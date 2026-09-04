@@ -7,13 +7,16 @@ registered component; pull of the analysis-workbook queue into the ledger (no
 triage yet); record of the broken retained-artifact link. No component was
 modified.
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
-**This repository:** `project-manager/`, branch `main`; the initial commit is
-recorded in the Provenance section once made
+**This repository:** `project-manager/`, branch `main`; initial commit
+`02335c56b232ecdbd402d537668b15d775291fa4`
 **Parent coordination repository:** `main` at `7677527` before this
-consolidation; the consolidation commit is recorded in the Provenance section
+consolidation; consolidation commit
+`e774b4217ccf5100c66e97b3b23a51a62c5e6365`, followed by one small parent
+commit that records this repository's HEAD in `../COMPONENTS.md`
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
-(synchronized at `7677527`); `origin` -> unreachable
-`jamorris_microsoft/beryllium-project` (retained, not retargeted)
+(synchronized at `7677527`; the consolidation commits are local until a push
+is confirmed); `origin` -> unreachable `jamorris_microsoft/beryllium-project`
+(retained, not retargeted)
 
 ## Fast resume: read this first
 
@@ -51,6 +54,13 @@ DMA, service, policy, or successor implementation to work around that gate.
   reason.
 - `queue/LEDGER.md` holds one `pending` row per analysis-workbook queue row.
 - `outbox/component-requests.md` records owner requests `PMR-001..PMR-006`.
+- The consolidation session was interrupted by a tool crash (Node.js heap
+  exhaustion during context compaction) after the contract suite was first
+  created; recovery resumed from on-disk state, reconciled the suite with the
+  documents, and completed the parent-root slimming. The crash left an
+  untracked Node.js diagnostic dump `report.20260904.130646.*.json` at the
+  parent root; it holds heap and stack data only (no environment variables)
+  and can be deleted.
 
 ### One recommended next action
 
@@ -61,7 +71,10 @@ cd /home/jmorris/src/l1/src/beryllium-project/project-manager
 sed -n '1,120p' HANDOFF.md
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-pm.sh
+bash ./scripts/inspect-components.sh registry-check
 git log --oneline -3
+git -C .. log --oneline -3
+rm ../report.20260904.130646.*.json    # optional: the crash dump described above
 gh auth refresh -h github.com          # the xjamesmorris keyring token was invalid on 2026-09-04
 ```
 
@@ -111,13 +124,16 @@ remain authoritative within their repositories.
 
 ## Observed workspace state
 
-Observed 2026-09-04T11:56Z with `scripts/inspect-components.sh status`.
-Full hashes are in `../COMPONENTS.md`.
+Observed 2026-09-04T12:29Z with `scripts/inspect-components.sh status`, before
+the consolidation commits. Full hashes are in `../COMPONENTS.md`. After the
+commits, the parent is `main` at `e774b42` plus one follow-up commit, ahead
+of `backup/main` and dirty only by the untracked crash dump named above, and
+this repository is clean on `main`.
 
 | Entry | Integration | Worktree | Branch | HEAD | Upstream (behind/ahead) |
 | --- | --- | --- | --- | --- | --- |
-| Parent | workspace | dirty only by untracked `project-manager/` | `main` | `7677527` | `backup/main` (0/0) |
-| `project-manager/` | direct | new, uncommitted at observation | `main` | unborn | none |
+| Parent | workspace | dirty only by untracked `project-manager/` and the crash dump | `main` | `7677527` | `backup/main` (0/0) |
+| `project-manager/` | direct | new, uncommitted at observation; initial commit `02335c5` followed | `main` | unborn | none |
 | `helium-te-poc/` | direct | **dirty, 43 entries** | `helium-te-travel-fedora44` | `9af92cc` | `origin/helium-te-travel-fedora44` (0/0) |
 | `formal-verification-research/` | direct | clean | `main` | `8b91ebd` | stale `origin/main` on the unreachable namespace (0/0 against a stale ref) |
 | `osr-claude/` | direct | clean | `main` | `f2edd17` | `origin/main` (0/0) |
@@ -396,4 +412,10 @@ Then:
   `767752792026622bbb06c3fcd29d240b0871a3e9` (last updated 2026-08-29) on
   2026-09-04, restructured for restartability and refreshed with observed
   state. The parent path now holds a redirect stub.
-- Consolidation commits: recorded here after they are made.
+- Consolidation commits: this repository's initial commit
+  `02335c56b232ecdbd402d537668b15d775291fa4`; parent consolidation commit
+  `e774b4217ccf5100c66e97b3b23a51a62c5e6365` (stubs, slimmed instructions,
+  registry refresh, `.gitignore`). This provenance update is the second commit
+  of this repository, and one further parent commit records its HEAD in the
+  `project-manager/` row of `../COMPONENTS.md`. Neither repository has been
+  pushed; push waits for explicit user confirmation.
