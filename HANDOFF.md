@@ -4,19 +4,22 @@
 **Update scope:** consolidation of the Project Manager function into this
 independent `project-manager/` component; live observed-state refresh of every
 registered component; pull of the analysis-workbook queue into the ledger (no
-triage yet); record of the broken retained-artifact link. No component was
-modified.
+triage yet); record of the broken retained-artifact link; user-confirmed
+creation of this repository's private remote and first push of both
+repositories. No component was modified.
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
 **This repository:** `project-manager/`, branch `main`; initial commit
-`02335c56b232ecdbd402d537668b15d775291fa4`
+`02335c56b232ecdbd402d537668b15d775291fa4`; `origin` -> private
+`beryllium-project/project-manager`, first pushed at
+`627d831da278189bd8248ceb2a425d600add87c1`
 **Parent coordination repository:** `main` at `7677527` before this
 consolidation; consolidation commit
-`e774b4217ccf5100c66e97b3b23a51a62c5e6365`, followed by one small parent
-commit that records this repository's HEAD in `../COMPONENTS.md`
+`e774b4217ccf5100c66e97b3b23a51a62c5e6365`, then
+`b2e80b260a8669a649cbf65f21e0291c3cda6a17` recording this repository's HEAD in
+`../COMPONENTS.md`
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
-(synchronized at `7677527`; the consolidation commits are local until a push
-is confirmed); `origin` -> unreachable `jamorris_microsoft/beryllium-project`
-(retained, not retargeted)
+(pushed `7677527..b2e80b2` on 2026-09-04); `origin` -> unreachable
+`jamorris_microsoft/beryllium-project` (retained, not retargeted)
 
 ## Fast resume: read this first
 
@@ -32,7 +35,7 @@ is confirmed); `origin` -> unreachable `jamorris_microsoft/beryllium-project`
 | Helium assurance line | Moved since the last coordination review: the component's own handoff names Tier 8 H6 candidate `ed15451` and frozen H7 gate branch `helium-te-fv-tier8-h7-approved` at `85a6e55`; an active travel-maintenance branch `helium-te-travel-fedora44` at `9af92cc` had 43 dirty entries at observation. **The Project Manager has not reviewed the Tier 7/8 gate content**; reconciliation is pending |
 | Component queues | 16 analysis-workbook rows `PMQ-001..016` pulled into `queue/LEDGER.md` as `pending`; threat-modeler queue empty |
 | Retained PM session artifacts | **Lost from this workstation**: the ignored parent `files` link no longer resolves and its listed artifacts were not found under the home directory. Human decision required |
-| Backups | Parent, analysis-workbook, provenance-review, beryllium-repo, xrv-research-repo, cheri-riscv-notes-repo synchronized with their remotes; threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account; `project-manager/` has no remote yet |
+| Backups | Parent (`backup/main` at `b2e80b2`), `project-manager/` (new private `origin/main`), analysis-workbook, provenance-review, beryllium-repo, xrv-research-repo, cheri-riscv-notes-repo synchronized with their remotes; threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -62,27 +65,31 @@ DMA, service, policy, or successor implementation to work around that gate.
   parent root; it holds heap and stack data only (no environment variables)
   and can be deleted.
 
+- On 2026-09-04 the user refreshed `gh` authentication (`xjamesmorris`, scopes
+  `repo`, `read:org`, `workflow`, `gist`) and confirmed the remote step; see
+  "Provenance" for the quoted confirmation and the resulting remote state.
+
 ### One recommended next action
 
-Review this consolidation, then authorize its private backup:
+Run the first coordination turn: triage the 16 pending ledger rows and
+reconcile the Helium notes.
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
 sed -n '1,120p' HANDOFF.md
-bash ./tests/validate-agent.sh
-bash ./scripts/validate-pm.sh
+bash ./scripts/inspect-components.sh status
 bash ./scripts/inspect-components.sh registry-check
-git log --oneline -3
-git -C .. log --oneline -3
-rm ../report.20260904.130646.*.json    # optional: the crash dump described above
-gh auth refresh -h github.com          # the xjamesmorris keyring token was invalid on 2026-09-04
+bash ./scripts/pull-queues.sh list
+rm -f ../report.20260904.130646.*.json   # optional: the crash dump described above
+copilot                                  # then: /agent project-manager
 ```
 
-Then, in a `project-manager` agent session, state explicitly: "create the
-private repository `beryllium-project/project-manager` and push `main`". The
-agent will not create a remote or push without that same-turn confirmation.
-After that, the first coordination turn triages `PML-0001..PML-0016` and
-reconciles the Helium notes against `../helium-te-poc/HANDOFF.md`.
+In that session, ask the agent to triage `PML-0001..PML-0016` against each
+suggested owner's own index and hand you `scripts/pull-queues.sh edits`, and
+to reconcile the Helium notes and `records/assurance/` against
+`../helium-te-poc/HANDOFF.md` at its then-current commit without touching the
+dirty travel worktree. Separately, decide the lost retained artifacts (section
+below); the agent cannot decide that for you.
 
 ### Minimal restart commands
 
@@ -109,7 +116,7 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | H0 acceptance, H1-H4 authorization, K3 execution | Responsible human | Open; `NOT RUN` |
 | Helium Tier 7/8 gate content review by the Project Manager | Project Manager (read-only) | Pending first coordination turn |
 | Decision on the lost retained PM artifacts (see "Retained PM session artifacts") | Responsible human | Open |
-| Private remote for `project-manager/` | Responsible human confirmation | Open |
+| Private remote for `project-manager/` | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; `origin` -> private `beryllium-project/project-manager` |
 | threat-modeler push of 2 local commits | threat-modeler owner | Open; `PMR-005` |
 | formal-verification-research backup | Owner | Open; no reachable remote |
 
@@ -365,9 +372,6 @@ Then:
 
 ## Pending coordination
 
-- **Authorize the private remote** `beryllium-project/project-manager` and the
-  push of `main`, after `gh auth refresh -h github.com`. Also push the parent
-  consolidation commit to `backup/main` on confirmation.
 - **Triage `PML-0001..PML-0016`** against each suggested owner's own index
   (xrv-research-repo `review-log.md`, formal-verification-research
   `sources/bibliography.md`, cheri-riscv-notes-repo reference indexes), then
@@ -415,7 +419,21 @@ Then:
 - Consolidation commits: this repository's initial commit
   `02335c56b232ecdbd402d537668b15d775291fa4`; parent consolidation commit
   `e774b4217ccf5100c66e97b3b23a51a62c5e6365` (stubs, slimmed instructions,
-  registry refresh, `.gitignore`). This provenance update is the second commit
-  of this repository, and one further parent commit records its HEAD in the
-  `project-manager/` row of `../COMPONENTS.md`. Neither repository has been
-  pushed; push waits for explicit user confirmation.
+  registry refresh, `.gitignore`); this repository's provenance commit
+  `627d831da278189bd8248ceb2a425d600add87c1`; parent commit
+  `b2e80b260a8669a649cbf65f21e0291c3cda6a17` recording that HEAD in the
+  `project-manager/` row of `../COMPONENTS.md`.
+- Remote creation and first push, 2026-09-04: after running
+  `gh auth refresh -h github.com`, the user was shown the exact four steps
+  (create the private repository, add `origin` and push this repository's
+  `main`, push the parent to `backup/main`, then record and push the recording
+  commits) and selected the confirmation "Yes: create private
+  `beryllium-project/project-manager`, push its main, and push the parent to
+  `backup/main` (steps 1-4)". Executed:
+  `gh repo create beryllium-project/project-manager --private`;
+  `git remote add origin https://github.com/beryllium-project/project-manager.git`
+  and `git push -u origin main` (`627d831`) in this repository;
+  `git push backup main` in the parent (`7677527..b2e80b2`). The remote heads
+  were verified against the local HEADs. The recording commits that follow
+  this entry are pushed under the same confirmation. No component repository
+  was pushed or modified; no tag was created; nothing is public.
