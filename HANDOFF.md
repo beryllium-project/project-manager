@@ -1,25 +1,30 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-04
-**Update scope:** consolidation of the Project Manager function into this
-independent `project-manager/` component; live observed-state refresh of every
-registered component; pull of the analysis-workbook queue into the ledger (no
-triage yet); record of the broken retained-artifact link; user-confirmed
-creation of this repository's private remote and first push of both
-repositories. No component was modified.
+**Update scope:** first coordination turn after the consolidation. Live
+observed-state refresh at 2026-09-04T16:15Z; `helium-te-poc/` row refreshed
+from dirty `9af92cc` to clean `e65c6a0`; triage of `PML-0001..PML-0016`
+(all `routed` to their suggested owners by `PMR-007..PMR-009`); Helium notes
+and `records/assurance/helium-te-fv-pathfinder.md` reconciled against
+`../helium-te-poc/HANDOFF.md` at `e65c6a0`, recording Tier 7/8 gate refs as
+the component's own statements and never as Project Manager approval;
+decision records `PMD-20260904-001` and `PMD-20260904-002`. No component was
+modified. Nothing was pushed.
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
 **This repository:** `project-manager/`, branch `main`; initial commit
 `02335c56b232ecdbd402d537668b15d775291fa4`; `origin` -> private
-`beryllium-project/project-manager`, first pushed at
-`627d831da278189bd8248ceb2a425d600add87c1`
-**Parent coordination repository:** `main` at `7677527` before this
-consolidation; consolidation commit
-`e774b4217ccf5100c66e97b3b23a51a62c5e6365`, then
-`b2e80b260a8669a649cbf65f21e0291c3cda6a17` recording this repository's HEAD in
-`../COMPONENTS.md`
+`beryllium-project/project-manager`, synchronized at
+`ccf8007c171d0c9effc00957309fd7f35e607f64` before this turn; this turn's
+commit is recorded in the `project-manager/` row of `../COMPONENTS.md`
+**Parent coordination repository:** `main` at `839a1b5` before this turn,
+synchronized with `backup/main`; consolidation commits
+`e774b4217ccf5100c66e97b3b23a51a62c5e6365`,
+`b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5` remain the
+provenance of the consolidation
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
-(pushed `7677527..b2e80b2` on 2026-09-04); `origin` -> unreachable
-`jamorris_microsoft/beryllium-project` (retained, not retargeted)
+(pushed through `839a1b5` on 2026-09-04 under the confirmation quoted in
+"Provenance"; this turn's parent commit is **not pushed**); `origin` ->
+unreachable `jamorris_microsoft/beryllium-project` (retained, not retargeted)
 
 ## Fast resume: read this first
 
@@ -32,10 +37,10 @@ consolidation; consolidation commit
 | Current authorized Beryllium work | Non-privileged R8-H0 profile freeze only; H0 remains **BLOCKED / NOT READY / NOT ACCEPTED** with all 81 acceptance rows unresolved |
 | Privileged and hardware work | H1-H4 unauthorized; Beryllium K3 execution and hardware evidence remain `NOT RUN` |
 | Implementation repository | `beryllium-repo` clean on `beryllium/single-hart-runtime-r0` at `65f6d89`, synchronized with its private origin |
-| Helium assurance line | Moved since the last coordination review: the component's own handoff names Tier 8 H6 candidate `ed15451` and frozen H7 gate branch `helium-te-fv-tier8-h7-approved` at `85a6e55`; an active travel-maintenance branch `helium-te-travel-fedora44` at `9af92cc` had 43 dirty entries at observation. **The Project Manager has not reviewed the Tier 7/8 gate content**; reconciliation is pending |
-| Component queues | 16 analysis-workbook rows `PMQ-001..016` pulled into `queue/LEDGER.md` as `pending`; threat-modeler queue empty |
+| Helium assurance line | Reconciled on 2026-09-04 against `../helium-te-poc/HANDOFF.md` at `e65c6a0` (worktree now clean; the 43-entry dirty state seen earlier that day is history). The component states: Tier 8 H6 candidate `ed15451` with frozen H7 gate `85a6e55`; Tier 7 reviewed source `7ca97a9` with frozen H7 gate `342e04a`; frozen Tier 6 H7 gate `c594b7f`; travel maintenance on `helium-te-travel-fedora44` from base `3dc3aee` with its own gate blocked. **These are the component's statements**; the Project Manager has not reviewed any Tier 7/8 gate content, has not verified the refs exist, and infers no approval (`records/decisions/PMD-20260904-002-helium-observed-state-refresh.md`) |
+| Component queues | 16 analysis-workbook rows `PMQ-001..016` triaged: all `routed` in `queue/LEDGER.md` to `xrv-research-repo` (9, `PMR-007`), `formal-verification-research` (5, `PMR-008`), `cheri-riscv-notes-repo` (2, `PMR-009`); `routed` maps to no workbook status under the queue file's header, so `scripts/pull-queues.sh edits` prints nothing until an owner reports a result (the workbook's `AGENT-INTERFACE.md` names a different status set; `PMR-011`); threat-modeler queue empty |
 | Retained PM session artifacts | **Lost from this workstation**: the ignored parent `files` link no longer resolves and its listed artifacts were not found under the home directory. Human decision required |
-| Backups | Parent (`backup/main` at `b2e80b2`), `project-manager/` (new private `origin/main`), analysis-workbook, provenance-review, beryllium-repo, xrv-research-repo, cheri-riscv-notes-repo synchronized with their remotes; threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
+| Backups | Parent `backup/main` at `839a1b5` and this repository's `origin/main` at `ccf8007` were synchronized before this turn; **this turn's two commits are local only** until the user confirms a push. analysis-workbook, provenance-review, beryllium-repo, xrv-research-repo, cheri-riscv-notes-repo synchronized with their remotes; threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -44,52 +49,68 @@ DMA, service, policy, or successor implementation to work around that gate.
 
 ### What changed in this update
 
-- The Project Manager agent, procedures, and records now live in
-  `project-manager/` (see `README.md`, `AGENT-INTERFACE.md`,
-  `.github/agents/`, `.github/skills/beryllium-project-management/SKILL.md`).
-- Component conventions moved from the parent `.github/copilot-instructions.md`
-  into `components/<component>.md`; agent invocation and validation moved into
-  `AGENT-ROSTER.md`.
-- `formal-verification/helium-te-fv-pathfinder.md` moved to
-  `records/assurance/helium-te-fv-pathfinder.md`; the parent path is a redirect
-  stub because sibling components cite it.
-- The parent `HANDOFF.md` became a redirect stub to this file for the same
-  reason.
-- `queue/LEDGER.md` holds one `pending` row per analysis-workbook queue row.
-- `outbox/component-requests.md` records owner requests `PMR-001..PMR-006`.
-- The consolidation session was interrupted by a tool crash (Node.js heap
-  exhaustion during context compaction) after the contract suite was first
-  created; recovery resumed from on-disk state, reconciled the suite with the
-  documents, and completed the parent-root slimming. The crash left an
-  untracked Node.js diagnostic dump `report.20260904.130646.*.json` at the
-  parent root; it holds heap and stack data only (no environment variables)
-  and can be deleted.
-
-- On 2026-09-04 the user refreshed `gh` authentication (`xjamesmorris`, scopes
-  `repo`, `read:org`, `workflow`, `gist`) and confirmed the remote step; see
-  "Provenance" for the quoted confirmation and the resulting remote state.
+- `../COMPONENTS.md`: `helium-te-poc/` row refreshed to clean `e65c6a0`
+  with the component-named refs; `analysis-workbook/` row shows the sixteen
+  queue rows as `routed` and names `PMR-011`; `formal-verification-research/`
+  row names the observed `PMR-001` resolution and `PMR-010`; the parent and
+  `project-manager/` backup rows say this turn's commits are local only;
+  review scope and closing paragraph updated.
+- `queue/LEDGER.md`: `PML-0001..PML-0016` moved from `pending` to `routed`
+  on 2026-09-04, each note naming the owner index searched and its commit.
+- `outbox/component-requests.md`: `PMR-007` (xrv-research-repo, 9 pointers),
+  `PMR-008` (formal-verification-research, 5 pointers), `PMR-009`
+  (cheri-riscv-notes-repo, 2 pointers); `PMR-006` note updated.
+- `records/decisions/PMD-20260904-001-first-queue-triage-routing.md` and
+  `records/decisions/PMD-20260904-002-helium-observed-state-refresh.md`.
+- `records/assurance/helium-te-fv-pathfinder.md`: new section "Observed
+  component statements, 2026-09-04"; the 2026-08-18 snapshot is retained
+  below it, unchanged apart from a two-sentence pointer at the top of
+  "Status".
+- `components/helium-te-poc.md`: role text names the component-reported Tier 8
+  boundary and points at the assurance record; the request wording is
+  tier-agnostic; `./he evidence-check`, `docs-preview`, and
+  `publication-check` added to the command list from the component's `./he
+  help` at `e65c6a0`.
+- `pm-auditor` pass: no blocking item. Its located discrepancies were fixed in
+  Project Manager artifacts or turned into requests: `PMR-001` note (both
+  halves of the reconciliation are observed satisfied at `8b91ebd`; backup
+  decision still open); `PMR-010` (formal-verification-research `COLLAB.md`
+  housekeeping budget conflicts with this Project Manager's boundary);
+  `PMR-011` (analysis-workbook `AGENT-INTERFACE.md` and queue header disagree
+  on the Project Manager-written status set); `components/analysis-workbook.md`
+  and `components/formal-verification-research.md` updated accordingly.
+- Observed but not acted on: the untracked crash dump named in the previous
+  update is no longer present at the parent root (parent clean at `839a1b5`).
+- The `/beryllium-project-management` skill is present on disk at
+  `.github/skills/beryllium-project-management/SKILL.md` but was not offered
+  by the Copilot CLI skill loader in this session; the turn followed the
+  on-disk procedure directly. The consolidation itself (2026-09-04, earlier
+  the same day) is described under "Provenance".
 
 ### One recommended next action
 
-Run the first coordination turn: triage the 16 pending ledger rows and
-reconcile the Helium notes.
+Carry the three owner requests to their owners; the only Project
+Manager-owned follow-up is read-only tooling, and it blocks nothing.
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
 sed -n '1,120p' HANDOFF.md
-bash ./scripts/inspect-components.sh status
-bash ./scripts/inspect-components.sh registry-check
-bash ./scripts/pull-queues.sh list
-rm -f ../report.20260904.130646.*.json   # optional: the crash dump described above
-copilot                                  # then: /agent project-manager
+grep -E '^\| PMR-00[789] ' outbox/component-requests.md
+bash ./scripts/pull-queues.sh list      # 16 rows, all routed
+bash ./scripts/pull-queues.sh edits     # empty until an owner reports a result
 ```
 
-In that session, ask the agent to triage `PML-0001..PML-0016` against each
-suggested owner's own index and hand you `scripts/pull-queues.sh edits`, and
-to reconcile the Helium notes and `records/assurance/` against
-`../helium-te-poc/HANDOFF.md` at its then-current commit without touching the
-dirty travel worktree. Separately, decide the lost retained artifacts (section
-below); the agent cannot decide that for you.
+For each owner, open its own agent or session from the paths in
+`AGENT-ROSTER.md` and hand over the request text verbatim:
+`PMR-007` -> `../xrv-research-repo/` (`review-log.md`, `references.md`);
+`PMR-008` -> `../formal-verification-research/` (`sources/bibliography.md`,
+`COLLAB.md` protocol); `PMR-009` -> `../cheri-riscv-notes-repo/`
+(`references/`). When an owner answers, return here, start
+`copilot` then `/agent project-manager`, and say which `PMQ` rows were
+recorded, already present, or declined; the agent will update the ledger and
+hand you the exact `outbox/pm-queue.md` edits. Separately, decide the lost
+retained artifacts (section below) and whether to push this turn's two
+commits; the agent does neither without you.
 
 ### Minimal restart commands
 
@@ -114,8 +135,11 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | --- | --- | --- |
 | Two H0 input selections (normative Fedora 44 H0 static OCI `fcf6c595...1bd1f5`; proposed H1/H2 path inventory `2c5e9396...c6660`) | Responsible human | Open; not inferred. Would authorize re-checking a still-blocked H0 candidate, not accept H0 |
 | H0 acceptance, H1-H4 authorization, K3 execution | Responsible human | Open; `NOT RUN` |
-| Helium Tier 7/8 gate content review by the Project Manager | Project Manager (read-only) | Pending first coordination turn |
+| Helium Tier 7/8 gate content | Component owner and the human who made the gate commits | Not a Project Manager gate. The component's statements at `e65c6a0` are recorded without review (`PMD-20260904-002`); confirming that the named refs exist is a read-only tooling follow-up (see "Pending coordination") |
+| Owner admission of the routed pointers (`PMR-007` xrv-research-repo, `PMR-008` formal-verification-research, `PMR-009` cheri-riscv-notes-repo) | Each component owner, carried by the responsible human | Open; source rows stay `new` until an owner answers |
+| Owner wording reconciliations (`PMR-010` formal-verification-research `COLLAB.md` housekeeping budget; `PMR-011` analysis-workbook status vocabulary) | Component owners, carried by the responsible human | Open; the Project Manager exercises no in-component budget and writes no status the queue header does not accept |
 | Decision on the lost retained PM artifacts (see "Retained PM session artifacts") | Responsible human | Open |
+| Push of this turn's `project-manager/` and parent commits | Responsible human confirmation | Open; both commits are local only |
 | Private remote for `project-manager/` | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; `origin` -> private `beryllium-project/project-manager` |
 | threat-modeler push of 2 local commits | threat-modeler owner | Open; `PMR-005` |
 | formal-verification-research backup | Owner | Open; no reachable remote |
@@ -131,17 +155,17 @@ remain authoritative within their repositories.
 
 ## Observed workspace state
 
-Observed 2026-09-04T12:29Z with `scripts/inspect-components.sh status`, before
-the consolidation commits. Full hashes are in `../COMPONENTS.md`. After the
-commits, the parent is `main` at `e774b42` plus one follow-up commit, ahead
-of `backup/main` and dirty only by the untracked crash dump named above, and
-this repository is clean on `main`.
+Observed 2026-09-04T16:15Z with `scripts/inspect-components.sh status`, at the
+start of the first coordination turn and before this turn's commits. Full
+hashes are in `../COMPONENTS.md`. The earlier observation the same day
+(2026-09-04T12:29Z, before the consolidation commits) differed only in the
+rows noted.
 
 | Entry | Integration | Worktree | Branch | HEAD | Upstream (behind/ahead) |
 | --- | --- | --- | --- | --- | --- |
-| Parent | workspace | dirty only by untracked `project-manager/` and the crash dump | `main` | `7677527` | `backup/main` (0/0) |
-| `project-manager/` | direct | new, uncommitted at observation; initial commit `02335c5` followed | `main` | unborn | none |
-| `helium-te-poc/` | direct | **dirty, 43 entries** | `helium-te-travel-fedora44` | `9af92cc` | `origin/helium-te-travel-fedora44` (0/0) |
+| Parent | workspace | clean (the crash dump named in the previous update is gone) | `main` | `839a1b5` | `backup/main` (0/0) |
+| `project-manager/` | direct | clean | `main` | `ccf8007` | `origin/main` (0/0) |
+| `helium-te-poc/` | direct | **clean** (was dirty with 43 entries at `9af92cc` at 12:29Z) | `helium-te-travel-fedora44` | `e65c6a0` | `origin/helium-te-travel-fedora44` (0/0) |
 | `formal-verification-research/` | direct | clean | `main` | `8b91ebd` | stale `origin/main` on the unreachable namespace (0/0 against a stale ref) |
 | `osr-claude/` | direct | clean | `main` | `f2edd17` | `origin/main` (0/0) |
 | `provenance-review/` | direct | clean | `main` | `86d9260` | `origin/main` (0/0) |
@@ -151,10 +175,14 @@ this repository is clean on `main`.
 | `cheri-riscv-notes-repo` | symlink `../copilot/gim/cheri-riscv-notes` | clean | `main` | `6553092` | `origin/main` (0/0) |
 | `xrv-research-repo` | symlink `../copilot/gim/xrv-research` | clean | `main` | `ca41490` | `origin/main` (0/0) |
 
-`helium-te-poc/` changed twice during the observation window (clean
-`for-review` at `1ab289c`, then the dirty travel branch above). Another agent
-session is active there. Nothing in that worktree was touched, and its dirty
-state must not be reset, cleaned, or reconciled by the Project Manager.
+`registry-check` reported one drift, `helium-te-poc` (`9af92cc` recorded,
+`e65c6a0` live), reconciled in `../COMPONENTS.md` this turn. `helium-te-poc/`
+changed three times on 2026-09-04 (clean `for-review` at `1ab289c` and the
+dirty travel branch at `9af92cc`, both as recorded by the consolidation update
+without a timestamp for the first; then the clean travel branch at `e65c6a0`
+at 16:15Z); another agent session works there. Nothing in that worktree was
+touched, and its state must not be reset, cleaned, or reconciled by the
+Project Manager.
 
 The parent `.gitignore` excludes every direct component checkout, now
 including `/project-manager/`. The three `*-repo` entries are tracked symlink
@@ -174,18 +202,42 @@ validated but unreviewed; frozen Tier 6 H7 gate `c594b7f`; pre-relocation
 preservation `d87080a`. Maintained candidate gate then: 17 harnesses, 142
 named claims, 16,233 successful CBMC properties, 16 rejected mutations.
 
-Observed now: all of those refs still exist. New branch refs include
-`helium-te-fv-tier7-h7-approved` (`342e04a`), `helium-te-fv-tier8-h6-candidate`
-(`ed15451`), `helium-te-fv-tier8-h7-approved` (`85a6e55`),
-`helium-te-fv-tier8-transaction` (`3dc3aee`), `for-review` (`1ab289c`), and
-the checked-out `helium-te-travel-fedora44` (`9af92cc`). The component's own
-`HANDOFF.md` at `9af92cc` describes the travel branch as maintenance outside
-the fixed Tier 8 candidate and reports a Fedora 44 checkpoint with 152 named
-claims and 19,419 successful properties. The Project Manager records these as
-observed component statements; it has not reviewed the Tier 7 or Tier 8 gate
-commits and infers no approval from branch names. Reconciling the Helium notes
-and `records/assurance/helium-te-fv-pathfinder.md` against the component's
-handoff is pending coordination.
+Observed 2026-09-04T12:29Z, as recorded by the consolidation update (its
+method for listing refs is not recorded there): all of those refs still
+existed, and new branch refs included `helium-te-fv-tier7-h7-approved`
+(`342e04a`), `helium-te-fv-tier8-h6-candidate` (`ed15451`),
+`helium-te-fv-tier8-h7-approved` (`85a6e55`), `helium-te-fv-tier8-transaction`
+(`3dc3aee`), `for-review` (`1ab289c`), and the checked-out
+`helium-te-travel-fedora44` (`9af92cc`, dirty with 43 entries).
+
+Reconciled 2026-09-04T16:15Z against `../helium-te-poc/HANDOFF.md` at
+`e65c6a0`, worktree clean (`PMD-20260904-002`). The component states that:
+the travel branch was created at exact base `3dc3aee` from
+`helium-te-fv-tier8-transaction` and lies outside the fixed Tier 8 H6
+candidate `ed15451` and frozen Tier 8 H7 gate `85a6e55`; the reviewed Tier 7
+source is `7ca97a9` with frozen Tier 7 H7 gate `342e04a`; the frozen Tier 6
+H7 gate is `c594b7f` and the Tier 5 H7 gate `111cff2`; the earlier H7 lineage
+`helium-te-fv` / `helium-te-h7-approved` is `d0cca32`;
+`helium-te-fv-pre-relocation-wip` preserves the pre-transfer snapshot; the
+historical `local-history` tip `c8d1032` is absent and must not be recreated;
+the exact Tier 8 candidate records 18 successful CBMC checks, 152 named
+claims, 19,419 successful properties, and 18 rejected mutations; the Fedora 44
+travel checkpoint passed native `./he check` and rootless `./he evaluate` for
+maintenance candidate `e83e99c`; and the travel gate remains blocked. The
+component further states that Tier 8 "completed responsible-human H6 review
+and has a valid frozen H7 gate" and that this "does not approve later
+maintenance-branch documentation or constitute publication".
+
+The Project Manager records all of that as the component's own statements. It
+has not reviewed the Tier 7 or Tier 8 gate content, has not verified that the
+named refs exist or are frozen (the inspect script reports only the
+checked-out branch), and infers no approval from a branch name, a clean
+worktree, or a passing evaluator run. The observed statements are tabulated
+in `records/assurance/helium-te-fv-pathfinder.md`, above its retained
+2026-08-18 snapshot. The component's handoff also names home-directory
+travel caches, a bootstrap helper script, and a repository bundle; those are
+workstation paths outside the workspace and are deliberately not recorded
+here.
 
 Preserve the claim boundary: Helium is a review-and-test PoC, not formally
 verified or hardware validated; selected C properties are machine-checked by
@@ -202,9 +254,24 @@ Last reviewed: `main` at `eaa497b` with both Helium FV consumption logs
 integrated (`26f3a54`, merge `eaa497b`). Observed now: `main` at `8b91ebd`
 ("define sub-project collaboration roles"), clean. The only remote is the
 unreachable `jamorris_microsoft` namespace, so the component has no working
-off-machine backup. Coordination discrepancy retained: the owner-status table
-and handoff described only the first integration at last review; whether
-`8b91ebd` resolves this is unverified (`PMR-001`).
+off-machine backup. The coordination discrepancy retained from the last review
+(owner-status table and handoff describing only the first integration) is
+observed resolved at `8b91ebd`: `COLLAB.md` "Owner status" names latest
+integration `eaa497b`, two guest integrations, latest validated destination
+`ff4a8a8`, and no unmerged `collab/*` branch on 2026-08-19, and `HANDOFF.md`
+names both integrated logs (`6f5f670`, `ff4a8a8`). `PMR-001` stays open for
+the backup decision only.
+
+Component expectations of the Project Manager at `8b91ebd`: `COLLAB.md`
+"Parent Project Manager housekeeping budget" would let a designated Project
+Manager integrate compliant `collab/*` branches and commit coordination
+metadata inside the component, and `HANDOFF.md` asks the "owner or delegated
+parent Project Manager" to inspect unmerged `collab/*` branches periodically.
+This Project Manager does not exercise that budget: it writes nothing and runs
+no `git` inside any component. Integration stays owner-only; periodic
+`collab/*` inspection waits for a read-only ref listing in
+`scripts/inspect-components.sh`. The owner is asked to amend the wording
+(`PMR-010`).
 
 ### OS security research archive
 
@@ -244,7 +311,16 @@ adds `reviews/PRV-20260901-001-policy-install-readback/` alongside
 Last reviewed at `ea71bd4` with no session. Observed now at `2261659`, clean,
 synchronized: session `AWB-20260829-001-post-g-install-readback-use-case` with
 inquiry `Q-001` exists, and `outbox/pm-queue.md` carries 16 `new` rows
-(`PMQ-001..016`), all now ledgered as `pending`.
+(`PMQ-001..016`). All sixteen were triaged on 2026-09-04 and are `routed` in
+`queue/LEDGER.md` (`PMD-20260904-001`): nine to `xrv-research-repo`
+(`PMR-007`), five to `formal-verification-research` (`PMR-008`), two to
+`cheri-riscv-notes-repo` (`PMR-009`). The Project Manager's own read-only
+search of each suggested owner's index agreed with the workbook's
+`IDX-SET-001` check that every source is absent there. The source rows stay
+`new` because `routed` has no workbook status under the queue file's own
+header; edits follow owner answers. The component's `AGENT-INTERFACE.md`
+names a different Project Manager-written status set (`acknowledged`,
+`routed`, `integrated`, `declined`); the conflict is raised as `PMR-011`.
 
 ### Threat modeler
 
@@ -372,17 +448,33 @@ Then:
 
 ## Pending coordination
 
-- **Triage `PML-0001..PML-0016`** against each suggested owner's own index
-  (xrv-research-repo `review-log.md`, formal-verification-research
-  `sources/bibliography.md`, cheri-riscv-notes-repo reference indexes), then
-  hand the user `scripts/pull-queues.sh edits`.
-- **Reconcile the Helium notes** and `records/assurance/` against
-  `../helium-te-poc/HANDOFF.md` at its then-current commit; record Tier 7/8
-  gate refs as observed statements, never as Project Manager approval. Do not
-  touch the dirty travel worktree.
+- **Carry `PMR-007`, `PMR-008`, `PMR-009`** to the xrv-research-repo,
+  formal-verification-research, and cheri-riscv-notes-repo owners. When an
+  owner answers, update the matching `PML-` rows in `queue/LEDGER.md`
+  (`accepted`, `duplicate`, `rejected`, or `deferred`), then hand the user
+  `scripts/pull-queues.sh edits` for `../analysis-workbook/outbox/pm-queue.md`.
+  If the formal-verification-research owner declines the integrity-monitoring
+  and attestation pointers (PMQ-007, 010, 012, 015), re-route them by a
+  superseding ledger note; `osr-claude/` is the candidate alternate.
+- **Helium and `collab/*` ref verification tooling:** extend
+  `scripts/inspect-components.sh` with a read-only ref listing for a named
+  component so the refs named in `../helium-te-poc/HANDOFF.md` and any
+  unmerged `collab/*` branch in `../formal-verification-research/` can be
+  confirmed without any command inside a component. Until then, re-read those
+  handoffs each turn and record their statements only (`PMD-20260904-002`).
 - **Decide the lost retained artifacts** (section above).
-- `PMR-001` formal-verification-research: confirm owner-status table and
-  handoff reflect the second integration; decide a reachable backup.
+- **Push decision:** this turn's `project-manager/` and parent commits are
+  local only; pushing `origin main` here and `backup main` in the parent needs
+  the user's explicit confirmation in the turn that performs it.
+- `PMR-001` formal-verification-research: the owner-status table and handoff
+  halves are observed satisfied at `8b91ebd`; decide a reachable backup.
+- `PMR-010` formal-verification-research: amend the `COLLAB.md` housekeeping
+  budget and `HANDOFF.md` wording so the Project Manager's role is read-only
+  inspection and reporting; integration and in-component commits stay
+  owner-only.
+- `PMR-011` analysis-workbook: reconcile the Project Manager-written status
+  vocabulary between `AGENT-INTERFACE.md` and the `outbox/pm-queue.md`
+  header; the Project Manager follows the queue header until then.
 - `PMR-002` osr-claude: remove stale HTTPS-remote and pending-`mktemp` lines.
 - `PMR-003` beryllium-repo: reconcile `planning/HANDOFF.md` path and H0 commit
   wording when preparing the exact replacement candidate.
@@ -391,8 +483,11 @@ Then:
   lists; consider citing `project-manager/HANDOFF.md` and
   `project-manager/records/` instead of the parent stubs.
 - `PMR-005` threat-modeler: push the 2 local commits (owner's decision).
-- `PMR-006` analysis-workbook: `PMQ-001..016` are ledgered; expect status edits
-  after triage, applied by the human.
+- `PMR-006` analysis-workbook: `PMQ-001..016` are ledgered and `routed`; no
+  status edit is due until an owner reports a result, after which the human
+  applies the edits from `scripts/pull-queues.sh edits`.
+- `PMR-007..PMR-009`: owner admission decisions for the sixteen routed
+  pointers (see the first bullet).
 - Obtain the two responsible-human H0 selections, or wait for the exact
   board/firmware packet; do not infer a normative host or path inventory.
 - Preserve every Helium approved, candidate, and preserved ref as a distinct
@@ -431,9 +526,17 @@ Then:
   `beryllium-project/project-manager`, push its main, and push the parent to
   `backup/main` (steps 1-4)". Executed:
   `gh repo create beryllium-project/project-manager --private`;
-  `git remote add origin https://github.com/beryllium-project/project-manager.git`
+  `git remote add origin` with the HTTPS URL of that private repository
   and `git push -u origin main` (`627d831`) in this repository;
   `git push backup main` in the parent (`7677527..b2e80b2`). The remote heads
   were verified against the local HEADs. The recording commits that follow
   this entry are pushed under the same confirmation. No component repository
   was pushed or modified; no tag was created; nothing is public.
+- First coordination turn, 2026-09-04 (after `ccf8007` here and `839a1b5` in
+  the parent): observed state at 16:15Z, `PML-0001..PML-0016` routed,
+  `PMR-007..PMR-009` raised, `PMD-20260904-001` and `PMD-20260904-002`
+  recorded, Helium notes and `records/assurance/helium-te-fv-pathfinder.md`
+  reconciled against `../helium-te-poc/HANDOFF.md` at `e65c6a0`. One commit
+  in each repository; the `project-manager/` HEAD is recorded in the
+  `project-manager/` row of `../COMPONENTS.md`. **No push was confirmed or
+  performed in this turn.** No component repository was modified.

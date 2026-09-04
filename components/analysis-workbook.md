@@ -41,10 +41,14 @@ topic and chronology in the generated `WORKBOOK.md`.
 ## Outbound queue
 
 `outbox/pm-queue.md` is a pull interface. The component writes rows with
-status `new` or `unconfirmed`; it expects the Project Manager to resolve them
-to `accepted`, `duplicate`, `rejected`, or `deferred`. The Project Manager
-consumes it ledger-only (see `../queue/README.md`) and hands the user the
-exact status edits.
+status `new` or `unconfirmed`; the queue file's own header expects the Project
+Manager to resolve them to `accepted`, `duplicate`, `rejected`, or `deferred`,
+while the component's `AGENT-INTERFACE.md` "Outbox pull protocol" names a
+different set (`acknowledged`, `routed`, `integrated`, `declined`); the
+conflict is raised as `PMR-011`, and until the owner answers the Project
+Manager follows the queue file's header. The Project Manager consumes the
+queue ledger-only (see `../queue/README.md`) and hands the user the exact
+status edits.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 

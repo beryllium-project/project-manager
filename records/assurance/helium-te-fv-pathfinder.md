@@ -10,13 +10,60 @@
   `formal-verification/helium-te-fv-pathfinder.md`, last changed there in
   parent commit `6d7f8236b92e12e02d236c2a96d03d042d5ae468` (2026-08-18) and
   moved into `project-manager/` from parent commit
-  `767752792026622bbb06c3fcd29d240b0871a3e9` on 2026-09-04. Content below is
-  unchanged by the move; the parent path now holds a redirect stub because
+  `767752792026622bbb06c3fcd29d240b0871a3e9` on 2026-09-04. The migrated
+  content, from "Status" onward, is unchanged by the move apart from the
+  two-sentence pointer at the top of "Status", and is retained as the
+  2026-08-18 snapshot; the parent path now holds a redirect stub because
   sibling components cite it.
+- **Observed update:** the section "Observed component statements,
+  2026-09-04" was added by the `project-manager` agent on 2026-09-04 from
+  `../helium-te-poc/HANDOFF.md` at
+  `e65c6a09b0164b4fffcbe7dfbede02094406b873` (decision record
+  `PMD-20260904-002`). It records what the component states; it adds no
+  review.
 - **Boundary:** this record summarizes evidence produced and validated inside
   `helium-te-poc`; it does not add proof, review, approval, or acceptance.
 
+## Observed component statements, 2026-09-04
+
+Source: `../helium-te-poc/HANDOFF.md` at `e65c6a0`, read on 2026-09-04 while
+the component was observed clean on `helium-te-travel-fedora44` at that
+commit. Every item below is the component's own statement. The Project
+Manager has not reviewed any Tier 7 or Tier 8 gate content, has not verified
+that the named refs exist or are frozen (its inspection script reports only
+the checked-out branch), and infers no approval from a branch name, a clean
+worktree, or a passing evaluator run. Later Project Manager reconciliation
+supersedes the "Status" snapshot below only for the values restated here.
+
+| Item | Component statement at `e65c6a0` |
+| --- | --- |
+| Checked-out branch | `helium-te-travel-fedora44`, travel maintenance created at exact base `3dc3aeebc087186ad77b4e00856ff331ef291da3` from `helium-te-fv-tier8-transaction`; outside the fixed Tier 8 candidate and gate; its own publication gate is blocked |
+| Fedora 44 travel checkpoint | native `./he check` and rootless `./he evaluate` reported passing for maintenance candidate `e83e99cbb0e88cf3f665ce0fb1da97600de34d88` (QEMU 10.2.2, OpenSBI 1.7, 18 successful checks, 152 named claims, 19,419 successful properties, 18 sensitivity mutations rejected) |
+| Tier 8 H6 candidate | `helium-te-fv-tier8-h6-candidate` at `ed1545155c8d09aa75803a256eee0d2fa8844b91`; the component reports 18 successful CBMC checks, 152 named claims, 19,419 successful properties, and 18 rejected mutations for this exact commit |
+| Tier 8 H7 gate | `helium-te-fv-tier8-h7-approved` at `85a6e55a2939ec504354bf63cd852908965bbe8e`; the component states that this human-created gate-only commit changes only `publication-gate.conf`, has the reviewed candidate `ed15451` as its sole parent, that the candidate completed responsible-human H6 review, and that the approval does not extend to later maintenance documentation or constitute publication |
+| Tier 7 reviewed source | `helium-te-fv-tier7-h6-candidate` at `7ca97a9833d451750bd09ac5a3e020cce9e5bd6f` (the "Tier 7 H6 candidate" of the snapshot below); the component now describes it as the frozen reviewed Tier 7 source parent |
+| Tier 7 H7 gate | `helium-te-fv-tier7-h7-approved` at `342e04a3f73eef16c54c8670135fe57496f7729d` |
+| Tier 6 H7 gate | `helium-te-fv-tier6-h7-approved` at `c594b7fdb6aa584f23c1a3ea4287f7cc6fb9bd03`, unchanged from the snapshot below |
+| Tier 5 H7 gate | `helium-te-fv-tier5-h7-approved` at `111cff26fe50bd51ac44f2cac156543bf1d63eaa`; reviewed Tier 5 source aliases at `749b9c8676ef92d747295f6ff813d6a04a503222` |
+| Earlier approved H7 lineage | `helium-te-fv` and `helium-te-h7-approved` at `d0cca32d24ca340561016942fd717264f67ca194`; retained H6 candidate lineage `helium-te-fv-h6-candidate` at `5a83a398ff479e9ec52409e38291e240ef4283ec` |
+| Tier 8 development commit | `0b3fa719f11ca57937936e2a794f61d38e442a29` (pure atomic capture-plus-pipeline transaction over the Tier 7 source parent) |
+| Preserved and absent refs | `helium-te-fv-pre-relocation-wip` preserves the pre-transfer snapshot (the `d87080a` ref of the snapshot below); the historical `local-history` tip `c8d1032` is absent and must not be recreated |
+| Tier 8 machine-checked scope | `trap-transaction` harness with `HE-FV-TXN-001..010`: exact production/specification equivalence, invalid/capture/decode rollback, terminal guest-failure and authority-rejection results, event-only state commit, and NULL rejection |
+| Stated proof limits | live CSR/frame/sentinel/root reads or provenance, policy/PTE queries, active-subject selection, linker symbols, call-time or once-only correspondence, console ordering, privileged effects in `src/main.c`, assembly, compiler, ISA, QEMU/hardware behavior, and noninterference remain outside the proof boundary; hardware validation is stated as not performed |
+
+Project Manager wording is unchanged by these statements: Helium remains a
+review-and-test proof of concept that is not formally verified and not
+hardware validated; selected fixed-profile C properties are machine-checked
+by CBMC only within the component's stated source, property, and tool
+boundary. A validated candidate, an approved predecessor tier, or an
+inherited gate never approves a successor; the component itself reports the
+travel-maintenance gate as blocked.
+
 ## Status
+
+Snapshot of 2026-08-18, retained unchanged; see "Observed component
+statements, 2026-09-04" above for the values the component has since
+restated.
 
 - **Component:** `helium-te-poc`
 - **Current development branch:** `helium-te-fv-tier7-capture-contract`

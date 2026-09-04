@@ -35,6 +35,12 @@ claim that Helium is formally verified.
   `sources/bibliography.md`.
 - Guest agents must not edit research, handoff, scratch, reference-clone, or
   another agent's ledger content.
+- `COLLAB.md` at `8b91ebd` offers a "designated parent Project Manager" a
+  housekeeping budget that includes integrating compliant `collab/*` branches
+  and committing coordination metadata inside this repository. The
+  `project-manager` component does not exercise it: it writes nothing and runs
+  no `git` inside a component, inspects through its own scripts, and raises
+  requests instead (`PMR-010`).
 
 ## Commands
 
@@ -47,4 +53,6 @@ Owner reconciliation of the owner-status table and `HANDOFF.md` after guest
 integrations; a backup decision (the configured `origin` names the unreachable
 `jamorris_microsoft` namespace, so this component has no working off-machine
 backup); registration of sources routed from component queues under the
-owner's rules.
+owner's rules; amendment of the `COLLAB.md` and `HANDOFF.md` Project Manager
+role wording so that integration and in-component commits stay owner-only
+(`PMR-010`).

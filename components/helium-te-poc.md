@@ -39,12 +39,16 @@ assurance workflow.
 The Helium FV line adds CBMC machine checks for selected fixed-profile TE,
 policy, enforcement, G-stage, pure runtime-transition, materialized
 trap-context, trap-authority witness, effect-plan, transactional trap-pipeline,
-and raw-capture materialization C properties. The trap decision remains exactly
-five fields; authority, state mutation, and effect planning remain separate
-pure boundaries. Tier 7 begins with caller-supplied scalar facts: it does not
-prove live CSR/frame/sentinel/root capture, live policy/PTE query
+raw-capture materialization, and (as the component reports at `e65c6a0`)
+atomic capture-plus-pipeline transaction C properties. The trap decision
+remains exactly five fields; authority, state mutation, and effect planning
+remain separate pure boundaries. Tier 7 begins with caller-supplied scalar
+facts and Tier 8 composes that materialization with the Tier 6 pipeline:
+neither proves live CSR/frame/sentinel/root capture, live policy/PTE query
 correspondence, linker-symbol wiring, privileged effect execution, assembly,
-compiler, ISA, emulator, hardware, or noninterference.
+compiler, ISA, emulator, hardware, or noninterference. The component's own
+statements about its tiers, refs, and gates are recorded, without review, in
+`../records/assurance/helium-te-fv-pathfinder.md`.
 
 ## Boundaries and conventions
 
@@ -90,6 +94,10 @@ npm ci                 # locked documentation dependencies
 ./he check             # complete local validation
 ./he docs-check        # regenerate and validate documentation
 ./he evaluate          # rootless independent evaluation
+./he evidence-check COMMIT [BUNDLE]   # verify a bundle against an exact clean commit
+./he docs-preview      # serve generated HTML
+./he publication-check # check the responsible-human public release gate
+./he help              # full subcommand list (evidence, report, docs-build, version, clean, ...)
 make help              # lower-level targets
 make unit-gcc; make unit-clang; make qemu-gcc; make toolcheck
 tests/test-qemu-trace-validator.sh
@@ -101,7 +109,10 @@ the Helium root.
 
 ## What the Project Manager may request
 
-Responsible-human H6 review of an exact candidate against its Tier 6 source;
+Responsible-human H6 review of an exact candidate against its reviewed
+predecessor source (at `e65c6a0` the component names travel maintenance
+candidate `e83e99c` on base `3dc3aee`; Tier 7 and Tier 8 H6 reviews are
+reported complete by the component and not reviewed by the Project Manager);
 handoff reconciliation; preservation of frozen refs; a backup push decided by
 the component owner. The Project Manager never creates an H7 gate, pushes, or
 releases.
