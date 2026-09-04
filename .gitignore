@@ -1,0 +1,12 @@
+# Machine-specific link to retained Project Manager session artifacts.
+/files
+
+# Working material that never becomes a durable record.
+/scratch/
+
+# User-supplied material is untrusted and private by default.
+/inbox/*
+!/inbox/README.md
+
+# Test sandboxes.
+/.test-output/
