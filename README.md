@@ -14,10 +14,13 @@ agent as trusted configuration.
 
 The agent runs a coordination turn: it re-resolves the canonical topology,
 inspects every registered component read-only, pulls the component queues,
-reconciles the registry and handoff, validates, commits its own artifacts, and
-ends with what the user should review and one exact next action. It manages
-and orchestrates the other agents by producing exact invocation, validation,
-and request instructions; it never acts inside their repositories.
+carries recorded requests into components only within the standing carry
+authority, reconciles the registry and handoff, validates, commits its own
+artifacts, and ends with what the user should review and one exact next
+action. It manages and orchestrates the other agents by producing exact
+invocation, validation, and request instructions; it never runs their
+commands and never edits their research, analysis, threat-model, provenance,
+session, model, or review content.
 
 ## Position in the workspace
 
@@ -37,19 +40,34 @@ cite those paths as read-only evidence.
 
 The agent writes only:
 
-- inside this repository; and
+- inside this repository;
 - to the Project Manager-owned parent-root artifacts named in
-  `AGENT-INTERFACE.md`, including tracked symlink objects and `.gitignore`.
+  `AGENT-INTERFACE.md`, including tracked symlink objects and `.gitignore`;
+  and
+- inside a carry-eligible component, only to carry a recorded request under
+  the standing carry authority
+  `records/decisions/PMD-20260904-003-standing-carry-authority.md`, in three
+  classes: queue status edits in that component's `outbox/pm-queue.md`,
+  metadata-only source-index entries in the owner's designated index, and
+  Project Manager-role wording in its Markdown interface, collaboration,
+  research-source, and handoff documents. Each carried write needs a clean
+  worktree and an open request, and is committed inside that component with
+  the request identifier.
 
-It never writes inside another component directory, never stages component
-contents in the parent, never resets, cleans, or reconciles a component
-worktree, and never retargets a tracked symlink without user direction.
-Component outbox queues are consumed ledger-only: dispositions live in
-`queue/LEDGER.md`, and the exact edits are handed to the user.
+It never writes inside another component directory outside those classes,
+never writes `helium-te-poc/` or `beryllium-repo` at all, never stages
+component contents in the parent, never resets, cleans, or reconciles a
+component worktree, and never retargets a tracked symlink without user
+direction. Component outbox queues are consumed ledger-first: dispositions
+live in `queue/LEDGER.md`, and the exact edits printed by
+`scripts/pull-queues.sh edits` are then applied by the agent as class-1
+carried writes, or handed to the user when the component is dirty or active.
 
-Direct Git is permitted only against this repository and the parent root.
-Remote creation, push, tag, publication, and release happen only after an
-explicit same-turn user confirmation.
+Direct Git is permitted against this repository and the parent root, and
+inside a component only as `git -C <component>` `status`, `diff`, `log`,
+`show`, `add <exact paths>`, and `commit` while carrying. Remote creation,
+push, tag, publication, and release, for any repository, happen only after
+an explicit same-turn user confirmation.
 
 The agent never grants or infers acceptance, approval, sign-off, licensing,
 publication, release, formal verification, hardware validation, or risk
@@ -74,8 +92,8 @@ HANDOFF.md                                   restartable Project Manager handoff
 components/<component>.md                    one knowledge card per registered component
 records/assurance/                           assurance-transfer records
 records/decisions/PMD-YYYYMMDD-NNN-*.md      decision records
-queue/LEDGER.md                              ledger-only dispositions of component queue rows
-outbox/component-requests.md                 pull-only requests to component owners
+queue/LEDGER.md                              ledger-first dispositions of component queue rows
+outbox/component-requests.md                 requests to component owners; three classes carried by the agent
 scripts/                                     maintained helpers
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
@@ -98,4 +116,6 @@ git diff --check
 
 Every mode of `inspect-components.sh` and `pull-queues.sh` is read-only and
 runs Git in a sanitized environment without hooks, credentials, or network
-access. `new-record.sh` writes only under `records/decisions/`.
+access. `new-record.sh` writes only under `records/decisions/`. Carried
+writes inside components are made by the agent itself, never by these
+scripts.

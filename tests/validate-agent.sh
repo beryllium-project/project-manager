@@ -212,6 +212,29 @@ for f in "$agent" "$instructions" "$skill" "$interface"; do
     require_text "$f" 'restricted-microsoft'
 done
 
+# Standing carry authority (PMD-20260904-003): the only writes permitted inside
+# a component are the three recorded classes, never in the two carry-ineligible
+# components, with git -C limited to the listed subcommands.
+carry_record=$repository_root/records/decisions/PMD-20260904-003-standing-carry-authority.md
+require_file "$carry_record"
+for f in "$agent" "$instructions" "$skill" "$interface" "$readme" "$roster"; do
+    require_text "$f" 'PMD-20260904-003'
+done
+for f in "$agent" "$instructions" "$skill" "$interface"; do
+    require_prose "$f" 'three classes'
+    require_prose "$f" '`helium-te-poc/` and `beryllium-repo` are carry-ineligible'
+    require_prose "$f" '`status`, `diff`, `log`, `show`, `add <exact paths>`, and `commit`'
+    require_prose "$f" 'clean worktree'
+    require_prose "$f" '(A|a) carried commit leaves the component ahead of its remote'
+done
+for f in "$agent" "$instructions" "$skill" "$interface" "$readme"; do
+    refute_pattern "$f" 'ledger-only|ledger only|Ledger-only'
+done
+require_text "$carry_record" '**Status:** recorded'
+require_text "$carry_record" 'Carry-ineligible components'
+require_prose "$carry_record" '`helium-te-poc/` and `beryllium-repo` are never written'
+require_text "$auditor" 'PMD-20260904-003'
+
 for f in "$agent" "$instructions" "$skill"; do
     require_text "$f" 'accepted through R7'
     require_text "$f" 'NOT RUN'
@@ -222,7 +245,7 @@ done
 
 for f in "$agent" "$instructions" "$skill" "$interface" "$readme"; do
     require_prose "$f" '(never|Never) (grants?|grant or infer|grants or infers|grants or implies)'
-    require_prose "$f" 'ledger-only|ledger only|Ledger-only'
+    require_prose "$f" 'ledger-first|Ledger-first'
 done
 
 require_text "$auditor" 'You never edit, execute, run Git, use the web'

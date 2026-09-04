@@ -2,7 +2,8 @@
 
 - **Workspace entry:** `../helium-te-poc/` (ignored canonical direct checkout)
 - **Ownership:** agent-owned Helium line; the Project Manager reads for
-  coordination and writes nothing here
+  coordination and writes nothing here. Carry-ineligible under `../records/decisions/PMD-20260904-003-standing-carry-authority.md`: every
+  change is a `PMR-NNN` request handed to the human
 - **Agent:** none user-invocable; maintained skill `helium-documentation`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `LLM_POLICY_ALIGNMENT.md`

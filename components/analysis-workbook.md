@@ -3,7 +3,10 @@
 - **Workspace entry:** `../analysis-workbook/` (ignored canonical direct
   checkout)
 - **Ownership:** agent-owned; its agents write only inside that component; the
-  Project Manager writes nothing here
+  Project Manager writes here only to carry requests under the standing carry
+  authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md` (class 1: status edits in `outbox/pm-queue.md`; class 3:
+  Project Manager-role wording in `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`),
+  committing inside this component; nothing else
 - **Agents:** `analysis-workbook` (user-invocable orchestrator),
   `analysis-evidence` and `analysis-research` (write-disabled specialists);
   skill `beryllium-analysis`
@@ -45,10 +48,11 @@ status `new` or `unconfirmed`; the queue file's own header expects the Project
 Manager to resolve them to `accepted`, `duplicate`, `rejected`, or `deferred`,
 while the component's `AGENT-INTERFACE.md` "Outbox pull protocol" names a
 different set (`acknowledged`, `routed`, `integrated`, `declined`); the
-conflict is raised as `PMR-011`, and until the owner answers the Project
-Manager follows the queue file's header. The Project Manager consumes the
-queue ledger-only (see `../queue/README.md`) and hands the user the exact
-status edits.
+conflict is raised as `PMR-011`, carry-eligible as class-3 wording; until it
+is carried the Project Manager follows the queue file's header. The Project
+Manager consumes the queue ledger-first (see `../queue/README.md`) and applies
+the status edits itself as class-1 carried writes when this component is
+clean.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 

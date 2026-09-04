@@ -2,7 +2,9 @@
 
 - **Workspace entry:** `../osr-claude/` (ignored direct checkout)
 - **Ownership:** agent-owned research archive (Claude research agent); ask the
-  user before any modification; the Project Manager writes nothing here
+  user before any modification. Carry-eligible in principle under the standing
+  carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`, but the Project Manager asks the user first per
+  this convention and never touches `sources/restricted-microsoft/`
 - **Agent:** reusable Claude skill `.claude/skills/os-security-research`
 - **Local instructions to read first:** `CLAUDE.md`, `HANDOFF.md`
 - **Observed state:** see `../../COMPONENTS.md`

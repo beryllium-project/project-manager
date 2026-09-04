@@ -3,7 +3,10 @@
 - **Workspace entry:** `../xrv-research-repo` (tracked symlink to
   `../copilot/gim/xrv-research`)
 - **Ownership:** private research survey; agent-owned; the Project Manager
-  writes nothing here and only maintains the parent symlink object
+  maintains the parent symlink object and writes here only to carry requests
+  under the standing carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md` (class 2: pointer-only
+  records under the `review-log.md` record contract or `references.md`;
+  class 3: Project Manager-role wording), committing inside this repository
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `review-log.md`

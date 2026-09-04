@@ -4,7 +4,8 @@ How every Beryllium project agent is invoked, what it consumes and produces,
 where it may write, and how it is validated. The Project Manager orchestrates
 by handing the human these exact invocations and by reading each agent's
 outputs; it never runs another agent's commands inside that agent's
-repository.
+repository. Its only writes inside a component are carried requests in the
+three classes of `records/decisions/PMD-20260904-003-standing-carry-authority.md`.
 
 Each agent component is an independent Git repository. Invoke an agent by
 starting Copilot CLI in that directory and selecting the agent, or by loading
@@ -14,7 +15,7 @@ the directory with `/add-dir <directory>` from the parent root.
 
 | Component | User-invocable agent | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
-| `project-manager/` | `project-manager` | `pm-auditor` (read, search) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository plus Project Manager-owned parent-root artifacts |
+| `project-manager/` | `project-manager` | `pm-auditor` (read, search) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
 | `analysis-workbook/` | `analysis-workbook` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`) | Own repository only |
 | `threat-modeler/` | `threat-modeler` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
 | `provenance-review/` | `provenance-review` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
@@ -85,14 +86,19 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `beryllium-repo` | skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or the Beryllium owner's agent session |
 | `formal-verification-research/` | `COLLAB.md` guest protocol; `.github/copilot-instructions.md`; `HANDOFF.md` | none configured | Owner |
 | `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md` | `tools/md-to-html.sh --check` | Owner's Claude agent |
-| `cheri-riscv-notes-repo` | none observed | `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
+| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
 | `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `review-log.md` | none configured | Owner |
 
 ## Orchestration rules
 
 - The Project Manager dispatches work by giving the human the exact
   invocation above and, when useful, a `PMR-NNN` request in
-  `outbox/component-requests.md`. It never writes into a component's `inbox/`.
+  `outbox/component-requests.md`. Under `PMD-20260904-003` it carries three
+  classes of request itself (queue status edits, metadata-only source-index
+  entries, Project Manager-role wording), committing inside the eligible
+  component with the request identifier; every other request is handed to the
+  human. It never writes into a component's `inbox/`, and never writes
+  `helium-te-poc/` or `beryllium-repo`.
 - Every sibling orchestrator is declared `disable-model-invocation: true`, so
   no agent can invoke another agent's orchestrator; the human starts each
   engagement.

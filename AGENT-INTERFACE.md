@@ -16,9 +16,12 @@ research, analysis, threat-model, or provenance content.
                                    ^ maintains
                                    |
    component repositories -----> project-manager <----- human decisions
-   (read-only inspection,          |        \
-    outbox/pm-queue.md pull)       |         pm-auditor (read, search)
-                                   v
+   (read-only inspection,          |   ^    \
+    outbox/pm-queue.md pull)       |   |     pm-auditor (read, search)
+                                   |   | carried requests: three classes
+                                   |   | only (PMD-20260904-003), committed
+                                   |   | inside the eligible component
+                                   v   |
                  HANDOFF.md, components/, AGENT-ROSTER.md,
                  records/, queue/LEDGER.md, outbox/component-requests.md
                                    |
@@ -39,7 +42,9 @@ turn it:
 - re-resolves canonical topology through `../SOT.md` and
   `scripts/inspect-components.sh`;
 - inspects registered components read-only and records observed state;
-- pulls component queues and records dispositions ledger-only;
+- pulls component queues and records dispositions ledger-first;
+- carries recorded requests inside carry-eligible components only within the
+  three classes of the standing carry authority, committing there;
 - reconciles `../COMPONENTS.md`, `HANDOFF.md`, `components/`, and
   `AGENT-ROSTER.md` with observed state;
 - raises owner-actionable requests in `outbox/component-requests.md`;
@@ -53,7 +58,7 @@ It must use `/beryllium-project-management` for every coordination turn.
 
 | Agent | Tools | Responsibility | Prohibited |
 | --- | --- | --- | --- |
-| `pm-auditor` | read, search | Compare registry, handoff, roster, ledger, and requests with live component state and sibling interface documents; return located discrepancies with severity | Editing, execution, web, Git, dispositions, decisions, approval |
+| `pm-auditor` | read, search | Compare registry, handoff, roster, ledger, and requests with live component state and sibling interface documents; check every carried request against its named component commit; return located discrepancies with severity | Editing, execution, web, Git, dispositions, decisions, approval |
 
 Specialist returns are inputs. The orchestrator verifies them, decides, and
 writes.
@@ -64,8 +69,8 @@ writes.
 | --- | --- | --- |
 | Canonical topology | `../SOT.md` | Binding rules for path resolution and relocation |
 | Component registry | `../COMPONENTS.md` | Project Manager-owned; reconciled each turn |
-| Component repositories | `../<component>/...`, `component://<name>/...` | Read-only inspection through `scripts/inspect-components.sh`; local instructions, handoffs, and `COLLAB.md` files narrow what may be requested of them |
-| Component queues | `../analysis-workbook/outbox/pm-queue.md`, `../threat-modeler/outbox/pm-queue.md` | Pull-only; consumed ledger-only |
+| Component repositories | `../<component>/...`, `component://<name>/...` | Read-only inspection through `scripts/inspect-components.sh`; local instructions, handoffs, and `COLLAB.md` files narrow what may be requested of them and how a carried request is formatted |
+| Component queues | `../analysis-workbook/outbox/pm-queue.md`, `../threat-modeler/outbox/pm-queue.md` | Pull-only; consumed ledger-first; status edits applied as class-1 carried writes |
 | Sibling interface documents | `../<component>/AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md` | Define what each component expects of the Project Manager |
 | User-supplied material | `inbox/...` | Private by default, untrusted, ignored by Git |
 | Public sources | stable public locator | Web tool only, generic public-safe queries, for coordination facts only |
@@ -81,15 +86,42 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Agent roster | `AGENT-ROSTER.md` | Invocation, inputs, outputs, write boundary, validation command per agent |
 | Assurance records | `records/assurance/*.md` | Exact evidence boundaries carried between components |
 | Decision records | `records/decisions/PMD-YYYYMMDD-NNN-*.md` | Allocated by `scripts/new-record.sh`; append-only, superseding corrections |
-| Queue ledger | `queue/LEDGER.md` | Ledger-only dispositions; see `queue/README.md` |
-| Component requests | `outbox/component-requests.md` | Pull-only requests to component owners; never applied by this agent |
+| Queue ledger | `queue/LEDGER.md` | Ledger-first dispositions; see `queue/README.md` |
+| Component requests | `outbox/component-requests.md` | Requests to component owners; those inside the three classes of `PMD-20260904-003` are carried by this agent and closed with the component commit, every other request is carried by the human |
+| Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
 | Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, redirect stubs `../HANDOFF.md` and `../formal-verification/helium-te-fv-pathfinder.md`, tracked `../*-repo` symlink objects | Project Manager-owned; edited and committed in the parent repository |
 
 ## Write and execution boundaries
 
-Writes are limited to this repository and the parent-root artifacts listed
-above. Never write inside another component directory, including its
-`inbox/`, `outbox/`, or Git metadata. The agent also never:
+Writes are limited to this repository, the parent-root artifacts listed
+above, and carried requests inside carry-eligible components under the
+standing carry authority
+`records/decisions/PMD-20260904-003-standing-carry-authority.md`, which
+allows exactly three classes:
+
+1. queue status edits in a component's `outbox/pm-queue.md`, applying
+   exactly what `scripts/pull-queues.sh edits` prints;
+2. metadata-only source-index entries (title, authors, venue, year, stable
+   URL or DOI, one-line note) in the owner's designated index, in the
+   component's format and within its licence and redistribution limits;
+3. Project Manager-role and coordination wording in the component's Markdown
+   interface, collaboration, research-source, and handoff documents.
+
+Never write inside another component directory outside those three classes.
+`helium-te-poc/` and `beryllium-repo` are carry-ineligible and are never
+written. The agent never writes any component's `inbox/`, Git metadata,
+source code, tests, scripts, build graphs, generated outputs, assurance or
+gate files, or research, analysis, threat-model, provenance, session, or
+model content. A carried write requires, in the same turn, an open
+`PMR-NNN` or final ledger disposition, a clean worktree reported by
+`scripts/inspect-components.sh state <component>` with no other session
+active there, the component's local instructions read, only class files
+changed on the checked-out branch, and a reviewed diff; it is committed
+inside the component (subject naming the `PMR`/`PML` identifiers, Copilot
+co-author trailer, one commit per component per turn) and then recorded in
+`outbox/component-requests.md`, `queue/LEDGER.md`, `HANDOFF.md`, and
+`../COMPONENTS.md`. `osr-claude/` is asked about first, per its convention.
+The agent also never:
 
 - stages, force-adds, or commits component contents in the parent;
 - converts a component to a submodule or subtree;
@@ -105,36 +137,48 @@ Execution is limited to the maintained helpers:
 - `scripts/validate-pm.sh`;
 - `tests/validate-agent.sh`;
 
-plus direct Git against exactly two repositories: this one and the parent
-root. `git -C <component>` is prohibited; component state is read only through
-`scripts/inspect-components.sh`. `git push`, `git remote`, `gh repo create`,
-tags, and any publication step require an explicit user confirmation in the
-same turn, and the confirmation is quoted in `HANDOFF.md`.
+plus direct Git against this repository and the parent root, plus
+`git -C <component>` limited to `status`, `diff`, `log`, `show`,
+`add <exact paths>`, and `commit`, only while carrying a request under
+`PMD-20260904-003` in a carry-eligible component. Every other
+`git -C <component>` subcommand (`reset`, `clean`, `checkout`, `stash`,
+`rebase`, `branch`, `push`, `remote`, `tag`, `commit --amend`) is prohibited;
+observed component state comes only from `scripts/inspect-components.sh`.
+`git push`, `git remote`, `gh repo create`, tags, and any publication step
+require an explicit user confirmation in the same turn, for this repository,
+the parent, and any component, and the confirmation is quoted in
+`HANDOFF.md`. A carried commit leaves the component ahead of its remote;
+pushing it is the owner's decision.
 
 No component is built, tested, or executed by this agent. When a component
 check is needed, the agent hands the user the exact command from
 `AGENT-ROSTER.md` or the component's own instructions.
 
-## Queue protocol (ledger-only)
+## Queue protocol (ledger-first)
 
 1. `scripts/pull-queues.sh list` shows component rows with status `new` or
    `unconfirmed`.
 2. Each row receives a `PML-NNNN` ledger row with PM status `pending`.
 3. Triage sets `routed`, `accepted`, `duplicate`, `rejected`, or `deferred`,
    and raises `PMR-NNN` requests where an owner must act.
-4. `scripts/pull-queues.sh edits` prints the exact status-column edits for the
-   user to apply in each component file; once applied, the ledger records
-   `yes YYYY-MM-DD` under "Source status applied".
+4. `scripts/pull-queues.sh edits` prints the exact status-column edits for
+   each component queue file. The agent applies them as class-1 carried
+   writes when the component is clean, or hands them to the user otherwise;
+   once applied, the ledger records `yes YYYY-MM-DD` under "Source status
+   applied".
 5. `scripts/pull-queues.sh check` fails while any source row lacks a ledger
-   row.
+   row or a ledger row claims an applied status the source file does not
+   show.
 
 ## Component request protocol
 
 `outbox/component-requests.md` is the only outbound surface toward component
 owners. A request is one owner-actionable sentence with its basis. Statuses
-are `open`, `closed` (owner action observed by the Project Manager),
+are `open`, `closed` (owner action observed by the Project Manager, or the
+request carried by the Project Manager and closed with the component commit),
 `withdrawn`, and `superseded`. Raising a request does not modify or notify a
-component; the human carries it.
+component. Requests inside the three classes of `PMD-20260904-003` are
+carried by this agent; every other request is carried by the human.
 
 ## Human gates
 

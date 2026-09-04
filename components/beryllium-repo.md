@@ -5,7 +5,8 @@
   repository on this workstation)
 - **Ownership:** agent-owned implementation repository; ask before modifying;
   the Project Manager writes nothing here and only maintains the parent
-  symlink object
+  symlink object. Carry-ineligible under `../records/decisions/PMD-20260904-003-standing-carry-authority.md`: every change is a
+  `PMR-NNN` request handed to the human
 - **Agent:** none user-invocable; maintained skills `helium-documentation`,
   `human-review-summary`, `reviewable-turn-summary`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,

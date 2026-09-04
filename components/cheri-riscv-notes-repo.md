@@ -3,10 +3,21 @@
 - **Workspace entry:** `../cheri-riscv-notes-repo` (tracked symlink to
   `../copilot/gim/cheri-riscv-notes`)
 - **Ownership:** internal GIM research repository; agent-owned; the Project
-  Manager writes nothing here and only maintains the parent symlink object
+  Manager maintains the parent symlink object and writes here only to carry a
+  class-3 Project Manager-role wording request under the standing carry
+  authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`. Class 2 does not apply: `references/*.md` and
+  `references.bib` are generated exports of the owner's reference database
+  behind human gate D4 (`meta/handoff.md`: never hand-edit; approval before
+  anything reaches `included`/`references.bib`), so source pointers stay
+  request-only (`PMR-009`)
 - **Agent:** none
-- **Local instructions to read first:** repository `README.md` and any
-  contributor notes; no `.github/copilot-instructions.md` observed
+- **Local instructions to read first:** `README.md`, `CONTRIBUTING.md`,
+  `meta/handoff.md` (non-standard handoff path; records the reference
+  database, gate D4, CRLF and commit-trailer conventions), `automation/design.md`,
+  `automation/schema.md`, and the `.github/` policy files; no
+  `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`'s hand-add
+  reference steps contradict `meta/handoff.md`; the stricter handoff is
+  followed
 - **Observed state:** see `../../COMPONENTS.md`
 
 ## Role

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Ledger-only consumption of component pm-queue files for the Project Manager.
+# Ledger-first consumption of component pm-queue files for the Project Manager.
 # Reads sibling outbox/pm-queue.md files and this repository's
 # queue/LEDGER.md. Never writes anywhere.
 
@@ -19,8 +19,9 @@ list     every component queue row awaiting a Project Manager disposition,
 check    exit 1 when a source row has no ledger row, a ledger row has no
          source row, or a ledger row claims an applied status the source file
          does not show
-edits    the exact status-column edits the user should apply in each component
-         queue file for ledger rows with a final disposition
+edits    the exact status-column edits due in each component queue file (applied
+         by the Project Manager as carried writes or by the user) for ledger
+         rows with a final disposition
 summary  per-source counts
 
 Sources are ../analysis-workbook/outbox/pm-queue.md (PMQ-NNN rows) and
@@ -94,7 +95,8 @@ declare -A awaiting_pattern=(
     [threat-modeler]='^new$'
 )
 
-# Ledger PM status -> status the user should write in each source file.
+# Ledger PM status -> status to write in each source file (by the Project
+# Manager as a carried write, or by the user).
 # An empty mapping means no edit is due for that PM status.
 map_status() {
     local source=$1 pm_status=$2

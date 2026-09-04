@@ -3,7 +3,9 @@
 - **Workspace entry:** `../provenance-review/` (ignored canonical direct
   checkout)
 - **Ownership:** agent-owned; its agents write only inside that component; the
-  Project Manager writes nothing here
+  Project Manager writes here only to carry a class-3 Project Manager-role
+  wording request under the standing carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`, committing inside
+  this component; it has no queue and no source index for routed pointers
 - **Agents:** `provenance-review` (user-invocable orchestrator),
   `provenance-code-lineage` and `provenance-research` (write-disabled
   specialists); skill `provenance-analysis`

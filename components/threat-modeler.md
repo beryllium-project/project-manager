@@ -3,7 +3,10 @@
 - **Workspace entry:** `../threat-modeler/` (ignored canonical direct
   checkout)
 - **Ownership:** agent-owned; its agents write only inside that component; the
-  Project Manager writes nothing here
+  Project Manager writes here only to carry requests under the standing carry
+  authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md` (class 1: status edits in `outbox/pm-queue.md`; class 3:
+  Project Manager-role wording in `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`),
+  committing inside this component; nothing else
 - **Agents:** `threat-modeler` (user-invocable orchestrator),
   `threat-evidence`, `threat-research`, and `threat-model-review`
   (write-disabled specialists); skill `beryllium-threat-modeling`
@@ -44,8 +47,8 @@ is generated. `THREAT-MODELS.md` is the generated index.
 engagement that no owning research component records. The component appends
 `new` rows; it expects the Project Manager to move rows through
 `acknowledged`, `routed`, `integrated`, or `declined`. The Project Manager
-consumes it ledger-only (see `../queue/README.md`) and hands the user the exact
-status edits.
+consumes it ledger-first (see `../queue/README.md`) and applies the exact
+status edits itself as class-1 carried writes when this component is clean.
 
 ## Commands (run by the human, from `../threat-modeler/`)
 

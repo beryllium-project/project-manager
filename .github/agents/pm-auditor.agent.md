@@ -37,7 +37,10 @@ Never open `../osr-claude/sources/restricted-microsoft/`.
    `../threat-modeler/outbox/pm-queue.md`: every source row has a ledger row,
    and every "Source status applied" value matches the source file.
 6. `outbox/component-requests.md`: each `open` request still applies; each
-   `closed` request is supported by observed component state.
+   `closed` request is supported by observed component state; for each
+   request the Project Manager carried under `PMD-20260904-003`, the named
+   component commit exists on the component's checked-out branch, touches
+   only paths inside the request's class, and names the request identifier.
 7. Wording discipline: acceptance, approval, sign-off, publication, release,
    formal-verification, and hardware-validation claims appear only as open
    gates or as named human records; assurance boundaries use the exact
