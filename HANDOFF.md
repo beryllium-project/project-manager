@@ -21,16 +21,18 @@ by the Project Manager.
 **This repository:** `project-manager/`, branch `main`; initial commit
 `02335c56b232ecdbd402d537668b15d775291fa4`; `origin` -> private
 `beryllium-project/project-manager`; first-coordination-turn commit
-`2439ce546f8f3329be4263fdad27d1e4f91d0c32` and its push record `947d959`
-pushed on 2026-09-04; the standing-carry-authority commit that follows is
-local until the user confirms a push; the current HEAD is recorded in the
-`project-manager/` row of `../COMPONENTS.md`
+`2439ce546f8f3329be4263fdad27d1e4f91d0c32`, its push record `947d959`, and
+the standing-carry-authority commit `d36b0150cf852f1ba12bd73ec418276d02fab75e`
+all pushed on 2026-09-04 under the confirmations quoted in "Provenance"; the
+current HEAD is recorded in the `project-manager/` row of `../COMPONENTS.md`
+and is synchronized with `origin/main`
 **Parent coordination repository:** `main`; consolidation commits
 `e774b4217ccf5100c66e97b3b23a51a62c5e6365`,
 `b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5`; first-coordination-turn
-registry commit `393ea6a075ee636db0fe51e47ec237612f001e4a` and its recording
-follow-up `15dcdf9` pushed to `backup/main`; the standing-carry-authority
-commit that follows is local until confirmed
+registry commit `393ea6a075ee636db0fe51e47ec237612f001e4a`, its recording
+follow-up `15dcdf9`, and the standing-carry-authority registry commit
+`b34e468b94b2ecbd02d5aa25e9b5e2dfb8fda708` pushed to `backup/main`;
+synchronized after the recording commit that follows
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
 (pushed through the first-coordination-turn recording commit on 2026-09-04
 under the confirmations quoted in "Provenance"); `origin` -> unreachable
@@ -50,7 +52,7 @@ under the confirmations quoted in "Provenance"); `origin` -> unreachable
 | Helium assurance line | Reconciled on 2026-09-04 against `../helium-te-poc/HANDOFF.md` at `e65c6a0` (worktree now clean; the 43-entry dirty state seen earlier that day is history). The component states: Tier 8 H6 candidate `ed15451` with frozen H7 gate `85a6e55`; Tier 7 reviewed source `7ca97a9` with frozen H7 gate `342e04a`; frozen Tier 6 H7 gate `c594b7f`; travel maintenance on `helium-te-travel-fedora44` from base `3dc3aee` with its own gate blocked. **These are the component's statements**; the Project Manager has not reviewed any Tier 7/8 gate content, has not verified the refs exist, and infers no approval (`records/decisions/PMD-20260904-002-helium-observed-state-refresh.md`) |
 | Component queues | 16 analysis-workbook rows `PMQ-001..016` triaged on 2026-09-04: nine (`PML-0001..0006`, `0009`, `0013`, `0016`) are `accepted` after the xrv-research-repo owner recorded them as `REV-20260904-001..009` (`7314e2f`); five (`PMR-008`, formal-verification-research) and two (`PMR-009`, cheri-riscv-notes-repo) stay `routed` and are now carry-eligible. `scripts/pull-queues.sh edits` prints nine due status edits for `../analysis-workbook/outbox/pm-queue.md`; they are to be applied as class-1 carried writes in the next session (source rows still `new`; ledger "applied" still `no`). threat-modeler queue empty |
 | Retained PM session artifacts | **Lost from this workstation**: the ignored parent `files` link no longer resolves and its listed artifacts were not found under the home directory. Human decision required |
-| Backups | Parent `main` and this repository's `main` are synchronized with `backup/main` and `origin/main` after the user-confirmed pushes of 2026-09-04 (quoted in "Provenance"); this update's commits are local until confirmed. analysis-workbook, provenance-review, beryllium-repo, cheri-riscv-notes-repo synchronized with their remotes; **xrv-research-repo is 1 commit ahead** (`7314e2f`, `PMR-013`; its backup state is `unknown` because its own handoff names the unreachable `jamorris_microsoft` namespace as the remote) and threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
+| Backups | Parent `main` and this repository's `main` are synchronized with `backup/main` and `origin/main` after the user-confirmed pushes of 2026-09-04 (quoted in "Provenance"), including the standing-carry-authority commits. analysis-workbook, provenance-review, beryllium-repo, cheri-riscv-notes-repo synchronized with their remotes; **xrv-research-repo is 1 commit ahead** (`7314e2f`, `PMR-013`; its backup state is `unknown` because its own handoff names the unreachable `jamorris_microsoft` namespace as the remote) and threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -154,8 +156,9 @@ cd /home/jmorris/src/l1/src/beryllium-project/project-manager
 copilot                                  # then: /agent project-manager
 ```
 
-First confirm this update was committed: `git status --short --branch` here
-and `git -C .. status --short --branch` must be clean. Then ask the agent to:
+First confirm both repositories are clean and synchronized:
+`git status --short --branch` here and `git -C .. status --short --branch`.
+Then ask the agent to:
 run the restart snapshot; carry, only where
 `scripts/inspect-components.sh state <name>` shows a clean worktree and in
 one commit per component naming every identifier, (a) analysis-workbook:
@@ -198,9 +201,9 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | Helium Tier 7/8 gate content | Component owner and the human who made the gate commits | Not a Project Manager gate. The component's statements at `e65c6a0` are recorded without review (`PMD-20260904-002`); confirming that the named refs exist is a read-only tooling follow-up (see "Pending coordination") |
 | Index pointers for the routed rows | `PMR-007` completed by the xrv-research-repo owner (`7314e2f`, `REV-20260904-001..009`); `PMR-008` to be carried by the Project Manager under `PMD-20260904-003` class 2 (metadata pointers on the owner's delegated authority, not corpus admission); `PMR-009` stays with the cheri-riscv-notes-repo owner (generated exports behind gate D4) | Nine rows `accepted`; five wait for the next session's carry; two wait for the owner; source rows stay `new` until the class-1 edits are applied |
 | Wording reconciliations (`PMR-012` formal-verification-research `COLLAB.md`/`HANDOFF.md`, superseding `PMR-010`; `PMR-011` analysis-workbook status vocabulary and consumer-2 sentence; Markdown parts of `PMR-004`) | Project Manager, under `PMD-20260904-003` class 3, next session; the agent-instruction sentence named in `PMR-012` stays with the owner | Open; not yet carried |
-| Standing carry authority | Responsible human | Granted 2026-09-04 (`PMD-20260904-003`; user choices quoted in "Provenance"); binds sessions started after this update's commit |
+| Standing carry authority | Responsible human | Granted 2026-09-04 (`PMD-20260904-003`; user choices quoted in "Provenance"); committed as `d36b015` and pushed; binds sessions started after that commit |
 | Decision on the lost retained PM artifacts (see "Retained PM session artifacts") | Responsible human | Open |
-| Push of the first-coordination-turn `project-manager/` and parent commits | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; this update's commits are local until confirmed |
+| Push of the first-coordination-turn and standing-carry-authority commits (`project-manager/` and parent) | Responsible human confirmation | Closed 2026-09-04 by the two user confirmations quoted in "Provenance"; both `main` branches are synchronized with their private remotes |
 | Private remote for `project-manager/` | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; `origin` -> private `beryllium-project/project-manager` |
 | xrv-research-repo push of `7314e2f` | xrv-research-repo owner | Open; `PMR-013` |
 | threat-modeler push of 2 local commits | threat-modeler owner | Open; `PMR-005` |
@@ -571,9 +574,9 @@ Then:
 - **Decide the lost retained artifacts** (section above).
 - **Pushes** stay per-turn user-confirmed actions, for this repository, the
   parent, and every component. The 2026-09-04 confirmation quoted in
-  "Provenance" covered only the first-coordination-turn commits of this
-  repository and the parent; this update's commits and every carried
-  component commit are local until confirmed.
+  "Provenance" covered the first-coordination-turn and standing-carry-authority
+  commits of this repository and the parent; every carried component commit
+  is local until its owner's push is confirmed.
 - `PMR-001` formal-verification-research: the owner-status table and handoff
   halves are observed satisfied at `8b91ebd`; decide a reachable backup.
 - `PMR-012` formal-verification-research (supersedes `PMR-010`): align the
@@ -681,7 +684,7 @@ Then:
   amended boundary documents listed under "What changed in this update". The
   session that recorded it stayed under the previous boundary and wrote only
   Project Manager-owned files; the grant binds sessions started after this
-  update's commit. No push was confirmed or performed for this update.
+  update's commit. Committed as `d36b015` here and `b34e468` in the parent.
 - `PMR-007` result, 2026-09-04: the user relayed the xrv-research-repo
   owner's report that all nine pointers were recorded as pointer-only
   `arrived` records `REV-20260904-001..009` (none already present, declined,
@@ -693,3 +696,13 @@ Then:
   `review-inbox/`. Ledger rows `PML-0001..0006`, `0009`, `0013`, `0016` set
   to `accepted`; `PMR-007` closed; `PMR-013` raised for the owner's push
   decision. The nine queue edits are due and not yet applied.
+- Push of the standing-carry-authority commits, 2026-09-04: the agent's
+  report ended with "If you want `d36b015`/`b34e468` pushed first, say so
+  explicitly", and the user replied "push those first". Executed:
+  `git push origin main` in this repository (`947d959..d36b015`) and
+  `git push backup main` in the parent (`15dcdf9..b34e468`); both remote
+  heads were verified against the local HEADs with `git ls-remote`. The
+  recording commit that follows this entry, and the parent commit recording
+  its HEAD in `../COMPONENTS.md`, are pushed under the same confirmation and
+  verified the same way. No component repository was pushed or modified; no
+  remote was added or changed; no tag was created; nothing is public.
