@@ -9,22 +9,26 @@ and `records/assurance/helium-te-fv-pathfinder.md` reconciled against
 `../helium-te-poc/HANDOFF.md` at `e65c6a0`, recording Tier 7/8 gate refs as
 the component's own statements and never as Project Manager approval;
 decision records `PMD-20260904-001` and `PMD-20260904-002`. No component was
-modified. Nothing was pushed.
+modified. Follow-up the same day: with the user's explicit confirmation
+quoted in "Provenance", this repository's `main` was pushed to `origin` and
+the parent's `main` to `backup`; the recording commits are pushed under the
+same confirmation.
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
 **This repository:** `project-manager/`, branch `main`; initial commit
 `02335c56b232ecdbd402d537668b15d775291fa4`; `origin` -> private
-`beryllium-project/project-manager`, synchronized at
-`ccf8007c171d0c9effc00957309fd7f35e607f64` before this turn; this turn's
-commit is recorded in the `project-manager/` row of `../COMPONENTS.md`
-**Parent coordination repository:** `main` at `839a1b5` before this turn,
-synchronized with `backup/main`; consolidation commits
+`beryllium-project/project-manager`; first-coordination-turn commit
+`2439ce546f8f3329be4263fdad27d1e4f91d0c32` pushed on 2026-09-04; the current
+HEAD is recorded in the `project-manager/` row of `../COMPONENTS.md` and is
+synchronized with `origin/main`
+**Parent coordination repository:** `main`; consolidation commits
 `e774b4217ccf5100c66e97b3b23a51a62c5e6365`,
-`b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5` remain the
-provenance of the consolidation
+`b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5`; first-coordination-turn
+registry commit `393ea6a075ee636db0fe51e47ec237612f001e4a` and its recording
+follow-up, synchronized with `backup/main`
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
-(pushed through `839a1b5` on 2026-09-04 under the confirmation quoted in
-"Provenance"; this turn's parent commit is **not pushed**); `origin` ->
-unreachable `jamorris_microsoft/beryllium-project` (retained, not retargeted)
+(pushed through the first-coordination-turn recording commit on 2026-09-04
+under the confirmations quoted in "Provenance"); `origin` -> unreachable
+`jamorris_microsoft/beryllium-project` (retained, not retargeted)
 
 ## Fast resume: read this first
 
@@ -40,7 +44,7 @@ unreachable `jamorris_microsoft/beryllium-project` (retained, not retargeted)
 | Helium assurance line | Reconciled on 2026-09-04 against `../helium-te-poc/HANDOFF.md` at `e65c6a0` (worktree now clean; the 43-entry dirty state seen earlier that day is history). The component states: Tier 8 H6 candidate `ed15451` with frozen H7 gate `85a6e55`; Tier 7 reviewed source `7ca97a9` with frozen H7 gate `342e04a`; frozen Tier 6 H7 gate `c594b7f`; travel maintenance on `helium-te-travel-fedora44` from base `3dc3aee` with its own gate blocked. **These are the component's statements**; the Project Manager has not reviewed any Tier 7/8 gate content, has not verified the refs exist, and infers no approval (`records/decisions/PMD-20260904-002-helium-observed-state-refresh.md`) |
 | Component queues | 16 analysis-workbook rows `PMQ-001..016` triaged: all `routed` in `queue/LEDGER.md` to `xrv-research-repo` (9, `PMR-007`), `formal-verification-research` (5, `PMR-008`), `cheri-riscv-notes-repo` (2, `PMR-009`); `routed` maps to no workbook status under the queue file's header, so `scripts/pull-queues.sh edits` prints nothing until an owner reports a result (the workbook's `AGENT-INTERFACE.md` names a different status set; `PMR-011`); threat-modeler queue empty |
 | Retained PM session artifacts | **Lost from this workstation**: the ignored parent `files` link no longer resolves and its listed artifacts were not found under the home directory. Human decision required |
-| Backups | Parent `backup/main` at `839a1b5` and this repository's `origin/main` at `ccf8007` were synchronized before this turn; **this turn's two commits are local only** until the user confirms a push. analysis-workbook, provenance-review, beryllium-repo, xrv-research-repo, cheri-riscv-notes-repo synchronized with their remotes; threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
+| Backups | Parent `main` and this repository's `main` are synchronized with `backup/main` and `origin/main` after the user-confirmed pushes of 2026-09-04 (quoted in "Provenance"). analysis-workbook, provenance-review, beryllium-repo, xrv-research-repo, cheri-riscv-notes-repo synchronized with their remotes; threat-modeler is 2 commits ahead of its private origin; formal-verification-research has no reachable remote; osr-claude is on a personal account |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -109,8 +113,7 @@ For each owner, open its own agent or session from the paths in
 `copilot` then `/agent project-manager`, and say which `PMQ` rows were
 recorded, already present, or declined; the agent will update the ledger and
 hand you the exact `outbox/pm-queue.md` edits. Separately, decide the lost
-retained artifacts (section below) and whether to push this turn's two
-commits; the agent does neither without you.
+retained artifacts (section below); the agent cannot decide that for you.
 
 ### Minimal restart commands
 
@@ -139,7 +142,7 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | Owner admission of the routed pointers (`PMR-007` xrv-research-repo, `PMR-008` formal-verification-research, `PMR-009` cheri-riscv-notes-repo) | Each component owner, carried by the responsible human | Open; source rows stay `new` until an owner answers |
 | Owner wording reconciliations (`PMR-010` formal-verification-research `COLLAB.md` housekeeping budget; `PMR-011` analysis-workbook status vocabulary) | Component owners, carried by the responsible human | Open; the Project Manager exercises no in-component budget and writes no status the queue header does not accept |
 | Decision on the lost retained PM artifacts (see "Retained PM session artifacts") | Responsible human | Open |
-| Push of this turn's `project-manager/` and parent commits | Responsible human confirmation | Open; both commits are local only |
+| Push of this turn's `project-manager/` and parent commits | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; both `main` branches are synchronized with their private remotes |
 | Private remote for `project-manager/` | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; `origin` -> private `beryllium-project/project-manager` |
 | threat-modeler push of 2 local commits | threat-modeler owner | Open; `PMR-005` |
 | formal-verification-research backup | Owner | Open; no reachable remote |
@@ -463,9 +466,10 @@ Then:
   confirmed without any command inside a component. Until then, re-read those
   handoffs each turn and record their statements only (`PMD-20260904-002`).
 - **Decide the lost retained artifacts** (section above).
-- **Push decision:** this turn's `project-manager/` and parent commits are
-  local only; pushing `origin main` here and `backup main` in the parent needs
-  the user's explicit confirmation in the turn that performs it.
+- **Pushes** stay per-turn user-confirmed actions. The 2026-09-04
+  confirmation quoted in "Provenance" covered only this repository's `main`
+  to `origin` and the parent's `main` to `backup`, including the recording
+  commits; no component was pushed.
 - `PMR-001` formal-verification-research: the owner-status table and handoff
   halves are observed satisfied at `8b91ebd`; decide a reachable backup.
 - `PMR-010` formal-verification-research: amend the `COLLAB.md` housekeeping
@@ -537,6 +541,18 @@ Then:
   `PMR-007..PMR-009` raised, `PMD-20260904-001` and `PMD-20260904-002`
   recorded, Helium notes and `records/assurance/helium-te-fv-pathfinder.md`
   reconciled against `../helium-te-poc/HANDOFF.md` at `e65c6a0`. One commit
-  in each repository; the `project-manager/` HEAD is recorded in the
-  `project-manager/` row of `../COMPONENTS.md`. **No push was confirmed or
-  performed in this turn.** No component repository was modified.
+  in each repository (`2439ce5` here, `393ea6a` in the parent); the
+  `project-manager/` HEAD is recorded in the `project-manager/` row of
+  `../COMPONENTS.md`. No push was performed in that turn. No component
+  repository was modified.
+- Push of the first-coordination-turn commits, 2026-09-04: the agent's turn
+  report ended with "if you want the two local commits backed up, tell me
+  explicitly and I'll run `git push origin main` here and `git push backup
+  main` in the parent", and the user replied "yep do that". Executed:
+  `git push origin main` in this repository (`ccf8007..2439ce5`) and
+  `git push backup main` in the parent (`839a1b5..393ea6a`); both remote
+  heads were verified against the local HEADs with `git ls-remote`. The
+  recording commit that follows this entry, and the parent commit recording
+  its HEAD in `../COMPONENTS.md`, are pushed under the same confirmation and
+  verified the same way. No component repository was pushed or modified; no
+  remote was added or changed; no tag was created; nothing is public.
