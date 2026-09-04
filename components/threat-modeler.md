@@ -39,7 +39,13 @@ is generated. `THREAT-MODELS.md` is the generated index.
   acceptance, approval, sign-off, publication, release, formal verification,
   hardware validation, or a human risk-acceptance decision.
 - Its discovery reference set cites `workspace://COMPONENTS.md`, which stays
-  at the parent root.
+  at the parent root. At `4a01578` (carried `PMR-004`, 2026-09-04) its
+  `RESEARCH-SOURCES.md` Tier 1 names the `project-manager/` handoff,
+  `records/`, `queue/LEDGER.md`, and `outbox/component-requests.md` through
+  `workspace://project-manager/...` and calls the parent `HANDOFF.md` and
+  `formal-verification/helium-te-fv-pathfinder.md` redirect stubs.
+  `project-manager` is not in its registered target set; that list lives in
+  the owner-only `scripts/readonly-inspect.sh`.
 
 ## Outbound queue
 
@@ -62,5 +68,8 @@ git diff --check
 ## What the Project Manager may request
 
 A model or review engagement on a registered snapshot; registration of
-`project-manager/` in its `scripts/readonly-inspect.sh` registered list and
-`RESEARCH-SOURCES.md`; nothing that grants risk acceptance or approval.
+`project-manager/` in its `scripts/readonly-inspect.sh` registered list (the
+`RESEARCH-SOURCES.md` part was carried at `4a01578`); whether to add
+`project-manager/queue/LEDGER.md` to its discovery reference set (`PMR-015`);
+a decision on pushing its local commits (`PMR-005`; 3 ahead after
+`4a01578`); nothing that grants risk acceptance or approval.

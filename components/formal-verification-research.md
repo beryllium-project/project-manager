@@ -39,13 +39,22 @@ claim that Helium is formally verified.
   `sources/bibliography.md`.
 - Guest agents must not edit research, handoff, scratch, reference-clone, or
   another agent's ledger content.
-- `COLLAB.md` at `8b91ebd` offers a "designated parent Project Manager" a
-  housekeeping budget that includes integrating compliant `collab/*` branches
-  and committing coordination metadata inside this repository. The
-  `project-manager` component exercises only the narrower standing carry
-  authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`: it never integrates `collab/*` branches or edits
+- `COLLAB.md` at `8b91ebd` offered a "designated parent Project Manager" a
+  housekeeping budget that included integrating compliant `collab/*` branches
+  and committing coordination metadata inside this repository. At `ccb48f6`
+  (carried `PMR-012`, 2026-09-04) `COLLAB.md` and `HANDOFF.md` describe the
+  narrower standing carry authority
+  `../records/decisions/PMD-20260904-003-standing-carry-authority.md`
+  instead: the Project Manager never integrates `collab/*` branches or edits
   research, and it commits here only for carried class-2 and class-3
-  requests. `PMR-012` (superseding `PMR-010`) aligns the wording.
+  requests. The heading "Parent Project Manager housekeeping budget" was kept
+  because the owner-only `.github/copilot-instructions.md` and `README.md`
+  refer to it; those two files still describe the old budget (`PMR-014`).
+- Class-2 pointers carried by the Project Manager live in the
+  `sources/bibliography.md` section "Routed pointers awaiting owner triage",
+  in the file's own entry format, never interleaved with the owner's curated
+  topic sections; the owner moves, annotates, or removes them
+  (`PMD-20260904-004`). Five were recorded at `ccb48f6` (`PMR-008`).
 
 ## Commands
 
@@ -57,7 +66,8 @@ by the owner.
 Owner reconciliation of the owner-status table and `HANDOFF.md` after guest
 integrations; a backup decision (the configured `origin` names the unreachable
 `jamorris_microsoft` namespace, so this component has no working off-machine
-backup); registration of sources routed from component queues under the
-owner's rules; alignment of the `COLLAB.md` and `HANDOFF.md` Project Manager
-role wording with the standing carry authority (`PMR-012`, carried by the
-Project Manager itself).
+backup, and the carried commit `ccb48f6` is local; `PMR-001`); alignment of
+the owner-only `.github/copilot-instructions.md` bullet and `README.md`
+sentence with the carried `COLLAB.md` wording, and triage of the five routed
+pointers (`PMR-014`). `PMR-012` and `PMR-008` were carried by the Project
+Manager itself on 2026-09-04.

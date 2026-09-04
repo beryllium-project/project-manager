@@ -49,7 +49,14 @@ neither proves live CSR/frame/sentinel/root capture, live policy/PTE query
 correspondence, linker-symbol wiring, privileged effect execution, assembly,
 compiler, ISA, emulator, hardware, or noninterference. The component's own
 statements about its tiers, refs, and gates are recorded, without review, in
-`../records/assurance/helium-te-fv-pathfinder.md`.
+`../records/assurance/helium-te-fv-pathfinder.md`. At `f0d96b1` (observed
+2026-09-04T22:45Z) the component further states that `FV-FIN-001` is
+resolved, "the responsible human selected Tier 8 as the endpoint for Helium
+formal-verification experimentation" (decision commit `6d3cd14`), and that no
+Tier 9 or final methods spike will be pursued; the Project Manager records
+that statement without review and infers no approval from it
+(`PMD-20260904-004` item 9). The same direction reaches the Project Manager
+as the analysis workbook's `HET-001` (`PMR-016`).
 
 ## Boundaries and conventions
 
