@@ -1,6 +1,6 @@
 ---
 name: beryllium-project-management
-description: Run one restartable Beryllium coordination turn: re-resolve topology, inspect components read-only, pull component queues ledger-first, carry recorded requests into components only within the standing carry authority, reconcile registry and handoff, validate, commit Project Manager artifacts, and report exact next actions without granting any human gate.
+description: Run one restartable Beryllium coordination turn that re-resolves topology, inspects components read-only, pulls component queues ledger-first, carries recorded requests into components only within the standing carry authority, reconciles the registry and handoff, validates, commits Project Manager artifacts, and reports exact next actions without granting any human gate.
 user-invocable: false
 ---
 

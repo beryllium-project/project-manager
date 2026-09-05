@@ -198,6 +198,25 @@ refute_pattern "$auditor" '"(execute|edit|web|agent)"'
 require_pattern "$skill" '^name: beryllium-project-management$'
 require_pattern "$skill" '^user-invocable: false$'
 
+# The skill loader parses the front matter as YAML. An unquoted scalar that
+# contains ": " opens a nested mapping ("mapping values are not allowed in
+# this context") and the whole file fails to load, silently to every other
+# check here. Keep every front-matter value free of an unquoted ": ".
+frontmatter_lines() {
+    awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } { print }' "$1"
+}
+for f in "$agent" "$auditor" "$skill"; do
+    if [[ $(sed -n '1p' "$f") != '---' ]]; then
+        fail "${f#"$repository_root/"} does not open with a YAML front-matter block"
+    elif frontmatter_lines "$f" | grep -Eq '^[A-Za-z-]+: [^"'"'"'].*: '; then
+        fail "${f#"$repository_root/"} front matter has an unquoted value containing \": \""
+    elif frontmatter_lines "$f" | grep -Evq '^[A-Za-z-]+: .+$'; then
+        fail "${f#"$repository_root/"} front matter has a line that is not \"key: value\""
+    else
+        pass "${f#"$repository_root/"} front matter parses as a flat YAML mapping"
+    fi
+done
+
 # --- boundary statements -------------------------------------------------------
 
 for f in "$agent" "$instructions" "$skill" "$interface"; do

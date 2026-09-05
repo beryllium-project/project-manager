@@ -1,8 +1,9 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-09-04
-**Update scope:** first coordination turn after the consolidation, then three
-same-day follow-ups. Turn: live observed-state refresh at 2026-09-04T16:15Z;
+**Last updated:** 2026-09-05
+**Update scope:** first coordination turn after the consolidation, three
+same-day follow-ups, and a next-morning repair of the skill file (follow-up
+4). Turn: live observed-state refresh at 2026-09-04T16:15Z;
 `helium-te-poc/` row refreshed from dirty `9af92cc` to clean `e65c6a0`;
 triage of `PML-0001..PML-0016` (all `routed` by `PMR-007..PMR-009`); Helium
 notes and `records/assurance/helium-te-fv-pathfinder.md` reconciled against
@@ -24,7 +25,11 @@ another session active) and a clean re-observation at 22:45Z, `83b97a3` in
 `../analysis-workbook/` (`PMR-011`, `PMR-004` Markdown part, fourteen class-1
 queue edits). Other sessions moved `analysis-workbook/` to `efde667` and
 `helium-te-poc/` to `f0d96b1` during the turn; both are recorded, neither
-was touched by the Project Manager beyond the carried commit.
+was touched by the Project Manager beyond the carried commit. **Follow-up 4
+(2026-09-05T04:49Z, repository-only)**: the `/beryllium-project-management`
+skill had never loaded because its `SKILL.md` front matter was invalid YAML;
+fixed in this repository, with a new test guard. No component was read for
+state or written.
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
 **This repository:** `project-manager/`, branch `main`; initial commit
 `02335c56b232ecdbd402d537668b15d775291fa4`; `origin` -> private
@@ -250,6 +255,31 @@ Follow-up 3, the same evening (the first carry turn, `PMD-20260904-004`):
   `/beryllium-project-management` skill was again not offered by the skill
   loader; the on-disk `SKILL.md` procedure was followed directly.
 
+Follow-up 4, the next morning (skill-loader repair, this repository only):
+
+- Root cause of every "skill not offered" note above: the Copilot CLI skill
+  loader reported `.github/skills/beryllium-project-management/SKILL.md:
+  failed to parse YAML frontmatter: mapping values are not allowed in this
+  context at line 2`. The `description:` value began "Run one restartable
+  Beryllium coordination turn: re-resolve topology, ..."; the unquoted `: `
+  inside the scalar opens a nested mapping, so the whole front matter failed
+  and the skill was silently dropped in every earlier session. The two agent
+  definitions parse; the sibling skills at
+  `../threat-modeler/.github/skills/beryllium-threat-modeling/SKILL.md` and
+  `../analysis-workbook/.github/skills/beryllium-analysis/SKILL.md` use the
+  same layout without an inner colon (read-only comparison; no state read).
+- Fix: the description was reworded as one clause without an inner colon
+  (same meaning; the skill body is unchanged). `tests/validate-agent.sh` now
+  checks that the front matter of both agent files and the skill opens with
+  `---`, is a flat `key: value` mapping, and contains no unquoted value with
+  `: `; the suite is 253 passed, 0 failed (`validate-pm.sh` 78/0,
+  `git diff --check` clean). The earlier notes stand as history: those turns
+  did follow the on-disk `SKILL.md` procedure by hand.
+- Effect on records: none to correct. `PMD-20260904-001..004` describe what
+  each turn observed; this entry supersedes their "not offered" remark with
+  the cause. The next session is the first in which the skill can load; its
+  handoff should say whether it did.
+
 ### One recommended next action
 
 Four owner actions are yours; the agent does none of them:
@@ -270,7 +300,9 @@ Four owner actions are yours; the agent does none of them:
 4. **cheri-riscv-notes-repo owner:** `PMR-009` (two pointers through the
    reference database; gate D4).
 
-Then start a new Project Manager session and ask it to: carry `PMR-017`
+Then start a new Project Manager session (the skill file is repaired, so
+`/beryllium-project-management` should now appear under Skills at startup;
+report it if the loader still rejects it) and ask it to: carry `PMR-017`
 (one `COLLAB.md` sentence, class 3) when formal-verification-research is
 clean; say whether `PMR-015` should be carried; and decide, with a new
 decision record, whether `outbox/helium-transfer-queue.md` is registered in
@@ -958,4 +990,17 @@ Then:
   `/beryllium-project-management` skill was again not offered by the skill
   loader; the on-disk `SKILL.md` was followed. One commit in this repository
   and one in the parent record the turn; neither is pushed without a further
+  confirmation.
+- Follow-up 4, 2026-09-05T04:49Z: the user reported the Copilot CLI startup
+  message "The following skills failed to load:
+  .github/skills/beryllium-project-management/SKILL.md: failed to parse YAML
+  frontmatter: mapping values are not allowed in this context at line 2" and
+  asked for the skill-loading issue to be fixed. The Project Manager changed
+  only `.github/skills/beryllium-project-management/SKILL.md` (front-matter
+  `description` reworded without an inner `: `; body unchanged) and
+  `tests/validate-agent.sh` (front-matter guard) in this repository, then
+  refreshed this handoff and the `project-manager/` row of
+  `../COMPONENTS.md`. No component was inspected, read for state, or
+  written; no `git -C` command was run; nothing was pushed. One commit here
+  and one in the parent record the repair; both are local until a further
   confirmation.
