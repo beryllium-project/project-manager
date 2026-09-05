@@ -42,7 +42,9 @@ research, analysis, threat models, provenance findings, or human decisions.
   limited to `status`, `diff`, `log`, `show`, `add <exact paths>`, and
   `commit` while carrying under `PMD-20260904-003`. Every other
   `git -C <component>` subcommand and any build, test, or run of component
-  content are prohibited.
+  content are prohibited. `scripts/owner-actions.sh` is the human's
+  owner-side helper (fetch, push, opt-in remote creation); the agent never
+  executes it, in any mode, and hands the human its invocation instead.
 - `git push`, `git remote`, `gh repo create`, tags, and publication require an
   explicit user confirmation in the same turn, quoted in `HANDOFF.md`, for
   this repository, the parent, and any component. A carried commit leaves the

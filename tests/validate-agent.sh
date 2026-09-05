@@ -166,7 +166,7 @@ for component in helium-te-poc formal-verification-research osr-claude \
     require_text "$repository_root/components/$component.md" '**Ownership:**'
 done
 
-for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh; do
+for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh owner-actions.sh; do
     require_executable "$repository_root/scripts/$script"
     require_pattern "$repository_root/scripts/$script" '^set -(euo pipefail|u)$'
     require_text "$repository_root/scripts/$script" 'export LC_ALL=C'

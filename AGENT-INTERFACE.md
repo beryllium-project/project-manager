@@ -154,6 +154,22 @@ No component is built, tested, or executed by this agent. When a component
 check is needed, the agent hands the user the exact command from
 `AGENT-ROSTER.md` or the component's own instructions.
 
+`scripts/owner-actions.sh` is a **human-run** helper for the owner-side
+actions this agent records but never performs: reviewing the commits a push
+would publish, fast-forward pushing component branches to their private
+remotes, backing up this repository and the parent, opt-in creation of one
+backup remote (`--fvr-backup`, `PMR-001`), opt-in pushes of the Helium
+local-only branches (`--helium-branches`, `PMR-018`), and the fetch that lets
+the next coordination turn observe the result. It is not in the execution
+list above; the agent never runs it, in any mode including `--plan`. It never
+forces a push, rewrites history, or changes a worktree, and it skips remotes
+in the unreachable `jamorris_microsoft` namespace. Its logs are written under
+`scratch/owner-actions/` (ignored by Git) and are evidence, not records: the
+coordination turn that follows records the run from the human's statement and
+the observed remote state. `scripts/validate-pm.sh` checks statically that
+the script declares itself human-run, parses, and contains no forced,
+deleting, or history-rewriting Git token.
+
 ## Queue protocol (ledger-first)
 
 1. `scripts/pull-queues.sh list` shows component rows with status `new` or

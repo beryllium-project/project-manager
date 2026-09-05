@@ -78,7 +78,10 @@ Use `execute` only for:
 Every other `git -C <component>` subcommand (`reset`, `clean`, `checkout`,
 `stash`, `rebase`, `branch`, `push`, `remote`, `tag`, `commit --amend`) and
 any build, test, or run of component content are prohibited; hand the user the
-exact command from `AGENT-ROSTER.md` instead. `git push`, `git remote`,
+exact command from `AGENT-ROSTER.md` instead. `scripts/owner-actions.sh` is
+the human's owner-side helper (review, fetch, fast-forward push, opt-in remote
+creation); never execute it, in any mode including `--plan`; hand the user its
+invocation. `git push`, `git remote`,
 `gh repo create`, tags, and publication steps require an explicit user
 confirmation in the same turn, for this repository, the parent, and any
 component; quote it in `HANDOFF.md`. A carried commit leaves the component

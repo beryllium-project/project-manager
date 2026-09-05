@@ -409,5 +409,37 @@ else
     pass "scripts/inspect-components.sh refs-mode checks skipped for fixture without scripts"
 fi
 
+# --- owner-actions (human-run) ----------------------------------------------
+# The script is never executed here or by the agent; these are static guards:
+# it must declare itself human-run, parse, and contain no history-rewriting,
+# forced, or worktree-changing Git subcommand outside comments.
+
+owner=$root/scripts/owner-actions.sh
+if [[ -f $owner ]]; then
+    if grep -Fq 'never executed by the Project Manager agent' "$owner"; then
+        pass "scripts/owner-actions.sh declares itself human-run"
+    else
+        fail "scripts/owner-actions.sh does not declare itself human-run"
+    fi
+    if bash -n "$owner"; then
+        pass "scripts/owner-actions.sh passes bash -n"
+    else
+        fail "scripts/owner-actions.sh fails bash -n"
+    fi
+    if grep -Ev '^[[:space:]]*#' "$owner" |
+        grep -Eq -- '(^|[^[:alnum:]_-])(reset|rebase|checkout|switch|stash|filter-branch|update-ref)([^[:alnum:]_-]|$)|--force|--mirror|--delete|--prune|\+refs/|branch[[:space:]]+-[dDmM]'; then
+        fail "scripts/owner-actions.sh contains a forced, deleting, or history-rewriting Git token"
+    else
+        pass "scripts/owner-actions.sh contains no forced, deleting, or history-rewriting Git token"
+    fi
+    if grep -Ev '^[[:space:]]*#' "$owner" | grep -Eq 'git -C "\$dir" (push|fetch|remote add)'; then
+        pass "scripts/owner-actions.sh pushes, fetches, and adds a remote only through its guarded helpers"
+    else
+        fail "scripts/owner-actions.sh has lost its guarded push/fetch/remote-add lines"
+    fi
+else
+    pass "scripts/owner-actions.sh checks skipped for fixture without scripts"
+fi
+
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"
 ((fail_count == 0))

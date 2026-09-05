@@ -77,7 +77,9 @@ Every other `git -C <component>` subcommand (`reset`, `clean`, `checkout`,
 every other command inside a component are prohibited; observed component
 state comes only from `scripts/inspect-components.sh`. Never build, test, or
 execute a component; hand the user the exact command from `AGENT-ROSTER.md`
-instead.
+instead. `scripts/owner-actions.sh` is the human's owner-side helper (review,
+fetch, fast-forward push, opt-in remote creation): never execute it, in any
+mode including `--plan`; hand the user its invocation.
 
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,

@@ -94,7 +94,8 @@ records/assurance/                           assurance-transfer records
 records/decisions/PMD-YYYYMMDD-NNN-*.md      decision records
 queue/LEDGER.md                              ledger-first dispositions of component queue rows
 outbox/component-requests.md                 requests to component owners; three classes carried by the agent
-scripts/                                     maintained helpers
+scripts/                                     maintained helpers (agent-run)
+scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes and fetches; never executed by the agent
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
 ```
@@ -120,3 +121,26 @@ runs Git in a sanitized environment without hooks, credentials, or network
 access. `new-record.sh` writes only under `records/decisions/`. Carried
 writes inside components are made by the agent itself, never by these
 scripts.
+
+## Owner actions (human-run)
+
+`scripts/owner-actions.sh` performs, for the responsible human, the owner-side
+actions the agent records but never performs. The agent never executes it, in
+any mode. Run it from this directory; dry-run first:
+
+```sh
+bash ./scripts/owner-actions.sh --plan            # read-only: reachability, outgoing commits, what would run
+bash ./scripts/owner-actions.sh                   # review, then y/N per push, then fetch + restart snapshot
+bash ./scripts/owner-actions.sh --yes             # same without prompts (a dirty worktree is still skipped)
+bash ./scripts/owner-actions.sh --fvr-backup      # also: create beryllium-project/formal-verification-research (private), add remote backup, push -u backup main
+bash ./scripts/owner-actions.sh --helium-branches --helium-only helium-te-fv,helium-te-h7-approved
+bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
+```
+
+Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
+`push_tm` (threat-modeler), `push_xrv` (xrv-research-repo, skipped while its
+`origin` is in the unreachable namespace), `push_pm` (this repository to
+`origin`, the parent to `backup`), `fetch_snapshot`. Every push is a
+fast-forward verified afterwards with `git ls-remote`; nothing is ever forced
+and no worktree is changed. Logs go to `scratch/owner-actions/` (ignored).
+Afterwards, start a Project Manager session and say what the run did.
