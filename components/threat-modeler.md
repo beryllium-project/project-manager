@@ -45,7 +45,11 @@ is generated. `THREAT-MODELS.md` is the generated index.
   `workspace://project-manager/...` and calls the parent `HANDOFF.md` and
   `formal-verification/helium-te-fv-pathfinder.md` redirect stubs.
   `project-manager` is not in its registered target set; that list lives in
-  the owner-only `scripts/readonly-inspect.sh`.
+  the owner-only `scripts/readonly-inspect.sh`. At `226d367` (carried
+  `PMR-015`, 2026-09-05) the "Discovery reference set" also names
+  `workspace://project-manager/queue/LEDGER.md`, so a source the Project
+  Manager has already routed or that is accepted into an owner's index is not
+  allocated again as a new `DISC-NNN` row.
 
 ## Outbound queue
 
@@ -69,7 +73,8 @@ git diff --check
 
 A model or review engagement on a registered snapshot; registration of
 `project-manager/` in its `scripts/readonly-inspect.sh` registered list (the
-`RESEARCH-SOURCES.md` part was carried at `4a01578`); whether to add
-`project-manager/queue/LEDGER.md` to its discovery reference set (`PMR-015`);
-a decision on pushing its local commits (`PMR-005`; 3 ahead after
-`4a01578`); nothing that grants risk acceptance or approval.
+`RESEARCH-SOURCES.md` part was carried at `4a01578`); a decision on pushing
+its local commits (`PMR-005`; 4 ahead after the carried `4a01578` and
+`226d367`); nothing that grants risk acceptance or approval. `PMR-015` (the
+ledger in the discovery reference set) was carried at `226d367` on
+2026-09-05.

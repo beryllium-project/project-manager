@@ -103,6 +103,11 @@ Component queues (`../analysis-workbook/outbox/pm-queue.md`,
 dispositions are recorded in `queue/LEDGER.md`, then the exact status edits
 printed by `scripts/pull-queues.sh edits` are applied by the Project Manager
 in the component queue file as a class-1 carried write and committed there.
+The transfer queue `../analysis-workbook/outbox/helium-transfer-queue.md`
+(`HET-NNN`) is tracked read-only in the same ledger
+(`records/decisions/PMD-20260905-001-helium-transfer-queue-consumption.md`):
+it is outside class 1, `edits` prints nothing for it, `accepted` is never
+used for its rows, and the workbook maintainer mirrors its lifecycle.
 Requests to component owners are recorded in `outbox/component-requests.md`;
 those inside the three classes are carried by the Project Manager, every
 other request is carried by the human.

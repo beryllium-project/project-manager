@@ -58,10 +58,10 @@ It never writes inside another component directory outside those classes,
 never writes `helium-te-poc/` or `beryllium-repo` at all, never stages
 component contents in the parent, never resets, cleans, or reconciles a
 component worktree, and never retargets a tracked symlink without user
-direction. Component outbox queues are consumed ledger-first: dispositions
-live in `queue/LEDGER.md`, and the exact edits printed by
-`scripts/pull-queues.sh edits` are then applied by the agent as class-1
-carried writes, or handed to the user when the component is dirty or active.
+direction. Component outbox queues are consumed ledger-first: the two
+`outbox/pm-queue.md` source-discovery files can produce class-1 status edits,
+while `../analysis-workbook/outbox/helium-transfer-queue.md` is tracked
+read-only and never edited by the Project Manager.
 
 Direct Git is permitted against this repository and the parent root, and
 inside a component only as `git -C <component>` `status`, `diff`, `log`,
@@ -105,6 +105,7 @@ tests/validate-agent.sh                      component contract suite
 bash ./scripts/inspect-components.sh components
 bash ./scripts/inspect-components.sh status
 bash ./scripts/inspect-components.sh registry-check
+bash ./scripts/inspect-components.sh refs <component> [<ref>...]
 bash ./scripts/pull-queues.sh list
 bash ./scripts/pull-queues.sh check
 bash ./scripts/pull-queues.sh edits

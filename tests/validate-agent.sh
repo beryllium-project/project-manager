@@ -386,6 +386,8 @@ expect_exit "pull-queues check fails when a ledger claims an unapplied status" 1
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/false-applied.md" check
 expect_exit "pull-queues check fails on an orphan ledger row" 1 \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/orphan.md" check
+expect_exit "pull-queues check fails on accepted/applied transfer rows" 1 \
+    bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/transfer-bad.md" check
 expect_exit "pull-queues check fails when the ledger is absent" 1 \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/absent.md" check
 expect_output "pull-queues list shows awaiting rows with their ledger IDs" \
@@ -393,6 +395,9 @@ expect_output "pull-queues list shows awaiting rows with their ledger IDs" \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" list
 expect_output "pull-queues list skips the None placeholder row" \
     "threat-modeler	DISC-001	new	PML-0004	routed" \
+    bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" list
+expect_output "pull-queues list shows transfer rows without code ticks" \
+    "analysis-workbook-transfer	HET-001	new	PML-0005	routed" \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" list
 expect_output "pull-queues edits maps deferred to the analysis-workbook vocabulary" \
     "new value: deferred" \
@@ -404,6 +409,8 @@ expect_output "pull-queues edits never instructs an edit from project-manager" \
     "apply them in the owning component, never from project-manager" \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" edits
 expect_output "pull-queues summary counts awaiting rows" "analysis-workbook	3	2	3	0" \
+    bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" summary
+expect_output "pull-queues summary counts transfer rows once" "analysis-workbook-transfer	1	1	1	0" \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" summary
 expect_exit "pull-queues check passes on the live ledger" 0 bash "$pull" check
 

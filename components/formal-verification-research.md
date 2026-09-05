@@ -50,6 +50,17 @@ claim that Helium is formally verified.
   requests. The heading "Parent Project Manager housekeeping budget" was kept
   because the owner-only `.github/copilot-instructions.md` and `README.md`
   refer to it; those two files still describe the old budget (`PMR-014`).
+  At `8246147` (carried `PMR-017`, 2026-09-05) the "Ledger integration
+  procedure" attributes the `git switch main` / `git branch --no-merged`
+  block to the research owner alone; the Project Manager runs none of those
+  commands and only reports what its read-only inspection observes.
+- `bash ./scripts/inspect-components.sh refs formal-verification-research`
+  (read-only, 2026-09-05T05:15Z, at `8246147`) listed two local `collab/*`
+  branches, `collab/helium-te-fv-gpt56sol-20260811-pathfinder` (`14f06d5`)
+  and `collab/helium-te-fv-gpt56sol-20260812-trap-effect` (`ff67d02`), both
+  merged into `main` (no unmerged `collab/*` branch), consistent with the
+  owner-status table's two integrated guest logs; `origin/main` is stale at
+  `8b91ebd`.
 - Class-2 pointers carried by the Project Manager live in the
   `sources/bibliography.md` section "Routed pointers awaiting owner triage",
   in the file's own entry format, never interleaved with the owner's curated
@@ -66,8 +77,9 @@ by the owner.
 Owner reconciliation of the owner-status table and `HANDOFF.md` after guest
 integrations; a backup decision (the configured `origin` names the unreachable
 `jamorris_microsoft` namespace, so this component has no working off-machine
-backup, and the carried commit `ccb48f6` is local; `PMR-001`); alignment of
-the owner-only `.github/copilot-instructions.md` bullet and `README.md`
-sentence with the carried `COLLAB.md` wording, and triage of the five routed
-pointers (`PMR-014`). `PMR-012` and `PMR-008` were carried by the Project
-Manager itself on 2026-09-04.
+backup, and the carried commits `ccb48f6` and `8246147` are local; `PMR-001`);
+alignment of the owner-only `.github/copilot-instructions.md` bullet and
+`README.md` sentence with the carried `COLLAB.md` wording, and triage of the
+five routed pointers (`PMR-014`). `PMR-012` and `PMR-008` were carried by the
+Project Manager itself on 2026-09-04 (`ccb48f6`) and `PMR-017` on 2026-09-05
+(`8246147`).

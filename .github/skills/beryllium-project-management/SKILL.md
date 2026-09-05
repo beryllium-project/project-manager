@@ -109,7 +109,14 @@ research, analysis, threat models, provenance findings, or human decisions.
    Phase 4b when the component is clean; otherwise hand them to the human
    verbatim. Once an edit is applied, set "Source status applied" to
    `yes YYYY-MM-DD`.
-5. `bash ./scripts/pull-queues.sh check` must pass before validation.
+5. Transfer rows from the third source `analysis-workbook-transfer`
+   (`../analysis-workbook/outbox/helium-transfer-queue.md`, `HET-NNN`) are
+   tracked read-only (`records/decisions/PMD-20260905-001-helium-transfer-queue-consumption.md`):
+   route each with a `PMR-NNN` and set `routed` as the terminal PM
+   disposition; never use `accepted`; keep "Source status applied" at
+   `Not applicable`; never edit that file (it is outside class 1; the
+   workbook maintainer mirrors its lifecycle from the owner-side record).
+6. `bash ./scripts/pull-queues.sh check` must pass before validation.
 
 ## Phase 4b: carry (standing carry authority)
 

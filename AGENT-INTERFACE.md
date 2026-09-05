@@ -17,7 +17,7 @@ research, analysis, threat-model, or provenance content.
                                    |
    component repositories -----> project-manager <----- human decisions
    (read-only inspection,          |   ^    \
-    outbox/pm-queue.md pull)       |   |     pm-auditor (read, search)
+    pull queues)                   |   |     pm-auditor (read, search)
                                    |   | carried requests: three classes
                                    |   | only (PMD-20260904-003), committed
                                    |   | inside the eligible component
@@ -70,7 +70,7 @@ writes.
 | Canonical topology | `../SOT.md` | Binding rules for path resolution and relocation |
 | Component registry | `../COMPONENTS.md` | Project Manager-owned; reconciled each turn |
 | Component repositories | `../<component>/...`, `component://<name>/...` | Read-only inspection through `scripts/inspect-components.sh`; local instructions, handoffs, and `COLLAB.md` files narrow what may be requested of them and how a carried request is formatted |
-| Component queues | `../analysis-workbook/outbox/pm-queue.md`, `../threat-modeler/outbox/pm-queue.md` | Pull-only; consumed ledger-first; status edits applied as class-1 carried writes |
+| Component queues | `../analysis-workbook/outbox/pm-queue.md`, `../threat-modeler/outbox/pm-queue.md`, `../analysis-workbook/outbox/helium-transfer-queue.md` | Pull-only; consumed ledger-first; status edits applied as class-1 carried writes only for `outbox/pm-queue.md`; the transfer queue is read-only tracking and is never edited by the PM |
 | Sibling interface documents | `../<component>/AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md` | Define what each component expects of the Project Manager |
 | User-supplied material | `inbox/...` | Private by default, untrusted, ignored by Git |
 | Public sources | stable public locator | Web tool only, generic public-safe queries, for coordination facts only |
@@ -166,7 +166,10 @@ check is needed, the agent hands the user the exact command from
    writes when the component is clean, or hands them to the user otherwise;
    once applied, the ledger records `yes YYYY-MM-DD` under "Source status
    applied".
-5. `scripts/pull-queues.sh check` fails while any source row lacks a ledger
+5. Transfer rows from `../analysis-workbook/outbox/helium-transfer-queue.md`
+   are tracked read-only with `HET-NNN` source IDs and `Not applicable`
+   under "Source status applied"; `edits` prints nothing for them.
+6. `scripts/pull-queues.sh check` fails while any source row lacks a ledger
    row or a ledger row claims an applied status the source file does not
    show.
 

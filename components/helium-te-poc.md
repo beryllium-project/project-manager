@@ -7,8 +7,11 @@
 - **Agent:** none user-invocable; maintained skill `helium-documentation`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `LLM_POLICY_ALIGNMENT.md`
-- **Observed state:** see `../../COMPONENTS.md` (single source; not repeated
-  here)
+- **Observed state:** clean `helium-te-travel-fedora44` at
+  `f0d96b18c3f629454c9a956b09c6de67d4c138bf`, synchronized with
+  `origin/helium-te-travel-fedora44` (observed read-only
+  2026-09-05T04:54Z by `scripts/inspect-components.sh`; the Project Manager
+  did not write, reset, clean, stage, or commit in this component)
 
 ## Role
 
@@ -40,23 +43,32 @@ assurance workflow.
 The Helium FV line adds CBMC machine checks for selected fixed-profile TE,
 policy, enforcement, G-stage, pure runtime-transition, materialized
 trap-context, trap-authority witness, effect-plan, transactional trap-pipeline,
-raw-capture materialization, and (as the component reports at `e65c6a0`)
-atomic capture-plus-pipeline transaction C properties. The trap decision
-remains exactly five fields; authority, state mutation, and effect planning
-remain separate pure boundaries. Tier 7 begins with caller-supplied scalar
-facts and Tier 8 composes that materialization with the Tier 6 pipeline:
+raw-capture materialization, and (as the component reports at `e65c6a0` and
+restates at `f0d96b1`) atomic capture-plus-pipeline transaction C properties.
+The trap decision remains exactly five fields; authority, state mutation, and
+effect planning remain separate pure boundaries. Tier 7 begins with
+caller-supplied scalar facts and Tier 8 composes that materialization with the
+Tier 6 pipeline:
 neither proves live CSR/frame/sentinel/root capture, live policy/PTE query
 correspondence, linker-symbol wiring, privileged effect execution, assembly,
 compiler, ISA, emulator, hardware, or noninterference. The component's own
 statements about its tiers, refs, and gates are recorded, without review, in
-`../records/assurance/helium-te-fv-pathfinder.md`. At `f0d96b1` (observed
-2026-09-04T22:45Z) the component further states that `FV-FIN-001` is
-resolved, "the responsible human selected Tier 8 as the endpoint for Helium
+`../records/assurance/helium-te-fv-pathfinder.md`. At `f0d96b1`,
+`../helium-te-poc/HANDOFF.md` states that `FV-FIN-001` is resolved, that "the
+responsible human selected Tier 8 as the endpoint for Helium
 formal-verification experimentation" (decision commit `6d3cd14`), and that no
-Tier 9 or final methods spike will be pursued; the Project Manager records
-that statement without review and infers no approval from it
-(`PMD-20260904-004` item 9). The same direction reaches the Project Manager
-as the analysis workbook's `HET-001` (`PMR-016`).
+Tier 9 or final methods spike will be pursued. The Project Manager records
+those as the component's statements; it has not reviewed the endpoint
+decision or any Tier 7/8 gate content, and infers no approval from the
+statements, commit subjects, branch names, clean worktree, evaluator results,
+or the existence of a ref. On 2026-09-05 the read-only
+`bash ../scripts/inspect-components.sh refs helium-te-poc <refs>` listing
+(run from `project-manager/`) confirmed that the eleven assurance-relevant
+refs the handoff names exist locally; that is an existence observation, not
+gate review. The newest observed statement set is in
+`../records/assurance/helium-te-fv-pathfinder.md`, section "Observed component
+statements, 2026-09-05 (`f0d96b1`)"; the same direction reaches the Project
+Manager as the analysis workbook's `HET-001` (`PMR-016`).
 
 ## Boundaries and conventions
 
@@ -95,6 +107,7 @@ as the analysis workbook's `HET-001` (`PMR-016`).
 
 ```sh
 npm ci                 # locked documentation dependencies
+./he help              # full subcommand list
 ./he build             # build the fixed TE image
 ./he demo              # two-subject demonstration
 ./he test              # host, QEMU, target-assurance, and report tests
@@ -105,10 +118,7 @@ npm ci                 # locked documentation dependencies
 ./he evidence-check COMMIT [BUNDLE]   # verify a bundle against an exact clean commit
 ./he docs-preview      # serve generated HTML
 ./he publication-check # check the responsible-human public release gate
-./he help              # full subcommand list (evidence, report, docs-build, version, clean, ...)
-make help              # lower-level targets
-make unit-gcc; make unit-clang; make qemu-gcc; make toolcheck
-tests/test-qemu-trace-validator.sh
+make toolcheck         # lightweight tools/syntax/policy/host-fixture gate
 ```
 
 The C unit tests are one monolithic `tests/unit/test_main.c` binary without a
@@ -117,10 +127,13 @@ the Helium root.
 
 ## What the Project Manager may request
 
-Responsible-human H6 review of an exact candidate against its reviewed
-predecessor source (at `e65c6a0` the component names travel maintenance
-candidate `e83e99c` on base `3dc3aee`; Tier 7 and Tier 8 H6 reviews are
-reported complete by the component and not reviewed by the Project Manager);
-handoff reconciliation; preservation of frozen refs; a backup push decided by
-the component owner. The Project Manager never creates an H7 gate, pushes, or
-releases.
+Responsible-human decisions on what, if anything, may proceed from what the
+component's handoff at `f0d96b1` calls "the accepted travel-maintenance
+baseline" (its phrase, recorded without review; the same handoff reports the
+travel gate as blocked; it names travel maintenance candidate `e83e99c` on
+base `3dc3aee`; Tier 7 and Tier 8 H6/H7 statements and the Tier 8 endpoint are
+reported by the component and not reviewed by the Project Manager); handoff
+reconciliation; preservation of frozen refs; a backup push decided by the
+component owner, including the `d0cca32` lineage and the branches without an
+upstream (`PMR-018`). The Project Manager never creates an H7 gate, pushes,
+publishes, or releases.

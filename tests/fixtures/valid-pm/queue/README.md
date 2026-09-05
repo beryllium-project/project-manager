@@ -46,6 +46,8 @@ outbox file.
 `scripts/pull-queues.sh edits` prints the exact edits the user should apply in
 each component file.
 
+Transfer fixtures are not modeled here, but accepted is never used for transfer rows in the live queue protocol.
+
 A ledger row is a Project Manager disposition of a pointer. It is never a
 claim that a source has been read, redistributed, or approved by its owning
 component; research owners retain sole authority to admit a source into their

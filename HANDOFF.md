@@ -1,57 +1,54 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-05
-**Update scope:** first coordination turn after the consolidation, three
-same-day follow-ups, and a next-morning repair of the skill file (follow-up
-4). Turn: live observed-state refresh at 2026-09-04T16:15Z;
-`helium-te-poc/` row refreshed from dirty `9af92cc` to clean `e65c6a0`;
-triage of `PML-0001..PML-0016` (all `routed` by `PMR-007..PMR-009`); Helium
-notes and `records/assurance/helium-te-fv-pathfinder.md` reconciled against
-`../helium-te-poc/HANDOFF.md` at `e65c6a0`, recording Tier 7/8 gate refs as
-the component's own statements and never as Project Manager approval;
-decision records `PMD-20260904-001` and `PMD-20260904-002`. Follow-up 1:
-with the user's explicit confirmation quoted in "Provenance", this
-repository's `main` was pushed to `origin` and the parent's `main` to
-`backup`. Follow-up 2: the responsible human granted the Project Manager a
-**standing carry authority** (`PMD-20260904-003`; three classes; never
-`helium-te-poc/` or `beryllium-repo`), the boundary documents were amended
-accordingly, and the xrv-research-repo owner completed `PMR-007`
-(`7314e2f`), moving nine ledger rows to `accepted`. **Follow-up 3 (the first
-carry turn, 22:18Z-23:00Z, `PMD-20260904-004`)**: the Project Manager
-committed `ccb48f6` in `../formal-verification-research/` (`PMR-012`,
-`PMR-008`; five ledger rows to `accepted`), `4a01578` in `../threat-modeler/`
-(`PMR-004`, Markdown part), and, after a refusal at 22:18Z (dirty worktree,
-another session active) and a clean re-observation at 22:45Z, `83b97a3` in
-`../analysis-workbook/` (`PMR-011`, `PMR-004` Markdown part, fourteen class-1
-queue edits). Other sessions moved `analysis-workbook/` to `efde667` and
-`helium-te-poc/` to `f0d96b1` during the turn; both are recorded, neither
-was touched by the Project Manager beyond the carried commit. **Follow-up 4
-(2026-09-05T04:49Z, repository-only)**: the `/beryllium-project-management`
-skill had never loaded because its `SKILL.md` front matter was invalid YAML;
-fixed in this repository, with a new test guard. No component was read for
-state or written.
+**Update scope:** second coordination turn (2026-09-05T04:54Z-05:40Z), run
+in fleet mode from the handoff's "One recommended next action". The
+`/beryllium-project-management` skill **loaded for the first time** (the
+follow-up 4 repair worked). Restart snapshot exact: every component clean,
+every HEAD matching `../COMPONENTS.md`, `pull-queues.sh check` passing. The
+responsible human answered the four queued questions in one `ask_user` form
+(quoted in "Provenance"): carry `PMR-015` in both components; register the
+Helium transfer queue for read-only tracking; also record the `f0d96b1`
+Helium statements and add a read-only ref-listing mode; and push this turn's
+coordination commits. **Three carried commits** under `PMD-20260904-003`
+class 3, each after a same-turn clean-worktree check and local-instruction
+read: `8246147` in `../formal-verification-research/` (`PMR-017`), `226d367`
+in `../threat-modeler/` (`PMR-015`), and `ff12f2f` in `../analysis-workbook/`
+(`PMR-015`); `PMR-015` and `PMR-017` closed. **`PMD-20260905-001`**: the
+transfer queue `../analysis-workbook/outbox/helium-transfer-queue.md` is a
+third, read-only source in `scripts/pull-queues.sh` and `queue/README.md`
+(`analysis-workbook-transfer`, `HET-NNN`; never an edit target; `accepted`
+never used); `PML-0017` records `HET-001` as `routed` (`PMR-016`). New
+`scripts/inspect-components.sh refs <component> [<ref>...]` mode (read-only
+Git subcommands only); its first run confirmed that the eleven
+assurance-relevant refs named in `../helium-te-poc/HANDOFF.md` exist locally,
+that `d0cca32` is on no remote-tracking branch and thirteen local branches
+have no upstream configured (`PMR-018`), and that both `collab/*` branches in
+`../formal-verification-research/` are merged. `records/assurance/helium-te-fv-pathfinder.md`
+gained the `f0d96b1` statements and the ref listing. The previous turn
+(2026-09-04, follow-ups 1-4) is summarized under "Previous update".
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
 **This repository:** `project-manager/`, branch `main`; initial commit
 `02335c56b232ecdbd402d537668b15d775291fa4`; `origin` -> private
-`beryllium-project/project-manager`; first-coordination-turn commit
-`2439ce546f8f3329be4263fdad27d1e4f91d0c32`, its push record `947d959`, the
-standing-carry-authority commit `d36b0150cf852f1ba12bd73ec418276d02fab75e`,
-and its push record `c244910` all pushed on 2026-09-04 under the
-confirmations quoted in "Provenance"; the carry-turn commit that follows is
-**local** until a further confirmation; the current HEAD is recorded in the
-`project-manager/` row of `../COMPONENTS.md`
+`beryllium-project/project-manager`; pushed through `c244910` on 2026-09-04
+and, under the confirmation quoted in "Provenance", through this turn's
+commits on 2026-09-05 (the carry-turn commit `36a162a`, the skill repair
+`a1677c1`, and this turn's commit, whose hash is recorded in the
+`project-manager/` row of `../COMPONENTS.md` and in "Provenance")
 **Parent coordination repository:** `main`; consolidation commits
 `e774b4217ccf5100c66e97b3b23a51a62c5e6365`,
 `b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5`; first-coordination-turn
 registry commit `393ea6a075ee636db0fe51e47ec237612f001e4a`, its recording
 follow-up `15dcdf9`, the standing-carry-authority registry commit
 `b34e468b94b2ecbd02d5aa25e9b5e2dfb8fda708`, and its recording follow-up
-`9abc320` pushed to `backup/main`; the carry-turn registry commit that
-follows is **local** until a further confirmation
+`9abc320` pushed to `backup/main` on 2026-09-04; the carry-turn registry
+commit `e02cff6`, the skill-repair registry commit `1607db5`, and this turn's
+registry commit pushed on 2026-09-05 under the confirmation quoted in
+"Provenance"
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
-(pushed through `9abc320` on 2026-09-04 under the confirmations quoted in
-"Provenance"); `origin` -> unreachable `jamorris_microsoft/beryllium-project`
-(retained, not retargeted)
+(pushed through `9abc320` on 2026-09-04 and through this turn's commits on
+2026-09-05, both under confirmations quoted in "Provenance"); `origin` ->
+unreachable `jamorris_microsoft/beryllium-project` (retained, not retargeted)
 
 ## Fast resume: read this first
 
@@ -59,15 +56,15 @@ follows is **local** until a further confirmation
 
 | Area | Current state |
 | --- | --- |
-| Project Manager function | Consolidated into `project-manager/`: agent `project-manager`, auditor `pm-auditor`, skill, knowledge cards, roster, records, ledger, requests, scripts, and tests. The parent root is a thin shell with redirect stubs. **Standing carry authority granted 2026-09-04** (`records/decisions/PMD-20260904-003-standing-carry-authority.md`): the agent may itself carry three classes of recorded request inside carry-eligible components (queue status edits; metadata-only source-index entries; Project Manager-role wording), committing there; never `helium-te-poc/` or `beryllium-repo`. **First exercised the same evening** (`PMD-20260904-004`): carried commits `ccb48f6` in `../formal-verification-research/`, `4a01578` in `../threat-modeler/`, and `83b97a3` in `../analysis-workbook/` (the last after a refusal while that worktree was dirty and a clean re-observation) |
+| Project Manager function | Consolidated into `project-manager/`: agent `project-manager`, auditor `pm-auditor`, skill (loads since `a1677c1`), knowledge cards, roster, records, ledger, requests, scripts, and tests. The parent root is a thin shell with redirect stubs. **Standing carry authority granted 2026-09-04** (`records/decisions/PMD-20260904-003-standing-carry-authority.md`): the agent may itself carry three classes of recorded request inside carry-eligible components (queue status edits; metadata-only source-index entries; Project Manager-role wording), committing there; never `helium-te-poc/` or `beryllium-repo`. Exercised twice: 2026-09-04 (`PMD-20260904-004`: `ccb48f6`, `4a01578`, `83b97a3`) and **2026-09-05 (this turn: `8246147` in `../formal-verification-research/` for `PMR-017`; `226d367` in `../threat-modeler/` and `ff12f2f` in `../analysis-workbook/` for `PMR-015`)**. Six carried commits in total, all local to this workstation until their owners push |
 | Accepted Beryllium runtime sequence | R0 through exact R7 are responsible-human accepted |
 | Current authorized Beryllium work | Non-privileged R8-H0 profile freeze only; H0 remains **BLOCKED / NOT READY / NOT ACCEPTED** with all 81 acceptance rows unresolved |
 | Privileged and hardware work | H1-H4 unauthorized; Beryllium K3 execution and hardware evidence remain `NOT RUN` |
 | Implementation repository | `beryllium-repo` clean on `beryllium/single-hart-runtime-r0` at `65f6d89`, synchronized with its private origin |
-| Helium assurance line | Reconciled on 2026-09-04 against `../helium-te-poc/HANDOFF.md` at `e65c6a0`; the component moved to `f0d96b1` (clean, synchronized) during the carry turn, and its handoff at that commit **states** that `FV-FIN-001` is resolved, "the responsible human selected Tier 8 as the endpoint for Helium formal-verification experimentation" (decision commit `6d3cd14`), the approved Tier 8 refs are unchanged, and the travel gate remains blocked. Earlier statements at `e65c6a0`: Tier 8 H6 candidate `ed15451` with frozen H7 gate `85a6e55`; Tier 7 reviewed source `7ca97a9` with frozen H7 gate `342e04a`; frozen Tier 6 H7 gate `c594b7f`; travel maintenance on `helium-te-travel-fedora44` from base `3dc3aee`. **These are the component's statements**; the Project Manager has not reviewed any Tier 7/8 gate content or the endpoint decision, has not verified the refs exist, and infers no approval (`records/decisions/PMD-20260904-002-helium-observed-state-refresh.md`, `PMD-20260904-004` item 9) |
-| Component queues | 16 analysis-workbook rows `PMQ-001..016`: **fourteen are `accepted`** in the ledger and in the queue file (nine, `PML-0001..0006`, `0009`, `0013`, `0016`, recorded by the xrv-research-repo owner as `REV-20260904-001..009` at `7314e2f`; five, `PML-0007`, `0010`, `0012`, `0014`, `0015`, recorded by the Project Manager as metadata-only pointers in `../formal-verification-research/sources/bibliography.md` at `ccb48f6`, `PMR-008`); the fourteen class-1 status edits were applied and committed by the Project Manager at `../analysis-workbook` `83b97a3` (ledger "applied" `yes 2026-09-04`); two (`PML-0008`, `0011`; `PMR-009`, cheri-riscv-notes-repo) stay `routed`/`new` and request-only. `scripts/pull-queues.sh edits` reports no edit due. threat-modeler queue empty. **New surface:** `../analysis-workbook/outbox/helium-transfer-queue.md` (`HET-001`, `new`, `unaccepted`) is committed at `efde667`; routed to the Beryllium owner as `PMR-016`; not yet registered in the Project Manager's queue tooling |
+| Helium assurance line | `../helium-te-poc/` clean and synchronized on `helium-te-travel-fedora44` at `f0d96b1` (observed 2026-09-05T04:54Z, unchanged since 2026-09-04T22:45Z). Its `HANDOFF.md` at that commit **states** that `FV-FIN-001` is resolved, "the responsible human selected Tier 8 as the endpoint for Helium formal-verification experimentation" (decision commit `6d3cd14`), the approved Tier 8 refs are unchanged and must remain frozen, the travel gate remains blocked, and the PoC "is not formally verified and has not been validated on hardware". Refs it names: travel base `3dc3aee`; Tier 8 H6 candidate `ed15451` with H7 gate `85a6e55`; Tier 7 source `7ca97a9` with H7 gate `342e04a`; Tier 6 H7 gate `c594b7f`; Tier 5 H7 gate `111cff2`; earlier H7 lineage `d0cca32`; preserved ref `d87080a`. **These are the component's statements**, now tabulated for `f0d96b1` in `records/assurance/helium-te-fv-pathfinder.md`. New this turn: the read-only `scripts/inspect-components.sh refs helium-te-poc ...` listing shows every named ref **exists** locally and, as of the last fetch, all but `d0cca32` are reachable from a remote-tracking branch (`PMR-018`). Existence is not gate review: the Project Manager has reviewed no Tier 7/8 gate content or the endpoint decision and infers no approval (`PMD-20260904-002`, `PMD-20260904-004` item 9) |
+| Component queues | 16 analysis-workbook rows `PMQ-001..016`: **fourteen `accepted`** in the ledger and in the queue file (nine recorded by the xrv-research-repo owner at `7314e2f`; five by the Project Manager as metadata-only pointers at `../formal-verification-research` `ccb48f6`; the class-1 edits applied at `../analysis-workbook` `83b97a3`); two (`PML-0008`, `0011`; `PMR-009`, cheri-riscv-notes-repo) stay `routed`/`new` and request-only. threat-modeler queue empty. **Transfer queue registered this turn (`PMD-20260905-001`)**: `../analysis-workbook/outbox/helium-transfer-queue.md` is the third source `analysis-workbook-transfer` in `scripts/pull-queues.sh` and `queue/README.md`, tracked read-only (outside class 1; `edits` prints nothing for it; `accepted` never used; the workbook maintainer mirrors its lifecycle); `PML-0017` records `HET-001` as `routed` to the Beryllium owner (`PMR-016`, open). `pull-queues.sh check`: 17 source rows, 17 ledger rows, ok; `edits`: none due. **`PMR-015` carried**: both discovery reference sets now name `project-manager/queue/LEDGER.md` (`226d367`, `ff12f2f`) |
 | Retained PM session artifacts | **Lost from this workstation**: the ignored parent `files` link no longer resolves and its listed artifacts were not found under the home directory. Human decision required |
-| Backups | Parent `main` and this repository's `main` are synchronized with `backup/main` and `origin/main` through `9abc320` and `c244910` after the user-confirmed pushes of 2026-09-04 (quoted in "Provenance"); **this carry turn's commit in each is local** until a further confirmation. provenance-review, beryllium-repo, cheri-riscv-notes-repo, and helium-te-poc (`f0d96b1`) synchronized with their remotes; **analysis-workbook is 1 commit ahead** (the carried `83b97a3`); **xrv-research-repo is 1 commit ahead** (`7314e2f`, `PMR-013`; its backup state is `unknown` because its own handoff names the unreachable `jamorris_microsoft` namespace as the remote); **threat-modeler is 3 commits ahead** of its private origin (the owner's two plus the carried `4a01578`; `PMR-005`); **formal-verification-research has no reachable remote and is 1 commit ahead** of its stale ref (the carried `ccb48f6`; `PMR-001`); osr-claude is on a personal account |
+| Backups | Parent `main` and this repository's `main` pushed to `backup/main` and `origin/main` through this turn's commits on 2026-09-05 under the confirmation quoted in "Provenance" (see that section for the exact hashes). provenance-review, beryllium-repo, cheri-riscv-notes-repo, helium-te-poc (`f0d96b1`), and osr-claude (personal account) synchronized with their remotes; **analysis-workbook is 2 commits ahead** (carried `83b97a3`, `ff12f2f`); **xrv-research-repo is 1 commit ahead** (`7314e2f`, `PMR-013`; backup state `unknown`); **threat-modeler is 4 commits ahead** (the owner's two plus carried `4a01578`, `226d367`; `PMR-005`); **formal-verification-research has no reachable remote and is 2 commits ahead** of its stale ref (carried `ccb48f6`, `8246147`; `PMR-001`); in Helium, thirteen local branches have no upstream configured and the `d0cca32` lineage is reachable from no remote-tracking branch as of the last fetch (`PMR-018`) |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -75,6 +72,80 @@ at the H0 input-and-selection gate. Do not start H1, Linux, multicore, device,
 DMA, service, policy, or successor implementation to work around that gate.
 
 ### What changed in this update
+
+- **Skill loaded.** `/beryllium-project-management` was offered and loaded at
+  session start for the first time; the follow-up 4 repair is confirmed.
+- **Carried, `../formal-verification-research/` commit
+  `824614780bd3f900abaa15aa523a3337e4bb3fbe`** (`main`, was `ccb48f6`, now 2
+  ahead of the stale ref): `PMR-017` (class 3) tightened one `COLLAB.md`
+  "Ledger integration procedure" sentence so the `git switch main` /
+  `git branch --no-merged` block is attributed to the research owner alone.
+  `state formal-verification-research` was clean immediately before the
+  write; `.github/copilot-instructions.md`, `COLLAB.md` (housekeeping budget
+  item 3 permits this edit), and `HANDOFF.md` were read; the diff was that
+  sentence only. `PMR-017` closed.
+- **Carried, `../threat-modeler/` commit
+  `226d367bde80c09c85fbadd4600222258d56527a`** (`main`, was `4a01578`, now 4
+  ahead) and **`../analysis-workbook/` commit
+  `ff12f2faf611c02faeaa75760306808bf5ed7eb9`** (`main`, was `83b97a3`, now 2
+  ahead): `PMR-015` (class 3) after the human chose "Carry now in
+  threat-modeler and analysis-workbook". Each `RESEARCH-SOURCES.md` discovery
+  reference set gained one bullet naming the Project Manager ledger
+  (`workspace://project-manager/queue/LEDGER.md`;
+  `../project-manager/queue/LEDGER.md`) so a source already routed or
+  accepted is not queued again as `new`. Both worktrees clean immediately
+  before the write; both components' `.github/copilot-instructions.md`,
+  `HANDOFF.md`, and interface documents read; neither owner-only
+  `tests/validate-agent.sh` pins anything the bullets change (read only, not
+  run). `PMR-015` closed.
+- **`records/decisions/PMD-20260905-001-helium-transfer-queue-consumption.md`**:
+  the transfer queue is registered as the read-only source
+  `analysis-workbook-transfer` (`HET-NNN`; Queue-summary columns Subject and
+  Target; awaiting status `new`) in `scripts/pull-queues.sh`; `map_status`
+  yields no edit for it; `check` fails a transfer row that uses `accepted` or
+  claims an applied status; `queue/README.md` documents the transfer
+  semantics ("Source status applied" is `Not applicable`; `routed` is the
+  terminal PM disposition; the workbook maintainer mirrors the lifecycle);
+  `queue/LEDGER.md` gained `PML-0017` (`HET-001`, `routed`, `PMR-016`).
+  `AGENT-INTERFACE.md`, `AGENT-ROSTER.md`, `README.md`,
+  `components/analysis-workbook.md`, `.github/copilot-instructions.md`, and
+  `.github/agents/pm-auditor.agent.md` name the third source. Fixtures under
+  `tests/fixtures/` cover the transfer ledger and a bad transfer row.
+- **`scripts/inspect-components.sh refs <component> [<ref>...]`**: lists
+  local branches with upstream and ahead/behind, remote-tracking branches
+  ("as of the last fetch; not a live remote check"), tags, unmerged
+  `collab/*` branches relative to `main`, and per-ref existence, full SHA,
+  containing branches, and subject, using only `for-each-ref`, `cat-file -e`,
+  `rev-parse`, `branch --contains`, `branch --no-merged`, and `log -1`.
+  `scripts/validate-pm.sh` now fails if the script contains a write
+  subcommand. First runs: Helium (all eleven named refs exist; `d0cca32` on
+  no remote-tracking branch), formal-verification-research (two `collab/*`
+  branches, both merged), project-manager.
+- **`records/assurance/helium-te-fv-pathfinder.md`**: new section "Observed
+  component statements, 2026-09-05 (`f0d96b1`)" above the 2026-09-04 section,
+  tabulating the `FV-FIN-001` resolution, the Tier 8 endpoint statement
+  (`6d3cd14`), the travel-gate statement, every named ref with its change
+  since `e65c6a0`, the `docs/fv-pathfinder-lessons.md` pointer, and the
+  handoff's requests to humans, all as the component's statements; plus the
+  subsection "Read-only ref listing, 2026-09-05T05:15Z".
+  `components/helium-te-poc.md` refreshed to `f0d96b1`.
+- `outbox/component-requests.md`: `PMR-015` and `PMR-017` closed with the
+  commit hashes; `PMR-001` and `PMR-005` notes updated (2 and 4 ahead);
+  **`PMR-018`** raised (helium-te-poc owner: decide whether the thirteen
+  local branches without an upstream, including the `d0cca32` lineage, are
+  backed up; request-only).
+- `components/formal-verification-research.md` and
+  `components/threat-modeler.md` record the carries and the `collab/*`
+  observation; `../COMPONENTS.md` rows, backup table, review scope, and
+  closing paragraph refreshed; `registry-check` exact after the carries.
+- `pm-auditor` pass: see "Provenance" for its findings and their reconciliation.
+- **Pushed** under the confirmation quoted in "Provenance": this repository's
+  `main` to `origin` and the parent's `main` to `backup`. No component was
+  pushed.
+
+### Previous update: 2026-09-04 turn and follow-ups 1-4
+
+Retained for restartability; superseded where the sections above say so.
 
 - `../COMPONENTS.md`: `helium-te-poc/` row refreshed to clean `e65c6a0`
   with the component-named refs; `analysis-workbook/` row shows the sixteen
@@ -282,41 +353,42 @@ Follow-up 4, the next morning (skill-loader repair, this repository only):
 
 ### One recommended next action
 
-Four owner actions are yours; the agent does none of them:
+Five owner actions are yours; the agent does none of them:
 
 1. **formal-verification-research owner:** review
-   `git -C ../formal-verification-research show ccb48f6`; act on `PMR-014`
-   (align `.github/copilot-instructions.md` and `README.md`; keep, move, or
-   remove the five routed pointers); decide a reachable backup remote
-   (`PMR-001`). Until then `ccb48f6` exists only on this workstation.
+   `git -C ../formal-verification-research show ccb48f6` and `show 8246147`;
+   act on `PMR-014` (align `.github/copilot-instructions.md` and `README.md`;
+   keep, move, or remove the five routed pointers); decide a reachable backup
+   remote (`PMR-001`). Until then both carried commits exist only on this
+   workstation.
 2. **Beryllium owner:** `PMR-016`: triage `HET-001` in
    `../analysis-workbook/outbox/helium-transfer-queue.md` under Beryllium's
    own planning controls and record the disposition; this is planning input,
    not authorization of any Beryllium work beyond the H0 profile freeze.
 3. **threat-modeler and analysis-workbook owners:** review
-   `git -C ../threat-modeler show 4a01578` and
-   `git -C ../analysis-workbook show 83b97a3`; decide the pushes (`PMR-005`
-   for threat-modeler's 3 local commits; the workbook is 1 ahead).
-4. **cheri-riscv-notes-repo owner:** `PMR-009` (two pointers through the
+   `git -C ../threat-modeler show 4a01578 226d367` and
+   `git -C ../analysis-workbook show 83b97a3 ff12f2f`; decide the pushes
+   (`PMR-005` for threat-modeler's 4 local commits; the workbook is 2 ahead).
+4. **helium-te-poc owner:** `PMR-018`: decide whether the thirteen local
+   branches without an upstream listed there (including the `d0cca32`
+   lineage) should be pushed to the component's private remote (`bash
+   ./scripts/inspect-components.sh refs helium-te-poc` from this directory
+   shows the current listing read-only).
+5. **cheri-riscv-notes-repo owner:** `PMR-009` (two pointers through the
    reference database; gate D4).
 
-Then start a new Project Manager session (the skill file is repaired, so
-`/beryllium-project-management` should now appear under Skills at startup;
-report it if the loader still rejects it) and ask it to: carry `PMR-017`
-(one `COLLAB.md` sentence, class 3) when formal-verification-research is
-clean; say whether `PMR-015` should be carried; and decide, with a new
-decision record, whether `outbox/helium-transfer-queue.md` is registered in
-`queue/README.md` and `scripts/pull-queues.sh`.
+Then start a new Project Manager session and ask it to run a plain
+coordination turn: re-observe, pull queues (a new `HET-NNN` row now appears in
+`pull-queues.sh list`), close any request whose owner action is observed, and
+record the lost-artifact decision if you have made one. No carry is queued:
+every open request is now request-only (`PMR-001`, `002`, `003`, `005`,
+`009`, `013`, `014`, `016`, `018`) or owner-only (`PMR-004` scripts).
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
 bash ./scripts/inspect-components.sh status
 copilot                                  # then: /agent project-manager
 ```
-
-If you want this turn's two local coordination commits backed up, say so
-explicitly; the agent will then run `git push origin main` here and
-`git push backup main` in the parent, and nothing else.
 
 ### Minimal restart commands
 
@@ -325,6 +397,7 @@ cd /home/jmorris/src/l1/src/beryllium-project/project-manager
 sed -n '1,120p' HANDOFF.md
 bash ./scripts/inspect-components.sh status
 bash ./scripts/inspect-components.sh registry-check
+bash ./scripts/inspect-components.sh refs helium-te-poc
 bash ./scripts/pull-queues.sh list
 bash ./scripts/pull-queues.sh check
 bash ./scripts/validate-pm.sh
@@ -341,19 +414,20 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | --- | --- | --- |
 | Two H0 input selections (normative Fedora 44 H0 static OCI `fcf6c595...1bd1f5`; proposed H1/H2 path inventory `2c5e9396...c6660`) | Responsible human | Open; not inferred. Would authorize re-checking a still-blocked H0 candidate, not accept H0 |
 | H0 acceptance, H1-H4 authorization, K3 execution | Responsible human | Open; `NOT RUN` |
-| Helium Tier 7/8 gate content | Component owner and the human who made the gate commits | Not a Project Manager gate. The component's statements at `e65c6a0` are recorded without review (`PMD-20260904-002`); confirming that the named refs exist is a read-only tooling follow-up (see "Pending coordination") |
+| Helium Tier 7/8 gate content | Component owner and the human who made the gate commits | Not a Project Manager gate. The component's statements at `e65c6a0` and `f0d96b1` are recorded without review (`PMD-20260904-002`; `records/assurance/helium-te-fv-pathfinder.md`); the read-only `refs` listing of 2026-09-05 confirms only that the named refs exist locally, not what any gate contains |
 | Index pointers for the routed rows | `PMR-007` completed by the xrv-research-repo owner (`7314e2f`, `REV-20260904-001..009`); `PMR-008` carried by the Project Manager under `PMD-20260904-003` class 2 at `../formal-verification-research` `ccb48f6` (metadata pointers on the owner's delegated authority, not corpus admission; owner triage `PMR-014`); `PMR-009` stays with the cheri-riscv-notes-repo owner (generated exports behind gate D4) | Fourteen rows `accepted` in the ledger and in the queue file (`83b97a3`); two wait for the owner |
-| Wording reconciliations | `PMR-012` carried at `ccb48f6`; `PMR-011` and the Markdown parts of `PMR-004` carried at `83b97a3` and `4a01578` (all closed except `PMR-004`, open for the two owner-only scripts); the formal-verification-research agent-instruction bullet and `README.md` sentence are the owner's (`PMR-014`); one carried `COLLAB.md` sentence to tighten (`PMR-017`, class 3, next turn) | Done apart from `PMR-014` (owner) and `PMR-017` (next turn) |
-| `HET-001` Helium-to-Beryllium method-transfer input (`../analysis-workbook/outbox/helium-transfer-queue.md` at `efde667`) | Beryllium owner (`PMR-016`); the workbook maintainer mirrors the lifecycle | Open; `new`/`unaccepted`; planning input only, not authorization of any Beryllium work |
+| Wording reconciliations | `PMR-012` carried at `ccb48f6`; `PMR-011` and the Markdown parts of `PMR-004` carried at `83b97a3` and `4a01578`; `PMR-017` carried at `8246147`; `PMR-015` carried at `226d367` and `ff12f2f`; the formal-verification-research agent-instruction bullet and `README.md` sentence are the owner's (`PMR-014`) | Done apart from `PMR-014` (owner) and the two owner-only scripts of `PMR-004` |
+| `HET-001` Helium-to-Beryllium method-transfer input (`../analysis-workbook/outbox/helium-transfer-queue.md`, observed `new`/`unaccepted` at `83b97a3` and unchanged at `ff12f2f`) | Beryllium owner (`PMR-016`); the workbook maintainer mirrors the lifecycle | Open; tracked read-only as `PML-0017` (`PMD-20260905-001`); planning input only, not authorization of any Beryllium work |
 | Standing carry authority | Responsible human | Granted 2026-09-04 (`PMD-20260904-003`; user choices quoted in "Provenance"); committed as `d36b015` and pushed; binds sessions started after that commit |
 | Decision on the lost retained PM artifacts (see "Retained PM session artifacts") | Responsible human | Open |
 | Push of the first-coordination-turn and standing-carry-authority commits (`project-manager/` and parent) | Responsible human confirmation | Closed 2026-09-04 by the two user confirmations quoted in "Provenance"; both `main` branches are synchronized with their private remotes |
 | Private remote for `project-manager/` | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; `origin` -> private `beryllium-project/project-manager` |
 | xrv-research-repo push of `7314e2f` | xrv-research-repo owner | Open; `PMR-013` |
-| threat-modeler push of 3 local commits (`026e6c9`, `0d5bed3`, carried `4a01578`) | threat-modeler owner | Open; `PMR-005` |
-| analysis-workbook push of the carried `83b97a3` | analysis-workbook owner | Open; 1 ahead of private `origin/main` |
-| formal-verification-research backup, now including the carried `ccb48f6` | Owner | Open; no reachable remote (`PMR-001`) |
-| Push of this carry turn's coordination commits (`project-manager/` and parent) | Responsible human confirmation | Open; local until confirmed |
+| threat-modeler push of 4 local commits (`026e6c9`, `0d5bed3`, carried `4a01578` and `226d367`) | threat-modeler owner | Open; `PMR-005` |
+| analysis-workbook push of the carried `83b97a3` and `ff12f2f` | analysis-workbook owner | Open; 2 ahead of private `origin/main` |
+| formal-verification-research backup, now including the carried `ccb48f6` and `8246147` | Owner | Open; no reachable remote (`PMR-001`) |
+| helium-te-poc backup of the thirteen local branches without an upstream, including the `d0cca32` lineage | helium-te-poc owner | Open; `PMR-018` (read-only observation as of the last fetch; not a gate) |
+| Push of this turn's coordination commits (`project-manager/` and parent) | Responsible human confirmation | Closed 2026-09-05 by the confirmation quoted in "Provenance"; both `main` branches pushed |
 
 ## Role and authority
 
@@ -378,8 +452,8 @@ the session that recorded it wrote only Project Manager-owned files.
 ## Observed workspace state
 
 Observed 2026-09-04T16:15Z with `scripts/inspect-components.sh status`, at the
-start of the first coordination turn and before this turn's commits. Full
-hashes are in `../COMPONENTS.md`. The earlier observation the same day
+start of the first coordination turn and before that turn's commits; the
+2026-09-05 observations follow below. Hashes are in `../COMPONENTS.md`. The earlier observation the same day
 (2026-09-04T12:29Z, before the consolidation commits) differed only in the
 rows noted.
 
@@ -420,6 +494,30 @@ revisions moved by this turn's carried commits:
 22:45Z, and is exact again after `../COMPONENTS.md` was refreshed with all
 five moved revisions at the end of this turn.
 
+Second coordination turn, 2026-09-05 (`scripts/inspect-components.sh status`
+at 04:54Z before any write; `registry-check` exact; `pull-queues.sh check`
+passing). Every row matched the carry-turn end state: parent clean `main`
+`1607db5` (`backup/main` 0/2), this repository clean `main` `a1677c1`
+(`origin/main` 0/2), `helium-te-poc/` clean `f0d96b1` (0/0),
+`formal-verification-research/` clean `ccb48f6` (0/1), `osr-claude/`
+`f2edd17`, `provenance-review/` `86d9260`, `analysis-workbook/` clean
+`83b97a3` (0/1), `threat-modeler/` clean `4a01578` (0/3), `beryllium-repo`
+`65f6d89`, `cheri-riscv-notes-repo` `6553092`, `xrv-research-repo` `7314e2f`
+(0/1). Rows moved by this turn's carried commits, each re-observed clean by
+`state <component>` immediately before the write:
+
+| Entry | Before | After this turn's carry | Note |
+| --- | --- | --- | --- |
+| `formal-verification-research/` | clean `main` `ccb48f6` (0/1 against the stale ref) | **`8246147`** (0/**2**) | `PMR-017`, `COLLAB.md` only |
+| `threat-modeler/` | clean `main` `4a01578` (0/3) | **`226d367`** (0/**4**) | `PMR-015`, `RESEARCH-SOURCES.md` only |
+| `analysis-workbook/` | clean `main` `83b97a3` (0/1) | **`ff12f2f`** (0/**2**) | `PMR-015`, `RESEARCH-SOURCES.md` only |
+
+A `status` run at 05:15Z after the carries and after the first `refs` runs
+showed every component still clean at those revisions, and `registry-check`
+exact once `../COMPONENTS.md` was refreshed. `helium-te-poc/` was not
+written; its ref listing is recorded in
+`records/assurance/helium-te-fv-pathfinder.md`.
+
 The 16:15Z `registry-check` had reported one drift, `helium-te-poc`
 (`9af92cc` recorded, `e65c6a0` live), reconciled in `../COMPONENTS.md` in
 that turn. `helium-te-poc/` changed six times on 2026-09-04 (clean
@@ -438,7 +536,8 @@ objects; their target contents remain outside parent history.
 ## Component notes
 
 Each note separates the last Project Manager review (2026-08-29, parent
-`HANDOFF.md` at `7677527`) from what was observed on 2026-09-04. Conventions,
+`HANDOFF.md` at `7677527`) from what was observed on 2026-09-04 and
+2026-09-05. Conventions,
 commands, and boundaries are in `components/<component>.md`.
 
 ### Helium Type Enforcement PoC
@@ -476,9 +575,11 @@ and has a valid frozen H7 gate" and that this "does not approve later
 maintenance-branch documentation or constitute publication".
 
 The Project Manager records all of that as the component's own statements. It
-has not reviewed the Tier 7 or Tier 8 gate content, has not verified that the
-named refs exist or are frozen (the inspect script reports only the
-checked-out branch), and infers no approval from a branch name, a clean
+has not reviewed the Tier 7 or Tier 8 gate content, had not at that point
+verified that the named refs exist or are frozen (the inspect script then
+reported only the checked-out branch; the 2026-09-05 `refs` listing later
+confirmed existence, not frozenness or content), and infers no approval from
+a branch name, a clean
 worktree, or a passing evaluator run. The observed statements are tabulated
 in `records/assurance/helium-te-fv-pathfinder.md`, above its retained
 2026-08-18 snapshot. The component's handoff also names home-directory
@@ -503,9 +604,23 @@ not formally verified and has not been validated on hardware." The same
 direction reaches the Project Manager independently as the workbook's
 `HET-001`. Recorded as the component's statements only; the Project Manager
 has not reviewed the endpoint decision or any gate content and infers no
-approval (`PMD-20260904-004` item 9). The 2026-09-04 section of
-`records/assurance/helium-te-fv-pathfinder.md` still reflects `e65c6a0`; add
-the `f0d96b1` statements there in the next turn.
+approval (`PMD-20260904-004` item 9). Recorded on 2026-09-05 in the new
+section "Observed component statements, 2026-09-05 (`f0d96b1`)" of
+`records/assurance/helium-te-fv-pathfinder.md`, which tabulates every
+statement and ref with its change since `e65c6a0`, and in the subsection
+"Read-only ref listing, 2026-09-05T05:15Z": `bash
+./scripts/inspect-components.sh refs helium-te-poc <refs>` found all eleven
+named refs present locally (twenty local branches, no tags); as of the last
+fetch all but `d0cca32` are reachable from a remote-tracking branch, and the
+local `helium-te-fv-tier8-h6-candidate`, `helium-te-fv-tier8-h7-approved`, and
+`helium-te-fv-tier8-transaction` branches have no upstream configured although
+`ed15451` and `85a6e55` are reachable from
+`origin/helium-te-fv-tier8-h7-approved`. `PMR-018` asks the owner to decide
+the backup of the local-only lineage. Existence is not gate review and not
+approval. The component's handoff at `f0d96b1` asks nothing of the Project
+Manager; its stated next actions are the responsible human's (push or
+publish the frozen H7 branch manually; decide which work may proceed from the
+travel-maintenance baseline).
 
 Incident provenance retained: at 2026-08-11 23:16:30 PDT a subagent ran
 `git init` and fetched into the former workspace path under a "Recover
@@ -535,8 +650,10 @@ Since `PMD-20260904-003` the Project Manager holds a narrower standing carry
 authority: it never integrates `collab/*` branches or edits research, and it
 commits in this repository only for carried class-2 (`sources/bibliography.md`
 pointers) and class-3 (Project Manager-role wording) requests. `collab/*`
-integration stays owner-only; periodic `collab/*` inspection waits for a
-read-only ref listing in `scripts/inspect-components.sh`.
+integration stays owner-only; periodic `collab/*` inspection is done
+read-only with `scripts/inspect-components.sh refs
+formal-verification-research` since 2026-09-05 (see the carry paragraph
+below).
 
 Carried 2026-09-04 (22:18Z turn), commit `ccb48f6` on `main`
 (`PMD-20260904-004`): `PMR-012` (superseding `PMR-010`) rewrote the
@@ -551,6 +668,19 @@ entries. The owner's `.github/copilot-instructions.md` bullet and `README.md`
 sentence still describe the old budget and, with the pointer triage, are
 `PMR-014`. The component is 1 commit ahead of its stale, unreachable remote
 ref; `PMR-001` (backup) is unchanged and now covers the carried commit.
+
+Carried 2026-09-05, commit `8246147` on `main`: `PMR-017` (class 3) made the
+"Ledger integration procedure" attribute the `git switch main` / `git branch
+--no-merged` block to the research owner alone; the Project Manager runs none
+of those commands and only reports what its read-only inspection observes.
+The worktree was clean immediately before the write and the diff was that
+sentence. The component is now 2 commits ahead of the stale ref (`PMR-001`).
+The read-only `refs` listing the same turn showed two local `collab/*`
+branches (`collab/helium-te-fv-gpt56sol-20260811-pathfinder` `14f06d5`,
+`collab/helium-te-fv-gpt56sol-20260812-trap-effect` `ff67d02`), both merged
+into `main`, consistent with the owner-status table; the periodic `collab/*`
+inspection the component asked for can now be done without any command
+inside the component.
 
 ### OS security research archive
 
@@ -640,9 +770,18 @@ to Helium Tier 8 candidate `ed15451` and `docs/fv-pathfinder-lessons.md`)
 asks the Project Manager or responsible human to route it to the Beryllium
 owner; the routing record is `PMR-016`. The workbook maintainer mirrors the
 lifecycle only from an exact owner-side record; the Project Manager does not
-edit that file (class 1 covers only `outbox/pm-queue.md`). Whether
-`queue/README.md` and `scripts/pull-queues.sh` register this queue is a
-pending decision.
+edit that file (class 1 covers only `outbox/pm-queue.md`). Decided 2026-09-05
+(`PMD-20260905-001`, after the human chose read-only registration): the queue
+is the third source `analysis-workbook-transfer` in `scripts/pull-queues.sh`
+and `queue/README.md`, tracked read-only; `PML-0017` records `HET-001` as
+`routed` (`PMR-016`) with "Source status applied" `Not applicable`.
+
+Carried 2026-09-05, commit `ff12f2f` on `main`: `PMR-015` (class 3) added
+`../project-manager/queue/LEDGER.md` to the `RESEARCH-SOURCES.md`
+"Source-discovery reference set". The worktree was clean immediately before
+the write; the diff was one bullet. The component is now 2 commits ahead of
+its private `origin/main`; pushing both carried commits is the owner's
+decision.
 
 ### Threat modeler
 
@@ -664,9 +803,12 @@ list is in the owner-only `scripts/readonly-inspect.sh`, still `PMR-004`).
 The component is now **3 commits ahead** of `origin/main`; `PMR-005` covers
 the carried commit too. Its pull-protocol status set (`acknowledged`,
 `routed`, `integrated`, `declined`) is the one `queue/README.md` already maps
-to for this queue, so no vocabulary request is needed here. `PMR-015` asks
-whether `project-manager/queue/LEDGER.md` should join its discovery reference
-set.
+to for this queue, so no vocabulary request is needed here. Carried
+2026-09-05, commit `226d367` on `main`: `PMR-015` (class 3) added
+`workspace://project-manager/queue/LEDGER.md` to the `RESEARCH-SOURCES.md`
+"Discovery reference set"; the worktree was clean immediately before the
+write and the diff was one bullet. The component is now **4 commits ahead**
+of `origin/main` (`PMR-005`).
 
 ### Cross-project Supervisor Domains disposition
 
@@ -788,40 +930,36 @@ Then:
 
 ## Pending coordination
 
-- **Carry `PMR-017`** (one `COLLAB.md` sentence, class 3) when
-  `bash ./scripts/inspect-components.sh state formal-verification-research`
-  is clean; **ask the user about `PMR-015`** (adding
-  `project-manager/queue/LEDGER.md` to the threat-modeler and
-  analysis-workbook discovery reference sets; class 3) before carrying it.
-  `PMR-009` is request-only (cheri-riscv-notes-repo `references/` are
-  generated exports behind gate D4). The formal-verification-research,
-  threat-modeler, and analysis-workbook carries of 2026-09-04 are done
-  (`ccb48f6`, `4a01578`, `83b97a3`; `PMD-20260904-004`).
-- **Decide how the Project Manager consumes
-  `../analysis-workbook/outbox/helium-transfer-queue.md`** (committed at
-  `efde667`; `HET-001` routed as `PMR-016`): record a decision on whether
-  `queue/README.md` and `scripts/pull-queues.sh` register it (its `HET-NNN`
-  lifecycle differs from the `PMQ-NNN` source-pointer schema) before any
-  tooling change.
-- **Add the `f0d96b1` Helium statements** (`FV-FIN-001` resolved; Tier 8
-  endpoint; travel gate blocked) to
-  `records/assurance/helium-te-fv-pathfinder.md` as observed statements.
-- **Helium and `collab/*` ref verification tooling:** extend
-  `scripts/inspect-components.sh` with a read-only ref listing for a named
-  component so the refs named in `../helium-te-poc/HANDOFF.md` and any
-  unmerged `collab/*` branch in `../formal-verification-research/` can be
-  confirmed without any command inside a component. Until then, re-read those
-  handoffs each turn and record their statements only (`PMD-20260904-002`).
+- **No carry is queued.** `PMR-015` (`226d367`, `ff12f2f`) and `PMR-017`
+  (`8246147`) were carried on 2026-09-05; `PMR-012`, `PMR-008`, `PMR-011`,
+  `PMR-006`, and the Markdown parts of `PMR-004` on 2026-09-04. `PMR-009` is
+  request-only (cheri-riscv-notes-repo `references/` are generated exports
+  behind gate D4). Every open request is request-only or owner-only.
+- **Transfer queue**: consumed read-only as `analysis-workbook-transfer`
+  (`PMD-20260905-001`). Each turn, `pull-queues.sh list` shows a new `HET-NNN`
+  row; add a `PML-NNNN` row, route it with a `PMR-NNN`, never edit the file,
+  never use `accepted`. When the Beryllium owner records, defers, or declines
+  `HET-001`, update `PMR-016` (or supersede it) so the workbook maintainer can
+  mirror the lifecycle from that exact record.
+- **Helium**: the `f0d96b1` statements and the read-only ref listing are in
+  `records/assurance/helium-te-fv-pathfinder.md`. Each turn, re-run `bash
+  ./scripts/inspect-components.sh refs helium-te-poc` and re-read
+  `../helium-te-poc/HANDOFF.md`; record changes as statements only
+  (`PMD-20260904-002`). `PMR-018` (backup of `d0cca32` and the local-only
+  branches) is the owner's.
+- **`collab/*` inspection**: `bash ./scripts/inspect-components.sh refs
+  formal-verification-research` lists unmerged `collab/*` branches read-only;
+  an unmerged branch observed there becomes a request to the owner, never an
+  integration.
 - **Decide the lost retained artifacts** (section above).
 - **Pushes** stay per-turn user-confirmed actions, for this repository, the
-  parent, and every component. The 2026-09-04 confirmations quoted in
-  "Provenance" covered the first-coordination-turn and standing-carry-authority
-  commits of this repository and the parent; this carry turn's coordination
-  commits are local, and the carried component commits `ccb48f6`, `4a01578`,
-  and `83b97a3` are local until their owners' pushes.
+  parent, and every component. This turn's coordination commits were pushed
+  under the confirmation quoted in "Provenance"; the carried component
+  commits `ccb48f6`, `8246147`, `4a01578`, `226d367`, `83b97a3`, and
+  `ff12f2f` are local until their owners' pushes.
 - `PMR-001` formal-verification-research: the owner-status table and handoff
   halves are observed satisfied at `8b91ebd`; decide a reachable backup, which
-  now also covers the carried `ccb48f6`.
+  now covers the carried `ccb48f6` and `8246147`.
 - `PMR-012` formal-verification-research (superseded `PMR-010`): **closed**,
   carried at `ccb48f6`. `PMR-014` asks the owner to align the remaining
   agent-instruction bullet and `README.md` sentence and to triage the five
@@ -836,8 +974,8 @@ Then:
 - `PMR-004` analysis-workbook and threat-modeler: both Markdown parts carried
   (`4a01578`, `83b97a3`); open only for the two owner-only
   `scripts/readonly-inspect.sh` registered lists.
-- `PMR-005` threat-modeler: push the 3 local commits, including the carried
-  `4a01578` (owner's decision).
+- `PMR-005` threat-modeler: push the 4 local commits, including the carried
+  `4a01578` and `226d367` (owner's decision).
 - `PMR-006` analysis-workbook: **closed**; the fourteen class-1 edits were
   applied at `83b97a3` and the ledger records `yes 2026-09-04`.
 - `PMR-007` xrv-research-repo: closed at `7314e2f`; `PMR-013` is the owner's
@@ -852,14 +990,15 @@ Then:
 - `PMR-014` formal-verification-research: owner-only alignment of
   `.github/copilot-instructions.md` and `README.md` with the carried
   `COLLAB.md`, and triage of the five routed pointers.
-- `PMR-015` threat-modeler and analysis-workbook: consider adding
-  `project-manager/queue/LEDGER.md` to the discovery reference sets
-  (carry-eligible; ask the user first).
+- `PMR-015` threat-modeler and analysis-workbook: **closed**, carried at
+  `226d367` and `ff12f2f` (both discovery reference sets name the ledger).
 - `PMR-016` beryllium-repo: triage `HET-001` under Beryllium's own planning
   controls and record the disposition (request-only; planning input, not
-  authorization of any Beryllium work).
-- `PMR-017` formal-verification-research: tighten the carried `COLLAB.md`
-  ledger-integration sentence (class 3; next turn).
+  authorization of any Beryllium work); tracked as `PML-0017`.
+- `PMR-017` formal-verification-research: **closed**, carried at `8246147`.
+- `PMR-018` helium-te-poc: decide the backup of the thirteen local branches
+  without an upstream, including the `d0cca32` lineage (request-only;
+  carry-ineligible component; not a gate).
 - Obtain the two responsible-human H0 selections, or wait for the exact
   board/firmware packet; do not infer a normative host or path inventory.
 - Preserve every Helium approved, candidate, and preserved ref as a distinct
@@ -1004,3 +1143,64 @@ Then:
   written; no `git -C` command was run; nothing was pushed. One commit here
   and one in the parent record the repair; both are local until a further
   confirmation.
+- Second coordination turn, 2026-09-05T04:54Z-05:40Z (after `a1677c1` here
+  and `1607db5` in the parent): the user opened a new session with "continue
+  per handoff" in fleet mode; the `/beryllium-project-management` skill loaded
+  at startup. After the restart snapshot the agent asked the four questions
+  the previous handoff had queued in one `ask_user` form; the user answered
+  `pmr015=carry_both` ("Carry now in threat-modeler and analysis-workbook
+  (class 3, one commit each)"), `het_registration=register_readonly`
+  ("Register for read-only tracking in pull-queues.sh + queue/README.md + one
+  PML row per HET item; never an edit target (recommended)"),
+  `optional_items=helium_assurance_refresh, refs_tooling`, and
+  `push_confirmation=true` to the field "Back up this turn's coordination
+  commits when done? (explicit push confirmation)", whose description read
+  "If yes, after committing I will run exactly `git push origin main` in
+  project-manager/ and `git push backup main` in the parent, and nothing
+  else; no component is pushed." Three write-confined sub-agents worked only
+  inside this repository (transfer-queue tooling and `PMD-20260905-001`; the
+  `refs` mode; the Helium assurance refresh) while the orchestrator carried
+  the requests itself: `../formal-verification-research/` (clean at
+  `ccb48f6`; `.github/copilot-instructions.md`, `COLLAB.md`, and `HANDOFF.md`
+  read) `COLLAB.md` one sentence, `git -C diff` and `diff --check` reviewed,
+  committed `824614780bd3f900abaa15aa523a3337e4bb3fbe` ("collab: PMR-017
+  ...", Copilot co-author trailer); `../threat-modeler/` (clean at
+  `4a01578`; local instructions read) `RESEARCH-SOURCES.md` one bullet,
+  committed `226d367bde80c09c85fbadd4600222258d56527a` ("docs: PMR-015
+  ..."); `../analysis-workbook/` (clean at `83b97a3`; local instructions
+  read) `RESEARCH-SOURCES.md` one bullet, committed
+  `ff12f2faf611c02faeaa75760306808bf5ed7eb9` ("docs: PMR-015 ..."). Only
+  `git -C <component> status`, `diff`, `add <path>`, `commit`, `log -1`, and
+  `status --short --branch` were run inside components; the `refs` listings
+  came from `scripts/inspect-components.sh`. `helium-te-poc/` and
+  `beryllium-repo` were not written. `pm-auditor` pass: see the entry that
+  follows. One commit in this repository and one in the parent record the
+  turn; their hashes and the push are recorded in the entry that follows.
+- `pm-auditor` pass, 2026-09-05T05:28Z (write-disabled; it had only a file
+  viewer, so it verified the three carried commits by reading Git metadata as
+  files and could not count changed files; the orchestrator confirmed one
+  file per commit with `git -C <component> show --stat`): no blocking item.
+  Ten stale items, all reconciled here before commit: the parent and
+  `project-manager/` backup rows and the `project-manager/` registry row
+  (pending Phase 8), the pre-push wording of this handoff (this entry and the
+  push entry below), the `PMR-016` note ("pending protocol decision"), the
+  analysis-workbook card (`PMR-015` still open, 1 ahead), the Helium card
+  ("has not verified the named refs exist"), the assurance record's preamble
+  (sub-agent process narration and "not independently verified" cells
+  contradicted by its own ref-listing subsection), and two superseded Helium
+  and formal-verification-research sentences in the component notes.
+  Thirteen minor items: "every ref named" and "eleven local-only branches"
+  overstated the check (eleven assurance-relevant refs were checked; thirteen
+  local branches have no upstream configured, three of whose tips are on
+  remote-tracking branches; fixed in the header, `PMR-018`, the Backups row,
+  the blockers table, `../COMPONENTS.md`, and the record, which now
+  enumerates the thirteen branches); "plumbing" became "read-only Git
+  subcommands"; the `HET-001` pin (`83b97a3`, unchanged at `ff12f2f`);
+  `PMR-004` listed in both request sets; section intros and "Full hashes";
+  the unattributed "accepted travel-maintenance baseline" phrase in the Helium
+  card (now quoted as the component's); the skill's Phase 4 (transfer rows
+  added); the `pull-queues.sh` header comment; the `PMD-20260905-001` input
+  pin (`a1677c1`). Left as is: the `tests/fixtures/valid-pm/queue/README.md`
+  fixture wording (fixture only) and the `PMR-015` component column naming
+  only `threat-modeler` with `analysis-workbook` in the note (same pattern as
+  `PMR-004`).

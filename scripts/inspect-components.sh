@@ -10,6 +10,7 @@ usage() {
     cat >&2 <<'EOF'
 Usage:
   inspect-components.sh components
+  inspect-components.sh refs <component|workspace|project-manager> [<ref>...]
   inspect-components.sh state <component|workspace|project-manager>
   inspect-components.sh symlinks
   inspect-components.sh status
@@ -17,6 +18,9 @@ Usage:
 
 components      one TSV row per registered entry: name, integration, worktree,
                 branch, head
+refs            local refs, remote-tracking refs as of the last fetch, tags,
+                unmerged collab/* branches relative to main, and optional
+                commit-ref checks for one entry
 state           branch, head, worktree, upstream, ahead/behind, and porcelain
                 status for one entry
 symlinks        readlink, resolution, and Git root for every tracked *-repo link
@@ -233,6 +237,139 @@ print_state() {
     fi
 }
 
+join_lines() {
+    local first=1 line
+    while IFS= read -r line; do
+        [[ -n $line ]] || continue
+        if ((first)); then
+            printf '%s' "$line"
+            first=0
+        else
+            printf ',%s' "$line"
+        fi
+    done
+    ((first)) && printf 'none'
+    return 0
+}
+
+print_containing_branches() {
+    local kind=$1 object=$2
+    if [[ $kind == local ]]; then
+        { "${component_git[@]}" branch --contains "$object" \
+            --format='%(refname:short)' 2>/dev/null || true; } | sort | join_lines
+    else
+        { "${component_git[@]}" branch --remotes --contains "$object" \
+            --format='%(refname:short)' 2>/dev/null || true; } | sort | join_lines
+    fi
+}
+
+print_refs() {
+    local name=$1 ref ref_arg head branch line local_name object upstream track
+    local ahead behind tag_name peeled target main_ref main_head collab collab_head
+    local ahead_behind resolution full_sha subject local_contains remote_contains
+    shift
+    open_entry "$name"
+    head=$(git_head)
+    printf '# refs for entry: %s\n' "$name"
+    printf '# git-root: %s\n' "$component_root"
+    printf '# head: %s\n' "$head"
+    printf '# checked: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+    printf '# local branches (name, head, upstream, ahead, behind)\n'
+    while IFS=$'\t' read -r local_name object upstream track; do
+        [[ -n $local_name ]] || continue
+        if [[ -z $upstream ]]; then
+            upstream=none
+            ahead=-
+            behind=-
+        elif [[ $track == *gone* ]]; then
+            ahead=unknown
+            behind=unknown
+        else
+            ahead=0
+            behind=0
+            if [[ $track =~ ahead[[:space:]]+([0-9]+) ]]; then
+                ahead=${BASH_REMATCH[1]}
+            fi
+            if [[ $track =~ behind[[:space:]]+([0-9]+) ]]; then
+                behind=${BASH_REMATCH[1]}
+            fi
+        fi
+        printf '%s\t%s\t%s\t%s\t%s\n' "$local_name" "$object" "$upstream" \
+            "$ahead" "$behind"
+    done < <("${component_git[@]}" for-each-ref \
+        --format=$'%(refname:short)\t%(objectname)\t%(upstream:short)\t%(upstream:track)' \
+        refs/heads)
+
+    printf '# remote-tracking branches (name, head) -- as of the last fetch; not a live remote check\n'
+    while IFS=$'\t' read -r branch object; do
+        [[ -n $branch ]] || continue
+        printf '%s\t%s\n' "$branch" "$object"
+    done < <("${component_git[@]}" for-each-ref \
+        --format=$'%(refname:short)\t%(objectname)' refs/remotes)
+
+    printf '# tags (name, target)\n'
+    while IFS=$'\t' read -r tag_name object peeled; do
+        [[ -n $tag_name ]] || continue
+        target=${peeled:-$object}
+        printf '%s\t%s\n' "$tag_name" "$target"
+    done < <("${component_git[@]}" for-each-ref \
+        --format=$'%(refname:short)\t%(objectname)\t%(*objectname)' refs/tags)
+
+    printf '# unmerged collab/* branches relative to main (name, head, commits-ahead)\n'
+    if ! main_head=$("${component_git[@]}" rev-parse --verify --quiet \
+        refs/heads/main^{commit} 2>/dev/null); then
+        printf '# main branch absent; unmerged collab/* listing omitted\n'
+    else
+        while IFS=$'\t' read -r collab collab_head; do
+            [[ -n $collab ]] || continue
+            ahead_behind=$("${component_git[@]}" for-each-ref \
+                --format='%(ahead-behind:refs/heads/main)' "refs/heads/$collab")
+            printf '%s\t%s\t%s\n' "$collab" "$collab_head" \
+                "${ahead_behind##* }"
+        done < <("${component_git[@]}" branch --no-merged "$main_head" \
+            --list 'collab/*' --format=$'%(refname:short)\t%(objectname)' || true)
+    fi
+
+    printf '# ref checks (ref, resolution, full-sha, on-local-branches, on-remote-tracking-branches, subject)\n'
+    for ref_arg in "$@"; do
+        resolution=absent
+        full_sha=-
+        subject=-
+        local_contains=none
+        remote_contains=none
+        if [[ $ref_arg =~ ^[0-9a-fA-F]{4,39}$ ]]; then
+            line=$({ "${component_git[@]}" rev-parse --disambiguate="$ref_arg" 2>/dev/null || true; } |
+                while IFS= read -r ref; do
+                    if "${component_git[@]}" cat-file -e "$ref^{commit}" 2>/dev/null; then
+                        printf '%s\n' "$ref"
+                    fi
+                done | sort -u)
+            if [[ $(printf '%s\n' "$line" | grep -c .) -gt 1 ]]; then
+                resolution=ambiguous
+            elif [[ -n $line ]]; then
+                full_sha=$line
+                resolution=exists
+            fi
+        elif full_sha=$("${component_git[@]}" rev-parse --verify --quiet \
+            "$ref_arg^{commit}" 2>/dev/null); then
+            if "${component_git[@]}" cat-file -e "$full_sha^{commit}" 2>/dev/null; then
+                resolution=exists
+            else
+                resolution=absent
+                full_sha=-
+            fi
+        fi
+        if [[ $resolution == exists ]]; then
+            local_contains=$(print_containing_branches local "$full_sha")
+            remote_contains=$(print_containing_branches remote "$full_sha")
+            subject=$("${component_git[@]}" log -1 --format=%s "$full_sha")
+        fi
+        printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$ref_arg" "$resolution" \
+            "$full_sha" "$local_contains" "$remote_contains" "$subject"
+    done
+}
+
 print_symlinks() {
     local name path target resolved
     printf '# tracked symlink entries (name, link-target, resolution, git-root, head)\n'
@@ -363,6 +500,10 @@ case $mode in
 components)
     (($# == 0)) || { usage; exit 2; }
     print_components_table
+    ;;
+refs)
+    (($# >= 1)) || { usage; exit 2; }
+    print_refs "$@"
     ;;
 state)
     (($# == 1)) || { usage; exit 2; }

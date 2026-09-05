@@ -44,7 +44,9 @@ topic and chronology in the generated `WORKBOOK.md`.
   `outbox/component-requests.md` and names the parent `HANDOFF.md` and
   `formal-verification/helium-te-fv-pathfinder.md` as redirect stubs, which
   the parent keeps. `project-manager` is not in its owner-only
-  `scripts/readonly-inspect.sh` registered list (still `PMR-004`).
+  `scripts/readonly-inspect.sh` registered list (still `PMR-004`). At
+  `ff12f2f` (carried `PMR-015`, 2026-09-05) its "Source-discovery reference
+  set" also names `../project-manager/queue/LEDGER.md`.
 - At `efde667` (the owner's session, 2026-09-04) the component emits a
   second pull-only queue, `outbox/helium-transfer-queue.md`: `HET-NNN`
   method-transfer inputs with their own lifecycle (`new`, `routed`,
@@ -52,21 +54,25 @@ topic and chronology in the generated `WORKBOOK.md`.
   (`unaccepted`), outside the `PMQ-NNN` schema; the maintainer mirrors a
   lifecycle change only from an exact owner-side record. `HET-001` (Helium
   Tier 8 endpoint and reusable FV method; target `component://beryllium-repo`)
-  is routed as `PMR-016`. The Project Manager never edits that file (class 1
-  covers only `outbox/pm-queue.md`); whether `../queue/README.md` and
-  `../scripts/pull-queues.sh` register the queue is a pending decision.
+  is routed as `PMR-016`. Since `PMD-20260905-001`, the Project Manager
+  registers this queue for read-only tracking in `../queue/LEDGER.md` and
+  `../scripts/pull-queues.sh`; it never edits that file because class 1
+  covers only `outbox/pm-queue.md`.
 
 ## Outbound queue
 
-`outbox/pm-queue.md` is a pull interface. The component writes rows with
-status `new` or `unconfirmed`; the Project Manager resolves them to
-`accepted`, `duplicate`, `rejected`, or `deferred`. Since `83b97a3` (carried
-`PMR-011`) the component's `AGENT-INTERFACE.md` "Source-discovery queue"
-uses the same set as the queue header and explains that `routed` is an
-intermediate state kept in `../queue/LEDGER.md`. The Project Manager
-consumes the queue ledger-first (see `../queue/README.md`) and applies the
-status edits itself as class-1 carried writes when this component is clean
-(first done at `83b97a3`: fourteen rows).
+`outbox/pm-queue.md` is a source-discovery pull interface. The component
+writes rows with status `new` or `unconfirmed`; the Project Manager resolves
+them to `accepted`, `duplicate`, `rejected`, or `deferred`. Since `83b97a3`
+(carried `PMR-011`) the component's `AGENT-INTERFACE.md`
+"Source-discovery queue" uses the same set as the queue header and explains
+that `routed` is an intermediate state kept in `../queue/LEDGER.md`. The
+Project Manager consumes the queue ledger-first (see `../queue/README.md`)
+and applies the status edits itself as class-1 carried writes when this
+component is clean (first done at `83b97a3`: fourteen rows). The separate
+`outbox/helium-transfer-queue.md` is also consumed ledger-first for `HET-NNN`
+tracking, but the PM never edits it; the workbook maintainer mirrors transfer
+lifecycle changes from exact owner-side records.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 
@@ -82,7 +88,7 @@ git diff --check
 
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
-part was carried at `83b97a3`); whether to add
-`project-manager/queue/LEDGER.md` to its source-discovery reference set
-(`PMR-015`); a decision on pushing the carried `83b97a3`; nothing that treats
-a session as review or acceptance.
+part was carried at `83b97a3`); a decision on pushing the carried `83b97a3`
+and `ff12f2f` (2 ahead); nothing that treats a session as review or
+acceptance. `PMR-015` (the ledger in the source-discovery reference set) was
+carried at `ff12f2f` on 2026-09-05.

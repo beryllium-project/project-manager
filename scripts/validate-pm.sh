@@ -181,18 +181,77 @@ check_table "$requests" "$root/templates/request-row.md" PMR \
 # Ledger-specific cells.
 if [[ -f $ledger ]]; then
     bad=0
-    while IFS=$'\t' read -r id source _sid _raised _title _owner _status applied _decided _note; do
+    while IFS=$'\t' read -r id source sid _raised _title _owner _status applied _decided _note; do
         [[ -n $id ]] || continue
-        if [[ ! $source =~ ^(analysis-workbook|threat-modeler)$ ]]; then
+        if [[ ! $source =~ ^(analysis-workbook|threat-modeler|analysis-workbook-transfer)$ ]]; then
             fail "queue/LEDGER.md $id names an unknown source component: $source"
             bad=1
         fi
-        if [[ ! $applied =~ ^(no|yes\ [0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
+        case $source in
+        analysis-workbook)
+            [[ $sid =~ ^PMQ-[0-9]{3}$ ]] || {
+                fail "queue/LEDGER.md $id has an invalid analysis-workbook source ID: $sid"
+                bad=1
+            }
+            ;;
+        threat-modeler)
+            [[ $sid =~ ^DISC-[0-9]{3}$ ]] || {
+                fail "queue/LEDGER.md $id has an invalid threat-modeler source ID: $sid"
+                bad=1
+            }
+            ;;
+        analysis-workbook-transfer)
+            [[ $sid =~ ^HET-[0-9]{3}$ ]] || {
+                fail "queue/LEDGER.md $id has an invalid transfer source ID: $sid"
+                bad=1
+            }
+            ;;
+        esac
+        if [[ $source == analysis-workbook-transfer ]]; then
+            if [[ $applied != 'Not applicable' ]]; then
+                fail "queue/LEDGER.md $id transfer row must mark applied as Not applicable: $applied"
+                bad=1
+            fi
+        elif [[ ! $applied =~ ^(no|yes\ [0-9]{4}-[0-9]{2}-[0-9]{2})$ ]]; then
             fail "queue/LEDGER.md $id has an invalid applied value: $applied"
             bad=1
         fi
     done < <(table_rows "$ledger" PML)
     ((bad == 0)) && pass "queue/LEDGER.md source and applied cells are valid"
+fi
+
+# --- transfer queue (HET) tracking ---------------------------------------
+
+pull=$root/scripts/pull-queues.sh
+if [[ -f $pull ]]; then
+    require_text "$pull" 'analysis-workbook/outbox/helium-transfer-queue.md'
+    require_text "$pull" 'outside class 1 of PMD-20260904-003'
+    bad=0
+    while IFS= read -r line; do
+        if [[ $line == *analysis-workbook-transfer:* && $line != *"printf ''"* ]]; then
+            fail "scripts/pull-queues.sh maps a transfer PM status to a source edit: $line"
+            bad=1
+        fi
+    done <"$pull"
+    ((bad == 0)) && pass "scripts/pull-queues.sh has no non-empty transfer status mapping"
+else
+    pass "scripts/pull-queues.sh transfer mapping check skipped for fixture without scripts"
+fi
+require_text "$root/queue/README.md" 'accepted is never used for transfer rows'
+if [[ -f $ledger ]]; then
+    bad=0
+    while IFS=$'\t' read -r id source _sid _raised _title _owner status applied _decided _note; do
+        [[ $source == analysis-workbook-transfer ]] || continue
+        if [[ $status == accepted ]]; then
+            fail "queue/LEDGER.md $id transfer row uses accepted"
+            bad=1
+        fi
+        if [[ $applied != 'Not applicable' ]]; then
+            fail "queue/LEDGER.md $id transfer row applied value is not Not applicable: $applied"
+            bad=1
+        fi
+    done < <(table_rows "$ledger" PML)
+    ((bad == 0)) && pass "queue/LEDGER.md transfer rows are read-only tracked"
 fi
 
 # --- decision records -----------------------------------------------------
@@ -323,6 +382,31 @@ if ((check_parent)); then
     else
         fail "parent .gitignore does not ignore /project-manager/"
     fi
+fi
+
+# --- inspect-components refs mode -------------------------------------------
+
+inspect=$root/scripts/inspect-components.sh
+if [[ -f $inspect ]]; then
+    if bash "$inspect" 2>&1 |
+        grep -Fq 'inspect-components.sh refs <component|workspace|project-manager> [<ref>...]'; then
+        pass "scripts/inspect-components.sh usage lists refs mode"
+    else
+        fail "scripts/inspect-components.sh usage does not list refs mode"
+    fi
+    if bash -n "$inspect"; then
+        pass "scripts/inspect-components.sh passes bash -n"
+    else
+        fail "scripts/inspect-components.sh fails bash -n"
+    fi
+    if sed 's/#.*//' "$inspect" |
+        grep -Eq '(^|[[:space:]])(fetch|checkout|switch|stash|reset|push)([[:space:]]|$)|remote[[:space:]]+add|branch[[:space:]]+-[dDmM]'; then
+        fail "scripts/inspect-components.sh contains a prohibited refs-mode write subcommand"
+    else
+        pass "scripts/inspect-components.sh contains no prohibited refs-mode write subcommand"
+    fi
+else
+    pass "scripts/inspect-components.sh refs-mode checks skipped for fixture without scripts"
 fi
 
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"

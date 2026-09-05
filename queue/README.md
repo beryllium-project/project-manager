@@ -6,7 +6,10 @@ repositories:
 - `../analysis-workbook/outbox/pm-queue.md` (rows `PMQ-NNN`, statuses written
   by that component: `new`, `unconfirmed`);
 - `../threat-modeler/outbox/pm-queue.md` (rows `DISC-NNN`, status written by
-  that component: `new`).
+  that component: `new`);
+- `../analysis-workbook/outbox/helium-transfer-queue.md` (rows `HET-NNN`,
+  lifecycle statuses written by that component, currently `new`, and input
+  states kept `unaccepted`).
 
 Those files live inside agent-owned repositories. The Project Manager
 therefore operates **ledger-first**: every disposition is recorded in
@@ -18,33 +21,56 @@ committed inside the owning component with the `PML` identifiers in the
 subject, when that component's worktree is clean and no other session is
 active there. Otherwise the edit is handed to the user, who applies it in the
 owning component. The Project Manager never stages or commits a component
-outbox file in the parent.
+outbox file in the parent. The transfer queue is tracked read-only:
+`scripts/pull-queues.sh edits` prints no edit for it, because it is outside
+class 1 and the workbook maintainer mirrors lifecycle changes after observing
+an exact owner-side record.
 
 ## Ledger columns
 
 | Column | Meaning |
 | --- | --- |
 | Ledger ID | `PML-NNNN`, monotonic, never reused |
-| Source component | `analysis-workbook` or `threat-modeler` |
-| Source ID | The row identifier in the component queue (`PMQ-NNN`, `DISC-NNN`) |
+| Source component | `analysis-workbook`, `threat-modeler`, or `analysis-workbook-transfer` |
+| Source ID | The row identifier in the component queue (`PMQ-NNN`, `DISC-NNN`, or `HET-NNN`) |
 | Raised on | Date recorded in the source row, or `unknown` |
 | Title | Source title as recorded in the source row |
 | Suggested owner | Owning component proposed by the source row |
 | PM status | `pending`, `routed`, `accepted`, `duplicate`, `rejected`, or `deferred` |
-| Source status applied | `no`, or `yes YYYY-MM-DD` once the corresponding status has been applied in the component file, by the Project Manager as a carried write or by the user |
+| Source status applied | `no`, or `yes YYYY-MM-DD` once the corresponding status has been applied in a class-1 source file, by the Project Manager as a carried write or by the user; `Not applicable` for `analysis-workbook-transfer` rows because the PM never edits that file |
 | Decided on | Date of the latest PM status change, or `Not applicable` |
 | Note | Disposition rationale, request ID, or limitation |
 
 ## PM status meanings
 
-| PM status | Meaning | Edit for `analysis-workbook` queue | Edit for `threat-modeler` queue |
-| --- | --- | --- | --- |
-| `pending` | Pulled, not yet triaged | none | none |
-| `routed` | Owning component identified and a `PMR-NNN` request raised in `outbox/component-requests.md` | none | `routed` |
-| `accepted` | A pointer to the source is recorded in the owning component's designated index under its own rules, by the owner or by the Project Manager as a class-2 carried write on the owner's delegated authority; never corpus admission, review, or endorsement | `accepted` | `integrated` |
-| `duplicate` | Already recorded by the owning component | `duplicate` | `declined` |
-| `rejected` | Out of scope or rejected with a reason | `rejected` | `declined` |
-| `deferred` | Tracked but not acted on now | `deferred` | `acknowledged` |
+| PM status | Meaning | Edit for `analysis-workbook` queue | Edit for `threat-modeler` queue | Edit for `analysis-workbook-transfer` queue |
+| --- | --- | --- | --- | --- |
+| `pending` | Pulled, not yet triaged | none | none | none |
+| `routed` | Owning component identified and a `PMR-NNN` request raised in `outbox/component-requests.md` | none | `routed` | none |
+| `accepted` | A pointer to the source is recorded in the owning component's designated index under its own rules, by the owner or by the Project Manager as a class-2 carried write on the owner's delegated authority; never corpus admission, review, or endorsement; never used for transfer rows | `accepted` | `integrated` | none |
+| `duplicate` | Already recorded by the owning component | `duplicate` | `declined` | none |
+| `rejected` | Out of scope or rejected with a reason | `rejected` | `declined` | none |
+| `deferred` | Tracked but not acted on now | `deferred` | `acknowledged` | none |
+
+### Transfer inputs (`HET-NNN`)
+
+Transfer rows are read-only tracking entries for Helium-to-Beryllium method
+inputs. The PM statuses used for them are `pending`, `routed`, `duplicate`,
+`rejected`, and `deferred`. For this source, `routed` means a `PMR-NNN`
+request to the target owner has been recorded; it is the terminal PM
+disposition, because the remaining lifecycle belongs to the target owner and
+the workbook maintainer.
+
+The PM status accepted is never used for transfer rows: the source's own
+schema keeps every input `unaccepted`, and no Project Manager disposition may
+read as acceptance. "Source status applied" is always `Not applicable` because
+the PM never edits `../analysis-workbook/outbox/helium-transfer-queue.md`: the
+file is outside class 1 of
+`../records/decisions/PMD-20260904-003-standing-carry-authority.md`, and the
+workbook maintainer mirrors lifecycle changes after observing an exact
+owner-side record, such as the `PMR-NNN` row or an owner artifact. The
+source file's observed lifecycle status and commit are recorded in the ledger
+Note, and `scripts/pull-queues.sh edits` prints nothing for this source.
 
 `scripts/pull-queues.sh list` shows source rows awaiting a disposition,
 `scripts/pull-queues.sh check` fails when a source row has no ledger row or a

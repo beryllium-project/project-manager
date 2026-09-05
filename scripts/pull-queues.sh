@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Ledger-first consumption of component pm-queue files for the Project Manager.
-# Reads sibling outbox/pm-queue.md files and this repository's
+# Reads sibling outbox/pm-queue.md files, the read-only-tracked
+# analysis-workbook/outbox/helium-transfer-queue.md, and this repository's
 # queue/LEDGER.md. Never writes anywhere.
 
 set -euo pipefail
@@ -24,9 +25,11 @@ edits    the exact status-column edits due in each component queue file (applied
          rows with a final disposition
 summary  per-source counts
 
-Sources are ../analysis-workbook/outbox/pm-queue.md (PMQ-NNN rows) and
-../threat-modeler/outbox/pm-queue.md (DISC-NNN rows). The ledger is
-queue/LEDGER.md. Every mode is read-only.
+Sources are ../analysis-workbook/outbox/pm-queue.md (PMQ-NNN rows),
+../threat-modeler/outbox/pm-queue.md (DISC-NNN rows), and
+../analysis-workbook/outbox/helium-transfer-queue.md (HET-NNN rows,
+read-only tracking only). The ledger is queue/LEDGER.md. Every mode is
+read-only.
 EOF
 }
 
@@ -74,25 +77,32 @@ mode=$1
 
 # Source definitions: name, relative file, id prefix, and 1-based column
 # numbers for id, raised-on, title, suggested owner, and status.
-source_names=(analysis-workbook threat-modeler)
+source_names=(analysis-workbook threat-modeler analysis-workbook-transfer)
 declare -A source_file=(
     [analysis-workbook]=analysis-workbook/outbox/pm-queue.md
     [threat-modeler]=threat-modeler/outbox/pm-queue.md
+    [analysis-workbook-transfer]=analysis-workbook/outbox/helium-transfer-queue.md
 )
-declare -A source_prefix=([analysis-workbook]=PMQ [threat-modeler]=DISC)
-declare -A col_id=([analysis-workbook]=1 [threat-modeler]=1)
-declare -A col_raised=([analysis-workbook]=2 [threat-modeler]=0)
-declare -A col_title=([analysis-workbook]=5 [threat-modeler]=3)
-declare -A col_owner=([analysis-workbook]=7 [threat-modeler]=5)
-declare -A col_status=([analysis-workbook]=10 [threat-modeler]=6)
+declare -A source_prefix=(
+    [analysis-workbook]=PMQ
+    [threat-modeler]=DISC
+    [analysis-workbook-transfer]=HET
+)
+declare -A col_id=([analysis-workbook]=1 [threat-modeler]=1 [analysis-workbook-transfer]=1)
+declare -A col_raised=([analysis-workbook]=2 [threat-modeler]=0 [analysis-workbook-transfer]=2)
+declare -A col_title=([analysis-workbook]=5 [threat-modeler]=3 [analysis-workbook-transfer]=4)
+declare -A col_owner=([analysis-workbook]=7 [threat-modeler]=5 [analysis-workbook-transfer]=5)
+declare -A col_status=([analysis-workbook]=10 [threat-modeler]=6 [analysis-workbook-transfer]=6)
 declare -A source_status_column_name=(
     [analysis-workbook]=Status
     [threat-modeler]=Status
+    [analysis-workbook-transfer]=Status
 )
 # Statuses written by the component that await the Project Manager.
 declare -A awaiting_pattern=(
     [analysis-workbook]='^(new|unconfirmed)$'
     [threat-modeler]='^new$'
+    [analysis-workbook-transfer]='^new$'
 )
 
 # Ledger PM status -> status to write in each source file (by the Project
@@ -109,6 +119,9 @@ map_status() {
     threat-modeler:accepted) printf 'integrated' ;;
     threat-modeler:duplicate | threat-modeler:rejected) printf 'declined' ;;
     threat-modeler:deferred) printf 'acknowledged' ;;
+    # The transfer queue is outside class 1 of PMD-20260904-003; the workbook
+    # maintainer mirrors lifecycle changes after observing the owner-side record.
+    analysis-workbook-transfer:*) printf '' ;;
     *) printf '' ;;
     esac
 }
@@ -136,6 +149,15 @@ field() {
     local line=$1 column=$2
     ((column > 0)) || { printf 'unknown'; return; }
     printf '%s' "$line" | awk -F'\t' -v c="$column" '{ print $c }'
+}
+
+normalize_cell() {
+    local value=$1
+    if [[ $value == '`'*'`' ]]; then
+        value=${value#'`'}
+        value=${value%'`'}
+    fi
+    printf '%s' "$value"
 }
 
 # Load the ledger: key "source<TAB>source-id" -> fields.
@@ -174,8 +196,10 @@ load_sources() {
         while IFS= read -r line; do
             [[ -n $line ]] || continue
             sid=$(field "$line" "${col_id[$source]}")
+            sid=$(normalize_cell "$sid")
             [[ $sid != None ]] || continue
             status=$(field "$line" "${col_status[$source]}")
+            status=$(normalize_cell "$status")
             key=$source$'\t'$sid
             source_line[$key]=$line
             source_status[$key]=$status
@@ -225,6 +249,19 @@ check)
         fi
         expected=$(map_status "$source" "${ledger_pm_status[$key]}")
         applied=${ledger_applied[$key]}
+        if [[ $source == analysis-workbook-transfer ]]; then
+            if [[ ${ledger_pm_status[$key]} == accepted ]]; then
+                printf 'FAIL %s uses PM status accepted for transfer source %s\n' \
+                    "${ledger_id[$key]}" "$sid"
+                failures=$((failures + 1))
+            fi
+            if [[ $applied == yes* ]]; then
+                printf 'FAIL %s claims a transfer source status was applied, but transfer queues are never edited by the PM\n' \
+                    "${ledger_id[$key]}"
+                failures=$((failures + 1))
+                continue
+            fi
+        fi
         if [[ $applied == yes* ]]; then
             if [[ -z $expected ]]; then
                 printf 'FAIL %s claims an applied status but PM status %s maps to no source edit\n' \

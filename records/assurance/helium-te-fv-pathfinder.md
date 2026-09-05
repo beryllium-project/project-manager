@@ -16,6 +16,10 @@
   2026-08-18 snapshot; the parent path now holds a redirect stub because
   sibling components cite it.
 - **Observed update:** the section "Observed component statements,
+  2026-09-05 (`f0d96b1`)" was added by the `project-manager` agent on
+  2026-09-05 from `../helium-te-poc/HANDOFF.md` at
+  `f0d96b18c3f629454c9a956b09c6de67d4c138bf`. It records what the component
+  states; it adds no review. The earlier section "Observed component statements,
   2026-09-04" was added by the `project-manager` agent on 2026-09-04 from
   `../helium-te-poc/HANDOFF.md` at
   `e65c6a09b0164b4fffcbe7dfbede02094406b873` (decision record
@@ -23,6 +27,91 @@
   review.
 - **Boundary:** this record summarizes evidence produced and validated inside
   `helium-te-poc`; it does not add proof, review, approval, or acceptance.
+
+## Observed component statements, 2026-09-05 (`f0d96b1`)
+
+Source: `../helium-te-poc/HANDOFF.md` at
+`f0d96b18c3f629454c9a956b09c6de67d4c138bf`, read on 2026-09-05 after the
+component was reported read-only as clean on `helium-te-travel-fedora44` at
+that commit and synchronized with `origin/helium-te-travel-fedora44`. Every
+item below is recorded as the component's statement; it is not reviewed by
+the Project Manager, and no approval is inferred. The Project Manager did
+not review any Tier 7 or Tier 8 gate content and did not review the Tier 8
+endpoint decision. Whether the named refs exist in the local repository was
+checked read-only the same day (subsection "Read-only ref listing" below);
+existence says nothing about what a gate contains or whether a ref is frozen.
+
+| Item | Component statement at `f0d96b1` | Change since `e65c6a0` |
+| --- | --- | --- |
+| Checked-out branch and travel tip | `helium-te-travel-fedora44` remains the travel-maintenance branch created at exact base `3dc3aeebc087186ad77b4e00856ff331ef291da3` from `helium-te-fv-tier8-transaction`; the component is now at `f0d96b18c3f629454c9a956b09c6de67d4c138bf` after decision commit `6d3cd14f5f437e3fdb3bcbecd13253197e1a6266` | Travel branch tip changed from `e65c6a0` to `f0d96b1` via `6d3cd14`; travel base unchanged |
+| `FV-FIN-001` and finalization state | `docs/finalization-ledger.md` tracks active completion work; "FV-FIN-001 is resolved: on 2026-09-04, the responsible human selected Tier 8 as the endpoint for Helium formal-verification experimentation, and no Tier 9 or final Helium methods spike will be pursued. Decision commit `6d3cd14f5f437e3fdb3bcbecd13253197e1a6266` records that closure." | New component statement since `e65c6a0`: `FV-FIN-001` moved from open/active finalization work to resolved, and the handoff names the Tier 8 endpoint decision commit |
+| Tier 8 endpoint wording | "On 2026-09-04, the responsible human set Tier 8 as the endpoint for Helium formal-verification experimentation. No Tier 9 or final Helium methods spike will be pursued. This is a Helium-local strategy stop, not a stronger assurance result: the unverified boundaries above remain unverified, and this decision does not claim whole-system formal verification, hardware validation, new H6/H7 review, publication approval, or parent-project planning." | New component statement since `e65c6a0`; recorded without Project Manager review or approval |
+| Travel gate | "The travel gate remains blocked. The approved Tier 8 H6/H7 refs above must remain frozen, and travel work must not claim hardware validation, whole-system formal verification, or assurance beyond the documented fixed-profile CBMC boundary and QEMU review-and-test evidence." The handoff also states that `publication-gate.conf` is blocked on the maintenance branch and approved only on the frozen Tier 8 H7 gate branch. | Gate state unchanged: travel remains blocked, and no current-maintenance approval is recorded |
+| Tier 8 H6 candidate | `helium-te-fv-tier8-h6-candidate` at `ed1545155c8d09aa75803a256eee0d2fa8844b91`; the handoff states that the exact combined candidate passed the complete native validation, all 18 CBMC checks with 152 named claims and 19,419 successful properties, all 18 expected mutation rejections, exact native retained-bundle integrity/correspondence, documentation/source-policy/link/diff checks, and the complete rootless evaluator | Ref unchanged from `e65c6a0`; existence confirmed read-only in the ref listing below, content not reviewed |
+| Tier 8 H7 gate | `helium-te-fv-tier8-h7-approved` at `85a6e55a2939ec504354bf63cd852908965bbe8e`; the component states that the human-created H7 child changes only `publication-gate.conf`, names reviewed commit `ed1545155c8d09aa75803a256eee0d2fa8844b91`, and reports review time `2026-08-24T06:54:54Z` | Ref unchanged from `e65c6a0`; existence confirmed read-only in the ref listing below, gate content not reviewed |
+| Tier 8 development and travel maintenance refs | Tier 8 development commit `0b3fa719f11ca57937936e2a794f61d38e442a29`; `helium-te-fv-tier8-transaction` at travel base `3dc3aeebc087186ad77b4e00856ff331ef291da3`; travel-maintenance candidate `e83e99cbb0e88cf3f665ce0fb1da97600de34d88` | Refs unchanged from the 2026-09-04 observed list; the current handoff adds endpoint/finalization wording on top of them |
+| Tier 7 source and gate | `helium-te-fv-tier7-h6-candidate` at `7ca97a9833d451750bd09ac5a3e020cce9e5bd6f`; `helium-te-fv-tier7-h7-approved` at `342e04a3f73eef16c54c8670135fe57496f7729d` | Unchanged from `e65c6a0`; existence confirmed read-only in the ref listing below, content not reviewed |
+| Tier 6 H7 gate | `helium-te-fv-tier6-h7-approved` at `c594b7fdb6aa584f23c1a3ea4287f7cc6fb9bd03` | Unchanged from `e65c6a0`; existence confirmed read-only in the ref listing below, content not reviewed |
+| Tier 5 source aliases and H7 gate | `helium-te-release-prep`, `helium-te-fv-next`, and `helium-te-fv-tier5-validated` remain fixed at `749b9c8676ef92d747295f6ff813d6a04a503222`; `helium-te-fv-tier5-h7-approved` remains fixed at `111cff26fe50bd51ac44f2cac156543bf1d63eaa` | Unchanged from `e65c6a0`; existence confirmed read-only in the ref listing below, content not reviewed |
+| Earlier approved and retained H6 lineages | `helium-te-fv` and `helium-te-h7-approved` remain fixed at `d0cca32d24ca340561016942fd717264f67ca194`; retained H6 candidate lineage `helium-te-fv-h6-candidate` remains fixed at `5a83a398ff479e9ec52409e38291e240ef4283ec` | Unchanged from `e65c6a0`; existence confirmed read-only in the ref listing below, content not reviewed |
+| Preserved and absent refs | `helium-te-fv-pre-relocation-wip` preserves the pre-transfer snapshot; the Tier 5 section names the preservation branch at `d87080a8cfcf51df2ec7e0a30ce24fe701d10a9d`; the historical `local-history` tip `c8d1032` is absent and must not be inferred, recreated, deleted, or published by automation | Preserved ref unchanged from `e65c6a0`; absent-ref statement unchanged |
+| `docs/fv-pathfinder-lessons.md` | The handoff states that `docs/fv-pathfinder-lessons.md` is "the maintained final evidence synthesis"; it "may inform future external FV decisions but is not parent-project planning, a roadmap, or an adoption claim." The related analysis-workbook transfer queue (`HET-001`, routed to the Beryllium owner as `PMR-016`) cites that component document and the Tier 8 H6 candidate as its maintained source. | The document pointer is explicit in the `f0d96b1` handoff; this record does not summarize the lessons' content |
+| Assurance limit | "This is a review-and-test PoC. It is not formally verified and has not been validated on hardware." The formal-verification status also states that selected fixed-profile C properties are machine-checked by CBMC while live CSR/frame/sentinel/root reads or provenance, policy/PTE queries, active-subject selection, linker symbols, call-time or once-only correspondence, console ordering, privileged effect execution in `src/main.c`, traps/CSRs, assembly, compiler, ISA, QEMU/hardware behavior, and noninterference remain outside the proof boundary. | Limit unchanged and remains the Project Manager wording boundary |
+| Handoff request to humans | The handoff states: "The next action remains solely with the responsible human: recheck destination policy and assistance disclosure, then decide whether to push or publish the frozen H7 branch manually. Automation must not push, publish, move either frozen Tier 8 ref, or represent post-approval maintenance changes as covered by the gate." For travel maintenance it separately states: "Next responsible-human gate: decide which work may proceed from the accepted travel-maintenance baseline. Do not move an approved branch or approve the travel gate as part of that decision." | No Project Manager-owned action is requested; human gates remain open |
+
+Project Manager wording is unchanged by these statements: Helium remains a
+review-and-test proof of concept that is not formally verified and not
+hardware validated; selected fixed-profile C properties are machine-checked
+by CBMC only within the component's stated source, property, and tool
+boundary. A validated candidate, an approved predecessor tier, or an
+inherited gate never approves a successor; the component itself reports the
+travel-maintenance gate as blocked. Beryllium remains accepted through R7;
+R8-H0 is a committed candidate and is not accepted; H1-H4 are not authorized;
+K3 hardware is `NOT RUN`.
+
+### Read-only ref listing, 2026-09-05T05:15Z
+
+`bash ./scripts/inspect-components.sh refs helium-te-poc 3dc3aee ed15451
+85a6e55 7ca97a9 342e04a c594b7f 111cff2 d0cca32 d87080a 6d3cd14 f0d96b1`
+(the mode added this turn; it runs only read-only Git subcommands and no
+command inside the component) reported, with the component clean at
+`f0d96b1`:
+
+| Ref named by the handoff | Resolution | Local branches containing it | Remote-tracking branches containing it (as of the last fetch) |
+| --- | --- | --- | --- |
+| `3dc3aee` travel base | exists | `helium-te-fv-tier8-transaction`, `helium-te-travel-fedora44` | `origin/helium-te-travel-fedora44` |
+| `ed15451` Tier 8 H6 candidate | exists | `helium-te-fv-tier8-h6-candidate`, `helium-te-fv-tier8-h7-approved`, `helium-te-fv-tier8-transaction`, `helium-te-travel-fedora44` | `origin/helium-te-fv-tier8-h7-approved`, `origin/helium-te-travel-fedora44` |
+| `85a6e55` Tier 8 H7 gate | exists | `helium-te-fv-tier8-h7-approved` | `origin/helium-te-fv-tier8-h7-approved` |
+| `7ca97a9` Tier 7 source | exists | seven local branches including `helium-te-fv-tier7-h6-candidate` and `helium-te-fv-tier7-h7-approved` | `origin/helium-te-fv-tier7-h7-approved`, `origin/helium-te-fv-tier8-h7-approved`, `origin/helium-te-travel-fedora44` |
+| `342e04a` Tier 7 H7 gate | exists | `helium-te-fv-tier7-h7-approved` | `origin/helium-te-fv-tier7-h7-approved` |
+| `c594b7f` Tier 6 H7 gate | exists | `helium-te-fv-tier6-h7-approved` | `origin/helium-te-fv-tier6-h7-approved` |
+| `111cff2` Tier 5 H7 gate | exists | `helium-te-fv-tier5-h7-approved` | `origin/helium-te-fv-tier5-h7-approved` |
+| `d0cca32` earlier H7 lineage | exists | `helium-te-fv`, `helium-te-h7-approved` | **none** |
+| `d87080a` preserved pre-relocation ref | exists | `helium-te-fv-pre-relocation-wip` | `origin/helium-te-fv-pre-relocation-wip` |
+| `6d3cd14` endpoint decision commit | exists | `helium-te-travel-fedora44` | `origin/helium-te-travel-fedora44` |
+| `f0d96b1` travel tip | exists | `helium-te-travel-fedora44` | `origin/helium-te-travel-fedora44` |
+
+The listing also showed twenty local branches, no tags, and remote-tracking
+branches only for `for-review`, `helium-te-fv-pre-relocation-wip`, the Tier
+5-8 `*-h7-approved` branches, `helium-te-travel-fedora44`, and `main`.
+Thirteen local branches have no upstream configured: `helium-te-fv`
+(`d0cca32`), `helium-te-fv-h6-candidate` (`5a83a39`), `helium-te-fv-next`
+(`749b9c8`), `helium-te-fv-tier5-validated` (`749b9c8`),
+`helium-te-fv-tier6-h6-candidate` (`e230cfd`), `helium-te-fv-tier6-pipeline`
+(`a58f79e`), `helium-te-fv-tier7-capture-contract` (`7780394`),
+`helium-te-fv-tier7-h6-candidate` (`7ca97a9`),
+`helium-te-fv-tier8-h6-candidate` (`ed15451`),
+`helium-te-fv-tier8-h7-approved` (`85a6e55`),
+`helium-te-fv-tier8-transaction` (`3dc3aee`), `helium-te-h7-approved`
+(`d0cca32`), and `helium-te-release-prep` (`749b9c8`). Of their tips, the
+four checked above (`7ca97a9`, `ed15451`, `85a6e55`, `3dc3aee`) are reachable
+from a remote-tracking branch (`85a6e55` from the same-named
+`origin/helium-te-fv-tier8-h7-approved`), `d0cca32` from none, and the
+remaining tips (`5a83a39`, `749b9c8`, `e230cfd`, `a58f79e`, `7780394`) were
+not checked. These are observations of ref existence and reachability in the
+local repository as of its last fetch. They are not a live remote check, not a
+review of any gate's content, and not an approval; whether any of these
+branches should exist on a remote is the owner's decision (`PMR-018`).
 
 ## Observed component statements, 2026-09-04
 
@@ -62,8 +151,10 @@ travel-maintenance gate as blocked.
 ## Status
 
 Snapshot of 2026-08-18, retained unchanged; see "Observed component
-statements, 2026-09-04" above for the values the component has since
-restated.
+statements, 2026-09-05 (`f0d96b1`)" above for the newest values the component
+has since restated, and "Observed component statements, 2026-09-04" for the
+earlier `e65c6a0` observation. Both observed sections record component
+statements only and add no Project Manager review or approval.
 
 - **Component:** `helium-te-poc`
 - **Current development branch:** `helium-te-fv-tier7-capture-contract`
