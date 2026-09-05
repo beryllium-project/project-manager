@@ -10,8 +10,9 @@
 - **Observed state:** clean `helium-te-travel-fedora44` at
   `f0d96b18c3f629454c9a956b09c6de67d4c138bf`, synchronized with
   `origin/helium-te-travel-fedora44` (observed read-only
-  2026-09-05T04:54Z, 05:15Z, and 07:13Z by
-  `scripts/inspect-components.sh`, unchanged; the Project Manager
+  2026-09-05T04:54Z, 05:15Z, 07:13Z, and 19:10Z by
+  `scripts/inspect-components.sh`, with `refs` re-run at 22:00Z, unchanged;
+  the Project Manager
   did not write, reset, clean, stage, or commit in this component)
 
 ## Role
@@ -69,7 +70,11 @@ refs the handoff names exist locally; that is an existence observation, not
 gate review. The newest observed statement set is in
 `../records/assurance/helium-te-fv-pathfinder.md`, section "Observed component
 statements, 2026-09-05 (`f0d96b1`)"; the same direction reaches the Project
-Manager as the analysis workbook's `HET-001` (`PMR-016`).
+Manager as the analysis workbook's `HET-001` (`PMR-016`, closed 2026-09-05
+when the responsible human, acting as the Beryllium owner, triaged it;
+`../records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`
+records the lifecycle disposition `recorded`, planning inputs only, and
+`PMR-019` asks the workbook maintainer to mirror it).
 
 ## Boundaries and conventions
 

@@ -31,8 +31,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   name for the session.
 - Maintained scripts only: `scripts/new-session.sh`, `scripts/new-inquiry.sh`,
   `scripts/readonly-inspect.sh`, `scripts/update-workbook.sh`,
-  `scripts/validate-session.sh`, and `tests/validate-agent.sh`. `WORKBOOK.md`
-  is generated; never edit it by hand.
+  `scripts/validate-session.sh`, `scripts/validate-helium-transfer-queue.sh`
+  (run with `--baseline <prior copy>` before recording or mirroring a
+  transfer-queue change, per its `AGENT-INTERFACE.md` at `ff12f2f`), and
+  `tests/validate-agent.sh`. `WORKBOOK.md` is generated; never edit it by
+  hand.
 - Session packages default to private; evidence, search, discovery, and
   activity records are append-only, with corrections as superseding records.
 - It produces analysis, never review, acceptance, approval, sign-off,
@@ -54,10 +57,21 @@ topic and chronology in the generated `WORKBOOK.md`.
   (`unaccepted`), outside the `PMQ-NNN` schema; the maintainer mirrors a
   lifecycle change only from an exact owner-side record. `HET-001` (Helium
   Tier 8 endpoint and reusable FV method; target `component://beryllium-repo`)
-  is routed as `PMR-016`. Since `PMD-20260905-001`, the Project Manager
+  was routed as `PMR-016`; on 2026-09-05 the responsible human, acting as the
+  Beryllium owner, triaged it, and
+  `../records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`
+  records the disposition as the lifecycle status `recorded` (planning inputs
+  only; the input state stays `unaccepted`; not acceptance of any Beryllium
+  work), closes `PMR-016`, and hands the maintainer the exact mirror rows as
+  `PMR-019`; the file itself was still `new`/`unaccepted` at `ff12f2f`.
+  Since `PMD-20260905-001`, the Project Manager
   registers this queue for read-only tracking in `../queue/LEDGER.md` and
   `../scripts/pull-queues.sh`; it never edits that file because class 1
   covers only `outbox/pm-queue.md`.
+- Backup: the owner pushed `main` to private `origin` on 2026-09-05 through
+  the human-run `../scripts/owner-actions.sh` (`efde667..ff12f2f`, verified
+  with `ls-remote` in its log); observed synchronized (0 behind, 0 ahead) at
+  19:10Z.
 
 ## Outbound queue
 
@@ -88,7 +102,10 @@ git diff --check
 
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
-part was carried at `83b97a3`); a decision on pushing the carried `83b97a3`
-and `ff12f2f` (2 ahead); nothing that treats a session as review or
-acceptance. `PMR-015` (the ledger in the source-discovery reference set) was
-carried at `ff12f2f` on 2026-09-05.
+part was carried at `83b97a3`); the `HET-001` lifecycle mirror (`PMR-019`,
+with the maintainer's own `scripts/validate-helium-transfer-queue.sh
+--baseline` run as its precondition); nothing that treats a session as review
+or acceptance. `PMR-015` (the ledger in the source-discovery reference set)
+was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
+`ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"
+above).

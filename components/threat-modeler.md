@@ -73,8 +73,10 @@ git diff --check
 
 A model or review engagement on a registered snapshot; registration of
 `project-manager/` in its `scripts/readonly-inspect.sh` registered list (the
-`RESEARCH-SOURCES.md` part was carried at `4a01578`); a decision on pushing
-its local commits (`PMR-005`; 4 ahead after the carried `4a01578` and
-`226d367`); nothing that grants risk acceptance or approval. `PMR-015` (the
-ledger in the discovery reference set) was carried at `226d367` on
-2026-09-05.
+`RESEARCH-SOURCES.md` part was carried at `4a01578`); nothing that grants
+risk acceptance or approval. `PMR-015` (the ledger in the discovery
+reference set) was carried at `226d367` on 2026-09-05. `PMR-005` (push of
+the local commits) closed 2026-09-05: the owner pushed `main` to private
+`origin` through the human-run `../scripts/owner-actions.sh`
+(`affe17b..226d367`, four commits, verified with `ls-remote` in its log);
+observed synchronized (0 behind, 0 ahead) at 19:10Z.

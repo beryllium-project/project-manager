@@ -61,3 +61,20 @@ npm ci
 Reconciliation of the component's own `planning/HANDOFF.md` (stale workstation
 path and H0 commit wording); the two responsible-human H0 input selections
 recorded in `../HANDOFF.md`; nothing that infers acceptance.
+
+## Helium-to-Beryllium transfer input
+
+`HET-001` (`../../analysis-workbook/outbox/helium-transfer-queue.md`) was
+routed to the Beryllium owner as `PMR-016` on 2026-09-04. On 2026-09-05 the
+responsible human, acting as the Beryllium owner, triaged it and told the
+Project Manager "HET-001 is triaged as accepted", confirming that this maps
+to the transfer-lifecycle status `recorded`: all eight candidate lessons are
+recorded as planning inputs for a possible future Beryllium
+security-significant seam, none is adopted as an entry criterion, design
+constraint, evidence requirement, or exit criterion, and no Beryllium
+authorization changes
+(`../records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`;
+`PMR-016` closed; the mirror is `PMR-019`). No Beryllium-owned artifact
+records the triage (read-only text search at `65f6d89`); if the owner later
+writes one, a superseding Project Manager record cites it. This is not
+acceptance of any Beryllium target or work.

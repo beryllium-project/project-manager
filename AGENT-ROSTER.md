@@ -43,6 +43,7 @@ cd analysis-workbook
 # Copilot CLI: /agent analysis-workbook
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-session.sh [--draft|--baseline <prior-copy>] sessions/AWB-YYYYMMDD-NNN-short-name
+bash ./scripts/validate-helium-transfer-queue.sh [--baseline <prior-copy>]   # before recording or mirroring a HET change
 bash ./scripts/update-workbook.sh --check
 git diff --check
 ```
