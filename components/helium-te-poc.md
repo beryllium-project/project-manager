@@ -10,7 +10,8 @@
 - **Observed state:** clean `helium-te-travel-fedora44` at
   `f0d96b18c3f629454c9a956b09c6de67d4c138bf`, synchronized with
   `origin/helium-te-travel-fedora44` (observed read-only
-  2026-09-05T04:54Z by `scripts/inspect-components.sh`; the Project Manager
+  2026-09-05T04:54Z, 05:15Z, and 07:13Z by
+  `scripts/inspect-components.sh`, unchanged; the Project Manager
   did not write, reset, clean, stage, or commit in this component)
 
 ## Role
