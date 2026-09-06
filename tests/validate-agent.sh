@@ -475,8 +475,16 @@ sed -i 's/| yes 2000-01-02 |/| yes |/' "$copy/queue/LEDGER.md"
 expect_exit "validate-pm fails on a malformed applied value" 1 bash "$validate" --no-parent "$copy"
 
 copy=$(mutate request-status)
-sed -i 's/| closed | 2000-01-02 |/| done | 2000-01-02 |/' "$copy/outbox/component-requests.md"
+sed -i 's/| closed | - | 2000-01-02 |/| done | - | 2000-01-02 |/' "$copy/outbox/component-requests.md"
 expect_exit "validate-pm fails on an invalid request status" 1 bash "$validate" --no-parent "$copy"
+
+copy=$(mutate request-priority)
+sed -i 's/| open | P2 |/| open | P9 |/' "$copy/outbox/component-requests.md"
+expect_exit "validate-pm fails on an invalid request priority" 1 bash "$validate" --no-parent "$copy"
+
+copy=$(mutate request-priority-closed)
+sed -i 's/| closed | - | 2000-01-02 |/| closed | P1 | 2000-01-02 |/' "$copy/outbox/component-requests.md"
+expect_exit "validate-pm fails when a closed request keeps a priority" 1 bash "$validate" --no-parent "$copy"
 
 copy=$(mutate decision-placeholder)
 sed -i 's/The fixture records a disposition./@@DISPOSITION@@/' \

@@ -1,0 +1,1 @@
+- Remote: `origin` is the private `xjamesmorris/osr-claude` repository, reached over SSH since the ~52 MB sources batch (HTTPS died mid-transfer on the original ~800 MB push, so large pushes use SSH).

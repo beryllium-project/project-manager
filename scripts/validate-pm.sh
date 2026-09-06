@@ -178,6 +178,27 @@ check_table "$ledger" "$root/templates/ledger-row.md" PML \
 check_table "$requests" "$root/templates/request-row.md" PMR \
     '^PMR-[0-9]{3}$' 6 '^(open|closed|withdrawn|superseded)$'
 
+# Request-specific cells: an open row carries a priority P1-P4; every other
+# row carries "-".
+if [[ -f $requests ]]; then
+    bad=0
+    while IFS=$'\t' read -r id _ _ _ _ status priority _; do
+        case "$status:$priority" in
+            open:P[1-4]) ;;
+            open:*)
+                fail "$(rel "$requests") row $id is open without a priority P1-P4: $priority"
+                bad=1
+                ;;
+            *:-) ;;
+            *)
+                fail "$(rel "$requests") row $id is $status but has priority '$priority' (expected -)"
+                bad=1
+                ;;
+        esac
+    done < <(table_rows "$requests" PMR)
+    ((bad == 0)) && pass "$(rel "$requests") priorities are well formed"
+fi
+
 # Ledger-specific cells.
 if [[ -f $ledger ]]; then
     bad=0
@@ -372,6 +393,8 @@ if ((check_parent)); then
     parent=$(CDPATH= cd -- "$root/.." && pwd -P)
     require_text "$parent/HANDOFF.md" 'project-manager/HANDOFF.md'
     require_text "$parent/formal-verification/helium-te-fv-pathfinder.md" \
+        'project-manager/records/assurance/helium-te-fv-pathfinder.md'
+    require_text "$parent/formal-verification/README.md" \
         'project-manager/records/assurance/helium-te-fv-pathfinder.md'
     require_text "$parent/COMPONENTS.md" '`project-manager/`'
     require_text "$parent/SOT.md" 'project-manager/'

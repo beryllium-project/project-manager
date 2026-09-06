@@ -48,5 +48,12 @@ No general test runner exists.
 
 ## What the Project Manager may request
 
-Human-gated inclusion of routed sources; resolution of the content license
-before any public mirror.
+Human-gated inclusion of routed sources (`PMR-009`, P4: the reference database
+is a SQLite store in a Copilot session on another machine, so the two
+`PMQ-008`/`PMQ-011` pointers are entered there; exact metadata in
+`../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
+public mirror; and, since 2026-09-06, a decision on how this workstation
+authenticates to `origin` (`PMR-020`, P2: the human-run
+`../scripts/owner-actions.sh` fetch failed with an authentication error on
+2026-09-05 and 2026-09-06, so the live backup state is `unknown`; the local
+checkout is clean at `6553092`).

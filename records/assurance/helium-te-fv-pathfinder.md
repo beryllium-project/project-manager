@@ -113,6 +113,27 @@ local repository as of its last fetch. They are not a live remote check, not a
 review of any gate's content, and not an approval; whether any of these
 branches should exist on a remote is the owner's decision (`PMR-018`).
 
+Re-observed 2026-09-06T08:42Z (`bash ./scripts/inspect-components.sh refs
+helium-te-poc`, read-only) after the owner ran `scripts/owner-actions.sh
+--helium-branches` at 08:39Z: the same twenty local branches at the same
+tips; nineteen now have an upstream, the twelve pushed by the owner having
+been created on the private `origin` and verified by the script with
+`ls-remote` (`helium-te-fv` and `helium-te-h7-approved` at `d0cca32`,
+`helium-te-fv-h6-candidate` `5a83a39`, `helium-te-fv-next`,
+`helium-te-fv-tier5-validated`, and `helium-te-release-prep` `749b9c8`,
+`helium-te-fv-tier6-h6-candidate` `e230cfd`, `helium-te-fv-tier6-pipeline`
+`a58f79e`, `helium-te-fv-tier7-capture-contract` `7780394`,
+`helium-te-fv-tier7-h6-candidate` `7ca97a9`, `helium-te-fv-tier8-h6-candidate`
+`ed15451`, `helium-te-fv-tier8-transaction` `3dc3aee`);
+`helium-te-fv-tier8-h7-approved` (`85a6e55`) alone has no upstream configured
+while the same-named remote-tracking branch is at that tip. Twenty
+remote-tracking branches plus the symbolic `origin/HEAD`; still no tags. The
+`d0cca32` lineage is therefore reachable from `origin/helium-te-fv` and
+`origin/helium-te-h7-approved` as of that fetch (`PMR-018` closed). These
+remain existence and reachability observations of a private backup; nothing
+was published, no gate content was reviewed, and no ref is approved by the
+Project Manager.
+
 ## Observed component statements, 2026-09-04
 
 Source: `../helium-te-poc/HANDOFF.md` at `e65c6a0`, read on 2026-09-04 while

@@ -100,12 +100,16 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
   component with the request identifier; every other request is handed to the
   human. It never writes into a component's `inbox/`, and never writes
   `helium-te-poc/` or `beryllium-repo`.
-- Owner-side pushes, fetches, and remote creation are the human's. From
-  `project-manager/`, `bash ./scripts/owner-actions.sh --plan` shows what is
-  outgoing and reachable, and `bash ./scripts/owner-actions.sh` performs the
-  fast-forward pushes with a prompt per step (see `README.md` "Owner actions").
-  The Project Manager never runs that script; it hands the human this
-  invocation and records the result in the next coordination turn.
+- Owner-side pushes, fetches, remote creation, and the exact recorded
+  owner-side edits are the human's. From `project-manager/`,
+  `bash ./scripts/owner-actions.sh --plan` shows what is outgoing and
+  reachable, and `bash ./scripts/owner-actions.sh` performs the fast-forward
+  pushes with a prompt per step; `--apply-edits` adds the recorded edits
+  (`outbox/owner-edits/`), diff first, committed by the human inside the
+  component (see `README.md` "Owner actions" and `outbox/OWNER-RUNBOOK.md`,
+  which lists every open item by priority with exact steps). The Project
+  Manager never runs that script; it hands the human this invocation and
+  records the result in the next coordination turn.
 - Every sibling orchestrator is declared `disable-model-invocation: true`, so
   no agent can invoke another agent's orchestrator; the human starts each
   engagement.

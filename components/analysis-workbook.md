@@ -102,9 +102,12 @@ git diff --check
 
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
-part was carried at `83b97a3`); the `HET-001` lifecycle mirror (`PMR-019`,
-with the maintainer's own `scripts/validate-helium-transfer-queue.sh
---baseline` run as its precondition); nothing that treats a session as review
+part was carried at `83b97a3`; P3, exact edit in `../outbox/OWNER-RUNBOOK.md`);
+the `HET-001` lifecycle mirror (`PMR-019`, P2; the human applies the exact
+rows in `../outbox/owner-edits/PMR-019-*` through the human-run
+`../scripts/owner-actions.sh --apply-edits`, which runs the maintainer's own
+`scripts/validate-helium-transfer-queue.sh --baseline` first; the `HANDOFF.md`
+prose refresh stays the maintainer's); nothing that treats a session as review
 or acceptance. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

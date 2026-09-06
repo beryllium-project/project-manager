@@ -3,38 +3,67 @@
 # Beryllium Project Manager records (outbox/component-requests.md, HANDOFF.md)
 # but never performs: reviewing the commits a push would publish, fast-forward
 # pushing component branches to their private remotes, backing up this
-# repository and the parent, opt-in creation of one backup remote, and the
-# fetch that lets the next coordination turn observe the result.
+# repository and the parent, opt-in creation of one backup remote, opt-in
+# application of the exact owner-side text edits recorded as PMR requests,
+# an opt-in search for the lost retained PM artifacts, and the fetch that
+# lets the next coordination turn observe the result. It ends with the open
+# requests listed by priority (outbox/component-requests.md; exact steps in
+# outbox/OWNER-RUNBOOK.md).
 #
 # This script is never executed by the Project Manager agent, in any mode:
-# fetch, push, remote creation, and gh are outside its execution boundary
-# (AGENT-INTERFACE.md "Execution boundary"). You run it, as component owner and
-# responsible human. It never forces a push, never rewrites history, and never
-# changes a worktree: it reads, fetches, and fast-forward pushes only.
+# fetch, push, remote creation, gh, and every write inside a component are
+# outside its execution boundary (AGENT-INTERFACE.md "Execution boundary").
+# You run it, as component owner and responsible human; every commit it makes
+# is yours, made after you have seen the diff and answered y. It never forces
+# a push, never rewrites history, and never edits a component file except in
+# the opt-in apply_edits step, which changes only the exact recorded text
+# (outbox/owner-edits/; the token @DATE@ becomes the day of application),
+# only in a clean worktree, and never inside helium-te-poc or beryllium-repo.
+# The only other filesystem change it can make is the opt-in removal of the
+# broken, Git-ignored parent "files" link in files_search, after a y.
 #
 # usage:
 #   bash ./scripts/owner-actions.sh [--plan] [--yes] [--full-diff] [--no-log]
 #                                   [--only step[,step...]] [--skip step[,step...]]
-#                                   [--fvr-backup] [--helium-branches]
+#                                   [--apply-edits] [--fvr-backup] [--helium-branches]
 #                                   [--helium-only name[,name...]]
+#                                   [--files-search] [--files-root DIR ...]
 #
 # default steps, in order (preflight always runs):
 #   preflight       resolve topology; gh auth status; remote reachability table
 #   review          list the commits each selected push would publish
 #   push_awb        analysis-workbook          main -> origin
-#   push_tm         threat-modeler             main -> origin        (PMR-005)
+#   push_tm         threat-modeler             main -> origin
 #   push_xrv        xrv-research-repo          main -> origin        (PMR-013; skipped while
-#                   origin is in the unreachable jamorris_microsoft namespace)
+#                   origin is in the unreachable jamorris_microsoft namespace),
+#                   and main -> backup once you add a remote named "backup"
+#   push_osr        osr-claude                 main -> origin
+#   push_fvr        formal-verification-research main -> backup, once the
+#                   remote "backup" exists (creating it needs --fvr-backup)
 #   push_pm         project-manager main -> origin; parent main -> backup
 #   fetch_snapshot  fetch every reachable remote of every registered entry, then
 #                   run the Project Manager restart snapshot (read-only)
 # opt-in steps (never run without their flag):
+#   apply_edits     --apply-edits: for each open request whose exact edit is
+#                   recorded in outbox/owner-edits/ (PMR-019 analysis-workbook
+#                   transfer-queue mirror; PMR-002 osr-claude handoff facts;
+#                   PMR-014 formal-verification-research wording), show the
+#                   diff, run the component's own validator where one exists,
+#                   and on y commit it inside that component with the PMR id
+#                   in the subject. Skipped when the worktree is dirty or the
+#                   current text no longer matches the recorded text. Runs
+#                   before review so the new commits are in the push review.
 #   push_fvr        --fvr-backup: gh repo create beryllium-project/formal-verification-research
 #                   --private (if absent), add remote "backup" (origin untouched),
 #                   push -u backup main                              (PMR-001)
 #   push_helium     --helium-branches: push -u origin every helium-te-poc local
 #                   branch that has no upstream; --helium-only a,b restricts to
 #                   the named branches                              (PMR-018)
+#   files_search    --files-search: read-only find under $HOME (and every
+#                   --files-root DIR) for the seven lost retained PM artifact
+#                   names, SHA-256 check of any archive found; if nothing is
+#                   found and the parent "files" link is broken, offer to
+#                   remove that link (the next coordination turn records it)
 #
 #   --plan       print what would run; perform only read-only checks
 #   --yes        answer every prompt yes (a dirty worktree is still skipped)
@@ -60,6 +89,8 @@ PLAN=0
 FULL_DIFF=0
 FVR=0
 HELIUM=0
+APPLY=0
+FILES=0
 NOLOG=0
 STOP=0
 helium_only=''
@@ -67,8 +98,10 @@ only=''
 skip=''
 log_file=''
 tee_pid=''
+tmp_dir=''
+files_roots=()
 
-all_steps=(preflight review push_awb push_tm push_xrv push_fvr push_helium push_pm fetch_snapshot)
+all_steps=(preflight apply_edits review push_awb push_tm push_xrv push_osr push_fvr push_helium push_pm files_search fetch_snapshot)
 all_csv=$(IFS=,; printf '%s' "${all_steps[*]}")
 
 done_list=()
@@ -105,7 +138,14 @@ while (($#)); do
         --full-diff) FULL_DIFF=1 ;;
         --fvr-backup) FVR=1 ;;
         --helium-branches) HELIUM=1 ;;
+        --apply-edits) APPLY=1 ;;
+        --files-search) FILES=1 ;;
         --no-log) NOLOG=1 ;;
+        --files-root)
+            if (($# < 2)); then usage_error "--files-root needs a directory"; fi
+            files_roots+=("$2")
+            shift
+            ;;
         --helium-only)
             if (($# < 2)); then usage_error "--helium-only needs a value"; fi
             helium_only=$2
@@ -130,6 +170,13 @@ while (($#)); do
     shift
 done
 
+# The formal-verification-research backup remote is created only with
+# --fvr-backup; once it exists, pushing to it is an ordinary default push.
+fvr_backup_configured() {
+    local dir=$ws_root/formal-verification-research
+    [[ -d $dir ]] && git -C "$dir" remote get-url backup >/dev/null 2>&1
+}
+
 validate_step_list() {
     local csv=$1 flag=$2 s
     local -a arr=()
@@ -138,28 +185,40 @@ validate_step_list() {
         if ! list_has "$all_csv" "$s"; then
             usage_error "$flag: unknown step '$s' (steps: $all_csv)"
         fi
-        if [[ $flag == --only && $s == push_fvr && $FVR == 0 ]]; then
-            usage_error "--only push_fvr needs --fvr-backup"
+        if [[ $flag == --only && $s == push_fvr && $FVR == 0 ]] && ! fvr_backup_configured; then
+            usage_error "--only push_fvr needs --fvr-backup while remote 'backup' is not configured"
         fi
         if [[ $flag == --only && $s == push_helium && $HELIUM == 0 ]]; then
             usage_error "--only push_helium needs --helium-branches"
         fi
+        if [[ $flag == --only && $s == apply_edits && $APPLY == 0 ]]; then
+            usage_error "--only apply_edits needs --apply-edits"
+        fi
+        if [[ $flag == --only && $s == files_search && $FILES == 0 ]]; then
+            usage_error "--only files_search needs --files-search"
+        fi
     done
     return 0
 }
+
 
 if [[ -n $only ]]; then validate_step_list "$only" --only; fi
 if [[ -n $skip ]]; then validate_step_list "$skip" --skip; fi
 if [[ -n $helium_only && $HELIUM == 0 ]]; then
     usage_error "--helium-only needs --helium-branches"
 fi
+if ((${#files_roots[@]} > 0)) && ((FILES == 0)); then
+    usage_error "--files-root needs --files-search"
+fi
 
 selected=()
 for s in "${all_steps[@]}"; do
     case $s in
         preflight) continue ;;
-        push_fvr) if ((FVR == 0)); then continue; fi ;;
+        apply_edits) if ((APPLY == 0)); then continue; fi ;;
+        push_fvr) if ((FVR == 0)) && ! fvr_backup_configured; then continue; fi ;;
         push_helium) if ((HELIUM == 0)); then continue; fi ;;
+        files_search) if ((FILES == 0)); then continue; fi ;;
     esac
     if [[ -n $only ]] && ! list_has "$only" "$s"; then continue; fi
     if [[ -n $skip ]] && list_has "$skip" "$s"; then continue; fi
@@ -178,6 +237,7 @@ fi
 
 cleanup() {
     local rc=$?
+    if [[ -n $tmp_dir && -d $tmp_dir ]]; then rm -rf -- "$tmp_dir"; fi
     if [[ -n $tee_pid ]]; then
         exec >&- 2>&-
         wait "$tee_pid" 2>/dev/null || true
@@ -255,6 +315,8 @@ targets=(
     "push_awb|analysis-workbook|$ws_root/analysis-workbook|origin|main|0"
     "push_tm|threat-modeler|$ws_root/threat-modeler|origin|main|0"
     "push_xrv|xrv-research-repo|$ws_root/xrv-research-repo|origin|main|0"
+    "push_xrv|xrv-research-repo|$ws_root/xrv-research-repo|backup|main|1"
+    "push_osr|osr-claude|$ws_root/osr-claude|origin|main|0"
     "push_fvr|formal-verification-research|$ws_root/formal-verification-research|backup|main|1"
     "push_pm|project-manager|$pm_root|origin|main|0"
     "push_pm|parent coordination repository|$ws_root|backup|main|0"
@@ -263,7 +325,7 @@ targets=(
 target_selected() {
     local step=$1
     case $step in
-        push_fvr) if ((FVR == 0)); then return 1; fi ;;
+        push_fvr) if ((FVR == 0)) && ! fvr_backup_configured; then return 1; fi ;;
     esac
     if [[ -n $only ]] && ! list_has "$only" "$step"; then return 1; fi
     if [[ -n $skip ]] && list_has "$skip" "$step"; then return 1; fi
@@ -566,6 +628,22 @@ step_push_fvr() {
         skipped_list+=("formal-verification-research: no repository")
         return 0
     fi
+    local url=''
+    if url=$(git -C "$dir" remote get-url backup 2>/dev/null); then
+        if [[ $(remote_slug "$url") != "$slug" ]]; then
+            warn "remote 'backup' points at $(remote_slug "$url"), not $slug; not changing it"
+            failed_list+=("push_fvr: remote 'backup' points elsewhere")
+            return 1
+        fi
+        note "remote 'backup' is configured for $slug (PMR-001 done); ordinary fast-forward push"
+        do_push push_fvr formal-verification-research "$dir" backup main 1
+        return
+    fi
+    if ((FVR == 0)); then
+        note "remote 'backup' is not configured; pass --fvr-backup to create $slug and add it"
+        skipped_list+=("formal-verification-research: main -> backup: remote not configured (needs --fvr-backup)")
+        return 0
+    fi
     if ! command -v gh >/dev/null 2>&1; then
         warn "gh is not installed; cannot create or check $slug"
         failed_list+=("push_fvr: gh missing")
@@ -589,32 +667,314 @@ step_push_fvr() {
             fi
         fi
     fi
-    local url=''
-    if url=$(git -C "$dir" remote get-url backup 2>/dev/null); then
-        if [[ $(remote_slug "$url") != "$slug" ]]; then
-            warn "remote 'backup' already points at $(remote_slug "$url"), not $slug; not changing it"
-            failed_list+=("push_fvr: remote 'backup' points elsewhere")
-            return 1
+    if ((PLAN)); then
+        printf 'would run: git -C %s remote add backup %s\n' "$dir" "$want_url"
+        printf 'would run: git -C %s push -u backup main\n' "$dir"
+        planned_list+=("formal-verification-research: main -> backup (new remote $slug)")
+        return 0
+    fi
+    if ! confirm "Add remote 'backup' -> $slug in formal-verification-research (origin untouched)?"; then
+        note "skipped by you"
+        skipped_list+=("push_fvr: remote addition declined")
+        return 0
+    fi
+    if ! run git -C "$dir" remote add backup "$want_url"; then
+        failed_list+=("push_fvr: remote add failed")
+        return 1
+    fi
+    do_push push_fvr formal-verification-research "$dir" backup main 1
+}
+
+# --- apply_edits (--apply-edits) ----------------------------------------------
+# Exact recorded text edits, one PMR at a time. The old/anchor and new text
+# live in outbox/owner-edits/<name>.{old,anchor,new}.txt so that the request
+# record, not this script, holds the words. Never helium-te-poc or
+# beryllium-repo.
+
+# edit table: PMR | component | file | mode (block: replace an exact multi-line
+# block; line: replace the single line containing the anchor) | name
+edits=(
+    "PMR-019|analysis-workbook|outbox/helium-transfer-queue.md|block|PMR-019-1"
+    "PMR-019|analysis-workbook|outbox/helium-transfer-queue.md|block|PMR-019-2"
+    "PMR-019|analysis-workbook|outbox/helium-transfer-queue.md|block|PMR-019-3"
+    "PMR-002|osr-claude|HANDOFF.md|line|PMR-002-1"
+    "PMR-002|osr-claude|HANDOFF.md|line|PMR-002-2"
+    "PMR-014|formal-verification-research|.github/copilot-instructions.md|block|PMR-014-1"
+    "PMR-014|formal-verification-research|README.md|block|PMR-014-2"
+    "PMR-014|formal-verification-research|README.md|block|PMR-014-3"
+)
+edit_pmrs=(PMR-019 PMR-002 PMR-014)
+
+# apply_block <file> <old.txt> <new.txt>: the old text must occur exactly once.
+# The token @DATE@ in a new-text file becomes the UTC date of application, so
+# appended history rows carry the day the owner applied them.
+apply_block() {
+    local file=$1 old new content rest
+    old=$(<"$2")
+    new=$(<"$3")
+    new=${new//@DATE@/$(date -u +%Y-%m-%d)}
+    content=$(<"$file")
+    rest=${content#*"$old"}
+    if [[ $rest == "$content" ]]; then return 1; fi
+    if [[ $rest == *"$old"* ]]; then return 2; fi
+    printf '%s\n' "${content/"$old"/"$new"}" >"$file"
+}
+
+# apply_line <file> <anchor.txt> <new.txt>: exactly one line contains the anchor.
+apply_line() {
+    local file=$1 anchor new n
+    anchor=$(<"$2")
+    new=$(<"$3")
+    new=${new//@DATE@/$(date -u +%Y-%m-%d)}
+    n=$(grep -c -F -- "$anchor" "$file" || true)
+    if ((n == 0)); then return 1; fi
+    if ((n > 1)); then return 2; fi
+    EDIT_ANCHOR=$anchor EDIT_NEW=$new awk '
+        index($0, ENVIRON["EDIT_ANCHOR"]) { print ENVIRON["EDIT_NEW"]; next }
+        { print }' "$file" >"$file.tmp" && mv -- "$file.tmp" "$file"
+}
+
+edit_precheck() {
+    local pmr=$1 dir=$2 url=''
+    case $pmr in
+        PMR-002)
+            url=$(git -C "$dir" remote get-url origin 2>/dev/null) || url=''
+            if [[ $url != git@* && $url != ssh://* ]]; then
+                warn "PMR-002: origin of osr-claude is not an SSH remote; the recorded wording would be wrong; skipping"
+                return 1
+            fi
+            if ! grep -q 'md-to-html\.XXXXXX' "$dir/tools/md-to-html.sh" 2>/dev/null; then
+                warn "PMR-002: tools/md-to-html.sh does not show the mktemp fix; skipping"
+                return 1
+            fi
+            ;;
+        PMR-019)
+            if [[ ! -f $dir/scripts/validate-helium-transfer-queue.sh ]]; then
+                warn "PMR-019: scripts/validate-helium-transfer-queue.sh is missing in analysis-workbook; skipping"
+                return 1
+            fi
+            ;;
+    esac
+    return 0
+}
+
+edit_commit_message() {
+    local pmr=$1
+    case $pmr in
+        PMR-019) cat <<'EOF'
+docs: mirror HET-001 to recorded (PMR-019)
+
+Appends the routed and recorded status-history rows citing the Project
+Manager record PMD-20260905-002 (PMR-016 closed 2026-09-05), sets the queue
+summary status to recorded, and appends ACTIVITY-002. The input state stays
+unaccepted; no Beryllium adoption, review, approval, release, or assurance
+state changed. Applied by the responsible human through the project-manager
+owner-actions helper (--apply-edits) after reviewing the diff.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+EOF
+            ;;
+        PMR-002) cat <<'EOF'
+docs: refresh infrastructure facts (PMR-002)
+
+The origin remote is SSH and the md-to-html.sh --check mktemp template bug
+is fixed; the handoff still said HTTPS and "fix pending". Applied by the
+responsible human through the project-manager owner-actions helper
+(--apply-edits) after reviewing the diff.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+EOF
+            ;;
+        PMR-014) cat <<'EOF'
+docs: align Project Manager wording with COLLAB.md (PMR-014)
+
+The agent-instruction bullet and the README workspace-relationship paragraph
+now describe the standing carry authority (PMD-20260904-003) carried into
+COLLAB.md at ccb48f6, not the former housekeeping budget. The five routed
+pointers in sources/bibliography.md are untouched; their triage stays with
+the owner. Applied by the responsible human through the project-manager
+owner-actions helper (--apply-edits) after reviewing the diff.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+EOF
+            ;;
+    esac
+}
+
+apply_one_pmr() {
+    local pmr=$1 dir='' comp='' e f mode name rc
+    local rp rcomp rf rmode rname
+    local -a files=()
+    local data=$pm_root/outbox/owner-edits
+    for e in "${edits[@]}"; do
+        IFS='|' read -r rp rcomp rf rmode rname <<<"$e"
+        if [[ $rp == "$pmr" ]]; then comp=$rcomp; dir=$ws_root/$comp; break; fi
+    done
+    if [[ -z $comp ]]; then
+        die "apply_edits: no recorded edit for $pmr"
+    fi
+    hr "apply_edits: $pmr in $comp"
+    if [[ $comp == helium-te-poc || $comp == beryllium-repo ]]; then
+        die "apply_edits refuses to touch $comp"
+    fi
+    if ! is_repo "$dir"; then
+        warn "no Git repository at $dir; skipping $pmr"
+        skipped_list+=("$pmr: no repository")
+        return 0
+    fi
+    if [[ -n $(git -C "$dir" status --porcelain 2>/dev/null) ]]; then
+        warn "$comp has a dirty worktree (another session may be active); skipping $pmr"
+        skipped_list+=("$pmr: $comp worktree dirty")
+        return 0
+    fi
+    if ! edit_precheck "$pmr" "$dir"; then
+        skipped_list+=("$pmr: precondition not met")
+        return 0
+    fi
+    local work=$tmp_dir/$pmr
+    rm -rf -- "$work"
+    mkdir -p -- "$work"
+    for e in "${edits[@]}"; do
+        IFS='|' read -r rp rcomp f mode name <<<"$e"
+        if [[ $rp != "$pmr" ]]; then continue; fi
+        if [[ ! -f $work/$f ]]; then
+            mkdir -p -- "$(dirname -- "$work/$f")"
+            cp -- "$dir/$f" "$work/$f"
+            files+=("$f")
         fi
-        note "remote 'backup' is already configured for $slug"
-    else
-        if ((PLAN)); then
-            printf 'would run: git -C %s remote add backup %s\n' "$dir" "$want_url"
-            printf 'would run: git -C %s push -u backup main\n' "$dir"
-            planned_list+=("formal-verification-research: main -> backup (new remote $slug)")
+        rc=0
+        if [[ $mode == block ]]; then
+            apply_block "$work/$f" "$data/$name.old.txt" "$data/$name.new.txt" || rc=$?
+        else
+            apply_line "$work/$f" "$data/$name.anchor.txt" "$data/$name.new.txt" || rc=$?
+        fi
+        if ((rc == 1)); then
+            warn "$pmr: $f no longer contains the recorded text for $name (already applied, or changed by the owner); skipping $pmr; see outbox/OWNER-RUNBOOK.md"
+            skipped_list+=("$pmr: recorded text not found in $f")
+            return 0
+        elif ((rc != 0)); then
+            warn "$pmr: the recorded text for $name occurs more than once in $f; skipping $pmr"
+            skipped_list+=("$pmr: recorded text ambiguous in $f")
             return 0
         fi
-        if ! confirm "Add remote 'backup' -> $slug in formal-verification-research (origin untouched)?"; then
-            note "skipped by you"
-            skipped_list+=("push_fvr: remote addition declined")
-            return 0
-        fi
-        if ! run git -C "$dir" remote add backup "$want_url"; then
-            failed_list+=("push_fvr: remote add failed")
+    done
+    for f in "${files[@]}"; do
+        printf -- '-- %s: %s --\n' "$comp" "$f"
+        diff -u --label "a/$f" --label "b/$f" "$dir/$f" "$work/$f" || true
+    done
+    if [[ $pmr == PMR-019 ]]; then
+        printf -- '-- analysis-workbook validator (baseline = current file) --\n'
+        if ! bash "$dir/scripts/validate-helium-transfer-queue.sh" --baseline "$dir/outbox/helium-transfer-queue.md" \
+            "$work/outbox/helium-transfer-queue.md"; then
+            warn "PMR-019: the component's validator rejected the edited queue; nothing applied"
+            failed_list+=("PMR-019: validate-helium-transfer-queue.sh failed")
             return 1
         fi
     fi
-    do_push push_fvr formal-verification-research "$dir" backup main 1
+    if ((PLAN)); then
+        printf 'would run: cp (the %d edited file(s) above) into %s; git -C %s add; git -C %s commit (%s)\n' \
+            "${#files[@]}" "$dir" "$dir" "$dir" "$pmr"
+        planned_list+=("$pmr: ${#files[@]} file(s) in $comp")
+        return 0
+    fi
+    if ! confirm "Apply and commit $pmr in $comp (${#files[@]} file(s) shown above)?"; then
+        note "skipped by you"
+        skipped_list+=("$pmr: declined")
+        return 0
+    fi
+    for f in "${files[@]}"; do
+        cp -- "$work/$f" "$dir/$f"
+        run git -C "$dir" add -- "$f" || { failed_list+=("$pmr: git add failed"); return 1; }
+    done
+    edit_commit_message "$pmr" >"$work/commit-message.txt"
+    if ! run git -C "$dir" commit -q -F "$work/commit-message.txt"; then
+        failed_list+=("$pmr: git commit failed")
+        return 1
+    fi
+    note "committed $(git -C "$dir" rev-parse --short HEAD) in $comp"
+    done_list+=("$pmr: committed $(git -C "$dir" rev-parse --short HEAD) in $comp (${files[*]})")
+    if [[ $pmr == PMR-019 ]]; then
+        note "PMR-019: the component's HANDOFF.md still describes HET-001 as new; refresh it in the maintainer's words (analysis-workbook agent), for example:"
+        grep -n 'HET-001' "$dir/HANDOFF.md" | grep -F -- '`new`' | sed 's/^/    HANDOFF.md:/' || true
+    fi
+    return 0
+}
+
+step_apply_edits() {
+    local rc=0 pmr
+    hr "apply_edits: exact recorded owner-side edits (outbox/owner-edits/)"
+    note "Each edit is shown as a diff first; you commit it as owner. helium-te-poc and beryllium-repo are never touched."
+    if [[ -z $tmp_dir ]]; then tmp_dir=$(mktemp -d); fi
+    for pmr in "${edit_pmrs[@]}"; do
+        apply_one_pmr "$pmr" || rc=1
+    done
+    return "$rc"
+}
+
+# --- files_search (--files-search) -------------------------------------------
+
+step_files_search() {
+    hr "files_search: lost retained PM artifacts (read-only search), then the broken parent link"
+    local -a names=(
+        K3-H0-PHYSICAL-INSPECTION-CHECKLIST.txt
+        fedora44-omni-k3-com260-boot-provenance.md
+        r8-h1-h2-proposed-path-inventories-v1-report.md
+        K3-MEMORY-CONSTRAINTS.md
+        image-identity.txt
+        H0-CANDIDATE-SCAFFOLD-REPORT.md
+        be-k3-h0-collection.tgz
+    )
+    local archive_sha=277d6168f9b0ae4bbb521eead40dc314f74c855e74f4be4ac3bba3c0af1c5d05
+    local -a roots=("$HOME" "${files_roots[@]+"${files_roots[@]}"}")
+    local -a expr=()
+    local n f sha found=0
+    for n in "${names[@]}"; do
+        if ((${#expr[@]} > 0)); then expr+=(-o); fi
+        expr+=(-name "$n")
+    done
+    note "searching (read-only, up to 10 minutes): ${roots[*]}"
+    while IFS= read -r -d '' f; do
+        found=$((found + 1))
+        printf 'found: %s\n' "$f"
+        if [[ $f == *.tgz ]]; then
+            sha=$(sha256sum -- "$f" | cut -d' ' -f1)
+            if [[ $sha == "$archive_sha" ]]; then
+                note "SHA-256 matches the recorded inbound archive"
+            else
+                note "SHA-256 differs from the recorded inbound archive ($(short "$sha")...)"
+            fi
+        fi
+    done < <(timeout 600 find "${roots[@]}" \( -name .git -o -name node_modules -o -name .cache \) -prune -o \
+        -type f \( "${expr[@]}" \) -print0 2>/dev/null || true)
+    if ((found == 0)); then
+        note "none of the ${#names[@]} recorded names was found under: ${roots[*]}"
+    else
+        note "$found file(s) found; the Project Manager records what you decide about them"
+    fi
+    local link=$ws_root/files
+    if [[ -L $link && ! -e $link ]]; then
+        note "the parent 'files' link is broken (target: $(readlink -- "$link"))"
+        if ((found > 0)); then
+            note "artifacts were found, so the link is left for you to retarget or remove by hand"
+            return 0
+        fi
+        if ((PLAN)); then
+            printf 'would run: rm -- %s\n' "$link"
+            planned_list+=("files_search: remove the broken parent 'files' link")
+            return 0
+        fi
+        if confirm "Nothing found. Remove the broken parent 'files' link (the next coordination turn records the loss from this log)?"; then
+            run rm -- "$link" && done_list+=("files_search: broken parent 'files' link removed; loss to be recorded")
+        else
+            note "kept"
+            skipped_list+=("files_search: link removal declined")
+        fi
+    elif [[ -L $link ]]; then
+        note "the parent 'files' link resolves; nothing to do"
+    else
+        note "no parent 'files' link is present"
+    fi
+    return 0
 }
 
 step_push_helium() {
@@ -698,17 +1058,35 @@ print_list() {
     return 0
 }
 
+# Open requests from outbox/component-requests.md, highest priority first
+# (P1 act now, P2 next, P3 housekeeping, P4 waiting on an external input).
+still_yours() {
+    local file=$pm_root/outbox/component-requests.md
+    printf '\nStill yours: open requests by priority (P1 first); exact steps in outbox/OWNER-RUNBOOK.md\n'
+    if [[ ! -f $file ]]; then
+        printf '  (outbox/component-requests.md not found)\n'
+        return 0
+    fi
+    awk -F'|' '
+        function trim(s) { gsub(/^[ \t]+|[ \t]+$/, "", s); return s }
+        /^\| PMR-/ {
+            if (trim($7) != "open") next
+            req = trim($5)
+            if (length(req) > 150) req = substr(req, 1, 147) "..."
+            printf "  - %s %s (%s): %s\n", trim($8), trim($2), trim($4), req
+        }' "$file" | sort -k2,2 -k3,3
+    printf '  - the runbook also lists the items that are not requests (retained PM artifacts, Beryllium gates)\n'
+    return 0
+}
+
 summary() {
     hr "summary"
     print_list "done" "${done_list[@]+"${done_list[@]}"}"
     print_list "planned (--plan)" "${planned_list[@]+"${planned_list[@]}"}"
     print_list "skipped" "${skipped_list[@]+"${skipped_list[@]}"}"
     print_list "failed" "${failed_list[@]+"${failed_list[@]}"}"
-    printf '\nStill yours (not scriptable):\n'
-    printf '  - PMR-016: triage HET-001 (../analysis-workbook/outbox/helium-transfer-queue.md) under Beryllium planning controls; planning input, not authorization\n'
-    printf '  - Decide the lost retained PM artifacts (HANDOFF.md "Retained PM session artifacts")\n'
-    printf '  - PMR-009 (cheri-riscv-notes-repo pointers, gate D4); PMR-014 (formal-verification-research owner alignment); PMR-002 (osr-claude handoff); PMR-003 (beryllium-repo planning wording)\n'
-    printf '\nNext: in %s start Copilot CLI, select /agent project-manager, and tell it what this run did; the coordination turn records it from your statement and the observed remote state.\n' "$pm_root"
+    still_yours
+    printf '\nNext: in %s start Copilot CLI, select /agent project-manager, and tell it what this run did; the coordination turn records it from your statement, this log, and the observed remote state.\n' "$pm_root"
     if [[ -n $log_file ]]; then printf 'Log: %s\n' "$log_file"; fi
     return 0
 }
@@ -719,10 +1097,12 @@ main() {
     for s in "${selected[@]+"${selected[@]}"}"; do
         if ((STOP)); then break; fi
         case $s in
+            apply_edits) step_apply_edits || rc=1 ;;
             review) step_review || rc=1 ;;
-            push_awb|push_tm|push_xrv|push_pm) run_targets "$s" || rc=1 ;;
+            push_awb|push_tm|push_xrv|push_osr|push_pm) run_targets "$s" || rc=1 ;;
             push_fvr) step_push_fvr || rc=1 ;;
             push_helium) step_push_helium || rc=1 ;;
+            files_search) step_files_search || rc=1 ;;
             fetch_snapshot) step_fetch_snapshot || rc=1 ;;
         esac
     done

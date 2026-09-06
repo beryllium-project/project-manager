@@ -59,8 +59,11 @@ npm ci
 ## What the Project Manager may request
 
 Reconciliation of the component's own `planning/HANDOFF.md` (stale workstation
-path and H0 commit wording); the two responsible-human H0 input selections
-recorded in `../HANDOFF.md`; nothing that infers acceptance.
+path and H0 commit wording; `PMR-003`, P2 since 2026-09-06, a pasted command
+in `../outbox/OWNER-RUNBOOK.md` that the human runs, never the Project
+Manager or its helper); the two responsible-human H0 input selections
+recorded in `../HANDOFF.md` (P3; their inputs are in the retained-artifacts
+decision); nothing that infers acceptance.
 
 ## Helium-to-Beryllium transfer input
 

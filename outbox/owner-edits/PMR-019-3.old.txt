@@ -1,0 +1,1 @@
+| ACTIVITY-001 | 2026-09-04 | analysis-workbook | Created the dedicated Helium method-transfer queue and recorded HET-001. | The item is `new` and `unaccepted`; no Beryllium adoption, review, approval, release, or assurance state changed. |

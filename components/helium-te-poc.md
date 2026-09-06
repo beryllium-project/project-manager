@@ -10,9 +10,9 @@
 - **Observed state:** clean `helium-te-travel-fedora44` at
   `f0d96b18c3f629454c9a956b09c6de67d4c138bf`, synchronized with
   `origin/helium-te-travel-fedora44` (observed read-only
-  2026-09-05T04:54Z, 05:15Z, 07:13Z, and 19:10Z by
-  `scripts/inspect-components.sh`, with `refs` re-run at 22:00Z, unchanged;
-  the Project Manager
+  2026-09-05T04:54Z, 05:15Z, 07:13Z, 19:10Z and 2026-09-06T08:42Z by
+  `scripts/inspect-components.sh`, with `refs` re-run at 22:00Z and 08:42Z,
+  HEAD unchanged; the Project Manager
   did not write, reset, clean, stage, or commit in this component)
 
 ## Role
@@ -139,7 +139,12 @@ baseline" (its phrase, recorded without review; the same handoff reports the
 travel gate as blocked; it names travel maintenance candidate `e83e99c` on
 base `3dc3aee`; Tier 7 and Tier 8 H6/H7 statements and the Tier 8 endpoint are
 reported by the component and not reviewed by the Project Manager); handoff
-reconciliation; preservation of frozen refs; a backup push decided by the
-component owner, including the `d0cca32` lineage and the branches without an
-upstream (`PMR-018`). The Project Manager never creates an H7 gate, pushes,
+reconciliation; preservation of frozen refs. The backup push was decided and
+made by the component owner on 2026-09-06 (`PMR-018` closed): twelve local
+branches, including the `d0cca32` lineage (`helium-te-fv`,
+`helium-te-h7-approved`), were pushed with upstreams to the private `origin`
+through the human-run `../scripts/owner-actions.sh --helium-branches`;
+`helium-te-fv-tier8-h7-approved` was already on `origin` at `85a6e55` and
+alone has no upstream configured. A private-remote backup, not publication
+and not gate review. The Project Manager never creates an H7 gate, pushes,
 publishes, or releases.

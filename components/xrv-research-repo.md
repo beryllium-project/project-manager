@@ -36,4 +36,8 @@ No configured build, test, or lint toolchain.
 ## What the Project Manager may request
 
 Review-queue intake of routed sources (most `PMQ` rows from the analysis
-workbook suggest this owner); nothing that changes review IDs or statuses.
+workbook suggest this owner); nothing that changes review IDs or statuses. A
+reachable private remote (`PMR-013`, P1 since 2026-09-06): `7314e2f` exists
+only on this workstation, the human-run `../scripts/owner-actions.sh` skips
+`origin` as unreachable, and it pushes `main -> backup` once the owner adds a
+remote of that name; exact commands in `../outbox/OWNER-RUNBOOK.md`.

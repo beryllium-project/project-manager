@@ -60,7 +60,9 @@ claim that Helium is formally verified.
   and `collab/helium-te-fv-gpt56sol-20260812-trap-effect` (`ff67d02`), both
   merged into `main` (no unmerged `collab/*` branch), consistent with the
   owner-status table's two integrated guest logs; `origin/main` is stale at
-  `8b91ebd`.
+  `8b91ebd`. Re-run 2026-09-06T08:42Z: the same two merged `collab/*`
+  branches; `main` now tracks the new `backup/main` at `8246147` (0/0), and
+  `origin/main` is still the stale `8b91ebd`.
 - Class-2 pointers carried by the Project Manager live in the
   `sources/bibliography.md` section "Routed pointers awaiting owner triage",
   in the file's own entry format, never interleaved with the owner's curated
@@ -75,9 +77,12 @@ by the owner.
 ## What the Project Manager may request
 
 Owner reconciliation of the owner-status table and `HANDOFF.md` after guest
-integrations; a backup decision (the configured `origin` names the unreachable
-`jamorris_microsoft` namespace, so this component has no working off-machine
-backup, and the carried commits `ccb48f6` and `8246147` are local; `PMR-001`);
+integrations; the backup decision is made (`PMR-001` closed 2026-09-06: the
+owner created the private `beryllium-project/formal-verification-research`,
+added remote `backup` with `origin` untouched, and pushed `-u backup main` up
+to `8246147` through the human-run `../scripts/owner-actions.sh --fvr-backup`;
+`main` now tracks `backup/main`, 0 behind, 0 ahead, so the carried `ccb48f6`
+and `8246147` are backed up);
 alignment of the owner-only `.github/copilot-instructions.md` bullet and
 `README.md` sentence with the carried `COLLAB.md` wording, and triage of the
 five routed pointers (`PMR-014`). `PMR-012` and `PMR-008` were carried by the

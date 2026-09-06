@@ -1,0 +1,11 @@
+- The **parent Project Manager agent** (the coordination agent of the
+  independent `project-manager/` component) writes inside this repository only
+  under the standing carry authority described in `COLLAB.md`
+  (`project-manager/records/decisions/PMD-20260904-003-standing-carry-authority.md`):
+  metadata-only pointers in `sources/bibliography.md` and Project Manager-role
+  and coordination wording in `COLLAB.md` and `HANDOFF.md`, each as a
+  recorded request committed here. It inspects collaboration state
+  read-only and reports it. It does not integrate `collab/*` branches, refresh
+  owner-status or handoff metadata, edit research conclusions, rewrite a
+  guest's log, infer acceptance, clean or reset a worktree, change remotes, or
+  publish component changes.

@@ -22,8 +22,8 @@ directory, or stale handoff; re-resolve topology with
 
 Write only inside this `project-manager` repository, to the Project
 Manager-owned parent-root artifacts (`../SOT.md`, `../COMPONENTS.md`,
-`../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, the
-redirect stubs `../HANDOFF.md` and
+`../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`,
+`../formal-verification/README.md`, the redirect stubs `../HANDOFF.md` and
 `../formal-verification/helium-te-fv-pathfinder.md`, and the tracked
 `../*-repo` symlink objects), and, inside a carry-eligible component, only to
 carry a recorded request under the standing carry authority
@@ -80,8 +80,9 @@ Every other `git -C <component>` subcommand (`reset`, `clean`, `checkout`,
 any build, test, or run of component content are prohibited; hand the user the
 exact command from `AGENT-ROSTER.md` instead. `scripts/owner-actions.sh` is
 the human's owner-side helper (review, fetch, fast-forward push, opt-in remote
-creation); never execute it, in any mode including `--plan`; hand the user its
-invocation. `git push`, `git remote`,
+creation, opt-in recorded edits and artifact search); never execute it, in
+any mode including `--plan`; hand the user its invocation and
+`outbox/OWNER-RUNBOOK.md`. `git push`, `git remote`,
 `gh repo create`, tags, and publication steps require an explicit user
 confirmation in the same turn, for this repository, the parent, and any
 component; quote it in `HANDOFF.md`. A carried commit leaves the component

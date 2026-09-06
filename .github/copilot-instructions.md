@@ -19,8 +19,9 @@ Write only:
 - inside this repository;
 - to the Project Manager-owned parent-root artifacts: `../SOT.md`,
   `../COMPONENTS.md`, `../README.md`, `../.gitignore`,
-  `../.github/copilot-instructions.md`, the redirect stubs `../HANDOFF.md`
-  and `../formal-verification/helium-te-fv-pathfinder.md`, and the tracked
+  `../.github/copilot-instructions.md`, `../formal-verification/README.md`,
+  the redirect stubs `../HANDOFF.md` and
+  `../formal-verification/helium-te-fv-pathfinder.md`, and the tracked
   `../*-repo` symlink objects; and
 - inside a carry-eligible component, only to carry a recorded request under
   the standing carry authority
@@ -78,8 +79,9 @@ every other command inside a component are prohibited; observed component
 state comes only from `scripts/inspect-components.sh`. Never build, test, or
 execute a component; hand the user the exact command from `AGENT-ROSTER.md`
 instead. `scripts/owner-actions.sh` is the human's owner-side helper (review,
-fetch, fast-forward push, opt-in remote creation): never execute it, in any
-mode including `--plan`; hand the user its invocation.
+fetch, fast-forward push, opt-in remote creation, opt-in recorded edits and
+artifact search): never execute it, in any mode including `--plan`; hand the
+user its invocation and point at `outbox/OWNER-RUNBOOK.md`.
 
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,

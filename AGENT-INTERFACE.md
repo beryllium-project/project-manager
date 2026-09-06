@@ -12,7 +12,8 @@ research, analysis, threat-model, or provenance content.
 
 ```text
                     parent root (SOT.md, COMPONENTS.md, README.md,
-                    .gitignore, tracked *-repo symlink objects)
+                    .gitignore, formal-verification/README.md,
+                    the two redirect stubs, tracked *-repo symlink objects)
                                    ^ maintains
                                    |
    component repositories -----> project-manager <----- human decisions
@@ -89,7 +90,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Queue ledger | `queue/LEDGER.md` | Ledger-first dispositions; see `queue/README.md` |
 | Component requests | `outbox/component-requests.md` | Requests to component owners; those inside the three classes of `PMD-20260904-003` are carried by this agent and closed with the component commit, every other request is carried by the human |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
-| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, redirect stubs `../HANDOFF.md` and `../formal-verification/helium-te-fv-pathfinder.md`, tracked `../*-repo` symlink objects | Project Manager-owned; edited and committed in the parent repository |
+| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, `../formal-verification/README.md` (since 2026-09-06), redirect stubs `../HANDOFF.md` and `../formal-verification/helium-te-fv-pathfinder.md`, tracked `../*-repo` symlink objects | Project Manager-owned; edited and committed in the parent repository |
 
 ## Write and execution boundaries
 
@@ -159,11 +160,20 @@ actions this agent records but never performs: reviewing the commits a push
 would publish, fast-forward pushing component branches to their private
 remotes, backing up this repository and the parent, opt-in creation of one
 backup remote (`--fvr-backup`, `PMR-001`), opt-in pushes of the Helium
-local-only branches (`--helium-branches`, `PMR-018`), and the fetch that lets
-the next coordination turn observe the result. It is not in the execution
-list above; the agent never runs it, in any mode including `--plan`. It never
-forces a push, rewrites history, or changes a worktree, and it skips remotes
-in the unreachable `jamorris_microsoft` namespace. Its logs are written under
+local-only branches (`--helium-branches`, `PMR-018`), opt-in application of
+the exact owner-side edits recorded in `outbox/owner-edits/` (`--apply-edits`:
+diff, the component's own validator, `y/N`, then a commit inside the component
+made by the human; never `helium-te-poc/` or `beryllium-repo`;
+`records/decisions/PMD-20260906-001-owner-edits-and-request-priorities.md`),
+an opt-in read-only search for the lost retained PM artifacts
+(`--files-search`), and the fetch that lets the next coordination turn observe
+the result. It ends by listing the open requests of
+`outbox/component-requests.md` by priority; `outbox/OWNER-RUNBOOK.md` gives
+the exact steps. It is not in the execution list above; the agent never runs
+it, in any mode including `--plan`. It never forces a push or rewrites
+history; outside `apply_edits` and the opt-in removal of the broken,
+Git-ignored parent `files` link in `files_search` (after a `y`) it changes no
+file; and it skips remotes in the unreachable `jamorris_microsoft` namespace. Its logs are written under
 `scratch/owner-actions/` (ignored by Git) and are evidence, not records: the
 coordination turn that follows records the run from the human's statement and
 the observed remote state. `scripts/validate-pm.sh` checks statically that

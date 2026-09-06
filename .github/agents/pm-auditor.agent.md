@@ -43,7 +43,11 @@ Never open `../osr-claude/sources/restricted-microsoft/`.
    `closed` request is supported by observed component state; for each
    request the Project Manager carried under `PMD-20260904-003`, the named
    component commit exists on the component's checked-out branch, touches
-   only paths inside the request's class, and names the request identifier.
+   only paths inside the request's class, and names the request identifier;
+   every `open` row carries a priority `P1`-`P4` and every other row `-`, and
+   `outbox/OWNER-RUNBOOK.md` lists every open row with the same priority and
+   steps consistent with the request text and the recorded edit files in
+   `outbox/owner-edits/`.
 7. Wording discipline: acceptance, approval, sign-off, publication, release,
    formal-verification, and hardware-validation claims appear only as open
    gates or as named human records; assurance boundaries use the exact

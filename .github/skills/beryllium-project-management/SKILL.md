@@ -43,8 +43,9 @@ research, analysis, threat models, provenance findings, or human decisions.
   `commit` while carrying under `PMD-20260904-003`. Every other
   `git -C <component>` subcommand and any build, test, or run of component
   content are prohibited. `scripts/owner-actions.sh` is the human's
-  owner-side helper (fetch, push, opt-in remote creation); the agent never
-  executes it, in any mode, and hands the human its invocation instead.
+  owner-side helper (fetch, push, opt-in remote creation, opt-in recorded
+  edits and artifact search); the agent never executes it, in any mode, and
+  hands the human its invocation and `outbox/OWNER-RUNBOOK.md` instead.
 - `git push`, `git remote`, `gh repo create`, tags, and publication require an
   explicit user confirmation in the same turn, quoted in `HANDOFF.md`, for
   this repository, the parent, and any component. A carried commit leaves the
@@ -166,9 +167,13 @@ Everything outside the three classes, and everything in `helium-te-poc/` or
    takes a position that later turns must honor. Fill every section of the
    scaffold; leave "What this record does not decide" explicit.
 5. Append owner-actionable requests to `outbox/component-requests.md`
-   (`PMR-NNN`, one sentence, basis with path and commit). Close a request only
-   when the owner's action is observed in component state or when the Project
-   Manager carried it in Phase 4b and names the component commit.
+   (`PMR-NNN`, one sentence, basis with path and commit, and a proposed
+   priority `P1`-`P4`; `-` once closed). Close a request only when the
+   owner's action is observed in component state or when the Project Manager
+   carried it in Phase 4b and names the component commit. Refresh
+   `outbox/OWNER-RUNBOOK.md` so that every open item, request or not, has
+   exact human steps in priority order, and remove the `outbox/owner-edits/`
+   set of every request closed this turn.
 
 ## Phase 6: audit
 
