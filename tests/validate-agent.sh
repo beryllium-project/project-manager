@@ -160,7 +160,7 @@ done
 
 for component in helium-te-poc formal-verification-research osr-claude \
     beryllium-repo cheri-riscv-notes-repo xrv-research-repo provenance-review \
-    analysis-workbook threat-modeler; do
+    analysis-workbook threat-modeler security-reviewer; do
     require_file "$repository_root/components/$component.md"
     require_text "$repository_root/components/$component.md" "# $component"
     require_text "$repository_root/components/$component.md" '**Ownership:**'
@@ -277,6 +277,7 @@ require_text "$interface" '../COMPONENTS.md'
 require_text "$roster" '`project-manager`'
 require_text "$roster" '`analysis-workbook`'
 require_text "$roster" '`threat-modeler`'
+require_text "$roster" '`security-reviewer`'
 require_text "$roster" '`provenance-review`'
 require_text "$roster" 'disable-model-invocation: true'
 require_text "$handoff" '## Fast resume'
@@ -310,7 +311,7 @@ init_repo() {
 }
 init_repo "$synth" workspace
 for name in project-manager helium-te-poc formal-verification-research osr-claude \
-    provenance-review analysis-workbook threat-modeler; do
+    provenance-review analysis-workbook threat-modeler security-reviewer; do
     init_repo "$synth/$name" "$name"
 done
 init_repo "$sandbox/copilot/msft/beryllium" beryllium
@@ -341,7 +342,7 @@ registry=$synth/COMPONENTS.md
     printf '| Workspace entry | Integration | Observed state | Role and boundary |\n'
     printf '| --- | --- | --- | --- |\n'
     for name in project-manager helium-te-poc formal-verification-research osr-claude \
-        provenance-review analysis-workbook threat-modeler; do
+        provenance-review analysis-workbook threat-modeler security-reviewer; do
         printf '| `%s/` | Ignored direct checkout | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$synth/$name" rev-parse --short HEAD)"
     done

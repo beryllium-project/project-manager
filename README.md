@@ -139,6 +139,7 @@ bash ./scripts/owner-actions.sh --yes             # same without prompts (a dirt
 bash ./scripts/owner-actions.sh --apply-edits     # also: the exact recorded owner-side edits (outbox/owner-edits/), diff, y/N, commit in the component
 bash ./scripts/owner-actions.sh --files-search --files-root /mnt/backup   # also: read-only search for the lost retained PM artifacts
 bash ./scripts/owner-actions.sh --fvr-backup      # also: create beryllium-project/formal-verification-research (private), add remote backup, push -u backup main
+bash ./scripts/owner-actions.sh --sr-backup       # also: create beryllium-project/security-reviewer (private), add remote origin, push -u origin main (PMR-021)
 bash ./scripts/owner-actions.sh --helium-branches --helium-only helium-te-fv,helium-te-h7-approved
 bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
 ```
@@ -148,9 +149,11 @@ Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
 `origin` is in the unreachable namespace; also `main -> backup` once such a
 remote exists), `push_osr` (osr-claude), `push_fvr`
 (formal-verification-research `main -> backup`, once that remote exists),
+`push_sr` (security-reviewer `main -> origin`, once that remote exists),
 `push_pm` (this repository to `origin`, the parent to `backup`),
 `fetch_snapshot`. Opt-in: `apply_edits` (`--apply-edits`), `push_fvr` remote
-creation (`--fvr-backup`), `push_helium` (`--helium-branches`), `files_search`
+creation (`--fvr-backup`), `push_sr` remote creation (`--sr-backup`),
+`push_helium` (`--helium-branches`), `files_search`
 (`--files-search`). Every push is a fast-forward verified afterwards with
 `git ls-remote`; nothing is ever forced; a component file is changed only by
 `apply_edits`, only to the exact text recorded in `outbox/owner-edits/`, only

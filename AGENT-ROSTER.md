@@ -18,6 +18,7 @@ the directory with `/add-dir <directory>` from the parent root.
 | `project-manager/` | `project-manager` | `pm-auditor` (read, search) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
 | `analysis-workbook/` | `analysis-workbook` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`) and read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`) | Own repository only |
 | `threat-modeler/` | `threat-modeler` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
+| `security-reviewer/` | `security-reviewer` | `security-evidence` (read, search); `security-research` (read, search, web); `security-finding-review` (read, search) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; the only target execution is a command the user approves by exact text, run through `scripts/run-approved-command.sh` with retained, hashed evidence |
 | `provenance-review/` | `provenance-review` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
 
 ## Invocation and validation
@@ -65,6 +66,28 @@ git diff --check
 The agent performs discovery and asks the user to choose `Review existing`,
 `Review and draft successor`, `Create from evidence`, `Edit scope`, or
 `Cancel` before allocating a package. Target execution is prohibited.
+
+### security-reviewer
+
+```sh
+cd security-reviewer
+# Copilot CLI: /agent security-reviewer
+bash ./tests/validate-agent.sh
+bash ./scripts/validate-security-review.sh [--draft|--baseline <prior-copy>] reviews/SR-YYYYMMDD-NNN-short-name
+bash ./scripts/update-index.sh --check
+git diff --check
+```
+
+The agent performs discovery and asks the user to choose `Independent
+review`, `Synthesis`, `Edit scope`, or `Cancel` before allocating a package.
+Target execution is prohibited except for commands the user approves by exact
+command text in the session; each runs only through
+`scripts/run-approved-command.sh` against an `APPROVAL-NNN` record and the
+expected target commit, with evidence retained under the package and hashed
+into `review-manifest.json`. A review package never reads another review
+package for the same target; synthesis is the only multi-package mode. Its
+contract derives from the Helium `agent-review/` artifacts at `9b3ff4e`
+(`AUTHORS.md` in the component); Helium is unchanged.
 
 ### provenance-review
 

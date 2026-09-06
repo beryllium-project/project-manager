@@ -34,7 +34,8 @@ Never open `../osr-claude/sources/restricted-microsoft/`.
 4. `AGENT-ROSTER.md` against each sibling's `.github/agents/*.agent.md`,
    `AGENT-INTERFACE.md`, and validation commands.
 5. `queue/LEDGER.md` against `../analysis-workbook/outbox/pm-queue.md`,
-   `../threat-modeler/outbox/pm-queue.md`, and the read-only-tracked
+   `../threat-modeler/outbox/pm-queue.md`,
+   `../security-reviewer/outbox/pm-queue.md`, and the read-only-tracked
    `../analysis-workbook/outbox/helium-transfer-queue.md`: every source row
    has a ledger row, every "Source status applied" value matches the source
    file, and no `analysis-workbook-transfer` row uses `accepted` or claims an

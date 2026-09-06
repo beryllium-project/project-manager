@@ -7,6 +7,9 @@ repositories:
   by that component: `new`, `unconfirmed`);
 - `../threat-modeler/outbox/pm-queue.md` (rows `DISC-NNN`, status written by
   that component: `new`);
+- `../security-reviewer/outbox/pm-queue.md` (rows `SRQ-NNN` of kind `source`
+  or `owner-action`, status written by that component: `new`; registered
+  2026-09-06, `PMD-20260906-003`);
 - `../analysis-workbook/outbox/helium-transfer-queue.md` (rows `HET-NNN`,
   lifecycle statuses written by that component, currently `new`, and input
   states kept `unaccepted`).
@@ -20,7 +23,11 @@ Manager itself as a class-1 carried write under the standing carry authority
 committed inside the owning component with the `PML` identifiers in the
 subject, when that component's worktree is clean and no other session is
 active there. Otherwise the edit is handed to the user, who applies it in the
-owning component. The Project Manager never stages or commits a component
+owning component. Class 1 names the analysis-workbook and threat-modeler
+queue files; every edit due in `../security-reviewer/outbox/pm-queue.md` is
+handed to the user until the responsible human extends class 1 to that file
+(`../records/decisions/PMD-20260906-003-security-reviewer-component-registered.md`).
+The Project Manager never stages or commits a component
 outbox file in the parent. The transfer queue is tracked read-only:
 `scripts/pull-queues.sh edits` prints no edit for it, because it is outside
 class 1 and the workbook maintainer mirrors lifecycle changes after observing
@@ -31,8 +38,8 @@ an exact owner-side record.
 | Column | Meaning |
 | --- | --- |
 | Ledger ID | `PML-NNNN`, monotonic, never reused |
-| Source component | `analysis-workbook`, `threat-modeler`, or `analysis-workbook-transfer` |
-| Source ID | The row identifier in the component queue (`PMQ-NNN`, `DISC-NNN`, or `HET-NNN`) |
+| Source component | `analysis-workbook`, `threat-modeler`, `security-reviewer`, or `analysis-workbook-transfer` |
+| Source ID | The row identifier in the component queue (`PMQ-NNN`, `DISC-NNN`, `SRQ-NNN`, or `HET-NNN`) |
 | Raised on | Date recorded in the source row, or `unknown` |
 | Title | Source title as recorded in the source row |
 | Suggested owner | Owning component proposed by the source row |
@@ -43,7 +50,7 @@ an exact owner-side record.
 
 ## PM status meanings
 
-| PM status | Meaning | Edit for `analysis-workbook` queue | Edit for `threat-modeler` queue | Edit for `analysis-workbook-transfer` queue |
+| PM status | Meaning | Edit for `analysis-workbook` queue | Edit for `threat-modeler` and `security-reviewer` queues | Edit for `analysis-workbook-transfer` queue |
 | --- | --- | --- | --- | --- |
 | `pending` | Pulled, not yet triaged | none | none | none |
 | `routed` | Owning component identified and a `PMR-NNN` request raised in `outbox/component-requests.md` | none | `routed` | none |

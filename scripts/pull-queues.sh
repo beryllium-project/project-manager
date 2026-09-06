@@ -26,7 +26,8 @@ edits    the exact status-column edits due in each component queue file (applied
 summary  per-source counts
 
 Sources are ../analysis-workbook/outbox/pm-queue.md (PMQ-NNN rows),
-../threat-modeler/outbox/pm-queue.md (DISC-NNN rows), and
+../threat-modeler/outbox/pm-queue.md (DISC-NNN rows),
+../security-reviewer/outbox/pm-queue.md (SRQ-NNN rows), and
 ../analysis-workbook/outbox/helium-transfer-queue.md (HET-NNN rows,
 read-only tracking only). The ledger is queue/LEDGER.md. Every mode is
 read-only.
@@ -77,31 +78,35 @@ mode=$1
 
 # Source definitions: name, relative file, id prefix, and 1-based column
 # numbers for id, raised-on, title, suggested owner, and status.
-source_names=(analysis-workbook threat-modeler analysis-workbook-transfer)
+source_names=(analysis-workbook threat-modeler security-reviewer analysis-workbook-transfer)
 declare -A source_file=(
     [analysis-workbook]=analysis-workbook/outbox/pm-queue.md
     [threat-modeler]=threat-modeler/outbox/pm-queue.md
+    [security-reviewer]=security-reviewer/outbox/pm-queue.md
     [analysis-workbook-transfer]=analysis-workbook/outbox/helium-transfer-queue.md
 )
 declare -A source_prefix=(
     [analysis-workbook]=PMQ
     [threat-modeler]=DISC
+    [security-reviewer]=SRQ
     [analysis-workbook-transfer]=HET
 )
-declare -A col_id=([analysis-workbook]=1 [threat-modeler]=1 [analysis-workbook-transfer]=1)
-declare -A col_raised=([analysis-workbook]=2 [threat-modeler]=0 [analysis-workbook-transfer]=2)
-declare -A col_title=([analysis-workbook]=5 [threat-modeler]=3 [analysis-workbook-transfer]=4)
-declare -A col_owner=([analysis-workbook]=7 [threat-modeler]=5 [analysis-workbook-transfer]=5)
-declare -A col_status=([analysis-workbook]=10 [threat-modeler]=6 [analysis-workbook-transfer]=6)
+declare -A col_id=([analysis-workbook]=1 [threat-modeler]=1 [security-reviewer]=1 [analysis-workbook-transfer]=1)
+declare -A col_raised=([analysis-workbook]=2 [threat-modeler]=0 [security-reviewer]=3 [analysis-workbook-transfer]=2)
+declare -A col_title=([analysis-workbook]=5 [threat-modeler]=3 [security-reviewer]=5 [analysis-workbook-transfer]=4)
+declare -A col_owner=([analysis-workbook]=7 [threat-modeler]=5 [security-reviewer]=6 [analysis-workbook-transfer]=5)
+declare -A col_status=([analysis-workbook]=10 [threat-modeler]=6 [security-reviewer]=7 [analysis-workbook-transfer]=6)
 declare -A source_status_column_name=(
     [analysis-workbook]=Status
     [threat-modeler]=Status
+    [security-reviewer]=Status
     [analysis-workbook-transfer]=Status
 )
 # Statuses written by the component that await the Project Manager.
 declare -A awaiting_pattern=(
     [analysis-workbook]='^(new|unconfirmed)$'
     [threat-modeler]='^new$'
+    [security-reviewer]='^new$'
     [analysis-workbook-transfer]='^new$'
 )
 
@@ -119,6 +124,13 @@ map_status() {
     threat-modeler:accepted) printf 'integrated' ;;
     threat-modeler:duplicate | threat-modeler:rejected) printf 'declined' ;;
     threat-modeler:deferred) printf 'acknowledged' ;;
+    # The security-reviewer queue shares the threat-modeler status vocabulary.
+    # Its edits are applied by the human until the responsible human extends
+    # class 1 of PMD-20260904-003 to this file (PMD-20260906-003).
+    security-reviewer:routed) printf 'routed' ;;
+    security-reviewer:accepted) printf 'integrated' ;;
+    security-reviewer:duplicate | security-reviewer:rejected) printf 'declined' ;;
+    security-reviewer:deferred) printf 'acknowledged' ;;
     # The transfer queue is outside class 1 of PMD-20260904-003; the workbook
     # maintainer mirrors lifecycle changes after observing the owner-side record.
     analysis-workbook-transfer:*) printf '' ;;

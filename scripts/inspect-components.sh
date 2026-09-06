@@ -55,6 +55,7 @@ registered_direct=(
     provenance-review
     analysis-workbook
     threat-modeler
+    security-reviewer
 )
 registered_symlinks=(
     beryllium-repo

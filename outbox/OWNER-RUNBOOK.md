@@ -3,7 +3,9 @@
 **Maintained by:** the `project-manager` agent, refreshed every coordination
 turn from `component-requests.md` (the request table is the source of the
 `Priority` column) and `../HANDOFF.md` "Blockers and open human gates".
-**Last refreshed:** 2026-09-06 (sixth coordination turn, after the 10:29Z run).
+**Last refreshed:** 2026-09-06 (seventh coordination turn: the
+`security-reviewer` component created and registered, `PMR-021` and
+`PMR-022` raised).
 
 Every step below is the responsible human's or the component owner's action.
 The Project Manager agent never runs `scripts/owner-actions.sh`, never pushes,
@@ -18,26 +20,34 @@ or a gate that is not actionable now.
 
 ## Quick path
 
-Your 10:29Z run of 2026-09-06 did everything the script could do: `PMR-019`
-(mirror, `d003dec`), `PMR-002` (`e275544`), and the `PMR-014` wording
-(`e5740de`) are committed and pushed; the lost retained PM artifacts are
-recorded as lost (`../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`)
+A new component exists: `security-reviewer/` (created 2026-09-06 from the
+Helium review contract; `PMD-20260906-003`). It has **no remote**: its only
+copy is on this workstation (`PMR-021`, P2). Your 10:29Z run of 2026-09-06
+did everything the script could do then: `PMR-019` (mirror, `d003dec`),
+`PMR-002` (`e275544`), and the `PMR-014` wording (`e5740de`) are committed and
+pushed; the lost retained PM artifacts are recorded as lost
+(`../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`)
 and the broken parent `files` link is gone. No recorded edit is pending, so
-`--apply-edits` now reports nothing to apply. The default run still pushes
-whatever is outgoing (P1: this coordination turn's two local commits, in
-`project-manager/` and the parent) and fetches:
+`--apply-edits` reports nothing to apply. The recommended run creates the new
+component's private remote and pushes it, and pushes whatever else is outgoing
+(P1: this coordination turn's local commits in `project-manager/` and the
+parent, and the sixth turn's two, still local) and fetches:
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --plan
-bash ./scripts/owner-actions.sh
+bash ./scripts/owner-actions.sh --plan --sr-backup
+bash ./scripts/owner-actions.sh --sr-backup
 ```
 
 Everything below is yours to do by hand or through a component's own agent,
-in priority order: `PMR-013` (P1), `PMR-003` (P2), `PMR-020` (P2), then the
-P3 housekeeping (`PMR-019` handoff prose, `PMR-014` pointers, `PMR-004`),
-then `PMR-009` (P4). After each, run the script (it pushes the new commits)
-and tell the Project Manager.
+in priority order: `PMR-013` (P1), `PMR-021` (P2, the run above), `PMR-003`
+(P2), `PMR-020` (P2), then the P3 housekeeping (`PMR-019` handoff prose,
+`PMR-014` pointers, `PMR-004` and `PMR-022` together), then `PMR-009` (P4).
+Separately, the Project Manager asks one question (`PMD-20260906-003` item
+3): does class 1 of the standing carry authority extend to
+`security-reviewer/outbox/pm-queue.md`? Until you say so, its queue edits
+are yours. After each action, run the script (it pushes the new commits) and
+tell the Project Manager.
 
 ## P1
 
@@ -65,6 +75,34 @@ registry records as not possible from here. Closure: the next turn observes
 `PMR-013`; if you choose differently, say so and the request is updated.
 
 ## P2
+
+### PMR-021: security-reviewer has no remote (its only copy is on this workstation)
+
+The new component `security-reviewer/` (clean `main` at `9ca5071`, initial
+commit of 2026-09-06) has no remote configured. Decide its backup home; the
+recorded proposal is a private repository `beryllium-project/security-reviewer`
+under the organization that already holds the other agent components. The
+script does it with a prompt per step (create if absent, add remote `origin`,
+push `-u origin main`, verify with `ls-remote`):
+
+```sh
+cd /home/jmorris/src/l1/src/beryllium-project/project-manager
+bash ./scripts/owner-actions.sh --plan --sr-backup     # shows exactly what would run
+bash ./scripts/owner-actions.sh --sr-backup            # y/N per step
+```
+
+If you prefer another home, do it by hand and say so:
+
+```sh
+cd /home/jmorris/src/l1/src/beryllium-project/security-reviewer
+git remote add origin <url>
+git push -u origin main
+```
+
+Closure: the next turn observes `main` tracking `origin/main` (0 behind,
+0 ahead) in `scripts/inspect-components.sh state security-reviewer` and
+closes `PMR-021`. Once the remote exists, the default script run pushes this
+component like the others (`push_sr`).
 
 ### PMR-003: beryllium-repo `planning/HANDOFF.md` names a former path and calls H0 uncommitted
 
@@ -204,6 +242,38 @@ If a component's `readonly-inspect.sh` resolves entries by a fixed path
 pattern, check that `project-manager` resolves as a direct checkout before
 committing (run its `components` mode). The next script run pushes both
 (`push_awb`, `push_tm`). Closure: observed at the new HEADs.
+
+### PMR-022: `scripts/readonly-inspect.sh` registered lists gain `security-reviewer` (analysis-workbook, threat-modeler)
+
+Same two owner-only files as `PMR-004`, one more line each, so make both
+edits in the same owner commit per component if you do `PMR-004` at the same
+time. Whether a sibling ever needs the new component as a target is your
+call; declining closes the request.
+
+```sh
+cd /home/jmorris/src/l1/src/beryllium-project/analysis-workbook
+python3 - <<'PY'
+import pathlib; p = pathlib.Path("scripts/readonly-inspect.sh"); s = p.read_text()
+old = "registered_components=(\n"; assert s.count(old) == 1
+p.write_text(s.replace(old, "registered_components=(\n    security-reviewer\n")); print("ok")
+PY
+bash -n scripts/readonly-inspect.sh && bash ./tests/validate-agent.sh
+git add scripts/readonly-inspect.sh && git commit -m "scripts: register security-reviewer in readonly-inspect (PMR-022)" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+
+cd /home/jmorris/src/l1/src/beryllium-project/threat-modeler
+python3 - <<'PY'
+import pathlib; p = pathlib.Path("scripts/readonly-inspect.sh"); s = p.read_text()
+old = "registered_components=(\n"; assert s.count(old) == 1
+p.write_text(s.replace(old, "registered_components=(\n    security-reviewer\n")); print("ok")
+PY
+bash -n scripts/readonly-inspect.sh && bash ./tests/validate-agent.sh
+git add scripts/readonly-inspect.sh && git commit -m "scripts: register security-reviewer in readonly-inspect (PMR-022)" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+```
+
+Run each component's `components` mode afterwards to confirm that
+`security-reviewer` resolves as a direct checkout. The next script run pushes
+both. Closure: observed at the new HEADs, or your statement that a sibling
+does not need the new component as a target.
 
 ## P4
 

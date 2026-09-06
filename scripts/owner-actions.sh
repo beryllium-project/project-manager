@@ -25,8 +25,8 @@
 # usage:
 #   bash ./scripts/owner-actions.sh [--plan] [--yes] [--full-diff] [--no-log]
 #                                   [--only step[,step...]] [--skip step[,step...]]
-#                                   [--apply-edits] [--fvr-backup] [--helium-branches]
-#                                   [--helium-only name[,name...]]
+#                                   [--apply-edits] [--fvr-backup] [--sr-backup]
+#                                   [--helium-branches] [--helium-only name[,name...]]
 #                                   [--files-search] [--files-root DIR ...]
 #
 # default steps, in order (preflight always runs):
@@ -40,6 +40,8 @@
 #   push_osr        osr-claude                 main -> origin
 #   push_fvr        formal-verification-research main -> backup, once the
 #                   remote "backup" exists (creating it needs --fvr-backup)
+#   push_sr         security-reviewer main -> origin, once the remote "origin"
+#                   exists (creating it needs --sr-backup)           (PMR-021)
 #   push_pm         project-manager main -> origin; parent main -> backup
 #   fetch_snapshot  fetch every reachable remote of every registered entry, then
 #                   run the Project Manager restart snapshot (read-only)
@@ -55,6 +57,9 @@
 #   push_fvr        --fvr-backup: gh repo create beryllium-project/formal-verification-research
 #                   --private (if absent), add remote "backup" (origin untouched),
 #                   push -u backup main                              (PMR-001)
+#   push_sr         --sr-backup: gh repo create beryllium-project/security-reviewer
+#                   --private (if absent), add remote "origin" (the component has
+#                   no remote yet), push -u origin main                (PMR-021)
 #   push_helium     --helium-branches: push -u origin every helium-te-poc local
 #                   branch that has no upstream; --helium-only a,b restricts to
 #                   the named branches                              (PMR-018)
@@ -87,6 +92,7 @@ YES=0
 PLAN=0
 FULL_DIFF=0
 FVR=0
+SR=0
 HELIUM=0
 APPLY=0
 FILES=0
@@ -100,7 +106,7 @@ tee_pid=''
 tmp_dir=''
 files_roots=()
 
-all_steps=(preflight apply_edits review push_awb push_tm push_xrv push_osr push_fvr push_helium push_pm files_search fetch_snapshot)
+all_steps=(preflight apply_edits review push_awb push_tm push_xrv push_osr push_fvr push_sr push_helium push_pm files_search fetch_snapshot)
 all_csv=$(IFS=,; printf '%s' "${all_steps[*]}")
 
 done_list=()
@@ -136,6 +142,7 @@ while (($#)); do
         --plan) PLAN=1 ;;
         --full-diff) FULL_DIFF=1 ;;
         --fvr-backup) FVR=1 ;;
+        --sr-backup) SR=1 ;;
         --helium-branches) HELIUM=1 ;;
         --apply-edits) APPLY=1 ;;
         --files-search) FILES=1 ;;
@@ -176,6 +183,13 @@ fvr_backup_configured() {
     [[ -d $dir ]] && git -C "$dir" remote get-url backup >/dev/null 2>&1
 }
 
+# The security-reviewer remote is created only with --sr-backup; once it
+# exists, pushing to it is an ordinary default push.
+sr_backup_configured() {
+    local dir=$ws_root/security-reviewer
+    [[ -d $dir ]] && git -C "$dir" remote get-url origin >/dev/null 2>&1
+}
+
 validate_step_list() {
     local csv=$1 flag=$2 s
     local -a arr=()
@@ -186,6 +200,9 @@ validate_step_list() {
         fi
         if [[ $flag == --only && $s == push_fvr && $FVR == 0 ]] && ! fvr_backup_configured; then
             usage_error "--only push_fvr needs --fvr-backup while remote 'backup' is not configured"
+        fi
+        if [[ $flag == --only && $s == push_sr && $SR == 0 ]] && ! sr_backup_configured; then
+            usage_error "--only push_sr needs --sr-backup while remote 'origin' is not configured"
         fi
         if [[ $flag == --only && $s == push_helium && $HELIUM == 0 ]]; then
             usage_error "--only push_helium needs --helium-branches"
@@ -216,6 +233,7 @@ for s in "${all_steps[@]}"; do
         preflight) continue ;;
         apply_edits) if ((APPLY == 0)); then continue; fi ;;
         push_fvr) if ((FVR == 0)) && ! fvr_backup_configured; then continue; fi ;;
+        push_sr) if ((SR == 0)) && ! sr_backup_configured; then continue; fi ;;
         push_helium) if ((HELIUM == 0)); then continue; fi ;;
         files_search) if ((FILES == 0)); then continue; fi ;;
     esac
@@ -317,6 +335,7 @@ targets=(
     "push_xrv|xrv-research-repo|$ws_root/xrv-research-repo|backup|main|1"
     "push_osr|osr-claude|$ws_root/osr-claude|origin|main|0"
     "push_fvr|formal-verification-research|$ws_root/formal-verification-research|backup|main|1"
+    "push_sr|security-reviewer|$ws_root/security-reviewer|origin|main|1"
     "push_pm|project-manager|$pm_root|origin|main|0"
     "push_pm|parent coordination repository|$ws_root|backup|main|0"
 )
@@ -325,6 +344,7 @@ target_selected() {
     local step=$1
     case $step in
         push_fvr) if ((FVR == 0)) && ! fvr_backup_configured; then return 1; fi ;;
+        push_sr) if ((SR == 0)) && ! sr_backup_configured; then return 1; fi ;;
     esac
     if [[ -n $only ]] && ! list_has "$only" "$step"; then return 1; fi
     if [[ -n $skip ]] && list_has "$skip" "$step"; then return 1; fi
@@ -471,7 +491,7 @@ step_preflight() {
             warn "gh is not authenticated. HTTPS pushes need a credential helper: gh auth login; gh auth setup-git"
         fi
     else
-        warn "gh is not installed: --fvr-backup is unavailable and HTTPS pushes need another credential helper"
+        warn "gh is not installed: --fvr-backup and --sr-backup are unavailable and HTTPS pushes need another credential helper"
     fi
     printf '\n-- push targets (label, branch, local head, dirty entries, remote, slug, live remote head) --\n'
     local t tstep label dir remote branch setu
@@ -682,6 +702,73 @@ step_push_fvr() {
         return 1
     fi
     do_push push_fvr formal-verification-research "$dir" backup main 1
+}
+
+step_push_sr() {
+    local dir=$ws_root/security-reviewer
+    local slug=beryllium-project/security-reviewer
+    local want_url="https://github.com/$slug.git"
+    hr "push_sr: private remote for security-reviewer (PMR-021)"
+    if ! is_repo "$dir"; then
+        warn "no Git repository at $dir; skipping"
+        skipped_list+=("security-reviewer: no repository")
+        return 0
+    fi
+    local url=''
+    if url=$(git -C "$dir" remote get-url origin 2>/dev/null); then
+        if [[ $(remote_slug "$url") != "$slug" ]]; then
+            warn "remote 'origin' points at $(remote_slug "$url"), not $slug; not changing it"
+            failed_list+=("push_sr: remote 'origin' points elsewhere")
+            return 1
+        fi
+        note "remote 'origin' is configured for $slug (PMR-021 done); ordinary fast-forward push"
+        do_push push_sr security-reviewer "$dir" origin main 1
+        return
+    fi
+    if ((SR == 0)); then
+        note "remote 'origin' is not configured; pass --sr-backup to create $slug and add it"
+        skipped_list+=("security-reviewer: main -> origin: remote not configured (needs --sr-backup)")
+        return 0
+    fi
+    if ! command -v gh >/dev/null 2>&1; then
+        warn "gh is not installed; cannot create or check $slug"
+        failed_list+=("push_sr: gh missing")
+        return 1
+    fi
+    if gh repo view "$slug" --json name >/dev/null 2>&1; then
+        note "repository $slug exists and is visible to the gh account"
+    else
+        note "repository $slug does not exist or is not visible to the gh account"
+        if ((PLAN)); then
+            printf 'would run: gh repo create %s --private\n' "$slug"
+        else
+            if ! confirm "Create the private repository $slug with gh?"; then
+                note "skipped by you"
+                skipped_list+=("push_sr: repository creation declined")
+                return 0
+            fi
+            if ! run gh repo create "$slug" --private; then
+                failed_list+=("push_sr: gh repo create failed")
+                return 1
+            fi
+        fi
+    fi
+    if ((PLAN)); then
+        printf 'would run: git -C %s remote add origin %s\n' "$dir" "$want_url"
+        printf 'would run: git -C %s push -u origin main\n' "$dir"
+        planned_list+=("security-reviewer: main -> origin (new remote $slug)")
+        return 0
+    fi
+    if ! confirm "Add remote 'origin' -> $slug in security-reviewer (it has no remote yet)?"; then
+        note "skipped by you"
+        skipped_list+=("push_sr: remote addition declined")
+        return 0
+    fi
+    if ! run git -C "$dir" remote add origin "$want_url"; then
+        failed_list+=("push_sr: remote add failed")
+        return 1
+    fi
+    do_push push_sr security-reviewer "$dir" origin main 1
 }
 
 # --- apply_edits (--apply-edits) ----------------------------------------------
@@ -1017,7 +1104,8 @@ step_fetch_snapshot() {
     local -a entries=("$ws_root" "$pm_root")
     local e dir r url
     for e in helium-te-poc formal-verification-research osr-claude provenance-review \
-        analysis-workbook threat-modeler beryllium-repo cheri-riscv-notes-repo xrv-research-repo; do
+        analysis-workbook threat-modeler security-reviewer beryllium-repo cheri-riscv-notes-repo \
+        xrv-research-repo; do
         entries+=("$ws_root/$e")
     done
     for dir in "${entries[@]}"; do
@@ -1101,6 +1189,7 @@ main() {
             review) step_review || rc=1 ;;
             push_awb|push_tm|push_xrv|push_osr|push_pm) run_targets "$s" || rc=1 ;;
             push_fvr) step_push_fvr || rc=1 ;;
+            push_sr) step_push_sr || rc=1 ;;
             push_helium) step_push_helium || rc=1 ;;
             files_search) step_files_search || rc=1 ;;
             fetch_snapshot) step_fetch_snapshot || rc=1 ;;

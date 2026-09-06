@@ -103,10 +103,14 @@ never a decision.
 ## Queue and request protocols
 
 Component queues (`../analysis-workbook/outbox/pm-queue.md`,
-`../threat-modeler/outbox/pm-queue.md`) are consumed ledger-first:
+`../threat-modeler/outbox/pm-queue.md`, and, since 2026-09-06,
+`../security-reviewer/outbox/pm-queue.md`) are consumed ledger-first:
 dispositions are recorded in `queue/LEDGER.md`, then the exact status edits
 printed by `scripts/pull-queues.sh edits` are applied by the Project Manager
 in the component queue file as a class-1 carried write and committed there.
+Class 1 of `PMD-20260904-003` names the first two files; edits due in the
+security-reviewer queue are handed to the human until the responsible human
+extends class 1 to that file (`PMD-20260906-003`).
 The transfer queue `../analysis-workbook/outbox/helium-transfer-queue.md`
 (`HET-NNN`) is tracked read-only in the same ledger
 (`records/decisions/PMD-20260905-001-helium-transfer-queue-consumption.md`):
