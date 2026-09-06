@@ -1,1 +1,0 @@
-- `tools/md-to-html.sh --check` works: the earlier `mktemp` template bug (too few X's) is fixed with a `md-to-html.XXXXXX` template.

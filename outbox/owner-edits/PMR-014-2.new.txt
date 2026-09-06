@@ -1,4 +1,0 @@
-tracks component topology, observed revisions, ownership, and cross-component
-handoffs. The parent Project Manager agent writes here only under the standing
-carry authority described in `COLLAB.md`; it does not integrate `collab/*`
-branches or edit research.

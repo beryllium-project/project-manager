@@ -49,7 +49,11 @@ claim that Helium is formally verified.
   research, and it commits here only for carried class-2 and class-3
   requests. The heading "Parent Project Manager housekeeping budget" was kept
   because the owner-only `.github/copilot-instructions.md` and `README.md`
-  refer to it; those two files still describe the old budget (`PMR-014`).
+  refer to it; those two files described the old budget until `e5740de`
+  (the owner's commit of 2026-09-06 through the human-run
+  `../scripts/owner-actions.sh --apply-edits`, `PMR-014` wording half), which
+  aligned the agent-instruction bullet and both `README.md` "Workspace
+  relationship" sentences with the standing carry authority.
   At `8246147` (carried `PMR-017`, 2026-09-05) the "Ledger integration
   procedure" attributes the `git switch main` / `git branch --no-merged`
   block to the research owner alone; the Project Manager runs none of those
@@ -83,8 +87,9 @@ added remote `backup` with `origin` untouched, and pushed `-u backup main` up
 to `8246147` through the human-run `../scripts/owner-actions.sh --fvr-backup`;
 `main` now tracks `backup/main`, 0 behind, 0 ahead, so the carried `ccb48f6`
 and `8246147` are backed up);
-alignment of the owner-only `.github/copilot-instructions.md` bullet and
-`README.md` sentence with the carried `COLLAB.md` wording, and triage of the
-five routed pointers (`PMR-014`). `PMR-012` and `PMR-008` were carried by the
+triage of the five routed pointers (`PMR-014`, P3; the alignment of the
+owner-only `.github/copilot-instructions.md` bullet and `README.md` sentences
+with the carried `COLLAB.md` wording was applied by the owner at `e5740de` on
+2026-09-06 and pushed to `backup`). `PMR-012` and `PMR-008` were carried by the
 Project Manager itself on 2026-09-04 (`ccb48f6`) and `PMR-017` on 2026-09-05
 (`8246147`).

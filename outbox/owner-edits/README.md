@@ -18,5 +18,9 @@ human applies the edit, so appended history rows carry their real date. The
 file, component, and mode for each name are in the `edits` table of the
 script. A file that no longer matches (already applied, or changed by the
 owner) makes the script skip that request and point at `../OWNER-RUNBOOK.md`.
-The set never includes `helium-te-poc/` or `beryllium-repo`. Remove a set once
-its request is closed.
+The set never includes `helium-te-poc/` or `beryllium-repo`. A set is removed,
+together with its rows in the script's `edits` table, once the owner's commit
+is observed. Applied and removed so far: `PMR-019` (analysis-workbook
+`d003dec`), `PMR-002` (osr-claude `e275544`), and the `PMR-014` wording
+(formal-verification-research `e5740de`), all on 2026-09-06. No set is
+pending.

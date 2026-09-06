@@ -3,7 +3,7 @@
 **Maintained by:** the `project-manager` agent, refreshed every coordination
 turn from `component-requests.md` (the request table is the source of the
 `Priority` column) and `../HANDOFF.md` "Blockers and open human gates".
-**Last refreshed:** 2026-09-06 (fifth coordination turn).
+**Last refreshed:** 2026-09-06 (sixth coordination turn, after the 10:29Z run).
 
 Every step below is the responsible human's or the component owner's action.
 The Project Manager agent never runs `scripts/owner-actions.sh`, never pushes,
@@ -16,27 +16,28 @@ next (unblocks coordination or another decision); `P3` housekeeping, when next
 working in that component; `P4` waits on an external input, another machine,
 or a gate that is not actionable now.
 
-## Quick path: one script run covers most of it
+## Quick path
+
+Your 10:29Z run of 2026-09-06 did everything the script could do: `PMR-019`
+(mirror, `d003dec`), `PMR-002` (`e275544`), and the `PMR-014` wording
+(`e5740de`) are committed and pushed; the lost retained PM artifacts are
+recorded as lost (`../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`)
+and the broken parent `files` link is gone. No recorded edit is pending, so
+`--apply-edits` now reports nothing to apply. The default run still pushes
+whatever is outgoing (P1: this coordination turn's two local commits, in
+`project-manager/` and the parent) and fetches:
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --plan --apply-edits --files-search   # read-only preview, diffs included
-bash ./scripts/owner-actions.sh --apply-edits --files-search          # y/N per edit, commit, and push
+bash ./scripts/owner-actions.sh --plan
+bash ./scripts/owner-actions.sh
 ```
 
-That run: applies and commits `PMR-019` (P2), `PMR-002` (P3), and the wording
-half of `PMR-014` (P3) after showing each diff and, for the transfer queue,
-running the workbook's own validator; searches for the lost retained PM
-artifacts (P2) and offers to remove the broken parent `files` link if nothing
-is found; pushes analysis-workbook, osr-claude, formal-verification-research
-(`backup`), this repository, and the parent; fetches; prints the restart
-snapshot and this list by priority. Then start Copilot CLI here, select
-`/agent project-manager`, and say what the run did (or point it at the log).
-
-Not covered by the script, in priority order: `PMR-013` (P1, one-time remote
-decision, commands below), `PMR-003` (P2, `beryllium-repo`, pasted command
-below), `PMR-020` (P2, credentials), the pointer half of `PMR-014` (P3),
-`PMR-004` (P3), `PMR-009` (P4).
+Everything below is yours to do by hand or through a component's own agent,
+in priority order: `PMR-013` (P1), `PMR-003` (P2), `PMR-020` (P2), then the
+P3 housekeeping (`PMR-019` handoff prose, `PMR-014` pointers, `PMR-004`),
+then `PMR-009` (P4). After each, run the script (it pushes the new commits)
+and tell the Project Manager.
 
 ## P1
 
@@ -64,43 +65,6 @@ registry records as not possible from here. Closure: the next turn observes
 `PMR-013`; if you choose differently, say so and the request is updated.
 
 ## P2
-
-### PMR-019: analysis-workbook mirrors `HET-001` to `recorded`
-
-Automated by `--apply-edits`: three exact table edits in
-`outbox/helium-transfer-queue.md` (status-history rows `routed` and
-`recorded` citing `PMD-20260905-002` at Project Manager commit `94888ea` and
-`PMR-016`; queue-summary status `recorded`, input state unchanged at
-`unaccepted`; `ACTIVITY-002`), validated with the component's
-`scripts/validate-helium-transfer-queue.sh --baseline <current file>` before
-you are asked, then committed as `docs: mirror HET-001 to recorded (PMR-019)`
-and pushed by `push_awb`. The exact text is `owner-edits/PMR-019-*.new.txt`,
-based on the rows in
-`../records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`
-"Exact mirror rows for PMR-019" with three differences: the appended rows are
-dated the day you apply them (the script replaces `@DATE@`), the locators name
-the Project Manager commit `94888ea` that introduced the record, and
-`ACTIVITY-002` says the rows are based on that record.
-
-Still the maintainer's afterwards: the component's `HANDOFF.md` says in
-several sentences that `HET-001` is `new`; the script prints those lines.
-Refresh them in the maintainer's words, for example with the component's
-agent:
-
-```text
-cd /home/jmorris/src/l1/src/beryllium-project/analysis-workbook   # then: /agent analysis-workbook
-Refresh HANDOFF.md so it reflects that HET-001 is now `recorded` (input state
-still `unaccepted`) per outbox/helium-transfer-queue.md status history, citing
-workspace://project-manager/records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md;
-run bash ./tests/validate-agent.sh and commit.
-```
-
-If you prefer the agent to do the whole mirror instead of `--apply-edits`,
-give it the same record path and the section name; the transition table allows
-`new` to `recorded` directly, and the maintainer decides whether the Project
-Manager-owned record meets its `recorded` definition or whether to stop at
-`routed`. Closure: the next turn reads the queue file at the new commit and
-closes `PMR-019`; `PML-0017` stays `routed` with the observed status noted.
 
 ### PMR-003: beryllium-repo `planning/HANDOFF.md` names a former path and calls H0 uncommitted
 
@@ -152,8 +116,8 @@ Closure: the next turn observes the new HEAD and the wording and closes
 
 ### PMR-020: cheri-riscv-notes-repo `origin` fetch fails with an authentication error
 
-Two consecutive script runs (2026-09-05T19:05Z, 2026-09-06T08:39Z) could not
-fetch `origin`, so its live backup state is `unknown`. The remote host and
+Three consecutive script runs (2026-09-05T19:05Z, 2026-09-06T08:39Z and
+10:29Z) could not fetch `origin`, so its live backup state is `unknown`. The remote host and
 organization are not recorded here; read them yourself:
 
 ```sh
@@ -171,60 +135,45 @@ Re-run `bash ./scripts/owner-actions.sh --only fetch_snapshot` from
 is simply not reachable from this workstation, say so and the registry records
 that instead of `unknown`.
 
-### Lost retained PM artifacts (not a request; `../HANDOFF.md` "Retained PM session artifacts")
-
-Automated by `--files-search` (add `--files-root DIR` for every other place
-worth searching, for example a mounted backup): a read-only `find` for the
-seven recorded names, a SHA-256 check of any `be-k3-h0-collection.tgz` found
-against the recorded `277d6168...`, then, only if nothing is found, a y/N
-prompt to remove the broken parent `files` link. Also worth one check on any
-other machine that ran Beryllium sessions in August 2026. Afterwards tell the
-Project Manager one of: "record the loss" (it writes a decision record; the K3
-archive appears to be the only unregenerable item, the rest is the Beryllium
-owner's to regenerate from the checked launchers) or "found at <path>" (it
-records the location and you retarget the link by hand).
-
 ## P3
 
-### PMR-002: osr-claude handoff still says HTTPS remote and "mktemp fix pending"
+### PMR-019: analysis-workbook `HANDOFF.md` still says `HET-001` is `new`
 
-Automated by `--apply-edits`, with two preconditions checked first (`origin`
-is an SSH remote; `tools/md-to-html.sh` contains the `md-to-html.XXXXXX`
-template). Two lines of `HANDOFF.md` "Infrastructure facts" are replaced by:
+The mirror itself is done: `outbox/helium-transfer-queue.md` at `d003dec`
+shows `HET-001` `recorded` (input state `unaccepted`) with the `routed` and
+`recorded` history rows and `ACTIVITY-002`, validated by the component's own
+script and pushed. What remains is the maintainer's prose: three sentences of
+the component's `HANDOFF.md` still say `HET-001` is `new`, and its "Blockers"
+and "Exact next action" paragraphs still describe it as pending routing and
+triage. Refresh them in the maintainer's words, for example with the
+component's agent:
 
 ```text
-- Remote: `origin` is the private `xjamesmorris/osr-claude` repository, reached over SSH since the ~52 MB sources batch (HTTPS died mid-transfer on the original ~800 MB push, so large pushes use SSH).
-- `tools/md-to-html.sh --check` works: the earlier `mktemp` template bug (too few X's) is fixed with a `md-to-html.XXXXXX` template.
+cd /home/jmorris/src/l1/src/beryllium-project/analysis-workbook   # then: /agent analysis-workbook
+Refresh HANDOFF.md so it reflects that HET-001 is now `recorded` (input state
+still `unaccepted`) per the outbox/helium-transfer-queue.md status history at
+d003dec, citing
+workspace://project-manager/records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md;
+run bash ./tests/validate-agent.sh and commit.
 ```
 
-Commit `docs: refresh infrastructure facts (PMR-002)`, pushed by `push_osr`.
-The component's convention is to ask before changing it; the y/N prompt is
-that question, answered by its owner. Closure: observed at the new HEAD.
+Closure: the next turn reads `HANDOFF.md` at the new commit and closes
+`PMR-019`.
 
-### PMR-014: formal-verification-research wording (automated) and five routed pointers (yours)
+### PMR-014: five routed pointers (the wording half is done)
 
-Wording half, automated by `--apply-edits`: the "parent Project Manager
-agent" bullet in `.github/copilot-instructions.md` (`owner-edits/PMR-014-1`),
-the first "Workspace relationship" paragraph in `README.md` (`PMR-014-2`, one
-sentence appended), and the second paragraph's sentence "The parent Project
-Manager agent may perform the narrowly defined ledger and handoff
-housekeeping described there" (`PMR-014-3`) are replaced by text that
-describes the standing carry authority carried into `COLLAB.md` at `ccb48f6`
-(class 2 `sources/bibliography.md` pointers; class 3 wording in `COLLAB.md`
-and `HANDOFF.md`) instead of the former housekeeping budget. Commit `docs:
-align Project Manager wording with COLLAB.md (PMR-014)`, pushed by `push_fvr`
-(`backup`). The request stays open for the pointer half below.
-
-Pointer half, yours: `sources/bibliography.md` "Routed pointers awaiting owner
-triage" holds five metadata-only pointers recorded on 2026-09-04 (`PMQ-007`
-Petroni et al. Copilot coprocessor monitor, USENIX Security 2004; `PMQ-010`
-NIST SP 800-193; `PMQ-012` OSLO measurement chain; `PMQ-014` IEC 61508-2:2010,
-paywalled; `PMQ-015` SWATT, paywalled). For each, tell the Project Manager
-`keep` (leave in that section), `move` (name the topic section), or `remove`;
-it carries a removal as a class-2 write on your instruction and gives the
-ledger row (`PML-0007`, `0010`, `0012`, `0014`, `0015`) a superseding
-`rejected` note, or you edit the file yourself. Closure: wording observed at
-the new HEAD and a disposition per pointer.
+The wording half was applied and pushed by you through `--apply-edits`
+(`e5740de`, "docs: align Project Manager wording with COLLAB.md (PMR-014)").
+What remains is yours as owner: `sources/bibliography.md` "Routed pointers
+awaiting owner triage" holds five metadata-only pointers recorded on
+2026-09-04 (`PMQ-007` Petroni et al. Copilot coprocessor monitor, USENIX
+Security 2004; `PMQ-010` NIST SP 800-193; `PMQ-012` OSLO measurement chain;
+`PMQ-014` IEC 61508-2:2010, paywalled; `PMQ-015` SWATT, paywalled). For each,
+tell the Project Manager `keep` (leave in that section), `move` (name the
+topic section), or `remove`; it carries a removal as a class-2 write on your
+instruction and gives the ledger row (`PML-0007`, `0010`, `0012`, `0014`,
+`0015`) a superseding `rejected` note, or you edit the file yourself.
+Closure: a disposition per pointer.
 
 ### PMR-004: `scripts/readonly-inspect.sh` registered lists (analysis-workbook, threat-modeler)
 
@@ -280,11 +229,29 @@ ledger rows `PML-0008` and `PML-0011` are updated and the class-1 queue
 edits are carried in `analysis-workbook/outbox/pm-queue.md`. Nothing is
 needed from this workstation.
 
+## Closed on 2026-09-06 (kept for one turn)
+
+### PMR-002: closed 2026-09-06
+
+Applied and pushed by you through `--apply-edits` (`e275544`, "docs: refresh
+infrastructure facts (PMR-002)"). Nothing remains.
+
+### Lost retained PM artifacts: recorded lost (closed 2026-09-06)
+
+Your `--files-search` run found none of the seven names under your home
+directory and removed the broken parent `files` link;
+`../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
+records the loss from this workstation, keeps the archive's SHA-256 and the
+scaffold tree for later matching, and leaves regeneration to the Beryllium
+owner. If you find them on another machine or a backup, say where (or run
+`bash ./scripts/owner-actions.sh --files-search --files-root DIR` against a
+mount) and a superseding record is added.
+
 ## Beryllium gates (recorded, not actionable now)
 
 | Item | Priority | State |
 | --- | --- | --- |
-| Two H0 input selections (normative Fedora 44 H0 static OCI; proposed H1/H2 path inventory) | P3 | Yours alone; wait for the retained-artifacts decision above (their inputs) and the exact board/firmware facts; the Project Manager infers nothing |
+| Two H0 input selections (normative Fedora 44 H0 static OCI; proposed H1/H2 path inventory) | P3 | Yours alone; two of their recorded inputs are among the artifacts recorded lost (`PMD-20260906-002`), so the Beryllium owner decides under Beryllium's controls whether to regenerate them from the checked launchers before the selections; the Project Manager infers nothing |
 | H0 acceptance, H1-H4 authorization, K3 execution | P4 | Open; `NOT RUN`; not actionable now |
 | Helium Tier 7/8 gate content | - | Not a Project Manager gate; the component states its approved refs must remain frozen; backed up 2026-09-06 (`PMR-018` closed) |
 

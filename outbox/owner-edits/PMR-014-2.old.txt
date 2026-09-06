@@ -1,2 +1,0 @@
-tracks component topology, observed revisions, ownership, and cross-component
-handoffs.

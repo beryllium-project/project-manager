@@ -1,7 +1,0 @@
-- The **parent Project Manager agent** may perform only the housekeeping budget
-  granted by `COLLAB.md`: inspect collaboration state, integrate a compliant
-  ledger-only guest branch, refresh owner-status/handoff metadata from observed
-  evidence, and update the parent component inventory. It may not edit research
-  conclusions, rewrite a guest's log, infer acceptance, clean or reset a
-  worktree, change remotes, or publish component changes without separate
-  explicit authorization.

@@ -63,15 +63,21 @@ topic and chronology in the generated `WORKBOOK.md`.
   records the disposition as the lifecycle status `recorded` (planning inputs
   only; the input state stays `unaccepted`; not acceptance of any Beryllium
   work), closes `PMR-016`, and hands the maintainer the exact mirror rows as
-  `PMR-019`; the file itself was still `new`/`unaccepted` at `ff12f2f`.
+  `PMR-019`. At `d003dec` (the maintainer's commit of 2026-09-06 through the
+  human-run `../scripts/owner-actions.sh --apply-edits`, after the component's
+  own `validate-helium-transfer-queue.sh --baseline` passed) the queue shows
+  `HET-001` `recorded`, with `routed` and `recorded` history rows dated
+  2026-09-06 citing `PMR-016` and `PMD-20260905-002`, `ACTIVITY-002`, and the
+  input state still `unaccepted`; the component's `HANDOFF.md` prose still
+  says `new` (the remaining part of `PMR-019`, P3).
   Since `PMD-20260905-001`, the Project Manager
   registers this queue for read-only tracking in `../queue/LEDGER.md` and
   `../scripts/pull-queues.sh`; it never edits that file because class 1
   covers only `outbox/pm-queue.md`.
-- Backup: the owner pushed `main` to private `origin` on 2026-09-05 through
-  the human-run `../scripts/owner-actions.sh` (`efde667..ff12f2f`, verified
-  with `ls-remote` in its log); observed synchronized (0 behind, 0 ahead) at
-  19:10Z.
+- Backup: the owner pushed `main` to private `origin` on 2026-09-05
+  (`efde667..ff12f2f`) and 2026-09-06 (`ff12f2f..d003dec`) through the
+  human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
+  its log; observed synchronized (0 behind, 0 ahead) at 2026-09-06T10:30Z.
 
 ## Outbound queue
 
@@ -103,12 +109,13 @@ git diff --check
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
 part was carried at `83b97a3`; P3, exact edit in `../outbox/OWNER-RUNBOOK.md`);
-the `HET-001` lifecycle mirror (`PMR-019`, P2; the human applies the exact
-rows in `../outbox/owner-edits/PMR-019-*` through the human-run
-`../scripts/owner-actions.sh --apply-edits`, which runs the maintainer's own
-`scripts/validate-helium-transfer-queue.sh --baseline` first; the `HANDOFF.md`
-prose refresh stays the maintainer's); nothing that treats a session as review
-or acceptance. `PMR-015` (the ledger in the source-discovery reference set)
+the `HET-001` lifecycle mirror (`PMR-019`: the table mirror was applied by
+the maintainer at `d003dec` on 2026-09-06 through the human-run
+`../scripts/owner-actions.sh --apply-edits`, after its own
+`scripts/validate-helium-transfer-queue.sh --baseline` passed; the request
+stays open, P3, for the `HANDOFF.md` sentences that still call `HET-001`
+`new`, which the maintainer refreshes in its own words); nothing that treats a
+session as review or acceptance. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"
 above).

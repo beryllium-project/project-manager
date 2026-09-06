@@ -39,12 +39,11 @@ tools/md-to-html.sh           # regenerate registered HTML
 
 ## What the Project Manager may request
 
-Removal of stale handoff statements (the HTTPS-remote and pending `mktemp`
-bug lines superseded by the SSH remote and the fix; `PMR-002`, P3 since
-2026-09-06: the owner applies the exact two-line replacement in
-`../outbox/owner-edits/PMR-002-*` through the human-run
-`../scripts/owner-actions.sh --apply-edits`, which asks first, as this
-component's convention requires, and then pushes `main` in its `push_osr`
-step);
+Removal of stale handoff statements (`PMR-002`, closed 2026-09-06: the owner
+applied the exact two-line replacement the Project Manager had recorded,
+through the human-run `../scripts/owner-actions.sh --apply-edits`, whose y/N
+prompt was this component's ask-first convention, committing `e275544` and
+pushing it to the personal-account `origin`; `HANDOFF.md` "Infrastructure
+facts" now states the SSH remote and the applied `mktemp` fix);
 registration of routed sources under the owner's rules; backup decisions (the
 remote is a personal account rather than the organization).

@@ -173,7 +173,9 @@ Everything outside the three classes, and everything in `helium-te-poc/` or
    carried it in Phase 4b and names the component commit. Refresh
    `outbox/OWNER-RUNBOOK.md` so that every open item, request or not, has
    exact human steps in priority order, and remove the `outbox/owner-edits/`
-   set of every request closed this turn.
+   set (files, script table rows, commit-message case) of every recorded
+   edit whose owner commit is observed this turn, whether or not its request
+   closes.
 
 ## Phase 6: audit
 

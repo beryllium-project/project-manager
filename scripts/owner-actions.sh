@@ -45,10 +45,9 @@
 #                   run the Project Manager restart snapshot (read-only)
 # opt-in steps (never run without their flag):
 #   apply_edits     --apply-edits: for each open request whose exact edit is
-#                   recorded in outbox/owner-edits/ (PMR-019 analysis-workbook
-#                   transfer-queue mirror; PMR-002 osr-claude handoff facts;
-#                   PMR-014 formal-verification-research wording), show the
-#                   diff, run the component's own validator where one exists,
+#                   recorded in outbox/owner-edits/ (none pending after
+#                   2026-09-06; the Project Manager records new ones there),
+#                   show the diff, run the component's own validator where one exists,
 #                   and on y commit it inside that component with the PMR id
 #                   in the subject. Skipped when the worktree is dirty or the
 #                   current text no longer matches the recorded text. Runs
@@ -692,18 +691,15 @@ step_push_fvr() {
 # beryllium-repo.
 
 # edit table: PMR | component | file | mode (block: replace an exact multi-line
-# block; line: replace the single line containing the anchor) | name
-edits=(
-    "PMR-019|analysis-workbook|outbox/helium-transfer-queue.md|block|PMR-019-1"
-    "PMR-019|analysis-workbook|outbox/helium-transfer-queue.md|block|PMR-019-2"
-    "PMR-019|analysis-workbook|outbox/helium-transfer-queue.md|block|PMR-019-3"
-    "PMR-002|osr-claude|HANDOFF.md|line|PMR-002-1"
-    "PMR-002|osr-claude|HANDOFF.md|line|PMR-002-2"
-    "PMR-014|formal-verification-research|.github/copilot-instructions.md|block|PMR-014-1"
-    "PMR-014|formal-verification-research|README.md|block|PMR-014-2"
-    "PMR-014|formal-verification-research|README.md|block|PMR-014-3"
-)
-edit_pmrs=(PMR-019 PMR-002 PMR-014)
+# block; line: replace the single line containing the anchor) | name.
+# Empty when every recorded edit has been applied; the Project Manager adds
+# rows here, the matching files in outbox/owner-edits/, a commit message case
+# in edit_commit_message, and any precondition in edit_precheck when it
+# records a new edit, and removes them once the owner's commit is observed.
+# Applied so far: PMR-019 (analysis-workbook d003dec), PMR-002 (osr-claude e275544),
+# PMR-014 wording (formal-verification-research e5740de), all 2026-09-06.
+edits=()
+edit_pmrs=()
 
 # apply_block <file> <old.txt> <new.txt>: the old text must occur exactly once.
 # The token @DATE@ in a new-text file becomes the UTC date of application, so
@@ -806,7 +802,7 @@ apply_one_pmr() {
     local rp rcomp rf rmode rname
     local -a files=()
     local data=$pm_root/outbox/owner-edits
-    for e in "${edits[@]}"; do
+    for e in "${edits[@]+"${edits[@]}"}"; do
         IFS='|' read -r rp rcomp rf rmode rname <<<"$e"
         if [[ $rp == "$pmr" ]]; then comp=$rcomp; dir=$ws_root/$comp; break; fi
     done
@@ -834,7 +830,7 @@ apply_one_pmr() {
     local work=$tmp_dir/$pmr
     rm -rf -- "$work"
     mkdir -p -- "$work"
-    for e in "${edits[@]}"; do
+    for e in "${edits[@]+"${edits[@]}"}"; do
         IFS='|' read -r rp rcomp f mode name <<<"$e"
         if [[ $rp != "$pmr" ]]; then continue; fi
         if [[ ! -f $work/$f ]]; then
@@ -904,6 +900,10 @@ step_apply_edits() {
     local rc=0 pmr
     hr "apply_edits: exact recorded owner-side edits (outbox/owner-edits/)"
     note "Each edit is shown as a diff first; you commit it as owner. helium-te-poc and beryllium-repo are never touched."
+    if ((${#edit_pmrs[@]} == 0)); then
+        note "no recorded edit is pending; nothing to apply (see outbox/OWNER-RUNBOOK.md for the remaining items)"
+        return 0
+    fi
     if [[ -z $tmp_dir ]]; then tmp_dir=$(mktemp -d); fi
     for pmr in "${edit_pmrs[@]}"; do
         apply_one_pmr "$pmr" || rc=1
@@ -1075,7 +1075,7 @@ still_yours() {
             if (length(req) > 150) req = substr(req, 1, 147) "..."
             printf "  - %s %s (%s): %s\n", trim($8), trim($2), trim($4), req
         }' "$file" | sort -k2,2 -k3,3
-    printf '  - the runbook also lists the items that are not requests (retained PM artifacts, Beryllium gates)\n'
+    printf '  - the runbook also lists the items that are not requests (Beryllium gates) and the items closed since the last turn\n'
     return 0
 }
 

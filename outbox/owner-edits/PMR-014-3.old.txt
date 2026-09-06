@@ -1,5 +1,0 @@
-`COLLAB.md` is the component-local control plane for agents working across
-Beryllium sub-projects. Guest agents use it to report actual consumption of
-this research and return corrections or stale assumptions. The parent Project
-Manager agent may perform the narrowly defined ledger and handoff housekeeping
-described there, but does not thereby become the research-content owner.
