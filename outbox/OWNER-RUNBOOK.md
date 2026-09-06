@@ -3,10 +3,10 @@
 **Maintained by:** the `project-manager` agent, refreshed every coordination
 turn from `component-requests.md` (the request table is the source of the
 `Priority` column) and `../HANDOFF.md` "Blockers and open human gates".
-**Last refreshed:** 2026-09-06 (seventh coordination turn: the
-`security-reviewer` component created, registered, and backed up by your
-19:38Z run; `PMR-021` closed, `PMR-022` open; class 1 extended,
-`PMD-20260906-004`).
+**Last refreshed:** 2026-09-06 (eighth coordination turn: your 19:48Z run
+recorded, everything pushable pushed, `threat-modeler/` dirty with an
+engagement in progress; `PMR-023` raised for the beryllium-repo backup
+state; none closed).
 
 Every step below is the responsible human's or the component owner's action.
 The Project Manager agent never runs `scripts/owner-actions.sh`, never pushes,
@@ -21,13 +21,15 @@ or a gate that is not actionable now.
 
 ## Quick path
 
-Your 19:38Z run of 2026-09-06 (`--sr-backup`) did everything the script could
-do: it created the private `beryllium-project/security-reviewer`, added remote
-`origin` to the new component, and pushed its `main` (`9ca5071`, verified;
-`PMR-021` closed), and pushed `project-manager/` `d7ba732..6682138` and the
-parent `36b0579..adb724f` (verified). Two later local commits (this
-repository's `PMD-20260906-004` record and the parent registry update that
-followed) are outgoing; the default run pushes them and fetches:
+Your 19:48Z run of 2026-09-06 (default steps) pushed `project-manager/`
+`6682138..844cd96` and the parent `adb724f..0c085e9` (verified), found every
+other reachable component up to date, skipped `xrv-research-repo` a sixth
+time (`PMR-013`, P1), and failed the `cheri-riscv-notes-repo` fetch a sixth
+time (`PMR-020`, P2). The eighth turn's own two recording commits were pushed
+by the agent under your "push when done", so **nothing is outgoing** except
+`xrv-research-repo` `7314e2f`, which the script cannot push until you give it
+a reachable remote. Do `PMR-013` first (commands below), then run the script,
+which fetches and from then on pushes `push_xrv` to `backup`:
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
@@ -35,15 +37,20 @@ bash ./scripts/owner-actions.sh --plan
 bash ./scripts/owner-actions.sh
 ```
 
+`threat-modeler/` is dirty (untracked
+`models/TM-20260906-001-helium-astra-replay/` at `dae994be`; you said an
+engagement is in progress): the Project Manager leaves it alone; commit and
+push it through that component's agent when the engagement ends, and do the
+threat-modeler half of `PMR-004`/`PMR-022` only on a clean worktree.
+
 Everything below is yours to do by hand or through a component's own agent,
 in priority order: `PMR-013` (P1), `PMR-003` (P2), `PMR-020` (P2), then the
 P3 housekeeping (`PMR-019` handoff prose, `PMR-014` pointers, `PMR-004` and
-`PMR-022` together), then `PMR-009` (P4). The class-1 question of
-`PMD-20260906-003` item 3 is answered: you said "re open gate: yes", so the
-standing carry authority now covers `security-reviewer/outbox/pm-queue.md`
-(`PMD-20260906-004`) and its queue edits are the Project Manager's. After
-each action, run the script (it pushes the new commits) and tell the Project
-Manager.
+`PMR-022` together, `PMR-023` beryllium-repo backup state), then `PMR-009`
+(P4). After each action, run the script
+(it pushes the new commits) and tell the Project Manager; to spare a run
+whose only outgoing commits are the previous turn's own, answer "push when
+done" in the turn and the agent pushes and verifies them itself.
 
 ## P1
 
@@ -122,8 +129,9 @@ Closure: the next turn observes the new HEAD and the wording and closes
 
 ### PMR-020: cheri-riscv-notes-repo `origin` fetch fails with an authentication error
 
-Four consecutive script runs (2026-09-05T19:05Z, 2026-09-06T08:39Z, 10:29Z,
-and 11:17Z) could not fetch `origin`, so its live backup state is `unknown`. The remote host and
+Six consecutive script runs (2026-09-05T19:05Z and 2026-09-06T08:39Z, 10:29Z,
+11:17Z, 19:38Z, and 19:48Z) could not fetch `origin`, each with the same
+error, so its live backup state is `unknown`. The remote host and
 organization are not recorded here; read them yourself:
 
 ```sh
@@ -184,7 +192,10 @@ Closure: a disposition per pointer.
 ### PMR-004: `scripts/readonly-inspect.sh` registered lists (analysis-workbook, threat-modeler)
 
 Owner-only scripts, so an exact edit, not a scripted one. In each file add one
-line `    project-manager` to the `registered_components=(` array:
+line `    project-manager` to the `registered_components=(` array. The
+threat-modeler half waits until that worktree is clean (an engagement is in
+progress there as of 2026-09-06T19:50Z; the snippet below expects
+`git status --short` to show nothing else before you commit):
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/analysis-workbook
@@ -215,7 +226,8 @@ committing (run its `components` mode). The next script run pushes both
 
 Same two owner-only files as `PMR-004`, one more line each, so make both
 edits in the same owner commit per component if you do `PMR-004` at the same
-time. Whether a sibling ever needs the new component as a target is your
+time (the threat-modeler half likewise waits for a clean worktree). Whether a
+sibling ever needs the new component as a target is your
 call; declining closes the request.
 
 ```sh
@@ -242,6 +254,42 @@ Run each component's `components` mode afterwards to confirm that
 `security-reviewer` resolves as a direct checkout. The next script run pushes
 both. Closure: observed at the new HEADs, or your statement that a sibling
 does not need the new component as a target.
+
+### PMR-023: beryllium-repo `origin` is never fetched (unreachable namespace); live backup state `unknown`
+
+Every run of the script since 2026-09-05T19:05Z prints
+`beryllium-repo: remote 'origin' is the unreachable namespace; not fetched`,
+so the `0 behind / 0 ahead` that the read-only inspection reports for
+`beryllium/single-hart-runtime-r0` at `65f6d89` is against a ref that has not
+been refreshed from this workstation (date of the last successful fetch
+`unknown`). The registry's own rule says a remote in that namespace is not a
+backup reachable from here, so it now records the live state as `unknown`.
+No local-only commit is known. You decide, as the Beryllium owner, one of:
+
+1. **Keep `origin` as the home.** Tell the Project Manager "beryllium-repo:
+   origin is the accepted home"; the registry then records "backed up on the
+   EMU tenant; not verifiable from this workstation" and the request closes.
+   Optionally verify from a machine that can reach that tenant:
+   `git -C <that clone> ls-remote origin refs/heads/beryllium/single-hart-runtime-r0`
+   (expect `65f6d89...`).
+2. **Add a reachable private `backup` remote** (the pattern used for
+   formal-verification-research and proposed for xrv-research-repo):
+
+   ```sh
+   cd /home/jmorris/src/l1/src/beryllium-project/beryllium-repo
+   gh repo create beryllium-project/beryllium --private
+   git remote add backup https://github.com/beryllium-project/beryllium.git
+   git push -u backup beryllium/single-hart-runtime-r0
+   git ls-remote backup refs/heads/beryllium/single-hart-runtime-r0   # expect 65f6d89...
+   ```
+
+   Then say so; the Project Manager adds a `push_be` target to the script
+   (a Project Manager-side change) so later runs fetch and fast-forward it.
+
+The Project Manager runs no command inside this component and never pushes
+it. Closure: your statement (option 1) or the next turn observing `backup`
+configured and synchronized in the read-only `refs beryllium-repo` listing
+(option 2).
 
 ## P4
 
@@ -274,24 +322,13 @@ needed from this workstation.
 Your 19:38Z `--sr-backup` run created the private
 `beryllium-project/security-reviewer`, added remote `origin` to the component,
 and pushed `main` (`9ca5071`, verified with `ls-remote`); observed
-synchronized (0 behind, 0 ahead) at 19:42Z. The default run now pushes this
-component like the others (`push_sr`). Nothing remains.
+synchronized (0 behind, 0 ahead) at 19:42Z and again at 19:49Z. The default
+run now pushes this component like the others (`push_sr`). Nothing remains.
 
-### PMR-002: closed 2026-09-06
+### Push gate for `bfc6feb`/`844cd96` and the parent `dcc0d25`/`0c085e9`: closed 2026-09-06
 
-Applied and pushed by you through `--apply-edits` (`e275544`, "docs: refresh
-infrastructure facts (PMR-002)"). Nothing remains.
-
-### Lost retained PM artifacts: recorded lost (closed 2026-09-06)
-
-Your `--files-search` run found none of the seven names under your home
-directory and removed the broken parent `files` link;
-`../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
-records the loss from this workstation, keeps the archive's SHA-256 and the
-scaffold tree for later matching, and leaves regeneration to the Beryllium
-owner. If you find them on another machine or a backup, say where (or run
-`bash ./scripts/owner-actions.sh --files-search --files-root DIR` against a
-mount) and a superseding record is added.
+Your 19:48Z run pushed them (`6682138..844cd96`, `adb724f..0c085e9`, each
+verified with `ls-remote`); observed 0/0 at 19:49Z. Nothing remains.
 
 ## Beryllium gates (recorded, not actionable now)
 

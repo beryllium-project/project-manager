@@ -79,4 +79,10 @@ reference set) was carried at `226d367` on 2026-09-05. `PMR-005` (push of
 the local commits) closed 2026-09-05: the owner pushed `main` to private
 `origin` through the human-run `../scripts/owner-actions.sh`
 (`affe17b..226d367`, four commits, verified with `ls-remote` in its log);
-observed synchronized (0 behind, 0 ahead) at 19:10Z.
+observed synchronized (0 behind, 0 ahead) at 19:10Z. `PMR-022` (open, P3,
+2026-09-06) asks the owner to add `security-reviewer` to the same
+owner-only registered list; both script edits fit one owner commit. Observed
+dirty at 2026-09-06T19:50Z (untracked
+`models/TM-20260906-001-helium-astra-replay/`; an engagement the responsible
+human states is in progress): a carry here is refused until the worktree is
+clean.
