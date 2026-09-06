@@ -1,7 +1,9 @@
 # security-reviewer
 
 - **Workspace entry:** `../security-reviewer/` (ignored canonical direct
-  checkout; created 2026-09-06)
+  checkout; created 2026-09-06; `origin` -> private
+  `beryllium-project/security-reviewer` since the owner's 19:38Z push that
+  day)
 - **Ownership:** agent-owned; its agents write only inside that component; the
   Project Manager writes here only to carry requests under the standing carry
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`
@@ -108,6 +110,6 @@ git diff --check
   (owner-only; scripts are outside every carry class).
 - Project Manager-role wording changes in `AGENT-INTERFACE.md` or
   `RESEARCH-SOURCES.md` (class 3, carried).
-- A backup remote and push (owner-only; `PMR-021`; the human-run
-  `../scripts/owner-actions.sh --sr-backup` performs it with a prompt per
-  step).
+- Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
+  step `push_sr` fast-forwards `main -> origin`; the remote was created and
+  first pushed on 2026-09-06, `PMR-021` closed).

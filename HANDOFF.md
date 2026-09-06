@@ -25,9 +25,15 @@ queue, and a 259-check contract suite; GPL-3.0-only). It is registered in
 `security-reviewer`, prefix `SRQ`), `queue/README.md`, `tests/validate-agent.sh`,
 and the human-run `scripts/owner-actions.sh` (`push_sr`; opt-in `--sr-backup`)
 (`records/decisions/PMD-20260906-003-security-reviewer-component-registered.md`).
-**It has no remote: its only copy is on this workstation** (`PMR-021`, P2).
-`PMR-022` (P3) asks the analysis-workbook and threat-modeler owners to add it
-to their `readonly-inspect.sh` target lists. **The one question of the turn
+**Backed up at 19:38Z by your `scripts/owner-actions.sh --sr-backup` run**
+(log `scratch/owner-actions/owner-actions-20260906T193827Z.log`): the private
+`beryllium-project/security-reviewer` created, remote `origin` added, `main`
+pushed to `9ca5071` and verified; observed synchronized at 19:42Z; `PMR-021`
+**closed**. The same run pushed this repository `d7ba732..6682138` and the
+parent `36b0579..adb724f` (verified), skipped `xrv-research-repo` a fifth time
+(`PMR-013`), and failed the `cheri-riscv-notes-repo` fetch a fifth time
+(`PMR-020`). `PMR-022` (P3) asks the analysis-workbook and threat-modeler
+owners to add the new component to their `readonly-inspect.sh` target lists. **The one question of the turn
 is answered**: asked whether class 1 of the standing carry authority extends
 to `../security-reviewer/outbox/pm-queue.md`, you said "re open gate: yes"
 (20:39 local), recorded as
@@ -41,9 +47,12 @@ one commit after `f0d96b1`; not reviewed beyond its subject; the frozen gate
 refs were not re-checked this turn); every other row unchanged;
 `registry-check` exact after the registry update. **No existing component was written; the only Git commands
 run against a component were inside the new `security-reviewer/` before it
-had an owner agent.** This turn's commits (`security-reviewer/` `9ca5071`,
-this repository, the parent) are **local** (no push confirmation was given;
-the script's default run pushes them). **The sixth turn's `d7ba732` and
+had an owner agent.** Of this turn's commits, `security-reviewer/` `9ca5071`,
+this repository's `81b7ac4` and `6682138`, and the parent's `e55b390` and
+`adb724f` are pushed (your 19:38Z run); **this repository's `bfc6feb`
+(`PMD-20260906-004`) and its parent registry commit, plus the recording
+commits that follow, are local** (no push confirmation was given; the
+script's default run pushes them). **The sixth turn's `d7ba732` and
 `36b0579` were pushed by the human-run `scripts/owner-actions.sh` at 11:17Z**
 (log `scratch/owner-actions/owner-actions-20260906T111720Z.log`, local,
 ignored: `dbe181a..d7ba732` and `1aa13c3..36b0579`, each verified with
@@ -71,8 +80,12 @@ fifth-coordination-turn commit `dbe181a` pushed by the human-run
 verified in its log; `origin/main` observed at `dbe181a` at 10:30Z); the
 sixth-coordination-turn commit `d7ba732` pushed by the human-run script at
 11:17Z on 2026-09-06 (`dbe181a..d7ba732`, verified in its log; `origin/main`
-observed at `d7ba732` at 18:13Z); the seventh-coordination-turn commit, whose
-hash is the `project-manager/` row of `../COMPONENTS.md`, is **local**
+observed at `d7ba732` at 18:13Z); the seventh-coordination-turn commit
+`81b7ac4` and its recording follow-up `6682138` pushed by the human-run
+script at 19:38Z (`d7ba732..6682138`, verified; `origin/main` observed at
+`6682138` at 19:42Z); the class-1 extension record `bfc6feb` and the
+recording commits after it, the newest of which is the `project-manager/`
+row of `../COMPONENTS.md`, are **local**
 **Parent coordination repository:** `main`; consolidation commits
 `e774b4217ccf5100c66e97b3b23a51a62c5e6365`,
 `b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5`; first-coordination-turn
@@ -96,7 +109,11 @@ on 2026-09-06 (`98fc0f5..1aa13c3`, verified; `backup/main` observed at
 `1aa13c3` at 10:30Z); the sixth-coordination-turn registry commit `36b0579`
 pushed by the human-run script at 11:17Z on 2026-09-06 (`1aa13c3..36b0579`,
 verified; `backup/main` observed at `36b0579` at 18:13Z); the
-seventh-coordination-turn registry commit is **local**
+seventh-coordination-turn registry commit `e55b390` and its recording
+follow-up `adb724f` pushed by the human-run script at 19:38Z
+(`36b0579..adb724f`, verified; `backup/main` observed at `adb724f` at
+19:42Z); the registry commits after it, the newest of which is the parent
+HEAD, are **local**
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
 (pushed through `9abc320` on 2026-09-04 and through `afb4f03` on 2026-09-05,
 both under confirmations quoted in "Provenance", through `6f452b7` by the
@@ -117,10 +134,10 @@ and through `1aa13c3` by the human-run script at 10:29Z on 2026-09-06); `origin`
 | Privileged and hardware work | H1-H4 unauthorized; Beryllium K3 execution and hardware evidence remain `NOT RUN` |
 | Implementation repository | `beryllium-repo` clean on `beryllium/single-hart-runtime-r0` at `65f6d89`, synchronized with its private origin |
 | Helium assurance line | `../helium-te-poc/` clean and synchronized on `helium-te-travel-fedora44`, **now at `9b3ff4e`** (the owner's "docs: record directed push of the travel-maintenance branch", observed 2026-09-06T19:09Z; not reviewed beyond its subject); its parent `f0d96b1` was the HEAD observed 2026-09-05T04:54Z, 05:15Z, 07:13Z, 19:10Z and 2026-09-06T08:42Z and 10:30Z (unchanged since 2026-09-04T22:45Z), and the statements below are as recorded at `f0d96b1`. **Backed up 2026-09-06**: the owner's `scripts/owner-actions.sh --helium-branches` run pushed twelve local branches with upstreams to the private `origin`, including the `d0cca32` lineage; `helium-te-fv-tier8-h7-approved` was already there (`PMR-018` closed; a backup, not publication, not gate review). Its `HANDOFF.md` at that commit **states** that `FV-FIN-001` is resolved, "the responsible human selected Tier 8 as the endpoint for Helium formal-verification experimentation" (decision commit `6d3cd14`), the approved Tier 8 refs are unchanged and must remain frozen, the travel gate remains blocked, and the PoC "is not formally verified and has not been validated on hardware". Refs it names: travel base `3dc3aee`; Tier 8 H6 candidate `ed15451` with H7 gate `85a6e55`; Tier 7 source `7ca97a9` with H7 gate `342e04a`; Tier 6 H7 gate `c594b7f`; Tier 5 H7 gate `111cff2`; earlier H7 lineage `d0cca32`; preserved ref `d87080a`. **These are the component's statements**, now tabulated for `f0d96b1` in `records/assurance/helium-te-fv-pathfinder.md`. The read-only `scripts/inspect-components.sh refs helium-te-poc ...` listing (added in the second turn; re-run at 07:14Z with an identical result) shows every named ref **exists** locally and, as of the last fetch, all but `d0cca32` are reachable from a remote-tracking branch (`PMR-018`). Existence is not gate review: the Project Manager has reviewed no Tier 7/8 gate content or the endpoint decision and infers no approval (`PMD-20260904-002`, `PMD-20260904-004` item 9) |
-| Security reviewer (new, 2026-09-06) | `../security-reviewer/` created this turn from the Helium review contract at `../helium-te-poc/` `9b3ff4e` and committed as `9ca5071` (`PMD-20260906-003`): agent `security-reviewer`, specialists `security-evidence`, `security-research`, `security-finding-review`, skill `beryllium-security-review`; private-by-default `reviews/SR-*` packages with a `review-manifest.json` (static-only unless a user-approved command ran through `scripts/run-approved-command.sh` with hashed evidence) and `syntheses/SRS-*` disposition ledgers, written only inside the component; independence rule (a review never reads another review of the same target). Registered everywhere on the Project Manager side; **no remote** (`PMR-021`, P2); sibling target registration requested (`PMR-022`, P3); **no engagement yet**; nothing here is a security review of any component. Class 1 of the standing carry authority **extended to its `outbox/pm-queue.md`** on the human's "re open gate: yes" (`PMD-20260906-004`) |
+| Security reviewer (new, 2026-09-06) | `../security-reviewer/` created this turn from the Helium review contract at `../helium-te-poc/` `9b3ff4e` and committed as `9ca5071` (`PMD-20260906-003`): agent `security-reviewer`, specialists `security-evidence`, `security-research`, `security-finding-review`, skill `beryllium-security-review`; private-by-default `reviews/SR-*` packages with a `review-manifest.json` (static-only unless a user-approved command ran through `scripts/run-approved-command.sh` with hashed evidence) and `syntheses/SRS-*` disposition ledgers, written only inside the component; independence rule (a review never reads another review of the same target). Registered everywhere on the Project Manager side; **backed up** to the private `beryllium-project/security-reviewer` by the human's 19:38Z `--sr-backup` run (`9ca5071` verified; `PMR-021` closed); sibling target registration requested (`PMR-022`, P3); **no engagement yet**; nothing here is a security review of any component. Class 1 of the standing carry authority **extended to its `outbox/pm-queue.md`** on the human's "re open gate: yes" (`PMD-20260906-004`) |
 | Component queues | 16 analysis-workbook rows `PMQ-001..016`: **fourteen `accepted`** in the ledger and in the queue file (nine recorded by the xrv-research-repo owner at `7314e2f`; five by the Project Manager as metadata-only pointers at `../formal-verification-research` `ccb48f6`; the class-1 edits applied at `../analysis-workbook` `83b97a3`); two (`PML-0008`, `0011`; `PMR-009`, cheri-riscv-notes-repo) stay `routed`/`new` and request-only. threat-modeler queue empty. **Transfer queue registered 2026-09-05, second turn (`PMD-20260905-001`)**: `../analysis-workbook/outbox/helium-transfer-queue.md` is the third source `analysis-workbook-transfer` in `scripts/pull-queues.sh` and `queue/README.md`, tracked read-only (outside class 1; `edits` prints nothing for it; `accepted` never used; the workbook maintainer mirrors its lifecycle); `PML-0017` records `HET-001` as `routed` to the Beryllium owner (`PMR-016`). **Fourth turn (19:10Z): owner-side triage of `HET-001` recorded** (`records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`): the responsible human, acting as the Beryllium owner, stated "HET-001 is triaged as accepted" and confirmed that this maps to the transfer-lifecycle status `recorded` (planning inputs only; the input state stays `unaccepted`; not acceptance of any Beryllium work); `PMR-016` **closed**. **Mirror observed 2026-09-06**: at `../analysis-workbook` `d003dec` (the maintainer's commit through the human-run `scripts/owner-actions.sh --apply-edits`, `PMR-019`) the transfer queue shows `HET-001` `recorded` with `routed` and `recorded` history rows citing `PMR-016` and `PMD-20260905-002`, `ACTIVITY-002`, input state `unaccepted`; `PML-0017` stays `routed` (terminal) with the observation in its note; `PMR-019` stays open at P3 only for the workbook `HANDOFF.md` prose. `list` now shows only `PMQ-008` and `PMQ-011`; `check` ok (17/17); `edits` none due. `PMR-015` carried in the second turn: both discovery reference sets name `project-manager/queue/LEDGER.md` (`226d367`, `ff12f2f`) |
 | Retained PM session artifacts | **Recorded lost from this workstation on 2026-09-06** (`records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`): the human-run `scripts/owner-actions.sh --files-search` found none of the seven names under the home directory and, on the human's `y`, removed the broken parent `files` link; the archive SHA-256 and scaffold tree are kept for later matching; existence elsewhere is `unknown`; regeneration of the two H0-selection inputs is the Beryllium owner's decision. Closed as a Project Manager item |
-| Backups | Parent `main` and this repository's `main`: every commit through `36b0579` and `d7ba732` is on `backup/main` and `origin/main` (the human's 10:29Z and 11:17Z script runs pushed the fifth- and sixth-turn commits, verified); **the seventh-turn commit in each repository is local** (the script's default `push_pm` pushes them; the agent pushes only on an explicit confirmation). **security-reviewer is not backed up at all: no remote** (`9ca5071`; `PMR-021`, P2; `--sr-backup`). **analysis-workbook** (`d003dec`), **osr-claude** (`e275544`, personal account), **formal-verification-research** (`e5740de` on the private `backup` remote; `origin` still the stale unreachable namespace), **threat-modeler** (`dae994be`, the owner's commit of 2026-09-06, synchronized as of the last fetch), provenance-review, beryllium-repo, and helium-te-poc (incl. the branches backed up 08:39Z) synchronized at 19:03Z. **xrv-research-repo is 1 commit ahead and not backed up** (`7314e2f`; skipped three times; `PMR-013`, **P1**). cheri-riscv-notes-repo: local `main` synchronized as of its last successful fetch; the script's fetch failed with an authentication error three times (`PMR-020`, P2), so the live state is `unknown` |
+| Backups | Parent `main` and this repository's `main`: every commit through `adb724f` and `6682138` is on `backup/main` and `origin/main` (the human's 10:29Z, 11:17Z, and 19:38Z script runs pushed the fifth-, sixth-, and seventh-turn commits, verified); **this repository's `bfc6feb` and the parent registry commits after `adb724f` are local** (the script's default `push_pm` pushes them; the agent pushes only on an explicit confirmation). **security-reviewer backed up** (`origin` -> private `beryllium-project/security-reviewer`, `9ca5071`, 0/0 at 19:42Z; `PMR-021` closed). **analysis-workbook** (`d003dec`), **osr-claude** (`e275544`, personal account), **formal-verification-research** (`e5740de` on the private `backup` remote; `origin` still the stale unreachable namespace), **threat-modeler** (`dae994be`, the owner's commit of 2026-09-06, synchronized as of the last fetch), provenance-review, beryllium-repo, and helium-te-poc (incl. the branches backed up 08:39Z) synchronized at 19:03Z. **xrv-research-repo is 1 commit ahead and not backed up** (`7314e2f`; skipped three times; `PMR-013`, **P1**). cheri-riscv-notes-repo: local `main` synchronized as of its last successful fetch; the script's fetch failed with an authentication error three times (`PMR-020`, P2), so the live state is `unknown` |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -200,8 +217,20 @@ DMA, service, policy, or successor implementation to work around that gate.
   `backup` remote; `PMR-013`, P1); the `cheri-riscv-notes-repo` fetch failed a
   fourth time with an authentication error (`PMR-020`, P2). The sixth turn's
   push gate is closed.
-- **Not done, deliberately**: no push, no remote, no repository creation; no
-  carry (nothing due); the component's own `HANDOFF.md` sentence "Project
+- **Owner run of 19:38Z recorded (from the log and the observed state; the
+  agent ran nothing).** `scripts/owner-actions.sh --sr-backup` (after a
+  `--plan` run at 19:38:17Z): on the human's `y`, `gh repo create
+  beryllium-project/security-reviewer --private`; on a second `y`, remote
+  `origin` added to `../security-reviewer/`; `main` pushed as a new branch to
+  `9ca5071` and verified with `ls-remote` (`PMR-021` **closed**; a private
+  backup, not publication); this repository `d7ba732..6682138` and the parent
+  `36b0579..adb724f` pushed and verified; analysis-workbook, threat-modeler,
+  osr-claude, formal-verification-research up to date; `xrv-research-repo`
+  skipped a fifth time (`PMR-013`, P1); `cheri-riscv-notes-repo` fetch failed
+  a fifth time (`PMR-020`, P2). `state security-reviewer` at 19:42Z: clean,
+  `origin/main`, 0 behind, 0 ahead.
+- **Not done, deliberately**: no push, no remote, no repository creation by
+  the agent; no carry (nothing due); the component's own `HANDOFF.md` sentence "Project
   Manager registration pending" is now stale and left to the component (a
   class-3 carry candidate for a later clean-worktree turn); the sibling
   registered lists (`PMR-022`) are owner-only.
@@ -891,16 +920,16 @@ Follow-up 4, the next morning (skill-loader repair, this repository only):
 
 ### One recommended next action
 
-Back up the new component and push this turn's local commits, in one script
-run (it creates the private `beryllium-project/security-reviewer` if absent,
-adds remote `origin`, pushes `-u origin main` with a prompt per step, and
-then runs the default fast-forward pushes, including `push_pm` for this
-repository's and the parent's seventh-turn commits):
+Your 19:38Z `--sr-backup` run backed up the new component and pushed the
+seventh-turn commits (`PMR-021` closed). Two later commits are local (this
+repository's `PMD-20260906-004` record and the parent registry update that
+recorded it, plus the recording commits of this closure); the default run
+pushes them and fetches:
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --plan --sr-backup
-bash ./scripts/owner-actions.sh --sr-backup
+bash ./scripts/owner-actions.sh --plan
+bash ./scripts/owner-actions.sh
 copilot                                  # then: /agent project-manager
 ```
 
@@ -924,9 +953,8 @@ copilot                                  # then: /agent security-reviewer
 ```
 
 The coordination turn after your script run records the pushes from your
-statement and the log in `scratch/owner-actions/`, closes `PMR-021` when
-`state security-reviewer` shows `origin/main` synchronized, and refreshes the
-runbook and priorities. No carry is queued.
+statement and the log in `scratch/owner-actions/` and refreshes the runbook
+and priorities. No carry is queued.
 
 ### Minimal restart commands
 
@@ -971,9 +999,10 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | Push of the fifth-coordination-turn commits (`project-manager/` `dbe181a`; parent `1aa13c3`) | - | Responsible human | Closed 2026-09-06: pushed by the human-run `scripts/owner-actions.sh` at 10:29Z (`366e0ad..dbe181a`, `98fc0f5..1aa13c3`, verified in its log); observed on the remotes at 10:30Z |
 | Push of the sixth-coordination-turn commits (`project-manager/` `d7ba732`; parent `36b0579`) | - | Responsible human | Closed 2026-09-06: pushed by the human-run `scripts/owner-actions.sh` at 11:17Z (`dbe181a..d7ba732`, `1aa13c3..36b0579`, verified in its log); observed on the remote-tracking refs at 18:13Z |
 | cheri-riscv-notes-repo `origin` authentication (fetch failed 2026-09-05T19:05Z, 2026-09-06T08:39Z, and 10:29Z) | P2 | Owner | Open; `PMR-020`; live backup state `unknown` until a fetch succeeds or the remote is recorded as unreachable from here |
-| security-reviewer backup (`9ca5071` exists only on this workstation; no remote) | P2 | Responsible human as the component's owner | Open; `PMR-021`; `bash ./scripts/owner-actions.sh --sr-backup` creates the private repository, adds `origin`, and pushes with a prompt per step (`PMD-20260906-003`) |
+| security-reviewer backup (`9ca5071`) | - | Responsible human as the component's owner | Closed 2026-09-06: the human-run `scripts/owner-actions.sh --sr-backup` at 19:38Z created the private `beryllium-project/security-reviewer`, added `origin`, and pushed `main` (verified in its log); observed synchronized at 19:42Z; `PMR-021` closed |
 | Class-1 extension of `PMD-20260904-003` to `../security-reviewer/outbox/pm-queue.md` | - | Responsible human | Closed 2026-09-06 (20:39 local): "re open gate: yes", recorded as `PMD-20260906-004`; the Project Manager now carries that queue's status edits under every condition of `PMD-20260904-003` |
-| Push of the seventh-coordination-turn commits (`project-manager/`, whose hash is its row in `../COMPONENTS.md`, and the parent registry commit, which is the parent HEAD) | P1 | Responsible human | Open; both local. The script's default `push_pm` pushes them on your next run (the `--sr-backup` run recommended above does), or give the agent an explicit push confirmation |
+| Push of the seventh-coordination-turn commits (`project-manager/` `81b7ac4`, `6682138`; parent `e55b390`, `adb724f`) | - | Responsible human | Closed 2026-09-06: pushed by the human-run `scripts/owner-actions.sh` at 19:38Z (`d7ba732..6682138`, `36b0579..adb724f`, verified in its log); observed on the remote-tracking refs at 19:42Z |
+| Push of the class-1 extension record `bfc6feb` and the recording commits after it (`project-manager/`, whose newest hash is its row in `../COMPONENTS.md`; the parent registry commits after `adb724f`, the newest of which is the parent HEAD) | P1 | Responsible human | Open; local. The script's default `push_pm` pushes them on your next run, or give the agent an explicit push confirmation |
 
 ## Role and authority
 
@@ -1567,7 +1596,9 @@ the owner to add `security-reviewer` to the registered target list.
 ### Security reviewer
 
 Created 2026-09-06 in the seventh (recovery) turn and observed clean on `main`
-at `9ca5071`, the initial commit, with **no remote** (`PMR-021`, P2). Role,
+at `9ca5071`, the initial commit; `origin` -> private
+`beryllium-project/security-reviewer`, synchronized since the human's 19:38Z
+`--sr-backup` run (`PMR-021` closed). Role,
 boundaries, queue protocol, and commands: `components/security-reviewer.md`
 and the `security-reviewer/` row of `../COMPONENTS.md`; creation and
 registration record: `records/decisions/PMD-20260906-003-security-reviewer-component-registered.md`.
@@ -1710,9 +1741,9 @@ Then:
 
 ## Pending coordination
 
-- **New component to back up and to answer for.** `security-reviewer/`
-  (`9ca5071`) has no remote (`PMR-021`); `PMR-022` asks two sibling owners to
-  register it as a target; `PMD-20260906-003` item 3 asks the responsible
+- **New component, backed up.** `security-reviewer/` (`9ca5071`) is on its
+  private `origin` since the human's 19:38Z run (`PMR-021` closed);
+  `PMR-022` asks two sibling owners to register it as a target; `PMD-20260906-003` item 3 asks the responsible
   human whether class 1 of the standing carry authority extends to its
   `outbox/pm-queue.md`; answered "re open gate: yes" (`PMD-20260906-004`).
   When `pull-queues.sh list` first shows an `SRQ-NNN` row, add a `PML-NNNN`
@@ -2369,3 +2400,10 @@ Then:
   `../security-reviewer/outbox/pm-queue.md`, the user answered "re open gate:
   yes"; recorded as `PMD-20260906-004`. No push confirmation was given or
   implied by that answer; this turn's commits stay local.
+- Owner run of 19:38Z, 2026-09-06, recorded: the human-run
+  `scripts/owner-actions.sh --sr-backup` created the private
+  `beryllium-project/security-reviewer`, added `origin`, and pushed `main`
+  (`9ca5071`), and pushed this repository `d7ba732..6682138` and the parent
+  `36b0579..adb724f`, each verified with `ls-remote` in its log
+  (`scratch/owner-actions/owner-actions-20260906T193827Z.log`, local,
+  ignored). The agent ran none of it and pushed nothing.
