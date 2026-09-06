@@ -40,9 +40,14 @@ refs were not re-checked this turn); every other row unchanged;
 `registry-check` exact after the registry update. **No existing component was written; the only Git commands
 run against a component were inside the new `security-reviewer/` before it
 had an owner agent.** This turn's commits (`security-reviewer/` `9ca5071`,
-this repository, the parent) are **local**, as are the sixth turn's two (no
-push confirmation was given; the script's default run pushes them). The
-sixth turn is summarized under "Previous update: 2026-09-06 sixth
+this repository, the parent) are **local** (no push confirmation was given;
+the script's default run pushes them). **The sixth turn's `d7ba732` and
+`36b0579` were pushed by the human-run `scripts/owner-actions.sh` at 11:17Z**
+(log `scratch/owner-actions/owner-actions-20260906T111720Z.log`, local,
+ignored: `dbe181a..d7ba732` and `1aa13c3..36b0579`, each verified with
+`ls-remote`; `xrv-research-repo` skipped a fourth time, `PMR-013`; the
+`cheri-riscv-notes-repo` fetch failed a fourth time, `PMR-020`), observed on
+the remote-tracking refs at 18:13Z. The sixth turn is summarized under "Previous update: 2026-09-06 sixth
 coordination turn (10:30Z-11:05Z)".
 
 **Workspace root:** `/home/jmorris/src/l1/src/beryllium-project`
@@ -62,9 +67,10 @@ and through its recording follow-up `366e0ad` under the same confirmation
 fifth-coordination-turn commit `dbe181a` pushed by the human-run
 `scripts/owner-actions.sh` at 10:29Z on 2026-09-06 (`366e0ad..dbe181a`,
 verified in its log; `origin/main` observed at `dbe181a` at 10:30Z); the
-sixth-coordination-turn commit `d7ba732` and the seventh-coordination-turn
-commit, whose hash is the `project-manager/` row of `../COMPONENTS.md`, are
-**local**
+sixth-coordination-turn commit `d7ba732` pushed by the human-run script at
+11:17Z on 2026-09-06 (`dbe181a..d7ba732`, verified in its log; `origin/main`
+observed at `d7ba732` at 18:13Z); the seventh-coordination-turn commit, whose
+hash is the `project-manager/` row of `../COMPONENTS.md`, is **local**
 **Parent coordination repository:** `main`; consolidation commits
 `e774b4217ccf5100c66e97b3b23a51a62c5e6365`,
 `b2e80b260a8669a649cbf65f21e0291c3cda6a17`, and `839a1b5`; first-coordination-turn
@@ -86,7 +92,9 @@ follow-up `98fc0f5` under the same confirmation (`backup/main` observed at
 commit `1aa13c3` pushed by the human-run `scripts/owner-actions.sh` at 10:29Z
 on 2026-09-06 (`98fc0f5..1aa13c3`, verified; `backup/main` observed at
 `1aa13c3` at 10:30Z); the sixth-coordination-turn registry commit `36b0579`
-and the seventh-coordination-turn registry commit are **local**
+pushed by the human-run script at 11:17Z on 2026-09-06 (`1aa13c3..36b0579`,
+verified; `backup/main` observed at `36b0579` at 18:13Z); the
+seventh-coordination-turn registry commit is **local**
 **Parent remotes:** `backup` -> private `beryllium-project/beryllium-project`
 (pushed through `9abc320` on 2026-09-04 and through `afb4f03` on 2026-09-05,
 both under confirmations quoted in "Provenance", through `6f452b7` by the
@@ -110,7 +118,7 @@ and through `1aa13c3` by the human-run script at 10:29Z on 2026-09-06); `origin`
 | Security reviewer (new, 2026-09-06) | `../security-reviewer/` created this turn from the Helium review contract at `../helium-te-poc/` `9b3ff4e` and committed as `9ca5071` (`PMD-20260906-003`): agent `security-reviewer`, specialists `security-evidence`, `security-research`, `security-finding-review`, skill `beryllium-security-review`; private-by-default `reviews/SR-*` packages with a `review-manifest.json` (static-only unless a user-approved command ran through `scripts/run-approved-command.sh` with hashed evidence) and `syntheses/SRS-*` disposition ledgers, written only inside the component; independence rule (a review never reads another review of the same target). Registered everywhere on the Project Manager side; **no remote** (`PMR-021`, P2); sibling target registration requested (`PMR-022`, P3); **no engagement yet**; nothing here is a security review of any component. Class-1 extension to its `outbox/pm-queue.md` is **proposed, not granted** (human question) |
 | Component queues | 16 analysis-workbook rows `PMQ-001..016`: **fourteen `accepted`** in the ledger and in the queue file (nine recorded by the xrv-research-repo owner at `7314e2f`; five by the Project Manager as metadata-only pointers at `../formal-verification-research` `ccb48f6`; the class-1 edits applied at `../analysis-workbook` `83b97a3`); two (`PML-0008`, `0011`; `PMR-009`, cheri-riscv-notes-repo) stay `routed`/`new` and request-only. threat-modeler queue empty. **Transfer queue registered 2026-09-05, second turn (`PMD-20260905-001`)**: `../analysis-workbook/outbox/helium-transfer-queue.md` is the third source `analysis-workbook-transfer` in `scripts/pull-queues.sh` and `queue/README.md`, tracked read-only (outside class 1; `edits` prints nothing for it; `accepted` never used; the workbook maintainer mirrors its lifecycle); `PML-0017` records `HET-001` as `routed` to the Beryllium owner (`PMR-016`). **Fourth turn (19:10Z): owner-side triage of `HET-001` recorded** (`records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`): the responsible human, acting as the Beryllium owner, stated "HET-001 is triaged as accepted" and confirmed that this maps to the transfer-lifecycle status `recorded` (planning inputs only; the input state stays `unaccepted`; not acceptance of any Beryllium work); `PMR-016` **closed**. **Mirror observed 2026-09-06**: at `../analysis-workbook` `d003dec` (the maintainer's commit through the human-run `scripts/owner-actions.sh --apply-edits`, `PMR-019`) the transfer queue shows `HET-001` `recorded` with `routed` and `recorded` history rows citing `PMR-016` and `PMD-20260905-002`, `ACTIVITY-002`, input state `unaccepted`; `PML-0017` stays `routed` (terminal) with the observation in its note; `PMR-019` stays open at P3 only for the workbook `HANDOFF.md` prose. `list` now shows only `PMQ-008` and `PMQ-011`; `check` ok (17/17); `edits` none due. `PMR-015` carried in the second turn: both discovery reference sets name `project-manager/queue/LEDGER.md` (`226d367`, `ff12f2f`) |
 | Retained PM session artifacts | **Recorded lost from this workstation on 2026-09-06** (`records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`): the human-run `scripts/owner-actions.sh --files-search` found none of the seven names under the home directory and, on the human's `y`, removed the broken parent `files` link; the archive SHA-256 and scaffold tree are kept for later matching; existence elsewhere is `unknown`; regeneration of the two H0-selection inputs is the Beryllium owner's decision. Closed as a Project Manager item |
-| Backups | Parent `main` and this repository's `main`: every commit through `1aa13c3` and `dbe181a` is on `backup/main` and `origin/main` (the human's 10:29Z script run pushed the fifth-turn commits, verified); **the sixth-turn (`36b0579`, `d7ba732`) and seventh-turn commits in each repository are local** (the script's default `push_pm` pushes them; the agent pushes only on an explicit confirmation). **security-reviewer is not backed up at all: no remote** (`9ca5071`; `PMR-021`, P2; `--sr-backup`). **analysis-workbook** (`d003dec`), **osr-claude** (`e275544`, personal account), **formal-verification-research** (`e5740de` on the private `backup` remote; `origin` still the stale unreachable namespace), **threat-modeler** (`dae994be`, the owner's commit of 2026-09-06, synchronized as of the last fetch), provenance-review, beryllium-repo, and helium-te-poc (incl. the branches backed up 08:39Z) synchronized at 19:03Z. **xrv-research-repo is 1 commit ahead and not backed up** (`7314e2f`; skipped three times; `PMR-013`, **P1**). cheri-riscv-notes-repo: local `main` synchronized as of its last successful fetch; the script's fetch failed with an authentication error three times (`PMR-020`, P2), so the live state is `unknown` |
+| Backups | Parent `main` and this repository's `main`: every commit through `36b0579` and `d7ba732` is on `backup/main` and `origin/main` (the human's 10:29Z and 11:17Z script runs pushed the fifth- and sixth-turn commits, verified); **the seventh-turn commit in each repository is local** (the script's default `push_pm` pushes them; the agent pushes only on an explicit confirmation). **security-reviewer is not backed up at all: no remote** (`9ca5071`; `PMR-021`, P2; `--sr-backup`). **analysis-workbook** (`d003dec`), **osr-claude** (`e275544`, personal account), **formal-verification-research** (`e5740de` on the private `backup` remote; `origin` still the stale unreachable namespace), **threat-modeler** (`dae994be`, the owner's commit of 2026-09-06, synchronized as of the last fetch), provenance-review, beryllium-repo, and helium-te-poc (incl. the branches backed up 08:39Z) synchronized at 19:03Z. **xrv-research-repo is 1 commit ahead and not backed up** (`7314e2f`; skipped three times; `PMR-013`, **P1**). cheri-riscv-notes-repo: local `main` synchronized as of its last successful fetch; the script's fetch failed with an authentication error three times (`PMR-020`, P2), so the live state is `unknown` |
 | Publication | Nothing public. Push, tag, publication, release, and public migration remain separately controlled human actions |
 
 The repositories are not broken. The runtime project is deliberately stopped
@@ -176,6 +184,15 @@ DMA, service, policy, or successor implementation to work around that gate.
   `records/assurance/helium-te-fv-pathfinder.md` for `f0d96b1` were not
   re-checked this turn (a `refs helium-te-poc <eleven refs>` re-run is the
   next turn's routine). Both are observations, not reviews.
+- **Owner run of 11:17Z recorded (from the log and the remote-tracking
+  refs; the agent ran nothing).** `scripts/owner-actions.sh` (default steps)
+  pushed this repository `dbe181a..d7ba732` and the parent `1aa13c3..36b0579`,
+  each verified with `ls-remote`; analysis-workbook, threat-modeler (then at
+  `226d367`), osr-claude, and formal-verification-research were up to date;
+  `xrv-research-repo` was skipped a fourth time (`origin` unreachable, no
+  `backup` remote; `PMR-013`, P1); the `cheri-riscv-notes-repo` fetch failed a
+  fourth time with an authentication error (`PMR-020`, P2). The sixth turn's
+  push gate is closed.
 - **Not done, deliberately**: no push, no remote, no repository creation; no
   carry (nothing due); the component's own `HANDOFF.md` sentence "Project
   Manager registration pending" is now stale and left to the component (a
@@ -871,7 +888,7 @@ Back up the new component and push this turn's local commits, in one script
 run (it creates the private `beryllium-project/security-reviewer` if absent,
 adds remote `origin`, pushes `-u origin main` with a prompt per step, and
 then runs the default fast-forward pushes, including `push_pm` for this
-repository's and the parent's sixth- and seventh-turn commits):
+repository's and the parent's seventh-turn commits):
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
@@ -946,11 +963,11 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | Push of the third-coordination-turn commits and the follow-up 5 commits (`project-manager/` `208579d`, `088046c`; parent `6f8a0a7`, `6f452b7`) | - | Responsible human | Closed 2026-09-05: pushed by the human-run `scripts/owner-actions.sh` at 19:05Z (`73cb51b..088046c`, `afb4f03..6f452b7`, verified in its log); `origin/main` and `backup/main` observed at those commits at 19:10Z |
 | Push of the fourth-coordination-turn commits (`project-manager/` `94888ea`, `366e0ad`; parent `60a11a2`, `98fc0f5`) | - | Responsible human confirmation | Closed 2026-09-05T22:38Z-22:41Z under the confirmation "push when done" (quoted in "Provenance"), all four verified with `git ls-remote`; `origin/main` at `366e0ad` and `backup/main` at `98fc0f5` re-observed 2026-09-06T08:42Z |
 | Push of the fifth-coordination-turn commits (`project-manager/` `dbe181a`; parent `1aa13c3`) | - | Responsible human | Closed 2026-09-06: pushed by the human-run `scripts/owner-actions.sh` at 10:29Z (`366e0ad..dbe181a`, `98fc0f5..1aa13c3`, verified in its log); observed on the remotes at 10:30Z |
-| Push of the sixth-coordination-turn commits (`project-manager/`, whose hash is its row in `../COMPONENTS.md`, and the parent registry commit, which is the parent HEAD) | P1 | Responsible human | Open; both local. The script's default `push_pm` pushes them on your next run, or give the agent an explicit push confirmation |
+| Push of the sixth-coordination-turn commits (`project-manager/` `d7ba732`; parent `36b0579`) | - | Responsible human | Closed 2026-09-06: pushed by the human-run `scripts/owner-actions.sh` at 11:17Z (`dbe181a..d7ba732`, `1aa13c3..36b0579`, verified in its log); observed on the remote-tracking refs at 18:13Z |
 | cheri-riscv-notes-repo `origin` authentication (fetch failed 2026-09-05T19:05Z, 2026-09-06T08:39Z, and 10:29Z) | P2 | Owner | Open; `PMR-020`; live backup state `unknown` until a fetch succeeds or the remote is recorded as unreachable from here |
 | security-reviewer backup (`9ca5071` exists only on this workstation; no remote) | P2 | Responsible human as the component's owner | Open; `PMR-021`; `bash ./scripts/owner-actions.sh --sr-backup` creates the private repository, adds `origin`, and pushes with a prompt per step (`PMD-20260906-003`) |
 | Class-1 extension of `PMD-20260904-003` to `../security-reviewer/outbox/pm-queue.md` | P3 | Responsible human | Open; proposed by `PMD-20260906-003` item 3, not granted; until then every edit `scripts/pull-queues.sh edits` prints for that file is the human's |
-| Push of the seventh-coordination-turn commits (`project-manager/`, whose hash is its row in `../COMPONENTS.md`, and the parent registry commit, which is the parent HEAD) | P1 | Responsible human | Open; both local, like the sixth turn's `d7ba732` and `36b0579`. The script's default `push_pm` pushes all four on your next run, or give the agent an explicit push confirmation |
+| Push of the seventh-coordination-turn commits (`project-manager/`, whose hash is its row in `../COMPONENTS.md`, and the parent registry commit, which is the parent HEAD) | P1 | Responsible human | Open; both local. The script's default `push_pm` pushes them on your next run (the `--sr-backup` run recommended above does), or give the agent an explicit push confirmation |
 
 ## Role and authority
 

@@ -31,7 +31,8 @@ and the broken parent `files` link is gone. No recorded edit is pending, so
 `--apply-edits` reports nothing to apply. The recommended run creates the new
 component's private remote and pushes it, and pushes whatever else is outgoing
 (P1: this coordination turn's local commits in `project-manager/` and the
-parent, and the sixth turn's two, still local) and fetches:
+parent; your 11:17Z run already pushed the sixth turn's `d7ba732` and
+`36b0579`) and fetches:
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project/project-manager
@@ -154,8 +155,8 @@ Closure: the next turn observes the new HEAD and the wording and closes
 
 ### PMR-020: cheri-riscv-notes-repo `origin` fetch fails with an authentication error
 
-Three consecutive script runs (2026-09-05T19:05Z, 2026-09-06T08:39Z and
-10:29Z) could not fetch `origin`, so its live backup state is `unknown`. The remote host and
+Four consecutive script runs (2026-09-05T19:05Z, 2026-09-06T08:39Z, 10:29Z,
+and 11:17Z) could not fetch `origin`, so its live backup state is `unknown`. The remote host and
 organization are not recorded here; read them yourself:
 
 ```sh
