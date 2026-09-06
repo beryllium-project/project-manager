@@ -27,10 +27,12 @@ and the human-run `scripts/owner-actions.sh` (`push_sr`; opt-in `--sr-backup`)
 (`records/decisions/PMD-20260906-003-security-reviewer-component-registered.md`).
 **It has no remote: its only copy is on this workstation** (`PMR-021`, P2).
 `PMR-022` (P3) asks the analysis-workbook and threat-modeler owners to add it
-to their `readonly-inspect.sh` target lists. **One question for you**
-(`PMD-20260906-003` item 3): does class 1 of the standing carry authority
-extend to `../security-reviewer/outbox/pm-queue.md`? Until you say so, its
-queue edits are yours. Re-observation at 19:03Z-19:09Z found two owner
+to their `readonly-inspect.sh` target lists. **The one question of the turn
+is answered**: asked whether class 1 of the standing carry authority extends
+to `../security-reviewer/outbox/pm-queue.md`, you said "re open gate: yes"
+(20:39 local), recorded as
+`records/decisions/PMD-20260906-004-class-1-extended-to-security-reviewer-queue.md`;
+its queue edits are now the Project Manager's carried writes. Re-observation at 19:03Z-19:09Z found two owner
 commits since the sixth turn, both clean and synchronized as of the last
 fetch: `../threat-modeler/` `dae994be` ("docs: add Helium threat-model run
 comparison and agent improvement proposals") and `../helium-te-poc/`
@@ -115,7 +117,7 @@ and through `1aa13c3` by the human-run script at 10:29Z on 2026-09-06); `origin`
 | Privileged and hardware work | H1-H4 unauthorized; Beryllium K3 execution and hardware evidence remain `NOT RUN` |
 | Implementation repository | `beryllium-repo` clean on `beryllium/single-hart-runtime-r0` at `65f6d89`, synchronized with its private origin |
 | Helium assurance line | `../helium-te-poc/` clean and synchronized on `helium-te-travel-fedora44`, **now at `9b3ff4e`** (the owner's "docs: record directed push of the travel-maintenance branch", observed 2026-09-06T19:09Z; not reviewed beyond its subject); its parent `f0d96b1` was the HEAD observed 2026-09-05T04:54Z, 05:15Z, 07:13Z, 19:10Z and 2026-09-06T08:42Z and 10:30Z (unchanged since 2026-09-04T22:45Z), and the statements below are as recorded at `f0d96b1`. **Backed up 2026-09-06**: the owner's `scripts/owner-actions.sh --helium-branches` run pushed twelve local branches with upstreams to the private `origin`, including the `d0cca32` lineage; `helium-te-fv-tier8-h7-approved` was already there (`PMR-018` closed; a backup, not publication, not gate review). Its `HANDOFF.md` at that commit **states** that `FV-FIN-001` is resolved, "the responsible human selected Tier 8 as the endpoint for Helium formal-verification experimentation" (decision commit `6d3cd14`), the approved Tier 8 refs are unchanged and must remain frozen, the travel gate remains blocked, and the PoC "is not formally verified and has not been validated on hardware". Refs it names: travel base `3dc3aee`; Tier 8 H6 candidate `ed15451` with H7 gate `85a6e55`; Tier 7 source `7ca97a9` with H7 gate `342e04a`; Tier 6 H7 gate `c594b7f`; Tier 5 H7 gate `111cff2`; earlier H7 lineage `d0cca32`; preserved ref `d87080a`. **These are the component's statements**, now tabulated for `f0d96b1` in `records/assurance/helium-te-fv-pathfinder.md`. The read-only `scripts/inspect-components.sh refs helium-te-poc ...` listing (added in the second turn; re-run at 07:14Z with an identical result) shows every named ref **exists** locally and, as of the last fetch, all but `d0cca32` are reachable from a remote-tracking branch (`PMR-018`). Existence is not gate review: the Project Manager has reviewed no Tier 7/8 gate content or the endpoint decision and infers no approval (`PMD-20260904-002`, `PMD-20260904-004` item 9) |
-| Security reviewer (new, 2026-09-06) | `../security-reviewer/` created this turn from the Helium review contract at `../helium-te-poc/` `9b3ff4e` and committed as `9ca5071` (`PMD-20260906-003`): agent `security-reviewer`, specialists `security-evidence`, `security-research`, `security-finding-review`, skill `beryllium-security-review`; private-by-default `reviews/SR-*` packages with a `review-manifest.json` (static-only unless a user-approved command ran through `scripts/run-approved-command.sh` with hashed evidence) and `syntheses/SRS-*` disposition ledgers, written only inside the component; independence rule (a review never reads another review of the same target). Registered everywhere on the Project Manager side; **no remote** (`PMR-021`, P2); sibling target registration requested (`PMR-022`, P3); **no engagement yet**; nothing here is a security review of any component. Class-1 extension to its `outbox/pm-queue.md` is **proposed, not granted** (human question) |
+| Security reviewer (new, 2026-09-06) | `../security-reviewer/` created this turn from the Helium review contract at `../helium-te-poc/` `9b3ff4e` and committed as `9ca5071` (`PMD-20260906-003`): agent `security-reviewer`, specialists `security-evidence`, `security-research`, `security-finding-review`, skill `beryllium-security-review`; private-by-default `reviews/SR-*` packages with a `review-manifest.json` (static-only unless a user-approved command ran through `scripts/run-approved-command.sh` with hashed evidence) and `syntheses/SRS-*` disposition ledgers, written only inside the component; independence rule (a review never reads another review of the same target). Registered everywhere on the Project Manager side; **no remote** (`PMR-021`, P2); sibling target registration requested (`PMR-022`, P3); **no engagement yet**; nothing here is a security review of any component. Class 1 of the standing carry authority **extended to its `outbox/pm-queue.md`** on the human's "re open gate: yes" (`PMD-20260906-004`) |
 | Component queues | 16 analysis-workbook rows `PMQ-001..016`: **fourteen `accepted`** in the ledger and in the queue file (nine recorded by the xrv-research-repo owner at `7314e2f`; five by the Project Manager as metadata-only pointers at `../formal-verification-research` `ccb48f6`; the class-1 edits applied at `../analysis-workbook` `83b97a3`); two (`PML-0008`, `0011`; `PMR-009`, cheri-riscv-notes-repo) stay `routed`/`new` and request-only. threat-modeler queue empty. **Transfer queue registered 2026-09-05, second turn (`PMD-20260905-001`)**: `../analysis-workbook/outbox/helium-transfer-queue.md` is the third source `analysis-workbook-transfer` in `scripts/pull-queues.sh` and `queue/README.md`, tracked read-only (outside class 1; `edits` prints nothing for it; `accepted` never used; the workbook maintainer mirrors its lifecycle); `PML-0017` records `HET-001` as `routed` to the Beryllium owner (`PMR-016`). **Fourth turn (19:10Z): owner-side triage of `HET-001` recorded** (`records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`): the responsible human, acting as the Beryllium owner, stated "HET-001 is triaged as accepted" and confirmed that this maps to the transfer-lifecycle status `recorded` (planning inputs only; the input state stays `unaccepted`; not acceptance of any Beryllium work); `PMR-016` **closed**. **Mirror observed 2026-09-06**: at `../analysis-workbook` `d003dec` (the maintainer's commit through the human-run `scripts/owner-actions.sh --apply-edits`, `PMR-019`) the transfer queue shows `HET-001` `recorded` with `routed` and `recorded` history rows citing `PMR-016` and `PMD-20260905-002`, `ACTIVITY-002`, input state `unaccepted`; `PML-0017` stays `routed` (terminal) with the observation in its note; `PMR-019` stays open at P3 only for the workbook `HANDOFF.md` prose. `list` now shows only `PMQ-008` and `PMQ-011`; `check` ok (17/17); `edits` none due. `PMR-015` carried in the second turn: both discovery reference sets name `project-manager/queue/LEDGER.md` (`226d367`, `ff12f2f`) |
 | Retained PM session artifacts | **Recorded lost from this workstation on 2026-09-06** (`records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`): the human-run `scripts/owner-actions.sh --files-search` found none of the seven names under the home directory and, on the human's `y`, removed the broken parent `files` link; the archive SHA-256 and scaffold tree are kept for later matching; existence elsewhere is `unknown`; regeneration of the two H0-selection inputs is the Beryllium owner's decision. Closed as a Project Manager item |
 | Backups | Parent `main` and this repository's `main`: every commit through `36b0579` and `d7ba732` is on `backup/main` and `origin/main` (the human's 10:29Z and 11:17Z script runs pushed the fifth- and sixth-turn commits, verified); **the seventh-turn commit in each repository is local** (the script's default `push_pm` pushes them; the agent pushes only on an explicit confirmation). **security-reviewer is not backed up at all: no remote** (`9ca5071`; `PMR-021`, P2; `--sr-backup`). **analysis-workbook** (`d003dec`), **osr-claude** (`e275544`, personal account), **formal-verification-research** (`e5740de` on the private `backup` remote; `origin` still the stale unreachable namespace), **threat-modeler** (`dae994be`, the owner's commit of 2026-09-06, synchronized as of the last fetch), provenance-review, beryllium-repo, and helium-te-poc (incl. the branches backed up 08:39Z) synchronized at 19:03Z. **xrv-research-repo is 1 commit ahead and not backed up** (`7314e2f`; skipped three times; `PMR-013`, **P1**). cheri-riscv-notes-repo: local `main` synchronized as of its last successful fetch; the script's fetch failed with an authentication error three times (`PMR-020`, P2), so the live state is `unknown` |
@@ -171,7 +173,12 @@ DMA, service, policy, or successor implementation to work around that gate.
 - **Recorded**: `PMD-20260906-003` (registration; item 3 proposes, does not
   grant, the class-1 extension); `PMR-021` (P2, backup remote; runbook and
   Quick path updated); `PMR-022` (P3, sibling `readonly-inspect.sh` lists;
-  runbook edit next to `PMR-004`).
+  runbook edit next to `PMR-004`). **Then, at 20:39 local, the responsible
+  human answered the item-3 question "re open gate: yes"**, recorded as
+  `PMD-20260906-004`: class 1 of `PMD-20260904-003` now covers
+  `../security-reviewer/outbox/pm-queue.md`; every "pending extension"
+  sentence in this repository and the parent registry was corrected in the
+  same turn; the queue file itself is unchanged (empty at `9ca5071`).
 - **Observed drift, recorded**: `../threat-modeler/` `226d367` -> `dae994be`
   (the owner's own commit and push, 2026-09-06, "docs: add Helium
   threat-model run comparison and agent improvement proposals"; the untracked
@@ -897,10 +904,9 @@ bash ./scripts/owner-actions.sh --sr-backup
 copilot                                  # then: /agent project-manager
 ```
 
-Then, in the Project Manager session, answer one question: does class 1 of
-the standing carry authority (`PMD-20260904-003`) extend to
-`../security-reviewer/outbox/pm-queue.md`? Say "yes" or "no"; a superseding
-record quotes your words. Everything else stays as before, in priority order
+The class-1 question is answered ("re open gate: yes", `PMD-20260906-004`),
+so nothing else is asked of you this turn. Everything else stays as before,
+in priority order
 with exact commands in `outbox/OWNER-RUNBOOK.md`: **P1 `PMR-013`**
 (xrv-research-repo `7314e2f` exists only on this workstation); **P2
 `PMR-003`** (beryllium-repo handoff), **P2 `PMR-020`** (cheri-riscv-notes-repo
@@ -950,7 +956,7 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | Index pointers for the routed rows | P4 | `PMR-007` completed by the xrv-research-repo owner (`7314e2f`, `REV-20260904-001..009`); `PMR-008` carried by the Project Manager under `PMD-20260904-003` class 2 at `../formal-verification-research` `ccb48f6` (metadata pointers on the owner's delegated authority, not corpus admission; owner triage `PMR-014`); `PMR-009` stays with the cheri-riscv-notes-repo owner (generated exports behind gate D4) | Fourteen rows `accepted` in the ledger and in the queue file (`83b97a3`); two wait for the owner |
 | Wording reconciliations | P3 | `PMR-012` carried at `ccb48f6`; `PMR-011` and the Markdown parts of `PMR-004` carried at `83b97a3` and `4a01578`; `PMR-017` carried at `8246147`; `PMR-015` carried at `226d367` and `ff12f2f`; the formal-verification-research agent-instruction bullet and `README.md` sentences applied by the owner at `e5740de` (`PMR-014` wording half, 2026-09-06); `PMR-002` applied by the owner at `e275544` | Done apart from the two owner-only scripts of `PMR-004` |
 | `HET-001` Helium-to-Beryllium method-transfer input (`../analysis-workbook/outbox/helium-transfer-queue.md`) | P3 | Beryllium owner triage done: `PMR-016` closed 2026-09-05 (`PMD-20260905-002`); mirror done by the maintainer at `d003dec` on 2026-09-06 (`PMR-019`, open only for the component's `HANDOFF.md` prose) | Owner-side disposition `recorded` (the human's words "triaged as accepted", mapped at the human's confirmation; planning inputs only; the input state stays `unaccepted`; not acceptance of any Beryllium work); observed `recorded` in the queue at `d003dec`; tracked read-only as `PML-0017` (`routed`, terminal) |
-| Standing carry authority | - | Responsible human | Granted 2026-09-04 (`PMD-20260904-003`; user choices quoted in "Provenance"); committed as `d36b015` and pushed; binds sessions started after that commit |
+| Standing carry authority | - | Responsible human | Granted 2026-09-04 (`PMD-20260904-003`; user choices quoted in "Provenance"); committed as `d36b015` and pushed; binds sessions started after that commit. Class 1 extended 2026-09-06 to `../security-reviewer/outbox/pm-queue.md` (`PMD-20260906-004`; "re open gate: yes") |
 | Decision on the lost retained PM artifacts (see "Retained PM session artifacts") | - | Responsible human | Closed 2026-09-06: the human-run `--files-search` found none of the seven names under the home directory and removed the broken parent `files` link on the human's `y`; recorded as lost from this workstation (`PMD-20260906-002`); existence elsewhere `unknown`; a later find adds a superseding record |
 | Push of the first-coordination-turn and standing-carry-authority commits (`project-manager/` and parent) | - | Responsible human confirmation | Closed 2026-09-04 by the two user confirmations quoted in "Provenance"; both `main` branches were synchronized with their private remotes after those pushes |
 | Private remote for `project-manager/` | - | Responsible human confirmation | Closed 2026-09-04 by the user confirmation quoted in "Provenance"; `origin` -> private `beryllium-project/project-manager` |
@@ -966,7 +972,7 @@ Then start Copilot CLI in `project-manager/` and select `/agent project-manager`
 | Push of the sixth-coordination-turn commits (`project-manager/` `d7ba732`; parent `36b0579`) | - | Responsible human | Closed 2026-09-06: pushed by the human-run `scripts/owner-actions.sh` at 11:17Z (`dbe181a..d7ba732`, `1aa13c3..36b0579`, verified in its log); observed on the remote-tracking refs at 18:13Z |
 | cheri-riscv-notes-repo `origin` authentication (fetch failed 2026-09-05T19:05Z, 2026-09-06T08:39Z, and 10:29Z) | P2 | Owner | Open; `PMR-020`; live backup state `unknown` until a fetch succeeds or the remote is recorded as unreachable from here |
 | security-reviewer backup (`9ca5071` exists only on this workstation; no remote) | P2 | Responsible human as the component's owner | Open; `PMR-021`; `bash ./scripts/owner-actions.sh --sr-backup` creates the private repository, adds `origin`, and pushes with a prompt per step (`PMD-20260906-003`) |
-| Class-1 extension of `PMD-20260904-003` to `../security-reviewer/outbox/pm-queue.md` | P3 | Responsible human | Open; proposed by `PMD-20260906-003` item 3, not granted; until then every edit `scripts/pull-queues.sh edits` prints for that file is the human's |
+| Class-1 extension of `PMD-20260904-003` to `../security-reviewer/outbox/pm-queue.md` | - | Responsible human | Closed 2026-09-06 (20:39 local): "re open gate: yes", recorded as `PMD-20260906-004`; the Project Manager now carries that queue's status edits under every condition of `PMD-20260904-003` |
 | Push of the seventh-coordination-turn commits (`project-manager/`, whose hash is its row in `../COMPONENTS.md`, and the parent registry commit, which is the parent HEAD) | P1 | Responsible human | Open; both local. The script's default `push_pm` pushes them on your next run (the `--sr-backup` run recommended above does), or give the agent an explicit push confirmation |
 
 ## Role and authority
@@ -1571,8 +1577,8 @@ exists; `SECURITY-REVIEWS.md` records an empty set; `outbox/pm-queue.md` is
 empty (fourth queue source, `SRQ-NNN`). Its `HANDOFF.md` at `9ca5071`
 suggests a first static-only engagement against `helium-te-poc` at its exact
 clean commit; that is the component's suggestion, and starting it is the
-human's decision. Open with the human: whether class 1 of `PMD-20260904-003`
-extends to its queue file (until then its queue edits are the human's).
+human's decision. Class 1 of `PMD-20260904-003` extends to its queue file
+since the human's "re open gate: yes" of 2026-09-06 (`PMD-20260906-004`).
 
 ### Cross-project Supervisor Domains disposition
 
@@ -1708,11 +1714,11 @@ Then:
   (`9ca5071`) has no remote (`PMR-021`); `PMR-022` asks two sibling owners to
   register it as a target; `PMD-20260906-003` item 3 asks the responsible
   human whether class 1 of the standing carry authority extends to its
-  `outbox/pm-queue.md`. When `pull-queues.sh list` first shows an `SRQ-NNN`
-  row, add a `PML-NNNN` row, route it with a `PMR-NNN`, and, until the
-  extension is granted, hand the printed status edit to the human. A later
-  class-3 carry candidate: the component's `HANDOFF.md` sentence that
-  registration is pending.
+  `outbox/pm-queue.md`; answered "re open gate: yes" (`PMD-20260906-004`).
+  When `pull-queues.sh list` first shows an `SRQ-NNN` row, add a `PML-NNNN`
+  row, route it with a `PMR-NNN`, and, on its final disposition, carry the
+  printed status edit under Phase 4b. A later class-3 carry candidate: the
+  component's `HANDOFF.md` sentence that registration is pending.
 - **No carry is queued.** `PMR-015` (`226d367`, `ff12f2f`) and `PMR-017`
   (`8246147`) were carried on 2026-09-05; `PMR-012`, `PMR-008`, `PMR-011`,
   `PMR-006`, and the Markdown parts of `PMR-004` on 2026-09-04. `PMR-009` is
@@ -2358,3 +2364,8 @@ Then:
   given; the human-run `scripts/owner-actions.sh --sr-backup` is the recorded
   way to do it. `helium-te-poc/`, `threat-modeler/`, and every other existing
   component were read only.
+- Class-1 extension, 2026-09-06 (20:39 local): asked in the handoff whether
+  class 1 of `PMD-20260904-003` extends to
+  `../security-reviewer/outbox/pm-queue.md`, the user answered "re open gate:
+  yes"; recorded as `PMD-20260906-004`. No push confirmation was given or
+  implied by that answer; this turn's commits stay local.

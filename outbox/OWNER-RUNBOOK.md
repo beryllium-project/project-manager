@@ -44,11 +44,11 @@ Everything below is yours to do by hand or through a component's own agent,
 in priority order: `PMR-013` (P1), `PMR-021` (P2, the run above), `PMR-003`
 (P2), `PMR-020` (P2), then the P3 housekeeping (`PMR-019` handoff prose,
 `PMR-014` pointers, `PMR-004` and `PMR-022` together), then `PMR-009` (P4).
-Separately, the Project Manager asks one question (`PMD-20260906-003` item
-3): does class 1 of the standing carry authority extend to
-`security-reviewer/outbox/pm-queue.md`? Until you say so, its queue edits
-are yours. After each action, run the script (it pushes the new commits) and
-tell the Project Manager.
+The class-1 question of `PMD-20260906-003` item 3 is answered: you said
+"re open gate: yes", so the standing carry authority now covers
+`security-reviewer/outbox/pm-queue.md` (`PMD-20260906-004`) and its queue
+edits are the Project Manager's. After each action, run the script (it pushes
+the new commits) and tell the Project Manager.
 
 ## P1
 

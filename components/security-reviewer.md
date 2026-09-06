@@ -5,11 +5,10 @@
 - **Ownership:** agent-owned; its agents write only inside that component; the
   Project Manager writes here only to carry requests under the standing carry
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`
-  (class 3: Project Manager-role wording in `AGENT-INTERFACE.md`,
-  `RESEARCH-SOURCES.md`; class 1 status edits in `outbox/pm-queue.md` only
-  once the responsible human extends that class to this file, see
-  `../records/decisions/PMD-20260906-003-security-reviewer-component-registered.md`),
-  committing inside this component; nothing else
+  (class 1: status edits in `outbox/pm-queue.md`, extended to this file by
+  `../records/decisions/PMD-20260906-004-class-1-extended-to-security-reviewer-queue.md`;
+  class 3: Project Manager-role wording in `AGENT-INTERFACE.md`,
+  `RESEARCH-SOURCES.md`), committing inside this component; nothing else
 - **Agents:** `security-reviewer` (user-invocable orchestrator,
   `claude-fable-5.1`), `security-evidence`, `security-research`, and
   `security-finding-review` (write-disabled specialists); skill
@@ -87,11 +86,11 @@ component records) and `owner-action` (a synthesis canonical action
 recommended to a target owner). The component appends `new` rows; it expects
 the Project Manager to move rows through `acknowledged`, `routed`,
 `integrated`, or `declined`. The Project Manager consumes it ledger-first (see
-`../queue/README.md`); until the responsible human extends class 1 of
-`PMD-20260904-003` to this file, the exact status edits printed by
-`scripts/pull-queues.sh edits` are handed to the human. An `owner-action`
-row is a recommendation routed by request; the target owner alone accepts,
-implements, or declines it.
+`../queue/README.md`) and applies the exact status edits printed by
+`scripts/pull-queues.sh edits` itself as class-1 carried writes when this
+component is clean (`PMD-20260906-004`). An `owner-action` row is a
+recommendation routed by request; the target owner alone accepts, implements,
+or declines it.
 
 ## Commands (run by the human, from `../security-reviewer/`)
 

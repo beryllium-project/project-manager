@@ -124,9 +124,8 @@ map_status() {
     threat-modeler:accepted) printf 'integrated' ;;
     threat-modeler:duplicate | threat-modeler:rejected) printf 'declined' ;;
     threat-modeler:deferred) printf 'acknowledged' ;;
-    # The security-reviewer queue shares the threat-modeler status vocabulary.
-    # Its edits are applied by the human until the responsible human extends
-    # class 1 of PMD-20260904-003 to this file (PMD-20260906-003).
+    # The security-reviewer queue shares the threat-modeler status vocabulary;
+    # class 1 of PMD-20260904-003 covers it since PMD-20260906-004.
     security-reviewer:routed) printf 'routed' ;;
     security-reviewer:accepted) printf 'integrated' ;;
     security-reviewer:duplicate | security-reviewer:rejected) printf 'declined' ;;

@@ -9,7 +9,8 @@ repositories:
   that component: `new`);
 - `../security-reviewer/outbox/pm-queue.md` (rows `SRQ-NNN` of kind `source`
   or `owner-action`, status written by that component: `new`; registered
-  2026-09-06, `PMD-20260906-003`);
+  2026-09-06, `PMD-20260906-003`; class 1 extended to it by
+  `PMD-20260906-004`);
 - `../analysis-workbook/outbox/helium-transfer-queue.md` (rows `HET-NNN`,
   lifecycle statuses written by that component, currently `new`, and input
   states kept `unaccepted`).
@@ -23,10 +24,9 @@ Manager itself as a class-1 carried write under the standing carry authority
 committed inside the owning component with the `PML` identifiers in the
 subject, when that component's worktree is clean and no other session is
 active there. Otherwise the edit is handed to the user, who applies it in the
-owning component. Class 1 names the analysis-workbook and threat-modeler
-queue files; every edit due in `../security-reviewer/outbox/pm-queue.md` is
-handed to the user until the responsible human extends class 1 to that file
-(`../records/decisions/PMD-20260906-003-security-reviewer-component-registered.md`).
+owning component. Class 1 covers the analysis-workbook, threat-modeler, and,
+since 2026-09-06, security-reviewer queue files
+(`../records/decisions/PMD-20260906-004-class-1-extended-to-security-reviewer-queue.md`).
 The Project Manager never stages or commits a component
 outbox file in the parent. The transfer queue is tracked read-only:
 `scripts/pull-queues.sh edits` prints no edit for it, because it is outside
