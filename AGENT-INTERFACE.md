@@ -12,8 +12,8 @@ research, analysis, threat-model, or provenance content.
 
 ```text
                     parent root (SOT.md, COMPONENTS.md, README.md,
-                    .gitignore, formal-verification/README.md,
-                    the two redirect stubs, tracked *-repo symlink objects)
+                    .gitignore, HANDOFF.md compatibility redirect,
+                    tracked *-repo symlink objects)
                                    ^ maintains
                                    |
    component repositories -----> project-manager <----- human decisions
@@ -90,7 +90,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Queue ledger | `queue/LEDGER.md` | Ledger-first dispositions; see `queue/README.md` |
 | Component requests | `outbox/component-requests.md` | Requests to component owners; those inside the three classes of `PMD-20260904-003` are carried by this agent and closed with the component commit, every other request is carried by the human |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
-| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, `../formal-verification/README.md` (since 2026-09-06), redirect stubs `../HANDOFF.md` and `../formal-verification/helium-te-fv-pathfinder.md`, tracked `../*-repo` symlink objects | Project Manager-owned; edited and committed in the parent repository |
+| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked `../*-repo` symlink objects | Project Manager-owned; edited and committed in the parent repository. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
 
 ## Write and execution boundaries
 

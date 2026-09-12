@@ -18,7 +18,12 @@
   `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`'s hand-add
   reference steps contradict `meta/handoff.md`; the stricter handoff is
   followed
-- **Observed state:** see `../../COMPONENTS.md`
+- **Observed state:** dirty `docs/reconcile-project-status` at `6553092`,
+  with no upstream and 21 changed entries (19 modified tracked paths plus
+  untracked `.github/workflows/` and
+  `automation/validate-corpus.mjs`). The component handoff identifies this as
+  an active 2026-09-11 integrity pass (`PMR-029`); the Project Manager leaves
+  it untouched
 
 ## Role
 
@@ -44,7 +49,9 @@ exports of the research corpus.
 node automation/build-wiki.mjs ../wiki-build <owner>/<repo>
 ```
 
-No general test runner exists.
+The current dirty topic branch introduces a dependency-free corpus validator,
+but it is not yet committed and therefore is not registered here as a durable
+maintained command.
 
 ## What the Project Manager may request
 
@@ -55,5 +62,5 @@ is a SQLite store in a Copilot session on another machine, so the two
 public mirror; and, since 2026-09-06, a decision on how this workstation
 authenticates to `origin` (`PMR-020`, P2: the human-run
 `../scripts/owner-actions.sh` fetch failed with an authentication error on
-2026-09-05 and 2026-09-06, so the live backup state is `unknown`; the local
-checkout is clean at `6553092`).
+2026-09-05 and 2026-09-06, so the live backup state is `unknown`; the
+worktree is now dirty on the no-upstream topic branch under `PMR-029`).

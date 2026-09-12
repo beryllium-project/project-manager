@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Structural validation of the Project Manager artifacts: handoff contract,
 # ledger and request tables, decision records, wording and path discipline,
-# and the parent-root redirect stubs. Read-only.
+# and the current parent-root coordination contract. Read-only.
 
 set -u
 export LC_ALL=C
@@ -13,8 +13,9 @@ Usage:
 
 Validates the project-manager repository at <root> (default: the repository
 containing this script). --no-parent skips the checks of the parent-root
-artifacts (../HANDOFF.md, ../formal-verification/..., ../COMPONENTS.md,
-../SOT.md, ../.gitignore); use it for fixtures. Exit 1 on any failure.
+artifacts (../HANDOFF.md, ../COMPONENTS.md, ../SOT.md, ../README.md,
+../.github/copilot-instructions.md, ../.gitignore); use it for fixtures.
+Exit 1 on any failure.
 EOF
 }
 
@@ -204,7 +205,7 @@ if [[ -f $ledger ]]; then
     bad=0
     while IFS=$'\t' read -r id source sid _raised _title _owner _status applied _decided _note; do
         [[ -n $id ]] || continue
-        if [[ ! $source =~ ^(analysis-workbook|threat-modeler|analysis-workbook-transfer)$ ]]; then
+        if [[ ! $source =~ ^(analysis-workbook|threat-modeler|security-reviewer|analysis-workbook-transfer)$ ]]; then
             fail "queue/LEDGER.md $id names an unknown source component: $source"
             bad=1
         fi
@@ -218,6 +219,12 @@ if [[ -f $ledger ]]; then
         threat-modeler)
             [[ $sid =~ ^DISC-[0-9]{3}$ ]] || {
                 fail "queue/LEDGER.md $id has an invalid threat-modeler source ID: $sid"
+                bad=1
+            }
+            ;;
+        security-reviewer)
+            [[ $sid =~ ^SRQ-[0-9]{3}$ ]] || {
+                fail "queue/LEDGER.md $id has an invalid security-reviewer source ID: $sid"
                 bad=1
             }
             ;;
@@ -392,10 +399,12 @@ done
 if ((check_parent)); then
     parent=$(CDPATH= cd -- "$root/.." && pwd -P)
     require_text "$parent/HANDOFF.md" 'project-manager/HANDOFF.md'
-    require_text "$parent/formal-verification/helium-te-fv-pathfinder.md" \
-        'project-manager/records/assurance/helium-te-fv-pathfinder.md'
-    require_text "$parent/formal-verification/README.md" \
-        'project-manager/records/assurance/helium-te-fv-pathfinder.md'
+    if [[ ! -e $parent/formal-verification/README.md &&
+        ! -e $parent/formal-verification/helium-te-fv-pathfinder.md ]]; then
+        pass "retired parent formal-verification redirects remain absent"
+    else
+        fail "a retired parent formal-verification redirect is present"
+    fi
     require_text "$parent/COMPONENTS.md" '`project-manager/`'
     require_text "$parent/SOT.md" 'project-manager/'
     require_text "$parent/README.md" 'project-manager/'

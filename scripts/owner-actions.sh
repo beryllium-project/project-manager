@@ -34,15 +34,14 @@
 #   review          list the commits each selected push would publish
 #   push_awb        analysis-workbook          main -> origin
 #   push_tm         threat-modeler             main -> origin
-#   push_xrv        xrv-research-repo          main -> origin        (PMR-013; skipped while
-#                   origin is in the unreachable jamorris_microsoft namespace),
-#                   and main -> backup once you add a remote named "backup"
+#   push_xrv        xrv-research-repo          main -> current origin,
+#                   and main -> backup when a remote named "backup" exists
 #   push_osr        osr-claude                 main -> origin
 #   push_fvr        formal-verification-research main -> backup, once the
 #                   remote "backup" exists (creating it needs --fvr-backup)
 #   push_sr         security-reviewer main -> origin, once the remote "origin"
 #                   exists (creating it needs --sr-backup)           (PMR-021)
-#   push_pm         project-manager main -> origin; parent main -> backup
+#   push_pm         project-manager main -> origin; parent main -> upstream
 #   fetch_snapshot  fetch every reachable remote of every registered entry, then
 #                   run the Project Manager restart snapshot (read-only)
 # opt-in steps (never run without their flag):
@@ -337,7 +336,7 @@ targets=(
     "push_fvr|formal-verification-research|$ws_root/formal-verification-research|backup|main|1"
     "push_sr|security-reviewer|$ws_root/security-reviewer|origin|main|1"
     "push_pm|project-manager|$pm_root|origin|main|0"
-    "push_pm|parent coordination repository|$ws_root|backup|main|0"
+    "push_pm|parent coordination repository|$ws_root|upstream|main|0"
 )
 
 target_selected() {

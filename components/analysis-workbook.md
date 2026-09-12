@@ -12,7 +12,9 @@
   skill `beryllium-analysis`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** see `../../COMPONENTS.md`
+- **Observed state:** clean `main` at `eab5f8b`, one commit ahead of
+  `origin/main`; the Project Manager's class-3 `PMR-031` carry updates only
+  the current assurance-record pointer
 
 ## Role
 
@@ -44,9 +46,10 @@ topic and chronology in the generated `WORKBOOK.md`.
   `../formal-verification/`, `../HANDOFF.md`, `../COMPONENTS.md`, and
   `../SOT.md`; at `83b97a3` (carried `PMR-004`, 2026-09-04) it cites
   `../project-manager/HANDOFF.md`, `records/`, `queue/LEDGER.md`, and
-  `outbox/component-requests.md` and names the parent `HANDOFF.md` and
-  `formal-verification/helium-te-fv-pathfinder.md` as redirect stubs, which
-  the parent keeps. `project-manager` is not in its owner-only
+  `outbox/component-requests.md`. At `eab5f8b` (`PMR-031`) it records the
+  parent `HANDOFF.md` as the remaining compatibility redirect and points
+  current assurance lookup directly to `../project-manager/records/assurance/`.
+  `project-manager` is not in its owner-only
   `scripts/readonly-inspect.sh` registered list (still `PMR-004`). At
   `ff12f2f` (carried `PMR-015`, 2026-09-05) its "Source-discovery reference
   set" also names `../project-manager/queue/LEDGER.md`.

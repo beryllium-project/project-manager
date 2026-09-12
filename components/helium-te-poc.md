@@ -7,13 +7,13 @@
 - **Agent:** none user-invocable; maintained skill `helium-documentation`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `LLM_POLICY_ALIGNMENT.md`
-- **Observed state:** clean `helium-te-travel-fedora44` at
-  `f0d96b18c3f629454c9a956b09c6de67d4c138bf`, synchronized with
-  `origin/helium-te-travel-fedora44` (observed read-only
-  2026-09-05T04:54Z, 05:15Z, 07:13Z, 19:10Z and 2026-09-06T08:42Z by
-  `scripts/inspect-components.sh`, with `refs` re-run at 22:00Z and 08:42Z,
-  HEAD unchanged; the Project Manager
-  did not write, reset, clean, stage, or commit in this component)
+- **Observed state:** clean detached HEAD at
+  `1ab289c066b69acdd8b55c9f77055b0145be1316` on 2026-09-12; local
+  `for-review` and `origin/for-review` point to the same commit. The ref
+  listing also contains `helium-te-travel-fedora44` at `52cc71a` and
+  `public/main`, `helium-te-final-release-h7-approved`, and tag `v0.6.0` at
+  `1c9e526`. The Project Manager records those refs but infers no release,
+  review, or acceptance from their names or commit subjects (`PMR-026`)
 
 ## Role
 
@@ -133,18 +133,10 @@ the Helium root.
 
 ## What the Project Manager may request
 
-Responsible-human decisions on what, if anything, may proceed from what the
-component's handoff at `f0d96b1` calls "the accepted travel-maintenance
-baseline" (its phrase, recorded without review; the same handoff reports the
-travel gate as blocked; it names travel maintenance candidate `e83e99c` on
-base `3dc3aee`; Tier 7 and Tier 8 H6/H7 statements and the Tier 8 endpoint are
-reported by the component and not reviewed by the Project Manager); handoff
-reconciliation; preservation of frozen refs. The backup push was decided and
-made by the component owner on 2026-09-06 (`PMR-018` closed): twelve local
-branches, including the `d0cca32` lineage (`helium-te-fv`,
-`helium-te-h7-approved`), were pushed with upstreams to the private `origin`
-through the human-run `../scripts/owner-actions.sh --helium-branches`;
-`helium-te-fv-tier8-h7-approved` was already on `origin` at `85a6e55` and
-alone has no upstream configured. A private-remote backup, not publication
-and not gate review. The Project Manager never creates an H7 gate, pushes,
-publishes, or releases.
+Responsible-human reconciliation of the current detached checkout,
+`HANDOFF.md`, and the separately observed review, travel, and public refs
+(`PMR-026`); preservation of frozen refs; and decisions on what, if anything,
+may proceed. The backup push recorded by `PMR-018` remains historical
+evidence. A remote-tracking ref or tag is not publication evidence or gate
+review by the Project Manager. The Project Manager never creates an H7 gate,
+pushes, publishes, or releases.

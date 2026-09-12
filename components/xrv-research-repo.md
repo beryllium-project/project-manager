@@ -10,7 +10,13 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `review-log.md`
-- **Observed state:** see `../../COMPONENTS.md`
+- **Observed state:** the relocated symlink resolves to the clean canonical
+  repository on `main` at `ca41490`, 0 behind / 0 ahead of `origin/main` as
+  of the last fetch. That remote remains in the unreachable
+  `jamorris_microsoft` namespace, so live backup state is unknown. The
+  previously recorded commit `7314e2f` is absent from this repository, and
+  its `review-log.md` lacks the nine `REV-20260904-001..009` rows
+  (`PMR-025`)
 
 ## Role
 
@@ -35,9 +41,11 @@ No configured build, test, or lint toolchain.
 
 ## What the Project Manager may request
 
-Review-queue intake of routed sources (most `PMQ` rows from the analysis
-workbook suggest this owner); nothing that changes review IDs or statuses. A
-reachable private remote (`PMR-013`, P1 since 2026-09-06): `7314e2f` exists
-only on this workstation, the human-run `../scripts/owner-actions.sh` skips
-`origin` as unreachable, and it pushes `main -> backup` once the owner adds a
-remote of that name; exact commands in `../outbox/OWNER-RUNBOOK.md`.
+Reconciliation of the nine source-intake records formerly observed at
+`7314e2f` (`PMR-025`, P1), including a reachable backup decision for any
+restored or replacement records, then ordinary review-queue intake of routed
+sources. The current canonical repository's remote-tracking `origin/main` is
+present at `ca41490`, but live reachability is unknown; the former backup
+request `PMR-013` is superseded by the combined missing-record and backup
+reconciliation. Nothing here authorizes the Project Manager to invent, reuse,
+or change owner review IDs.

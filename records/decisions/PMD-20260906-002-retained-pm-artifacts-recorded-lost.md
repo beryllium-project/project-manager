@@ -4,7 +4,8 @@
 - **Created:** 2026-09-06
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20260912-002` for current workstation availability;
+  this record remains the historical disposition as of 2026-09-06
 
 ## Scope
 

@@ -25,8 +25,8 @@ state           branch, head, worktree, upstream, ahead/behind, and porcelain
                 status for one entry
 symlinks        readlink, resolution, and Git root for every tracked *-repo link
 status          the restart snapshot: parent, symlinks, components, upstreams
-registry-check  compare the observed revision recorded for each component row
-                in ../COMPONENTS.md with the live HEAD; exit 1 on drift
+registry-check  compare each component row in ../COMPONENTS.md with the live
+                HEAD or an explicit leading **Absent** marker; exit 1 on drift
 
 "workspace" is the parent coordination repository. Registered names are the
 component rows maintained in ../COMPONENTS.md.
@@ -436,7 +436,8 @@ registry_check() {
     [[ -f $file ]] || die "registry file is absent: $file"
 
     # Component rows: first cell is a backticked entry name; the third cell is
-    # the observed state whose first 7-40 hex token is the observed HEAD.
+    # the observed state whose first 7-40 hex token is the observed HEAD, or
+    # begins with **Absent** when a registered path is deliberately unavailable.
     while IFS=$'\t' read -r name recorded; do
         [[ -n $name ]] || continue
         recorded_hash[$name]=$recorded
@@ -446,10 +447,14 @@ registry_check() {
             gsub(/[` \/]/, "", name)
             state = $4
             hash = "unparsed"
-            while (match(state, /`[0-9a-f]{7,40}`/)) {
-                token = substr(state, RSTART + 1, RLENGTH - 2)
-                if (token ~ /[0-9]/ || length(token) >= 12) { hash = token; break }
-                state = substr(state, RSTART + RLENGTH)
+            if (state ~ /^[[:space:]]*\*\*Absent\*\*/) {
+                hash = "absent"
+            } else {
+                while (match(state, /`[0-9a-f]{7,40}`/)) {
+                    token = substr(state, RSTART + 1, RLENGTH - 2)
+                    if (token ~ /[0-9]/ || length(token) >= 12) { hash = token; break }
+                    state = substr(state, RSTART + RLENGTH)
+                }
             }
             printf "%s\t%s\n", name, hash
         }' "$file")
@@ -464,7 +469,16 @@ registry_check() {
             continue
         fi
         recorded=${recorded_hash[$name]}
-        if [[ ! -e $(entry_path "$name") ]] || ! open_entry "$name" 2>/dev/null; then
+        if [[ ! -e $(entry_path "$name") ]]; then
+            if [[ $recorded == absent ]]; then
+                printf '%s\tabsent\tabsent\tmatch\n' "$name"
+            else
+                printf '%s\t%s\t-\tunresolvable\n' "$name" "$recorded"
+                drift=1
+            fi
+            continue
+        fi
+        if ! open_entry "$name" 2>/dev/null; then
             printf '%s\t%s\t-\tunresolvable\n' "$name" "$recorded"
             drift=1
             continue

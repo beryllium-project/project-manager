@@ -12,8 +12,8 @@ repositories:
   2026-09-06, `PMD-20260906-003`; class 1 extended to it by
   `PMD-20260906-004`);
 - `../analysis-workbook/outbox/helium-transfer-queue.md` (rows `HET-NNN`,
-  lifecycle statuses written by that component, currently `new`, and input
-  states kept `unaccepted`).
+  lifecycle statuses written by that component; HET-001 is currently
+  `recorded`, with its input state kept `unaccepted`).
 
 Those files live inside agent-owned repositories. The Project Manager
 therefore operates **ledger-first**: every disposition is recorded in

@@ -26,17 +26,17 @@ session, model, or review content.
 
 The parent workspace root remains the thin coordination shell: `SOT.md`
 (canonical topology), `COMPONENTS.md` (component registry), `README.md`,
-`.gitignore`, and the tracked `*-repo` symlink objects. This component owns
+`.gitignore`, `.github/copilot-instructions.md`, the compatibility redirect
+`HANDOFF.md`, and the tracked `*-repo` symlink objects. This component owns
 the Project Manager handoff, component knowledge cards, the agent roster,
 assurance-transfer records, decision records, the queue ledger, and the
 component-request outbox.
 
 Before the consolidation recorded in `HANDOFF.md`, these artifacts lived at
-the parent root. Redirect stubs remain at `../HANDOFF.md` and
-`../formal-verification/helium-te-fv-pathfinder.md` because sibling components
-cite those paths as read-only evidence; `../formal-verification/README.md`
-(Project Manager-owned since 2026-09-06) describes that directory's
-coordination purpose.
+the parent root. The compatibility redirect `../HANDOFF.md` remains. The
+former `../formal-verification/` redirect files were removed at parent commit
+`4a91f7f` and retired by the responsible human in `PMD-20260912-001`;
+current assurance records live under `records/assurance/`.
 
 ## Safety boundary
 
@@ -60,7 +60,7 @@ It never writes inside another component directory outside those classes,
 never writes `helium-te-poc/` or `beryllium-repo` at all, never stages
 component contents in the parent, never resets, cleans, or reconciles a
 component worktree, and never retargets a tracked symlink without user
-direction. Component outbox queues are consumed ledger-first: the two
+direction. Component outbox queues are consumed ledger-first: the three
 `outbox/pm-queue.md` source-discovery files can produce class-1 status edits,
 while `../analysis-workbook/outbox/helium-transfer-queue.md` is tracked
 read-only and never edited by the Project Manager.
@@ -145,12 +145,12 @@ bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
 ```
 
 Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
-`push_tm` (threat-modeler), `push_xrv` (xrv-research-repo, skipped while its
-`origin` is in the unreachable namespace; also `main -> backup` once such a
-remote exists), `push_osr` (osr-claude), `push_fvr`
-(formal-verification-research `main -> backup`, once that remote exists),
+`push_tm` (threat-modeler), `push_xrv` (xrv-research-repo to its current
+tracked `origin`; also `main -> backup` if such a remote exists), `push_osr`
+(osr-claude), `push_fvr` (formal-verification-research `main -> backup` when
+the component and remote exist),
 `push_sr` (security-reviewer `main -> origin`, once that remote exists),
-`push_pm` (this repository to `origin`, the parent to `backup`),
+`push_pm` (this repository to `origin`, the parent to `upstream`),
 `fetch_snapshot`. Opt-in: `apply_edits` (`--apply-edits`), `push_fvr` remote
 creation (`--fvr-backup`), `push_sr` remote creation (`--sr-backup`),
 `push_helium` (`--helium-branches`), `files_search`

@@ -18,7 +18,12 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** see `../../COMPONENTS.md`
+- **Observed state:** clean `main` at `c13c36e`, one commit ahead of
+  `origin/main`; the Project Manager's class-3 carry closes `PMR-030` and
+  `PMR-031` by refreshing only registration, backup, and current
+  assurance-pointer wording. No engagement has run. `PMR-033` records that
+  the carried handoff's `9ca5071` synchronization sentence is explicitly a
+  pre-carry observation and needs a next-turn wording correction
 
 ## Role
 

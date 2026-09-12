@@ -19,10 +19,8 @@ Write only:
 - inside this repository;
 - to the Project Manager-owned parent-root artifacts: `../SOT.md`,
   `../COMPONENTS.md`, `../README.md`, `../.gitignore`,
-  `../.github/copilot-instructions.md`, `../formal-verification/README.md`,
-  the redirect stubs `../HANDOFF.md` and
-  `../formal-verification/helium-te-fv-pathfinder.md`, and the tracked
-  `../*-repo` symlink objects; and
+  `../.github/copilot-instructions.md`, the redirect stub `../HANDOFF.md`,
+  and the tracked `../*-repo` symlink objects; and
 - inside a carry-eligible component, only to carry a recorded request under
   the standing carry authority
   `records/decisions/PMD-20260904-003-standing-carry-authority.md`, in

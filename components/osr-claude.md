@@ -7,7 +7,11 @@
   this convention and never touches `sources/restricted-microsoft/`
 - **Agent:** reusable Claude skill `.claude/skills/os-security-research`
 - **Local instructions to read first:** `CLAUDE.md`, `HANDOFF.md`
-- **Observed state:** see `../../COMPONENTS.md`
+- **Observed state:** clean local `main` at `f2edd17`, one commit behind
+  `origin/main` at `e275544` as of the last fetch. The remote commit is the
+  already-recorded `PMR-002` handoff correction; `PMR-027` asks the owner to
+  fast-forward this canonical checkout or state why the older local revision
+  is intentional
 
 ## Role
 

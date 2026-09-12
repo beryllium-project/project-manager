@@ -11,7 +11,10 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `COLLAB.md`, `HANDOFF.md`
-- **Observed state:** see `../../COMPONENTS.md`
+- **Observed state:** absent at the registered canonical direct path on
+  2026-09-12; last recorded local revision `e5740de`. `PMR-024` asks the
+  owner to identify the current canonical checkout/integration form or
+  explicitly retire the component; the Project Manager does not recreate it
 
 ## Role
 

@@ -354,6 +354,18 @@ registry=$synth/COMPONENTS.md
 expect_exit "registry-check passes when every recorded revision matches" 0 \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" registry-check "$registry"
 
+absent_registry=$synth/COMPONENTS.absent.md
+cp "$registry" "$absent_registry"
+mv "$synth/provenance-review" "$sandbox/provenance-review-absent"
+sed -i '/`provenance-review\/`/c\| `provenance-review/` | Ignored direct checkout | **Absent** at the canonical path | Fixture |' \
+    "$absent_registry"
+expect_exit "registry-check accepts an explicitly recorded absent component" 0 \
+    env PM_WORKSPACE_ROOT="$synth" bash "$inspect" registry-check "$absent_registry"
+expect_output "registry-check reports an absent component match" \
+    "provenance-review	absent	absent	match" \
+    env PM_WORKSPACE_ROOT="$synth" bash "$inspect" registry-check "$absent_registry"
+mv "$sandbox/provenance-review-absent" "$synth/provenance-review"
+
 git -C "$synth/osr-claude" -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -q --allow-empty -m "fixture drift"
 expect_exit "registry-check fails after a component moves" 1 \
