@@ -60,3 +60,12 @@ Manager to allocate or change review IDs, integrate guest branches, edit
 research, or push. Pushing local commit `d618935` to reachable `backup`
 remains a separate owner gate (`PMR-039`). `PMR-040` asks the XRV owner to
 review the proposed architecture in analysis-workbook commit `a46dba2`.
+
+After D0, the approved active identity is
+`agentic-os-research/cheri-hypervisor-research`
+(`PMD-20260914-003`, `PMR-045`). The former experimental/unknown name becomes
+a historical name. It is not an alias unless the owner later chooses a
+GitHub rename or transfer rather than the default new-active-repository
+mechanism. Microsoft-origin repository state remains an inactive historical
+reference. The current local path and tracked symlink do not move without a
+later explicit target-specific direction.

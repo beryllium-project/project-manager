@@ -23,7 +23,9 @@
   `PMR-031` by refreshing only registration, backup, and current
   assurance-pointer wording. No engagement has run. `PMR-033` records that
   the carried handoff's `9ca5071` synchronization sentence is explicitly a
-  pre-carry observation and needs a next-turn wording correction
+  pre-carry observation and needs a next-turn wording correction.
+  `PMD-20260914-003` keeps this independent review component separate; its
+  future organization placement is not yet decided
 
 ## Role
 

@@ -11,11 +11,29 @@ Before any repository write, confirm the worktree and active-session state;
 a clean tree alone is not permission. If another agent is active, coordinate
 through its handoff and wait for an explicit return.
 
-## First action: preserve current local-only work
+## First action: complete D0 and preserve local-only work
 
-Two current states have the highest data-loss exposure:
+1. **PMR-047 - D0 transition inventory.** Before any organization rename,
+   repository creation, rehome, remote edit, symlink change, quarantine move,
+   or publication, record for every registered repository and every
+   additional Microsoft-origin repository named by the responsible human:
 
-1. **PMR-028 - Threat-model package committed but not backed up.** The clean
+   - current and target active remote;
+   - visibility and owning namespace;
+   - authorship context (`personal`, `employer`, or `unknown`);
+   - third-party license and redistribution state;
+   - publicability class;
+   - active branch, clean/active-session state, and backup state;
+   - old-name/path/API references;
+   - Wiki, tags/releases, issues/discussions;
+   - Pages, Actions, packages, webhooks, and integrations;
+   - quarantine boundary and target repository, using `unknown` until chosen.
+
+   Never inspect `osr-claude/sources/restricted-microsoft/`. Every Microsoft
+   repository remains an inactive reference after a verified successor is
+   active; do not push new work there.
+
+2. **PMR-028 - Threat-model package committed but not backed up.** The clean
    `threat-modeler/main` is two commits ahead of `origin/main`: owner commit
    `5bf6a4b` contains the complete private, paused
    `TM-20260911-001-helium-te-poc-astra` package, and Project Manager carry
@@ -30,7 +48,7 @@ Two current states have the highest data-loss exposure:
    # then: /agent threat-model-maintainer
    ```
 
-2. **PMR-029 - CHERI notes topic work is uncommitted.** The active
+3. **PMR-029 - CHERI notes topic work is uncommitted.** The active
    `docs/reconcile-project-status` worktree has 21 changed entries and no
    upstream. Continue in the owning session; review and validate before
    committing:
@@ -46,6 +64,73 @@ Two current states have the highest data-loss exposure:
    the owner reports the work committed, intentionally parked, or discarded.
 
 ## P2 coordination blockers
+
+### Organization rename - responsible human
+
+After reviewing completed `PMR-047`, the organization owner may rename:
+
+```text
+Agentic-OS-Development
+  -> GitHub organization Settings
+  -> Danger zone
+  -> Rename organization
+  -> agentic-os-research
+```
+
+Confirm the target name in the authenticated form immediately before the
+rename. GitHub redirects repository links after an organization rename, but
+the old organization profile/API name does not redirect and the old name can
+be reused. Record the exact result before changing any repository remote.
+
+### PMR-043 - Beryllium active rehome
+
+After D0 and the organization rename, create the private active home
+`agentic-os-research/beryllium`, verify the complete active branch history,
+and update the Beryllium owner handoff and remote. Keep the Microsoft
+repository unchanged as an inactive reference. `beryllium-repo` is
+carry-ineligible; the Project Manager performs none of these actions.
+
+### PMR-044 - OS-security rehome and quarantine
+
+First resolve `PMR-027`, complete D0, and rename the organization. Then use
+the OS-security owner to design the active private
+`agentic-os-research/os-security-research` repository and a separate private
+quarantine repository visible only to the responsible human. Port the workflow
+to tool-neutral Copilot instructions. Do not open or copy the restricted
+subtree in a Project Manager session. Do not treat moving current files as
+making the existing Git history public-safe.
+
+### PMR-045 - CHERI hypervisor research identity
+
+After D0 and the organization rename, establish
+`agentic-os-research/cheri-hypervisor-research`, preserving the full
+`REV-*` and `COLLAB.md` history. Keep the Microsoft-origin home inactive for
+reference. Retargeting the tracked local symlink requires a later exact human
+direction after the active repository and checkout are verified.
+
+### PMR-046 - CHERI-RISC-V SoK home
+
+After `PMR-029`, D0, and the organization rename, establish
+`agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
+`sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
+inactive reference. No public or Pages action occurs until licensing,
+authorship, corpus-integrity, and public-mirror gates close.
+
+### PMR-048 - Project Manager tasking pilot
+
+After D0, the Project Manager designs generated
+`outbox/tasking/<component>.md` views from the authoritative request table and
+pilots the resolver with one direct checkout and one real symlink target. The
+human UX target is:
+
+```text
+copilot
+check Project Manager tasking
+```
+
+The pilot must show the as-of PM commit, require no pasted request details,
+avoid mutable task mirrors in component handoffs, and stop if tasking is
+unreachable or stale.
 
 ### PMR-026 - Helium checkout and handoff disagree
 
@@ -182,9 +267,6 @@ a comparator baseline, or push without a separate human decision.
   bibliography pointers.
 - **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
   pointers at `c55065c` and `784be93`.
-- **PMR-023:** the Beryllium owner decides whether its existing `origin` is
-  the accepted off-workstation home or whether to add a reachable private
-  backup. No local-only Beryllium commit is currently observed.
 - **PMR-033:** in the next Project Manager turn, or through the component
   owner, clarify `security-reviewer/HANDOFF.md` so the `9ca5071` 0/0 statement
   is explicitly pre-carry and current `main` is `c13c36e`, one ahead. This is

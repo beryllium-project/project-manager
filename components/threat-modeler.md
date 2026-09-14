@@ -19,7 +19,8 @@
   class-3 `PMR-031` carry. `5bf6a4b` added the complete private, paused
   `TM-20260911-001-helium-te-poc-astra` package and the maintainer workflow.
   The run stays paused; `PMR-028` asks the owner to reconcile its delivery
-  wording and decide the push
+  wording and decide the push. `PMD-20260914-003` keeps the component
+  separate; its future organization placement is not yet decided
 
 ## Role
 

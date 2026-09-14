@@ -15,7 +15,8 @@
 - **Observed state:** clean `main` at `b93722b`, seven commits ahead of
   `origin/main`; owner commit `a46dba2` adds the completed CHERI hypervisor
   security-model session, and Project Manager carry `b93722b` applies
-  `PML-0023..0027`
+  `PML-0023..0027`. `PMD-20260914-003` keeps this Be-specific workbench
+  separate; its future organization placement is not yet decided
 
 ## Role
 

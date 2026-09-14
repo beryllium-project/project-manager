@@ -14,7 +14,9 @@
 - **Observed state:** clean canonical direct checkout on `main` at `784be93`,
   two ahead of `origin/main`. The latest Project Manager carry records
   `PML-0024` and completes the bibliography-format half of `PMR-037`;
-  `PMR-024` remains closed
+  `PMR-024` remains closed. `PMD-20260914-003` keeps the component
+  independent and mixed for now; its future organization namespace is
+  deliberately `unknown` pending D0
 
 ## Role
 

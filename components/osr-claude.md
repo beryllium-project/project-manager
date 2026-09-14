@@ -51,3 +51,12 @@ pushing it to the personal-account `origin`; `HANDOFF.md` "Infrastructure
 facts" now states the SSH remote and the applied `mktemp` fix);
 registration of routed sources under the owner's rules; backup decisions (the
 remote is a personal account rather than the organization).
+
+The approved target identity is
+`agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`).
+The active owner workflow is to become tool-neutral and Copilot-capable after
+D0. The old
+repository remains an inactive reference. Its current history stays private;
+quarantined licensed resources move only through a responsible-human-approved
+plan into a separate private repository visible only to the responsible
+human. The Project Manager never opens or copies the restricted subtree.

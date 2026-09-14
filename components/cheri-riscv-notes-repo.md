@@ -64,3 +64,11 @@ authenticates to `origin` (`PMR-020`, P2: the human-run
 `../scripts/owner-actions.sh` fetch failed with an authentication error on
 2026-09-05 and 2026-09-06, so the live backup state is `unknown`; the
 worktree is now dirty on the no-upstream topic branch under `PMR-029`).
+
+The approved future active home is
+`agentic-os-research/cheri-riscv-notes`, retaining the current slug
+(`PMD-20260914-003`, `PMR-046`). The `sok/` artifact is branded the
+CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
+current branch, license, authorship, public-mirror, and corpus-integrity gates
+close. The existing internal repository then remains an inactive reference;
+no symlink or remote changes occur before owner verification.

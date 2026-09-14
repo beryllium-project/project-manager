@@ -1,11 +1,12 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-14
-**Update scope:** twelfth coordination turn; cleared the completed XRV
-session lock, consumed analysis-workbook owner commit `a46dba2`, resolved
-`PMQ-022..026`, carried one formal-verification pointer and five workbook
-status edits, and opened the XRV proposed-architecture review. No repository
-was pushed.
+**Update scope:** thirteenth coordination turn; recorded the responsible
+human's approved federated research topology, target
+`agentic-os-research` organization, Microsoft-reference retirement model,
+Beryllium rehome, private quarantine boundary, and task-discovery direction.
+No organization, repository, remote, symlink, visibility, or publication
+change was executed.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -28,27 +29,31 @@ was pushed.
 | Other components | `beryllium-repo` remains clean at `65f6d89`; `security-reviewer` remains at `c13c36e`. |
 | Queues | 26 source-discovery rows / 26 ledger rows plus one transfer row. `PMQ-022`, `024..026` are duplicates; `PMQ-023` is accepted at `784be93`; all five source edits were applied at `b93722b`. Only `PMQ-008` and `PMQ-011` remain `new`/ledger-routed. `HET-001` remains `recorded` with input state `unaccepted`. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
+| Approved target topology | `PMD-20260914-003` records the responsible human's approval of `agentic-os-research` as the future active namespace for independent research, Beryllium, and approved successor repositories. Microsoft homes remain inactive references. Approved identities include `cheri-hypervisor-research`, `os-security-research`, retained `cheri-riscv-notes`, and a private Beryllium target slug pending final confirmation. |
+| Quarantine | Licensed/restricted resources require a separate private repository visible only to the responsible human. Exact owner, slug, transfer method, and history policy remain `unknown`; the Project Manager never opens or copies the restricted OS-security subtree. |
 | Parent coordination | Workspace root and symlinks are current. The responsible human chose to retire the two already-deleted parent `formal-verification/` redirect files (`PMD-20260912-001`); parent `HANDOFF.md` remains the sole compatibility redirect. |
 | Retained PM artifacts | The ignored parent `files` path now exposes candidate copies matching all seven formerly lost names. Identity and suitability are unverified (`PMD-20260912-002`, `PMR-032`); no file was opened or copied by the Project Manager. |
 
 ### One recommended next action
 
-Have the XRV owner review the completed security-model package and return a
-bounded disposition:
+Complete the D0 inventory before renaming the organization or creating active
+successor repositories:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/xrv-research-repo
+cd /home/jmorris/src/beryllium-project/project-manager
 copilot
+# then: /agent project-manager
 ```
 
-Provide `PMR-040` and analysis-workbook commit `a46dba2`:
+Tell the Project Manager:
 
 ```text
-Review cheri-hypervisor-security-model.md,
-capability-resource-correspondence.md, and helium-cheri-parity-plan.md as
-explicitly proposed architecture. Return incorporate, qualify, defer, or
-decline with exact XRV commit and paths. Do not select an implementation
-target or comparator baseline, and ask before pushing main to backup.
+Complete PMR-047 from PMD-20260914-003. Inventory every registered and
+human-identified Microsoft-origin repository: current and target active
+remote, visibility, authorship context, third-party licensing, publicability,
+active branch and backup state, old-name references, Pages/Actions/packages
+dependencies, quarantine boundary, and active-session state. Use unknown
+rather than guessing and do not inspect restricted content.
 ```
 
 ### Minimal restart commands
@@ -65,23 +70,26 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- The responsible human reported the XRV run complete. Read-only inspection
-  found XRV still clean at `d618935`, one ahead of `backup/main`; the active
-  lock is cleared, but no push decision is inferred.
-- Verified analysis-workbook owner commit `a46dba2`: the security-model
-  session is complete and the repository is clean. Its handoff still contains
-  a stale "pending commit" sentence, retained for owner correction in
-  `PMR-038`.
-- Triaged `PML-0023..0027`: four existing formal-verification sources are
-  duplicates; `seL4 Enforces Integrity` was absent and was carried as a
-  metadata-only pointer at formal-verification commit `784be93`.
-- Applied all five analysis-workbook queue dispositions in class-1 carry
-  commit `b93722b`.
-- Opened `PMR-040` for XRV owner review of the three proposed-architecture
-  documents at `a46dba2`, and `PMR-041` for owner triage of the two later
-  formal-verification pointers.
-- No XRV file, analysis content, formal-verification research narrative,
-  assurance artifact, or human gate was changed by the Project Manager.
+- Recorded the responsible human's approval of consolidation decisions 1, 2,
+  3, 5, 6, 7, and 8 from the two-pass Claude Fable 5.1 plan.
+- Recorded the approved organization rename
+  `Agentic-OS-Development` -> `agentic-os-research`.
+- Recorded that all active work moves out of Microsoft repositories; old
+  Microsoft homes remain inactive historical references rather than being
+  renamed away.
+- Recorded the approved active identities:
+  `agentic-os-research/cheri-riscv-notes`,
+  `agentic-os-research/cheri-hypervisor-research`,
+  `agentic-os-research/os-security-research`, and private
+  `agentic-os-research/beryllium`.
+- Recorded that the canonical OS-security history remains private and that
+  quarantined licensed resources require a separate human-only private
+  repository. Moving files alone does not make old Git history public-safe.
+- Opened `PMR-043..PMR-048` for Beryllium rehome, OS-security
+  rehome/quarantine, XRV rehome, SoK rehome/publicability, D0 inventory, and
+  the generated Project Manager tasking pilot. `PMR-043` supersedes
+  `PMR-023`.
+- No external GitHub operation or component write was performed.
 
 ## Pending coordination
 
@@ -89,6 +97,7 @@ git -C .. status --short --branch
 | --- | --- | --- |
 | P1 | `PMR-028` | Back up the complete private paused threat-model package and reconcile its stale delivery wording through `threat-model-maintainer`. |
 | P1 | `PMR-029` | Preserve and complete or intentionally park the dirty CHERI notes topic branch before any PM action there. |
+| P1 | `PMR-047` | Complete the D0 remote/licensing/authorship/publicability/quarantine inventory that gates every rename and rehome. |
 | P2 | `PMR-026` | Reconcile Helium's detached checkout, current handoff, and observed refs; no gate is inferred. |
 | P2 | `PMR-027` | Fast-forward OSR to existing remote commit `e275544` or state why `f2edd17` is intentional. |
 | P2 | `PMR-032` | Run the read-only retained-artifact search/hash check and report whether the reappeared candidates match the recorded identities. |
@@ -96,9 +105,13 @@ git -C .. status --short --branch
 | P2 | `PMR-020` | Verify CHERI notes remote access after the active dirty work is resolved. |
 | P2 | `PMR-039` | Review XRV `backup/main..main` and decide whether to push `d618935` to the reachable private backup. |
 | P2 | `PMR-040` | XRV owner reviews the three proposed-architecture documents at analysis-workbook `a46dba2`. |
+| P2 | `PMR-043` | Rehouse Beryllium privately at `agentic-os-research/beryllium`; keep the Microsoft repository reference-only. |
+| P2 | `PMR-044` | Rehouse/rename OS security and design the separate human-only quarantine repository. |
+| P2 | `PMR-045` | Rehouse/rename XRV as `agentic-os-research/cheri-hypervisor-research`. |
+| P2 | `PMR-046` | Rehouse `cheri-riscv-notes`, retain the slug, and prepare the gated SoK publication pilot. |
+| P2 | `PMR-048` | After D0, pilot generated per-component Project Manager tasking discovery. |
 | P3 | `PMR-004`, `PMR-022` | Owners decide the analysis/threat read-only target-list additions. |
 | P3 | `PMR-014` | Triage the five original formal-verification bibliography pointers. |
-| P3 | `PMR-023` | Beryllium owner decides/verifies the implementation backup home. |
 | P3 | `PMR-033` | Correct the security-reviewer handoff's self-stale pre-carry synchronization sentence in the next turn or by its owner. |
 | P3 | `PMR-037` | Refresh formal-verification remote/handoff wording; bibliography formatting is complete at `784be93`. |
 | P3 | `PMR-038` | Mirror `CRQ-001` as `completed` from closed `PMR-034` and XRV commit `d618935`. |
@@ -109,11 +122,12 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## Open human gates
 
-- No push was authorized in this turn. XRV `d618935`, analysis-workbook
-  `a46dba2` and carry `b93722b`, formal-verification carry `784be93`, the
-  previously pending component commits, and this turn's Project Manager and
-  parent commits remain local until the responsible human reviews and
-  explicitly chooses each push.
+- No organization rename, repository creation, repository transfer, history
+  push, remote change, symlink retarget, visibility change, or Pages
+  publication was executed. The human approvals establish target state, not
+  completion of external operations.
+- Existing local commits remain unpushed until separately reviewed and
+  confirmed.
 - Beryllium H0 acceptance remains open. H1-H4 remain unauthorized. K3
   execution remains `NOT RUN`.
 - Helium checkout/ref reconciliation, review, publication, and release remain
@@ -129,15 +143,13 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - `../COMPONENTS.md`
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
-- `outbox/component-requests.md` (`PMR-038..PMR-042`)
-- `queue/LEDGER.md` (`PML-0023..0027`)
-- `components/analysis-workbook.md`,
-  `components/formal-verification-research.md`,
-  `components/xrv-research-repo.md`
-- analysis-workbook owner commit `a46dba2`
-- formal-verification carry `784be93`
-- analysis-workbook carry `b93722b`
-- XRV outgoing commit `d618935`
+- `outbox/component-requests.md` (`PMR-043..PMR-048`, and superseded
+  `PMR-023`)
+- `records/decisions/PMD-20260914-003-approve-federated-research-topology.md`
+- `components/beryllium-repo.md`
+- `components/osr-claude.md`
+- `components/xrv-research-repo.md`
+- `components/cheri-riscv-notes-repo.md`
 
 ## Validation and commit state
 
@@ -147,15 +159,16 @@ deliberately deferred; no security-reviewer write was attempted.
 
 Pre-commit validation passed:
 
-- `bash ./scripts/validate-pm.sh`: 201 passed, 0 failed;
+- `bash ./scripts/validate-pm.sh`: 212 passed, 0 failed;
 - `bash ./tests/validate-agent.sh`: 267 passed, 0 failed;
 - `bash ./scripts/pull-queues.sh check`: 27/27 exact;
 - `bash ./scripts/inspect-components.sh registry-check`: every registered row
   matched the pre-commit live state;
 - `git diff --check` in this repository and the parent: passed;
-- parent status contained only Project Manager-owned `COMPONENTS.md`.
+- parent status contained only Project Manager-owned `COMPONENTS.md` and
+  `README.md`.
 
-This handoff is included in the twelfth-turn Project Manager commit. Its exact
+This handoff is included in the thirteenth-turn Project Manager commit. Its exact
 HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. Neither commit is pushed
 without explicit same-turn confirmation.
@@ -164,14 +177,17 @@ without explicit same-turn confirmation.
 
 - Live state: `scripts/inspect-components.sh status`, `components`,
   `symlinks`, `registry-check`, `state`, and `refs` output observed
-  2026-09-14T13:50Z-13:55Z.
+  2026-09-14T19:41Z.
 - Queue state: `scripts/pull-queues.sh list`, `edits`, and `check`; 27/27,
-  no edit due after the `b93722b` carry.
-- User direction: **"xrv run is complete, proceed"**. This clears the
-  user-reported XRV active-session lock but is not a push, research
-  incorporation, target-selection, or approval decision.
+  no edit due.
+- User direction: approved consolidation decisions 1, 2, 3, 5, 6, 7, and 8;
+  selected `Agentic-OS-Development` for rename to `agentic-os-research`;
+  directed Beryllium and other Microsoft-origin active work to new GitHub
+  homes while old repositories remain inactive references; and required a
+  separate human-only private quarantine repository for licensed resources.
+  These are target-state decisions, not completed external operations.
 - Required write-disabled `pm-auditor` pass found no blocking discrepancy;
-  stale and minor findings were corrected or recorded as `PMR-038`,
-  `PMR-040`, `PMR-041`, and closed procedural record `PMR-042`.
+  stale and minor findings were corrected in the approval record, requests,
+  runbook, cards, registry, and parent README.
 - Previous full Project Manager handoff: Git object
-  `b450bef:HANDOFF.md`.
+  `c7a40b9:HANDOFF.md`.
