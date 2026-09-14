@@ -66,6 +66,7 @@ Use `execute` only for:
 
 - `scripts/inspect-components.sh`;
 - `scripts/pull-queues.sh`;
+- `scripts/project-tasking.sh`;
 - `scripts/new-record.sh`;
 - `scripts/validate-pm.sh`;
 - `tests/validate-agent.sh`;
@@ -126,7 +127,8 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
    `git diff --check` in both repositories; parent `git status --short` must
    show only Project Manager-owned root artifacts;
    `scripts/inspect-components.sh registry-check` must be exact.
-9. Commit this repository, record its new HEAD in the `project-manager/` row
+9. Commit this repository, generate tasking views from that exact commit,
+   record its new HEAD in the `project-manager/` row
    of `../COMPONENTS.md`, then commit the parent, each with the Copilot
    co-author trailer. Do not push without confirmation.
 10. Report: overall position; exact paths to review, including every

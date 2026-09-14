@@ -121,6 +121,7 @@ records/assurance/                           assurance-transfer records
 records/decisions/PMD-YYYYMMDD-NNN-*.md      decision records
 queue/LEDGER.md                              ledger-first dispositions of component queue rows
 outbox/component-requests.md                 requests to component owners, each with a priority; three classes carried by the agent
+outbox/tasking/README.md                     contract for ignored generated per-component tasking views
 outbox/OWNER-RUNBOOK.md                      open items by priority with exact human steps (refreshed each turn)
 outbox/owner-edits/                          exact text of the recorded owner-side edits applied by the human-run helper
 templates/owner-return.md                    component HANDOFF return shape for PMR/PML owner results
@@ -140,6 +141,9 @@ bash ./scripts/inspect-components.sh refs <component> [<ref>...]
 bash ./scripts/pull-queues.sh list
 bash ./scripts/pull-queues.sh check
 bash ./scripts/pull-queues.sh edits
+bash ./scripts/project-tasking.sh generate
+bash ./scripts/project-tasking.sh check
+bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
 bash ./scripts/new-record.sh decision <slug>
 bash ./scripts/validate-pm.sh
 bash ./tests/validate-agent.sh
@@ -151,6 +155,16 @@ runs Git in a sanitized environment without hooks, credentials, or network
 access. `new-record.sh` writes only under `records/decisions/`. Carried
 writes inside components are made by the agent itself, never by these
 scripts.
+
+`project-tasking.sh generate` writes only ignored local projections under
+`outbox/tasking/`, after confirming the authoritative request table is
+committed. `check` and `resolve` fail closed unless the view records the
+current Project Manager commit and exact committed request blob. From either a
+direct checkout or tracked workspace symlink, run:
+
+```sh
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+```
 
 ## Owner actions (human-run)
 

@@ -10,3 +10,7 @@
 
 # Test sandboxes.
 /.test-output/
+
+# Regenerable local tasking projections; README documents the contract.
+/outbox/tasking/*.md
+!/outbox/tasking/README.md

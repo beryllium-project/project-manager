@@ -1,10 +1,10 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-14
-**Update scope:** fourteenth coordination turn; completed the bounded local
-D0 transition inventory for the parent and all registered repositories,
-closed `PMR-047`, and separated authenticated owner verification into
-`PMR-049`. No organization, repository, remote, symlink, visibility,
+**Update scope:** fifteenth coordination turn; implemented generated,
+fail-closed per-component Project Manager tasking discovery and closed
+`PMR-048`. `PMR-049` remains the authenticated D0 human-verification gate.
+No component, organization, repository, remote, symlink, visibility,
 quarantine, or publication change was executed.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
@@ -30,6 +30,7 @@ quarantine, or publication change was executed.
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
 | Approved target topology | `PMD-20260914-003` records the responsible human's approval of `agentic-os-research` as the future active namespace for independent research, Beryllium, and approved successor repositories. Microsoft homes remain inactive references. Approved identities include `cheri-hypervisor-research`, `os-security-research`, retained `cheri-riscv-notes`, and a private Beryllium target slug pending final confirmation. |
 | D0 transition inventory | `PMD-20260914-004` records current/target repository, visibility, authorship, licensing, publicability, branch/backup, old-reference, GitHub-service, quarantine, and active-session fields for the parent and all eleven registered repositories. Bounded local inventory `PMR-047` is closed. Authenticated service facts and unresolved human determinations remain `PMR-049`; no external transition is unlocked. |
+| Generated tasking | `PMR-048` is closed citing `PMD-20260914-005`. `scripts/project-tasking.sh` generates ignored per-component views from the committed authoritative request table and resolves either a direct checkout or tracked workspace symlink. It refuses missing, dirty, stale-commit, or wrong-request-blob state rather than showing stale tasking. |
 | Quarantine | Licensed/restricted resources require a separate private repository visible only to the responsible human. Exact owner, slug, transfer method, and history policy remain `unknown`; the Project Manager never opens or copies the restricted OS-security subtree. |
 | Parent coordination | Workspace root and symlinks are current. The responsible human chose to retire the two already-deleted parent `formal-verification/` redirect files (`PMD-20260912-001`); parent `HANDOFF.md` remains the sole compatibility redirect. |
 | Retained PM artifacts | The ignored parent `files` path now exposes candidate copies matching all seven formerly lost names. Identity and suitability are unverified (`PMD-20260912-002`, `PMR-032`); no file was opened or copied by the Project Manager. |
@@ -71,20 +72,18 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- Recorded `PMD-20260914-004`, a two-table D0 transition map for the parent
-  coordination repository and all eleven registered components, based on
-  sanitized local Git state, component cards, and owner handoffs.
-- Recorded exact active branch, worktree, last-fetched backup, local tag, old
-  reference, known visibility, license/publicability, service-surface, and
-  quarantine facts. Unknowns remain explicit.
-- Closed `PMR-047` as the bounded local inventory and opened `PMR-049` for
-  authenticated owner verification, complete Microsoft-origin scope, and
-  licensing/authorship/publicability determinations.
-- Made local Project Manager tasking pilot `PMR-048` actionable, while keeping
-  every organization rename, rehome, remote, symlink, visibility, quarantine,
-  Pages, and publication operation blocked on `PMR-049` and its existing
-  owner gates.
-- No component or external GitHub operation was performed.
+- Added `scripts/project-tasking.sh` with `generate`, `check`, and `resolve`
+  modes. The authoritative state remains `outbox/component-requests.md`.
+- Added ignored local `outbox/tasking/<component>.md` projections recording
+  the exact Project Manager commit and committed request-table blob.
+- Added fixture coverage for component-name, direct-checkout, and physical
+  symlink-entry resolution; cross-named requests; closed and other-owner
+  filtering; missing views; dirty request state; stale Project Manager HEAD;
+  regeneration; and current-view checks.
+- Recorded the contract in `PMD-20260914-005` and closed `PMR-048`.
+- Updated the Project Manager agent, skill, instructions, interface, roster,
+  README, runbook, parent registry, and parent README. No component or
+  external GitHub operation was performed.
 
 ## Pending coordination
 
@@ -104,7 +103,6 @@ git -C .. status --short --branch
 | P2 | `PMR-044` | After `PMR-027`, `PMR-049`, and the organization rename, rehouse OS security and design the separate human-only quarantine repository. |
 | P2 | `PMR-045` | After `PMR-049` and the organization rename, rehouse XRV as `agentic-os-research/cheri-hypervisor-research`. |
 | P2 | `PMR-046` | After `PMR-029`, `PMR-049`, and the organization rename, rehouse `cheri-riscv-notes`, retain the slug, and prepare the gated SoK publication pilot. |
-| P2 | `PMR-048` | Pilot generated per-component Project Manager tasking discovery locally; it may not perform or imply any external transition. |
 | P3 | `PMR-004`, `PMR-022` | Owners decide the analysis/threat read-only target-list additions. |
 | P3 | `PMR-014` | Triage the five original formal-verification bibliography pointers. |
 | P3 | `PMR-033` | Correct the security-reviewer handoff's self-stale pre-carry synchronization sentence in the next turn or by its owner. |
@@ -140,37 +138,42 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 - `../COMPONENTS.md`
 - `../README.md`
-- `../SOT.md`
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
 - `outbox/component-requests.md` (`PMR-043..PMR-049`, and superseded
   `PMR-023`)
-- `records/decisions/PMD-20260914-003-approve-federated-research-topology.md`
-- `records/decisions/PMD-20260914-004-d0-transition-inventory.md`
-- `components/beryllium-repo.md`
-- `components/osr-claude.md`
-- `components/xrv-research-repo.md`
-- `components/cheri-riscv-notes-repo.md`
-- `components/formal-verification-research.md`
+- `records/decisions/PMD-20260914-005-generated-component-tasking.md`
+- `scripts/project-tasking.sh`
+- `outbox/tasking/README.md`
+- `tests/validate-agent.sh`
+- `.github/agents/project-manager.agent.md`
+- `.github/skills/beryllium-project-management/SKILL.md`
+- `.github/copilot-instructions.md`
+- `AGENT-INTERFACE.md`
+- `AGENT-ROSTER.md`
+- `README.md`
 
 ## Validation and commit state
 
-The write-disabled `pm-auditor` found no blocking discrepancy. Its stale and
-minor findings were corrected or recorded as open requests. `PMR-033` remains
-deliberately deferred; no security-reviewer write was attempted.
+The write-disabled `pm-auditor` found no blocking discrepancy. Its functional,
+stale, and minor findings were corrected in the resolver, tests, tasking
+contract, handoff, roster, and registry. No component write was attempted.
 
 Pre-commit validation passed:
 
-- `bash ./scripts/validate-pm.sh`: 223 passed, 0 failed;
-- `bash ./tests/validate-agent.sh`: 267 passed, 0 failed;
+- `bash ./scripts/validate-pm.sh`: 234 passed, 0 failed;
+- `bash ./tests/validate-agent.sh`: 294 passed, 0 failed;
 - `bash ./scripts/pull-queues.sh check`: 27/27 exact;
 - `bash ./scripts/inspect-components.sh registry-check`: every registered row
   matched the pre-commit live state;
 - `git diff --check` in this repository and the parent: passed;
-- parent status contained only Project Manager-owned `COMPONENTS.md`,
-  `README.md`, and `SOT.md`.
+- parent status contained only Project Manager-owned `COMPONENTS.md` and
+  `README.md`.
 
-This handoff is included in the fourteenth-turn Project Manager commit. Its exact
+Post-commit generation and current-view checking follow the Project Manager
+commit so each ignored view can name the exact containing HEAD.
+
+This handoff is included in the fifteenth-turn Project Manager commit. Its exact
 HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. Neither commit is pushed
 without explicit same-turn confirmation.
@@ -179,14 +182,14 @@ without explicit same-turn confirmation.
 
 - Live state: `scripts/inspect-components.sh status`, `components`,
   `symlinks`, `registry-check`, `state`, and `refs` output observed
-  2026-09-14T23:06Z.
+  2026-09-14T23:25Z.
 - Queue state: `scripts/pull-queues.sh list`, `edits`, and `check`; 27/27,
   no edit due.
-- User direction: continue per the prior handoff, whose recommended next
-  action was bounded D0 inventory `PMR-047`. No new human gate or external
-  operation was granted.
+- User direction: after being told `PMR-049` requires authenticated human
+  facts, selected autonomous local tasking pilot `PMR-048`. No human gate or
+  external operation was granted.
 - Required write-disabled `pm-auditor` pass found no blocking discrepancy;
-  stale and minor findings were corrected in the D0 record, requests,
-  runbook, cards, registry, handoff, parent README, and `SOT.md`.
+  its symlink-invocation, cross-component filtering, coverage, check-order,
+  missing-view, stale wording, and provenance findings were corrected.
 - Previous full Project Manager handoff: Git object
-  `174f113:HANDOFF.md`.
+  `9f6b662:HANDOFF.md`.

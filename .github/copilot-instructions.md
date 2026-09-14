@@ -63,6 +63,7 @@ Use `execute` only for:
 
 - `scripts/inspect-components.sh`;
 - `scripts/pull-queues.sh`;
+- `scripts/project-tasking.sh`;
 - `scripts/new-record.sh`;
 - `scripts/validate-pm.sh`;
 - `tests/validate-agent.sh`;
@@ -127,6 +128,12 @@ component named by an open request before closing anything. The PM posts work
 through `outbox/component-requests.md`, component cards, and
 `outbox/OWNER-RUNBOOK.md`; request closure is acknowledgement, and a distinct
 follow-up gets a new identifier.
+
+Generated `outbox/tasking/<component>.md` files are ignored local projections
+of `outbox/component-requests.md`. Generate them after the Project Manager
+commit with `scripts/project-tasking.sh generate`. The component startup
+resolver must stop when the Project Manager repository, generated view,
+recorded PM commit, or request-table blob is missing or stale.
 
 Before writing any repository, check current worktree state and active-session
 signals. User statements, component handoffs, owner-return notes, dirty state,

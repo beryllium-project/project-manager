@@ -37,7 +37,8 @@ research, analysis, threat models, provenance findings, or human decisions.
   repository at a former path. Never retarget a tracked symlink without
   explicit user direction.
 - Execute only `scripts/inspect-components.sh`, `scripts/pull-queues.sh`,
-  `scripts/new-record.sh`, `scripts/validate-pm.sh`, `tests/validate-agent.sh`,
+  `scripts/project-tasking.sh`, `scripts/new-record.sh`,
+  `scripts/validate-pm.sh`, `tests/validate-agent.sh`,
   `git` against this repository or the parent root, and `git -C <component>`
   limited to `status`, `diff`, `log`, `show`, `add <exact paths>`, and
   `commit` while carrying under `PMD-20260904-003`. Every other
@@ -221,7 +222,9 @@ must be exact, including every component written in Phase 4b.
 
 ## Phase 8: commit
 
-Commit this repository first. Then record its new HEAD in the
+Commit this repository first. Then generate ignored local tasking views with
+`bash ./scripts/project-tasking.sh generate` and require
+`bash ./scripts/project-tasking.sh check` to pass. Record the new HEAD in the
 `project-manager/` row of `../COMPONENTS.md`, so that
 `scripts/inspect-components.sh registry-check` stays exact, and commit the
 parent. Use one commit per repository per turn, with a subject that names the
@@ -229,6 +232,15 @@ coordination change and the trailer
 `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`. Never
 push, add a remote, create a repository, or tag without an explicit user
 confirmation in the same turn; quote the confirmation in `HANDOFF.md`.
+
+`outbox/component-requests.md` remains authoritative. Generated
+`outbox/tasking/<component>.md` files are ignored local projections, never
+mutable component task state. From a direct checkout or tracked workspace
+symlink,
+`bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .`
+identifies the component and prints its view only when the recorded PM commit
+and request-table blob are current. Missing, unreachable, dirty, or stale
+tasking fails closed.
 
 ## Phase 9: report
 

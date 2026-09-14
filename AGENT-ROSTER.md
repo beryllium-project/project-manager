@@ -20,6 +20,16 @@ validation, backup state, and requested PM action. The Project Manager pulls
 and verifies that return on startup; neither agent writes the other's
 repository (`PMD-20260914-002`).
 
+From a registered component's workspace entry, the owner can resolve current
+Project Manager tasking without pasted request details:
+
+```sh
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+```
+
+The generated view is discovery only and fails closed when its PM commit or
+request-table snapshot is stale.
+
 Before any listed agent writes, it checks the target repository's worktree
 and active-session signals. User statements and handoffs can establish an
 active session even when Git is clean; concurrent writes wait for an explicit

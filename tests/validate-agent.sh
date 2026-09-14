@@ -171,6 +171,13 @@ for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh 
     require_pattern "$repository_root/scripts/$script" '^set -(euo pipefail|u)$'
     require_text "$repository_root/scripts/$script" 'export LC_ALL=C'
 done
+require_file "$repository_root/scripts/project-tasking.sh"
+require_pattern "$repository_root/scripts/project-tasking.sh" '^set -euo pipefail$'
+require_text "$repository_root/scripts/project-tasking.sh" 'export LC_ALL=C'
+expect_pass "project-tasking passes bash -n" \
+    bash -n "$repository_root/scripts/project-tasking.sh"
+refute_pattern "$repository_root/scripts/project-tasking.sh" \
+    'git_pm (add|commit|push|fetch|remote|checkout|reset|clean|stash|rebase|tag)'
 require_executable "$repository_root/tests/validate-agent.sh"
 
 for f in "$repository_root/.gitignore"; do
@@ -223,6 +230,7 @@ for f in "$agent" "$instructions" "$skill" "$interface"; do
     require_text "$f" 'Never write inside another component directory'
     require_text "$f" 'scripts/inspect-components.sh'
     require_text "$f" 'scripts/pull-queues.sh'
+    require_text "$f" 'scripts/project-tasking.sh'
     require_text "$f" 'scripts/new-record.sh'
     require_text "$f" 'scripts/validate-pm.sh'
     require_text "$f" 'tests/validate-agent.sh'
@@ -426,6 +434,94 @@ expect_output "pull-queues summary counts awaiting rows" "analysis-workbook	3	2	
 expect_output "pull-queues summary counts transfer rows once" "analysis-workbook-transfer	1	1	1	0" \
     bash "$pull" --workspace "$fixture_workspace" --ledger "$ledgers/complete.md" summary
 expect_exit "pull-queues check passes on the live ledger" 0 bash "$pull" check
+
+# --- project-tasking.sh -------------------------------------------------------
+
+tasking=$repository_root/scripts/project-tasking.sh
+tasking_workspace=$sandbox/tasking-workspace
+tasking_pm=$tasking_workspace/project-manager
+tasking_target=$sandbox/tasking-symlink-target
+mkdir -p "$tasking_pm/components" "$tasking_pm/outbox/tasking" "$tasking_pm/scripts" \
+    "$tasking_workspace/direct-component" "$tasking_target"
+cp "$tasking" "$tasking_pm/scripts/project-tasking.sh"
+ln -s "$tasking_target" "$tasking_workspace/symlink-component"
+printf '# direct-component\n' >"$tasking_pm/components/direct-component.md"
+printf '# symlink-component\n' >"$tasking_pm/components/symlink-component.md"
+cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
+# Component requests
+
+| Request ID | Raised on | Component | Request | Basis | Status | Priority | Resolved on | Note |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PMR-001 | 2000-01-01 | direct-component | Do the direct task. | Fixture basis. | open | P2 | Not applicable | Direct note. |
+| PMR-002 | 2000-01-01 | symlink-component | Do the symlink task. | Fixture basis. | open | P1 | Not applicable | Symlink note. |
+| PMR-003 | 2000-01-01 | direct-component | Ignore the closed task. | Fixture basis. | closed | - | 2000-01-02 | Closed note. |
+| PMR-004 | 2000-01-01 | other-component | Coordinate with `direct-component`. | Fixture basis. | open | P1 | Not applicable | Cross-component note. |
+EOF
+git -C "$tasking_pm" init -q
+git -C "$tasking_pm" add components outbox/component-requests.md \
+    scripts/project-tasking.sh
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -qm "tasking fixture"
+
+expect_exit "project-tasking without a mode exits 2" 2 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking"
+expect_exit "project-tasking rejects an unknown mode" 2 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" bogus
+expect_exit "project-tasking generates committed request views" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+require_file "$tasking_pm/outbox/tasking/direct-component.md"
+require_file "$tasking_pm/outbox/tasking/symlink-component.md"
+require_text "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-004'
+refute_pattern "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-00[23]'
+expect_output "project-tasking resolves a component name" "PMR-001" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve direct-component
+expect_output "project-tasking resolves a direct component path" "PMR-001" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve "$tasking_workspace/direct-component"
+expect_output "project-tasking resolves a tracked symlink path" "PMR-002" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve "$tasking_workspace/symlink-component"
+resolve_from_workspace_entry() {
+    local entry=$1
+    (
+        cd -- "$entry" || exit 2
+        env PM_TASKING_ROOT="$tasking_pm" \
+            PM_TASKING_WORKSPACE="$tasking_workspace" \
+            bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+    )
+}
+expect_output "documented resolver works from a symlink workspace entry" "PMR-002" \
+    resolve_from_workspace_entry "$tasking_workspace/symlink-component"
+expect_exit "project-tasking check accepts current generated views" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" check
+rm -f -- "$tasking_pm/outbox/tasking/symlink-component.md"
+expect_exit "project-tasking check rejects a missing component view" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" check
+expect_exit "project-tasking restores a complete view set" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+printf '\n' >>"$tasking_pm/outbox/component-requests.md"
+expect_exit "project-tasking rejects a dirty request table" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve direct-component
+git -C "$tasking_pm" checkout -q -- outbox/component-requests.md
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q --allow-empty -m "advance fixture"
+expect_exit "project-tasking rejects a stale PM commit" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" check
+expect_exit "project-tasking regenerates after a PM commit" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+expect_exit "project-tasking check accepts regenerated views" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" check
 
 # --- new-record.sh -------------------------------------------------------------------
 

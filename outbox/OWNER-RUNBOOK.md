@@ -11,6 +11,15 @@ Before any repository write, confirm the worktree and active-session state;
 a clean tree alone is not permission. If another agent is active, coordinate
 through its handoff and wait for an explicit return.
 
+From any registered component's workspace entry, current generated tasking can
+be resolved without pasting request rows:
+
+```sh
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+```
+
+The command fails rather than showing stale or unreachable tasking.
+
 ## First action: verify D0 and preserve local-only work
 
 1. **PMR-049 - authenticated D0 verification.** Review
@@ -118,22 +127,6 @@ After `PMR-029`, `PMR-049`, and the organization rename, establish
 `sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
 inactive reference. No public or Pages action occurs until licensing,
 authorship, corpus-integrity, and public-mirror gates close.
-
-### PMR-048 - Project Manager tasking pilot
-
-`PMR-047` is closed, so the Project Manager may now design generated
-`outbox/tasking/<component>.md` views from the authoritative request table and
-pilots the resolver with one direct checkout and one real symlink target. The
-human UX target is:
-
-```text
-copilot
-check Project Manager tasking
-```
-
-The pilot must show the as-of PM commit, require no pasted request details,
-avoid mutable task mirrors in component handoffs, and stop if tasking is
-unreachable or stale.
 
 ### PMR-026 - Helium checkout and handoff disagree
 
