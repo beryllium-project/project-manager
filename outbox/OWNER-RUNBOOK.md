@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-12
+**Last refreshed:** 2026-09-14
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -10,7 +10,7 @@ Review each component's own handoff and diff before acting.
 
 ## First action: preserve current local-only work
 
-Three current states have the highest data-loss exposure:
+Four current states have the highest coordination or data-loss exposure:
 
 1. **PMR-025 - XRV intake records unavailable.** The canonical
    `xrv-research-repo` is clean at `ca41490` and 0/0 against its
@@ -30,7 +30,33 @@ Three current states have the highest data-loss exposure:
 
    Then tell the Project Manager the canonical path or owner disposition.
 
-2. **PMR-028 - Threat-model package committed but not backed up.** The clean
+   After that reconciliation, review `PMR-034` and the owner-ready proposal:
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project/xrv-research-repo
+   copilot
+   ```
+
+   The owner decides whether to add root `COLLAB.md` and related owner
+   wording, then allocates non-conflicting IDs for `PMQ-017..020`. No push is
+   implied.
+
+2. **PMR-036 - analysis-workbook collaboration contract.** The clean
+   `analysis-workbook/main` is at `8899176`, three ahead of `origin/main`.
+   Owner commit `4c771c0` assigns CRQ status writes to the Project Manager,
+   but current class 1 does not cover
+   `outbox/collaboration-requests.md` or `.github/copilot-instructions.md`.
+   Through the workbook owner, change those documents so the maintainer
+   mirrors exact PM or owner records, then mirror `CRQ-001` as `routed` from
+   `PMR-034` and run the component's maintained validation:
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project/analysis-workbook
+   copilot
+   # then: /agent analysis-workbook
+   ```
+
+3. **PMR-028 - Threat-model package committed but not backed up.** The clean
    `threat-modeler/main` is two commits ahead of `origin/main`: owner commit
    `5bf6a4b` contains the complete private, paused
    `TM-20260911-001-helium-te-poc-astra` package, and Project Manager carry
@@ -45,7 +71,7 @@ Three current states have the highest data-loss exposure:
    # then: /agent threat-model-maintainer
    ```
 
-3. **PMR-029 - CHERI notes topic work is uncommitted.** The active
+4. **PMR-029 - CHERI notes topic work is uncommitted.** The active
    `docs/reconcile-project-status` worktree has 21 changed entries and no
    upstream. Continue in the owning session; review and validate before
    committing:
@@ -62,12 +88,12 @@ Three current states have the highest data-loss exposure:
 
 ## P2 coordination blockers
 
-### PMR-024 - formal-verification-research checkout absent
+### PMR-034 - XRV collaboration and new intake
 
-Tell the Project Manager either the component's current canonical path and
-integration form, or that the component is retired. Do not clone, copy, or
-recreate it at the former direct path. Its last recorded local revision was
-`e5740de`, previously backed up to a private remote.
+After `PMR-025` is complete, use the XRV owner session described in the first
+action to decide the owner-ready `COLLAB.md` proposal and triage
+`PMQ-017..020`. The owner must preserve the existing source-intake workflow
+and allocate non-conflicting review IDs.
 
 ### PMR-026 - Helium checkout and handoff disagree
 
@@ -162,9 +188,9 @@ input or authorize H0 work.
 
   Then run that component's `readonly-inspect.sh components` mode and
   maintained validation before committing with both request IDs.
-- **PMR-014:** blocked by `PMR-024`; when
-  `formal-verification-research` is available, its owner triages the five
-  routed bibliography pointers.
+- **PMR-014:** `formal-verification-research` is available again. Its owner
+  may now triage the five earlier routed bibliography pointers plus the new
+  metadata-only `PMQ-021` pointer carried at `c55065c`.
 - **PMR-023:** the Beryllium owner decides whether its existing `origin` is
   the accepted off-workstation home or whether to add a reachable private
   backup. No local-only Beryllium commit is currently observed.
@@ -172,6 +198,11 @@ input or authorize H0 work.
   owner, clarify `security-reviewer/HANDOFF.md` so the `9ca5071` 0/0 statement
   is explicitly pre-carry and current `main` is `c13c36e`, one ahead. This
   turn cannot make a second component commit.
+- **PMR-037:** in `formal-verification-research`, refresh the owner-maintained
+  handoff to state that the restored clone tracks the reachable
+  `beryllium-project` repository as `origin`, and normalize the routed-pointer
+  heading and `PMQ-021` author style. This turn already used the one allowed
+  Project Manager carry commit there.
 
 ## P4 source triage
 
@@ -198,8 +229,8 @@ verified them. No selection, acceptance, or authorization is inferred.
 
 ## Push the completed coordination carries
 
-After reviewing the three component commits and the Project Manager/parent
-commits from this turn, the responsible human may use the maintained helper.
+After reviewing the listed local component commits and the Project
+Manager/parent commits, the responsible human may use the maintained helper.
 It now targets parent `main -> upstream`:
 
 ```sh
@@ -211,9 +242,17 @@ bash ./scripts/owner-actions.sh
 The relevant local component commits are:
 
 - `analysis-workbook` `eab5f8b` (`PMR-031`);
+- `analysis-workbook` owner `4c771c0` and carry `8899176` (`PML-0022`);
+- `formal-verification-research` `c55065c` (`PMR-035`, `PML-0022`);
 - `threat-modeler` `f4eb272` (`PMR-031`, stacked after owner commit
   `5bf6a4b`);
 - `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`).
+
+The current helper's `push_fvr` path expects a remote named `backup`, while
+the restored formal-verification clone has only `origin`. It will not push
+`c55065c` by default. The owner must either push that commit through the
+component's own approved workflow or direct a later Project Manager change to
+retarget the helper; do not create a duplicate remote implicitly.
 
 The helper prompts before every push, skips dirty worktrees, never forces, and
 does not publish. Report its log path and result to the next Project Manager

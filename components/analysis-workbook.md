@@ -12,9 +12,10 @@
   skill `beryllium-analysis`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at `eab5f8b`, one commit ahead of
-  `origin/main`; the Project Manager's class-3 `PMR-031` carry updates only
-  the current assurance-record pointer
+- **Observed state:** clean `main` at `8899176`, three commits ahead of
+  `origin/main`; owner commit `4c771c0` contains two completed analysis
+  sessions, five new source rows, and the collaboration-request interface;
+  Project Manager carry `8899176` applies `PML-0022`
 
 ## Role
 
@@ -77,6 +78,12 @@ topic and chronology in the generated `WORKBOOK.md`.
   registers this queue for read-only tracking in `../queue/LEDGER.md` and
   `../scripts/pull-queues.sh`; it never edits that file because class 1
   covers only `outbox/pm-queue.md`.
+- Owner commit `4c771c0` adds a third pull interface,
+  `outbox/collaboration-requests.md`, and `CRQ-001` for an XRV collaboration
+  protocol. `PMD-20260914-001` accepts the three-lane design as owner-ready
+  but records that the Project Manager has no class-1 authority to edit this
+  new queue. `CRQ-001` is routed as `PMR-034`; `PMR-036` asks the maintainer
+  to correct the status-writer contract and mirror the routed state.
 - Backup: the owner pushed `main` to private `origin` on 2026-09-05
   (`efde667..ff12f2f`) and 2026-09-06 (`ff12f2f..d003dec`) through the
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
@@ -96,6 +103,11 @@ component is clean (first done at `83b97a3`: fourteen rows). The separate
 `outbox/helium-transfer-queue.md` is also consumed ledger-first for `HET-NNN`
 tracking, but the PM never edits it; the workbook maintainer mirrors transfer
 lifecycle changes from exact owner-side records.
+
+The proposed collaboration queue is not part of the standing class-1 carry
+authority. Until the responsible human explicitly changes that authority, it
+is read-only to the Project Manager and its maintainer mirrors exact
+coordination outcomes.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 

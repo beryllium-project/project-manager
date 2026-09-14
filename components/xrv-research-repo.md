@@ -4,9 +4,10 @@
   `../copilot/gim/xrv-research`)
 - **Ownership:** private research survey; agent-owned; the Project Manager
   maintains the parent symlink object and writes here only to carry requests
-  under the standing carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md` (class 2: pointer-only
-  records under the `review-log.md` record contract or `references.md`;
-  class 3: Project Manager-role wording), committing inside this repository
+  under the standing carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`. XRV source intake remains
+  request-only because its `review-log.md` contract requires owner-created
+  review records and inbox notes; class 3 is limited to Project Manager-role
+  wording
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `review-log.md`
@@ -48,4 +49,6 @@ sources. The current canonical repository's remote-tracking `origin/main` is
 present at `ca41490`, but live reachability is unknown; the former backup
 request `PMR-013` is superseded by the combined missing-record and backup
 reconciliation. Nothing here authorizes the Project Manager to invent, reuse,
-or change owner review IDs.
+or change owner review IDs. After `PMR-025`, `PMR-034` asks the owner to decide
+the proposed root `COLLAB.md` interface and, if accepted, triage
+`PMQ-017..020`; the proposal is not yet owner-accepted.

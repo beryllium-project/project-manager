@@ -11,10 +11,10 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `COLLAB.md`, `HANDOFF.md`
-- **Observed state:** absent at the registered canonical direct path on
-  2026-09-12; last recorded local revision `e5740de`. `PMR-024` asks the
-  owner to identify the current canonical checkout/integration form or
-  explicitly retire the component; the Project Manager does not recreate it
+- **Observed state:** clean canonical direct checkout on `main` at `c55065c`,
+  one ahead of `origin/main` after the Project Manager's metadata-only
+  `PMR-035` / `PML-0022` carry. `PMR-024` is closed from observed topology;
+  no recreation was performed
 
 ## Role
 
@@ -70,11 +70,18 @@ claim that Helium is formally verified.
   `8b91ebd`. Re-run 2026-09-06T08:42Z: the same two merged `collab/*`
   branches; `main` now tracks the new `backup/main` at `8246147` (0/0), and
   `origin/main` is still the stale `8b91ebd`.
+- Those branch and remote statements are pre-relocation observations. The
+  restored checkout observed on 2026-09-14 contains only local `main`, has no
+  local `collab/*` branches, and tracks `origin/main` at `e5740de`; `origin`
+  now denotes the reachable `beryllium-project` backup repository
+  (`PMR-037` requests owner-maintained handoff reconciliation).
 - Class-2 pointers carried by the Project Manager live in the
   `sources/bibliography.md` section "Routed pointers awaiting owner triage",
   in the file's own entry format, never interleaved with the owner's curated
   topic sections; the owner moves, annotates, or removes them
-  (`PMD-20260904-004`). Five were recorded at `ccb48f6` (`PMR-008`).
+  (`PMD-20260904-004`). Five were recorded at `ccb48f6` (`PMR-008`), and a
+  sixth at `c55065c` (`PMR-035` / `PML-0022`). Heading and author-format
+  normalization is deferred as `PMR-037`.
 
 ## Commands
 
@@ -85,14 +92,15 @@ by the owner.
 
 Owner reconciliation of the owner-status table and `HANDOFF.md` after guest
 integrations; the backup decision is made (`PMR-001` closed 2026-09-06: the
-owner created the private `beryllium-project/formal-verification-research`,
-added remote `backup` with `origin` untouched, and pushed `-u backup main` up
-to `8246147` through the human-run `../scripts/owner-actions.sh --fvr-backup`;
-`main` now tracks `backup/main`, 0 behind, 0 ahead, so the carried `ccb48f6`
-and `8246147` are backed up);
-triage of the five routed pointers (`PMR-014`, P3; the alignment of the
+owner created the private `beryllium-project/formal-verification-research`
+backup and pushed through the human-run
+`../scripts/owner-actions.sh --fvr-backup`; after relocation the restored
+clone uses that repository as `origin` and tracks `origin/main` (`PMR-037`
+requests corresponding owner-handoff refresh);
+triage of the six routed pointers (`PMR-014`, P3; the alignment of the
 owner-only `.github/copilot-instructions.md` bullet and `README.md` sentences
 with the carried `COLLAB.md` wording was applied by the owner at `e5740de` on
 2026-09-06 and pushed to `backup`). `PMR-012` and `PMR-008` were carried by the
 Project Manager itself on 2026-09-04 (`ccb48f6`) and `PMR-017` on 2026-09-05
-(`8246147`).
+(`8246147`). `PMR-035` carried the metadata-only `PMQ-021` pointer at
+`c55065c`; it does not admit or validate the source.
