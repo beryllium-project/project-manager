@@ -1,10 +1,9 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-14
-**Update scope:** tenth coordination turn; review and routing of the
-analysis-workbook XRV collaboration proposal, ledger-first intake of
-`PMQ-017..021`, reconciliation of the restored formal-verification checkout,
-and two narrow carried commits. No repository was pushed.
+**Update scope:** tenth coordination turn plus a post-turn owner-return note.
+The owner return has not yet been reconciled into Project Manager requests,
+ledger rows, component cards, or the parent registry.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -29,29 +28,59 @@ and two narrow carried commits. No repository was pushed.
 | Parent coordination | Workspace root and symlinks are current. The responsible human chose to retire the two already-deleted parent `formal-verification/` redirect files (`PMD-20260912-001`); parent `HANDOFF.md` remains the sole compatibility redirect. |
 | Retained PM artifacts | The ignored parent `files` path now exposes candidate copies matching all seven formerly lost names. Identity and suitability are unverified (`PMD-20260912-002`, `PMR-032`); no file was opened or copied by the Project Manager. |
 
+### Post-turn owner return: reconcile first
+
+The responsible human ran the requested XRV and analysis-workbook owner
+sessions after this handoff's tenth coordination turn. Treat the following as
+an owner report to verify read-only, not as Project Manager closure or a
+replacement for the request and ledger protocols:
+
+| Request | Reported owner result | Reported repository state |
+| --- | --- | --- |
+| `PMR-025` | No local Git repository contained `7314e2f`. Historical IDs `REV-20260904-001..009` remain reserved; the nine pointers were re-recorded as `REV-20260914-001..009`. A reachable private backup `beryllium-project/xrv-research` was created and verified. | XRV commit `706e7082c66fd2a6e88d951e6d998cc8820553cc` is reported on `backup/main`. |
+| `PMR-034` | XRV adopted root `COLLAB.md`, kept `review-log.md` plus `review-inbox/` as source intake, aligned owner instructions and handoff, and recorded `PMQ-017..020` as `REV-20260914-010..013`. | XRV commit `d618935` is reported local on `main`, one ahead of `backup/main`; it was intentionally not pushed. |
+| `PMR-036` | The analysis-workbook owner assigned CRQ status mirroring to the workbook maintainer, preserved exact Project Manager or owner records as authority, and mirrored `CRQ-001` as `routed` from `PMR-034`. | Analysis-workbook commit `62ee356` is reported local on `main`, four ahead of `origin/main`; it was intentionally not pushed. |
+
+Reported validation:
+
+- XRV review-ID uniqueness, review-log links, changed-path checks, and
+  `git diff --check` passed.
+- Analysis-workbook's direct transfer-queue validation, workbook check,
+  PMR-036 assertions, and `git diff --check` passed.
+- The full analysis-workbook contract suite reproduced its documented
+  baseline of 182 passes and 8 pre-existing transfer-transition fixture
+  failures; do not report the suite as fully green.
+
+On the next Project Manager run:
+
+1. Run the minimal restart commands below and verify all three reported
+   commits and remote/ahead states through maintained read-only inspection.
+2. Inspect XRV `706e708..d618935` and analysis-workbook
+   `8899176..62ee356`; confirm the owner report matches the exact changed
+   paths and component contracts.
+3. Reconcile `PMR-025`, `PMR-034`, and `PMR-036` without rewriting history.
+4. Update `PML-0018..0021` and generate any authorized
+   `outbox/pm-queue.md` status edits only after verifying the four XRV review
+   records.
+5. Refresh the XRV and analysis-workbook component cards, this handoff,
+   `outbox/OWNER-RUNBOOK.md`, `../COMPONENTS.md`, and any queue totals.
+6. Preserve both local-only states. Do not push XRV `d618935`,
+   analysis-workbook `62ee356`, or any stacked commit without explicit
+   responsible-human confirmation in that turn.
+
 ### One recommended next action
 
-Resolve the XRV history prerequisite, then hand the owner the collaboration
-and intake request:
+Reconcile the returned owner work before issuing another XRV or
+analysis-workbook request:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/xrv-research-repo
-copilot
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/inspect-components.sh status
+bash ./scripts/pull-queues.sh list
+bash ./scripts/pull-queues.sh edits
+bash ./scripts/pull-queues.sh check
+bash ./scripts/inspect-components.sh registry-check
 ```
-
-Tell the XRV owner:
-
-```text
-Complete PMR-025 first: locate or supersede the missing 7314e2f /
-REV-20260904-001..009 history without reusing IDs, and establish a reachable
-backup. Then review PMR-034 and the analysis-workbook owner-ready XRV
-collaboration proposal. If accepted, create the owner-controlled COLLAB.md and
-related owner wording, preserve review-log.md plus review-inbox/ as source
-intake, and triage PMQ-017..020 with non-conflicting REV IDs. Do not push
-without asking.
-```
-
-Then return the resulting commit and backup state to the Project Manager.
 
 ### Minimal restart commands
 
