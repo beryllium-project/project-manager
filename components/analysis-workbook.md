@@ -12,11 +12,10 @@
   skill `beryllium-analysis`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** dirty `main` at `0501243`, five commits ahead of
-  `origin/main`; owner commit `62ee356` corrects CRQ ownership and handoff
-  state, Project Manager carry `0501243` applies `PML-0018..0021`, and
-  untracked `sessions/AWB-20260914-002-cheri-hypervisor-security-model/`
-  marks an active owner session
+- **Observed state:** clean `main` at `b93722b`, seven commits ahead of
+  `origin/main`; owner commit `a46dba2` adds the completed CHERI hypervisor
+  security-model session, and Project Manager carry `b93722b` applies
+  `PML-0023..0027`
 
 ## Role
 
@@ -110,9 +109,11 @@ It is read-only to the Project Manager and its maintainer mirrors exact
 coordination outcomes. `PMQ-017..020` were accepted after XRV intake and the
 class-1 edits were carried at `0501243`.
 
-The active `AWB-20260914-002-cheri-hypervisor-security-model` session has
-added `PMQ-022..026`. They are ledgered as `PML-0023..0027` with status
-`pending`; owner-index checks and triage wait for the session's stable return.
+Owner commit `a46dba2` completes
+`AWB-20260914-002-cheri-hypervisor-security-model` and adds
+`PMQ-022..026`. `PML-0023`, `PML-0025..0027` are duplicates;
+`PML-0024` is accepted at formal-verification commit `784be93`; all five
+source statuses were applied at `b93722b`.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 
@@ -129,8 +130,8 @@ git diff --check
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
 part was carried at `83b97a3`; P3, exact edit in `../outbox/OWNER-RUNBOOK.md`);
-the CRQ-001 completion mirror (`PMR-038`, request-only because the queue is
-outside class 1 and blocked until the active session hands off); nothing that
+the CRQ-001 completion mirror and stale interface/handoff wording correction
+(`PMR-038`, request-only because the queue is outside class 1); nothing that
 treats a session as review or acceptance.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and

@@ -119,15 +119,49 @@ bash ./scripts/owner-actions.sh --files-search \
 Report the log path and archive hash result. This does not select either H0
 input or authorize H0 work.
 
+### PMR-039 - XRV local backup decision
+
+The responsible human reports the XRV deep-research run complete. Review the
+current outgoing range:
+
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/inspect-components.sh state xrv-research-repo
+bash ./scripts/inspect-components.sh refs xrv-research-repo d618935
+```
+
+Then review the complete outgoing owner work and decide whether to push
+`main` to reachable private `backup`.
+
+### PMR-040 - XRV review of proposed architecture
+
+Start the XRV owner and provide analysis-workbook commit `a46dba2`:
+
+```sh
+cd /home/jmorris/src/beryllium-project/xrv-research-repo
+copilot
+```
+
+Ask the owner to review:
+
+- `../analysis-workbook/sessions/AWB-20260914-002-cheri-hypervisor-security-model/cheri-hypervisor-security-model.md`;
+- `../analysis-workbook/sessions/AWB-20260914-002-cheri-hypervisor-security-model/capability-resource-correspondence.md`;
+- `../analysis-workbook/sessions/AWB-20260914-002-cheri-hypervisor-security-model/helium-cheri-parity-plan.md`.
+
+Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
+with exact commit and paths. Do not select an implementation target, approve
+a comparator baseline, or push without a separate human decision.
+
 ## P3 housekeeping
 
 - **PMR-038:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
   use `/agent analysis-workbook` to mirror `CRQ-001` from `routed` to
   `completed` using closed `PMR-034` and XRV commit `d618935`, and refresh
   the related handoff wording. Preserve that completion is coordination
-  state, not source review or approval. Wait for the active untracked
-  `AWB-20260914-002-cheri-hypervisor-security-model` session to hand off
-  before this owner action.
+  state, not source review or approval. Also correct the stale "two
+  queue/surface" text, the handoff's "pending commit" sentence, and the
+  `PMQ-023` note's `PMR-014` reference to `PMR-041`. The security-model
+  session is now committed at `a46dba2`.
 - **PMR-004 and PMR-022:** the analysis-workbook and threat-modeler owners
   decide whether their owner-only `scripts/readonly-inspect.sh` target lists
   should add `project-manager` and `security-reviewer`; scripts are outside
@@ -144,9 +178,10 @@ input or authorize H0 work.
 
   Then run that component's `readonly-inspect.sh components` mode and
   maintained validation before committing with both request IDs.
-- **PMR-014:** `formal-verification-research` is available again. Its owner
-  may now triage the five earlier routed bibliography pointers plus the new
-  metadata-only `PMQ-021` pointer carried at `c55065c`.
+- **PMR-014:** the formal-verification owner triages the five original routed
+  bibliography pointers.
+- **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
+  pointers at `c55065c` and `784be93`.
 - **PMR-023:** the Beryllium owner decides whether its existing `origin` is
   the accepted off-workstation home or whether to add a reachable private
   backup. No local-only Beryllium commit is currently observed.
@@ -156,23 +191,8 @@ input or authorize H0 work.
   deliberately deferred; no security-reviewer write was attempted now.
 - **PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
-  `beryllium-project` repository as `origin`, and normalize the routed-pointer
-  heading and `PMQ-021` author style. This is deliberately deferred; no
-  formal-verification-research write was attempted now.
-
-### PMR-039 - XRV local work and active research
-
-Do not write or push `xrv-research-repo` while the reported deep-research
-session is active. After its owner return, re-run:
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/inspect-components.sh state xrv-research-repo
-bash ./scripts/inspect-components.sh refs xrv-research-repo d618935
-```
-
-Then review the complete outgoing owner work and decide whether to push
-`main` to reachable private `backup`.
+  `beryllium-project` repository as `origin`. The bibliography-format half
+  was carried at `784be93`.
 
 ## P4 source triage
 
@@ -212,22 +232,24 @@ bash ./scripts/owner-actions.sh
 The relevant local component commits are:
 
 - `analysis-workbook` `eab5f8b` (`PMR-031`);
-- `analysis-workbook` owner commits `4c771c0`, `62ee356` and carries
-  `8899176`, `0501243` (`PML-0018..0022`);
+- `analysis-workbook` owner commits `4c771c0`, `62ee356`, `a46dba2` and
+  carries `8899176`, `0501243`, `b93722b` (`PML-0018..0027`);
 - `xrv-research-repo` `706e708` is backed up on `backup/main`; owner commit
-  `d618935` is local one ahead and intentionally unpushed. The user reports
-  an active XRV deep-research session; do not push or write there until it
-  hands off;
-- `formal-verification-research` `c55065c` (`PMR-035`, `PML-0022`);
+  `d618935` is local one ahead and intentionally unpushed;
+- `formal-verification-research` `c55065c`, `784be93`
+  (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` `f4eb272` (`PMR-031`, stacked after owner commit
   `5bf6a4b`);
 - `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`).
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push
-`c55065c` by default. The owner must either push that commit through the
+`c55065c` or `784be93` by default. The owner must either push those commits through the
 component's own approved workflow or direct a later Project Manager change to
 retarget the helper; do not create a duplicate remote implicitly.
+
+XRV `d618935` remains pending the separate `PMR-039` decision. If running the
+general helper before that decision, skip `push_xrv` or answer `N`.
 
 The helper prompts before every push, skips dirty worktrees, never forces, and
 does not publish. Report its log path and result to the next Project Manager

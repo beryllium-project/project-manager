@@ -11,10 +11,10 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `COLLAB.md`, `HANDOFF.md`
-- **Observed state:** clean canonical direct checkout on `main` at `c55065c`,
-  one ahead of `origin/main` after the Project Manager's metadata-only
-  `PMR-035` / `PML-0022` carry. `PMR-024` is closed from observed topology;
-  no recreation was performed
+- **Observed state:** clean canonical direct checkout on `main` at `784be93`,
+  two ahead of `origin/main`. The latest Project Manager carry records
+  `PML-0024` and completes the bibliography-format half of `PMR-037`;
+  `PMR-024` remains closed
 
 ## Role
 
@@ -79,9 +79,11 @@ claim that Helium is formally verified.
   `sources/bibliography.md` section "Routed pointers awaiting owner triage",
   in the file's own entry format, never interleaved with the owner's curated
   topic sections; the owner moves, annotates, or removes them
-  (`PMD-20260904-004`). Five were recorded at `ccb48f6` (`PMR-008`), and a
-  sixth at `c55065c` (`PMR-035` / `PML-0022`). Heading and author-format
-  normalization is deferred as `PMR-037`.
+  (`PMD-20260904-004`). Five were recorded at `ccb48f6` (`PMR-008`), a sixth
+  at `c55065c` (`PMR-035` / `PML-0022`), and a seventh at `784be93`
+  (`PMR-042` / `PML-0024`). The heading and `PMQ-021` author format were normalized in
+  the same `784be93` carry; `PMR-037` remains open only for owner-maintained
+  remote/handoff wording.
 
 ## Commands
 
@@ -97,10 +99,12 @@ backup and pushed through the human-run
 `../scripts/owner-actions.sh --fvr-backup`; after relocation the restored
 clone uses that repository as `origin` and tracks `origin/main` (`PMR-037`
 requests corresponding owner-handoff refresh);
-triage of the six routed pointers (`PMR-014`, P3; the alignment of the
+triage of the five original routed pointers (`PMR-014`, P3) and the two later
+pointers (`PMR-041`, P3); the alignment of the
 owner-only `.github/copilot-instructions.md` bullet and `README.md` sentences
 with the carried `COLLAB.md` wording was applied by the owner at `e5740de` on
 2026-09-06 and pushed to `backup`). `PMR-012` and `PMR-008` were carried by the
 Project Manager itself on 2026-09-04 (`ccb48f6`) and `PMR-017` on 2026-09-05
 (`8246147`). `PMR-035` carried the metadata-only `PMQ-021` pointer at
-`c55065c`; it does not admit or validate the source.
+`c55065c`; `PMR-042` / `PML-0024` carried `PMQ-023` at `784be93`. Neither
+admits or validates a source.

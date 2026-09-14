@@ -16,8 +16,8 @@
   `706e708`. The old `origin/main` remains at `ca41490` in the unreachable
   namespace. `706e708` reconciles the missing intake history; `d618935` adds
   the owner-controlled collaboration interface and four new intake records.
-  The user reports an active deep-research session; no Project Manager write
-  or push is attempted until that session hands off
+  The responsible human reports the deep-research session complete; no
+  successor XRV commit is observed
 
 ## Role
 
@@ -58,4 +58,5 @@ The Project Manager may request owner review and disposition of
 owner-controlled collaboration protocol. Nothing authorizes the Project
 Manager to allocate or change review IDs, integrate guest branches, edit
 research, or push. Pushing local commit `d618935` to reachable `backup`
-remains a separate owner gate and waits for the active research session.
+remains a separate owner gate (`PMR-039`). `PMR-040` asks the XRV owner to
+review the proposed architecture in analysis-workbook commit `a46dba2`.
