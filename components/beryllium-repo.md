@@ -86,7 +86,10 @@ acceptance of any Beryllium target or work.
 
 The recorded target slug for a new private active GitHub home is
 `agentic-os-research/beryllium`, pending final responsible-human confirmation
-before creation (`PMD-20260914-003`, `PMR-043`). The current Microsoft
+before creation (`PMD-20260914-003`, `PMR-043`). The bounded local D0
+inventory is recorded in `PMD-20260914-004`; authenticated remote,
+authorship, licensing, and service-state verification remains `PMR-049`.
+The current Microsoft
 repository remains an inactive historical reference after the new home is
 verified. Repository creation, history push, remote changes, handoff updates,
 and any local symlink retarget are owner actions; none changes the acceptance

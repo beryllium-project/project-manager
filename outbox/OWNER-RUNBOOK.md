@@ -11,12 +11,13 @@ Before any repository write, confirm the worktree and active-session state;
 a clean tree alone is not permission. If another agent is active, coordinate
 through its handoff and wait for an explicit return.
 
-## First action: complete D0 and preserve local-only work
+## First action: verify D0 and preserve local-only work
 
-1. **PMR-047 - D0 transition inventory.** Before any organization rename,
-   repository creation, rehome, remote edit, symlink change, quarantine move,
-   or publication, record for every registered repository and every
-   additional Microsoft-origin repository named by the responsible human:
+1. **PMR-049 - authenticated D0 verification.** Review
+   `records/decisions/PMD-20260914-004-d0-transition-inventory.md`, which
+   closes the bounded local inventory `PMR-047`. From authenticated owner
+   views, replace each decision-relevant `unknown` and name any additional
+   Microsoft-origin repository in scope. For every repository, verify:
 
    - current and target active remote;
    - visibility and owning namespace;
@@ -29,9 +30,11 @@ through its handoff and wait for an explicit return.
    - Pages, Actions, packages, webhooks, and integrations;
    - quarantine boundary and target repository, using `unknown` until chosen.
 
-   Never inspect `osr-claude/sources/restricted-microsoft/`. Every Microsoft
-   repository remains an inactive reference after a verified successor is
-   active; do not push new work there.
+   Return facts without credentials, private URLs, serial numbers, or
+   restricted content. Never inspect
+   `osr-claude/sources/restricted-microsoft/` in a Project Manager session.
+   Every Microsoft repository remains an inactive reference after a verified
+   successor is active; do not push new work there.
 
 2. **PMR-028 - Threat-model package committed but not backed up.** The clean
    `threat-modeler/main` is two commits ahead of `origin/main`: owner commit
@@ -67,7 +70,7 @@ through its handoff and wait for an explicit return.
 
 ### Organization rename - responsible human
 
-After reviewing completed `PMR-047`, the organization owner may rename:
+After closing `PMR-049`, the organization owner may rename:
 
 ```text
 Agentic-OS-Development
@@ -84,7 +87,7 @@ be reused. Record the exact result before changing any repository remote.
 
 ### PMR-043 - Beryllium active rehome
 
-After D0 and the organization rename, create the private active home
+After `PMR-049` and the organization rename, create the private active home
 `agentic-os-research/beryllium`, verify the complete active branch history,
 and update the Beryllium owner handoff and remote. Keep the Microsoft
 repository unchanged as an inactive reference. `beryllium-repo` is
@@ -92,7 +95,7 @@ carry-ineligible; the Project Manager performs none of these actions.
 
 ### PMR-044 - OS-security rehome and quarantine
 
-First resolve `PMR-027`, complete D0, and rename the organization. Then use
+First resolve `PMR-027` and `PMR-049`, then rename the organization. Use
 the OS-security owner to design the active private
 `agentic-os-research/os-security-research` repository and a separate private
 quarantine repository visible only to the responsible human. Port the workflow
@@ -102,7 +105,7 @@ making the existing Git history public-safe.
 
 ### PMR-045 - CHERI hypervisor research identity
 
-After D0 and the organization rename, establish
+After `PMR-049` and the organization rename, establish
 `agentic-os-research/cheri-hypervisor-research`, preserving the full
 `REV-*` and `COLLAB.md` history. Keep the Microsoft-origin home inactive for
 reference. Retargeting the tracked local symlink requires a later exact human
@@ -110,7 +113,7 @@ direction after the active repository and checkout are verified.
 
 ### PMR-046 - CHERI-RISC-V SoK home
 
-After `PMR-029`, D0, and the organization rename, establish
+After `PMR-029`, `PMR-049`, and the organization rename, establish
 `agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
 `sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
 inactive reference. No public or Pages action occurs until licensing,
@@ -118,7 +121,7 @@ authorship, corpus-integrity, and public-mirror gates close.
 
 ### PMR-048 - Project Manager tasking pilot
 
-After D0, the Project Manager designs generated
+`PMR-047` is closed, so the Project Manager may now design generated
 `outbox/tasking/<component>.md` views from the authoritative request table and
 pilots the resolver with one direct checkout and one real symlink target. The
 human UX target is:
@@ -317,7 +320,7 @@ The relevant local component commits are:
 - `analysis-workbook` owner commits `4c771c0`, `62ee356`, `a46dba2` and
   carries `8899176`, `0501243`, `b93722b` (`PML-0018..0027`);
 - `xrv-research-repo` `706e708` is backed up on `backup/main`; owner commit
-  `d618935` is local one ahead and intentionally unpushed;
+  `d618935` is local one ahead, unpushed pending `PMR-039`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` `f4eb272` (`PMR-031`, stacked after owner commit

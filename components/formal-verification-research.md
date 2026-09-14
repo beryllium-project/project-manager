@@ -16,7 +16,9 @@
   `PML-0024` and completes the bibliography-format half of `PMR-037`;
   `PMR-024` remains closed. `PMD-20260914-003` keeps the component
   independent and mixed for now; its future organization namespace is
-  deliberately `unknown` pending D0
+  deliberately `unknown`. `PMD-20260914-004` records the bounded local D0
+  inventory; authenticated namespace, service, authorship, licensing, and
+  publicability verification remains `PMR-049`
 
 ## Role
 

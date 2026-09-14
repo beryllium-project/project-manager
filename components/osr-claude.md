@@ -54,6 +54,9 @@ remote is a personal account rather than the organization).
 
 The approved target identity is
 `agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`).
+The bounded local D0 inventory is recorded in `PMD-20260914-004`;
+authenticated service, licensing, authorship, and quarantine details remain
+`PMR-049`.
 The active owner workflow is to become tool-neutral and Copilot-capable after
 D0. The old
 repository remains an inactive reference. Its current history stays private;

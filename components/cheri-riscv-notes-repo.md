@@ -12,12 +12,11 @@
   request-only (`PMR-009`)
 - **Agent:** none
 - **Local instructions to read first:** `README.md`, `CONTRIBUTING.md`,
-  `meta/handoff.md` (non-standard handoff path; records the reference
-  database, gate D4, CRLF and commit-trailer conventions), `automation/design.md`,
+  `meta/handoff.md` (non-standard handoff path), `automation/design.md`,
   `automation/schema.md`, and the `.github/` policy files; no
   `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`'s hand-add
-  reference steps contradict `meta/handoff.md`; the stricter handoff is
-  followed
+  reference steps and older D4/database wording must be reconciled against
+  the current uncommitted handoff through the owning session
 - **Observed state:** dirty `docs/reconcile-project-status` at `6553092`,
   with no upstream and 21 changed entries (19 modified tracked paths plus
   untracked `.github/workflows/` and
@@ -56,9 +55,11 @@ maintained command.
 ## What the Project Manager may request
 
 Human-gated inclusion of routed sources (`PMR-009`, P4: the reference database
-is a SQLite store in a Copilot session on another machine, so the two
-`PMQ-008`/`PMQ-011` pointers are entered there; exact metadata in
-`../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
+workflow has changed across owner handoffs; the current uncommitted handoff
+says no SQLite database is committed and any temporary database must
+reconcile to `references/references.bib`, so the two
+`PMQ-008`/`PMQ-011` pointers remain owner-only pending `PMR-029`; exact
+metadata is in `../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
 public mirror; and, since 2026-09-06, a decision on how this workstation
 authenticates to `origin` (`PMR-020`, P2: the human-run
 `../scripts/owner-actions.sh` fetch failed with an authentication error on
@@ -67,7 +68,10 @@ worktree is now dirty on the no-upstream topic branch under `PMR-029`).
 
 The approved future active home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug
-(`PMD-20260914-003`, `PMR-046`). The `sok/` artifact is branded the
+(`PMD-20260914-003`, `PMR-046`). The bounded local D0 inventory is
+`PMD-20260914-004`; authenticated service state and the unresolved
+licensing/authorship/publicability fields remain `PMR-049`. The `sok/`
+artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 current branch, license, authorship, public-mirror, and corpus-integrity gates
 close. The existing internal repository then remains an inactive reference;
