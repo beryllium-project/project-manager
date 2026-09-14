@@ -79,7 +79,7 @@ security-significant seam, none is adopted as an entry criterion, design
 constraint, evidence requirement, or exit criterion, and no Beryllium
 authorization changes
 (`../records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`;
-`PMR-016` closed; the mirror is `PMR-019`). No Beryllium-owned artifact
+`PMR-016` and mirror request `PMR-019` are closed). No Beryllium-owned artifact
 records the triage (read-only text search at `65f6d89`); if the owner later
 writes one, a superseding Project Manager record cites it. This is not
 acceptance of any Beryllium target or work.

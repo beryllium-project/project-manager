@@ -14,6 +14,7 @@ agent as trusted configuration.
 
 The agent runs a coordination turn: it re-resolves the canonical topology,
 inspects every registered component read-only, pulls the component queues,
+catches component owner returns from their own handoffs,
 carries recorded requests into components only within the standing carry
 authority, reconciles the registry and handoff, validates, commits its own
 artifacts, and ends with what the user should review and one exact next
@@ -37,6 +38,30 @@ the parent root. The compatibility redirect `../HANDOFF.md` remains. The
 former `../formal-verification/` redirect files were removed at parent commit
 `4a91f7f` and retired by the responsible human in `PMD-20260912-001`;
 current assurance records live under `records/assurance/`.
+
+## Bidirectional agent coordination
+
+The coordination model is pull-based (`PMD-20260914-002`):
+
+- component owners return completed, partial, or blocked `PMR`/`PML` work in
+  a structured `Project Manager return` section of their component-owned
+  handoff document, using `templates/owner-return.md`;
+- the Project Manager checks changed component HEADs and open-request owners
+  on startup, verifies exact commits and paths, then reconciles its records;
+- the Project Manager posts work through `outbox/component-requests.md`,
+  `components/<component>.md`, and `outbox/OWNER-RUNBOOK.md`; and
+- component agents receive those exact rows and their card before owner work
+  begins.
+
+No agent writes another repository merely to deliver a message. Request
+closure is the acknowledgement; a distinct follow-up receives a new request
+identifier. The existing handoffs and request ledger are sufficient at the
+current scale, so there is no second generic returns queue.
+
+Every repository write also requires a fresh coordination check. The acting
+agent checks worktree state and active-session evidence first; user reports,
+handoffs, dirty state, and active session artifacts all block concurrent
+writes. A clean tree alone is not a lock grant.
 
 ## Safety boundary
 
@@ -98,6 +123,7 @@ queue/LEDGER.md                              ledger-first dispositions of compon
 outbox/component-requests.md                 requests to component owners, each with a priority; three classes carried by the agent
 outbox/OWNER-RUNBOOK.md                      open items by priority with exact human steps (refreshed each turn)
 outbox/owner-edits/                          exact text of the recorded owner-side edits applied by the human-run helper
+templates/owner-return.md                    component HANDOFF return shape for PMR/PML owner results
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
 templates/                                   record and row templates

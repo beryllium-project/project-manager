@@ -117,6 +117,23 @@ Requests to component owners are recorded in `outbox/component-requests.md`;
 those inside the three classes are carried by the Project Manager, every
 other request is carried by the human.
 
+Component-to-Project-Manager returns are pull-based
+(`records/decisions/PMD-20260914-002-owner-return-pull-protocol.md`).
+Component agents record exact `PMR`/`PML` results, commits, validation, backup
+state, and requested PM action in the component-owned handoff document named
+by its card, using `templates/owner-return.md`; they do not write this
+repository. On startup, verify returns from every drifted component and every
+component named by an open request before closing anything. The PM posts work
+through `outbox/component-requests.md`, component cards, and
+`outbox/OWNER-RUNBOOK.md`; request closure is acknowledgement, and a distinct
+follow-up gets a new identifier.
+
+Before writing any repository, check current worktree state and active-session
+signals. User statements, component handoffs, owner-return notes, dirty state,
+and active session artifacts are coordination locks; a clean worktree alone
+does not grant permission. Wait or coordinate with the active session rather
+than writing concurrently.
+
 ## Records and identifiers
 
 - Decision records: `records/decisions/PMD-YYYYMMDD-NNN-<slug>.md`, allocated

@@ -67,7 +67,11 @@ research, analysis, threat models, provenance findings, or human decisions.
 3. List every difference between the observed state and what `HANDOFF.md`
    and `../COMPONENTS.md` record. A difference is a drift to reconcile, never
    a reason to touch a component worktree.
-4. If a recorded path has disappeared, stop using it and record the fact. Do
+4. For every drifted component and every component named by an open
+   `PMR-NNN`, inspect the component-owned handoff document named by its card
+   for a `Project Manager return` section. Treat it as owner evidence to
+   verify, not automatic closure (`PMD-20260914-002`).
+5. If a recorded path has disappeared, stop using it and record the fact. Do
    not run `git init`, clone, copy, or recover anything.
 
 ## Phase 2: ownership and scope
@@ -82,6 +86,11 @@ research, analysis, threat models, provenance findings, or human decisions.
 3. Use `ask_user` for any action whose ownership, scope, or gate status is
    unclear. Do not infer human decisions from branch tips, commit messages,
    handoffs, or clean worktrees.
+4. Before any repository write, check its worktree and active-session
+   signals. User statements, handoffs, owner-return notes, dirty state, and
+   active session artifacts are coordination locks. A clean worktree alone
+   is not permission to write. Wait or coordinate with the active owner
+   session before proceeding.
 
 ## Phase 3: inspect
 
@@ -95,6 +104,10 @@ research, analysis, threat models, provenance findings, or human decisions.
    its `.github/copilot-instructions.md`, `AGENT-INTERFACE.md`, and
    `RESEARCH-SOURCES.md`, to learn what the component now expects of the
    Project Manager.
+5. For each owner return, verify the related `PMR-NNN`/`PML-NNNN`, exact
+   component commit and paths, validation summary, and current branch/backup
+   state. A user-relayed note is input; close nothing until component evidence
+   agrees.
 
 ## Phase 4: queues (ledger-first)
 
@@ -176,6 +189,10 @@ Everything outside the three classes, and everything in `helium-te-poc/` or
    set (files, script table rows, commit-message case) of every recorded
    edit whose owner commit is observed this turn, whether or not its request
    closes.
+6. Treat request closure with exact owner evidence as acknowledgement of a
+   component return. If the completed work creates a separate mirror or
+   housekeeping action, allocate a new `PMR-NNN`; never reopen or silently
+   expand the closed request.
 
 ## Phase 6: audit
 

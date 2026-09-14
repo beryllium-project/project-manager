@@ -93,9 +93,16 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 ## Coordination turn
 
 1. Restart: run `scripts/inspect-components.sh status`; compare with
-   `HANDOFF.md` and `../COMPONENTS.md`; note every drift.
+   `HANDOFF.md` and `../COMPONENTS.md`; note every drift. For every drifted
+   component and every component named by an open `PMR-NNN`, inspect the
+   component-owned handoff document named by its card for a structured
+   `Project Manager return` and verify the named evidence before closure
+   (`PMD-20260914-002`).
 2. Ownership: treat every component as agent-owned; use `ask_user` before any
-   action whose ownership is unclear.
+   action whose ownership is unclear. Before any repository write, check
+   worktree state plus user, handoff, owner-return, and active-session
+   signals; a clean tree alone is not permission, and an active session blocks
+   concurrent writing.
 3. Inspect: `scripts/inspect-components.sh components`, `symlinks`, and
    `registry-check`.
 4. Queues: `scripts/pull-queues.sh list`; add a `PML-NNNN` ledger row for every
@@ -110,6 +117,8 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
    `AGENT-ROSTER.md` with observed state, including the moved HEAD of every
    component written this turn. Record decisions with
    `scripts/new-record.sh decision <slug>`; raise owner requests as `PMR-NNN`.
+   Closing a request acknowledges a verified owner return; allocate a new
+   request for a distinct downstream mirror or housekeeping action.
 7. Audit: delegate to `pm-auditor` with the exact observed state, the
    artifact list, and every carried commit; reconcile its discrepancies; it
    decides nothing.

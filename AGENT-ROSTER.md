@@ -11,12 +11,26 @@ Each agent component is an independent Git repository. Invoke an agent by
 starting Copilot CLI in that directory and selecting the agent, or by loading
 the directory with `/add-dir <directory>` from the parent root.
 
+Before owner work begins, provide the agent its current card under
+`project-manager/components/` and every open row naming it in
+`project-manager/outbox/component-requests.md`. When returning owner work, the agent uses `templates/owner-return.md` to add a
+structured `Project Manager return` section to the component-owned handoff
+document named by its card, with exact request IDs, commit and paths,
+validation, backup state, and requested PM action. The Project Manager pulls
+and verifies that return on startup; neither agent writes the other's
+repository (`PMD-20260914-002`).
+
+Before any listed agent writes, it checks the target repository's worktree
+and active-session signals. User statements and handoffs can establish an
+active session even when Git is clean; concurrent writes wait for an explicit
+handoff.
+
 ## Agent components
 
 | Component | User-invocable agent | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
 | `project-manager/` | `project-manager` | `pm-auditor` (read, search) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
-| `analysis-workbook/` | `analysis-workbook` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and `outbox/collaboration-requests.md` (`CRQ-NNN`, maintainer-mirrored pending `PMR-036`) | Own repository only |
+| `analysis-workbook/` | `analysis-workbook` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only |
 | `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
 | `security-reviewer/` | `security-reviewer` | `security-evidence` (read, search); `security-research` (read, search, web); `security-finding-review` (read, search) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; the only target execution is a command the user approves by exact text, run through `scripts/run-approved-command.sh` with retained, hashed evidence |
 | `provenance-review/` | `provenance-review` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
@@ -53,11 +67,11 @@ A session begins in a planning phase and enters analysis only on explicit
 confirmation. No component command runs unless the user approves that exact
 command by name for the session.
 
-Commit `4c771c0` adds a third `CRQ-NNN` collaboration-request interface.
-`PMD-20260914-001` treats it as read-only to the Project Manager: the
-maintainer mirrors status from exact Project Manager or owner records unless
-the responsible human explicitly expands class 1. `PMR-036` records the
-owner-side contract correction.
+Commit `4c771c0` adds a third `CRQ-NNN` collaboration-request interface;
+owner commit `62ee356` makes the maintainer its status writer and mirrors
+`CRQ-001` as `routed`. `PMD-20260914-001` keeps it read-only to the Project
+Manager; `PMR-038` requests the completion mirror after verified XRV commit
+`d618935`.
 
 ### threat-modeler
 
@@ -119,7 +133,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` (`PMR-035`) | none configured | Owner |
 | `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md` | `tools/md-to-html.sh --check` | Owner's Claude agent |
 | `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
-| `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `review-log.md` | none configured | Owner |
+| `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md` | none configured | Owner |
 
 ## Orchestration rules
 

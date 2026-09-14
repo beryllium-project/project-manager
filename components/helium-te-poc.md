@@ -74,7 +74,7 @@ Manager as the analysis workbook's `HET-001` (`PMR-016`, closed 2026-09-05
 when the responsible human, acting as the Beryllium owner, triaged it;
 `../records/decisions/PMD-20260905-002-het-001-owner-triage-recorded.md`
 records the lifecycle disposition `recorded`, planning inputs only, and
-`PMR-019` asks the workbook maintainer to mirror it).
+`PMR-019` is closed after the workbook mirror and handoff refresh).
 
 ## Boundaries and conventions
 

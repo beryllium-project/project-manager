@@ -12,10 +12,11 @@
   skill `beryllium-analysis`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at `8899176`, three commits ahead of
-  `origin/main`; owner commit `4c771c0` contains two completed analysis
-  sessions, five new source rows, and the collaboration-request interface;
-  Project Manager carry `8899176` applies `PML-0022`
+- **Observed state:** dirty `main` at `0501243`, five commits ahead of
+  `origin/main`; owner commit `62ee356` corrects CRQ ownership and handoff
+  state, Project Manager carry `0501243` applies `PML-0018..0021`, and
+  untracked `sessions/AWB-20260914-002-cheri-hypervisor-security-model/`
+  marks an active owner session
 
 ## Role
 
@@ -72,18 +73,18 @@ topic and chronology in the generated `WORKBOOK.md`.
   own `validate-helium-transfer-queue.sh --baseline` passed) the queue shows
   `HET-001` `recorded`, with `routed` and `recorded` history rows dated
   2026-09-06 citing `PMR-016` and `PMD-20260905-002`, `ACTIVITY-002`, and the
-  input state still `unaccepted`; the component's `HANDOFF.md` prose still
-  says `new` (the remaining part of `PMR-019`, P3).
+  input state still `unaccepted`. Owner commit `62ee356` aligns the handoff;
+  `PMR-019` is closed.
   Since `PMD-20260905-001`, the Project Manager
   registers this queue for read-only tracking in `../queue/LEDGER.md` and
   `../scripts/pull-queues.sh`; it never edits that file because class 1
   covers only `outbox/pm-queue.md`.
 - Owner commit `4c771c0` adds a third pull interface,
   `outbox/collaboration-requests.md`, and `CRQ-001` for an XRV collaboration
-  protocol. `PMD-20260914-001` accepts the three-lane design as owner-ready
-  but records that the Project Manager has no class-1 authority to edit this
-  new queue. `CRQ-001` is routed as `PMR-034`; `PMR-036` asks the maintainer
-  to correct the status-writer contract and mirror the routed state.
+  protocol. Owner commit `62ee356` assigns status mirroring to the maintainer
+  and mirrors `CRQ-001` as `routed`; `PMR-036` is closed. XRV owner commit
+  `d618935` completes the requested interface, so `PMR-038` asks the
+  maintainer for the derived `completed` mirror.
 - Backup: the owner pushed `main` to private `origin` on 2026-09-05
   (`efde667..ff12f2f`) and 2026-09-06 (`ff12f2f..d003dec`) through the
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
@@ -104,10 +105,14 @@ component is clean (first done at `83b97a3`: fourteen rows). The separate
 tracking, but the PM never edits it; the workbook maintainer mirrors transfer
 lifecycle changes from exact owner-side records.
 
-The proposed collaboration queue is not part of the standing class-1 carry
-authority. Until the responsible human explicitly changes that authority, it
-is read-only to the Project Manager and its maintainer mirrors exact
-coordination outcomes.
+The collaboration queue is not part of the standing class-1 carry authority.
+It is read-only to the Project Manager and its maintainer mirrors exact
+coordination outcomes. `PMQ-017..020` were accepted after XRV intake and the
+class-1 edits were carried at `0501243`.
+
+The active `AWB-20260914-002-cheri-hypervisor-security-model` session has
+added `PMQ-022..026`. They are ledgered as `PML-0023..0027` with status
+`pending`; owner-index checks and triage wait for the session's stable return.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 
@@ -124,13 +129,10 @@ git diff --check
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
 part was carried at `83b97a3`; P3, exact edit in `../outbox/OWNER-RUNBOOK.md`);
-the `HET-001` lifecycle mirror (`PMR-019`: the table mirror was applied by
-the maintainer at `d003dec` on 2026-09-06 through the human-run
-`../scripts/owner-actions.sh --apply-edits`, after its own
-`scripts/validate-helium-transfer-queue.sh --baseline` passed; the request
-stays open, P3, for the `HANDOFF.md` sentences that still call `HET-001`
-`new`, which the maintainer refreshes in its own words); nothing that treats a
-session as review or acceptance. `PMR-015` (the ledger in the source-discovery reference set)
+the CRQ-001 completion mirror (`PMR-038`, request-only because the queue is
+outside class 1 and blocked until the active session hands off); nothing that
+treats a session as review or acceptance.
+`PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"
 above).

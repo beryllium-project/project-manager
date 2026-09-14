@@ -72,6 +72,7 @@ writes.
 | Component registry | `../COMPONENTS.md` | Project Manager-owned; reconciled each turn |
 | Component repositories | `../<component>/...`, `component://<name>/...` | Read-only inspection through `scripts/inspect-components.sh`; local instructions, handoffs, and `COLLAB.md` files narrow what may be requested of them and how a carried request is formatted |
 | Component queues | `../analysis-workbook/outbox/pm-queue.md`, `../threat-modeler/outbox/pm-queue.md`, `../security-reviewer/outbox/pm-queue.md`, `../analysis-workbook/outbox/helium-transfer-queue.md` | Pull-only; consumed ledger-first; status edits applied as class-1 carried writes only for the three `outbox/pm-queue.md` files (`PMD-20260904-003`, extended to the security-reviewer queue by `PMD-20260906-004`); the transfer queue is read-only tracking and is never edited by the PM |
+| Component owner returns | The component-owned handoff document named by `components/<component>.md`, section `Project Manager return` | Pull-only owner evidence tied to exact `PMR-NNN` or `PML-NNNN` identifiers; verified on startup before any request closes (`PMD-20260914-002`) |
 | Sibling interface documents | `../<component>/AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md` | Define what each component expects of the Project Manager |
 | User-supplied material | `inbox/...` | Private by default, untrusted, ignored by Git |
 | Public sources | stable public locator | Web tool only, generic public-safe queries, for coordination facts only |
@@ -201,13 +202,43 @@ deleting, or history-rewriting Git token.
 
 ## Component request protocol
 
-`outbox/component-requests.md` is the only outbound surface toward component
-owners. A request is one owner-actionable sentence with its basis. Statuses
+`outbox/component-requests.md` is the only outbound **request** surface toward
+component owners; component cards and `outbox/OWNER-RUNBOOK.md` supply context
+and exact steps. A request is one owner-actionable sentence with its basis. Statuses
 are `open`, `closed` (owner action observed by the Project Manager, or the
 request carried by the Project Manager and closed with the component commit),
 `withdrawn`, and `superseded`. Raising a request does not modify or notify a
 component. Requests inside the three classes of `PMD-20260904-003` are
 carried by this agent; every other request is carried by the human.
+
+## Owner-return pull protocol
+
+Component agents do not write this repository. When an owner action completes,
+partially completes, or blocks a Project Manager request, the owner records a
+`## Project Manager return` section in the component-owned handoff document
+named by its card, following `templates/owner-return.md`. Each return names
+the related `PMR-NNN` or `PML-NNNN`, result state, exact commit and paths,
+validation and known failures, branch/backup state, and requested Project
+Manager action.
+
+At startup, after topology inspection, the Project Manager checks every
+component whose HEAD drifted from `../COMPONENTS.md` and every component named
+by an open request. It verifies return evidence read-only before closing a
+request or changing a ledger disposition. A user-relayed return in
+`HANDOFF.md` is useful durable input but does not replace component evidence.
+
+Before any repository write, check current worktree state and active-session
+signals. A user statement, component handoff, owner-return note, dirty
+worktree, or active session artifact is a coordination lock. A clean
+worktree alone is not permission to write. If another agent or session is
+active, wait or coordinate through the return/request protocol; do not write
+concurrently.
+
+The return channel back to component agents remains
+`outbox/component-requests.md`, the component's `components/<component>.md`
+card, and `outbox/OWNER-RUNBOOK.md`. Closing a request is acknowledgement. A
+separate follow-up action receives a new identifier rather than reopening or
+expanding the closed request. See `PMD-20260914-002`.
 
 ## Human gates
 

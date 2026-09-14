@@ -10,21 +10,22 @@
   wording
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
-  `HANDOFF.md`, `review-log.md`
-- **Observed state:** the relocated symlink resolves to the clean canonical
-  repository on `main` at `ca41490`, 0 behind / 0 ahead of `origin/main` as
-  of the last fetch. That remote remains in the unreachable
-  `jamorris_microsoft` namespace, so live backup state is unknown. The
-  previously recorded commit `7314e2f` is absent from this repository, and
-  its `review-log.md` lacks the nine `REV-20260904-001..009` rows
-  (`PMR-025`)
+  `HANDOFF.md`, `COLLAB.md`, `review-log.md`
+- **Observed state:** the symlink resolves to the clean canonical repository
+  on `main` at `d618935`, one ahead of reachable private `backup/main` at
+  `706e708`. The old `origin/main` remains at `ca41490` in the unreachable
+  namespace. `706e708` reconciles the missing intake history; `d618935` adds
+  the owner-controlled collaboration interface and four new intake records.
+  The user reports an active deep-research session; no Project Manager write
+  or push is attempted until that session hands off
 
 ## Role
 
 Private CHERI-first hypervisor survey. It separates incoming material,
 reviewed material, and durable provenance through `review-inbox/`,
-`review-done/`, and `review-log.md`. Reviewed non-CHERI comparisons include
-Supervisor Domain Isolation / SmMTT.
+`review-done/`, and `review-log.md`. Root `COLLAB.md` separately records
+completed downstream consumption; it is not source intake. Reviewed
+non-CHERI comparisons include Supervisor Domain Isolation / SmMTT.
 
 ## Boundaries and conventions
 
@@ -33,6 +34,15 @@ Supervisor Domain Isolation / SmMTT.
   remain visibly distinct.
 - Preserve the stable review IDs, status values, provenance history, and
   deletion rules in `review-log.md`.
+- Historical IDs `REV-20260904-001..009` remain reserved. Their pointers are
+  currently materialized as `REV-20260914-001..009` at `706e708`; this is a
+  reconciliation, not identifier reuse or a reversal of historical ledger
+  dispositions.
+- `PMQ-017..020` are pointer-only `arrived` records
+  `REV-20260914-010..013` at `d618935`, pending owner review as non-CHERI
+  comparisons.
+- Guest agents follow the exact append-only budget in `COLLAB.md`; only the
+  XRV owner integrates a `collab/*` branch.
 - Update `HANDOFF.md` before every push from that repository and include the
   update in the pushed change set.
 
@@ -42,13 +52,10 @@ No configured build, test, or lint toolchain.
 
 ## What the Project Manager may request
 
-Reconciliation of the nine source-intake records formerly observed at
-`7314e2f` (`PMR-025`, P1), including a reachable backup decision for any
-restored or replacement records, then ordinary review-queue intake of routed
-sources. The current canonical repository's remote-tracking `origin/main` is
-present at `ca41490`, but live reachability is unknown; the former backup
-request `PMR-013` is superseded by the combined missing-record and backup
-reconciliation. Nothing here authorizes the Project Manager to invent, reuse,
-or change owner review IDs. After `PMR-025`, `PMR-034` asks the owner to decide
-the proposed root `COLLAB.md` interface and, if accepted, triage
-`PMQ-017..020`; the proposal is not yet owner-accepted.
+`PMR-025` and `PMR-034` are closed by owner commits `706e708` and `d618935`.
+The Project Manager may request owner review and disposition of
+`REV-20260914-001..013` or report completed-use feedback through the
+owner-controlled collaboration protocol. Nothing authorizes the Project
+Manager to allocate or change review IDs, integrate guest branches, edit
+research, or push. Pushing local commit `d618935` to reachable `backup`
+remains a separate owner gate and waits for the active research session.

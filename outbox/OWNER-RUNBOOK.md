@@ -7,56 +7,15 @@
 The Project Manager does not execute this file's commands, run component
 validation, modify carry-ineligible components, or push any repository.
 Review each component's own handoff and diff before acting.
+Before any repository write, confirm the worktree and active-session state;
+a clean tree alone is not permission. If another agent is active, coordinate
+through its handoff and wait for an explicit return.
 
 ## First action: preserve current local-only work
 
-Four current states have the highest coordination or data-loss exposure:
+Two current states have the highest data-loss exposure:
 
-1. **PMR-025 - XRV intake records unavailable.** The canonical
-   `xrv-research-repo` is clean at `ca41490` and 0/0 against its
-   last-fetched `origin/main`, but that remote remains in the unreachable
-   namespace. The formerly observed `7314e2f` and its nine
-   `REV-20260904-001..009` records are absent. Locate an existing clone or
-   backup that already contains that commit, or instruct the XRV owner to
-   re-record the nine pointers without reusing identifiers, then establish a
-   reachable backup. Do not recreate a checkout at a former workspace path.
-   Verify any candidate repository with:
-
-   ```sh
-   git -C <existing-candidate-repository> cat-file -e \
-     7314e2f^{commit}
-   git -C <existing-candidate-repository> show --stat --oneline 7314e2f
-   ```
-
-   Then tell the Project Manager the canonical path or owner disposition.
-
-   After that reconciliation, review `PMR-034` and the owner-ready proposal:
-
-   ```sh
-   cd /home/jmorris/src/beryllium-project/xrv-research-repo
-   copilot
-   ```
-
-   The owner decides whether to add root `COLLAB.md` and related owner
-   wording, then allocates non-conflicting IDs for `PMQ-017..020`. No push is
-   implied.
-
-2. **PMR-036 - analysis-workbook collaboration contract.** The clean
-   `analysis-workbook/main` is at `8899176`, three ahead of `origin/main`.
-   Owner commit `4c771c0` assigns CRQ status writes to the Project Manager,
-   but current class 1 does not cover
-   `outbox/collaboration-requests.md` or `.github/copilot-instructions.md`.
-   Through the workbook owner, change those documents so the maintainer
-   mirrors exact PM or owner records, then mirror `CRQ-001` as `routed` from
-   `PMR-034` and run the component's maintained validation:
-
-   ```sh
-   cd /home/jmorris/src/beryllium-project/analysis-workbook
-   copilot
-   # then: /agent analysis-workbook
-   ```
-
-3. **PMR-028 - Threat-model package committed but not backed up.** The clean
+1. **PMR-028 - Threat-model package committed but not backed up.** The clean
    `threat-modeler/main` is two commits ahead of `origin/main`: owner commit
    `5bf6a4b` contains the complete private, paused
    `TM-20260911-001-helium-te-poc-astra` package, and Project Manager carry
@@ -71,7 +30,7 @@ Four current states have the highest coordination or data-loss exposure:
    # then: /agent threat-model-maintainer
    ```
 
-4. **PMR-029 - CHERI notes topic work is uncommitted.** The active
+2. **PMR-029 - CHERI notes topic work is uncommitted.** The active
    `docs/reconcile-project-status` worktree has 21 changed entries and no
    upstream. Continue in the owning session; review and validate before
    committing:
@@ -80,20 +39,13 @@ Four current states have the highest coordination or data-loss exposure:
    cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo
    git status --short --branch
    git diff --check
-   node automation/validate-corpus.mjs
+   node automation/validate-corpus.mjs  # uncommitted validator on this topic branch
    ```
 
    Do not run a Project Manager carry or source-pointer triage there until
    the owner reports the work committed, intentionally parked, or discarded.
 
 ## P2 coordination blockers
-
-### PMR-034 - XRV collaboration and new intake
-
-After `PMR-025` is complete, use the XRV owner session described in the first
-action to decide the owner-ready `COLLAB.md` proposal and triage
-`PMQ-017..020`. The owner must preserve the existing source-intake workflow
-and allocate non-conflicting review IDs.
 
 ### PMR-026 - Helium checkout and handoff disagree
 
@@ -169,9 +121,13 @@ input or authorize H0 work.
 
 ## P3 housekeeping
 
-- **PMR-019:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
-  use `/agent analysis-workbook` to refresh `HANDOFF.md` so HET-001 is
-  `recorded` while its input state remains `unaccepted`.
+- **PMR-038:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
+  use `/agent analysis-workbook` to mirror `CRQ-001` from `routed` to
+  `completed` using closed `PMR-034` and XRV commit `d618935`, and refresh
+  the related handoff wording. Preserve that completion is coordination
+  state, not source review or approval. Wait for the active untracked
+  `AWB-20260914-002-cheri-hypervisor-security-model` session to hand off
+  before this owner action.
 - **PMR-004 and PMR-022:** the analysis-workbook and threat-modeler owners
   decide whether their owner-only `scripts/readonly-inspect.sh` target lists
   should add `project-manager` and `security-reviewer`; scripts are outside
@@ -196,13 +152,27 @@ input or authorize H0 work.
   backup. No local-only Beryllium commit is currently observed.
 - **PMR-033:** in the next Project Manager turn, or through the component
   owner, clarify `security-reviewer/HANDOFF.md` so the `9ca5071` 0/0 statement
-  is explicitly pre-carry and current `main` is `c13c36e`, one ahead. This
-  turn cannot make a second component commit.
+  is explicitly pre-carry and current `main` is `c13c36e`, one ahead. This is
+  deliberately deferred; no security-reviewer write was attempted now.
 - **PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`, and normalize the routed-pointer
-  heading and `PMQ-021` author style. This turn already used the one allowed
-  Project Manager carry commit there.
+  heading and `PMQ-021` author style. This is deliberately deferred; no
+  formal-verification-research write was attempted now.
+
+### PMR-039 - XRV local work and active research
+
+Do not write or push `xrv-research-repo` while the reported deep-research
+session is active. After its owner return, re-run:
+
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/inspect-components.sh state xrv-research-repo
+bash ./scripts/inspect-components.sh refs xrv-research-repo d618935
+```
+
+Then review the complete outgoing owner work and decide whether to push
+`main` to reachable private `backup`.
 
 ## P4 source triage
 
@@ -242,7 +212,12 @@ bash ./scripts/owner-actions.sh
 The relevant local component commits are:
 
 - `analysis-workbook` `eab5f8b` (`PMR-031`);
-- `analysis-workbook` owner `4c771c0` and carry `8899176` (`PML-0022`);
+- `analysis-workbook` owner commits `4c771c0`, `62ee356` and carries
+  `8899176`, `0501243` (`PML-0018..0022`);
+- `xrv-research-repo` `706e708` is backed up on `backup/main`; owner commit
+  `d618935` is local one ahead and intentionally unpushed. The user reports
+  an active XRV deep-research session; do not push or write there until it
+  hands off;
 - `formal-verification-research` `c55065c` (`PMR-035`, `PML-0022`);
 - `threat-modeler` `f4eb272` (`PMR-031`, stacked after owner commit
   `5bf6a4b`);
