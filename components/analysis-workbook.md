@@ -5,18 +5,20 @@
 - **Ownership:** agent-owned; its agents write only inside that component; the
   Project Manager writes here only to carry requests under the standing carry
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md` (class 1: status edits in `outbox/pm-queue.md`; class 3:
-  Project Manager-role wording in `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`),
-  committing inside this component; nothing else
+  Project Manager-role wording in Markdown interface, collaboration,
+  research-source, and handoff documents, including `AGENT-INTERFACE.md`,
+  `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing inside this component;
+  nothing else
 - **Agents:** `analysis-workbook` (user-invocable orchestrator),
   `analysis-evidence` and `analysis-research` (write-disabled specialists);
   skill `beryllium-analysis`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at `b93722b`, seven commits ahead of
-  `origin/main`; owner commit `a46dba2` adds the completed CHERI hypervisor
-  security-model session, and Project Manager carry `b93722b` applies
-  `PML-0023..0027`. `PMD-20260914-003` keeps this Be-specific workbench
-  separate; its future organization placement is not yet decided
+- **Observed state:** clean `main` at owner commit `2374115`, eight commits
+  ahead of `origin/main`. It adds `CRQ-002`, mirrors `CRQ-001` as completed,
+  and partially completes `PMR-038`; Project Manager carry `b93722b` remains
+  its parent. `PMD-20260915-001` keeps this Be-specific workbench under
+  `beryllium-project` for now
 
 ## Role
 
@@ -83,8 +85,9 @@ topic and chronology in the generated `WORKBOOK.md`.
   `outbox/collaboration-requests.md`, and `CRQ-001` for an XRV collaboration
   protocol. Owner commit `62ee356` assigns status mirroring to the maintainer
   and mirrors `CRQ-001` as `routed`; `PMR-036` is closed. XRV owner commit
-  `d618935` completes the requested interface, so `PMR-038` asks the
-  maintainer for the derived `completed` mirror.
+  `d618935` completes the requested interface, and the maintainer mirrored
+  `CRQ-001` as `completed` at `2374115`; `PMR-038` remains open for residual
+  interface/handoff wording and the structured return.
 - Backup: the owner pushed `main` to private `origin` on 2026-09-05
   (`efde667..ff12f2f`) and 2026-09-06 (`ff12f2f..d003dec`) through the
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
@@ -116,6 +119,16 @@ Owner commit `a46dba2` completes
 `PML-0024` is accepted at formal-verification commit `784be93`; all five
 source statuses were applied at `b93722b`.
 
+Owner commit `2374115` mirrors `CRQ-001` as `completed`, corrects the
+`PMQ-023` triage request, and adds `CRQ-002` plus its successor-first
+coordination packet. `PMD-20260915-004` pulls `CRQ-002` and routes the three
+owner stages as `PMR-052..PMR-054`; `PMR-055` requests its derived `routed`
+mirror and correction of the packet's stale `OPEN-001` reference to current
+`OPEN-003`. `PMR-038` remains open because `AGENT-INTERFACE.md` still says
+the outbox has two surfaces, `HANDOFF.md` still calls the clean committed
+update uncommitted, and no structured Project Manager return names the
+partial result.
+
 ## Commands (run by the human, from `../analysis-workbook/`)
 
 ```sh
@@ -131,9 +144,12 @@ git diff --check
 A new analysis session on a named aspect; registration of `project-manager/`
 in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
 part was carried at `83b97a3`; P3, exact edit in `../outbox/OWNER-RUNBOOK.md`);
-the CRQ-001 completion mirror and stale interface/handoff wording correction
-(`PMR-038`, request-only because the queue is outside class 1); nothing that
-treats a session as review or acceptance.
+the remaining stale interface/handoff wording and structured return under
+`PMR-038`; the `CRQ-002` routed mirror and stale open-ID correction under
+`PMR-055`; and, only after `PMR-052` and `PMR-053` return, the bounded
+cap-talk follow-up inquiry under `PMR-054`. These are request-only because the
+collaboration queue and analysis content are outside class 1. Nothing treats
+a session as review or acceptance.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

@@ -9,8 +9,10 @@
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`
   (class 1: status edits in `outbox/pm-queue.md`, extended to this file by
   `../records/decisions/PMD-20260906-004-class-1-extended-to-security-reviewer-queue.md`;
-  class 3: Project Manager-role wording in `AGENT-INTERFACE.md`,
-  `RESEARCH-SOURCES.md`), committing inside this component; nothing else
+  class 3: Project Manager-role wording in Markdown interface,
+  collaboration, research-source, and handoff documents, including
+  `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing
+  inside this component; nothing else
 - **Agents:** `security-reviewer` (user-invocable orchestrator,
   `claude-fable-5.1`), `security-evidence`, `security-research`, and
   `security-finding-review` (write-disabled specialists); skill
@@ -18,14 +20,16 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at `c13c36e`, one commit ahead of
-  `origin/main`; the Project Manager's class-3 carry closes `PMR-030` and
-  `PMR-031` by refreshing only registration, backup, and current
-  assurance-pointer wording. No engagement has run. `PMR-033` records that
-  the carried handoff's `9ca5071` synchronization sentence is explicitly a
-  pre-carry observation and needs a next-turn wording correction.
+- **Observed state:** clean `main` at `3a40583`, two commits ahead of
+  `origin/main`; the latest Project Manager class-3 carry closes `PMR-033` by
+  distinguishing the pre-carry synchronized `9ca5071` state from carried
+  `c13c36e`. The earlier carry closes `PMR-030` and `PMR-031` by refreshing
+  only registration, backup, and current assurance-pointer wording. No
+  engagement has run.
   `PMD-20260914-003` keeps this independent review component separate; its
-  future organization placement is not yet decided
+  placement remains under `beryllium-project` for now under
+  `PMD-20260915-001`. `PMR-056` tracks the handoff's post-carry current-HEAD,
+  date, and coordination-update refresh
 
 ## Role
 

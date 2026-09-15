@@ -81,7 +81,11 @@ Commit `4c771c0` adds a third `CRQ-NNN` collaboration-request interface;
 owner commit `62ee356` makes the maintainer its status writer and mirrors
 `CRQ-001` as `routed`. `PMD-20260914-001` keeps it read-only to the Project
 Manager; `PMR-038` requests the completion mirror after verified XRV commit
-`d618935`.
+`d618935`. Owner commit `2374115` mirrors `CRQ-001` as `completed`, adds
+`CRQ-002`, and partially completes `PMR-038`.
+`PMD-20260915-004` records successor-first handling for `CRQ-002`;
+`PMR-052..PMR-054` are the three sequenced owner tasks and `PMR-055` is the
+workbook's derived routed-status and stale-open-ID correction.
 
 ### threat-modeler
 
@@ -140,7 +144,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | --- | --- | --- | --- |
 | `helium-te-poc/` | skill `helium-documentation`; `.github/copilot-instructions.md`; `HANDOFF.md` | `./he check`, `./he test`, `./he fv-check`, `./he docs-check`, `./he evaluate` | Human or the Helium line's own agent session |
 | `beryllium-repo` | skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or the Beryllium owner's agent session |
-| `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` (`PMR-035`) | none configured | Owner |
+| `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` (`PMR-035`) and `784be93` (`PMR-037`, `PMR-042`, `PML-0024`) | none configured | Owner |
 | `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md` | `tools/md-to-html.sh --check` | Owner's Claude agent |
 | `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
 | `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md` | none configured | Owner |

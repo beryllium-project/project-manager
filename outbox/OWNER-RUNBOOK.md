@@ -20,11 +20,41 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: Beryllium active rehome
+## First action: reconcile the OS-security checkout
 
 The responsible human reports that the organization rename to
 `agentic-os-research` succeeded (`PMD-20260915-003`). No repository was
-created or moved by that action.
+created or moved by that action. Complete `PMR-027` first because it blocks
+the OS-security successor and the successor-first `CRQ-002` sequence:
+
+```sh
+cd /home/jmorris/src/beryllium-project/osr-claude
+git status --short --branch
+git pull --ff-only origin main
+tools/md-to-html.sh --check
+```
+
+If the older checkout is intentional, do not pull; report that owner decision
+instead. The Project Manager asks before any OS-security write and never opens
+`sources/restricted-microsoft/`.
+
+## CRQ-002 successor-first sequence
+
+`PMD-20260915-004` records the responsible human's `successor-first`
+selection. It is sequencing only and authorizes no repository or source
+operation.
+
+| Order | Priority | Request | Required result |
+| --- | --- | --- | --- |
+| 1 | P2 | `PMR-027` | Reconcile local OS-security `main` at `f2edd17` with `origin/main` at `e275544`, or record why the older state is intentional. |
+| 2 | P2 | `PMR-044`, `PMR-045` | Establish and verify the private OS-security and XRV successor homes and executable owner workflows; keep old homes inactive. |
+| 3 | P2 | `PMR-052` | OS-security identifies and inspects, or precisely bounds as inaccessible, the public post-March-2016 cap-talk continuation. |
+| 4 | P3 | `PMR-053` | XRV reviews only materially relevant returned threads through its owner intake lifecycle. |
+| 5 | P3 | `PMR-054` | Analysis-workbook adds the revision-bound follow-up inquiry and states whether Q-001 through Q-004 change. |
+
+`PMR-055` is independent immediate workbook housekeeping: mirror `CRQ-002`
+as `routed`, replace the packet's stale `OPEN-001` instruction with current
+`OPEN-003`, and mark the superseded `OPEN-001` question row consistently.
 
 ## P2 repository actions and blockers
 
@@ -54,7 +84,8 @@ treat moving current files as making the existing Git history public-safe.
 Establish `agentic-os-research/cheri-hypervisor-research`, preserving the full
 `REV-*` and `COLLAB.md` history. Keep the Microsoft-origin home inactive for
 reference. Retargeting the tracked local symlink requires a later exact human
-direction after the active repository and checkout are verified.
+direction after the active repository and checkout are verified. Under
+`PMD-20260915-004`, verify this successor before `PMR-052` begins.
 
 ### PMR-046 - CHERI-RISC-V SoK home
 
@@ -158,13 +189,13 @@ a comparator baseline, or push without a separate human decision.
 ## P3 housekeeping
 
 - **PMR-038:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
-  use `/agent analysis-workbook` to mirror `CRQ-001` from `routed` to
-  `completed` using closed `PMR-034` and XRV commit `d618935`, and refresh
-  the related handoff wording. Preserve that completion is coordination
-  state, not source review or approval. Also correct the stale "two
-  queue/surface" text, the handoff's "pending commit" sentence, and the
-  `PMQ-023` note's `PMR-014` reference to `PMR-041`. The security-model
-  session is now committed at `a46dba2`.
+  use `/agent analysis-workbook` to finish the partial owner result at
+  `2374115`: change the remaining `AGENT-INTERFACE.md` sentence that says the
+  outbox contains two surfaces, reconcile `HANDOFF.md` with the clean
+  committed `2374115` state, and append the structured Project Manager
+  return. The `CRQ-001` completion mirror and `PMQ-023` reference correction
+  are already present. Preserve that completion is coordination state, not
+  source review or approval.
 - **PMR-004 and PMR-050:** threat-modeler completed both registrations at
   synchronized owner commit `c4126b6` and threat-owned `PMR-022` is closed.
   The analysis-workbook owner decides whether its owner-only
@@ -192,14 +223,19 @@ a comparator baseline, or push without a separate human decision.
   hosted workflow-run state (or `unknown`), and add the structured Project
   Manager return with exact validation. No merge to `main` or remote workflow
   run is required.
-- **PMR-033:** in the next Project Manager turn, or through the component
-  owner, clarify `security-reviewer/HANDOFF.md` so the `9ca5071` 0/0 statement
-  is explicitly pre-carry and current `main` is `c13c36e`, one ahead. This is
-  deliberately deferred; no security-reviewer write was attempted now.
 - **PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`. The bibliography-format half
   was carried at `784be93`.
+- **PMR-055:** in the same analysis-workbook owner session as `PMR-038` if
+  convenient, mirror `CRQ-002` to `routed` from `PMD-20260915-004` and
+  `PMR-052..PMR-054`, and change the execution packet's stale `OPEN-001`
+  instruction to current `OPEN-003`; mark the already-superseded `OPEN-001`
+  row `Superseded`. Keep the two request IDs distinct in the owner return.
+- **PMR-056:** in the next clean, inactive security-reviewer owner or Project
+  Manager carry turn, refresh `HANDOFF.md` to current `3a40583`, two ahead of
+  `origin/main`, update its date, and name `PMR-033` in the coordination
+  update. A second security-reviewer commit is not made in this turn.
 
 ## Additional P3 source triage
 
@@ -240,14 +276,16 @@ The relevant local component commits are:
 
 - `analysis-workbook` `eab5f8b` (`PMR-031`);
 - `analysis-workbook` owner commits `4c771c0`, `62ee356`, `a46dba2` and
-  carries `8899176`, `0501243`, `b93722b` (`PML-0018..0027`);
+  carries `8899176`, `0501243`, `b93722b` (`PML-0018..0027`), followed by
+  owner commit `2374115` (CRQ-002 and partial `PMR-038`);
 - `xrv-research-repo` `706e708` is backed up on `backup/main`; owner commit
   `d618935` is local one ahead, unpushed pending `PMR-039`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` is already backed up through synchronized owner maintenance
   `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
-- `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`).
+- `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`) and `3a40583`
+  (`PMR-033`).
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push
