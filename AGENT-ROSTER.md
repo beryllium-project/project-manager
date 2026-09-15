@@ -142,7 +142,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `beryllium-repo` | skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or the Beryllium owner's agent session |
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` (`PMR-035`) | none configured | Owner |
 | `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md` | `tools/md-to-html.sh --check` | Owner's Claude agent |
-| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
+| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
 | `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md` | none configured | Owner |
 
 ## Orchestration rules

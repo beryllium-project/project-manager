@@ -5,31 +5,33 @@
 - **Ownership:** internal GIM research repository; agent-owned; the Project
   Manager maintains the parent symlink object and writes here only to carry a
   class-3 Project Manager-role wording request under the standing carry
-  authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`. Class 2 does not apply: `references/*.md` and
-  `references.bib` are generated exports of the owner's reference database
-  behind human gate D4 (`meta/handoff.md`: never hand-edit; approval before
-  anything reaches `included`/`references.bib`), so source pointers stay
-  request-only (`PMR-009`)
+  authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`.
+  At `ae09213`, `references/references.bib` is the durable canonical
+  inventory and `references/*.md` are curated views; class 2 has a
+  hand-editable target, but owner gate D4 requires explicit human approval
+  before a reference enters the canonical inventory, so `PMR-009` remains an
+  owner triage request
 - **Agent:** none
 - **Local instructions to read first:** `README.md`, `CONTRIBUTING.md`,
   `meta/handoff.md` (non-standard handoff path), `automation/design.md`,
   `automation/schema.md`, and the `.github/` policy files; no
-  `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`'s hand-add
-  reference steps and older D4/database wording must be reconciled against
-  the current uncommitted handoff through the owning session
-- **Observed state:** dirty `docs/reconcile-project-status` at `6553092`,
-  with no upstream and 21 changed entries (19 modified tracked paths plus
-  untracked `.github/workflows/` and
-  `automation/validate-corpus.mjs`). The component handoff identifies this as
-  an active 2026-09-11 integrity pass (`PMR-029`); the Project Manager leaves
-  it untouched
+  `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`,
+  `meta/decisions.md`, and `meta/handoff.md` are reconciled at `ae09213`
+- **Observed state:** clean `docs/reconcile-project-status` at owner commit
+  `ae09213`, synchronized 0/0 with
+  `origin/docs/reconcile-project-status`. The commit preserves the former 21
+  changed entries, including the corpus validator and workflow; `PMR-029` and
+  remote-access request `PMR-020` are closed. `main` / `origin/main` remain at
+  `6553092`. The committed handoff/status still describe the pre-push topic
+  state (`PMR-051`)
 
 ## Role
 
 Internal CHERI / CHERI-RISC-V knowledge base and SoK corpus. The in-repo
 `wiki/` tree is the source of truth for the generated GitHub Wiki;
-`references/references.bib` and the annotated reference indexes are generated
-exports of the research corpus.
+`references/references.bib` is the complete durable canonical citation
+inventory; the annotated reference indexes are curated views and need not be
+one-to-one with it.
 
 ## Boundaries and conventions
 
@@ -37,8 +39,10 @@ exports of the research corpus.
   in maintained pages.
 - Every non-obvious factual claim carries a stable citekey with primary-source
   verification. Unverifiable sources are marked `[UNVERIFIED]` and tracked.
-- Do not hand-edit generated bibliography exports. Automation cannot promote a
-  reference to the included corpus without human approval.
+- Keep shared citekeys and metadata synchronized between
+  `references/references.bib` and any curated view containing the same
+  reference. Automation cannot accept a reference into the canonical
+  inventory without human approval.
 - The repository is internal, not public; licensing is unresolved. Follow its
   public-mirror checklist before any public distribution.
 
@@ -48,23 +52,25 @@ exports of the research corpus.
 node automation/build-wiki.mjs ../wiki-build <owner>/<repo>
 ```
 
-The current dirty topic branch introduces a dependency-free corpus validator,
-but it is not yet committed and therefore is not registered here as a durable
-maintained command.
+The topic branch adds a dependency-free corpus validator as a committed
+maintained command:
+
+```sh
+node automation/validate-corpus.mjs
+```
 
 ## What the Project Manager may request
 
 Human-gated inclusion of routed sources (`PMR-009`, P4: the reference database
-workflow has changed across owner handoffs; the current uncommitted handoff
-says no SQLite database is committed and any temporary database must
-reconcile to `references/references.bib`, so the two
-`PMQ-008`/`PMQ-011` pointers remain owner-only pending `PMR-029`; exact
+workflow is BibTeX-first at `ae09213`; no SQLite database is committed and any
+temporary database must reconcile to `references/references.bib`. The two
+`PMQ-008`/`PMQ-011` pointers require the owner's D4 admission decision before
+any class-2 metadata entry; exact
 metadata is in `../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
-public mirror; and, since 2026-09-06, a decision on how this workstation
-authenticates to `origin` (`PMR-020`, P2: the human-run
-`../scripts/owner-actions.sh` fetch failed with an authentication error on
-2026-09-05 and 2026-09-06, so the live backup state is `unknown`; the
-worktree is now dirty on the no-upstream topic branch under `PMR-029`).
+public mirror; and reconciliation of the committed handoff/status with the
+now-synchronized topic branch (`PMR-051`). Topic backup is evidenced by the
+matching remote-tracking ref at `ae09213`; the authentication mechanism
+remains `unknown` (`PMR-020` closed on the observed backup result).
 
 The approved future active home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug
@@ -73,6 +79,6 @@ The approved future active home is
 `PMD-20260915-001`. No repository is public-approved now. The `sok/`
 artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
-current branch, license, authorship, public-mirror, and corpus-integrity gates
+license, authorship, public-mirror, and corpus-integrity gates
 close. The existing internal repository then remains an inactive reference;
 no symlink or remote changes occur before owner verification.

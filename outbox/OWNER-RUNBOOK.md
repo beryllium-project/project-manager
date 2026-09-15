@@ -20,26 +20,7 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: preserve local-only work
-
-1. **PMR-029 - CHERI notes topic work is uncommitted.** The active
-   `docs/reconcile-project-status` worktree has 21 changed entries and no
-   upstream. Continue in the owning session; review and validate before
-   committing:
-
-   ```sh
-   cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo
-   git status --short --branch
-   git diff --check
-   node automation/validate-corpus.mjs  # uncommitted validator on this topic branch
-   ```
-
-   Do not run a Project Manager carry or source-pointer triage there until
-   the owner reports the work committed, intentionally parked, or discarded.
-
-## P2 coordination blockers
-
-### Organization rename - responsible human
+## First action: organization rename
 
 The owner inventory is closed by `PMD-20260915-001`. The organization owner
 may now rename:
@@ -56,6 +37,8 @@ Confirm the target name in the authenticated form immediately before the
 rename. GitHub redirects repository links after an organization rename, but
 the old organization profile/API name does not redirect and the old name can
 be reused. Record the exact result before changing any repository remote.
+
+## P2 coordination blockers
 
 ### PMR-043 - Beryllium active rehome
 
@@ -87,7 +70,7 @@ direction after the active repository and checkout are verified.
 
 ### PMR-046 - CHERI-RISC-V SoK home
 
-After `PMR-029` and the organization rename, establish
+After the organization rename, establish
 `agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
 `sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
 inactive reference. No public or Pages action occurs until licensing,
@@ -136,19 +119,6 @@ copilot
 
 Preserve: R0-R7 accepted; R8-H0 not accepted; H1-H4 unauthorized; K3
 hardware `NOT RUN`.
-
-### PMR-020 - CHERI notes remote verification
-
-After `PMR-029` is resolved, verify the current internal `origin` using the
-owner's credentials:
-
-```sh
-cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo
-git fetch origin
-git status --short --branch
-```
-
-Report whether the remote is reachable and the topic branch's backup state.
 
 ### PMR-032 - Verify the reappeared retained artifacts
 
@@ -229,6 +199,12 @@ a comparator baseline, or push without a separate human decision.
   bibliography pointers.
 - **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
   pointers at `c55065c` and `784be93`.
+- **PMR-051:** in `cheri-riscv-notes-repo`, refresh `meta/handoff.md` and
+  `meta/status.md` to state that topic commit `ae09213` is committed and
+  synchronized with `origin/docs/reconcile-project-status`, report the actual
+  hosted workflow-run state (or `unknown`), and add the structured Project
+  Manager return with exact validation. No merge to `main` or remote workflow
+  run is required.
 - **PMR-033:** in the next Project Manager turn, or through the component
   owner, clarify `security-reviewer/HANDOFF.md` so the `9ca5071` 0/0 statement
   is explicitly pre-carry and current `main` is `c13c36e`, one ahead. This is
@@ -238,10 +214,10 @@ a comparator baseline, or push without a separate human decision.
   `beryllium-project` repository as `origin`. The bibliography-format half
   was carried at `784be93`.
 
-## P4 source triage
+## Additional P3 source triage
 
-- **PMR-009:** after `PMR-029`, the CHERI notes owner decides whether to
-  record analysis-workbook rows `PMQ-008` (Rowhammer/PTE privilege
+- **PMR-009:** the CHERI notes owner decides whether to record
+  analysis-workbook rows `PMQ-008` (Rowhammer/PTE privilege
   escalation) and `PMQ-011` (Starbleed). The current queue rows remain
   `new`; ledger rows `PML-0008` and `PML-0011` remain `routed`. Use these
   metadata-only pointers under the component's current human inclusion gate:
