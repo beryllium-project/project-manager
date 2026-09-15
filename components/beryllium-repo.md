@@ -84,11 +84,12 @@ records the triage (read-only text search at `65f6d89`); if the owner later
 writes one, a superseding Project Manager record cites it. This is not
 acceptance of any Beryllium target or work.
 
-The recorded target slug for a new private active GitHub home is
-`agentic-os-research/beryllium`, pending final responsible-human confirmation
-before creation (`PMD-20260914-003`, `PMR-043`). The bounded local D0
+The confirmed target for a new private active GitHub home is
+`agentic-os-research/beryllium` (`PMD-20260914-003`, confirmed by
+`PMD-20260915-001`; `PMR-043`). The bounded local D0
 inventory is recorded in `PMD-20260914-004`; authenticated remote,
-authorship, licensing, and service-state verification remains `PMR-049`.
+authorship, licensing, and service-state owner inventory is closed by
+`PMD-20260915-001` / `PMR-049`. Every successor starts private.
 The current Microsoft
 repository remains an inactive historical reference after the new home is
 verified. Repository creation, history push, remote changes, handoff updates,

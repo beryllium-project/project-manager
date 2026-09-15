@@ -69,8 +69,8 @@ worktree is now dirty on the no-upstream topic branch under `PMR-029`).
 The approved future active home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug
 (`PMD-20260914-003`, `PMR-046`). The bounded local D0 inventory is
-`PMD-20260914-004`; authenticated service state and the unresolved
-licensing/authorship/publicability fields remain `PMR-049`. The `sok/`
+`PMD-20260914-004`; the guided owner inventory closes `PMR-049` in
+`PMD-20260915-001`. No repository is public-approved now. The `sok/`
 artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 current branch, license, authorship, public-mirror, and corpus-integrity gates

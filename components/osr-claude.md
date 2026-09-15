@@ -55,8 +55,10 @@ remote is a personal account rather than the organization).
 The approved target identity is
 `agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`).
 The bounded local D0 inventory is recorded in `PMD-20260914-004`;
-authenticated service, licensing, authorship, and quarantine details remain
-`PMR-049`.
+the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`.
+The separate private quarantine target is the responsible human's personal
+`os-security-restricted-sources` repository with clean new history and manual
+human transfer.
 The active owner workflow is to become tool-neutral and Copilot-capable after
 D0. The old
 repository remains an inactive reference. Its current history stays private;

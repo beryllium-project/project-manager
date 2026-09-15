@@ -65,6 +65,16 @@ It must use `/beryllium-project-management` for every coordination turn.
 Specialist returns are inputs. The orchestrator verifies them, decides, and
 writes.
 
+## Human interaction
+
+Human intake follows `PMD-20260915-002`. When a human-owned decision can be
+decomposed, the Project Manager asks one short structured question at a time,
+carries prior answers forward, offers a safe recommended default plus
+exception or defer choice, and prepares large tables or machine-shaped records
+itself. If the human is unavailable, it preserves partial intake and reports
+the next unanswered question. This presentation rule never transfers or
+weakens a human gate.
+
 ## Inputs
 
 | Input | Locator form | Authority and handling |

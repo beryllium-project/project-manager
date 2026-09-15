@@ -275,6 +275,11 @@ for f in "$agent" "$instructions" "$skill" "$interface" "$readme"; do
     require_prose "$f" 'ledger-first|Ledger-first'
 done
 
+for f in "$agent" "$instructions" "$skill" "$interface" "$readme"; do
+    require_text "$f" 'PMD-20260915-002'
+    require_prose "$f" 'one short .*question at a time'
+done
+
 require_text "$auditor" 'You never edit, execute, run Git, use the web'
 require_text "$auditor" 'not decisions, dispositions, or'
 require_text "$readme" '/agent project-manager'

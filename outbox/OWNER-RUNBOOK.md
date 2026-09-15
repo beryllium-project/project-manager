@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-14
+**Last refreshed:** 2026-09-15
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -20,32 +20,9 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: verify D0 and preserve local-only work
+## First actions: preserve local-only work
 
-1. **PMR-049 - authenticated D0 verification.** Review
-   `records/decisions/PMD-20260914-004-d0-transition-inventory.md`, which
-   closes the bounded local inventory `PMR-047`. From authenticated owner
-   views, replace each decision-relevant `unknown` and name any additional
-   Microsoft-origin repository in scope. For every repository, verify:
-
-   - current and target active remote;
-   - visibility and owning namespace;
-   - authorship context (`personal`, `employer`, or `unknown`);
-   - third-party license and redistribution state;
-   - publicability class;
-   - active branch, clean/active-session state, and backup state;
-   - old-name/path/API references;
-   - Wiki, tags/releases, issues/discussions;
-   - Pages, Actions, packages, webhooks, and integrations;
-   - quarantine boundary and target repository, using `unknown` until chosen.
-
-   Return facts without credentials, private URLs, serial numbers, or
-   restricted content. Never inspect
-   `osr-claude/sources/restricted-microsoft/` in a Project Manager session.
-   Every Microsoft repository remains an inactive reference after a verified
-   successor is active; do not push new work there.
-
-2. **PMR-028 - Threat-model package committed but not backed up.** The clean
+1. **PMR-028 - Threat-model package committed but not backed up.** The clean
    `threat-modeler/main` is two commits ahead of `origin/main`: owner commit
    `5bf6a4b` contains the complete private, paused
    `TM-20260911-001-helium-te-poc-astra` package, and Project Manager carry
@@ -60,7 +37,7 @@ The command fails rather than showing stale or unreachable tasking.
    # then: /agent threat-model-maintainer
    ```
 
-3. **PMR-029 - CHERI notes topic work is uncommitted.** The active
+2. **PMR-029 - CHERI notes topic work is uncommitted.** The active
    `docs/reconcile-project-status` worktree has 21 changed entries and no
    upstream. Continue in the owning session; review and validate before
    committing:
@@ -79,7 +56,8 @@ The command fails rather than showing stale or unreachable tasking.
 
 ### Organization rename - responsible human
 
-After closing `PMR-049`, the organization owner may rename:
+The owner inventory is closed by `PMD-20260915-001`. The organization owner
+may now rename:
 
 ```text
 Agentic-OS-Development
@@ -96,7 +74,7 @@ be reused. Record the exact result before changing any repository remote.
 
 ### PMR-043 - Beryllium active rehome
 
-After `PMR-049` and the organization rename, create the private active home
+After the organization rename, create the private active home
 `agentic-os-research/beryllium`, verify the complete active branch history,
 and update the Beryllium owner handoff and remote. Keep the Microsoft
 repository unchanged as an inactive reference. `beryllium-repo` is
@@ -104,17 +82,19 @@ carry-ineligible; the Project Manager performs none of these actions.
 
 ### PMR-044 - OS-security rehome and quarantine
 
-First resolve `PMR-027` and `PMR-049`, then rename the organization. Use
-the OS-security owner to design the active private
+After `PMR-027` and the organization rename, use the OS-security owner to
+design the active private
 `agentic-os-research/os-security-research` repository and a separate private
-quarantine repository visible only to the responsible human. Port the workflow
-to tool-neutral Copilot instructions. Do not open or copy the restricted
-subtree in a Project Manager session. Do not treat moving current files as
-making the existing Git history public-safe.
+quarantine repository `os-security-restricted-sources` in the responsible
+human's personal account. It starts with clean new history; the responsible
+human manually reviews and copies restricted files with their license
+metadata. Port the active workflow to tool-neutral Copilot instructions. Do
+not open or copy the restricted subtree in a Project Manager session. Do not
+treat moving current files as making the existing Git history public-safe.
 
 ### PMR-045 - CHERI hypervisor research identity
 
-After `PMR-049` and the organization rename, establish
+After the organization rename, establish
 `agentic-os-research/cheri-hypervisor-research`, preserving the full
 `REV-*` and `COLLAB.md` history. Keep the Microsoft-origin home inactive for
 reference. Retargeting the tracked local symlink requires a later exact human
@@ -122,7 +102,7 @@ direction after the active repository and checkout are verified.
 
 ### PMR-046 - CHERI-RISC-V SoK home
 
-After `PMR-029`, `PMR-049`, and the organization rename, establish
+After `PMR-029` and the organization rename, establish
 `agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
 `sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
 inactive reference. No public or Pages action occurs until licensing,

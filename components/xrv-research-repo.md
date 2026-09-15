@@ -67,7 +67,7 @@ After D0, the approved active identity is
 a historical name. It is not an alias unless the owner later chooses a
 GitHub rename or transfer rather than the default new-active-repository
 mechanism. The bounded local D0 inventory is `PMD-20260914-004`;
-authenticated service, authorship, licensing, and publicability verification
-remains `PMR-049`. Microsoft-origin repository state remains an inactive historical
+the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`, and
+the successor starts private. Microsoft-origin repository state remains an inactive historical
 reference. The current local path and tracked symlink do not move without a
 later explicit target-specific direction.

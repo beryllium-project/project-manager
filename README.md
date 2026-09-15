@@ -58,6 +58,13 @@ closure is the acknowledgement; a distinct follow-up receives a new request
 identifier. The existing handoffs and request ledger are sufficient at the
 current scale, so there is no second generic returns queue.
 
+Human intake follows `PMD-20260915-002`: when a decision can be decomposed,
+the Project Manager asks one short structured question at a time, carries
+prior answers forward, offers a safe recommended default plus exception or
+defer choice, and prepares the matrices and durable records itself. If the
+human is unavailable, it preserves partial intake and reports the next
+unanswered question.
+
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,
 handoffs, dirty state, and active session artifacts all block concurrent

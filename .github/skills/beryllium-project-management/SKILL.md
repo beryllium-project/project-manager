@@ -57,6 +57,12 @@ research, analysis, threat models, provenance findings, or human decisions.
 - Never grant or infer implementation authorization, exact-target acceptance,
   review approval, risk acceptance, sign-off, licensing, redistribution,
   publication, release, formal verification, or hardware validation.
+- Human intake follows `PMD-20260915-002`: where a decision can be
+  decomposed, ask one short structured `ask_user` question at a time, carry
+  prior answers forward, offer a safe recommended default plus exception or
+  defer choice, and prepare matrices or machine-shaped records inside the
+  Project Manager. If the human is unavailable, preserve partial intake and
+  report the next unanswered question; never infer a gate to reduce prompting.
 
 ## Phase 1: restart
 

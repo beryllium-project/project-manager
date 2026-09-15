@@ -15,10 +15,9 @@
   two ahead of `origin/main`. The latest Project Manager carry records
   `PML-0024` and completes the bibliography-format half of `PMR-037`;
   `PMR-024` remains closed. `PMD-20260914-003` keeps the component
-  independent and mixed for now; its future organization namespace is
-  deliberately `unknown`. `PMD-20260914-004` records the bounded local D0
-  inventory; authenticated namespace, service, authorship, licensing, and
-  publicability verification remains `PMR-049`
+  independent and mixed for now. `PMD-20260914-004` records the bounded local
+  D0 inventory; `PMD-20260915-001` closes the guided owner inventory and
+  retains the current `beryllium-project` placement for now
 
 ## Role
 

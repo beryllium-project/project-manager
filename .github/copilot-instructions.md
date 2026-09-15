@@ -93,6 +93,13 @@ owner's decision.
 Use `/agent project-manager` for user-facing work. The orchestrator must use
 the `/beryllium-project-management` skill for every coordination turn.
 
+Human intake follows `records/decisions/PMD-20260915-002-guided-human-intake.md`.
+Use `ask_user` for one short structured question at a time where appropriate,
+carry prior answers forward, offer a safe recommended default plus exception
+or defer choice, and prepare large tables, templates, and machine-shaped
+records yourself. If the human is unavailable, preserve partial intake and
+report the next unanswered question. Never infer a gate for convenience.
+
 `pm-auditor` is write-disabled (read and search only). It compares the
 registry, handoff, roster, ledger, and requests with live component state and
 sibling interface documents, checks every carried request against its named
