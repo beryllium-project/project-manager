@@ -20,14 +20,13 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at `12fd9fb`, three commits ahead of
-  `origin/main`; the latest Project Manager class-3 carry closes `PMR-056`
-  after `PMR-033` at `3a40583`. The earlier carries close `PMR-030` and
-  `PMR-031`. No engagement has run.
+- **Observed state:** clean `main` at `79c664f`, four commits ahead of
+  `origin/main`; the latest Project Manager class-3 carry closes `PMR-060`.
+  Earlier carries close `PMR-030`, `PMR-031`, `PMR-033`, and `PMR-056`. No
+  engagement has run.
   `PMD-20260914-003` keeps this independent review component separate; its
   placement remains under `beryllium-project` for now under
-  `PMD-20260915-001`. `PMR-060` tracks stable post-refresh handoff wording
-  without another self-stale "current HEAD" claim
+  `PMD-20260915-001`
 
 ## Role
 
@@ -120,7 +119,7 @@ git diff --check
   (owner-only; scripts are outside every carry class).
 - Project Manager-role and coordination wording changes in
   `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, or `HANDOFF.md` (class 3,
-  carried). `PMR-060` is the next stable historical-wording refresh.
+  carried).
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
   step `push_sr` fast-forwards `main -> origin`; the remote was created and
   first pushed on 2026-09-06, `PMR-021` closed).

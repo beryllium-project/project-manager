@@ -20,39 +20,26 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: finish the Beryllium successor checkout
+## First action: back up the Beryllium return commits
 
-The responsible human manually pushed private
-`beryllium-project/beryllium-hypervisor`, selected it to replace the prior
-Beryllium target, and retained `beryllium/single-hart-runtime-r0` as the
-active branch (`PMD-20260915-005`). The canonical checkout is currently dirty
-on placeholder `main` at `a7809db`; do not delete or clean its untracked
-`build/` and `node_modules/` automatically.
+`PMR-057` is complete at clean owner return `f05ccb3`. The active/default
+branch and private successor are reconciled, and the ignored owner artifacts
+were preserved. The two return commits remain local and need owner review
+before backup (`PMR-061`).
 
 ```sh
 cd /home/jmorris/src/beryllium-project/beryllium-repo
 git status --short --branch
-git switch beryllium/single-hart-runtime-r0
-git status --short --branch
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
-copilot
+git log --oneline \
+  origin/beryllium/single-hart-runtime-r0..beryllium/single-hart-runtime-r0
+git diff --stat \
+  origin/beryllium/single-hart-runtime-r0..beryllium/single-hart-runtime-r0
+git push origin beryllium/single-hart-runtime-r0
 ```
 
-If `git switch` refuses because an untracked path conflicts, stop; do not
-force, clean, or delete it. Otherwise tell the owner: `complete PMR-057`. It
-must preserve or disposition the untracked artifacts, verify complete
-synchronized history in the private successor, retain the Microsoft remote
-as inactive, update `planning/HANDOFF.md`, run the branch's maintained
-validation, and append the structured Project Manager return. The responsible
-human selected the active/default branch in this turn; set the GitHub default
-branch with:
-
-```sh
-gh repo edit beryllium-project/beryllium-hypervisor \
-  --default-branch beryllium/single-hart-runtime-r0
-```
-
-`PMR-003` and `PMR-043` are superseded by this request.
+Push only to private `origin`, never inactive `msft-downstream`. Report the
+resulting synchronized state. This is private backup, not acceptance,
+publication, or release.
 
 ## CRQ-002 successor-first sequence
 
@@ -74,12 +61,11 @@ as `routed`, replace the packet's stale `OPEN-001` instruction with current
 
 ## P2 repository actions and blockers
 
-### PMR-057 - Beryllium successor reconciliation
+### PMR-061 - Beryllium return-commit backup
 
-The private repository creation and manual push are recorded, but the current
-checkout is not yet usable as the implementation restart point. Complete the
-first-action block above. Do not treat placeholder `main`, a synchronized ref,
-or the push as acceptance of any Beryllium stage.
+Review and push owner commits `3221231` and `f05ccb3` using the first-action
+block above. The active branch is already restored and the default branch is
+already recorded by the owner return.
 
 ### PMR-044 - OS-security rehome and quarantine
 
@@ -214,31 +200,14 @@ a comparator baseline, or push without a separate human decision.
   `PMR-052..PMR-054`, and change the execution packet's stale `OPEN-001`
   instruction to current `OPEN-003`; mark the already-superseded `OPEN-001`
   row `Superseded`. Keep the two request IDs distinct in the owner return.
-- **PMR-060:** in the next clean, inactive security-reviewer owner or Project
-  Manager carry turn, replace the handoff's self-stale "current `3a40583`"
-  sentence with stable history: `3a40583` was the pre-refresh state two
-  ahead; `12fd9fb` is the `PMR-056` refresh and left `main` three ahead.
-  Also replace the stale `PMR-022` sibling-registration open item with the
-  remaining analysis-workbook action `PMR-050`. Avoid another sentence that
-  tries to name its own future commit. A second security-reviewer commit is
-  not made in this turn.
 - **PMR-058:** after `PMR-045`, the XRV owner triages `PMQ-027`,
   `PMQ-028`, and corrected `PMQ-030` under `review-log.md`; `PMQ-029` is not
   separately pursued because `PMQ-030` supersedes it.
-- **PMR-059:** the analysis-workbook owner finishes and commits the active
-  `AWB-20260915-001-smdbltrp-consideration` session and applies this exact
-  Project Manager status result while preserving all other queue fields:
-
-  ```text
-  PMQ-029 Status: rejected
-  Resolved on: 2026-09-15
-  Resolution note: Rejected by the Project Manager because PMQ-030 supersedes
-  this complete-newness claim before owner intake; PMQ-030 is routed to
-  xrv-research-repo under PMR-058 (ledger PML-0030).
-  ```
-
-  Return the owner commit, changed paths, validation, branch, and backup
-  state. The Project Manager makes no concurrent workbook write.
+- **PMR-059:** owner commit `1ef1ac6` preserves and backs up
+  `AWB-20260915-001`; Project Manager carry `c7cc0fa` applies the exact
+  `PMQ-029` rejection. Refresh repository `HANDOFF.md` and append the
+  structured Project Manager return naming the owner commit, changed paths,
+  validation results, branch, and backup state.
 
 ## Additional P3 source triage
 
@@ -280,7 +249,7 @@ The relevant local component commits are:
 - `analysis-workbook` `eab5f8b` (`PMR-031`);
 - `analysis-workbook` owner commits `4c771c0`, `62ee356`, `a46dba2` and
   carries `8899176`, `0501243`, `b93722b` (`PML-0018..0027`), followed by
-  owner commit `2374115` (CRQ-002 and partial `PMR-038`);
+  owner commits `2374115`, `1ef1ac6`, and carry `c7cc0fa` (`PML-0030`);
 - `xrv-research-repo` `706e708` is backed up on `backup/main`; owner commit
   `d618935` is local one ahead, unpushed pending `PMR-039`;
 - `formal-verification-research` `c55065c`, `784be93`
@@ -288,7 +257,7 @@ The relevant local component commits are:
 - `threat-modeler` is already backed up through synchronized owner maintenance
   `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
 - `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`), `3a40583`
-  (`PMR-033`), and `12fd9fb` (`PMR-056`).
+  (`PMR-033`), `12fd9fb` (`PMR-056`), and `79c664f` (`PMR-060`).
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push

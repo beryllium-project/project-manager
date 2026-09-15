@@ -86,6 +86,8 @@ Manager; `PMR-038` requests the completion mirror after verified XRV commit
 `PMD-20260915-004` records successor-first handling for `CRQ-002`;
 `PMR-052..PMR-054` are the three sequenced owner tasks and `PMR-055` is the
 workbook's derived routed-status and stale-open-ID correction.
+Owner commit `1ef1ac6` adds complete `AWB-20260915-001` and
+`PMQ-027..030`; Project Manager carry `c7cc0fa` applies `PML-0030`.
 
 ### threat-modeler
 
@@ -143,7 +145,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | Component | Local agent material | Maintained check surface | Who runs it |
 | --- | --- | --- | --- |
 | `helium-te-poc/` | skill `helium-documentation`; `.github/copilot-instructions.md`; `HANDOFF.md` | `./he check`, `./he test`, `./he fv-check`, `./he docs-check`, `./he evaluate` | Human or the Helium line's own agent session |
-| `beryllium-repo` | On selected active branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`. Current dirty placeholder `main` lacks the maintained workflow; reconcile under `PMR-057` before invocation | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` after the active branch is restored | Human or the Beryllium owner's agent session |
+| `beryllium-repo` | On active/default branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`; `PMR-057` closed at owner return `f05ccb3` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or an ordinary Copilot owner session; no user-invocable custom agent |
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` (`PMR-035`) and `784be93` (`PMR-037`, `PMR-042`, `PML-0024`) | none configured | Owner |
 | `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md` | `tools/md-to-html.sh --check` | Owner's Claude agent |
 | `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
