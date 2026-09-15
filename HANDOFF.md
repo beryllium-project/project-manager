@@ -1,10 +1,10 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-15
-**Update scope:** sixteenth coordination turn; completed the guided owner
-inventory, closed `PMR-049`, and adopted one-question-at-a-time human intake.
-No component, organization, repository, remote, symlink, visibility,
-quarantine, push, or publication change was executed.
+**Update scope:** seventeenth coordination turn; verified threat-modeler owner
+return `c4126b6`, closed `PMR-028`, and recorded completion of the
+threat-modeler halves of `PMR-004` and `PMR-022`. No Project Manager
+component write or external operation was performed.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -18,7 +18,7 @@ quarantine, push, or publication change was executed.
 | --- | --- |
 | Beryllium runtime | R0-R7 are responsible-human accepted. R8-H0 is a committed candidate and is not accepted. H1-H4 are not authorized. K3 hardware is `NOT RUN`. |
 | Helium | Clean detached HEAD at `1ab289c`, also named by synchronized `for-review`; separate refs include travel `52cc71a` and `public/main` plus tag `v0.6.0` at `1c9e526`. The checked-out handoff says release remains blocked, so `PMR-026` asks the owner to reconcile checkout/ref/handoff state. The Project Manager infers no release or approval from ref names or commit subjects. Helium remains a review-and-test PoC, not formally verified or hardware validated. |
-| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, and paused by explicit user request. Owner commit `5bf6a4b` is local; Project Manager carry `f4eb272` follows it. `main` is two ahead of `origin/main` (`PMR-028`, P1). The model's risks are conditional analysis, not observed compromise or risk acceptance. |
+| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
 | XRV | Historical commit `7314e2f` remains unavailable and `REV-20260904-001..009` remain reserved. Replacement records are backed up at `706e708`; owner commit `d618935` adds root `COLLAB.md` and `REV-20260914-010..013`. The responsible human reports the deep-research session complete; no successor XRV commit is observed. `PMR-039` is the private backup decision and `PMR-040` requests review of the new proposed architecture. |
 | Analysis-workbook | Owner commit `a46dba2` completes the CHERI-native hypervisor security-model session with five inquiries and five queue rows. Four rows were duplicates; `PMQ-023` was recorded as a metadata-only routed pointer in formal-verification `sources/bibliography.md` at `784be93`. Project Manager carry `b93722b` applies `PML-0023..0027`; `main` is clean and seven ahead of `origin/main`. `PMR-038` remains for the CRQ completion mirror and stale interface/handoff wording. |
 | Active owner work | `cheri-riscv-notes-repo` is dirty on no-upstream branch `docs/reconcile-project-status` at `6553092`, with 21 changed entries. The Project Manager did not modify it (`PMR-029`, P1). |
@@ -37,17 +37,14 @@ quarantine, push, or publication change was executed.
 
 ### One recommended next action
 
-Back up the complete private paused threat-model package:
+Continue or intentionally park the dirty CHERI-RISC-V notes topic work:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/threat-modeler
+cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo
 copilot
-# then: /agent threat-model-maintainer
 ```
 
-Tell the maintainer: `Complete PMR-028: inspect the outgoing two commits,
-reconcile stale HANDOFF delivery wording, run maintained validation, and ask
-me before any push.`
+Then say: `check Project Manager tasking`.
 
 ### Minimal restart commands
 
@@ -56,6 +53,7 @@ cd /home/jmorris/src/beryllium-project/project-manager
 bash ./scripts/inspect-components.sh status
 bash ./scripts/pull-queues.sh list
 bash ./scripts/pull-queues.sh check
+bash ./scripts/project-tasking.sh check
 bash ./scripts/inspect-components.sh registry-check
 git status --short --branch
 git -C .. status --short --branch
@@ -63,24 +61,20 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- Recorded thirteen guided owner answers as ten disposition items in
-  `PMD-20260915-001` and closed `PMR-049`.
-- Confirmed no additional Microsoft-origin repository, all-private successor
-  creation, four exact `agentic-os-research` target names, current placement
-  of workflow/evidence repositories, authorship context, current
-  non-publicability, known hosted state, and the quarantine owner/name/history/
-  transfer model.
-- Recorded `PMD-20260915-002` and updated the Project Manager contract to ask
-  one short structured human question at a time where appropriate.
-- Updated five component cards, both READMEs, the owner runbook, request
-  dependencies, and validation coverage.
-- No component or external GitHub operation was performed.
+- Verified threat-modeler owner return and exact synchronized commit
+  `c4126b6`.
+- Closed `PMR-028`: the complete private paused package, Project Manager
+  carry, and owner maintenance are backed up; delivery wording is current.
+- Recorded that threat-modeler's owner-only `scripts/readonly-inspect.sh`
+  registrations for `project-manager` (`PMR-004`) and `security-reviewer`
+  (`PMR-022`) are complete. Closed threat-owned `PMR-022` and opened distinct
+  analysis-workbook follow-up `PMR-050`.
+- No Project Manager component write or external operation was performed.
 
 ## Pending coordination
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P1 | `PMR-028` | Back up the complete private paused threat-model package and reconcile its stale delivery wording through `threat-model-maintainer`. |
 | P1 | `PMR-029` | Preserve and complete or intentionally park the dirty CHERI notes topic branch before any PM action there. |
 | P2 | `PMR-026` | Reconcile Helium's detached checkout, current handoff, and observed refs; no gate is inferred. |
 | P2 | `PMR-027` | Fast-forward OSR to existing remote commit `e275544` or state why `f2edd17` is intentional. |
@@ -93,7 +87,7 @@ git -C .. status --short --branch
 | P2 | `PMR-044` | After `PMR-027` and the organization rename, rehouse OS security and create the separate personal quarantine repository under the recorded clean-history/manual-transfer model. |
 | P2 | `PMR-045` | After the organization rename, rehouse XRV as `agentic-os-research/cheri-hypervisor-research`. |
 | P2 | `PMR-046` | After `PMR-029` and the organization rename, rehouse `cheri-riscv-notes`, retain the slug, and preserve the later gated SoK publication pilot. |
-| P3 | `PMR-004`, `PMR-022` | Owners decide the analysis/threat read-only target-list additions. |
+| P3 | `PMR-004`, `PMR-050` | Analysis-workbook owner decides the two remaining read-only target-list additions; threat-modeler is complete at `c4126b6`. |
 | P3 | `PMR-014` | Triage the five original formal-verification bibliography pointers. |
 | P3 | `PMR-033` | Correct the security-reviewer handoff's self-stale pre-carry synchronization sentence in the next turn or by its owner. |
 | P3 | `PMR-037` | Refresh formal-verification remote/handoff wording; bibliography formatting is complete at `784be93`. |
@@ -118,7 +112,8 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   execution remains `NOT RUN`.
 - Helium checkout/ref reconciliation, review, publication, and release remain
   owner gates. The Project Manager records no approval.
-- The complete paused threat model has no risk-acceptance effect.
+- The complete privately backed-up paused threat model has no risk-acceptance
+  effect and remains paused.
 - The reappeared retained artifacts remain unverified and do not satisfy either
   H0 input-selection gate.
 - Licensing, redistribution, publication, and release remain responsible-human
@@ -127,31 +122,18 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 ## What to review
 
 - `../COMPONENTS.md`
-- `../README.md`
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
-- `outbox/component-requests.md` (`PMR-043..PMR-049`, and superseded
-  `PMR-023`)
-- `records/decisions/PMD-20260915-001-close-d0-owner-inventory.md`
-- `records/decisions/PMD-20260915-002-guided-human-intake.md`
-- `.github/agents/project-manager.agent.md`
-- `.github/skills/beryllium-project-management/SKILL.md`
-- `.github/copilot-instructions.md`
-- `AGENT-INTERFACE.md`
-- `README.md`
-- `tests/validate-agent.sh`
-- `components/beryllium-repo.md`
-- `components/cheri-riscv-notes-repo.md`
-- `components/formal-verification-research.md`
-- `components/osr-claude.md`
-- `components/xrv-research-repo.md`
+- `outbox/component-requests.md` (`PMR-004`, `PMR-022`, `PMR-028`,
+  `PMR-050`)
+- `components/threat-modeler.md`
+- `../threat-modeler/HANDOFF.md` at `c4126b6`
 
 ## Validation and commit state
 
 The write-disabled `pm-auditor` found no blocking discrepancy. Its stale and
-minor findings were corrected in the owner records, requests, runbook,
-interaction contracts, cards, handoff, and registry. No component write was
-attempted.
+minor findings were corrected in the requests, runbook, threat-modeler card,
+handoff, and registry. No component write was attempted.
 
 Pre-commit validation passed:
 
@@ -161,13 +143,12 @@ Pre-commit validation passed:
 - `bash ./scripts/inspect-components.sh registry-check`: every registered row
   matched the pre-commit live state;
 - `git diff --check` in this repository and the parent: passed;
-- parent status contained only Project Manager-owned `COMPONENTS.md` and
-  `README.md`.
+- parent status contained only Project Manager-owned `COMPONENTS.md`.
 
 Post-commit tasking generation and current-view checking follow the Project
 Manager commit so each ignored view can name the exact containing HEAD.
 
-This handoff is included in the sixteenth-turn Project Manager commit. Its exact
+This handoff is included in the seventeenth-turn Project Manager commit. Its exact
 HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. Neither commit is pushed
 without explicit same-turn confirmation.
@@ -176,15 +157,14 @@ without explicit same-turn confirmation.
 
 - Live state: `scripts/inspect-components.sh status`, `components`,
   `symlinks`, `registry-check`, `state`, and `refs` output observed
-  2026-09-15T00:04Z.
+  2026-09-15T03:45Z.
 - Queue state: `scripts/pull-queues.sh list`, `edits`, and `check`; 27/27,
   no edit due.
-- User direction: guided answers recorded in `PMD-20260915-001`; explicitly
-  directed closure of `PMR-049` from those answers without settings-page-by-
-  settings-page inspection; explicitly requested one-question-at-a-time
-  interactive intake for future sessions (`PMD-20260915-002`).
+- User return: "done" after starting `threat-model-maintainer` for `PMR-028`.
+  Component-owned `HANDOFF.md` and synchronized commit `c4126b6` provide the
+  verified owner return.
 - Required write-disabled `pm-auditor` pass found no blocking discrepancy;
-  stale and minor findings were corrected in the owner records, requests,
-  runbook, interaction contracts, component cards, handoff, and registry.
+  stale and minor findings were corrected in the requests, runbook,
+  threat-modeler card, handoff, and registry.
 - Previous full Project Manager handoff: Git object
-  `12e4424:HANDOFF.md`.
+  `8396c95:HANDOFF.md`.

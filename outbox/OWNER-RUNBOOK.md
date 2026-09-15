@@ -20,24 +20,9 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First actions: preserve local-only work
+## First action: preserve local-only work
 
-1. **PMR-028 - Threat-model package committed but not backed up.** The clean
-   `threat-modeler/main` is two commits ahead of `origin/main`: owner commit
-   `5bf6a4b` contains the complete private, paused
-   `TM-20260911-001-helium-te-poc-astra` package, and Project Manager carry
-   `f4eb272` updates only its current coordination pointer. Start the
-   maintainer and ask it to inspect the complete outgoing diff, reconcile the
-   stale delivery sentence in `HANDOFF.md`, run its maintained checks, and
-   push only after your explicit confirmation:
-
-   ```sh
-   cd /home/jmorris/src/beryllium-project/threat-modeler
-   copilot
-   # then: /agent threat-model-maintainer
-   ```
-
-2. **PMR-029 - CHERI notes topic work is uncommitted.** The active
+1. **PMR-029 - CHERI notes topic work is uncommitted.** The active
    `docs/reconcile-project-status` worktree has 21 changed entries and no
    upstream. Continue in the owning session; review and validate before
    committing:
@@ -223,11 +208,12 @@ a comparator baseline, or push without a separate human decision.
   queue/surface" text, the handoff's "pending commit" sentence, and the
   `PMQ-023` note's `PMR-014` reference to `PMR-041`. The security-model
   session is now committed at `a46dba2`.
-- **PMR-004 and PMR-022:** the analysis-workbook and threat-modeler owners
-  decide whether their owner-only `scripts/readonly-inspect.sh` target lists
-  should add `project-manager` and `security-reviewer`; scripts are outside
-  the Project Manager carry authority. In each repository, review and add the
-  two names to the existing array:
+- **PMR-004 and PMR-050:** threat-modeler completed both registrations at
+  synchronized owner commit `c4126b6` and threat-owned `PMR-022` is closed.
+  The analysis-workbook owner decides whether its owner-only
+  `scripts/readonly-inspect.sh` target list should add `project-manager` and
+  `security-reviewer`; scripts are outside the Project Manager carry
+  authority. Review and add the two names to the existing array:
 
   ```sh
   registered_components=(
@@ -237,8 +223,8 @@ a comparator baseline, or push without a separate human decision.
   )
   ```
 
-  Then run that component's `readonly-inspect.sh components` mode and
-  maintained validation before committing with both request IDs.
+  Then run analysis-workbook's `readonly-inspect.sh components` mode and
+  maintained validation before committing with `PMR-004` and `PMR-050`.
 - **PMR-014:** the formal-verification owner triages the five original routed
   bibliography pointers.
 - **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
@@ -296,8 +282,8 @@ The relevant local component commits are:
   `d618935` is local one ahead, unpushed pending `PMR-039`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
-- `threat-modeler` `f4eb272` (`PMR-031`, stacked after owner commit
-  `5bf6a4b`);
+- `threat-modeler` is already backed up through synchronized owner maintenance
+  `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
 - `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`).
 
 The current helper's `push_fvr` path expects a remote named `backup`, while

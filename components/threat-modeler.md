@@ -5,8 +5,9 @@
 - **Ownership:** agent-owned; its agents write only inside that component; the
   Project Manager writes here only to carry requests under the standing carry
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md` (class 1: status edits in `outbox/pm-queue.md`; class 3:
-  Project Manager-role wording in `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`),
-  committing inside this component; nothing else
+  Project Manager-role wording in `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`,
+  `COLLAB.md`, and `HANDOFF.md` where present), committing inside this
+  component; nothing else
 - **Agents:** `threat-modeler` (user-invocable orchestrator),
   `threat-model-maintainer` (repository maintenance, validation, and
   explicitly authorized Git delivery), `threat-evidence`,
@@ -14,13 +15,16 @@
   skill `beryllium-threat-modeling`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at `f4eb272`, two commits ahead of
-  `origin/main` after the owner commit `5bf6a4b` and the Project Manager's
-  class-3 `PMR-031` carry. `5bf6a4b` added the complete private, paused
-  `TM-20260911-001-helium-te-poc-astra` package and the maintainer workflow.
-  The run stays paused; `PMR-028` asks the owner to reconcile its delivery
-  wording and decide the push. `PMD-20260914-003` keeps the component
-  separate; its future organization placement is not yet decided
+- **Observed state:** clean synchronized `main` / `origin/main` at `c4126b6`.
+  Owner commit `5bf6a4b` added the complete private, paused
+  `TM-20260911-001-helium-te-poc-astra` package; Project Manager carry
+  `f4eb272` followed it; owner maintenance `c4126b6` reconciles delivery
+  wording, records maintained validation, and registers `project-manager` and
+  `security-reviewer` as exact-snapshot targets. It is synchronized with
+  private `origin/main` together with `5bf6a4b` and `f4eb272`. `PMR-028` is
+  closed. The run remains paused.
+  `PMD-20260915-001` keeps this independent personal-project repository under
+  `beryllium-project`
 
 ## Role
 
@@ -53,12 +57,17 @@ is generated. `THREAT-MODELS.md` is the generated index.
   `workspace://project-manager/...`. At `f4eb272` (`PMR-031`) it records the
   parent `HANDOFF.md` as the remaining compatibility redirect and points
   current assurance lookup directly to `project-manager/records/assurance/`.
-  `project-manager` is not in its registered target set; that list lives in
-  the owner-only `scripts/readonly-inspect.sh`. At `226d367` (carried
+  Until owner commit `c4126b6`, `project-manager` was not in its registered
+  target set; that list lives in the owner-only
+  `scripts/readonly-inspect.sh`. At `226d367` (carried
   `PMR-015`, 2026-09-05) the "Discovery reference set" also names
   `workspace://project-manager/queue/LEDGER.md`, so a source the Project
   Manager has already routed or that is accepted into an owner's index is not
   allocated again as a new `DISC-NNN` row.
+- At owner commit `c4126b6`, `scripts/readonly-inspect.sh` registers both
+  `project-manager` (`PMR-004`) and `security-reviewer` (`PMR-022`) as
+  exact-snapshot targets. `PMR-022` is closed; `PMR-004` and new
+  analysis-workbook follow-up `PMR-050` carry the remaining workbook actions.
 
 ## Outbound queue
 
@@ -81,17 +90,14 @@ git diff --check
 
 ## What the Project Manager may request
 
-A model or review engagement on a registered snapshot; repository delivery of
-the complete private, paused `TM-20260911-001` package through
-`/agent threat-model-maintainer` (`PMR-028`); registration of
-`project-manager/` in its `scripts/readonly-inspect.sh` registered list (the
-`RESEARCH-SOURCES.md` part was carried at `4a01578`); nothing that grants
+A model or review engagement on a registered snapshot; nothing that grants
 risk acceptance or approval. `PMR-015` (the ledger in the discovery
 reference set) was carried at `226d367` on 2026-09-05. `PMR-005` (push of
 the local commits) closed 2026-09-05: the owner pushed `main` to private
 `origin` through the human-run `../scripts/owner-actions.sh`
 (`affe17b..226d367`, four commits, verified with `ls-remote` in its log);
-observed synchronized (0 behind, 0 ahead) at 19:10Z. `PMR-022` (open, P3,
-2026-09-06) asks the owner to add `security-reviewer` to the same
-owner-only registered list; both script edits fit one owner commit. `PMR-031` was carried at `f4eb272` on 2026-09-12. The run remains paused;
+observed synchronized (0 behind, 0 ahead) at 19:10Z. Owner commit `c4126b6`
+completes the threat-modeler halves of `PMR-004` and `PMR-022` and closes
+delivery request `PMR-028`; it is synchronized with private `origin/main`.
+`PMR-031` was carried at `f4eb272` on 2026-09-12. The run remains paused;
 coordination does not resume it or accept any risk.
