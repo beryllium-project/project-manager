@@ -205,7 +205,7 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface"; do
     require_text "$f" 'claude-opus-5'
     require_text "$f" 'max'
     require_text "$f" 'long_context'
-    require_text "$f" 'PMD-20260915-006'
+    require_text "$f" 'PMD-20260915-007'
 done
 
 require_pattern "$skill" '^name: beryllium-project-management$'

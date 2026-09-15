@@ -15,7 +15,7 @@ anything.
 For invocations after the 2026-09-15 coordination session, the Project
 Manager supplies reasoning effort `max` and context tier `long_context`
 unless the responsible human explicitly specifies otherwise
-(`PMD-20260915-006`).
+(`PMD-20260915-007`).
 
 ## Inputs you receive
 

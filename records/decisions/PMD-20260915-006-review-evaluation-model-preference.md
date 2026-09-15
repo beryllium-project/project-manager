@@ -4,7 +4,7 @@
 - **Created:** 2026-09-15
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20260915-007`
 
 ## Scope
 

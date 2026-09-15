@@ -67,6 +67,34 @@ Review and push owner commits `3221231` and `f05ccb3` using the first-action
 block above. The active branch is already restored and the default branch is
 already recorded by the owner return.
 
+### PMR-062 - Security-reviewer model substitution
+
+Before starting another security-review engagement, run an ordinary owner
+session in the clean component:
+
+```sh
+cd /home/jmorris/src/beryllium-project/security-reviewer
+git status --short --branch
+copilot
+```
+
+Then say:
+
+```text
+Check Project Manager tasking and complete PMR-062. Replace
+claude-fable-5.1 with claude-opus-5 in security-reviewer.agent.md,
+security-evidence.agent.md, security-research.agent.md, and
+security-finding-review.agent.md. Record max reasoning and long_context
+invocation defaults under PMD-20260915-007, update tests and current
+instructions/handoff, preserve non-Fable assignments and historical
+artifacts, run bash ./tests/validate-agent.sh,
+bash ./scripts/update-index.sh --check, and git diff --check, then append the
+structured Project Manager return.
+```
+
+This is owner-only configuration; the Project Manager does not edit the
+component's agent definitions or tests.
+
 ### PMR-044 - OS-security rehome and quarantine
 
 Use the OS-security owner to design the active private

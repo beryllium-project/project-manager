@@ -210,11 +210,12 @@ the sibling documents consulted. Reconcile each returned discrepancy: fix
 items as stop conditions until resolved or explicitly recorded as open. The
 auditor decides nothing.
 
-For review and evaluation delegations after the 2026-09-15 coordination
-session, invoke `claude-opus-5` with reasoning effort `max` and context tier
-`long_context` unless the responsible human explicitly specifies otherwise
-(`PMD-20260915-006`). Do not restart an already launched task merely to apply
-this future default.
+Project-wide, substitute `claude-opus-5` for Claude Fable 5.1 in active
+review/evaluation roles, with reasoning effort `max` and context tier
+`long_context`, unless the responsible human explicitly specifies otherwise
+(`PMD-20260915-007`). Preserve non-Fable assignments and historical
+artifacts. Do not restart an already launched task merely to apply the
+default.
 
 ## Phase 7: validate
 
