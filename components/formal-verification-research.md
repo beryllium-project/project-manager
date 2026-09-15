@@ -110,4 +110,7 @@ with the carried `COLLAB.md` wording was applied by the owner at `e5740de` on
 Project Manager itself on 2026-09-04 (`ccb48f6`) and `PMR-017` on 2026-09-05
 (`8246147`). `PMR-035` carried the metadata-only `PMQ-021` pointer at
 `c55065c`; `PMR-042` / `PML-0024` carried `PMQ-023` at `784be93`. Neither
-admits or validates a source.
+admits or validates a source. `PMR-069` asks the owner startup context to map
+`check Project Manager tasking` to the exact fail-closed resolver without
+session-history fallback; it includes no research or bibliography
+disposition.

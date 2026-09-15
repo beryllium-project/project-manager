@@ -72,7 +72,9 @@ recorded in `../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorde
 and superseding `PMD-20260912-002` (candidate copies have reappeared but their
 identity and suitability remain unverified; `PMR-032`); nothing that infers
 acceptance. `PMR-061` is the owner-only decision to review and push the two
-PMR-057 handoff/return commits to private `origin`.
+PMR-057 handoff/return commits to private `origin`. `PMR-067` asks the
+ordinary Copilot owner context to implement the exact tasking resolver mapping
+whose absence caused the observed session-history fallback.
 
 ## Helium-to-Beryllium transfer input
 

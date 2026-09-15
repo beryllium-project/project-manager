@@ -181,6 +181,20 @@ direct checkout or tracked workspace symlink, run:
 bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 ```
 
+`PMD-20260915-008` makes the natural-language startup contract explicit:
+`check Project Manager tasking` means run that exact resolver from the
+logical workspace entry. An agent must stop on failure; it must not search
+session history, task databases, background agents, prior chat, or memory as
+a fallback. Component-owned entry points are tracked by
+`PMR-063..PMR-072`.
+
+From the workspace root, use
+`bash ./project-manager/scripts/project-tasking.sh resolve <component>`.
+Tracked-symlink owners verify `pwd` versus `pwd -P` and use the documented
+`PM_TASKING_ROOT` / `PM_TASKING_WORKSPACE` inputs when the logical entry is
+not preserved. Generated rows show `Assigned to` so cross-named requests are
+not mistaken for owner assignments.
+
 ## Owner actions (human-run)
 
 `scripts/owner-actions.sh` performs, for the responsible human, the owner-side

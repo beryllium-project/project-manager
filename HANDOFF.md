@@ -1,13 +1,13 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-15
-**Update scope:** twenty-third coordination turn; recorded the responsible
-human's project-wide Fable-to-Opus review/evaluation substitution and routed
-the four remaining security-reviewer profiles through `PMR-062`, following
-the immediately preceding return-reconciliation commit `5f68f0c`. No
-repository creation, remote change, branch change, symlink change, visibility
-change, quarantine transfer, push, or publication action was performed by
-the Project Manager.
+**Update scope:** twenty-fourth coordination turn; made
+`check Project Manager tasking` an explicit required project-wide startup
+contract and routed one owner adoption request per registered component after
+the observed Beryllium fallback to session-history search. No repository
+creation, remote change, branch change, symlink change, visibility change,
+quarantine transfer, push, or publication action was performed by the
+Project Manager.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -34,6 +34,7 @@ the Project Manager.
 | Approved target topology | The organization is `agentic-os-research`. `PMD-20260915-005` supersedes the Beryllium mapping only: private `beryllium-project/beryllium-hypervisor` is the active target, with `beryllium/single-hart-runtime-r0` retained as its active branch. OS-security, XRV, and CHERI notes retain their `agentic-os-research` targets. |
 | D0 transition inventory | `PMD-20260914-004` records the bounded local inventory. `PMD-20260915-001` closes `PMR-049`: no additional Microsoft-origin repositories, all successors private initially, and no repository public-approved. `PMD-20260915-005` supersedes only its Beryllium target name; workflow/evidence repositories and formal-verification otherwise stay under `beryllium-project`. "None known" remains an owner statement, not an independently authenticated negative finding. |
 | Generated tasking | `PMR-048` is closed citing `PMD-20260914-005`. `scripts/project-tasking.sh` generates ignored per-component views from the committed authoritative request table and resolves either a direct checkout or tracked workspace symlink. It refuses missing, dirty, stale-commit, or wrong-request-blob state rather than showing stale tasking. |
+| Tasking startup contract | `PMD-20260915-008` requires every owner context to map `check Project Manager tasking` and obvious variants to the exact resolver. Failure stops; session history, task databases, background agents, prior chat, and remembered PMRs are forbidden fallbacks. Project Manager is updated directly; `PMR-063..PMR-072` route component-owned adoption. |
 | Human interaction | `PMD-20260915-002` requires one short structured question at a time where appropriate. The Project Manager carries answers forward and prepares matrices and machine-shaped records; the human is not used as a parsing engine. |
 | Review/evaluation model | `PMD-20260915-007` supersedes the Project Manager-only preference with a project-wide substitution: active Fable 5.1 review/evaluation profiles use `claude-opus-5`, `max`, and `long_context` unless explicitly overridden. Non-Fable assignments and historical artifacts stay unchanged. Project Manager audit is already migrated; `PMR-062` owns the four remaining security-reviewer profiles. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
@@ -42,20 +43,26 @@ the Project Manager.
 
 ### One recommended next action
 
-Review and back up the two Beryllium owner-return commits under `PMR-061`:
+Complete the security-reviewer model and tasking-startup changes together:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/beryllium-repo
+cd /home/jmorris/src/beryllium-project/security-reviewer
 git status --short --branch
-git log --oneline \
-  origin/beryllium/single-hart-runtime-r0..beryllium/single-hart-runtime-r0
-git diff --stat \
-  origin/beryllium/single-hart-runtime-r0..beryllium/single-hart-runtime-r0
-git push origin beryllium/single-hart-runtime-r0
+copilot
 ```
 
-Push only to private `origin`, never inactive `msft-downstream`. This backs up
-the handoff/return; it grants no acceptance, publication, or release.
+Then say:
+
+```text
+I approve this exact read-only startup command for this session:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Run it now. Treat its validated output as discovery over
+project-manager/outbox/component-requests.md, not as authorization. Do not
+search session history, task databases, background agents, prior chat, or
+memory. Complete PMR-062 and PMR-065 in one owner commit, keeping their
+returned evidence distinct.
+```
 
 ### Minimal restart commands
 
@@ -73,19 +80,16 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- Verified Beryllium owner reconciliation commit `3221231` and structured
-  return `f05ccb3`; closed `PMR-057`. Opened `PMR-061` for the two local
-  return commits, which are not yet on private `origin`.
-- Observed clean synchronized analysis-workbook owner commit `1ef1ac6`;
-  carried the exact `PML-0030` rejection at `c7cc0fa`. `PMR-059` remains only
-  for the repository handoff and structured return.
-- Carried stable security-reviewer coordination wording at `79c664f`, closing
-  `PMR-060`. No engagement or gate changed.
-- Recorded the responsible human's project-wide Fable-to-Opus
-  review/evaluation substitution in `PMD-20260915-007`. The only remaining
-  active Fable review/evaluation profiles are security-reviewer's
-  orchestrator and three specialists; `PMR-062` routes their owner-only
-  configuration and tests.
+- Recorded `PMD-20260915-008` after the observed Beryllium failure: exact
+  tasking phrases are required to map to the resolver and fail closed without
+  session-history/task-database/background-agent fallback.
+- Updated Project Manager's own agent, parent-root instructions, skill,
+  interface, tasking README, resolver output, and tests directly. Generated
+  views now include `Assigned to`; root and physical-symlink invocation paths
+  are covered.
+- Routed component-owned adoption as `PMR-063..PMR-072`, one request per
+  registered non-PM component. Adoption remains pending until each owner
+  returns its commit.
 - No repository creation, remote change, branch change, symlink change,
   visibility change, quarantine transfer, push, or publication action was
   performed by the Project Manager.
@@ -97,6 +101,8 @@ git -C .. status --short --branch
 | P2 | `PMR-026` | Reconcile Helium's detached checkout, current handoff, and observed refs; no gate is inferred. |
 | P2 | `PMR-061` | Review and push Beryllium owner-return commits `3221231` and `f05ccb3` to private `origin`; never push inactive `msft-downstream`. |
 | P2 | `PMR-062` | Before the next security review, migrate its orchestrator and three specialists from Fable 5.1 to Opus 5 / `max` / `long_context`, update tests/instructions, and return the owner commit. |
+| P2 | `PMR-065` | Teach security-reviewer to resolve `check Project Manager tasking` exactly and prohibit session-history/background-agent fallback; may share a commit with `PMR-062`. |
+| P2 | `PMR-067` | Teach the ordinary Beryllium Copilot owner context the exact resolver contract whose absence caused the observed failure. |
 | P2 | `PMR-052` | After `PMR-044` and `PMR-045`, the successor OS-security owner closes or precisely bounds the cap-talk archive gap from the `2016-04-01` start bound. |
 | P2 | `PMR-032` | Run the read-only retained-artifact search/hash check and report whether the reappeared candidates match the recorded identities. |
 | P2 | `PMR-039` | Review XRV `backup/main..main` and decide whether to push `d618935` to the reachable private backup. |
@@ -116,6 +122,10 @@ git -C .. status --short --branch
 | P3 | `PMR-055` | Analysis-workbook mirrors `CRQ-002` as routed and corrects the packet's stale `OPEN-001` reference to `OPEN-003`. |
 | P3 | `PMR-058` | After `PMR-045`, XRV triages the new double-trap specification, QEMU series, and corrected exact OpenSBI pointer. |
 | P3 | `PMR-059` | Refresh the workbook repository handoff and add the structured return for synchronized owner commit `1ef1ac6`; `PML-0030` is already applied at `c7cc0fa`. |
+| P3 | `PMR-063` | Add the explicit fail-closed tasking startup contract to analysis-workbook. |
+| P3 | `PMR-064` | Add the explicit fail-closed tasking startup contract to threat-modeler and its maintainer. |
+| P3 | `PMR-066` | Add the explicit fail-closed tasking startup contract to provenance-review. |
+| P3 | `PMR-068..PMR-072` | Add the explicit fail-closed tasking startup contract to Helium, formal-verification, OS-security, CHERI notes, and XRV owner contexts. |
 
 Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
@@ -149,42 +159,54 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - `../README.md`
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
-- `outbox/component-requests.md` (`PMR-057..PMR-062`)
+- `outbox/component-requests.md` (`PMR-057..PMR-072`)
+- `records/decisions/PMD-20260915-008-component-tasking-startup-contract.md`
+- `outbox/tasking/README.md`
 - `records/decisions/PMD-20260915-007-project-wide-review-model-preference.md`
 - `records/decisions/PMD-20260915-006-review-evaluation-model-preference.md`
 - `.github/agents/pm-auditor.agent.md`
 - `.github/agents/project-manager.agent.md`
 - `.github/copilot-instructions.md`
+- `../.github/copilot-instructions.md`
 - `.github/skills/beryllium-project-management/SKILL.md`
 - `AGENT-INTERFACE.md`
 - `README.md`
+- `scripts/project-tasking.sh`
 - `tests/validate-agent.sh`
 - `queue/LEDGER.md` (`PML-0028..PML-0031`)
 - `AGENT-ROSTER.md`
 - `components/analysis-workbook.md`
 - `components/beryllium-repo.md`
+- `components/cheri-riscv-notes-repo.md`
+- `components/formal-verification-research.md`
+- `components/helium-te-poc.md`
+- `components/osr-claude.md`
+- `components/provenance-review.md`
 - `components/security-reviewer.md`
+- `components/threat-modeler.md`
+- `components/xrv-research-repo.md`
 - `../beryllium-repo/planning/HANDOFF.md` at component commit `f05ccb3`
 - `../analysis-workbook/outbox/pm-queue.md` at component commit `c7cc0fa`
 - `../security-reviewer/HANDOFF.md` at component commit `79c664f`
 
 ## Validation and commit state
 
-The write-disabled `pm-auditor` found no blocking discrepancy. Its stale and
-minor findings were corrected in the requests, ledger, runbook, cards,
-handoff, and registry. Analysis carry `c7cc0fa` and security-reviewer carry
-`79c664f` match their recorded classes and identifiers.
+The write-disabled `pm-auditor` found one initial authority-boundary blocker
+in the owner prompt ("authoritative" rather than "discovery"); it is
+corrected. Its stale and minor findings were also corrected in the startup
+record, resolver output, root/symlink invocation forms, requests, runbook,
+cards, handoff, registry, and tests.
 
 Pre-commit validation passed:
 
-- `bash ./scripts/validate-pm.sh`: 311 passed, 0 failed;
-- `bash ./tests/validate-agent.sh`: 324 passed, 0 failed;
+- `bash ./scripts/validate-pm.sh`: 322 passed, 0 failed;
+- `bash ./tests/validate-agent.sh`: 364 passed, 0 failed;
 - `bash ./scripts/pull-queues.sh check`: 31/31 exact; no source edit is due;
 - `bash ./scripts/inspect-components.sh registry-check`: every registered row
   matched the pre-commit live state;
 - `git diff --check` in this repository and the parent: passed;
-- parent status contained only Project Manager-owned `COMPONENTS.md` and
-  `README.md`.
+- parent status contained only Project Manager-owned
+  `.github/copilot-instructions.md`, `COMPONENTS.md`, and `README.md`.
 
 Post-commit tasking generation and current-view checking follow the Project
 Manager commit so each ignored view can name the exact containing HEAD.
@@ -213,10 +235,15 @@ without explicit same-turn confirmation.
 - Security-reviewer carry: clean-state and instruction checks preceded the
   one-file class-3 `HANDOFF.md` change; component commit `79c664f` closes
   `PMR-060` and leaves the component four ahead of `origin/main`.
-- Required write-disabled `pm-auditor` pass found no blocking discrepancy;
-  stale and minor findings were corrected.
+- Required write-disabled `pm-auditor` pass identified one initial
+  tasking-authority blocker; it and all stale/minor findings were corrected
+  before final validation.
 - Project-wide model direction:
   `"also, project-wide, substitute Opus 5 for Fable 5.1 in review/eval
   roles, to save costs. I will specify Fable 5.1 later as needed."`
+- Tasking-startup direction:
+  `"these agents should know exactly how to check pm tasking, this one seems
+  to not know yet"`; the observed Beryllium owner session searched persisted
+  sessions and background agents until the responsible human cancelled it.
 - Previous full Project Manager handoff: Git object
-  `5f68f0c:HANDOFF.md`.
+  `e5e17b1:HANDOFF.md`.

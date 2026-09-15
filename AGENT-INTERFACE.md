@@ -267,7 +267,27 @@ symlink,
 `bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .`
 identifies the physical component and prints its view
 only after checking the exact PM commit, committed request blob, and clean
-request-table state. Missing or stale tasking fails closed.
+request-table state. From the workspace root use
+`bash ./project-manager/scripts/project-tasking.sh resolve <component>`.
+For a physically resolved symlink target, the human supplies
+`PM_TASKING_ROOT` and `PM_TASKING_WORKSPACE` or relaunches from the logical
+entry. Missing or stale tasking fails closed. Each generated row names
+`Assigned to`, distinguishing directly owned work from a cross-named
+coordination row.
+
+Every registered component owner context must map `check Project Manager
+tasking` and obvious case/singular/plural variants to that exact resolver
+command from the logical workspace entry. A user-invocable orchestrator may
+allow this one read-only sibling command despite its ordinary execution
+boundary. If location or validation fails, it stops and asks the human to
+relaunch from the registered workspace entry; it never searches session
+history, a task/todo database, background agents, prior chat, or memory for a
+fallback PMR (`PMD-20260915-008`).
+This one resolver is startup discovery outside a component package, not target
+execution, and requires no package approval record or target command runner.
+Only the Project Manager may read its authoritative request table directly
+while that table is intentionally dirty during a coordination turn; component
+owners wait for the PM commit and regenerated views.
 
 ## Human gates
 

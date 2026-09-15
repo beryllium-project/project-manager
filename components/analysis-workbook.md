@@ -37,6 +37,9 @@ topic and chronology in the generated `WORKBOOK.md`.
 - Every other component is a read-only, untrusted input. No component may be
   built, tested, or executed without the user approving that exact command by
   name for the session.
+- After `PMR-063`, the exact read-only Project Manager tasking resolver is a
+  single startup-discovery exception outside an analysis package. It is not
+  target execution and grants no other sibling command.
 - Maintained scripts only: `scripts/new-session.sh`, `scripts/new-inquiry.sh`,
   `scripts/readonly-inspect.sh`, `scripts/update-workbook.sh`,
   `scripts/validate-session.sh`, `scripts/validate-helium-transfer-queue.sh`
@@ -163,6 +166,8 @@ the remaining stale interface/handoff wording and structured return under
 `PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
 These are request-only because the collaboration queue and analysis content
 are outside class 1. Nothing treats a session as review or acceptance.
+`PMR-063` asks the owner to map `check Project Manager tasking` to the exact
+fail-closed resolver and prohibit session-history fallback.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

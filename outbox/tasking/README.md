@@ -19,12 +19,36 @@ the logical workspace path when locating the Project Manager:
 bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 ```
 
+In every component owner context, `check Project Manager tasking` and obvious
+case/singular/plural variants mean: run that exact command. A user-invocable
+agent with an execution allowlist permits this one read-only sibling command
+for startup discovery. If the command path is absent or validation fails,
+stop and tell the human to relaunch from the registered logical workspace
+entry. Never search session history, task/todo databases, background agents,
+prior chat, or memory for a fallback PMR (`PMD-20260915-008`).
+
+From the workspace root, the equivalent explicit form is:
+
+```sh
+bash ./project-manager/scripts/project-tasking.sh resolve <component>
+```
+
+If a tracked symlink entry has been physically resolved before command
+execution, the human may supply `PM_TASKING_ROOT` and
+`PM_TASKING_WORKSPACE`, or relaunch from the logical workspace entry. Owners
+record `pwd` and `pwd -P` while adopting the contract. If a Project Manager
+turn is in progress and views are stale, component owners wait for the PM
+commit and regeneration; only the Project Manager may read its dirty
+authoritative request table directly.
+
 The resolver identifies the physical repository behind either integration
 form. It prints open requests assigned to the component plus requests that
 explicitly cross-name it in the Request or Note field, only when the generated view
 names the current Project Manager commit, matches the committed
 `outbox/component-requests.md` blob, and that request table has no staged or
 unstaged change. Missing, unreachable, or stale tasking fails closed.
+Each row includes `Assigned to`, so a cross-named coordination row cannot be
+mistaken for work owned by the current component.
 
 The view is discovery only. Owner results return through the component-owned
 handoff protocol in `PMD-20260914-002`; no view grants a human gate.

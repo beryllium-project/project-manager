@@ -78,4 +78,7 @@ the successor starts private. The organization rename is complete
 (`PMD-20260915-003`), so `PMR-045` is repository-owner actionable.
 Microsoft-origin repository state remains an inactive historical
 reference. The current local path and tracked symlink do not move without a
-later explicit target-specific direction.
+later explicit target-specific direction. `PMR-072` asks the owner context to
+map `check Project Manager tasking` to the exact fail-closed resolver without
+session-history fallback; it includes no research, review-ID, collaboration,
+or push change.

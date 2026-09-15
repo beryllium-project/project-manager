@@ -9,6 +9,26 @@ user-invocable: true
 
 Use the `/beryllium-project-management` skill for every coordination turn.
 
+When the user says `check Project Manager tasking` or an obvious
+case/singular/plural variant, invoke the maintained resolver rather than
+searching session history, task databases, background agents, or prior chat.
+From `project-manager/`:
+
+```sh
+bash ./scripts/project-tasking.sh resolve project-manager
+```
+
+When loaded from the workspace root with `/add-dir project-manager`:
+
+```sh
+bash ./project-manager/scripts/project-tasking.sh resolve project-manager
+```
+
+If the view is stale because this agent is actively changing its own request
+table, read authoritative `outbox/component-requests.md` directly. Otherwise
+treat failure as a blocker; never infer a PMR from memory
+(`PMD-20260915-008`).
+
 Project-wide, substitute `claude-opus-5` for Claude Fable 5.1 in active
 review/evaluation roles, with reasoning effort `max` and context tier
 `long_context`, unless the responsible human explicitly specifies otherwise

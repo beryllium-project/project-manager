@@ -93,7 +93,7 @@ render_view() {
             cross_named = index(request, "`" target "`") ||
                 index(note, "`" target "`")
             if (status == "open" && (owner == target || cross_named))
-                printf "%s\t%s\t%s\t%s\t%s\n", id, priority, request, basis, note
+                printf "%s\t%s\t%s\t%s\t%s\t%s\n", id, priority, owner, request, basis, note
         }
     ' "$source_file" | sort -t $'\t' -k2,2 -k1,1 >"$rows"
 
@@ -105,11 +105,11 @@ render_view() {
         printf -- '- **Authoritative source:** `outbox/component-requests.md`\n'
         printf -- '- **Component:** `%s`\n\n' "$component"
         if [[ -s $rows ]]; then
-            printf '| Request | Priority | Action | Basis | Note |\n'
-            printf '| --- | --- | --- | --- | --- |\n'
-            while IFS=$'\t' read -r id priority request basis note; do
-                printf '| `%s` | %s | %s | %s | %s |\n' \
-                    "$id" "$priority" "$request" "$basis" "$note"
+            printf '| Request | Priority | Assigned to | Action | Basis | Note |\n'
+            printf '| --- | --- | --- | --- | --- | --- |\n'
+            while IFS=$'\t' read -r id priority owner request basis note; do
+                printf '| `%s` | %s | `%s` | %s | %s | %s |\n' \
+                    "$id" "$priority" "$owner" "$request" "$basis" "$note"
             done <"$rows"
         else
             printf 'No open Project Manager requests for this component.\n'

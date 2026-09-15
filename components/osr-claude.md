@@ -66,3 +66,6 @@ repository remains an inactive reference. Its current history stays private;
 quarantined licensed resources move only through a responsible-human-approved
 plan into a separate private repository visible only to the responsible
 human. The Project Manager never opens or copies the restricted subtree.
+`PMR-070` asks the Claude owner context to implement the exact tasking
+resolver mapping and no-fallback rule; ask the responsible human before that
+OS-security write.

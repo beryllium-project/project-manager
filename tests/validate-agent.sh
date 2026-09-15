@@ -207,6 +207,22 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface"; do
     require_text "$f" 'long_context'
     require_text "$f" 'PMD-20260915-007'
 done
+for f in "$agent" "$skill" "$instructions" "$interface" "$readme" \
+    "$repository_root/outbox/tasking/README.md"; do
+    require_text "$f" 'check Project Manager tasking'
+    require_text "$f" 'project-tasking.sh'
+    require_text "$f" 'session history'
+    require_text "$f" 'background agents'
+    require_text "$f" 'PMD-20260915-008'
+done
+parent_instructions=$repository_root/../.github/copilot-instructions.md
+require_file "$parent_instructions"
+require_text "$parent_instructions" 'check Project Manager tasking'
+require_text "$parent_instructions" \
+    'bash ./project-manager/scripts/project-tasking.sh resolve <component>'
+require_text "$parent_instructions" 'session history'
+require_text "$parent_instructions" 'background agents'
+require_text "$parent_instructions" 'PMD-20260915-008'
 
 require_pattern "$skill" '^name: beryllium-project-management$'
 require_pattern "$skill" '^user-invocable: false$'
@@ -486,6 +502,9 @@ expect_exit "project-tasking generates committed request views" 0 \
 require_file "$tasking_pm/outbox/tasking/direct-component.md"
 require_file "$tasking_pm/outbox/tasking/symlink-component.md"
 require_text "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-004'
+require_text "$tasking_pm/outbox/tasking/direct-component.md" '| Assigned to |'
+require_text "$tasking_pm/outbox/tasking/direct-component.md" \
+    '| `PMR-004` | P1 | `other-component` |'
 refute_pattern "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-00[23]'
 expect_output "project-tasking resolves a component name" "PMR-001" \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
@@ -507,6 +526,26 @@ resolve_from_workspace_entry() {
 }
 expect_output "documented resolver works from a symlink workspace entry" "PMR-002" \
     resolve_from_workspace_entry "$tasking_workspace/symlink-component"
+resolve_from_workspace_root() {
+    (
+        cd -- "$tasking_workspace" || exit 2
+        env PM_TASKING_ROOT="$tasking_pm" \
+            PM_TASKING_WORKSPACE="$tasking_workspace" \
+            bash ./project-manager/scripts/project-tasking.sh resolve direct-component
+    )
+}
+expect_output "workspace-root resolver form works" "PMR-001" \
+    resolve_from_workspace_root
+resolve_from_physical_symlink_target() {
+    (
+        cd -- "$tasking_target" || exit 2
+        env PM_TASKING_ROOT="$tasking_pm" \
+            PM_TASKING_WORKSPACE="$tasking_workspace" \
+            bash "$tasking_pm/scripts/project-tasking.sh" resolve .
+    )
+}
+expect_output "explicit PM tasking roots resolve a physical symlink target" "PMR-002" \
+    resolve_from_physical_symlink_target
 expect_exit "project-tasking check accepts current generated views" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check

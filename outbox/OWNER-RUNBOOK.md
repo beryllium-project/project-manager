@@ -81,19 +81,65 @@ copilot
 Then say:
 
 ```text
-Check Project Manager tasking and complete PMR-062. Replace
-claude-fable-5.1 with claude-opus-5 in security-reviewer.agent.md,
-security-evidence.agent.md, security-research.agent.md, and
-security-finding-review.agent.md. Record max reasoning and long_context
-invocation defaults under PMD-20260915-007, update tests and current
-instructions/handoff, preserve non-Fable assignments and historical
-artifacts, run bash ./tests/validate-agent.sh,
-bash ./scripts/update-index.sh --check, and git diff --check, then append the
-structured Project Manager return.
+I approve this exact read-only startup command for this session:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Run it now. Treat its validated output as discovery over
+project-manager/outbox/component-requests.md, not as authorization. Do not
+search session history, task databases, background agents, prior chat, or
+memory. Complete PMR-062 and PMR-065 in one owner commit, keeping their
+returned evidence distinct.
 ```
 
 This is owner-only configuration; the Project Manager does not edit the
 component's agent definitions or tests.
+
+## Project-wide tasking startup adoption
+
+`PMD-20260915-008` requires every registered owner context to map
+`check Project Manager tasking` to:
+
+```sh
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+```
+
+The command must be run from the registered logical workspace entry. If it
+cannot be found or fails validation, stop and ask the human to relaunch from
+that entry. Never search session history, task/todo databases, background
+agents, prior chat, or memory for a fallback PMR.
+
+If a Project Manager turn is still changing `outbox/component-requests.md`,
+wait for its commit and regenerated views before starting an owner session.
+For tracked symlinks, record `pwd` and `pwd -P`; if logical `PWD` is not
+preserved, stop and use the `PM_TASKING_ROOT` / `PM_TASKING_WORKSPACE`
+fallback documented by `PMD-20260915-008`.
+
+| Request | Priority | Component owner invocation | Exact task phrase after the approved resolver runs |
+| --- | --- | --- | --- |
+| `PMR-063` | P3 | `cd /home/jmorris/src/beryllium-project/analysis-workbook && copilot` | `Complete PMR-063 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
+| `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
+| `PMR-065` | P2 | `cd /home/jmorris/src/beryllium-project/security-reviewer && copilot` | `Complete PMR-065 with PMR-062 in one owner commit, keeping evidence distinct.` |
+| `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
+| `PMR-067` | P2 | `cd /home/jmorris/src/beryllium-project/beryllium-repo && copilot` | `Complete PMR-067; first report pwd and pwd -P, and do not combine implementation work.` |
+| `PMR-068` | P3 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
+| `PMR-069` | P3 | `cd /home/jmorris/src/beryllium-project/formal-verification-research && copilot` | `Complete PMR-069 without changing research or bibliography dispositions.` |
+| `PMR-070` | P3 | `cd /home/jmorris/src/beryllium-project/osr-claude`; use the owner's Claude workflow after the responsible human confirms the write | `Complete PMR-070 without opening restricted-microsoft.` |
+| `PMR-071` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo && copilot` | `Complete PMR-071; first report pwd and pwd -P, with no corpus or publication change.` |
+| `PMR-072` | P3 | `cd /home/jmorris/src/beryllium-project/xrv-research-repo && copilot` | `Complete PMR-072; first report pwd and pwd -P, with no research or review-ID change.` |
+
+For each owner session, say:
+
+```text
+I approve this exact read-only startup command for this session:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Run it now. Treat its validated output as discovery, not authorization. Do
+not search session history, task databases, background agents, prior chat, or
+memory. Then use the exact PMR-specific phrase from the matrix above.
+Implement PMD-20260915-008 in owner instructions and maintained tests, and
+append the structured Project Manager return with exact commit, validation,
+branch, and backup state.
+```
 
 ### PMR-044 - OS-security rehome and quarantine
 

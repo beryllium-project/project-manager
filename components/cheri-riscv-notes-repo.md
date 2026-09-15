@@ -82,4 +82,7 @@ artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 license, authorship, public-mirror, and corpus-integrity gates
 close. The existing internal repository then remains an inactive reference;
-no symlink or remote changes occur before owner verification.
+no symlink or remote changes occur before owner verification. `PMR-071` asks
+the owner-facing instructions to map `check Project Manager tasking` to the
+exact fail-closed resolver without session-history fallback; it changes no
+corpus or publication gate.

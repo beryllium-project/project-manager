@@ -139,4 +139,6 @@ Responsible-human reconciliation of the current detached checkout,
 may proceed. The backup push recorded by `PMR-018` remains historical
 evidence. A remote-tracking ref or tag is not publication evidence or gate
 review by the Project Manager. The Project Manager never creates an H7 gate,
-pushes, publishes, or releases.
+pushes, publishes, or releases. `PMR-068` asks the ordinary Copilot/skill
+owner context to map `check Project Manager tasking` to the exact fail-closed
+resolver without session-history fallback; it changes no frozen ref or gate.

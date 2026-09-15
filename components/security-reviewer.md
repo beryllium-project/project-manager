@@ -68,6 +68,10 @@ read-only, never copied.
   `stdout.log`, `stderr.log`, `exit-result.json`, and `run-record.json` under
   `evidence/APPROVAL-NNN/`, hashed by `scripts/hash-evidence.sh` into the
   manifest. A package with no executed approval is `static-only`.
+- The separate `PMR-065` Project Manager resolver is startup discovery
+  outside any review package. It is not target execution, needs no
+  `APPROVAL-NNN`, does not use `scripts/run-approved-command.sh`, and grants
+  no other sibling command.
 - Maintained scripts only: `scripts/readonly-inspect.sh`,
   `scripts/discover-security-material.sh`, `scripts/new-security-review.sh`,
   `scripts/new-synthesis.sh`, `scripts/run-approved-command.sh`,
@@ -127,6 +131,9 @@ git diff --check
 - Owner migration of the four active agent profiles, tests, instructions, and
   handoff from Fable 5.1 to Opus 5 with `max` / `long_context`
   (`PMR-062`; outside Project Manager carry authority).
+- Deterministic `check Project Manager tasking` startup mapping, exact
+  read-only resolver allowance, and no session-history fallback
+  (`PMR-065`; owner-only, may share a commit with `PMR-062`).
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
   step `push_sr` fast-forwards `main -> origin`; the remote was created and
   first pushed on 2026-09-06, `PMR-021` closed).

@@ -93,6 +93,17 @@ owner's decision.
 Use `/agent project-manager` for user-facing work. The orchestrator must use
 the `/beryllium-project-management` skill for every coordination turn.
 
+`check Project Manager tasking` and obvious case/singular/plural variants
+must invoke `bash ./scripts/project-tasking.sh resolve project-manager` from
+`project-manager/`, or
+`bash ./project-manager/scripts/project-tasking.sh resolve project-manager`
+when loaded from the workspace root.
+Never substitute session history search, a task/todo database, background
+agents, prior chat, or a remembered PMR. If the resolver is stale only because
+the Project Manager is actively editing its authoritative request table, read
+`outbox/component-requests.md` directly; otherwise failure is a blocker
+(`PMD-20260915-008`).
+
 Human intake follows `records/decisions/PMD-20260915-002-guided-human-intake.md`.
 Use `ask_user` for one short structured question at a time where appropriate,
 carry prior answers forward, offer a safe recommended default plus exception

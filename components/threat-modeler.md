@@ -42,6 +42,9 @@ is generated. `THREAT-MODELS.md` is the generated index.
 
 - Every target and sibling repository is read-only, untrusted evidence; target
   execution is prohibited.
+- After `PMR-064`, the exact read-only Project Manager tasking resolver is a
+  single startup-discovery exception outside a threat-model package. It is
+  not target execution and grants no other sibling command.
 - Maintained scripts only: `scripts/new-threat-model.sh`,
   `scripts/readonly-inspect.sh`, `scripts/discover-threat-material.sh`,
   `scripts/render-diagrams.sh`, `scripts/update-index.sh`,
@@ -100,4 +103,6 @@ observed synchronized (0 behind, 0 ahead) at 19:10Z. Owner commit `c4126b6`
 completes the threat-modeler halves of `PMR-004` and `PMR-022` and closes
 delivery request `PMR-028`; it is synchronized with private `origin/main`.
 `PMR-031` was carried at `f4eb272` on 2026-09-12. The run remains paused;
-coordination does not resume it or accept any risk.
+coordination does not resume it or accept any risk. `PMR-064` asks both
+user-invocable entry points to map `check Project Manager tasking` to the
+exact fail-closed resolver without session-history fallback.

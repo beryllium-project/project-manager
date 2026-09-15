@@ -66,6 +66,19 @@ research, analysis, threat models, provenance findings, or human decisions.
 
 ## Phase 1: restart
 
+If the user says `check Project Manager tasking` or an obvious
+case/singular/plural variant, first invoke
+`bash ./scripts/project-tasking.sh resolve project-manager` from the Project
+Manager repository, or
+`bash ./project-manager/scripts/project-tasking.sh resolve project-manager`
+from the workspace root. Treat its
+validated output as discovery over `outbox/component-requests.md`. Never
+search session history, a task/todo database, background agents, or prior chat
+as a fallback, and never infer a PMR from memory. If the view is stale only
+because this Project Manager turn is editing the authoritative request table,
+read that table directly; otherwise report resolver failure as a blocker
+(`PMD-20260915-008`).
+
 1. Read `../SOT.md`, then `HANDOFF.md` from its first screen, then
    `../COMPONENTS.md`.
 2. Run `bash ./scripts/inspect-components.sh status`. It reports the parent

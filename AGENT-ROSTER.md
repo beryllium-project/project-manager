@@ -30,6 +30,18 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 The generated view is discovery only and fails closed when its PM commit or
 request-table snapshot is stale.
 
+Every component owner entry point must map `check Project Manager tasking`
+and obvious case/singular/plural variants to that exact command. Resolver
+failure stops; agents never search session history, task/todo databases,
+background agents, prior chat, or memory for a PMR fallback
+(`PMD-20260915-008`). Component-owner adoption is tracked by
+`PMR-063..PMR-072`.
+
+For allow-listed orchestrators, this resolver is startup discovery outside an
+analysis, threat-model, provenance, or security-review package. It is not
+target execution, needs no package approval record, and does not use a target
+command runner. No other sibling command is permitted by this exception.
+
 Before any listed agent writes, it checks the target repository's worktree
 and active-session signals. User statements and handoffs can establish an
 active session even when Git is clean; concurrent writes wait for an explicit
@@ -40,10 +52,10 @@ handoff.
 | Component | User-invocable agent | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
 | `project-manager/` | `project-manager` | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context` under project-wide `PMD-20260915-007`) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
-| `analysis-workbook/` | `analysis-workbook` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only |
-| `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
-| `security-reviewer/` | `security-reviewer` | `security-evidence` (read, search); `security-research` (read, search, web); `security-finding-review` (read, search); all four profiles currently pin Fable 5.1 and are owner migration `PMR-062` to Opus 5 / `max` / `long_context` | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; the only target execution is a command the user approves by exact text, run through `scripts/run-approved-command.sh` with retained, hashed evidence |
-| `provenance-review/` | `provenance-review` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
+| `analysis-workbook/` | `analysis-workbook`; tasking startup adoption `PMR-063` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only |
+| `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking startup adoption `PMR-064` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
+| `security-reviewer/` | `security-reviewer`; tasking startup adoption `PMR-065` | `security-evidence` (read, search); `security-research` (read, search, web); `security-finding-review` (read, search); all four profiles currently pin Fable 5.1 and are owner migration `PMR-062` to Opus 5 / `max` / `long_context` | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; the only target execution is a command the user approves by exact text, run through `scripts/run-approved-command.sh` with retained, hashed evidence |
+| `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
 
 ## Invocation and validation
 
@@ -104,6 +116,8 @@ git diff --check
 The agent performs discovery and asks the user to choose `Review existing`,
 `Review and draft successor`, `Create from evidence`, `Edit scope`, or
 `Cancel` before allocating a package. Target execution is prohibited.
+After `PMR-064`, the PM resolver is separate read-only startup discovery
+outside a threat-model package, not target execution.
 
 ### security-reviewer
 
@@ -127,6 +141,10 @@ package for the same target; synthesis is the only multi-package mode. Its
 contract derives from the Helium `agent-review/` artifacts at `9b3ff4e`
 (`AUTHORS.md` in the component); Helium is unchanged.
 
+After `PMR-065`, the PM resolver is separate startup discovery outside a
+package, is not target execution, and uses neither `APPROVAL-NNN` nor
+`scripts/run-approved-command.sh`.
+
 ### provenance-review
 
 ```sh
@@ -144,12 +162,12 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 
 | Component | Local agent material | Maintained check surface | Who runs it |
 | --- | --- | --- | --- |
-| `helium-te-poc/` | skill `helium-documentation`; `.github/copilot-instructions.md`; `HANDOFF.md` | `./he check`, `./he test`, `./he fv-check`, `./he docs-check`, `./he evaluate` | Human or the Helium line's own agent session |
-| `beryllium-repo` | On active/default branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`; `PMR-057` closed at owner return `f05ccb3` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or an ordinary Copilot owner session; no user-invocable custom agent |
-| `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` (`PMR-035`) and `784be93` (`PMR-037`, `PMR-042`, `PML-0024`) | none configured | Owner |
-| `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md` | `tools/md-to-html.sh --check` | Owner's Claude agent |
-| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `automation/design.md`, `automation/schema.md`; `.github/` policy files; no agent definition observed | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
-| `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md` | none configured | Owner |
+| `helium-te-poc/` | skill `helium-documentation`; `.github/copilot-instructions.md`; `HANDOFF.md`; tasking startup adoption `PMR-068` | `./he check`, `./he test`, `./he fv-check`, `./he docs-check`, `./he evaluate` | Human or the Helium line's own agent session |
+| `beryllium-repo` | On active/default branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`; `PMR-057` closed; tasking startup adoption `PMR-067` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or an ordinary Copilot owner session; no user-invocable custom agent |
+| `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; tasking startup adoption `PMR-069`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` and `784be93` | none configured | Owner |
+| `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md`; tasking startup adoption `PMR-070` | `tools/md-to-html.sh --check` | Owner's Claude agent |
+| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `.github/` policy files; no agent definition observed; tasking startup adoption `PMR-071` | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
+| `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; tasking startup adoption `PMR-072` | none configured | Owner |
 
 ## Orchestration rules
 
