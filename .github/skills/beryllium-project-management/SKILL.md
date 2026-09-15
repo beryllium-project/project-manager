@@ -210,6 +210,12 @@ the sibling documents consulted. Reconcile each returned discrepancy: fix
 items as stop conditions until resolved or explicitly recorded as open. The
 auditor decides nothing.
 
+For review and evaluation delegations after the 2026-09-15 coordination
+session, invoke `claude-opus-5` with reasoning effort `max` and context tier
+`long_context` unless the responsible human explicitly specifies otherwise
+(`PMD-20260915-006`). Do not restart an already launched task merely to apply
+this future default.
+
 ## Phase 7: validate
 
 ```sh

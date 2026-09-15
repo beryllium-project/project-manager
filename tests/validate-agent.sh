@@ -197,10 +197,16 @@ require_pattern "$agent" '^tools: \["read", "search", "execute", "edit", "agent"
 require_text "$agent" '/beryllium-project-management'
 
 require_pattern "$auditor" '^name: pm-auditor$'
-require_pattern "$auditor" '^model: claude-fable-5.1$'
+require_pattern "$auditor" '^model: claude-opus-5$'
 require_pattern "$auditor" '^user-invocable: false$'
 require_pattern "$auditor" '^tools: \["read", "search"\]$'
 refute_pattern "$auditor" '"(execute|edit|web|agent)"'
+for f in "$agent" "$auditor" "$skill" "$instructions" "$interface"; do
+    require_text "$f" 'claude-opus-5'
+    require_text "$f" 'max'
+    require_text "$f" 'long_context'
+    require_text "$f" 'PMD-20260915-006'
+done
 
 require_pattern "$skill" '^name: beryllium-project-management$'
 require_pattern "$skill" '^user-invocable: false$'

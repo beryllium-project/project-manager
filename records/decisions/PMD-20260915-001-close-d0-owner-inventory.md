@@ -4,7 +4,8 @@
 - **Created:** 2026-09-15
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20260915-005` for disposition 9's Beryllium target
+  identity only
 
 ## Scope
 

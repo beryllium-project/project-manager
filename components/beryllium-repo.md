@@ -9,9 +9,16 @@
   `PMR-NNN` request handed to the human
 - **Agent:** none user-invocable; maintained skills `helium-documentation`,
   `human-review-summary`, `reviewable-turn-summary`
-- **Local instructions to read first:** `.github/copilot-instructions.md`,
-  `planning/HANDOFF.md`, `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`
-- **Observed state:** see `../../COMPONENTS.md`
+- **Local instructions to read first:** on the selected active branch,
+  `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
+  `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; only generic
+  `.github/copilot-instructions.md` exists on the current placeholder `main`
+- **Observed state:** see `../../COMPONENTS.md`. Current checkout is a dirty
+  placeholder `main` at `a7809db` and exposes only a one-line `README.md`
+  plus generic uninitialized-project instructions; the responsible human
+  selected synchronized `beryllium/single-hart-runtime-r0` at `65f6d89` as
+  the active branch. Do not run maintained Beryllium commands until
+  `PMR-057` restores that branch and its owner handoff
 
 ## Role
 
@@ -43,7 +50,11 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 - The root Makefile is an inspectable lower-level graph without a `help`
   target.
 
-## Commands (run by the human or the component's own agent, from `../beryllium-repo/`)
+## Commands
+
+Run these only after the owner has restored
+`beryllium/single-hart-runtime-r0` under `PMR-057`; they are not present on
+the currently checked-out placeholder `main`.
 
 ```sh
 npm ci
@@ -58,10 +69,10 @@ npm ci
 
 ## What the Project Manager may request
 
-Reconciliation of the component's own `planning/HANDOFF.md` (stale workstation
-path and H0 commit wording; `PMR-003`, P2 since 2026-09-06, with the exact
-owner-session invocation in `../outbox/OWNER-RUNBOOK.md`; never performed by
-the Project Manager or its helper); the two responsible-human H0 input selections
+Reconciliation of the new active repository, active checkout, and component's
+own `planning/HANDOFF.md` (including the stale workstation path and H0 commit
+wording) under `PMR-057`, which supersedes `PMR-003` and `PMR-043`; the two
+responsible-human H0 input selections
 recorded in `../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
 and superseding `PMD-20260912-002` (candidate copies have reappeared but their
 identity and suitability remain unverified; `PMR-032`); nothing that infers
@@ -84,15 +95,15 @@ records the triage (read-only text search at `65f6d89`); if the owner later
 writes one, a superseding Project Manager record cites it. This is not
 acceptance of any Beryllium target or work.
 
-The confirmed target for a new private active GitHub home is
-`agentic-os-research/beryllium` (`PMD-20260914-003`, confirmed by
-`PMD-20260915-001`; `PMR-043`). The organization rename is complete
-(`PMD-20260915-003`), so `PMR-043` is repository-owner actionable. The bounded local D0
-inventory is recorded in `PMD-20260914-004`; authenticated remote,
-authorship, licensing, and service-state owner inventory is closed by
-`PMD-20260915-001` / `PMR-049`. Every successor starts private.
-The current Microsoft
-repository remains an inactive historical reference after the new home is
-verified. Repository creation, history push, remote changes, handoff updates,
-and any local symlink retarget are owner actions; none changes the acceptance
+The responsible human revised the private active GitHub home to
+`beryllium-project/beryllium-hypervisor` and reported the manual push
+complete (`PMD-20260915-005`). The same record selects
+`beryllium/single-hart-runtime-r0` as the active branch. Sanitized refs show
+that branch synchronized at `65f6d89` on `origin`, with the former Microsoft
+reference retained under `msft-downstream`; the current checkout is instead
+dirty placeholder `main` at `a7809db`. `PMR-057` requires owner verification
+of complete history/default branch and restoration of the active checkout
+and handoff. No workspace symlink change is directed. Repository creation,
+history push, remote and default-branch changes, handoff updates, and any
+future local symlink retarget remain owner actions; none changes acceptance
 or authorization state.

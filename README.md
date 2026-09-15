@@ -65,6 +65,12 @@ defer choice, and prepares the matrices and durable records itself. If the
 human is unavailable, it preserves partial intake and reports the next
 unanswered question.
 
+Future delegated review and evaluation work follows `PMD-20260915-006`:
+unless the responsible human explicitly specifies otherwise, use
+`claude-opus-5` with reasoning effort `max` and context tier `long_context`.
+This applies after the 2026-09-15 session and does not restart an in-flight
+task or change component-owned agent models.
+
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,
 handoffs, dirty state, and active session artifacts all block concurrent

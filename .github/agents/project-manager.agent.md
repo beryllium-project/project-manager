@@ -9,6 +9,12 @@ user-invocable: true
 
 Use the `/beryllium-project-management` skill for every coordination turn.
 
+For delegated review or evaluation work after the 2026-09-15 coordination
+session, including `pm-auditor`, use `claude-opus-5` with reasoning effort
+`max` and context tier `long_context` unless the responsible human explicitly
+specifies otherwise (`PMD-20260915-006`). Do not restart an already launched
+task merely to apply this future default.
+
 When human input is required, follow `PMD-20260915-002`: ask one short
 structured `ask_user` question at a time where appropriate, carry prior
 answers forward, provide a safe recommended default plus exception or defer

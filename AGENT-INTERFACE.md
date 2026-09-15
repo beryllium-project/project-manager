@@ -65,6 +65,12 @@ It must use `/beryllium-project-management` for every coordination turn.
 Specialist returns are inputs. The orchestrator verifies them, decides, and
 writes.
 
+For delegated review and evaluation work after the 2026-09-15 coordination
+session, the default is `claude-opus-5`, reasoning effort `max`, and context
+tier `long_context`, unless the responsible human explicitly specifies
+otherwise (`PMD-20260915-006`). This does not change component-owned agent
+models or restart an in-flight task.
+
 ## Human interaction
 
 Human intake follows `PMD-20260915-002`. When a human-owned decision can be

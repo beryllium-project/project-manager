@@ -20,16 +20,14 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at `3a40583`, two commits ahead of
-  `origin/main`; the latest Project Manager class-3 carry closes `PMR-033` by
-  distinguishing the pre-carry synchronized `9ca5071` state from carried
-  `c13c36e`. The earlier carry closes `PMR-030` and `PMR-031` by refreshing
-  only registration, backup, and current assurance-pointer wording. No
-  engagement has run.
+- **Observed state:** clean `main` at `12fd9fb`, three commits ahead of
+  `origin/main`; the latest Project Manager class-3 carry closes `PMR-056`
+  after `PMR-033` at `3a40583`. The earlier carries close `PMR-030` and
+  `PMR-031`. No engagement has run.
   `PMD-20260914-003` keeps this independent review component separate; its
   placement remains under `beryllium-project` for now under
-  `PMD-20260915-001`. `PMR-056` tracks the handoff's post-carry current-HEAD,
-  date, and coordination-update refresh
+  `PMD-20260915-001`. `PMR-060` tracks stable post-refresh handoff wording
+  without another self-stale "current HEAD" claim
 
 ## Role
 
@@ -88,8 +86,9 @@ read-only, never copied.
   implemented.
 - Its registered target set (`scripts/readonly-inspect.sh`) names every other
   workspace component including `project-manager`; `security-reviewer` itself
-  is never a target. Sibling `readonly-inspect.sh` lists do not yet name
-  `security-reviewer` (`PMR-022`, owner-only).
+  is never a target. Threat-modeler now names `security-reviewer` at
+  `c4126b6`; only the analysis-workbook registration remains owner-side
+  (`PMR-050`).
 
 ## Outbound queue
 
@@ -119,8 +118,9 @@ git diff --check
 
 - Registration of a new target component in `scripts/readonly-inspect.sh`
   (owner-only; scripts are outside every carry class).
-- Project Manager-role wording changes in `AGENT-INTERFACE.md` or
-  `RESEARCH-SOURCES.md` (class 3, carried).
+- Project Manager-role and coordination wording changes in
+  `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, or `HANDOFF.md` (class 3,
+  carried). `PMR-060` is the next stable historical-wording refresh.
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
   step `push_sr` fast-forwards `main -> origin`; the remote was created and
   first pushed on 2026-09-06, `PMR-021` closed).

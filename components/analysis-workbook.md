@@ -14,11 +14,13 @@
   skill `beryllium-analysis`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at owner commit `2374115`, eight commits
-  ahead of `origin/main`. It adds `CRQ-002`, mirrors `CRQ-001` as completed,
-  and partially completes `PMR-038`; Project Manager carry `b93722b` remains
-  its parent. `PMD-20260915-001` keeps this Be-specific workbench under
-  `beryllium-project` for now
+- **Observed state:** dirty `main` based at owner commit `2374115`, eight
+  commits ahead of `origin/main`. The active worktree adds complete private
+  session `AWB-20260915-001-smdbltrp-consideration`, four source rows
+  `PMQ-027..030`, and generated index/log changes. It is an owner-session
+  coordination lock; `PMR-059` requests its commit/return and the one due
+  `PMQ-029` status edit. `PMD-20260915-001` keeps this Be-specific workbench
+  under `beryllium-project` for now
 
 ## Role
 
@@ -129,6 +131,13 @@ the outbox has two surfaces, `HANDOFF.md` still calls the clean committed
 update uncommitted, and no structured Project Manager return names the
 partial result.
 
+The active dirty session adds `PMQ-027..030`. Ledger rows
+`PML-0028`, `PML-0029`, and `PML-0031` route the specification, QEMU series,
+and corrected exact OpenSBI pointer to XRV under `PMR-058` after `PMR-045`.
+`PML-0030` rejects `PMQ-029` because `PMQ-030` supersedes it. The exact
+class-1 source edit is not carried while the owner session is active;
+`PMR-059` hands it to the owner with the session commit/return.
+
 ## Commands (run by the human, from `../analysis-workbook/`)
 
 ```sh
@@ -142,14 +151,17 @@ git diff --check
 ## What the Project Manager may request
 
 A new analysis session on a named aspect; registration of `project-manager/`
-in its `scripts/readonly-inspect.sh` registered list (the `RESEARCH-SOURCES.md`
-part was carried at `83b97a3`; P3, exact edit in `../outbox/OWNER-RUNBOOK.md`);
+and `security-reviewer` in its `scripts/readonly-inspect.sh` registered list
+(`PMR-004`, `PMR-050`; the `RESEARCH-SOURCES.md` Project Manager part was
+carried at `83b97a3`; exact edit in `../outbox/OWNER-RUNBOOK.md`);
 the remaining stale interface/handoff wording and structured return under
 `PMR-038`; the `CRQ-002` routed mirror and stale open-ID correction under
-`PMR-055`; and, only after `PMR-052` and `PMR-053` return, the bounded
-cap-talk follow-up inquiry under `PMR-054`. These are request-only because the
-collaboration queue and analysis content are outside class 1. Nothing treats
-a session as review or acceptance.
+`PMR-055`; completion/return of the current dirty session plus the handed-over
+`PMQ-029` status edit under `PMR-059`; and, only after `PMR-052` and
+`PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
+These are request-only because the collaboration queue and analysis content
+are outside class 1, while the queue edit is handed to the human only because
+the owner session is active. Nothing treats a session as review or acceptance.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

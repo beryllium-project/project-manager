@@ -7,11 +7,9 @@
   this convention and never touches `sources/restricted-microsoft/`
 - **Agent:** reusable Claude skill `.claude/skills/os-security-research`
 - **Local instructions to read first:** `CLAUDE.md`, `HANDOFF.md`
-- **Observed state:** clean local `main` at `f2edd17`, one commit behind
-  `origin/main` at `e275544` as of the last fetch. The remote commit is the
-  already-recorded `PMR-002` handoff correction; `PMR-027` asks the owner to
-  fast-forward this canonical checkout or state why the older local revision
-  is intentional
+- **Observed state:** clean local `main` synchronized with `origin/main` at
+  `e275544`. The responsible human completed the fast-forward and sanitized
+  state/refs verify the exact result; `PMR-027` is closed
 
 ## Role
 
@@ -56,8 +54,9 @@ The approved target identity is
 `agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`).
 The bounded local D0 inventory is recorded in `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`.
-The organization rename is complete (`PMD-20260915-003`); `PMR-044` still
-waits for local checkout reconciliation `PMR-027`.
+The organization rename is complete (`PMD-20260915-003`) and local checkout
+reconciliation `PMR-027` is closed at synchronized `e275544`; `PMR-044` is
+now owner-actionable.
 The separate private quarantine target is the responsible human's personal
 `os-security-restricted-sources` repository with clean new history and manual
 human transfer.

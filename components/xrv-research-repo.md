@@ -60,6 +60,12 @@ Manager to allocate or change review IDs, integrate guest branches, edit
 research, or push. Pushing local commit `d618935` to reachable `backup`
 remains a separate owner gate (`PMR-039`). `PMR-040` asks the XRV owner to
 review the proposed architecture in analysis-workbook commit `a46dba2`.
+After the verified successor in `PMR-045`, `PMR-058` asks the owner to
+triage the new double-trap specification, QEMU support series, and corrected
+exact OpenSBI pointer from `PML-0028..0031`; they do not establish target
+support or Beryllium adoption.
+After `PMR-052`, `PMR-053` separately asks the owner to review only materially
+relevant returned cap-talk threads.
 
 After D0, the approved active identity is
 `agentic-os-research/cheri-hypervisor-research`

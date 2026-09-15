@@ -106,6 +106,12 @@ sibling interface documents, checks every carried request against its named
 component commit, and returns located discrepancies. Its output is an input,
 never a decision.
 
+For delegated review or evaluation work after the 2026-09-15 coordination
+session, including `pm-auditor`, use `claude-opus-5` with reasoning effort
+`max` and context tier `long_context` unless the responsible human explicitly
+specifies otherwise (`PMD-20260915-006`). Do not restart an already launched
+task merely to apply this future default.
+
 ## Queue and request protocols
 
 Component queues (`../analysis-workbook/outbox/pm-queue.md`,
