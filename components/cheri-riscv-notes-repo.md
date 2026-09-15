@@ -61,7 +61,7 @@ node automation/validate-corpus.mjs
 
 ## What the Project Manager may request
 
-Human-gated inclusion of routed sources (`PMR-009`, P4: the reference database
+Human-gated inclusion of routed sources (`PMR-009`, P3: the reference database
 workflow is BibTeX-first at `ae09213`; no SQLite database is committed and any
 temporary database must reconcile to `references/references.bib`. The two
 `PMQ-008`/`PMQ-011` pointers require the owner's D4 admission decision before
@@ -76,7 +76,8 @@ The approved future active home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug
 (`PMD-20260914-003`, `PMR-046`). The bounded local D0 inventory is
 `PMD-20260914-004`; the guided owner inventory closes `PMR-049` in
-`PMD-20260915-001`. No repository is public-approved now. The `sok/`
+`PMD-20260915-001`, and the organization rename is complete in
+`PMD-20260915-003`. No repository is public-approved now. The `sok/`
 artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 license, authorship, public-mirror, and corpus-integrity gates

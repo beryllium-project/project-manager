@@ -1,10 +1,10 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-15
-**Update scope:** eighteenth coordination turn; verified CHERI notes owner
-commit `ae09213`, closed `PMR-029` and `PMR-020`, and separated stale
-handoff/return cleanup into `PMR-051`. No Project Manager component write or
-external operation was performed.
+**Update scope:** nineteenth coordination turn; recorded the responsible
+human's completed organization rename to `agentic-os-research`. No repository
+creation, transfer, remote, symlink, visibility, quarantine, push, or
+publication action was performed by the Project Manager.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -27,7 +27,7 @@ external operation was performed.
 | Other components | `beryllium-repo` remains clean at `65f6d89`; `security-reviewer` remains at `c13c36e`. |
 | Queues | 26 source-discovery rows / 26 ledger rows plus one transfer row. `PMQ-022`, `024..026` are duplicates; `PMQ-023` is accepted at `784be93`; all five source edits were applied at `b93722b`. Only `PMQ-008` and `PMQ-011` remain `new`/ledger-routed. `HET-001` remains `recorded` with input state `unaccepted`. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
-| Approved target topology | `PMD-20260914-003` records the responsible human's approval of `agentic-os-research` as the future active namespace for independent research, Beryllium, and approved successor repositories. Microsoft homes remain inactive references. `PMD-20260915-001` confirms private targets `beryllium`, `cheri-hypervisor-research`, `os-security-research`, and retained `cheri-riscv-notes`. |
+| Approved target topology | The responsible human confirms the organization is now named `agentic-os-research` (`PMD-20260915-003`). `PMD-20260915-001` confirms private targets `beryllium`, `cheri-hypervisor-research`, `os-security-research`, and retained `cheri-riscv-notes`. Microsoft homes remain future inactive references after verified successors are active. |
 | D0 transition inventory | `PMD-20260914-004` records the bounded local inventory. `PMD-20260915-001` records the guided owner inventory and closes `PMR-049`: no additional Microsoft-origin repositories; all successors private initially; four exact active target names confirmed; workflow/evidence repositories and formal-verification stay under `beryllium-project`; no repository is public-approved now. "None known" remains an owner statement, not an independently authenticated negative finding. |
 | Generated tasking | `PMR-048` is closed citing `PMD-20260914-005`. `scripts/project-tasking.sh` generates ignored per-component views from the committed authoritative request table and resolves either a direct checkout or tracked workspace symlink. It refuses missing, dirty, stale-commit, or wrong-request-blob state rather than showing stale tasking. |
 | Human interaction | `PMD-20260915-002` requires one short structured question at a time where appropriate. The Project Manager carries answers forward and prepares matrices and machine-shaped records; the human is not used as a parsing engine. |
@@ -37,18 +37,16 @@ external operation was performed.
 
 ### One recommended next action
 
-In authenticated GitHub organization settings, rename:
+Start the Beryllium owner session:
 
-```text
-Agentic-OS-Development
-  -> Settings
-  -> Danger zone
-  -> Rename organization
-  -> agentic-os-research
+```sh
+cd /home/jmorris/src/beryllium-project/beryllium-repo
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+copilot
 ```
 
-Return only whether it succeeded and the resulting organization name. Do not
-create or move repositories yet.
+Then say: `check Project Manager tasking`. The owner must ask before creating
+the private successor, pushing history, or changing the active remote.
 
 ### Minimal restart commands
 
@@ -65,15 +63,16 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- Verified clean synchronized CHERI notes topic commit `ae09213`, containing
-  the former 21 changed entries and Copilot trailer.
-- Closed `PMR-029`: the active reconciliation work is committed and backed
-  up on its topic upstream.
-- Closed `PMR-020`: the successful topic push verifies remote access; both
-  topic and `main` refs are synchronized with their tracking refs.
-- Kept `PMR-009` source triage open and now actionable. Opened `PMR-051` for
-  stale pre-push handoff/status wording and the structured owner return.
-- No Project Manager component write or external operation was performed.
+- Recorded the responsible human's exact confirmation that the organization
+  rename succeeded and the resulting name is `agentic-os-research`.
+- Added `PMD-20260915-003` and removed the organization-rename dependency from
+  `PMR-043..PMR-046`.
+- `PMR-043` and `PMR-045` are now repository-owner actionable. `PMR-044`
+  still waits for `PMR-027`. Private successor establishment in `PMR-046` is
+  actionable; license/authorship/public-mirror/corpus-integrity gates remain
+  before publication.
+- No repository creation, transfer, remote, symlink, visibility, quarantine,
+  push, or publication action was performed by the Project Manager.
 
 ## Pending coordination
 
@@ -85,10 +84,10 @@ git -C .. status --short --branch
 | P2 | `PMR-003` | Reconcile the Beryllium implementation handoff's old path and H0 wording. |
 | P2 | `PMR-039` | Review XRV `backup/main..main` and decide whether to push `d618935` to the reachable private backup. |
 | P2 | `PMR-040` | XRV owner reviews the three proposed-architecture documents at analysis-workbook `a46dba2`. |
-| P2 | `PMR-043` | After the organization rename, rehouse Beryllium privately at `agentic-os-research/beryllium`; keep the Microsoft repository reference-only. |
-| P2 | `PMR-044` | After `PMR-027` and the organization rename, rehouse OS security and create the separate personal quarantine repository under the recorded clean-history/manual-transfer model. |
-| P2 | `PMR-045` | After the organization rename, rehouse XRV as `agentic-os-research/cheri-hypervisor-research`. |
-| P2 | `PMR-046` | After the organization rename, rehouse `cheri-riscv-notes`, retain the slug, and preserve the later gated SoK publication pilot. |
+| P2 | `PMR-043` | Rehouse Beryllium privately at `agentic-os-research/beryllium`; keep the Microsoft repository reference-only. |
+| P2 | `PMR-044` | After `PMR-027`, rehouse OS security and create the separate personal quarantine repository under the recorded clean-history/manual-transfer model. |
+| P2 | `PMR-045` | Rehouse XRV as `agentic-os-research/cheri-hypervisor-research`. |
+| P2 | `PMR-046` | Establish the private `cheri-riscv-notes` successor and retain the slug; publication remains separately gated by license, authorship, public-mirror, and corpus-integrity review. |
 | P3 | `PMR-004`, `PMR-050` | Analysis-workbook owner decides the two remaining read-only target-list additions; threat-modeler is complete at `c4126b6`. |
 | P3 | `PMR-014` | Triage the five original formal-verification bibliography pointers. |
 | P3 | `PMR-033` | Correct the security-reviewer handoff's self-stale pre-carry synchronization sentence in the next turn or by its owner. |
@@ -102,13 +101,9 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## Open human gates
 
-- No organization rename, repository creation, repository transfer, history
-  push, remote change, symlink retarget, visibility change, or Pages
-  publication was executed. The human approvals establish target state, not
-  completion of external operations.
-- `PMR-049` is closed, but no organization rename or repository operation has
-  been performed or authorized for agent execution. Each remains a distinct
-  responsible-human action.
+- The organization rename is complete. No repository creation, repository
+  transfer, history push, remote change, symlink retarget, visibility change,
+  quarantine transfer, or Pages publication was executed in this turn.
 - Existing local commits remain unpushed until separately reviewed and
   confirmed.
 - Beryllium H0 acceptance remains open. H1-H4 remain unauthorized. K3
@@ -125,32 +120,37 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 ## What to review
 
 - `../COMPONENTS.md`
+- `../README.md`
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
-- `outbox/component-requests.md` (`PMR-020`, `PMR-029`, `PMR-051`)
+- `outbox/component-requests.md` (`PMR-043..PMR-046`)
+- `records/decisions/PMD-20260915-003-organization-rename-completed.md`
+- `components/beryllium-repo.md`
 - `components/cheri-riscv-notes-repo.md`
-- `../cheri-riscv-notes-repo/meta/handoff.md` at `ae09213`
+- `components/osr-claude.md`
+- `components/xrv-research-repo.md`
 
 ## Validation and commit state
 
 The write-disabled `pm-auditor` found no blocking discrepancy. Its stale and
-minor findings were corrected in the CHERI card, requests, runbook, handoff,
-and registry. No component write was attempted.
+minor findings were corrected in the rename record, dependency notes,
+runbook, cards, handoff, and registry. No component write was attempted.
 
 Pre-commit validation passed:
 
-- `bash ./scripts/validate-pm.sh`: 256 passed, 0 failed;
+- `bash ./scripts/validate-pm.sh`: 267 passed, 0 failed;
 - `bash ./tests/validate-agent.sh`: 304 passed, 0 failed;
 - `bash ./scripts/pull-queues.sh check`: 27/27 exact;
 - `bash ./scripts/inspect-components.sh registry-check`: every registered row
   matched the pre-commit live state;
 - `git diff --check` in this repository and the parent: passed;
-- parent status contained only Project Manager-owned `COMPONENTS.md`.
+- parent status contained only Project Manager-owned `COMPONENTS.md` and
+  `README.md`.
 
 Post-commit tasking generation and current-view checking follow the Project
 Manager commit so each ignored view can name the exact containing HEAD.
 
-This handoff is included in the eighteenth-turn Project Manager commit. Its exact
+This handoff is included in the nineteenth-turn Project Manager commit. Its exact
 HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. Neither commit is pushed
 without explicit same-turn confirmation.
@@ -159,17 +159,14 @@ without explicit same-turn confirmation.
 
 - Live state: `scripts/inspect-components.sh status`, `components`,
   `symlinks`, `registry-check`, `state`, and `refs` output observed
-  2026-09-15T05:57Z.
+  2026-09-15T06:19Z.
 - Queue state: `scripts/pull-queues.sh list`, `edits`, and `check`; 27/27,
   no edit due.
-- User return: "done" after starting the CHERI notes owner session from
-  generated tasking. Clean synchronized commit `ae09213` and its 21-path diff
-  provide owner evidence; the committed handoff lacks the structured return.
-- Commit evidence: read-only owner commit inspection identified the 21 changed
-  paths and Copilot trailer; `inspect-components.sh state` and `refs` supplied
-  the canonical branch, commit, upstream, and backup observations.
+- User return: "done"; guided confirmation: "Yes - it is now
+  agentic-os-research." This is authoritative human evidence of the external
+  organization rename.
 - Required write-disabled `pm-auditor` pass found no blocking discrepancy;
-  stale and minor findings were corrected in the CHERI card, requests,
-  runbook, handoff, and registry.
+  stale and minor findings were corrected in the rename record, dependency
+  notes, runbook, cards, handoff, and registry.
 - Previous full Project Manager handoff: Git object
-  `baa59d6:HANDOFF.md`.
+  `fd085a8:HANDOFF.md`.

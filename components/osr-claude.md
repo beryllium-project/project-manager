@@ -56,6 +56,8 @@ The approved target identity is
 `agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`).
 The bounded local D0 inventory is recorded in `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`.
+The organization rename is complete (`PMD-20260915-003`); `PMR-044` still
+waits for local checkout reconciliation `PMR-027`.
 The separate private quarantine target is the responsible human's personal
 `os-security-restricted-sources` repository with clean new history and manual
 human transfer.

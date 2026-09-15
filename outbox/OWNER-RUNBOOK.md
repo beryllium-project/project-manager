@@ -20,38 +20,27 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: organization rename
+## First action: Beryllium active rehome
 
-The owner inventory is closed by `PMD-20260915-001`. The organization owner
-may now rename:
+The responsible human reports that the organization rename to
+`agentic-os-research` succeeded (`PMD-20260915-003`). No repository was
+created or moved by that action.
 
-```text
-Agentic-OS-Development
-  -> GitHub organization Settings
-  -> Danger zone
-  -> Rename organization
-  -> agentic-os-research
-```
-
-Confirm the target name in the authenticated form immediately before the
-rename. GitHub redirects repository links after an organization rename, but
-the old organization profile/API name does not redirect and the old name can
-be reused. Record the exact result before changing any repository remote.
-
-## P2 coordination blockers
+## P2 repository actions and blockers
 
 ### PMR-043 - Beryllium active rehome
 
-After the organization rename, create the private active home
-`agentic-os-research/beryllium`, verify the complete active branch history,
+Create the private active home `agentic-os-research/beryllium`, verify the
+complete active branch history,
 and update the Beryllium owner handoff and remote. Keep the Microsoft
 repository unchanged as an inactive reference. `beryllium-repo` is
-carry-ineligible; the Project Manager performs none of these actions.
+carry-ineligible; the Project Manager performs none of these actions. The
+owner must ask the responsible human before repository creation, history push,
+or active-remote change.
 
 ### PMR-044 - OS-security rehome and quarantine
 
-After `PMR-027` and the organization rename, use the OS-security owner to
-design the active private
+After `PMR-027`, use the OS-security owner to design the active private
 `agentic-os-research/os-security-research` repository and a separate private
 quarantine repository `os-security-restricted-sources` in the responsible
 human's personal account. It starts with clean new history; the responsible
@@ -62,16 +51,14 @@ treat moving current files as making the existing Git history public-safe.
 
 ### PMR-045 - CHERI hypervisor research identity
 
-After the organization rename, establish
-`agentic-os-research/cheri-hypervisor-research`, preserving the full
+Establish `agentic-os-research/cheri-hypervisor-research`, preserving the full
 `REV-*` and `COLLAB.md` history. Keep the Microsoft-origin home inactive for
 reference. Retargeting the tracked local symlink requires a later exact human
 direction after the active repository and checkout are verified.
 
 ### PMR-046 - CHERI-RISC-V SoK home
 
-After the organization rename, establish
-`agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
+Establish `agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
 `sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
 inactive reference. No public or Pages action occurs until licensing,
 authorship, corpus-integrity, and public-mirror gates close.

@@ -86,7 +86,8 @@ acceptance of any Beryllium target or work.
 
 The confirmed target for a new private active GitHub home is
 `agentic-os-research/beryllium` (`PMD-20260914-003`, confirmed by
-`PMD-20260915-001`; `PMR-043`). The bounded local D0
+`PMD-20260915-001`; `PMR-043`). The organization rename is complete
+(`PMD-20260915-003`), so `PMR-043` is repository-owner actionable. The bounded local D0
 inventory is recorded in `PMD-20260914-004`; authenticated remote,
 authorship, licensing, and service-state owner inventory is closed by
 `PMD-20260915-001` / `PMR-049`. Every successor starts private.
