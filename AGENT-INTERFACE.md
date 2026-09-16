@@ -85,12 +85,6 @@ configuration changes remain owner requests (`PMR-074` for
 `security-reviewer`, closed at owner commit `2e8d205`) and no in-flight task
 is restarted.
 
-The `project-manager` agent inherits the CLI's configured model, reasoning
-effort, and context tier rather than pinning a model in front matter, because
-agent-level model selection resets the CLI effort to the model default. The
-active CLI profile must therefore be `gpt-5.6-sol`, `max`, and `long_context`
-before the agent is selected.
-
 ## Human interaction
 
 Human intake follows `PMD-20260915-002`. When a human-owned decision can be
