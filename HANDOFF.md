@@ -9,8 +9,13 @@ CHERI-RISC-V notes `9a4c5ef`. All three active successors are private under
 remain inactive references and tracked workspace symlinks did not move.
 `PMR-075` separately records XRV's two local-only owner documentation
 commits. The Project Manager wrote no component and performed no repository
-creation, remote change, push, restricted-file transfer, or publication
-action.
+creation, component remote change, restricted-file transfer, or publication
+action. After reviewing closure commits `61d5304` and `afaef46`, the
+responsible human replied `"yes, push"` to the exact request to push Project
+Manager `main` to `origin/main` and parent coordination `main` to
+`upstream/main`, with no component push. This confirmation-record commit and
+the containing parent registry commit are included in those two private
+fast-forward pushes; both are verified synchronized afterward.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -186,7 +191,9 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   privately backed up; `PMR-061` is closed. None changes acceptance or
   authorization.
 - Other component and coordination commits reported ahead of their remotes
-  remain unpushed until separately reviewed and confirmed.
+  remain unpushed until separately reviewed and confirmed. The Project
+  Manager and parent coordination repositories are synchronized by the
+  responsible human-confirmed closure push; XRV `PMR-075` remains separate.
 - Beryllium H0 acceptance remains open. H1-H4 remain unauthorized. K3
   execution remains `NOT RUN`.
 - Helium checkout/ref reconciliation, review, publication, and release remain
@@ -246,8 +253,9 @@ Manager commit so each ignored view can name the exact containing HEAD.
 
 This handoff is included in the thirtieth-turn Project Manager commit. Its
 exact HEAD is recorded afterward in the `project-manager/` row of
-`../COMPONENTS.md`, followed by the parent commit. Neither commit is pushed
-without explicit same-turn confirmation.
+`../COMPONENTS.md`, followed by the parent commit. The responsible human's
+same-turn `"yes, push"` confirmation covers only these Project Manager and
+parent fast-forward pushes; both are verified synchronized after the push.
 
 ## Provenance
 
@@ -257,6 +265,11 @@ without explicit same-turn confirmation.
   CHERI-RISC-V notes `9a4c5ef`; active successor refs and inactive legacy
   refs match the owner returns; the parent and Project Manager were clean.
   No queue edit was due.
+- Responsible-human push confirmation after reviewing `61d5304` and
+  `afaef46`: `"yes, push"` in direct response to the exact private
+  Project Manager `main -> origin/main` and parent
+  `main -> upstream/main` authorization request; no component push was
+  authorized.
 - Previous-turn responsible-human structured choices: narrow finish line
   (`PMR-044..PMR-046`), three isolated parallel lanes, clean non-restricted
   OS-security successor history, and verified successors as `origin` with old
