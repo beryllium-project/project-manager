@@ -11,13 +11,13 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
-- **Observed state:** the symlink resolves to the clean canonical repository
-  on `main` at `d618935`, one ahead of reachable private `backup/main` at
-  `706e708`. The old `origin/main` remains at `ca41490` in the unreachable
-  namespace. `706e708` reconciles the missing intake history; `d618935` adds
-  the owner-controlled collaboration interface and four new intake records.
-  The responsible human reports the deep-research session complete; no
-  successor XRV commit is observed
+- **Observed state:** the unchanged symlink resolves to clean `main` at owner
+  return `456c70b`, two ahead of private active `origin/main` at `d618935`.
+  `legacy-backup/main` remains `706e708`; `msft-inactive/main` remains
+  `ca41490` and was unreachable with the active credential. The active
+  successor preserves history through `d618935`, including `REV-*` and
+  `COLLAB.md`; `PMR-045` is closed and deferred backup request `PMR-075`
+  covers the two local owner documentation commits
 
 ## Role
 
@@ -57,9 +57,11 @@ The Project Manager may request owner review and disposition of
 `REV-20260914-001..013` or report completed-use feedback through the
 owner-controlled collaboration protocol. Nothing authorizes the Project
 Manager to allocate or change review IDs, integrate guest branches, edit
-research, or push. Pushing local commit `d618935` to reachable `backup`
-remains a separate owner gate (`PMR-039`). `PMR-040` asks the XRV owner to
-review the proposed architecture in analysis-workbook commit `a46dba2`.
+research, or push. `PMR-039` is superseded because active private
+`origin/main` now preserves `d618935`; `PMR-075` separately asks whether to
+back up local owner documentation commits `22095a1` and `456c70b`.
+`PMR-040` asks the XRV owner to review the proposed architecture in
+analysis-workbook commit `a46dba2`.
 After the verified successor in `PMR-045`, `PMR-058` asks the owner to
 triage the new double-trap specification, QEMU support series, and corrected
 exact OpenSBI pointer from `PML-0028..0031`; they do not establish target
@@ -67,20 +69,19 @@ support or Beryllium adoption.
 After `PMR-052`, `PMR-053` separately asks the owner to review only materially
 relevant returned cap-talk threads.
 
-After D0, the approved active identity is
+The active private identity is
 `agentic-os-research/cheri-hypervisor-research`
-(`PMD-20260914-003`, `PMR-045`). The former experimental/unknown name becomes
+(`PMD-20260914-003`, `PMR-045`, closed at owner return `456c70b`). The former experimental/unknown name is
 a historical name. It is not an alias unless the owner later chooses a
 GitHub rename or transfer rather than the default new-active-repository
 mechanism. The bounded local D0 inventory is `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`, and
 the successor starts private. The organization rename is complete
-(`PMD-20260915-003`), so `PMR-045` is P1 and repository-owner actionable
-under `PMD-20260916-002`. The verified successor becomes `origin`; the
+(`PMD-20260915-003`). The verified successor is `origin`; the
 existing private backup and old Microsoft-origin home remain explicit
 inactive-reference remotes. History through `d618935`, including `REV-*` and
-`COLLAB.md`, must remain reachable. Repository creation, remote changes, and
-pushes require explicit same-turn responsible-human confirmation.
+`COLLAB.md`, is reachable. Owner documentation commits `22095a1` and
+`456c70b` remain local pending `PMR-075`.
 Microsoft-origin repository state remains an inactive historical
 reference. The current local path and tracked symlink do not move without a
 later explicit target-specific direction. `PMR-072` asks the owner context to

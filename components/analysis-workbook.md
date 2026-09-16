@@ -138,7 +138,8 @@ partial result.
 
 Owner commit `1ef1ac6` adds `PMQ-027..030`. Ledger rows
 `PML-0028`, `PML-0029`, and `PML-0031` route the specification, QEMU series,
-and corrected exact OpenSBI pointer to XRV under `PMR-058` after `PMR-045`.
+and corrected exact OpenSBI pointer to XRV under now-actionable `PMR-058`;
+`PMR-045` is closed.
 `PML-0030` rejects `PMQ-029` because `PMQ-030` supersedes it; the exact
 class-1 source edit is carried at `c7cc0fa`. `PMR-059` remains for the
 repository handoff and structured return only.

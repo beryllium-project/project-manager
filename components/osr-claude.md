@@ -1,15 +1,18 @@
 # osr-claude
 
 - **Workspace entry:** `../osr-claude/` (ignored direct checkout)
-- **Ownership:** agent-owned research archive (Claude research agent); ask the
+- **Ownership:** agent-owned research archive; ask the
   user before any modification. Carry-eligible in principle under the standing
   carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`, but the Project Manager asks the user first per
   this convention and never touches `sources/restricted-microsoft/`
-- **Agent:** reusable Claude skill `.claude/skills/os-security-research`
-- **Local instructions to read first:** `CLAUDE.md`, `HANDOFF.md`
-- **Observed state:** clean local `main` synchronized with `origin/main` at
-  `e275544`. The responsible human completed the fast-forward and sanitized
-  state/refs verify the exact result; `PMR-027` is closed
+- **Agent:** reusable Copilot skill
+  `.github/skills/os-security-research/`
+- **Local instructions to read first:** `.github/copilot-instructions.md`,
+  `HANDOFF.md`
+- **Observed state:** clean `main` at `49fbfd6`, synchronized with private
+  active `origin/main`; clean root snapshot `58f8023` contains the reviewed
+  non-restricted tree, while inactive `legacy-personal/main` preserves old
+  private history at `e275544`. `PMR-044` and `PMR-027` are closed
 
 ## Role
 
@@ -50,29 +53,25 @@ facts" now states the SSH remote and the applied `mktemp` fix);
 registration of routed sources under the owner's rules; backup decisions (the
 remote is a personal account rather than the organization).
 
-The approved target identity is
-`agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`).
+The active private identity is
+`agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`,
+closed at owner return `49fbfd6`).
 The bounded local D0 inventory is recorded in `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`.
 The organization rename is complete (`PMD-20260915-003`) and local checkout
-reconciliation `PMR-027` is closed at synchronized `e275544`; `PMR-044` is
-now P1 and owner-actionable under
-`PMD-20260916-002`.
+reconciliation `PMR-027` is closed at `e275544`.
 The separate private quarantine target is the responsible human's personal
 `os-security-restricted-sources` repository with clean new history and manual
 human transfer.
-The active private successor uses a clean snapshot whose reachable history
+The verified private successor uses root snapshot `58f8023`, whose reachable history
 excludes `sources/restricted-microsoft/`; the complete old private repository
-remains an inactive historical reference. After verification the successor
-becomes `origin`, while the old home remains under an explicit inactive
-remote name. No symlink changes. Each repository creation, remote change,
-push, and restricted-file transfer remains an explicit same-turn human gate.
-The active owner workflow is to become tool-neutral and Copilot-capable after
-D0. The old
-repository remains an inactive reference. Its current history stays private;
+remains an inactive historical reference at `legacy-personal/main`. The
+successor is `origin`; no symlink changed. The active owner workflow is
+tool-neutral and Copilot-capable. The old repository stays private;
 quarantined licensed resources move only through a responsible-human-approved
 plan into a separate private repository visible only to the responsible
 human. The Project Manager never opens or copies the restricted subtree.
-`PMR-070` asks the Claude owner context to implement the exact tasking
+The quarantine exists empty with clean history; no restricted file was copied
+during `PMR-044`. `PMR-070` asks the owner context to implement the exact tasking
 resolver mapping and no-fallback rule; ask the responsible human before that
 OS-security write.

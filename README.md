@@ -65,11 +65,13 @@ defer choice, and prepares the matrices and durable records itself. If the
 human is unavailable, it preserves partial intake and reports the next
 unanswered question.
 
-The current repository-reorganization critical path is
-`PMD-20260916-002`: `PMR-044`, `PMR-045`, and `PMR-046` are the only P1
-finish-line requests and use isolated parallel owner lanes. Non-blocking
-process, research, cleanup, publication, and symlink work waits until those
-three verified returns are reconciled.
+The repository-reorganization critical path in `PMD-20260916-002` is
+complete: `PMR-044`, `PMR-045`, and `PMR-046` closed at verified owner
+returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The active private
+OS-security, XRV, and CHERI-RISC-V notes successors are under
+`agentic-os-research`; old homes remain inactive references and tracked
+workspace symlinks did not move. Publication, licensing, redistribution,
+release, and assurance gates remain unchanged.
 
 Project-wide model assignment follows the role-to-model matrix of
 `PMD-20260916-001` (extending `PMD-20260915-007`): planning, coding,
@@ -230,7 +232,7 @@ bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
 
 Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
 `push_tm` (threat-modeler), `push_xrv` (xrv-research-repo to its current
-tracked `origin`; also `main -> backup` if such a remote exists), `push_osr`
+tracked active `origin`), `push_osr`
 (osr-claude), `push_fvr` (formal-verification-research `main -> backup` when
 the component and remote exist),
 `push_sr` (security-reviewer `main -> origin`, once that remote exists),

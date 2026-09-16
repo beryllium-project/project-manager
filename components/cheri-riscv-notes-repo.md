@@ -17,13 +17,13 @@
   `automation/schema.md`, and the `.github/` policy files; no
   `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` are reconciled at `ae09213`
-- **Observed state:** clean `docs/reconcile-project-status` at owner commit
-  `ae09213`, synchronized 0/0 with
-  `origin/docs/reconcile-project-status`. The commit preserves the former 21
-  changed entries, including the corpus validator and workflow; `PMR-029` and
-  remote-access request `PMR-020` are closed. `main` / `origin/main` remain at
-  `6553092`. The committed handoff/status still describe the pre-push topic
-  state (`PMR-051`)
+- **Observed state:** clean `docs/reconcile-project-status` at owner return
+  `9a4c5ef`, synchronized with private active
+  `origin/docs/reconcile-project-status`; `main` / `origin/main` remain
+  `6553092`. Inactive `gim-inactive` preserves the old internal home, and
+  private `origin/archive/gim-wiki` preserves complete Wiki history through
+  `cd7dc81`. `PMR-046`, `PMR-029`, and `PMR-020` are closed; `PMR-051`
+  remains separate
 
 ## Role
 
@@ -49,7 +49,7 @@ one-to-one with it.
 ## Commands (run by the human, from the repository root)
 
 ```sh
-node automation/build-wiki.mjs ../wiki-build <owner>/<repo>
+node automation/build-wiki.mjs ../wiki-build [owner/repo]
 ```
 
 The topic branch adds a dependency-free corpus validator as a committed
@@ -69,26 +69,27 @@ any class-2 metadata entry; exact
 metadata is in `../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
 public mirror; and reconciliation of the committed handoff/status with the
 now-synchronized topic branch (`PMR-051`). Topic backup is evidenced by the
-matching remote-tracking ref at `ae09213`; the authentication mechanism
+matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
 remains `unknown` (`PMR-020` closed on the observed backup result).
 
-The approved future active home is
+The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug
-(`PMD-20260914-003`, `PMR-046`). The bounded local D0 inventory is
+(`PMD-20260914-003`, `PMR-046`, closed at owner return `9a4c5ef`). The bounded local D0 inventory is
 `PMD-20260914-004`; the guided owner inventory closes `PMR-049` in
 `PMD-20260915-001`, and the organization rename is complete in
-`PMD-20260915-003`. `PMR-046` is P1 under `PMD-20260916-002`: preserve
+`PMD-20260915-003`. The successor preserves
 `main`, `docs/reconcile-project-status`, required refs, checked-in Wiki state,
-and hosted issues 2 and 3; make the verified private successor `origin`;
-retain the internal home as an inactive-reference remote; and leave the
-tracked symlink unchanged. Repository creation, remote changes, hosted-state
-migration, and pushes require explicit same-turn responsible-human
-confirmation. No repository is public-approved now. The `sok/`
+and hosted issues 2 and 3; private `archive/gim-wiki` retains the full prior
+Wiki history because the current organization plan has no private hosted
+Wiki. The verified successor is `origin`, the internal home is
+`gim-inactive`, and the tracked symlink is unchanged. No repository is
+public-approved now. The `sok/`
 artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 license, authorship, public-mirror, and corpus-integrity gates
-close. The existing internal repository then remains an inactive reference;
-no symlink or remote changes occur before owner verification. `PMR-071` asks
+close. The existing internal repository remains the inactive
+`gim-inactive` reference, and the workspace symlink remained unchanged after
+owner verification. `PMR-071` asks
 the owner-facing instructions to map `check Project Manager tasking` to the
 exact fail-closed resolver without session-history fallback; it changes no
 corpus or publication gate.

@@ -53,13 +53,11 @@ through PM tasking/returns but may not invoke it. The specialist does not
 exist until the request closes and must preserve all current Git and human
 gates.
 
-Current priority exception: `PMD-20260916-002` makes `PMR-044`, `PMR-045`,
-and `PMR-046` the only P1 repository-reorganization finish-line requests.
-Their OS-security, XRV, and CHERI-RISC-V notes owner lanes may run in parallel
-from the logical workspace entries using the exact packets in
-`outbox/OWNER-RUNBOOK.md`. Tasking-adoption requests `PMR-070..PMR-072` and
-other non-blocking work are deferred; each owner still invokes the exact
-read-only resolver under explicit human approval and returns through
+The `PMD-20260916-002` repository-reorganization critical path is complete:
+`PMR-044`, `PMR-045`, and `PMR-046` closed at verified owner returns
+`49fbfd6`, `456c70b`, and `9a4c5ef`. The active private successors are under
+`agentic-os-research`; old homes remain inactive references and tracked
+workspace symlinks did not move. Owner results continue through
 `templates/owner-return.md`.
 
 ## Agent components
@@ -180,9 +178,9 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `helium-te-poc/` | skill `helium-documentation`; `.github/copilot-instructions.md`; `HANDOFF.md`; tasking startup adoption `PMR-068` | `./he check`, `./he test`, `./he fv-check`, `./he docs-check`, `./he evaluate` | Human or the Helium line's own agent session |
 | `beryllium-repo` | On active/default branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`; `PMR-057` closed; tasking startup adoption `PMR-067` | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate` | Human or an ordinary Copilot owner session; no user-invocable custom agent |
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; tasking startup adoption `PMR-069`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` and `784be93` | none configured | Owner |
-| `osr-claude/` | Claude skill `os-security-research`; `CLAUDE.md`; `HANDOFF.md`; tasking startup adoption `PMR-070` | `tools/md-to-html.sh --check` | Owner's Claude agent |
-| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `.github/` policy files; no agent definition observed; tasking startup adoption `PMR-071` | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build <owner>/<repo>` | Human |
-| `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; tasking startup adoption `PMR-072` | none configured | Owner |
+| `osr-claude/` | Copilot skill `.github/skills/os-security-research/`; `.github/copilot-instructions.md`; `HANDOFF.md`; active private successor at owner return `49fbfd6`; tasking startup adoption `PMR-070` | `tools/md-to-html.sh --check` | Owner |
+| `cheri-riscv-notes-repo` | `meta/handoff.md`; `CONTRIBUTING.md`; `.github/` policy files; no agent definition observed; active private successor at owner return `9a4c5ef`; tasking startup adoption `PMR-071` | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build [owner/repo]` (successor identity is the default) | Human |
+| `xrv-research-repo` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; active private successor at owner return `456c70b`; tasking startup adoption `PMR-072` | none configured | Owner |
 
 ## Orchestration rules
 
