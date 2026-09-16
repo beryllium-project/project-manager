@@ -280,8 +280,17 @@ End the turn with, in this order:
 2. what the human should review, as exact paths, including every component
    commit made in Phase 4b;
 3. blockers and open human gates, each named;
-4. one specific next action with exact commands and paths, followed by any
+4. a compact current-todo table with columns **Priority**, **Request(s)**,
+   **Blocking status**, and **Human-focused description**, showing P1/P2
+   individually and grouping P3/P4 only when owner/context and blocking state
+   match;
+5. one specific next action with exact commands and paths, followed by any
    further actions in priority order.
+
+Under `PMD-20260916-003`, each todo description says what the work unblocks,
+the principal boundary or cost, and who must act. State why the recommendation
+fits the observed project state, while acknowledging that the human may have
+external priorities the Project Manager cannot see.
 
 Configuration changes are delivered as complete final file contents with
 explicit file operations. Use `unknown` rather than guessing. Never record

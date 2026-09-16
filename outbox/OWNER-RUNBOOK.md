@@ -45,7 +45,7 @@ operation.
 | --- | --- | --- | --- |
 | Done | - | `PMR-027` | OS-security is clean and synchronized at `e275544`. |
 | Done | - | `PMR-044`, `PMR-045` | Private OS-security and XRV successors are verified; old homes remain inactive references. |
-| 1 | P2 | `PMR-052` | OS-security identifies and inspects, or precisely bounds as inaccessible, the public continuation beginning after the final archived March 2016 message; use `2016-04-01` as the acquisition start bound. |
+| Blocked | P4 | `PMR-052` | Wait for the cap-talk archive owners' response; only then may OS-security identify and inspect, or precisely bound as inaccessible, the public continuation from the `2016-04-01` start bound. |
 | 2 | P3 | `PMR-053` | XRV reviews only materially relevant returned threads through its owner intake lifecycle. |
 | 3 | P3 | `PMR-054` | Analysis-workbook adds the revision-bound follow-up inquiry and states whether Q-001 through Q-004 change. |
 
@@ -152,6 +152,12 @@ a comparator baseline, or push without a separate human decision.
 
 ## Deferred P3 housekeeping
 
+- **PMR-076:** locate the responsible human's `kcopilotd` project, then
+  design a Project Manager-owned OSS alignment skill/agent that maintains
+  revision-bound comparisons with upstream and peer projects across LLM
+  policy, development workflow, licensing/redistribution, governance/release,
+  automation/CI, and contribution practices. Preserve fact/inference/proposal/
+  unknown labels; do not write peer repositories or infer human gates.
 - **PMR-075:** XRV owner documentation commits `22095a1` and `456c70b`
   remain local two ahead of private active `origin/main` at `d618935`.
   Review only that range and, if explicitly confirmed in the owner turn, push

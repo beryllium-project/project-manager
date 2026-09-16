@@ -308,6 +308,18 @@ for f in "$agent" "$instructions" "$skill" "$interface" "$readme"; do
     require_prose "$f" 'one short .*question at a time'
 done
 
+todo_summary_record=$repository_root/records/decisions/PMD-20260916-003-contextual-todo-summary.md
+require_file "$todo_summary_record"
+require_text "$todo_summary_record" '**Status:** recorded'
+for f in "$agent" "$instructions" "$skill" "$interface" "$readme"; do
+    require_text "$f" 'PMD-20260916-003'
+    require_text "$f" 'Blocking status'
+    require_text "$f" 'Human-focused description'
+done
+require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20260916-003'
+require_text "$repository_root/../.github/copilot-instructions.md" 'blocking status'
+require_text "$repository_root/../.github/copilot-instructions.md" 'human-focused'
+
 require_text "$auditor" 'You never edit, execute, run Git, use the web'
 require_text "$auditor" 'not decisions, dispositions, or'
 require_text "$readme" '/agent project-manager'

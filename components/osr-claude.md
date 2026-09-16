@@ -74,4 +74,5 @@ human. The Project Manager never opens or copies the restricted subtree.
 The quarantine exists empty with clean history; no restricted file was copied
 during `PMR-044`. `PMR-070` asks the owner context to implement the exact tasking
 resolver mapping and no-fallback rule; ask the responsible human before that
-OS-security write.
+OS-security write. `PMR-052` is blocked while the responsible human waits for
+the cap-talk archive owners' response.

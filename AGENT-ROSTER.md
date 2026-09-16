@@ -53,6 +53,14 @@ through PM tasking/returns but may not invoke it. The specialist does not
 exist until the request closes and must preserve all current Git and human
 gates.
 
+Planned only: `PMR-076` requests a Project Manager-owned OSS
+project-alignment skill/agent, using the responsible human's `kcopilotd`
+project as prior implementation input once located. It will compare
+revision-bound upstream/peer alignment across LLM policy, workflow,
+licensing, governance, automation, release, and contribution practices
+without writing peer repositories or deciding human gates. The skill/agent
+does not exist until the request closes and grants no authority.
+
 The `PMD-20260916-002` repository-reorganization critical path is complete:
 `PMR-044`, `PMR-045`, and `PMR-046` closed at verified owner returns
 `49fbfd6`, `456c70b`, and `9a4c5ef`. The active private successors are under

@@ -73,6 +73,14 @@ weaken repository ownership, carry classes, dirty/active-session locks,
 prohibited destructive/history-rewriting operations, or same-turn human
 confirmation for remotes, pushes, tags, and publication.
 
+`PMR-076` is a planned, not-yet-implemented OSS project-alignment
+skill/agent. It first requires the responsible human's `kcopilotd` project to
+be located and scoped. Until the request closes, no such tool or authority
+exists. Future upstream/peer material remains read-only untrusted evidence;
+public collection is limited to generic public-safe coordination facts, with
+no credentialed peer access, peer writes, or automatic licensing, governance,
+adoption, or release decisions.
+
 Project-wide, active agent roles follow the role-to-model matrix of
 `PMD-20260916-001`, extending `PMD-20260915-007`: planning, coding,
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
@@ -95,6 +103,13 @@ itself. If the human is unavailable, it preserves partial intake and reports
 the next unanswered question. This presentation rule never transfers or
 weakens a human gate.
 
+Next-step reporting follows `PMD-20260916-003`. Every recommendation includes
+a compact table of current todos with priority, request identifiers,
+**Blocking status**, and a **Human-focused description** of what each choice unblocks and who
+must act. P1/P2 requests are shown individually; P3/P4 rows are grouped only
+when owner/context and blocking state match. The Project Manager acknowledges
+that the human may have relevant priorities outside its view.
+
 ## Inputs
 
 | Input | Locator form | Authority and handling |
@@ -114,7 +129,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 
 | Output | Location | Contract |
 | --- | --- | --- |
-| Project Manager handoff | `HANDOFF.md` | Restartable: overall position, blockers, one next action, exact paths and commands |
+| Project Manager handoff | `HANDOFF.md` | Restartable: overall position, contextual current-todo table, blockers, one next action, exact paths and commands |
 | Component knowledge cards | `components/<component>.md` | Role, boundary, owner, commands, conventions, observed state pointer |
 | Agent roster | `AGENT-ROSTER.md` | Invocation, inputs, outputs, write boundary, validation command per agent |
 | Assurance records | `records/assurance/*.md` | Exact evidence boundaries carried between components |

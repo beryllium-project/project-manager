@@ -197,3 +197,10 @@ position, what to review, blockers, open gates, and one specific next action
 with exact commands and paths. Deliver configuration changes as complete final
 file contents with explicit file operations. Keep `HANDOFF.md` restartable
 from its first screen.
+
+Under `PMD-20260916-003`, every next-step recommendation includes a compact
+current-todo table with columns **Priority**, **Request(s)**, **Blocking
+status**, and **Human-focused description**. Show P1/P2 requests individually;
+group P3/P4 only when owner/context and blocking state match. State what each
+choice unblocks and who must act, and acknowledge that the human may have
+external priorities outside Project Manager visibility.

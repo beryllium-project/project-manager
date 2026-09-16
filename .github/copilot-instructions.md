@@ -211,3 +211,10 @@ paths), blockers, open human gates, and one specific next action with exact
 commands and paths. Handoffs must be restartable after days away. Configuration
 changes are delivered as complete final file contents with explicit file
 operations, never as ambiguous snippets.
+
+Every next-step recommendation also includes the compact current-todo table
+required by `PMD-20260916-003`: **Priority**, **Request(s)**, **Blocking
+status**, and **Human-focused description**. P1/P2 rows are individual; P3/P4
+rows may be grouped only when their owner/context and blocking state match.
+Explain what each choice unblocks and who acts, while acknowledging priorities
+outside Project Manager visibility.

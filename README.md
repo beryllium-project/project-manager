@@ -65,6 +65,12 @@ defer choice, and prepares the matrices and durable records itself. If the
 human is unavailable, it preserves partial intake and reports the next
 unanswered question.
 
+Next-step reporting follows `PMD-20260916-003`: every recommendation includes
+a compact current-todo table with priority, request identifiers, **Blocking
+status**, and a **Human-focused description** of what each choice unblocks and who
+must act. P1/P2 work is shown individually; similar P3/P4 work may be grouped.
+The Project Manager explicitly acknowledges priorities outside its view.
+
 The repository-reorganization critical path in `PMD-20260916-002` is
 complete: `PMR-044`, `PMR-045`, and `PMR-046` closed at verified owner
 returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The active private
@@ -131,6 +137,12 @@ implemented and grants no authority. The intended design permits invocation
 only by the Project Manager; component agents request service through durable
 PM tasking/returns. Existing repository ownership, operation prohibitions,
 active-session locks, and human gates remain binding.
+
+`PMR-076` is the planned OSS project-alignment skill/agent todo. It is not yet
+implemented and grants no authority. It requires the responsible human's
+`kcopilotd` project to be located and scoped before design begins; all
+upstream/peer material remains read-only untrusted evidence, and licensing,
+governance, adoption, redistribution, and release remain human decisions.
 
 ## Local requirements
 
