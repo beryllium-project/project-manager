@@ -73,12 +73,16 @@ weaken repository ownership, carry classes, dirty/active-session locks,
 prohibited destructive/history-rewriting operations, or same-turn human
 confirmation for remotes, pushes, tags, and publication.
 
-Project-wide, active review/evaluation profiles substitute `claude-opus-5`
-for Claude Fable 5.1, with reasoning effort `max` and context tier
-`long_context`, unless the responsible human explicitly specifies otherwise
-(`PMD-20260915-007`). Existing non-Fable assignments and historical
-artifacts are unchanged. Component-owned configuration changes remain owner
-requests and no in-flight task is restarted.
+Project-wide, active agent roles follow the role-to-model matrix of
+`PMD-20260916-001`, extending `PMD-20260915-007`: planning, coding,
+coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
+audit use `claude-opus-5`; deep or adversarial security review uses
+`gpt-5.3-codex`; every row uses reasoning effort `max` and context tier
+`long_context`, unless the responsible human explicitly specifies otherwise.
+The `project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
+`claude-opus-5`. Historical artifacts are unchanged. Component-owned
+configuration changes remain owner requests (`PMR-074` for
+`security-reviewer`) and no in-flight task is restarted.
 
 ## Human interaction
 

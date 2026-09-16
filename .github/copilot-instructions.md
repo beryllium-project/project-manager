@@ -117,12 +117,16 @@ sibling interface documents, checks every carried request against its named
 component commit, and returns located discrepancies. Its output is an input,
 never a decision.
 
-Project-wide, substitute `claude-opus-5` for Claude Fable 5.1 in active
-review/evaluation roles, with reasoning effort `max` and context tier
-`long_context`, unless the responsible human explicitly specifies otherwise
-(`PMD-20260915-007`). Preserve non-Fable assignments and historical
-artifacts. Do not restart an already launched task merely to apply the
-default.
+Project-wide, active agent roles follow the role-to-model matrix of
+`PMD-20260916-001`, which extends `PMD-20260915-007`: planning, coding,
+coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, audit,
+and finding iteration use `claude-opus-5`; deep or adversarial security
+review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
+context tier `long_context`, unless the responsible human explicitly
+specifies otherwise for a named task. The `project-manager` orchestrator is
+`gpt-5.6-sol`; `pm-auditor` is `claude-opus-5`. Claude Fable 5.1 is no
+longer a default in any active role. Preserve historical artifacts and do
+not restart an already launched task merely to apply the matrix.
 
 ## Queue and request protocols
 

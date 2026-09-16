@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-15
+**Last refreshed:** 2026-09-16
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -191,6 +191,42 @@ with exact commit and paths. Do not select an implementation target, approve
 a comparator baseline, or push without a separate human decision.
 
 ## P3 housekeeping
+
+- **PMR-074:** Security-reviewer owner moves all four profiles to
+  `gpt-5.3-codex` under `PMD-20260916-001` before the next engagement.
+  From `security-reviewer/`, run `copilot` in an ordinary
+  configuration-maintenance session (not `/agent security-reviewer`, whose
+  execution boundary excludes direct Git), then say
+  `check Project Manager tasking` and approve the printed resolver command.
+  Then say:
+
+  ```text
+  Complete PMR-074 only: set model gpt-5.3-codex in
+  .github/agents/security-reviewer.agent.md, security-evidence.agent.md,
+  security-research.agent.md, and security-finding-review.agent.md; keep
+  reasoning max and context long_context as recorded defaults; update
+  tests/validate-agent.sh, instructions, skill, README, and HANDOFF.md to
+  match; keep historical Opus/Fable references only as provenance or
+  explicit later overrides; run the component validation; record the
+  Project Manager return (commit, validation, backup state) in HANDOFF.md.
+  Do not run any engagement.
+  ```
+
+  Review the diff and, if the session left it uncommitted, commit it
+  yourself; the Project Manager never commits this component's agent files:
+
+  ```sh
+  cd /home/jmorris/src/beryllium-project/security-reviewer
+  git status --short --branch
+  git diff --stat
+  git add .github/agents tests .github/copilot-instructions.md .github/skills AGENT-INTERFACE.md README.md HANDOFF.md
+  git commit -m "PMR-074: move four profiles to gpt-5.3-codex under PMD-20260916-001"
+  git log --oneline -3
+  ```
+
+  Push only if you decide to (`bash project-manager/scripts/owner-actions.sh`
+  per this runbook's push section), then tell the Project Manager the exact
+  commit so `PMR-074` can be verified and closed.
 
 - **PMR-073:** Project Manager designs and implements the planned
   `git-maintainer` specialist. Required design inputs:

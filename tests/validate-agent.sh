@@ -190,7 +190,8 @@ done
 # --- agent front matter --------------------------------------------------------
 
 require_pattern "$agent" '^name: project-manager$'
-require_pattern "$agent" '^model: claude-fable-5.1$'
+require_pattern "$agent" '^model: gpt-5.6-sol$'
+refute_pattern "$agent" '^model: claude-fable-5.1$'
 require_pattern "$agent" '^user-invocable: true$'
 require_pattern "$agent" '^disable-model-invocation: true$'
 require_pattern "$agent" '^tools: \["read", "search", "execute", "edit", "agent", "web", "ask_user"\]$'
@@ -201,11 +202,16 @@ require_pattern "$auditor" '^model: claude-opus-5$'
 require_pattern "$auditor" '^user-invocable: false$'
 require_pattern "$auditor" '^tools: \["read", "search"\]$'
 refute_pattern "$auditor" '"(execute|edit|web|agent)"'
+for f in "$agent" "$skill" "$instructions" "$interface"; do
+    require_text "$f" 'gpt-5.6-sol'
+    require_text "$f" 'gpt-5.3-codex'
+done
 for f in "$agent" "$auditor" "$skill" "$instructions" "$interface"; do
     require_text "$f" 'claude-opus-5'
     require_text "$f" 'max'
     require_text "$f" 'long_context'
     require_text "$f" 'PMD-20260915-007'
+    require_text "$f" 'PMD-20260916-001'
 done
 for f in "$agent" "$skill" "$instructions" "$interface" "$readme" \
     "$repository_root/outbox/tasking/README.md"; do

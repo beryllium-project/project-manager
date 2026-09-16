@@ -14,8 +14,11 @@
   `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing
   inside this component; nothing else
 - **Agents:** `security-reviewer` (user-invocable orchestrator,
-  `claude-opus-5`), `security-evidence`, `security-research`, and
-  `security-finding-review` (write-disabled specialists, also Opus 5);
+  observed `claude-opus-5` at `f2051a4`), `security-evidence`,
+  `security-research`, and `security-finding-review` (write-disabled
+  specialists, also observed Opus 5); open `PMR-074` requests all four move
+  to `gpt-5.3-codex` under the deep-security-review row of
+  `PMD-20260916-001`;
   reasoning `max` / context `long_context` defaults; skill
   `beryllium-security-review`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
@@ -25,12 +28,15 @@
   commit `f2051a4`; `PMR-062` and `PMR-065` are closed independently. The
   four profiles use Opus 5 / `max` / `long_context`, the tasking startup
   resolver contract is active, owner validation reported 319 passed, and no
-  engagement has run
+  engagement has run.
   `PMD-20260914-003` keeps this independent review component separate; its
   placement remains under `beryllium-project` for now under
   `PMD-20260915-001`. `PMD-20260915-007` preserves non-Fable assignments
   and historical artifacts; owner commit `f2051a4` completes the four-profile
-  migration and `PMD-20260915-008` tasking startup contract
+  Opus migration and `PMD-20260915-008` tasking startup contract.
+  `PMD-20260916-001` (responsible-human `all_codex` choice) now assigns
+  deep/adversarial security review to `gpt-5.3-codex`; `PMR-074` is the
+  owner request and no engagement is authorized by it
 
 ## Role
 
@@ -130,6 +136,11 @@ git diff --check
   carried).
 - Owner model migration and deterministic tasking startup are complete at
   `f2051a4` (`PMR-062`, `PMR-065`).
+- Model reassignment of all four profiles to `gpt-5.3-codex` under
+  `PMD-20260916-001` (`PMR-074`, owner-only agent/test/instruction change;
+  the component `HANDOFF.md` at `f2051a4` still says the owner commit has
+  no remote backup, while inspection shows 0/0 with `origin/main`; the
+  return should restate backup state).
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
   step `push_sr` fast-forwards `main -> origin`; the remote was created and
   first pushed on 2026-09-06, `PMR-021` closed).

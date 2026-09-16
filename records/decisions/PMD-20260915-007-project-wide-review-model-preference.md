@@ -4,7 +4,8 @@
 - **Created:** 2026-09-15
 - **Status:** recorded
 - **Supersedes:** `PMD-20260915-006`
-- **Superseded by:** None
+- **Superseded by:** `PMD-20260916-001` (in part: the orchestrator-model
+  statement only; the review/evaluation substitution is retained)
 
 ## Scope
 

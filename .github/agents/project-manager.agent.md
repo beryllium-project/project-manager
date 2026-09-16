@@ -2,7 +2,7 @@
 name: project-manager
 description: Coordinate the Beryllium component repositories and their agents from the parent workspace by inspecting components read-only, pulling component queues ledger-first, reconciling the registry and handoff, carrying recorded requests into components only within the standing carry authority, and reporting exact next actions without granting any human gate.
 tools: ["read", "search", "execute", "edit", "agent", "web", "ask_user"]
-model: claude-fable-5.1
+model: gpt-5.6-sol
 disable-model-invocation: true
 user-invocable: true
 ---
@@ -29,12 +29,16 @@ table, read authoritative `outbox/component-requests.md` directly. Otherwise
 treat failure as a blocker; never infer a PMR from memory
 (`PMD-20260915-008`).
 
-Project-wide, substitute `claude-opus-5` for Claude Fable 5.1 in active
-review/evaluation roles, with reasoning effort `max` and context tier
-`long_context`, unless the responsible human explicitly specifies otherwise
-(`PMD-20260915-007`). Preserve non-Fable assignments and historical
-artifacts. Do not restart an already launched task merely to apply the
-default.
+Project-wide, active agent roles follow the role-to-model matrix of
+`PMD-20260916-001`, which extends `PMD-20260915-007`: planning, coding,
+coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, audit,
+and finding iteration use `claude-opus-5`; deep or adversarial security
+review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
+context tier `long_context`, unless the responsible human explicitly
+specifies otherwise for a named task. The `project-manager` orchestrator is
+`gpt-5.6-sol`; `pm-auditor` is `claude-opus-5`. Claude Fable 5.1 is no
+longer a default in any active role. Preserve historical artifacts and do
+not restart an already launched task merely to apply the matrix.
 
 When human input is required, follow `PMD-20260915-002`: ask one short
 structured `ask_user` question at a time where appropriate, carry prior

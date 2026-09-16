@@ -65,13 +65,15 @@ defer choice, and prepares the matrices and durable records itself. If the
 human is unavailable, it preserves partial intake and reports the next
 unanswered question.
 
-Project-wide review and evaluation model substitution follows
-`PMD-20260915-007`: active Claude Fable 5.1 review/evaluation profiles use
-`claude-opus-5` with reasoning effort `max` and context tier `long_context`,
-unless the responsible human explicitly specifies otherwise. Existing
-non-Fable assignments, the user-facing Project Manager coordination model,
-and historical artifacts are unchanged; component-owned changes are routed
-to their owners.
+Project-wide model assignment follows the role-to-model matrix of
+`PMD-20260916-001` (extending `PMD-20260915-007`): planning, coding,
+coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
+audit use `claude-opus-5`; deep or adversarial security review uses
+`gpt-5.3-codex`; every row uses reasoning effort `max` and context tier
+`long_context`, unless the responsible human explicitly specifies otherwise.
+The `project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
+`claude-opus-5`. Historical artifacts are unchanged; component-owned changes
+are routed to their owners (`PMR-074` for `security-reviewer`).
 
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,
