@@ -20,26 +20,18 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: back up the Beryllium return commits
+## First action: security-reviewer model and tasking startup
 
-`PMR-057` is complete at clean owner return `f05ccb3`. The active/default
-branch and private successor are reconciled, and the ignored owner artifacts
-were preserved. The two return commits remain local and need owner review
-before backup (`PMR-061`).
+Complete `PMR-062` and `PMR-065` together before another security-review
+engagement:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/beryllium-repo
+cd /home/jmorris/src/beryllium-project/security-reviewer
 git status --short --branch
-git log --oneline \
-  origin/beryllium/single-hart-runtime-r0..beryllium/single-hart-runtime-r0
-git diff --stat \
-  origin/beryllium/single-hart-runtime-r0..beryllium/single-hart-runtime-r0
-git push origin beryllium/single-hart-runtime-r0
+copilot
 ```
 
-Push only to private `origin`, never inactive `msft-downstream`. Report the
-resulting synchronized state. This is private backup, not acceptance,
-publication, or release.
+Then paste the exact approved resolver prompt in the `PMR-062` section below.
 
 ## CRQ-002 successor-first sequence
 
@@ -61,24 +53,9 @@ as `routed`, replace the packet's stale `OPEN-001` instruction with current
 
 ## P2 repository actions and blockers
 
-### PMR-061 - Beryllium return-commit backup
-
-Review and push owner commits `3221231` and `f05ccb3` using the first-action
-block above. The active branch is already restored and the default branch is
-already recorded by the owner return.
-
 ### PMR-062 - Security-reviewer model substitution
 
-Before starting another security-review engagement, run an ordinary owner
-session in the clean component:
-
-```sh
-cd /home/jmorris/src/beryllium-project/security-reviewer
-git status --short --branch
-copilot
-```
-
-Then say:
+After starting the ordinary owner session from the first-action block, say:
 
 ```text
 I approve this exact read-only startup command for this session:

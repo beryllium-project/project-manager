@@ -14,10 +14,8 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at owner return commit `f05ccb3`, two
-  ahead of private `origin`; `PMR-057` is closed. Pre-return history through
-  `65f6d89` is backed up, and `PMR-061` asks the owner to review and push the
-  two return commits
+  `beryllium/single-hart-runtime-r0` at owner return commit `f05ccb3`,
+  synchronized with private `origin`; `PMR-057` and `PMR-061` are closed
 
 ## Role
 
@@ -71,8 +69,7 @@ The two responsible-human H0 input selections
 recorded in `../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
 and superseding `PMD-20260912-002` (candidate copies have reappeared but their
 identity and suitability remain unverified; `PMR-032`); nothing that infers
-acceptance. `PMR-061` is the owner-only decision to review and push the two
-PMR-057 handoff/return commits to private `origin`. `PMR-067` asks the
+acceptance. `PMR-061` is closed by synchronized private backup. `PMR-067` asks the
 ordinary Copilot owner context to implement the exact tasking resolver mapping
 whose absence caused the observed session-history fallback.
 
@@ -99,8 +96,8 @@ complete (`PMD-20260915-005`). The same record selects
 `beryllium/single-hart-runtime-r0` as the active branch. Owner reconciliation
 commits `3221231` and `f05ccb3` restore the active checkout, default-branch
 record, inactive `msft-downstream`, maintained workflow, and structured
-return; `PMR-057` is closed. The active branch is clean and two ahead of
-private `origin`, so `PMR-061` is the separate review-and-push decision.
+return; `PMR-057` is closed. The active branch and both return commits through
+`f05ccb3` are synchronized with private `origin`; `PMR-061` is closed.
 No workspace symlink change is directed. Repository creation, history push,
 remote and default-branch changes, handoff updates, and any future local
 symlink retarget remain owner actions; none changes acceptance or
