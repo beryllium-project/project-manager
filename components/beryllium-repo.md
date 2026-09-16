@@ -69,7 +69,11 @@ The two responsible-human H0 input selections
 recorded in `../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
 and superseding `PMD-20260912-002` (candidate copies have reappeared but their
 identity and suitability remain unverified; `PMR-032`); nothing that infers
-acceptance. `PMR-061` is closed by synchronized private backup. `PMR-067` asks the
+acceptance. External K3 COM260 bring-up is in progress in a separate
+environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
+responsible-human readiness return, which does not accept H0, authorize
+H1-H4, or count as Beryllium hardware validation. `PMR-061` is closed by
+synchronized private backup. `PMR-067` asks the
 ordinary Copilot owner context to implement the exact tasking resolver mapping
 whose absence caused the observed session-history fallback.
 

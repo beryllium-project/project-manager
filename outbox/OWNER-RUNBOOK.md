@@ -267,6 +267,16 @@ and the proposed H1/H2 path inventory. Candidate copies of two relevant
 inputs have reappeared under the ignored `files` path, but `PMR-032` has not
 verified them. No selection, acceptance, or authorization is inferred.
 
+## External Beryllium dependency
+
+**P4 `PMR-077`:** K3 COM260 (normalized from the responsible human's
+externally unverified `Com260` term) bring-up is in progress in a separate
+environment/project. Wait for the responsible human's minimal readiness
+return before any Beryllium hardware bring-up. Do not access or import that
+project through this request, and return no serial numbers, credentials,
+keys, tokens, private URLs, or restricted content. Its completion does not
+accept H0, authorize H1-H4, or establish Beryllium hardware validation.
+
 ## Push the completed coordination carries
 
 After reviewing the listed local component commits and the Project
