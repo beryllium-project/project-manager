@@ -70,7 +70,8 @@ visibility.
 | P3 | `PMR-058`, `072`, `075` | **Ready - XRV owner or human action** | Triage new source pointers, add tasking startup behavior, or optionally back up two local documentation commits; none blocks the completed reorganization. |
 | P3 | `PMR-064`, `066`, `068` | **Ready - component-owner configuration** | Add deterministic tasking startup to threat, provenance, and Helium contexts; process reliability only. |
 | P3 | `PMR-070` | **Ready - OS-security owner configuration; ask human first** | Add deterministic tasking startup to the new Copilot owner workflow without accessing restricted material; process reliability only. |
-| P3 | `PMR-073`, `076` | **Deferred/non-blocking - Project Manager design** | Design the Git-maintainer and OSS alignment specialists when infrastructure work is worth prioritizing over project deliverables. |
+| P3 | `PMR-073` | **Deferred/non-blocking - Project Manager design** | Design the Git-maintainer specialist when infrastructure work is worth prioritizing over project deliverables. |
+| P3 | `PMR-076` | **Blocked on locating/scoping `kcopilotd`; otherwise deferred** | Once the responsible human identifies the prior project, design the OSS alignment skill/agent; no search or design work is authorized by the todo itself. |
 | P3 | `PMR-053`, `054` | **Blocked by `PMR-052`** | XRV cap-talk review and workbook follow-up cannot begin until the archive result returns. |
 | P4 | `PMR-052` | **Blocked - waiting on cap-talk archive owners** | The responsible human is already pursuing the external response; no agent action is useful until it arrives. |
 
