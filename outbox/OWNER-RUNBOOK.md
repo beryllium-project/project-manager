@@ -20,18 +20,22 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: security-reviewer model and tasking startup
+## First action: Beryllium tasking startup adoption
 
-Complete `PMR-062` and `PMR-065` together before another security-review
-engagement:
+Security-reviewer `PMR-062` and `PMR-065` are complete at synchronized
+`f2051a4`. Apply the startup contract next to the ordinary Beryllium owner
+context whose failed lookup exposed the gap (`PMR-067`):
 
 ```sh
-cd /home/jmorris/src/beryllium-project/security-reviewer
+cd /home/jmorris/src/beryllium-project/beryllium-repo
+pwd
+pwd -P
 git status --short --branch
 copilot
 ```
 
-Then paste the exact approved resolver prompt in the `PMR-062` section below.
+Then use the exact approved resolver prompt in the tasking-adoption section
+below and say `Complete PMR-067`.
 
 ## CRQ-002 successor-first sequence
 
@@ -52,24 +56,6 @@ as `routed`, replace the packet's stale `OPEN-001` instruction with current
 `OPEN-003`, and mark the superseded `OPEN-001` question row consistently.
 
 ## P2 repository actions and blockers
-
-### PMR-062 - Security-reviewer model substitution
-
-After starting the ordinary owner session from the first-action block, say:
-
-```text
-I approve this exact read-only startup command for this session:
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
-
-Run it now. Treat its validated output as discovery over
-project-manager/outbox/component-requests.md, not as authorization. Do not
-search session history, task databases, background agents, prior chat, or
-memory. Complete PMR-062 and PMR-065 in one owner commit, keeping their
-returned evidence distinct.
-```
-
-This is owner-only configuration; the Project Manager does not edit the
-component's agent definitions or tests.
 
 ## Project-wide tasking startup adoption
 
@@ -95,7 +81,6 @@ fallback documented by `PMD-20260915-008`.
 | --- | --- | --- | --- |
 | `PMR-063` | P3 | `cd /home/jmorris/src/beryllium-project/analysis-workbook && copilot` | `Complete PMR-063 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
 | `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
-| `PMR-065` | P2 | `cd /home/jmorris/src/beryllium-project/security-reviewer && copilot` | `Complete PMR-065 with PMR-062 in one owner commit, keeping evidence distinct.` |
 | `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
 | `PMR-067` | P2 | `cd /home/jmorris/src/beryllium-project/beryllium-repo && copilot` | `Complete PMR-067; first report pwd and pwd -P, and do not combine implementation work.` |
 | `PMR-068` | P3 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
@@ -207,6 +192,25 @@ a comparator baseline, or push without a separate human decision.
 
 ## P3 housekeeping
 
+- **PMR-073:** Project Manager designs and implements the planned
+  `git-maintainer` specialist. Required design inputs:
+  - only `project-manager` can invoke it; component agents submit durable
+    requests through PM tasking or owner returns;
+  - every invocation names exact repository, operation, paths/refs, expected
+    initial state, validation, and requested evidence;
+  - refuse unregistered, dirty, or active repositories unless a separately
+    recorded contract explicitly handles the exact state;
+  - in component repositories, no reset, clean, checkout/switch, stash,
+    rebase, amend, force, or other destructive/history-rewriting operation;
+    any future exception requires a new superseding decision and explicit
+    same-turn responsible-human confirmation;
+  - no remote creation/change, push, tag, publication, or release under the
+    current specialist authority;
+  - produce reviewed diffs/status, exact commit/ref evidence, and a
+    restartable result for the Project Manager;
+  - add synthetic tests for allowed/refused operations and prove component
+    agents cannot invoke it directly.
+
 - **PMR-038:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
   use `/agent analysis-workbook` to finish the partial owner result at
   `2374115`: change the remaining `AGENT-INTERFACE.md` sentence that says the
@@ -297,18 +301,16 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` `eab5f8b` (`PMR-031`);
-- `analysis-workbook` owner commits `4c771c0`, `62ee356`, `a46dba2` and
-  carries `8899176`, `0501243`, `b93722b` (`PML-0018..0027`), followed by
-  owner commits `2374115`, `1ef1ac6`, and carry `c7cc0fa` (`PML-0030`);
+- `analysis-workbook` carry `c7cc0fa` (`PML-0030`) is the only outgoing
+  commit; owner `1ef1ac6` and predecessors are already synchronized;
 - `xrv-research-repo` `706e708` is backed up on `backup/main`; owner commit
   `d618935` is local one ahead, unpushed pending `PMR-039`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` is already backed up through synchronized owner maintenance
   `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
-- `security-reviewer` `c13c36e` (`PMR-030`, `PMR-031`), `3a40583`
-  (`PMR-033`), `12fd9fb` (`PMR-056`), and `79c664f` (`PMR-060`).
+- `security-reviewer`: nothing outgoing; owner `f2051a4` and all predecessors
+  are synchronized with private `origin/main`.
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push

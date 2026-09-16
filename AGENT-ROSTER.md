@@ -47,6 +47,12 @@ and active-session signals. User statements and handoffs can establish an
 active session even when Git is clean; concurrent writes wait for an explicit
 handoff.
 
+Planned only: `PMR-073` requests a `git-maintainer` specialist invocable
+exclusively by `project-manager`. Component agents may request Git service
+through PM tasking/returns but may not invoke it. The specialist does not
+exist until the request closes and must preserve all current Git and human
+gates.
+
 ## Agent components
 
 | Component | User-invocable agent | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
@@ -54,7 +60,7 @@ handoff.
 | `project-manager/` | `project-manager` | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context` under project-wide `PMD-20260915-007`) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
 | `analysis-workbook/` | `analysis-workbook`; tasking startup adoption `PMR-063` | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only |
 | `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking startup adoption `PMR-064` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
-| `security-reviewer/` | `security-reviewer`; tasking startup adoption `PMR-065` | `security-evidence` (read, search); `security-research` (read, search, web); `security-finding-review` (read, search); all four profiles currently pin Fable 5.1 and are owner migration `PMR-062` to Opus 5 / `max` / `long_context` | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; the only target execution is a command the user approves by exact text, run through `scripts/run-approved-command.sh` with retained, hashed evidence |
+| `security-reviewer/` | `security-reviewer` (`claude-opus-5`, `max`, `long_context`; tasking startup adopted at `f2051a4`) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; Opus 5 / `max` / `long_context`) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, while the PM resolver is separate startup discovery |
 | `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
 
 ## Invocation and validation

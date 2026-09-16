@@ -65,6 +65,14 @@ It must use `/beryllium-project-management` for every coordination turn.
 Specialist returns are inputs. The orchestrator verifies them, decides, and
 writes.
 
+`PMR-073` is a planned, not-yet-implemented `git-maintainer` specialist. Its
+design must keep invocation exclusive to the Project Manager; component
+agents request service through durable PM tasking or owner returns. Until the
+request closes, no such specialist or authority exists. The design may not
+weaken repository ownership, carry classes, dirty/active-session locks,
+prohibited destructive/history-rewriting operations, or same-turn human
+confirmation for remotes, pushes, tags, and publication.
+
 Project-wide, active review/evaluation profiles substitute `claude-opus-5`
 for Claude Fable 5.1, with reasoning effort `max` and context tier
 `long_context`, unless the responsible human explicitly specifies otherwise

@@ -14,23 +14,23 @@
   `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing
   inside this component; nothing else
 - **Agents:** `security-reviewer` (user-invocable orchestrator,
-  currently `claude-fable-5.1`), `security-evidence`, `security-research`,
-  and `security-finding-review` (write-disabled specialists, also currently
-  Fable 5.1); `PMR-062` requests the project-wide Opus 5 / `max` /
-  `long_context` substitution before the next engagement; skill
+  `claude-opus-5`), `security-evidence`, `security-research`, and
+  `security-finding-review` (write-disabled specialists, also Opus 5);
+  reasoning `max` / context `long_context` defaults; skill
   `beryllium-security-review`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at `79c664f`, four commits ahead of
-  `origin/main`; the latest Project Manager class-3 carry closes `PMR-060`.
-  Earlier carries close `PMR-030`, `PMR-031`, `PMR-033`, and `PMR-056`. No
-  engagement has run.
+- **Observed state:** clean synchronized `main` / `origin/main` at owner
+  commit `f2051a4`; `PMR-062` and `PMR-065` are closed independently. The
+  four profiles use Opus 5 / `max` / `long_context`, the tasking startup
+  resolver contract is active, owner validation reported 319 passed, and no
+  engagement has run
   `PMD-20260914-003` keeps this independent review component separate; its
   placement remains under `beryllium-project` for now under
   `PMD-20260915-001`. `PMD-20260915-007` preserves non-Fable assignments
-  and historical artifacts while routing this component's four active Fable
-  profiles to owner request `PMR-062`
+  and historical artifacts; owner commit `f2051a4` completes the four-profile
+  migration and `PMD-20260915-008` tasking startup contract
 
 ## Role
 
@@ -128,12 +128,8 @@ git diff --check
 - Project Manager-role and coordination wording changes in
   `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, or `HANDOFF.md` (class 3,
   carried).
-- Owner migration of the four active agent profiles, tests, instructions, and
-  handoff from Fable 5.1 to Opus 5 with `max` / `long_context`
-  (`PMR-062`; outside Project Manager carry authority).
-- Deterministic `check Project Manager tasking` startup mapping, exact
-  read-only resolver allowance, and no session-history fallback
-  (`PMR-065`; owner-only, may share a commit with `PMR-062`).
+- Owner model migration and deterministic tasking startup are complete at
+  `f2051a4` (`PMR-062`, `PMR-065`).
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
   step `push_sr` fast-forwards `main -> origin`; the remote was created and
   first pushed on 2026-09-06, `PMR-021` closed).

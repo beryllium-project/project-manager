@@ -115,6 +115,12 @@ The agent never grants or infers acceptance, approval, sign-off, licensing,
 publication, release, formal verification, hardware validation, or risk
 acceptance. Those remain responsible-human gates.
 
+`PMR-073` is the planned Git-maintainer specialist todo. It is not yet
+implemented and grants no authority. The intended design permits invocation
+only by the Project Manager; component agents request service through durable
+PM tasking/returns. Existing repository ownership, operation prohibitions,
+active-session locks, and human gates remain binding.
+
 ## Local requirements
 
 The maintained helpers target the Beryllium Linux workstation and require Bash
