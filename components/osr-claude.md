@@ -56,10 +56,17 @@ The bounded local D0 inventory is recorded in `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`.
 The organization rename is complete (`PMD-20260915-003`) and local checkout
 reconciliation `PMR-027` is closed at synchronized `e275544`; `PMR-044` is
-now owner-actionable.
+now P1 and owner-actionable under
+`PMD-20260916-002`.
 The separate private quarantine target is the responsible human's personal
 `os-security-restricted-sources` repository with clean new history and manual
 human transfer.
+The active private successor uses a clean snapshot whose reachable history
+excludes `sources/restricted-microsoft/`; the complete old private repository
+remains an inactive historical reference. After verification the successor
+becomes `origin`, while the old home remains under an explicit inactive
+remote name. No symlink changes. Each repository creation, remote change,
+push, and restricted-file transfer remains an explicit same-turn human gate.
 The active owner workflow is to become tool-neutral and Copilot-capable after
 D0. The old
 repository remains an inactive reference. Its current history stays private;

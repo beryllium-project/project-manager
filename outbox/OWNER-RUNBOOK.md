@@ -20,22 +20,127 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## First action: Beryllium tasking startup adoption
+## First action: three P1 successor owner lanes
 
-Security-reviewer `PMR-062` and `PMR-065` are complete at synchronized
-`f2051a4`. Apply the startup contract next to the ordinary Beryllium owner
-context whose failed lookup exposed the gap (`PMR-067`):
+`PMD-20260916-002` freezes non-blocking coordination work until
+`PMR-044`, `PMR-045`, and `PMR-046` complete. Run the three owner lanes in
+separate terminals after current tasking is generated and checked:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/beryllium-repo
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/project-tasking.sh generate
+bash ./scripts/project-tasking.sh check
+```
+
+A blocked lane does not stop the other two. Do not start any lane while
+another session is active in that same repository.
+
+The Project Manager never executes the owner commands below. Repository
+creation, remote changes, pushes, hosted-state migration, and restricted-file
+transfer require explicit repository-specific responsible-human confirmation
+in the same owner turn. No tracked workspace symlink moves.
+
+### Lane A - PMR-044 OS-security
+
+```sh
+cd /home/jmorris/src/beryllium-project/osr-claude
+git status --short --branch
+claude
+```
+
+In that owner session, explicitly approve the read-only resolver and the
+named private repository operations for that turn, then give this task:
+
+```text
+Run:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Complete PMR-044 under PMD-20260916-002. Start
+agentic-os-research/os-security-research from a clean snapshot of the reviewed
+non-restricted tree; no reachable successor commit may contain
+sources/restricted-microsoft/. Preserve the complete old private repository as
+an inactive historical remote. After verification, make the private successor
+origin and its active upstream. Port only the owner workflow needed for
+tool-neutral Copilot operation; do not change research findings.
+
+Create the responsible human's personal private
+os-security-restricted-sources repository with clean new history, but do not
+open or copy restricted files. I will manually review and copy any selected
+files with their applicable license metadata. Do not publish, force-push,
+rewrite the old history, or change a workspace symlink. Validate the active
+successor, update its handoff, and append the structured Project Manager
+return with exact commits, paths, remote map, visibility, validation, backup
+state, quarantine state, and active-session state.
+```
+
+### Lane B - PMR-045 XRV
+
+```sh
+cd /home/jmorris/src/beryllium-project/xrv-research-repo
 pwd
 pwd -P
 git status --short --branch
 copilot
 ```
 
-Then use the exact approved resolver prompt in the tasking-adoption section
-below and say `Complete PMR-067`.
+In that owner session, explicitly approve the read-only resolver and the
+named private repository/remote/push operations for that turn, then give this
+task:
+
+```text
+Run:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Complete PMR-045 under PMD-20260916-002. Establish the private
+agentic-os-research/cheri-hypervisor-research successor and preserve the
+owner-controlled history through d618935, including all durable REV-* records
+and COLLAB.md. After verification, make the successor origin and main's active
+upstream. Retain the current private backup and old Microsoft-origin home
+under explicit inactive-reference remote names. Do not retarget the workspace
+symlink, force-push, rewrite history, allocate review IDs, triage sources,
+incorporate research, or combine PMR-039, PMR-040, PMR-053, PMR-058, or
+PMR-072. Update identity/remote workflow and HANDOFF.md only as needed, then
+append the structured Project Manager return with exact commits, paths,
+preserved refs, validation, visibility, backup state, and active-session
+state.
+```
+
+### Lane C - PMR-046 CHERI-RISC-V notes
+
+```sh
+cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo
+pwd
+pwd -P
+git status --short --branch
+copilot
+```
+
+In that owner session, explicitly approve the read-only resolver and the
+named private repository/remote/push/hosted-state operations for that turn,
+then give this task:
+
+```text
+Run:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Complete PMR-046 under PMD-20260916-002. Establish the private
+agentic-os-research/cheri-riscv-notes successor. Preserve main at 6553092,
+docs/reconcile-project-status through ae09213, required refs, checked-in Wiki
+state, and hosted issues 2 and 3 without merging, rebasing, rewriting, or
+force-pushing merely for this transition. After verification, make the
+successor origin and configure the corresponding branch upstreams. Retain the
+internal home under an explicit inactive-reference remote name. Keep the
+tracked workspace symlink unchanged.
+
+Preserve CHERI-RISC-V SoK branding, corpus admission rules, licensing,
+authorship, public-mirror, and integrity gates. Do not enable Pages, publish,
+admit sources, or combine PMR-009, PMR-051, or PMR-071. Run the maintained
+corpus validator, git diff checks, and a non-publishing Wiki build check.
+Update `meta/handoff.md` and the status surfaces needed for an exact return,
+then append the structured Project Manager return with exact branches,
+commits, paths, remote map, Wiki/issues result, validation, private
+visibility, backup state, open gates, and active-session state.
+```
 
 ## CRQ-002 successor-first sequence
 
@@ -46,7 +151,7 @@ operation.
 | Order | Priority | Request | Required result |
 | --- | --- | --- | --- |
 | Done | - | `PMR-027` | OS-security is clean and synchronized at `e275544`. |
-| 1 | P2 | `PMR-044`, `PMR-045` | Establish and verify the private OS-security and XRV successor homes and executable owner workflows; keep old homes inactive. |
+| 1 | P1 | `PMR-044`, `PMR-045` | Establish and verify the private OS-security and XRV successor homes and executable owner workflows; keep old homes inactive. |
 | 2 | P2 | `PMR-052` | OS-security identifies and inspects, or precisely bounds as inaccessible, the public continuation beginning after the final archived March 2016 message; use `2016-04-01` as the acquisition start bound. |
 | 3 | P3 | `PMR-053` | XRV reviews only materially relevant returned threads through its owner intake lifecycle. |
 | 4 | P3 | `PMR-054` | Analysis-workbook adds the revision-bound follow-up inquiry and states whether Q-001 through Q-004 change. |
@@ -55,7 +160,16 @@ operation.
 as `routed`, replace the packet's stale `OPEN-001` instruction with current
 `OPEN-003`, and mark the superseded `OPEN-001` question row consistently.
 
-## P2 repository actions and blockers
+`PMR-046` runs in parallel as the third P1 reorganization finish-line request;
+it is not a prerequisite for `CRQ-002`.
+
+## Deferred process and P2 work
+
+Until the three P1 lanes return, defer `PMR-004`, `PMR-009`, `PMR-014`,
+`PMR-026`, `PMR-032`, `PMR-037..PMR-041`, `PMR-050..PMR-059`,
+`PMR-063..PMR-073`, and unrelated cleanup unless one becomes a demonstrated
+hard blocker for a P1 lane. Do not fold a deferred request into a transition
+commit merely because it touches the same repository.
 
 ## Project-wide tasking startup adoption
 
@@ -103,20 +217,25 @@ append the structured Project Manager return with exact commit, validation,
 branch, and backup state.
 ```
 
+## P1 request summaries
+
 ### PMR-044 - OS-security rehome and quarantine
 
-Use the OS-security owner to design the active private
+Use Lane A above to establish the active private
 `agentic-os-research/os-security-research` repository and a separate private
 quarantine repository `os-security-restricted-sources` in the responsible
-human's personal account. It starts with clean new history; the responsible
+human's personal account. Both new repositories start with clean history; the
+active successor is a reviewed non-restricted snapshot, and the responsible
 human manually reviews and copies restricted files with their license
-metadata. Port the active workflow to tool-neutral Copilot instructions. Do
-not open or copy the restricted subtree in a Project Manager session. Do not
-treat moving current files as making the existing Git history public-safe.
+metadata only into the quarantine. Port the active workflow to tool-neutral
+Copilot instructions. Do not open or copy the restricted subtree in a Project
+Manager session. Do not treat moving current files as making the existing Git
+history public-safe.
 
 ### PMR-045 - CHERI hypervisor research identity
 
-Establish `agentic-os-research/cheri-hypervisor-research`, preserving the full
+Use Lane B above to establish
+`agentic-os-research/cheri-hypervisor-research`, preserving the full
 `REV-*` and `COLLAB.md` history. Keep the Microsoft-origin home inactive for
 reference. Retargeting the tracked local symlink requires a later exact human
 direction after the active repository and checkout are verified. Under
@@ -124,10 +243,12 @@ direction after the active repository and checkout are verified. Under
 
 ### PMR-046 - CHERI-RISC-V SoK home
 
-Establish `agentic-os-research/cheri-riscv-notes`, preserving the slug and branding
-`sok/` as the CHERI-RISC-V SoK. The existing internal repository becomes an
-inactive reference. No public or Pages action occurs until licensing,
-authorship, corpus-integrity, and public-mirror gates close.
+Use Lane C above to establish `agentic-os-research/cheri-riscv-notes`,
+preserving the slug, both current branches, required refs, checked-in Wiki
+state, hosted issues 2 and 3, and the CHERI-RISC-V SoK branding. The existing
+internal repository becomes an inactive reference. No public or Pages action
+occurs until licensing, authorship, corpus-integrity, and public-mirror gates
+close.
 
 ### PMR-026 - Helium checkout and handoff disagree
 
@@ -190,7 +311,7 @@ Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
 with exact commit and paths. Do not select an implementation target, approve
 a comparator baseline, or push without a separate human decision.
 
-## P3 housekeeping
+## Deferred P3 housekeeping
 
 - **PMR-073:** Project Manager designs and implements the planned
   `git-maintainer` specialist. Required design inputs:
@@ -310,8 +431,8 @@ The relevant local component commits are:
 - `threat-modeler` is already backed up through synchronized owner maintenance
   `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
 - `security-reviewer`: owner commit `2e8d205` (`PMR-074`, four profiles to
-  `gpt-5.3-codex`) is one ahead of private `origin/main`; helper step
-  `push_sr` fast-forwards it. `f2051a4` and predecessors are synchronized.
+  `gpt-5.3-codex`) is synchronized with private `origin/main`; no
+  `push_sr` action is due.
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push

@@ -53,6 +53,15 @@ through PM tasking/returns but may not invoke it. The specialist does not
 exist until the request closes and must preserve all current Git and human
 gates.
 
+Current priority exception: `PMD-20260916-002` makes `PMR-044`, `PMR-045`,
+and `PMR-046` the only P1 repository-reorganization finish-line requests.
+Their OS-security, XRV, and CHERI-RISC-V notes owner lanes may run in parallel
+from the logical workspace entries using the exact packets in
+`outbox/OWNER-RUNBOOK.md`. Tasking-adoption requests `PMR-070..PMR-072` and
+other non-blocking work are deferred; each owner still invokes the exact
+read-only resolver under explicit human approval and returns through
+`templates/owner-return.md`.
+
 ## Agent components
 
 | Component | User-invocable agent | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |

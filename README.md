@@ -65,6 +65,12 @@ defer choice, and prepares the matrices and durable records itself. If the
 human is unavailable, it preserves partial intake and reports the next
 unanswered question.
 
+The current repository-reorganization critical path is
+`PMD-20260916-002`: `PMR-044`, `PMR-045`, and `PMR-046` are the only P1
+finish-line requests and use isolated parallel owner lanes. Non-blocking
+process, research, cleanup, publication, and symlink work waits until those
+three verified returns are reconciled.
+
 Project-wide model assignment follows the role-to-model matrix of
 `PMD-20260916-001` (extending `PMD-20260915-007`): planning, coding,
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and

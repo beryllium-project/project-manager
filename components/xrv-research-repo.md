@@ -75,7 +75,12 @@ GitHub rename or transfer rather than the default new-active-repository
 mechanism. The bounded local D0 inventory is `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`, and
 the successor starts private. The organization rename is complete
-(`PMD-20260915-003`), so `PMR-045` is repository-owner actionable.
+(`PMD-20260915-003`), so `PMR-045` is P1 and repository-owner actionable
+under `PMD-20260916-002`. The verified successor becomes `origin`; the
+existing private backup and old Microsoft-origin home remain explicit
+inactive-reference remotes. History through `d618935`, including `REV-*` and
+`COLLAB.md`, must remain reachable. Repository creation, remote changes, and
+pushes require explicit same-turn responsible-human confirmation.
 Microsoft-origin repository state remains an inactive historical
 reference. The current local path and tracked symlink do not move without a
 later explicit target-specific direction. `PMR-072` asks the owner context to

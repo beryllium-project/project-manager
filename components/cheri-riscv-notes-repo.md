@@ -77,7 +77,13 @@ The approved future active home is
 (`PMD-20260914-003`, `PMR-046`). The bounded local D0 inventory is
 `PMD-20260914-004`; the guided owner inventory closes `PMR-049` in
 `PMD-20260915-001`, and the organization rename is complete in
-`PMD-20260915-003`. No repository is public-approved now. The `sok/`
+`PMD-20260915-003`. `PMR-046` is P1 under `PMD-20260916-002`: preserve
+`main`, `docs/reconcile-project-status`, required refs, checked-in Wiki state,
+and hosted issues 2 and 3; make the verified private successor `origin`;
+retain the internal home as an inactive-reference remote; and leave the
+tracked symlink unchanged. Repository creation, remote changes, hosted-state
+migration, and pushes require explicit same-turn responsible-human
+confirmation. No repository is public-approved now. The `sok/`
 artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 license, authorship, public-mirror, and corpus-integrity gates

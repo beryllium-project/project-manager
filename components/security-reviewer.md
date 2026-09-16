@@ -23,8 +23,8 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at owner commit `2e8d205`, one ahead of
-  private `origin/main` (unpushed); `PMR-062`, `PMR-065`, and `PMR-074` are
+- **Observed state:** clean `main` at owner commit `2e8d205`, synchronized
+  with private `origin/main`; `PMR-062`, `PMR-065`, and `PMR-074` are
   closed independently. The four profiles use `gpt-5.3-codex` / `max` /
   `long_context`, the tasking startup resolver contract is active, owner
   validation reported 321 passed, and no engagement has run.
@@ -136,8 +136,9 @@ git diff --check
 - Owner model migration and deterministic tasking startup are complete at
   `f2051a4` (`PMR-062`, `PMR-065`).
 - Model reassignment of all four profiles to `gpt-5.3-codex` under
-  `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`); pushing it is
-  the owner's decision.
+  `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`) and synchronized
+  with private `origin/main`.
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
-  step `push_sr` fast-forwards `main -> origin`; the remote was created and
-  first pushed on 2026-09-06, `PMR-021` closed).
+  step `push_sr` is currently a no-op because `main` and `origin/main` are
+  synchronized; the remote was created and first pushed on 2026-09-06,
+  `PMR-021` closed).
