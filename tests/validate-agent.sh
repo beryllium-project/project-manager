@@ -179,6 +179,13 @@ expect_pass "project-tasking passes bash -n" \
 refute_pattern "$repository_root/scripts/project-tasking.sh" \
     'git_pm (add|commit|push|fetch|remote|checkout|reset|clean|stash|rebase|tag)'
 require_executable "$repository_root/tests/validate-agent.sh"
+expect_pass "owner-actions passes bash -n" \
+    bash -n "$repository_root/scripts/owner-actions.sh"
+require_text "$repository_root/scripts/owner-actions.sh" 'files_search_only'
+require_text "$repository_root/scripts/owner-actions.sh" 'files_search-only: skipping GitHub authentication and push-target preflight'
+require_text "$repository_root/scripts/owner-actions.sh" '--only files_search needs --files-search'
+require_text "$repository_root/scripts/owner-actions.sh" '((${#selected[@]} == 1))'
+require_text "$repository_root/README.md" '--only files_search --files-search'
 
 for f in "$repository_root/.gitignore"; do
     require_text "$f" '/files'

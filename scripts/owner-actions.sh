@@ -5,7 +5,7 @@
 # pushing component branches to their private remotes, backing up this
 # repository and the parent, opt-in creation of one backup remote, opt-in
 # application of the exact owner-side text edits recorded as PMR requests,
-# an opt-in search for the lost retained PM artifacts, and the fetch that
+# an opt-in search for retained PM artifact candidates, and the fetch that
 # lets the next coordination turn observe the result. It ends with the open
 # requests listed by priority (outbox/component-requests.md; exact steps in
 # outbox/OWNER-RUNBOOK.md).
@@ -28,6 +28,8 @@
 #                                   [--apply-edits] [--fvr-backup] [--sr-backup]
 #                                   [--helium-branches] [--helium-only name[,name...]]
 #                                   [--files-search] [--files-root DIR ...]
+#   bash ./scripts/owner-actions.sh --only files_search --files-search \
+#       --files-root DIR
 #
 # default steps, in order (preflight always runs):
 #   preflight       resolve topology; gh auth status; remote reachability table
@@ -63,8 +65,10 @@
 #                   branch that has no upstream; --helium-only a,b restricts to
 #                   the named branches                              (PMR-018)
 #   files_search    --files-search: read-only find under $HOME (and every
-#                   --files-root DIR) for the seven lost retained PM artifact
-#                   names, SHA-256 check of any archive found; if nothing is
+#                   --files-root DIR) for the seven retained PM artifact
+#                   candidate names, SHA-256 check of any archive found;
+#                   --only files_search skips GitHub/push-target preflight;
+#                   if nothing is
 #                   found and the parent "files" link is broken, offer to
 #                   remove that link (the next coordination turn records it)
 #
@@ -240,6 +244,11 @@ for s in "${all_steps[@]}"; do
     if [[ -n $skip ]] && list_has "$skip" "$s"; then continue; fi
     selected+=("$s")
 done
+
+files_search_only=0
+if ((${#selected[@]} == 1)) && [[ ${selected[0]} == files_search ]]; then
+    files_search_only=1
+fi
 
 # --- log ---------------------------------------------------------------------
 
@@ -484,6 +493,10 @@ step_preflight() {
     note "mode: $mode; prompts: $prompts"
     note "steps: ${selected[*]:-none}"
     if [[ -n $log_file ]]; then note "log: $log_file"; fi
+    if ((files_search_only)); then
+        note "files_search-only: skipping GitHub authentication and push-target preflight"
+        return 0
+    fi
     printf '\n-- gh auth status --\n'
     if command -v gh >/dev/null 2>&1; then
         if ! gh auth status 2>&1; then

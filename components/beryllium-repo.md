@@ -15,7 +15,10 @@
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
   `beryllium/single-hart-runtime-r0` at owner return commit `f05ccb3`,
-  synchronized with private `origin`; `PMR-057` and `PMR-061` are closed
+  synchronized with the last-fetched private `origin` ref; `PMR-057` and
+  `PMR-061` are closed from prior verification. The 21:53Z helper run could
+  not refresh `origin` with the active credential, so live reachability is
+  currently `unknown`
 
 ## Role
 
@@ -67,9 +70,18 @@ npm ci
 
 The two responsible-human H0 input selections
 recorded in `../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
-and superseding `PMD-20260912-002` (candidate copies have reappeared but their
-identity and suitability remain unverified; `PMR-032`); nothing that infers
-acceptance. External K3 COM260 bring-up is in progress in a separate
+and superseding `PMD-20260912-002` / `PMD-20260916-004`: all seven expected
+candidate names are present, the inbound archive hash matches its recorded
+value, and the candidate static OCI identity record, physical-inspection
+checklist, and proposed H1/H2 path inventory may be presented for
+responsible-human owner review; their exact mapping and adequacy remain
+`PMR-078`. The six non-archive files have expected-name verification only.
+`PMR-032` is closed, but no input is selected and nothing infers acceptance.
+`PMR-078` is the ready responsible-human follow-up to select or reject the
+exact normative Fedora 44 H0 static OCI identity and proposed H1/H2 path
+inventory under Beryllium's own controls; it does not accept H0 or authorize
+H1-H4.
+External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize
 H1-H4, or count as Beryllium hardware validation. `PMR-061` is closed by

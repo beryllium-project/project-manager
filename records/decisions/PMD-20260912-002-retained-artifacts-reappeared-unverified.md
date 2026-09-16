@@ -6,7 +6,8 @@
 - **Supersedes:** `PMD-20260906-002` only for current workstation
   availability; that record remains the historical disposition as of
   2026-09-06
-- **Superseded by:** None
+- **Superseded by:** `PMD-20260916-004` for current availability,
+  expected-name coverage, and the inbound-archive SHA-256 result only
 
 ## Scope
 

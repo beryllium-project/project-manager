@@ -235,7 +235,7 @@ bash ./scripts/owner-actions.sh --plan            # read-only: reachability, out
 bash ./scripts/owner-actions.sh                   # review, then y/N per push, then fetch + restart snapshot
 bash ./scripts/owner-actions.sh --yes             # same without prompts (a dirty worktree is still skipped)
 bash ./scripts/owner-actions.sh --apply-edits     # also: the exact recorded owner-side edits (outbox/owner-edits/), diff, y/N, commit in the component
-bash ./scripts/owner-actions.sh --files-search --files-root /mnt/backup   # also: read-only search for the lost retained PM artifacts
+bash ./scripts/owner-actions.sh --only files_search --files-search --files-root /mnt/backup   # only: read-only retained-artifact search; skips GitHub/push preflight
 bash ./scripts/owner-actions.sh --fvr-backup      # also: create beryllium-project/formal-verification-research (private), add remote backup, push -u backup main
 bash ./scripts/owner-actions.sh --sr-backup       # also: create beryllium-project/security-reviewer (private), add remote origin, push -u origin main (PMR-021)
 bash ./scripts/owner-actions.sh --helium-branches --helium-only helium-te-fv,helium-te-h7-approved

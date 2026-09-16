@@ -116,21 +116,6 @@ cd /home/jmorris/src/beryllium-project/helium-te-poc
 copilot
 ```
 
-### PMR-032 - Verify the reappeared retained artifacts
-
-The ignored parent `files` path now exposes candidate copies with all seven
-names recorded in `PMD-20260906-002`, but their identity and suitability are
-unknown. Run the maintained read-only search and hash check:
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --files-search \
-  --files-root /home/jmorris/src/beryllium-project/files
-```
-
-Report the log path and archive hash result. This does not select either H0
-input or authorize H0 work.
-
 ### PMR-040 - XRV review of proposed architecture
 
 Start the XRV owner and provide analysis-workbook commit `a46dba2`:
@@ -159,9 +144,10 @@ a comparator baseline, or push without a separate human decision.
   automation/CI, and contribution practices. Preserve fact/inference/proposal/
   unknown labels; do not write peer repositories or infer human gates.
 - **PMR-075:** XRV owner documentation commits `22095a1` and `456c70b`
-  remain local two ahead of private active `origin/main` at `d618935`.
-  Review only that range and, if explicitly confirmed in the owner turn, push
-  it without force:
+  remain local two ahead of last-fetched `origin/main` at `d618935`. The
+  active credential could not reach that remote in the 21:53Z helper run, so
+  wait for an authorized credential. Then review only that range and, if
+  explicitly confirmed in the owner turn, push it without force:
 
   ```sh
   cd /home/jmorris/src/beryllium-project/xrv-research-repo
@@ -262,10 +248,39 @@ a comparator baseline, or push without a separate human decision.
 
 ## Open Beryllium input gates
 
-The responsible human still must select the normative Fedora 44 H0 static OCI
-and the proposed H1/H2 path inventory. Candidate copies of two relevant
-inputs have reappeared under the ignored `files` path, but `PMR-032` has not
-verified them. No selection, acceptance, or authorization is inferred.
+`PMR-032` is closed by `PMD-20260916-004`: all seven expected artifact names
+are present, and the inbound archive hash matches its recorded value.
+
+### PMR-078 - Select or reject the H0 inputs
+
+Start the ordinary Beryllium owner context:
+
+```sh
+cd /home/jmorris/src/beryllium-project/beryllium-repo
+pwd
+pwd -P
+git status --short --branch
+copilot
+```
+
+Then explicitly approve the read-only resolver and give this task:
+
+```text
+Run:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Complete PMR-078 only. Under Beryllium's owner controls, review the candidate
+H0 static OCI identity record, physical-inspection checklist, and proposed
+H1/H2 path-inventory report exposed through the workspace files path. Decide
+their exact mapping and adequacy, then decide separately whether to select or
+reject the normative Fedora 44 H0 static OCI identity and proposed H1/H2 path
+inventory. Return each decision, exact candidate identity, rationale, and
+remaining unknowns in planning/HANDOFF.md. Do not accept H0, authorize H1-H4,
+run K3, or combine external dependency PMR-077.
+```
+
+Name presence does not independently authenticate the six non-archive files.
+No selection, H0 acceptance, or authorization is inferred.
 
 ## External Beryllium dependency
 
@@ -314,9 +329,9 @@ retarget the helper; do not create a duplicate remote implicitly.
 For XRV, `push_xrv` now targets active private `origin` and corresponds only
 to deferred `PMR-075`; inactive `legacy-backup` is not a push target.
 
-The helper prompts before every push, skips dirty worktrees, never forces, and
-does not publish. Report its log path and result to the next Project Manager
-turn.
+The helper prompts before every push, warns on a dirty worktree and skips it
+automatically only under `--yes`, never forces, and does not publish. Report
+its log path and result to the next Project Manager turn.
 
 ## Human gates unchanged
 
