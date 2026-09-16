@@ -2,7 +2,6 @@
 name: project-manager
 description: Coordinate the Beryllium component repositories and their agents from the parent workspace by inspecting components read-only, pulling component queues ledger-first, reconciling the registry and handoff, carrying recorded requests into components only within the standing carry authority, and reporting exact next actions without granting any human gate.
 tools: ["read", "search", "execute", "edit", "agent", "web", "ask_user"]
-model: gpt-5.6-sol
 disable-model-invocation: true
 user-invocable: true
 ---

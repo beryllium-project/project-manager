@@ -76,6 +76,11 @@ The `project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
 are routed to their owners (`PMR-074` for `security-reviewer`, closed at
 owner commit `2e8d205`).
 
+The `project-manager` agent intentionally inherits the CLI's configured model,
+effort, and context profile. Pinning its model in agent front matter causes
+agent selection to reset effort to the model default. Configure the CLI profile
+as `gpt-5.6-sol`, `max`, and `long_context` before selecting the agent.
+
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,
 handoffs, dirty state, and active session artifacts all block concurrent

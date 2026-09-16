@@ -190,8 +190,7 @@ done
 # --- agent front matter --------------------------------------------------------
 
 require_pattern "$agent" '^name: project-manager$'
-require_pattern "$agent" '^model: gpt-5.6-sol$'
-refute_pattern "$agent" '^model: claude-fable-5.1$'
+refute_pattern "$agent" '^model:'
 require_pattern "$agent" '^user-invocable: true$'
 require_pattern "$agent" '^disable-model-invocation: true$'
 require_pattern "$agent" '^tools: \["read", "search", "execute", "edit", "agent", "web", "ask_user"\]$'
