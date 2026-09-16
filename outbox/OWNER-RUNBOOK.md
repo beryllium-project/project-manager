@@ -192,42 +192,6 @@ a comparator baseline, or push without a separate human decision.
 
 ## P3 housekeeping
 
-- **PMR-074:** Security-reviewer owner moves all four profiles to
-  `gpt-5.3-codex` under `PMD-20260916-001` before the next engagement.
-  From `security-reviewer/`, run `copilot` in an ordinary
-  configuration-maintenance session (not `/agent security-reviewer`, whose
-  execution boundary excludes direct Git), then say
-  `check Project Manager tasking` and approve the printed resolver command.
-  Then say:
-
-  ```text
-  Complete PMR-074 only: set model gpt-5.3-codex in
-  .github/agents/security-reviewer.agent.md, security-evidence.agent.md,
-  security-research.agent.md, and security-finding-review.agent.md; keep
-  reasoning max and context long_context as recorded defaults; update
-  tests/validate-agent.sh, instructions, skill, README, and HANDOFF.md to
-  match; keep historical Opus/Fable references only as provenance or
-  explicit later overrides; run the component validation; record the
-  Project Manager return (commit, validation, backup state) in HANDOFF.md.
-  Do not run any engagement.
-  ```
-
-  Review the diff and, if the session left it uncommitted, commit it
-  yourself; the Project Manager never commits this component's agent files:
-
-  ```sh
-  cd /home/jmorris/src/beryllium-project/security-reviewer
-  git status --short --branch
-  git diff --stat
-  git add .github/agents tests .github/copilot-instructions.md .github/skills AGENT-INTERFACE.md README.md HANDOFF.md
-  git commit -m "PMR-074: move four profiles to gpt-5.3-codex under PMD-20260916-001"
-  git log --oneline -3
-  ```
-
-  Push only if you decide to (`bash project-manager/scripts/owner-actions.sh`
-  per this runbook's push section), then tell the Project Manager the exact
-  commit so `PMR-074` can be verified and closed.
-
 - **PMR-073:** Project Manager designs and implements the planned
   `git-maintainer` specialist. Required design inputs:
   - only `project-manager` can invoke it; component agents submit durable
@@ -345,8 +309,9 @@ The relevant local component commits are:
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` is already backed up through synchronized owner maintenance
   `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
-- `security-reviewer`: nothing outgoing; owner `f2051a4` and all predecessors
-  are synchronized with private `origin/main`.
+- `security-reviewer`: owner commit `2e8d205` (`PMR-074`, four profiles to
+  `gpt-5.3-codex`) is one ahead of private `origin/main`; helper step
+  `push_sr` fast-forwards it. `f2051a4` and predecessors are synchronized.
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push

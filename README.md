@@ -73,7 +73,8 @@ audit use `claude-opus-5`; deep or adversarial security review uses
 `long_context`, unless the responsible human explicitly specifies otherwise.
 The `project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
 `claude-opus-5`. Historical artifacts are unchanged; component-owned changes
-are routed to their owners (`PMR-074` for `security-reviewer`).
+are routed to their owners (`PMR-074` for `security-reviewer`, closed at
+owner commit `2e8d205`).
 
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,

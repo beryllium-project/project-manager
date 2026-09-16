@@ -1,14 +1,15 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-16
-**Update scope:** twenty-seventh coordination turn; recorded the
-responsible human's project-wide role-to-model matrix as
-`PMD-20260916-001` (planning/coding/coordination `gpt-5.6-sol`;
-review/evaluation/audit `claude-opus-5`; deep/adversarial security review
-`gpt-5.3-codex`; all `max` / `long_context`), moved the `project-manager`
-orchestrator to `gpt-5.6-sol`, and raised `PMR-074` for the
-security-reviewer move to `gpt-5.3-codex` per the human's `all_codex`
-choice. No component was written. No repository creation, remote change,
+**Update scope:** twenty-eighth coordination turn; verified the
+security-reviewer owner return for `PMR-074` at commit `2e8d205` (all four
+profiles now `gpt-5.3-codex`, 321 tests passed, one ahead of private
+`origin/main`, unpushed) and closed it. The twenty-seventh turn recorded the
+project-wide role-to-model matrix `PMD-20260916-001` (planning/coding/
+coordination `gpt-5.6-sol`; review/evaluation/audit `claude-opus-5`;
+deep/adversarial security review `gpt-5.3-codex`; all `max` /
+`long_context`) and moved the `project-manager` orchestrator to
+`gpt-5.6-sol`. No component was written by the Project Manager. No repository creation, remote change,
 branch change, symlink change, visibility change, quarantine transfer,
 push, or publication action was performed by the Project Manager.
 
@@ -30,7 +31,7 @@ push, or publication action was performed by the Project Manager.
 | CHERI-RISC-V notes | Owner topic commit `ae09213` preserves the former 21-entry reconciliation and corpus-validator work. Clean `docs/reconcile-project-status` is synchronized with `origin/docs/reconcile-project-status`; `main` remains `6553092`. `PMR-029` and `PMR-020` are closed. `PMR-051` requests a post-push handoff/status refresh; `PMR-009` source triage is now actionable. |
 | Formal verification | Clean `main` at `784be93`, two ahead of the reachable `origin/main`. The latest carry adds metadata-only `PMQ-023` and normalizes the routed-pointer section; `PMR-037` remains open only for owner-maintained remote/handoff wording. |
 | Other drift | `osr-claude` is clean and synchronized at `e275544`; `PMR-027` is closed and `PMR-044` is actionable. `provenance-review` remains synchronized at `9bfbab3`. |
-| Other components | Security-reviewer is clean and synchronized at owner commit `f2051a4`; all four profiles currently use Opus 5 / `max` / `long_context`, the tasking startup contract is active, `PMR-062` and `PMR-065` are closed independently, and no engagement ran. Open `PMR-074` asks the owner to move all four profiles to `gpt-5.3-codex` before the next engagement. |
+| Other components | Security-reviewer is clean at owner commit `2e8d205`, one ahead of private `origin/main` (unpushed); all four profiles use `gpt-5.3-codex` / `max` / `long_context`, the tasking startup contract is active, `PMR-062`, `PMR-065`, and `PMR-074` are closed independently, and no engagement ran. Pushing `2e8d205` is the owner's decision (`push_sr`). |
 | Queues | 30 source-discovery rows / 30 source ledger rows plus one transfer row are exact. `PMQ-027`, `028`, and corrected `030` are routed to XRV; `PMQ-029` is rejected and its source edit is applied at `c7cc0fa`. `PMQ-008` and `011` remain routed; `HET-001` remains `recorded`/`unaccepted`. |
 | Cap-talk closure | `PMR-027` is complete. Successor-first sequencing now requires `PMR-044` and `PMR-045`; then `PMR-052` acquires or bounds the public continuation from the `2016-04-01` start bound, followed by XRV review `PMR-053` and workbook follow-up `PMR-054`. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -40,7 +41,7 @@ push, or publication action was performed by the Project Manager.
 | Tasking startup contract | `PMD-20260915-008` requires every owner context to map `check Project Manager tasking` and obvious variants to the exact resolver. Failure stops; session history, task databases, background agents, prior chat, and remembered PMRs are forbidden fallbacks. Project Manager is updated directly; security-reviewer adoption `PMR-065` is complete, while `PMR-063`, `064`, and `066..072` remain. |
 | Planned Git maintenance | `PMR-073` records a Project Manager-owned design/implementation todo for a narrow `git-maintainer` specialist. Only the Project Manager may invoke it; component agents request service through PM tasking/returns. It must preserve existing ownership, operation allowlists, active-session locks, and all human gates. No such specialist exists yet. |
 | Human interaction | `PMD-20260915-002` requires one short structured question at a time where appropriate. The Project Manager carries answers forward and prepares matrices and machine-shaped records; the human is not used as a parsing engine. |
-| Role-to-model matrix | `PMD-20260916-001` extends `PMD-20260915-007`: planning, coding, coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and audit use `claude-opus-5`; deep or adversarial security review uses `gpt-5.3-codex`; every row is `max` / `long_context` unless the human specifies otherwise for a named task. The `project-manager` orchestrator is now `gpt-5.6-sol`; `pm-auditor` stays `claude-opus-5`. Fable 5.1 is no default in any active role. Security-reviewer moves to `gpt-5.3-codex` under open `PMR-074` (human choice `all_codex`). Historical artifacts are unchanged; no launched task is restarted. |
+| Role-to-model matrix | `PMD-20260916-001` extends `PMD-20260915-007`: planning, coding, coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and audit use `claude-opus-5`; deep or adversarial security review uses `gpt-5.3-codex`; every row is `max` / `long_context` unless the human specifies otherwise for a named task. The `project-manager` orchestrator is now `gpt-5.6-sol`; `pm-auditor` stays `claude-opus-5`. Fable 5.1 is no default in any active role. Security-reviewer moved to `gpt-5.3-codex` at owner commit `2e8d205` (`PMR-074` closed; human choice `all_codex`). Historical artifacts are unchanged; no launched task is restarted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
 | Parent coordination | Workspace root and symlinks are current. The responsible human chose to retire the two already-deleted parent `formal-verification/` redirect files (`PMD-20260912-001`); parent `HANDOFF.md` remains the sole compatibility redirect. |
 | Retained PM artifacts | The ignored parent `files` path now exposes candidate copies matching all seven formerly lost names. Identity and suitability are unverified (`PMD-20260912-002`, `PMR-032`); no file was opened or copied by the Project Manager. |
@@ -86,7 +87,14 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- Recorded `PMD-20260916-001`, the project-wide role-to-model matrix, from
+- Verified the `PMR-074` owner return: `../security-reviewer/HANDOFF.md`
+  "Project Manager return" row, commit `2e8d205` (parent `f2051a4`) touching
+  the four agent profiles, instructions, skill, interface, README, handoff,
+  and `tests/validate-agent.sh`, which now asserts `gpt-5.3-codex`; owner
+  validation `321 passed, 0 failed`. Closed `PMR-074`; refreshed the card,
+  roster, interface, README, runbook (removed the P3 entry; `push_sr` now
+  has one outgoing commit), and `../COMPONENTS.md`.
+- Previous turn (twenty-seventh): recorded `PMD-20260916-001`, the project-wide role-to-model matrix, from
   the responsible human's exact direction and a same-turn structured intake
   answer (`all_codex` for security-reviewer). It extends `PMD-20260915-007`
   and supersedes its statement that the orchestrator model was unchanged.
@@ -137,7 +145,6 @@ git -C .. status --short --branch
 | P3 | `PMR-066` | Add the explicit fail-closed tasking startup contract to provenance-review. |
 | P3 | `PMR-068..PMR-072` | Add the explicit fail-closed tasking startup contract to Helium, formal-verification, OS-security, CHERI notes, and XRV owner contexts. |
 | P3 | `PMR-073` | Design and implement the Project Manager-only Git-maintainer specialist with exact request, refusal, evidence, test, and human-gate contracts. |
-| P3 | `PMR-074` | Security-reviewer owner moves the orchestrator and three specialists to `gpt-5.3-codex` (`max`, `long_context`) before the next engagement and returns the commit. |
 
 Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
@@ -177,7 +184,8 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - `.github/copilot-instructions.md`
 - `.github/skills/beryllium-project-management/SKILL.md`
 - `tests/validate-agent.sh`
-- `outbox/component-requests.md` (`PMR-074`)
+- `outbox/component-requests.md` (`PMR-074` closed)
+- `../security-reviewer/HANDOFF.md` and commit `2e8d205` (owner return)
 - `AGENT-INTERFACE.md`
 - `AGENT-ROSTER.md`
 - `README.md`
@@ -185,8 +193,8 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## Validation and commit state
 
-The write-disabled `pm-auditor` (`claude-opus-5`, `max`, `long_context`)
-found no blocker this turn. Its stale/minor findings (parent registry row,
+The twenty-seventh-turn write-disabled `pm-auditor` (`claude-opus-5`,
+`max`, `long_context`) found no blocker. Its stale/minor findings (parent registry row,
 `PMD-20260915-007` superseded-by marker, runbook date and owner-session
 boundary wording for `PMR-074`, handoff provenance, card run-on and open
 request list, exact identifiers in parent documents) were corrected before
@@ -210,7 +218,7 @@ Pre-commit validation passed:
 Post-commit tasking generation and current-view checking follow the Project
 Manager commit so each ignored view can name the exact containing HEAD.
 
-This handoff is included in the twenty-seventh-turn Project Manager commit. Its
+This handoff is included in the twenty-eighth-turn Project Manager commit. Its
 exact HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. Neither commit is pushed
 without explicit same-turn confirmation.
@@ -218,8 +226,10 @@ without explicit same-turn confirmation.
 ## Provenance
 
 - Live state: `scripts/inspect-components.sh status` and `registry-check`
-  observed at 2026-09-16T04:33Z; every registered row matched, all
-  worktrees clean, no queue edit due.
+  observed at 2026-09-16T04:33Z (twenty-seventh turn) and
+  `scripts/inspect-components.sh state security-reviewer` at
+  2026-09-16T07:00Z (twenty-eighth turn: clean `main` at `2e8d205`, one
+  ahead of `origin/main`); no queue edit due.
 - Previous-turn responsible-human direction (2026-09-15):
   `"add to project todo: create a git maintainer agent which can be invoked
   by project manager agent, and requested by sub agents"`.
@@ -253,5 +263,8 @@ without explicit same-turn confirmation.
   state/refs verify clean synchronized `main` / `origin/main`; component
   handoff returns `PMR-062` and `PMR-065` independently with 319 passing
   tests and no engagement.
+- Security-reviewer `PMR-074` return: `../security-reviewer/HANDOFF.md` at
+  `2e8d205`, verified by `git -C ../security-reviewer show --stat` and the
+  `model:` lines of the four profiles.
 - Previous full Project Manager handoff: Git object
-  `c5307f5:HANDOFF.md`.
+  `e195ac8:HANDOFF.md`.

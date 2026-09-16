@@ -82,7 +82,8 @@ audit use `claude-opus-5`; deep or adversarial security review uses
 The `project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
 `claude-opus-5`. Historical artifacts are unchanged. Component-owned
 configuration changes remain owner requests (`PMR-074` for
-`security-reviewer`) and no in-flight task is restarted.
+`security-reviewer`, closed at owner commit `2e8d205`) and no in-flight task
+is restarted.
 
 ## Human interaction
 
