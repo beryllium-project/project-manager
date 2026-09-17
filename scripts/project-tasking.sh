@@ -11,16 +11,20 @@ Usage:
   project-tasking.sh generate
   project-tasking.sh check
   project-tasking.sh resolve [<component>|<workspace-entry-path>]
+  project-tasking.sh dispatch <component> <PMR-NNN>
 
 generate  write ignored outbox/tasking/<component>.md views from the committed
           outbox/component-requests.md at the current Project Manager HEAD
 check     reject any generated view whose PM commit or request blob is stale
 resolve   identify a registered component by name or workspace path, validate
           its generated view, then print it
+dispatch  validate one directly assigned open request and print a deterministic
+          PM-only owner-worker packet; it writes and launches nothing
 
 Run generate after each Project Manager commit. Resolve stops rather than
 showing tasking when the Project Manager repository, view, source commit, or
-request-table snapshot is missing or stale.
+request-table snapshot is missing or stale. Dispatch has the same fail-closed
+checks and additionally requires an exact component name and request ID.
 EOF
 }
 
@@ -235,6 +239,109 @@ check_views() {
     printf 'tasking views are current at %s\n' "$(git_pm rev-parse --verify HEAD)"
 }
 
+dispatch_request() {
+    local component=$1 request_id=$2
+    local source_commit source_blob current_head current_blob temp_dir
+    local selected id raised owner action basis status priority resolved note
+
+    is_component "$component" ||
+        die "dispatch component is not registered: $component"
+    [[ $component != project-manager ]] ||
+        die "project-manager is self-managed and has no component owner worker"
+    [[ $request_id =~ ^PMR-[0-9][0-9][0-9]$ ]] ||
+        die "dispatch request ID is invalid: $request_id"
+
+    validate_view "$component"
+    source_commit=$(git_pm rev-parse --verify HEAD) ||
+        die "cannot resolve Project Manager HEAD"
+    source_blob=$(git_pm rev-parse --verify "HEAD:$requests_rel") ||
+        die "cannot resolve committed request table"
+
+    temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/project-dispatch.XXXXXX") ||
+        die "cannot create dispatch workspace"
+    trap 'rm -rf -- "$temp_dir"' EXIT HUP INT TERM
+    git_pm show "$source_commit:$requests_rel" >"$temp_dir/requests.md" ||
+        die "cannot read committed request table"
+    selected=$temp_dir/selected.tsv
+    if ! awk -F'|' -v wanted="$request_id" '
+        function trim(s) { gsub(/^[ \t]+|[ \t]+$/, "", s); return s }
+        /^\| PMR-[0-9][0-9][0-9] / {
+            id = trim($2)
+            if (id != wanted)
+                next
+            matches++
+            if (NF != 11) {
+                malformed = 1
+                next
+            }
+            printf "%s\034%s\034%s\034%s\034%s\034%s\034%s\034%s\034%s\n",
+                id, trim($3), trim($4), trim($5), trim($6),
+                trim($7), trim($8), trim($9), trim($10)
+        }
+        END {
+            if (matches != 1 || malformed)
+                exit 1
+        }
+    ' "$temp_dir/requests.md" >"$selected"; then
+        die "dispatch request is missing, duplicated, or malformed: $request_id"
+    fi
+    IFS=$'\034' read -r id raised owner action basis status priority resolved note \
+        <"$selected" ||
+        die "cannot parse dispatch request: $request_id"
+
+    [[ $id == "$request_id" ]] ||
+        die "dispatch request identity changed: $request_id"
+    [[ $raised =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] ||
+        die "dispatch request has an invalid raised date: $request_id"
+    [[ $owner == "$component" ]] ||
+        die "dispatch request is assigned to $owner, not $component: $request_id"
+    [[ $status == open ]] ||
+        die "dispatch request is not open: $request_id"
+    [[ $priority =~ ^P[1-4]$ ]] ||
+        die "dispatch request has an invalid open priority: $request_id"
+    [[ $resolved == "Not applicable" ]] ||
+        die "dispatch request has a resolved date while open: $request_id"
+    [[ -n $action ]] ||
+        die "dispatch request has no owner action: $request_id"
+    [[ -n $basis ]] ||
+        die "dispatch request has no evidence basis: $request_id"
+
+    validate_view "$component"
+    current_head=$(git_pm rev-parse --verify HEAD) ||
+        die "cannot re-resolve Project Manager HEAD"
+    current_blob=$(git_pm rev-parse --verify "HEAD:$requests_rel") ||
+        die "cannot re-resolve committed request table"
+    [[ $current_head == "$source_commit" ]] ||
+        die "Project Manager HEAD changed during dispatch"
+    [[ $current_blob == "$source_blob" ]] ||
+        die "request table changed during dispatch"
+
+    printf '# Project Manager dispatch packet v1\n\n'
+    printf -- '- **Component:** `%s`\n' "$component"
+    printf -- '- **Request ID:** `%s`\n' "$request_id"
+    printf -- '- **Assigned component:** `%s`\n' "$owner"
+    printf -- '- **Raised on:** `%s`\n' "$raised"
+    printf -- '- **Status at selection:** `%s`\n' "$status"
+    printf -- '- **Priority:** `%s`\n' "$priority"
+    printf -- '- **Source Project Manager commit:** `%s`\n' "$source_commit"
+    printf -- '- **Source request blob:** `%s`\n' "$source_blob"
+    printf -- '- **Authoritative source:** `%s`\n' "$requests_rel"
+    printf -- '- **Dispatch key:** `%s/%s/%s/%s`\n\n' \
+        "$component" "$request_id" "$source_commit" "$source_blob"
+    printf '## Owner action\n\n%s\n\n' "$action"
+    printf '## Evidence basis\n\n%s\n\n' "$basis"
+    printf '## Coordination note\n\n%s\n\n' "${note:-None recorded.}"
+    printf '## Control boundary\n\n'
+    printf '%s\n' \
+        'The Project Manager emits this packet only after separately establishing that the request is already authorized and ready.' \
+        'This packet does not grant or infer implementation authorization, exact-target acceptance, review approval, risk acceptance, sign-off, licensing, redistribution, publication, release, formal verification, or hardware validation.' \
+        'Work relies only on previously recorded authority. Stop on an unresolved gate, dependency, scope conflict, dirty worktree, or active writer.' \
+        'The owner returns durable evidence through its component handoff under PMD-20260914-002.'
+
+    rm -rf -- "$temp_dir"
+    trap - EXIT HUP INT TERM
+}
+
 require_repository
 (($# >= 1)) || { usage; exit 2; }
 mode=$1
@@ -253,6 +360,10 @@ resolve)
     component=$(resolve_component "${1:-.}")
     validate_view "$component"
     cat -- "$tasking_dir/$component.md"
+    ;;
+dispatch)
+    (($# == 2)) || { usage; exit 2; }
+    dispatch_request "$1" "$2"
     ;;
 *)
     usage

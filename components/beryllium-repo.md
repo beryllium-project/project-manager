@@ -8,7 +8,9 @@
   symlink object. Carry-ineligible under `../records/decisions/PMD-20260904-003-standing-carry-authority.md`: every change is a
   `PMR-NNN` request handed to the human
 - **Agent:** none user-invocable; maintained skills `helium-documentation`,
-  `human-review-summary`, `reviewable-turn-summary`
+  `human-review-summary`, `reviewable-turn-summary`. Beryllium is pilot 2
+  under `PMD-20260917-002`, only after the analysis-workbook owner passes its
+  read-only native discovery/isolation proof; no owner profile exists yet
 - **Local instructions to read first:** on the selected active branch,
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`

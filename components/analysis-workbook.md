@@ -11,7 +11,9 @@
   nothing else
 - **Agents:** `analysis-workbook` (user-invocable orchestrator),
   `analysis-evidence` and `analysis-research` (write-disabled specialists);
-  skill `beryllium-analysis`
+  skill `beryllium-analysis`. P1 `PMR-084` requests a separate hidden
+  `analysis-workbook-owner` canary; it does not exist until an owner return is
+  verified
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean `main` at Project Manager carry `c7cc0fa`, one
@@ -19,8 +21,9 @@
   complete private session `AWB-20260915-001-smdbltrp-consideration` and
   source rows `PMQ-027..030`; carry `c7cc0fa` applies `PML-0030`.
   `PMR-059` remains only for the repository handoff refresh and structured
-  return. `PMD-20260915-001` keeps this Be-specific workbench under
-  `beryllium-project` for now
+  return. `PMR-084` is the one-time owner-worker bootstrap; `PMR-063` remains
+  open for the later dispatch pilot. `PMD-20260915-001` keeps this
+  Be-specific workbench under `beryllium-project` for now
 
 ## Role
 
@@ -40,6 +43,10 @@ topic and chronology in the generated `WORKBOOK.md`.
 - After `PMR-063`, the exact read-only Project Manager tasking resolver is a
   single startup-discovery exception outside an analysis package. It is not
   target execution and grants no other sibling command.
+- `PMD-20260917-002` creates only the PM control plane. `PMR-084` must add and
+  validate the hidden owner profile through this component's owner before any
+  PM invocation; the first invocation is a read-only discovery/root/isolation
+  handshake, not analysis or write authority.
 - Maintained scripts only: `scripts/new-session.sh`, `scripts/new-inquiry.sh`,
   `scripts/readonly-inspect.sh`, `scripts/update-workbook.sh`,
   `scripts/validate-session.sh`, `scripts/validate-helium-transfer-queue.sh`

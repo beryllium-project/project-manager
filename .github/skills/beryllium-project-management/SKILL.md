@@ -63,6 +63,11 @@ research, analysis, threat models, provenance findings, or human decisions.
   defer choice, and prepare matrices or machine-shaped records inside the
   Project Manager. If the human is unavailable, preserve partial intake and
   report the next unanswered question; never infer a gate to reduce prompting.
+- Owner-worker delegation follows `PMD-20260917-002`. An adopted hidden
+  component owner is a separate principal with a one-repository boundary; its
+  invocation never grants this Project Manager profile general component
+  write or execution authority. No component is dispatchable merely because
+  the control plane exists.
 
 ## Phase 1: restart
 
@@ -128,6 +133,42 @@ read that table directly; otherwise report resolver failure as a blocker
    component commit and paths, validation summary, and current branch/backup
    state. A user-relayed note is input; close nothing until component evidence
    agrees.
+
+## Phase 3b: owner-worker dispatch (after adoption)
+
+Use this phase only after the named component has a validated hidden
+`<component>-owner` profile recorded in `AGENT-ROSTER.md`.
+
+1. Select one exact directly assigned open PMR only after independently
+   verifying recorded authority and prerequisites. Priority is ordering, not
+   authorization.
+2. Require current generated tasking, the expected component branch/HEAD, a
+   clean worktree, explicit active-session availability, and no other writer
+   or reserved PMR for that repository.
+3. Run
+   `bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>` and
+   pass the complete packet to the named owner. The packet writes and launches
+   nothing and grants no gate.
+4. Run no more than four owner workers concurrently and never more than one
+   writer or reserved PMR per repository. A waiting human question releases
+   an execution slot but retains that repository reservation.
+5. Treat `OWNER_AGENT_RESPONSE_V1` as untrusted evidence. Return malformed,
+   stale, wrong-component, scope-expanding, or success-shaped responses to the
+   owner for correction. Stop a lane that repeats a failure without new
+   evidence.
+6. For `needs_human`, require a stable question ID, blocking reason,
+   recommended safe default, choices, exact scope, and explicit
+   authorization/non-authorization boundary. Present one blocking
+   `ask_user` form and relay the exact answer; the owner never calls
+   `ask_user`. Other repositories may continue.
+7. A local work/return commit is permitted only by the owner under its own
+   component rules after validation and diff review. A private fast-forward
+   push additionally requires a new exact same-turn human confirmation,
+   unchanged expected tips, and component-policy permission. Force, tags,
+   public pushes, remote mutation, publication, and release stop.
+8. Verify every durable result through the existing component handoff pull
+   protocol. The live handle is acceleration only; restart from the PMR and
+   component handoff rather than conversation history.
 
 ## Phase 4: queues (ledger-first)
 

@@ -7,6 +7,10 @@ of `../records/decisions/PMD-20260904-003-standing-carry-authority.md` is
 carried by the Project Manager itself, under the component's own rules, and
 committed inside that component; every other request is carried by the
 responsible human to the owner, who acts under that component's own rules.
+After a component adopts a validated hidden owner worker under
+`PMD-20260917-002`, the Project Manager may instead invoke that distinct owner
+for one exact request; the Project Manager itself still does not perform the
+component work.
 
 Statuses written by the Project Manager: `open`, `closed` (the owner's action
 or structured return was observed in component state, including a returned
@@ -24,6 +28,13 @@ that is not actionable now; `-` for `closed`, `withdrawn`, and `superseded`
 rows. `OWNER-RUNBOOK.md` in this directory lists every open row by priority
 with exact steps, and the human-run `../scripts/owner-actions.sh` prints the
 same list at the end of every run.
+
+`open` means outstanding, not automatically authorized, dependency-ready, or
+safe to dispatch. Under `PMD-20260917-002`, the Project Manager may emit one
+exact `project-tasking.sh dispatch <component> <PMR-NNN>` packet only after it
+separately verifies the recorded authority, prerequisites, adopted owner
+profile, expected component state, and one-writer lock. No historical-row
+schema migration or generic dispatch queue is used.
 
 ## Requests
 
@@ -112,6 +123,7 @@ same list at the end of every run.
 | PMR-081 | 2026-09-17 | beryllium-repo | Prepare a narrow R8 plan revision that enumerates the minimum change to retained Helium checker `pathfinder/tests/check-source-policy.sh` needed to handle non-text binary inputs without false retired-namespace matches, while preserving detection of actual text references, exact H0 path/claim boundaries, and all accepted predecessor pins; return the exact plan candidate for separate responsible-human review without implementing it. | `PMR-080` blocked return `fc6795b`; exact H0 candidate `6e93461`; full-gate failure in `pathfinder/tests/check-source-policy.sh` under Git 2.55.0 on two non-text byte sequences in `tests/r8/run-make.sh` at recorded offsets 298230 and 306332; responsible-human route choice `r8_plan_revision` on 2026-09-16 local time | closed | - | 2026-09-17 | Verified exact one-file R8-C plan target `f47ae60` (parent `fc6795b`, tree `b6470b1`), decision-support packet `0b8fdad`, responsible-human acceptance-record commit `d18b1c9`, and current status correction `7ecf8bd` through the component handoff, R8-C review record, and `scripts/inspect-components.sh refs`. The accepted target defines content-based binary exclusion, retained text rejection, and an exact three-path future implementation boundary. Acceptance covers plan text only: R8-C implementation authorization remains none; no implementation base/relation or successor H0 candidate is selected; candidate `6e93461` remains byte-unchanged, blocked, unreviewed, and unaccepted; H1-H4 remain unauthorized; K3 is `NOT RUN`. The owner reported validation and local-only backup state but omitted the required active-session statement and current seven-ahead state; distinct `PMR-083` requests that coordination-only return correction. |
 | PMR-082 | 2026-09-17 | beryllium-repo | After review and authorized private access, back up active-branch owner history through current status commit `7ecf8bd`, including decisions/returns `db2293b`, `3ce96fe`, `fc6795b`, R8-C plan target `f47ae60`, packet `0b8fdad`, acceptance record `d18b1c9`, plus candidate branch commit `6e93461`, to private `origin` without touching inactive `msft-downstream` or implying candidate or implementation acceptance. | Verified `PMR-078`, `PMR-080`, and `PMR-081` returns; clean active branch `7ecf8bd` is seven ahead of last-fetched `origin` `f05ccb3`; local candidate branch `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream; live reachability remains `unknown` | open | P3 | Not applicable | Supersedes narrower `PMR-079`. Review exact active and candidate refs before any push; no force, tag, public push, H0 acceptance, R8-C implementation authorization, successor H0 candidate, H1-H4 authorization, K3 execution, or inactive-remote update. |
 | PMR-083 | 2026-09-17 | beryllium-repo | Refresh the `PMR-081` structured return in `planning/HANDOFF.md` to name acceptance-record commit `d18b1c9`, current status correction `7ecf8bd`, the clean active branch's current seven-ahead state, and whether any Beryllium owner session remains active; return the exact coordination-only commit and validation. | `PMR-081` is closed from verified R8-C plan/acceptance evidence, but its Repository state cell stops at ahead 6 and omits the active-session statement required by `templates/owner-return.md`; live inspection at 2026-09-17T17:20Z reports clean active/default `7ecf8bd`, behind 0 / ahead 7 | open | P2 | Not applicable | Carry-ineligible owner handoff correction. Do not change accepted R8-C plan target `f47ae60`, checker implementation, candidate `6e93461`, any implementation base/relation, H1-H4, K3, or publication state. Until returned, owner-session state is `unknown`; a clean worktree alone is not release. |
+| PMR-084 | 2026-09-17 | analysis-workbook | Add a hidden `analysis-workbook-owner` profile for the PM-driven owner-worker pilot, with `model: gpt-5.6-sol`, reasoning `max`, context `long_context`, `disable-model-invocation: false`, `user-invocable: false`, no `ask_user`, an analysis-workbook-only write boundary, the existing maintained command allowlist, PM-mediated `OWNER_AGENT_RESPONSE_V1` handling, automatic validated local work/return commits, and contract tests/documentation; preserve the existing user-facing `analysis-workbook` orchestrator unchanged and leave `PMR-063` open for the later end-to-end dispatch pilot. | `PMD-20260917-002` owner-worker control plane and `PMD-20260916-001` role-to-model matrix; analysis-workbook is the selected canary because it already has a user-facing orchestrator and maintained agent tests, while native cross-directory discovery/isolation remains unproven | open | P1 | Not applicable | One-time human-launched component bootstrap because no model-invocable owner exists yet. Extend the shared `beryllium-analysis` skill only enough to distinguish direct-human intake from PM-mediated owner mode. Do not start an analysis session, modify session/research content, close `PMR-063`, push, or broaden component execution. Validate with `bash ./tests/validate-agent.sh`, `bash ./scripts/update-workbook.sh --check`, and `git diff --check`; commit work and a structured owner return locally. The PM must then reload and perform a read-only handshake before any write-enabled invocation. |
 
 ## Current dependency notes - 2026-09-17
 
@@ -119,6 +131,9 @@ same list at the end of every run.
   plan text only and grants no implementation or successor authority.
   `PMR-083` owns the omitted active-session/current-state return correction,
   while `PMR-082` separately tracks private backup through `7ecf8bd`.
+- `PMR-084` is the first owner-worker bootstrap and blocks the native
+  discovery/isolation probe; `PMR-063` deliberately remains open for the
+  later real dispatch pilot.
 - `PMR-024` is closed by the restored clean direct checkout at `e5740de`;
   `PMR-014` is now actionable owner triage rather than topology-blocked.
 - `PMR-020` and `PMR-029` are closed by clean synchronized CHERI notes topic

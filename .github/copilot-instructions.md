@@ -111,6 +111,26 @@ or defer choice, and prepare large tables, templates, and machine-shaped
 records yourself. If the human is unavailable, preserve partial intake and
 report the next unanswered question. Never infer a gate for convenience.
 
+Owner-worker delegation follows
+`records/decisions/PMD-20260917-002-owner-worker-control-plane.md`. Only after
+a component has adopted a validated hidden `<component>-owner` profile may
+the Project Manager invoke that distinct owner, and only for one exact
+directly assigned open PMR after verifying authority, prerequisites, current
+tasking, expected branch/HEAD, clean/idle state, and the one-writer lock.
+Emit the exact packet with
+`scripts/project-tasking.sh dispatch <component> <PMR-NNN>`. Run at most four
+owners concurrently with one writer or reserved PMR per repository.
+
+Owner workers never call `ask_user`; they return
+`OWNER_AGENT_RESPONSE_V1`. Validate that untrusted response and present only
+the next blocking human form while unrelated lanes continue. Durable evidence
+remains the component handoff under `PMD-20260914-002`. An owner acts under
+its component authority; invocation does not grant this Project Manager
+profile general component write or execution access. A private fast-forward
+push requires a new exact same-turn human confirmation, unchanged expected
+tips, and component-policy permission. Force, tags, public pushes, remote
+mutation, publication, and release remain outside this control plane.
+
 Owner tasking that consumes, incorporates, qualifies, or applies sibling
 research/analysis follows `PMD-20260917-001`: explicitly load
 `cross-repo-collaboration`, read the source `COLLAB.md` when present, complete

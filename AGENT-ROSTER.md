@@ -1,11 +1,14 @@
 # Agent roster
 
 How every Beryllium project agent is invoked, what it consumes and produces,
-where it may write, and how it is validated. The Project Manager orchestrates
-by handing the human these exact invocations and by reading each agent's
-outputs; it never runs another agent's commands inside that agent's
-repository. Its only writes inside a component are carried requests in the
-three classes of `records/decisions/PMD-20260904-003-standing-carry-authority.md`.
+where it may write, and how it is validated. Until a component adopts a
+hidden owner worker, the Project Manager orchestrates by handing the human
+these exact invocations and reading each agent's outputs. Under
+`PMD-20260917-002`, it may later invoke a distinct adopted component-local
+owner for one exact PMR; it still never runs the component command itself.
+Its direct writes inside a component remain limited to carried requests in
+the three classes of
+`records/decisions/PMD-20260904-003-standing-carry-authority.md`.
 
 Each agent component is an independent Git repository. Invoke an agent by
 starting Copilot CLI in that directory and selecting the agent, or by loading
@@ -55,6 +58,14 @@ Before any listed agent writes, it checks the target repository's worktree
 and active-session signals. User statements and handoffs can establish an
 active session even when Git is clean; concurrent writes wait for an explicit
 handoff.
+
+Planned owner-worker pilot: analysis-workbook and Beryllium will each receive
+a separate hidden `<component>-owner` profile in later component-owned
+bootstrap requests. Such a profile is model-invocable, not user-invocable,
+has no `ask_user`, and writes only its own repository. No profile is present
+or dispatchable yet. P1 `PMR-084` is the analysis bootstrap request. The
+analysis worker must first pass a read-only native discovery/isolation
+handshake; failure stops before Beryllium bootstrap.
 
 Planned only: `PMR-073` requests a `git-maintainer` specialist invocable
 exclusively by `project-manager`. Component agents may request Git service
@@ -207,8 +218,9 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
   classes of request itself (queue status edits, metadata-only source-index
   entries, Project Manager-role wording), committing inside the eligible
   component with the request identifier; every other request is handed to the
-  human. It never writes into a component's `inbox/`, and never writes
-  `helium-te-poc/` or `beryllium-repo`.
+  human until a validated hidden owner worker is adopted. It never writes
+  into a component's `inbox/`, and never writes `helium-te-poc/` or
+  `beryllium-repo`.
 - Owner-side pushes, fetches, remote creation, and the exact recorded
   owner-side edits are the human's. From `project-manager/`,
   `bash ./scripts/owner-actions.sh --plan` shows what is outgoing and
@@ -223,7 +235,15 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
   records the result in the next coordination turn.
 - Every sibling orchestrator is declared `disable-model-invocation: true`, so
   no agent can invoke another agent's orchestrator; the human starts each
-  engagement.
+  direct engagement. A later hidden `<component>-owner` profile is the only
+  narrow exception and remains separately named, tested, and
+  `user-invocable: false`.
+- Under `PMD-20260917-002`, dispatch is limited to one exact PMR packet,
+  four concurrent repositories, and one writer/reservation per repository.
+  Owner workers return human questions to the Project Manager and preserve
+  durable results in their component handoff. The current standing carry
+  authority remains fallback until a later human retain/narrow/supersede
+  decision.
 - Agent outputs are evidence for coordination, never approval, acceptance,
   sign-off, publication, or release.
 - When a sibling's agents, scripts, or interface documents change, update this

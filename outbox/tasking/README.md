@@ -33,6 +33,29 @@ From the workspace root, the equivalent explicit form is:
 bash ./project-manager/scripts/project-tasking.sh resolve <component>
 ```
 
+After the Project Manager has separately established that one directly
+assigned open request is already authorized and ready, it may emit one exact
+owner-worker packet:
+
+```sh
+bash ./project-manager/scripts/project-tasking.sh dispatch <component> <PMR-NNN>
+```
+
+`dispatch` is PM-only. It accepts a canonical component name, not a path;
+requires the PMR to be directly assigned to that component, open, unresolved,
+and structurally valid; reads the row from the committed request-table object;
+and binds the packet to the current Project Manager commit and request blob.
+It writes and launches nothing. Cross-named rows remain discovery only.
+Missing, duplicated, closed, wrong-component, dirty, or stale input fails
+without a partial packet.
+
+An `open` row is not automatically dispatch-ready. Priority is not
+authorization. Before invoking an owner worker, the Project Manager must
+separately verify recorded authority and prerequisites, the adopted owner
+profile, expected component branch/HEAD, clean worktree, and absence of
+another writer. The packet grants no human gate, implementation authority, or
+permission beyond the recorded request.
+
 If a tracked symlink entry has been physically resolved before command
 execution, the human may supply `PM_TASKING_ROOT` and
 `PM_TASKING_WORKSPACE`, or relaunch from the logical workspace entry. Owners
@@ -50,8 +73,10 @@ unstaged change. Missing, unreachable, or stale tasking fails closed.
 Each row includes `Assigned to`, so a cross-named coordination row cannot be
 mistaken for work owned by the current component.
 
-The view is discovery only. Owner results return through the component-owned
-handoff protocol in `PMD-20260914-002`; no view grants a human gate.
+The view and dispatch packet are discovery/selection only. Owner results
+return durably through the component-owned handoff protocol in
+`PMD-20260914-002`; a live PM-invoked worker uses
+`templates/owner-agent-response.md`. Neither grants a human gate.
 
 When a resolved request consumes, incorporates, qualifies, or applies sibling
 research or analysis, the human also tells the destination owner:

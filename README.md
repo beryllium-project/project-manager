@@ -58,6 +58,28 @@ closure is the acknowledgement; a distinct follow-up receives a new request
 identifier. The existing handoffs and request ledger are sufficient at the
 current scale, so there is no second generic returns queue.
 
+`PMD-20260917-002` adds a minimum owner-worker control plane without replacing
+that durable model. After a component adopts a validated hidden
+`<component>-owner` profile, the Project Manager may select one exact,
+already-authorized ready PMR with:
+
+```sh
+bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
+```
+
+The deterministic packet is bound to the PM commit and request blob; it writes
+and launches nothing. The distinct component owner, not the Project Manager,
+performs repository work under its own policy. Live
+`OWNER_AGENT_RESPONSE_V1` messages accelerate iteration, while the component
+handoff remains authoritative. Owner workers return blocking human questions
+to the PM instead of calling `ask_user`. At most four repositories run
+concurrently and never more than one writer/reservation per repository.
+
+No owner profile exists yet. Analysis-workbook and Beryllium are the planned
+pilot, with a read-only native discovery/isolation proof before write-enabled
+use. V1 adds no dispatch/return queue, historical request migration,
+execution ledger, daemon, lease database, or general Git automation.
+
 Cross-repository consumption follows `PMD-20260917-001`: destination owners
 load `cross-repo-collaboration` before using sibling research or analysis,
 read the source `COLLAB.md` when present, and record completed use only within
@@ -139,6 +161,14 @@ The agent never grants or infers acceptance, approval, sign-off, licensing,
 publication, release, formal verification, hardware validation, or risk
 acceptance. Those remain responsible-human gates.
 
+Invoking a separately adopted component owner does not enlarge this agent's
+write or execution boundary. The owner may create validated local work and
+return commits under its own component rules. A private fast-forward push
+requires a new exact same-turn human confirmation presented by the Project
+Manager, unchanged expected tips, and component-policy permission. Force,
+tags, public pushes, remote mutation, publication, and release remain outside
+the owner-worker control plane.
+
 `PMR-073` is the planned Git-maintainer specialist todo. It is not yet
 implemented and grants no authority. The intended design permits invocation
 only by the Project Manager; component agents request service through durable
@@ -176,6 +206,7 @@ outbox/tasking/README.md                     contract for ignored generated per-
 outbox/OWNER-RUNBOOK.md                      open items by priority with exact human steps (refreshed each turn)
 outbox/owner-edits/                          exact text of the recorded owner-side edits applied by the human-run helper
 templates/owner-return.md                    component HANDOFF return shape for PMR/PML owner results
+templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
 templates/                                   record and row templates
@@ -195,6 +226,7 @@ bash ./scripts/pull-queues.sh edits
 bash ./scripts/project-tasking.sh generate
 bash ./scripts/project-tasking.sh check
 bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
+bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
 bash ./scripts/new-record.sh decision <slug>
 bash ./scripts/validate-pm.sh
 bash ./tests/validate-agent.sh

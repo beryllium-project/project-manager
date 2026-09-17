@@ -1,17 +1,17 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-17
-**Update scope:** thirty-seventh coordination turn; verified exact R8-C plan
-target `f47ae60`, decision-support packet `0b8fdad`, responsible-human
-acceptance-record commit `d18b1c9`, and current status correction `7ecf8bd`;
-closed `PMR-081` on that plan-only result. The accepted target changes one
-planning file and grants no R8-C implementation authorization,
-implementation base/relation, successor H0 candidate, H0 acceptance, H1-H4,
-or K3 execution. Clean active/default Beryllium is seven ahead of
-last-fetched private `origin`; live reachability and owner-session release
-remain `unknown`. `PMR-082` now covers private backup through `7ecf8bd`;
-`PMR-083` requests the omitted structured-return session/ahead fields. The
-Project Manager wrote no component.
+**Update scope:** thirty-eighth coordination turn; recorded
+`PMD-20260917-002` and implemented the minimum PM-driven owner-worker control
+plane. `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` now emits
+one deterministic, fail-closed packet for a directly assigned open request;
+`OWNER_AGENT_RESPONSE_V1` defines live progress, blocking-human, and result
+returns while the existing component handoff stays durable. The control plane
+permits at most four repositories with one writer/reservation each, grants no
+PM component-write authority, and creates no owner profile or active pilot.
+Raised P1 `PMR-084` for the one-time analysis-workbook canary bootstrap. The
+responsible human wants this coordination work completed soon to return focus
+to hardware bring-up. No component was modified.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -23,6 +23,7 @@ Project Manager wrote no component.
 
 | Area | Current state |
 | --- | --- |
+| Owner-worker control plane | **Phase 1 complete in this turn.** `PMD-20260917-002` records dedicated hidden component owners, automatic validated local commits, four-repository/one-writer bounds, PM-mediated blocking questions, and exact confirmed private fast-forward boundaries. V1 adds one exact dispatch packet and typed live response template, but no owner profile, queue, execution ledger, or active pilot. P1 `PMR-084` is the analysis-workbook canary bootstrap; the PM must reload before the later read-only native discovery/isolation probe. |
 | Planned OSS alignment | `PMR-076` is a non-blocking P3 Project Manager-owned todo. Locate and scope the responsible human's `kcopilotd` project first, then decide whether the maintained interface is a skill, agent, or pair. Comparisons must be revision-pinned and distinguish fact, inference, proposal, and unknown; licensing, redistribution, governance, adoption, and release remain human decisions. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references; tracked workspace symlinks are unchanged. |
 | Beryllium runtime | R0-R7 are accepted. R8-C plan target `f47ae60` is accepted as plan text only; R8-C implementation authorization is none, no implementation base/relation is selected, and no successor H0 candidate is authorized. Exact local H0 candidate `6e93461` remains blocked, unreviewed, and unaccepted with 80 H0 blockers. Clean active/default status is `7ecf8bd`, seven ahead; owner-session release is `unknown` pending `PMR-083`. `PMR-082` is backup. H1-H4 unauthorized; K3 `NOT RUN`; external `PMR-077` separate. |
@@ -53,17 +54,17 @@ Project Manager wrote no component.
 
 ### Current todo choices
 
-The Project Manager recommends reviewing this isolated Phase 0 reconciliation,
-then starting the PM-owned owner-agent control-plane Phase 1 already selected
-by the responsible human. It directly targets the manual cross-repository
-handoff cost without changing component or human-gate authority. `PMR-083`
-can proceed independently but blocks any new Beryllium owner write until
-session release is explicit. The responsible human may choose differently
-based on priorities outside Project Manager visibility.
+The Project Manager recommends the single analysis-workbook canary bootstrap
+`PMR-084`. It is the shortest path to proving whether native owner-agent
+invocation actually removes manual repository switching; broad rollout waits
+for that proof. `PMR-083` can proceed independently but blocks any new
+Beryllium owner write until session release is explicit. The responsible
+human may choose differently based on priorities outside Project Manager
+visibility.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P1 | Owner-agent Phase 1 | **Ready after Phase 0 review - Project Manager only** | Record and implement the PM dispatch/typed-return control plane; this unblocks the analysis-workbook/Beryllium pilot without granting component write authority. |
+| P1 | `PMR-084` | **Ready - one-time analysis-workbook owner bootstrap** | Add the hidden canary owner and return locally; this enables the read-only invocation/isolation proof without starting analysis work. |
 | P2 | `PMR-083` | **Ready - Beryllium owner coordination only** | Complete the R8-C structured return with current commit/ahead and active-session state; this releases or preserves the Beryllium write lock without changing any plan or implementation gate. |
 | P2 | `PMR-026` | **Ready - Helium owner action** | Reconcile the detached checkout, refs, and handoff so future Helium work does not rely on contradictory release/ref state; it grants no release approval. |
 | P2 | `PMR-040` | **Ready - XRV owner review** | Decide whether the proposed CHERI hypervisor architecture should be incorporated, qualified, deferred, or declined; this is research review, not implementation selection. |
@@ -84,17 +85,19 @@ based on priorities outside Project Manager visibility.
 
 ### One recommended next action
 
-Review the Phase 0 Project Manager and parent commits, then tell the Project
-Manager `start Phase 1`:
+Start the one-time analysis-workbook canary bootstrap:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-git show --stat --oneline HEAD
-git -C .. show --stat --oneline HEAD
+cd /home/jmorris/src/beryllium-project/analysis-workbook
+git status --short --branch
+copilot
 ```
 
-Phase 1 is PM-owned and must not modify a component. `PMR-083` remains a
-separate owner correction in `outbox/OWNER-RUNBOOK.md`.
+Use the exact `PMR-084` prompt in
+`project-manager/outbox/OWNER-RUNBOOK.md`. Do not start an analysis session,
+close `PMR-063`, or push. After the local owner return, reload
+`/agent project-manager`; the first PM invocation is a read-only handshake,
+not write-enabled work.
 
 ### Minimal restart commands
 
@@ -113,6 +116,30 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
+- Recorded `PMD-20260917-002`, the minimal owner-worker control plane selected
+  by the responsible human: dedicated hidden component owners, automatic
+  validated local commits, up to four repositories with one writer/reserved
+  PMR each, one PM-presented blocking question at a time, a two-repository
+  pilot, and exact confirmed private fast-forward pushes only where component
+  policy permits.
+- Added read-only
+  `scripts/project-tasking.sh dispatch <component> <PMR-NNN>`. It selects one
+  directly assigned open row from the committed request table, binds the
+  packet to the PM commit/blob, and rejects stale, dirty, duplicated, closed,
+  malformed, cross-named, and wrong-component requests.
+- Added `templates/owner-agent-response.md` and extended
+  `templates/owner-return.md`. Live owner messages are acceleration only;
+  component handoffs remain durable, and owner workers return
+  `needs_human` rather than calling `ask_user`.
+- Updated the Project Manager agent, skill, repository/parent instructions,
+  interface, roster, README, tasking README, request header, and tests. No
+  component owner profile exists yet; the loaded Project Manager must be
+  restarted before the pilot.
+- Raised P1 `PMR-084` for a one-time human-launched analysis-workbook canary
+  bootstrap. `PMR-063` stays open for the later real dispatch pilot.
+- Preserved the existing three-class direct PM carry only as a temporary
+  fallback. Its retain/narrow/supersede decision remains a later human gate.
+Previous turn (thirty-seventh):
 - Verified the R8-C chain through the component handoff, review record, and
   maintained inspector: plan target `f47ae60` (parent `fc6795b`, tree
   `b6470b1`), decision-support packet `0b8fdad`, acceptance-record commit
@@ -129,6 +156,7 @@ git -C .. status --short --branch
 - The responsible human selected and started only Phase 0 of the planned
   PM-driven owner-agent orchestration work. No owner-agent control-plane or
   component bootstrap change is included in this isolated reconciliation.
+Previous turn (thirty-sixth):
 - Verified exact local candidate `6e93461` and structured blocked return
   `fc6795b`; closed `PMR-080` on the returned result.
 - Recorded passing standalone H0 and Chromium documentation gates and the
@@ -140,7 +168,7 @@ git -C .. status --short --branch
   the full returned-state and candidate-branch backup.
 - Preserved that candidate `6e93461` is unaccepted, H1-H4 are unauthorized,
   K3 is `NOT RUN`, and `PMR-077` remains open and separate.
-- Previous turn: recorded `PMD-20260917-001` and cross-repo collaboration
+- Earlier turn (thirty-fifth): recorded `PMD-20260917-001` and cross-repo collaboration
   tasking hints.
 - Recorded `PMD-20260917-001`: owner tasks that consume sibling
   research/analysis explicitly load `cross-repo-collaboration`, read the
@@ -278,6 +306,7 @@ git -C .. status --short --branch
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
+| P1 | `PMR-084` | Bootstrap the hidden analysis-workbook owner profile without starting analysis or closing `PMR-063`; then return local commits for PM verification and a read-only native invocation/isolation probe. |
 | P2 | `PMR-026` | Reconcile Helium's detached checkout, current handoff, and observed refs; no gate is inferred. |
 | P2 | `PMR-067` | Teach the ordinary Beryllium Copilot owner context the exact resolver contract whose absence caused the observed failure. |
 | P2 | `PMR-083` | Refresh the completed R8-C return with acceptance-record/current-tip identities, seven-ahead state, and explicit owner-session state; no plan or implementation change. |
@@ -309,6 +338,11 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## Open human gates
 
+- The owner-worker control plane creates no component owner profile and proves
+  no cross-directory discovery or isolation. `PMR-084` is a one-time
+  human-launched analysis-workbook bootstrap; the PM must reload after the
+  Phase 1 commit and verify that owner read-only before any write-enabled
+  dispatch. No owner-agent push is authorized in this turn.
 - The organization rename is complete. No repository creation, repository
   transfer, history push, remote change, symlink retarget, visibility change,
   quarantine transfer, or Pages publication was executed by the Project
@@ -332,7 +366,7 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   remains `unknown` under `PMR-083`.
 - Other component and coordination commits reported ahead of their remotes
   remain unpushed until separately reviewed and confirmed. Project Manager
-  `35f0f20` and parent `3650f84` were already seven commits ahead before this
+  `2773ac6` and parent `7be8535` were already eight commits ahead before this
   turn; this turn's commits remain unpushed. The prior `"yes, push"` covered
   only the completed reorganization closure. XRV `PMR-075` remains separate.
 - Beryllium H0 acceptance remains open. H1-H4 remain unauthorized. K3
@@ -351,16 +385,25 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## What to review
 
+- `records/decisions/PMD-20260917-002-owner-worker-control-plane.md`
+- `scripts/project-tasking.sh`
+- `templates/owner-agent-response.md`
+- `templates/owner-return.md`
+- `.github/agents/project-manager.agent.md`
+- `.github/copilot-instructions.md`
+- `.github/skills/beryllium-project-management/SKILL.md`
+- `AGENT-INTERFACE.md`
+- `AGENT-ROSTER.md`
+- `README.md`
+- `outbox/tasking/README.md`
+- `components/analysis-workbook.md`
+- `tests/validate-agent.sh`
+- `../SOT.md`
+- `../.github/copilot-instructions.md`
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
-- `outbox/component-requests.md` (`PMR-081` closed; `PMR-082`, `PMR-083`
-  open)
-- `components/beryllium-repo.md`
+- `outbox/component-requests.md` (`PMR-084` open P1)
 - `../COMPONENTS.md`
-- `../beryllium-repo/planning/HANDOFF.md`
-- `../beryllium-repo/planning/single-hart-runtime-r8-plan-r8c-review-summary.md`
-- Beryllium R8-C target `f47ae60`, packet `0b8fdad`, acceptance record
-  `d18b1c9`, and current status `7ecf8bd`
 
 Previous-turn model-matrix artifacts remain listed in Git history at
 `2f8d576:HANDOFF.md`.
@@ -368,29 +411,28 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 ## Validation and commit state
 
 This turn's write-disabled `pm-auditor` (`claude-opus-5`, `max`,
-`long_context`) found no gate blocker and found the PMR-081 plan/acceptance
-evidence sufficient for closure. It identified stale PM request, runbook,
-handoff, card, roster, backup-scope, and registry facts, plus the component
-return's omitted active-session statement and one-commit lag. All PM-owned
-findings were corrected. The component-owned omission is preserved as
-`unknown` and routed through new `PMR-083`; no clean-worktree release was
-inferred.
+`long_context`) found no blocker. It confirmed the decision, dispatch logic,
+typed-return/handoff split, authority boundaries, and `PMR-084` canary scope.
+Its stale handoff/parent-state findings and minor self-dispatch, model pin,
+roster/card, review-list, and R8-C runbook findings were corrected. Dispatch
+now explicitly rejects `project-manager`, which remains self-managed.
 
 Pre-commit validation passed:
 
-- `bash ./scripts/validate-pm.sh`: 377 passed, 0 failed;
-- `bash ./tests/validate-agent.sh`: 424 passed, 0 failed;
+- `bash ./scripts/validate-pm.sh`: 388 passed, 0 failed;
+- `bash ./tests/validate-agent.sh`: 507 passed, 0 failed;
 - `bash ./scripts/pull-queues.sh check`: 31/31 exact; no source edit is due;
 - `bash ./scripts/inspect-components.sh registry-check`: exact for the
   pre-commit state; the `project-manager/` row is updated to the new containing
   commit before the parent commit;
 - `git diff --check` in this repository and the parent: passed;
-- parent status contained only Project Manager-owned `COMPONENTS.md`.
+- parent status contained only Project Manager-owned `SOT.md`,
+  `.github/copilot-instructions.md`, and `COMPONENTS.md`.
 
 Post-commit tasking generation and current-view checking follow the Project
 Manager commit so each ignored view can name the exact containing HEAD.
 
-This handoff is included in the thirty-seventh-turn Project Manager commit. Its
+This handoff is included in the thirty-eighth-turn Project Manager commit. Its
 exact HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. No push is authorized in
 this turn; the prior turn's `"yes, push"` covered only the completed
@@ -398,6 +440,18 @@ reorganization closure and its confirmation records.
 
 ## Provenance
 
+- Live state: `scripts/inspect-components.sh status`, `components`,
+  `symlinks`, and `registry-check` at 2026-09-17T18:20Z observed parent
+  `7be8535` clean eight ahead, Project Manager `2773ac6` clean before this
+  turn and eight ahead, every component at its recorded revision, and all
+  tracked symlinks resolved.
+- Responsible-human execution direction: `"start phase 1"`.
+- Responsible-human priority:
+  `"I want to get this repo reorg & project management stuff done soon so I can get back to focusing on hw bringup"`.
+- Two read-only `gpt-5.6-sol` / `max` / `long_context` fleet design lanes
+  assessed tasking mechanics and authority/human-channel contracts. Both
+  converged on the minimum no-new-queue/no-schema-migration control plane and
+  modified no repository.
 - Live state: `scripts/inspect-components.sh status`, `components`, and
   `registry-check` at 2026-09-17T17:15Z observed parent `3650f84` clean seven
   ahead, Project Manager `35f0f20` clean before this turn and seven ahead,
@@ -495,4 +549,4 @@ reorganization closure and its confirmation records.
   `2e8d205`, verified by `git -C ../security-reviewer show --stat` and the
   `model:` lines of the four profiles.
 - Previous full Project Manager handoff: Git object
-  `35f0f20:HANDOFF.md`.
+  `2773ac6:HANDOFF.md`.

@@ -152,6 +152,8 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" "$roster" \
     "$repository_root/records/assurance/helium-te-fv-pathfinder.md" \
     "$repository_root/queue/README.md" "$repository_root/queue/LEDGER.md" \
     "$repository_root/outbox/component-requests.md" \
+    "$repository_root/templates/owner-agent-response.md" \
+    "$repository_root/templates/owner-return.md" \
     "$repository_root/templates/decision.md" \
     "$repository_root/templates/ledger-row.md" \
     "$repository_root/templates/request-row.md"; do
@@ -341,6 +343,44 @@ require_text "$repository_root/outbox/OWNER-RUNBOOK.md" 'PMD-20260917-001'
 require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20260917-001'
 require_text "$repository_root/../.github/copilot-instructions.md" 'cross-repo-collaboration'
 
+owner_worker_record=$repository_root/records/decisions/PMD-20260917-002-owner-worker-control-plane.md
+owner_response=$repository_root/templates/owner-agent-response.md
+require_file "$owner_worker_record"
+require_text "$owner_worker_record" '**Status:** recorded'
+require_text "$owner_worker_record" 'OWNER_AGENT_RESPONSE_V1'
+require_text "$owner_worker_record" 'At most four'
+for f in "$agent" "$skill" "$instructions" "$interface" "$readme" "$roster"; do
+    require_text "$f" 'PMD-20260917-002'
+    require_text "$f" '<component>-owner'
+done
+for f in "$agent" "$skill" "$instructions" "$interface" "$readme" \
+    "$repository_root/outbox/tasking/README.md" \
+    "$repository_root/outbox/component-requests.md"; do
+    require_text "$f" 'project-tasking.sh dispatch <component> <PMR-NNN>'
+done
+for f in "$agent" "$skill" "$instructions" "$interface" "$readme"; do
+    require_text "$f" 'OWNER_AGENT_RESPONSE_V1'
+    require_prose "$f" '(four|4) (owner|repositor)'
+    require_prose "$f" 'one writer|one writer/reservation|one writer or reserved'
+done
+require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20260917-002'
+require_text "$repository_root/../.github/copilot-instructions.md" '<component>-owner'
+require_text "$owner_response" 'protocol: OWNER_AGENT_RESPONSE_V1'
+require_text "$owner_response" 'state: progress | needs_human | completed | partial | blocked | refused'
+require_text "$owner_response" 'active_session: self | none | other | unknown'
+require_text "$owner_response" 'does_not_authorize:'
+require_text "$owner_response" 'never calls `ask_user`'
+require_text "$repository_root/templates/owner-return.md" '`needs_human`'
+require_text "$repository_root/templates/owner-return.md" '`refused`'
+require_text "$repository_root/templates/owner-return.md" '`progress`'
+require_text "$repository_root/outbox/component-requests.md" '| PMR-084 |'
+require_text "$repository_root/outbox/component-requests.md" '`model: gpt-5.6-sol`'
+require_text "$repository_root/outbox/component-requests.md" 'reasoning `max`'
+require_text "$repository_root/outbox/component-requests.md" 'context `long_context`'
+require_text "$repository_root/scripts/project-tasking.sh" 'dispatch_request()'
+require_text "$repository_root/scripts/project-tasking.sh" '# Project Manager dispatch packet v1'
+require_text "$repository_root/scripts/project-tasking.sh" 'it writes and launches nothing'
+
 require_text "$auditor" 'You never edit, execute, run Git, use the web'
 require_text "$auditor" 'not decisions, dispositions, or'
 require_text "$readme" '/agent project-manager'
@@ -513,6 +553,7 @@ cp "$tasking" "$tasking_pm/scripts/project-tasking.sh"
 ln -s "$tasking_target" "$tasking_workspace/symlink-component"
 printf '# direct-component\n' >"$tasking_pm/components/direct-component.md"
 printf '# symlink-component\n' >"$tasking_pm/components/symlink-component.md"
+printf '# other-component\n' >"$tasking_pm/components/other-component.md"
 cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 # Component requests
 
@@ -522,6 +563,7 @@ cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 | PMR-002 | 2000-01-01 | symlink-component | Do the symlink task. | Fixture basis. | open | P1 | Not applicable | Symlink note. |
 | PMR-003 | 2000-01-01 | direct-component | Ignore the closed task. | Fixture basis. | closed | - | 2000-01-02 | Closed note. |
 | PMR-004 | 2000-01-01 | other-component | Coordinate with `direct-component`. | Fixture basis. | open | P1 | Not applicable | Cross-component note. |
+| PMR-006 | 2000-01-01 | project-manager | Keep this task self-managed. | Fixture basis. | open | P2 | Not applicable | Self-managed note. |
 EOF
 git -C "$tasking_pm" init -q
 git -C "$tasking_pm" add components outbox/component-requests.md \
@@ -539,6 +581,7 @@ expect_exit "project-tasking generates committed request views" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" generate
 require_file "$tasking_pm/outbox/tasking/direct-component.md"
+require_file "$tasking_pm/outbox/tasking/other-component.md"
 require_file "$tasking_pm/outbox/tasking/symlink-component.md"
 require_text "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-004'
 require_text "$tasking_pm/outbox/tasking/direct-component.md" '| Assigned to |'
@@ -554,6 +597,65 @@ expect_output "project-tasking resolves a direct component path" "PMR-001" \
 expect_output "project-tasking resolves a tracked symlink path" "PMR-002" \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" resolve "$tasking_workspace/symlink-component"
+expect_output "project-tasking dispatches one directly assigned request" \
+    "# Project Manager dispatch packet v1" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+expect_output "project-tasking dispatch packet includes the owner action" \
+    "Do the direct task." \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+expect_output "project-tasking dispatch packet includes the request blob" \
+    "**Source request blob:**" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+expect_output "project-tasking dispatch packet preserves the no-gate boundary" \
+    "does not grant or infer implementation authorization" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+dispatch_output=$(env PM_TASKING_ROOT="$tasking_pm" \
+    PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001 2>/dev/null || true)
+if [[ $dispatch_output == *PMR-001* &&
+      $dispatch_output != *PMR-002* &&
+      $dispatch_output != *PMR-003* &&
+      $dispatch_output != *PMR-004* &&
+      $dispatch_output != *PMR-006* ]]; then
+    pass "project-tasking dispatch packet contains only the selected request"
+else
+    fail "project-tasking dispatch packet leaked another request"
+fi
+expect_exit "project-tasking dispatch rejects a closed request" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-003
+expect_exit "project-tasking dispatch rejects the wrong component" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-002
+expect_exit "project-tasking dispatch rejects a cross-named request" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-004
+expect_output "project-tasking dispatch accepts the directly assigned component" \
+    "Coordinate with \`direct-component\`." \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch other-component PMR-004
+expect_exit "project-tasking dispatch rejects an unknown request" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-999
+expect_exit "project-tasking dispatch rejects a malformed request ID" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-1
+expect_exit "project-tasking dispatch rejects a path in place of a component" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch "$tasking_workspace/direct-component" PMR-001
+expect_exit "project-tasking dispatch rejects missing arguments" 2 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component
+expect_exit "project-tasking dispatch rejects extra arguments" 2 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001 extra
+expect_exit "project-tasking dispatch rejects project-manager self-dispatch" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch project-manager PMR-006
 resolve_from_workspace_entry() {
     local entry=$1
     (
@@ -589,6 +691,9 @@ expect_exit "project-tasking check accepts current generated views" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check
 rm -f -- "$tasking_pm/outbox/tasking/symlink-component.md"
+expect_exit "project-tasking dispatch rejects a missing component view" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch symlink-component PMR-002
 expect_exit "project-tasking check rejects a missing component view" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check
@@ -596,12 +701,23 @@ expect_exit "project-tasking restores a complete view set" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" generate
 printf '\n' >>"$tasking_pm/outbox/component-requests.md"
+expect_exit "project-tasking dispatch rejects a dirty request table" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
 expect_exit "project-tasking rejects a dirty request table" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" resolve direct-component
+git -C "$tasking_pm" add outbox/component-requests.md
+expect_exit "project-tasking dispatch rejects a staged request table" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+git -C "$tasking_pm" reset -q HEAD -- outbox/component-requests.md
 git -C "$tasking_pm" checkout -q -- outbox/component-requests.md
 git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -q --allow-empty -m "advance fixture"
+expect_exit "project-tasking dispatch rejects a stale PM commit" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
 expect_exit "project-tasking rejects a stale PM commit" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check
@@ -611,6 +727,41 @@ expect_exit "project-tasking regenerates after a PM commit" 0 \
 expect_exit "project-tasking check accepts regenerated views" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check
+
+sed -i -E '/Source request blob:/ s/`[0-9a-f]{40}`/`0000000000000000000000000000000000000000`/' \
+    "$tasking_pm/outbox/tasking/direct-component.md"
+expect_exit "project-tasking dispatch rejects incorrect view metadata" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+expect_exit "project-tasking restores view metadata after regeneration" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+
+printf '%s\n' \
+    '| PMR-001 | 2000-01-01 | direct-component | Duplicate task. | Duplicate basis. | open | P2 | Not applicable | Duplicate note. |' \
+    >>"$tasking_pm/outbox/component-requests.md"
+git -C "$tasking_pm" add outbox/component-requests.md
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -qm "duplicate tasking fixture"
+expect_exit "project-tasking regenerates a duplicate request fixture" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+expect_exit "project-tasking dispatch rejects a duplicate request ID" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+sed -i '$d' "$tasking_pm/outbox/component-requests.md"
+printf '%s\n' \
+    '| PMR-005 | 2000-01-01 | direct-component | Missing basis task. |  | open | P2 | Not applicable | Missing basis note. |' \
+    >>"$tasking_pm/outbox/component-requests.md"
+git -C "$tasking_pm" add outbox/component-requests.md
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -qm "malformed tasking fixture"
+expect_exit "project-tasking regenerates a malformed request fixture" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+expect_exit "project-tasking dispatch rejects a missing evidence basis" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-005
 
 # --- new-record.sh -------------------------------------------------------------------
 

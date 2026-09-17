@@ -20,6 +20,45 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
+## P1 owner-worker canary bootstrap
+
+`PMR-084` is the only next owner-agent rollout action. Start one ordinary
+analysis-workbook repository-owner context; the new hidden owner profile does
+not exist yet, so the Project Manager cannot invoke this bootstrap itself:
+
+```sh
+cd /home/jmorris/src/beryllium-project/analysis-workbook
+git status --short --branch
+copilot
+```
+
+Then provide:
+
+```text
+Run:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Complete PMR-084 only. Add and validate the hidden analysis-workbook-owner
+profile with model gpt-5.6-sol, reasoning max, context long_context, and the
+PM-mediated response mode exactly as requested. Preserve the existing
+user-facing analysis-workbook orchestrator unchanged. Do not start an analysis
+session, change research/session content, close PMR-063, push, or broaden the
+maintained command allowlist. Create local work and structured owner-return
+commits, then stop for Project Manager verification.
+```
+
+Run the component's maintained checks before its local commit:
+
+```sh
+bash ./tests/validate-agent.sh
+bash ./scripts/update-workbook.sh --check
+git diff --check
+```
+
+After the return, reload `/agent project-manager`. The Project Manager first
+performs a read-only native discovery/root/isolation handshake; it does not
+dispatch write-enabled work merely because `PMR-084` returned.
+
 ## Repository reorganization complete
 
 Do not rerun the former P1 migration lanes. The Project Manager verified and
@@ -367,8 +406,10 @@ its log path and result to the next Project Manager turn.
 
 ## Human gates unchanged
 
-Beryllium is accepted through R7. R8-H0 is a committed candidate and is not
-accepted; H1-H4 are not authorized; K3 hardware is `NOT RUN`. Helium is a
-review-and-test proof of concept, not formally verified or hardware
-validated. No coordination action grants acceptance, approval, risk
-acceptance, sign-off, licensing, publication, or release.
+Beryllium is accepted through R7. R8-C plan target `f47ae60` is accepted as
+plan text only and grants no implementation authority. Exact H0 candidate
+`6e93461` remains blocked, unreviewed, and unaccepted; H1-H4 are not
+authorized; K3 hardware is `NOT RUN`. Helium is a review-and-test proof of
+concept, not formally verified or hardware validated. No coordination action
+grants acceptance, approval, risk acceptance, sign-off, licensing,
+publication, or release.
