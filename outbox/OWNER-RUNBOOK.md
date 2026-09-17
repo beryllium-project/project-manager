@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-16
+**Last refreshed:** 2026-09-17
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -135,8 +135,49 @@ Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
 with exact commit and paths. Do not select an implementation target, approve
 a comparator baseline, or push without a separate human decision.
 
+### P2 PMR-080 - Incorporate selected inputs into an exact H0 candidate
+
+Start the ordinary Beryllium owner context:
+
+```sh
+cd /home/jmorris/src/beryllium-project/beryllium-repo
+pwd
+pwd -P
+git status --short --branch
+copilot
+```
+
+Then explicitly approve the read-only resolver and give this task:
+
+```text
+Run:
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+
+Complete PMR-080 only under the already-recorded R8-H0 implementation
+authorization and accepted R8/R8-A boundaries. Incorporate the exact OCI
+identity and H1/H2 path baselines selected by PMR-078 into a new exact
+non-privileged H0 candidate, or stop for a reviewed plan revision. Rederive
+all authenticated contracts, hashes, counts, and report identities. Validate
+the exact candidate in three separate fresh clean detached checkouts, one per
+command: ./tests/r8/run-make.sh r8-check, ./be docs-check, and make check. The
+PMR-078 environment lacked supported Chromium for the final browser-render
+subgate; provide it or record the exact blocker and do not claim that subgate passed.
+Return the exact candidate commit and remaining blockers in
+planning/HANDOFF.md. Do not accept H0, start H1-H4 or K3, treat the passive
+checklist as supplied evidence, add an unlisted path, relax
+UNKNOWN/fail-closed rules, or combine PMR-077.
+```
+
+`PMR-078` selected inputs only. The current candidate `102f2b0` still records
+the selected fields as `UNKNOWN`, and board/firmware/hardware blockers remain.
+
 ## Deferred P3 housekeeping
 
+- **P3 PMR-079:** Beryllium owner commits `db2293b` and `3ce96fe` remain
+  local two ahead of last-fetched private `origin` at `f05ccb3`. Live
+  reachability is `unknown`; after an authorized credential can reach
+  `origin`, review only `f05ccb3..3ce96fe` and decide whether to push. Never
+  push inactive `msft-downstream`.
 - **PMR-076:** locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
   revision-bound comparisons with upstream and peer projects across LLM
@@ -245,42 +286,6 @@ a comparator baseline, or push without a separate human decision.
   | Year / type / venue | 2015 / blog / Google Project Zero | 2020 / paper / USENIX Security |
   | Stable locator | The Project Zero URL in `../analysis-workbook/outbox/pm-queue.md` row `PMQ-008` | The USENIX presentation URL in row `PMQ-011` |
   | Scope note | Hardware-fault counter-source: PTE bit flips as a privilege-escalation path outside a capability model | FPGA-readback counter-source: configuration-interface secrets recovered from the device |
-
-## Open Beryllium input gates
-
-`PMR-032` is closed by `PMD-20260916-004`: all seven expected artifact names
-are present, and the inbound archive hash matches its recorded value.
-
-### PMR-078 - Select or reject the H0 inputs
-
-Start the ordinary Beryllium owner context:
-
-```sh
-cd /home/jmorris/src/beryllium-project/beryllium-repo
-pwd
-pwd -P
-git status --short --branch
-copilot
-```
-
-Then explicitly approve the read-only resolver and give this task:
-
-```text
-Run:
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
-
-Complete PMR-078 only. Under Beryllium's owner controls, review the candidate
-H0 static OCI identity record, physical-inspection checklist, and proposed
-H1/H2 path-inventory report exposed through the workspace files path. Decide
-their exact mapping and adequacy, then decide separately whether to select or
-reject the normative Fedora 44 H0 static OCI identity and proposed H1/H2 path
-inventory. Return each decision, exact candidate identity, rationale, and
-remaining unknowns in planning/HANDOFF.md. Do not accept H0, authorize H1-H4,
-run K3, or combine external dependency PMR-077.
-```
-
-Name presence does not independently authenticate the six non-archive files.
-No selection, H0 acceptance, or authorization is inferred.
 
 ## External Beryllium dependency
 

@@ -14,11 +14,11 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at owner return commit `f05ccb3`,
-  synchronized with the last-fetched private `origin` ref; `PMR-057` and
-  `PMR-061` are closed from prior verification. The 21:53Z helper run could
-  not refresh `origin` with the active credential, so live reachability is
-  currently `unknown`
+  `beryllium/single-hart-runtime-r0` at owner return `3ce96fe`, two ahead of
+  last-fetched private `origin` at `f05ccb3`; decision commit `db2293b`
+  selects the bounded H0 inputs. `PMR-078`, `PMR-057`, and `PMR-061` are
+  closed; live remote reachability remains `unknown` under the active
+  credential and private backup follow-up is `PMR-079`
 
 ## Role
 
@@ -68,19 +68,18 @@ npm ci
 
 ## What the Project Manager may request
 
-The two responsible-human H0 input selections
-recorded in `../records/decisions/PMD-20260906-002-retained-pm-artifacts-recorded-lost.md`
-and superseding `PMD-20260912-002` / `PMD-20260916-004`: all seven expected
-candidate names are present, the inbound archive hash matches its recorded
-value, and the candidate static OCI identity record, physical-inspection
-checklist, and proposed H1/H2 path inventory may be presented for
-responsible-human owner review; their exact mapping and adequacy remain
-`PMR-078`. The six non-archive files have expected-name verification only.
-`PMR-032` is closed, but no input is selected and nothing infers acceptance.
-`PMR-078` is the ready responsible-human follow-up to select or reject the
-exact normative Fedora 44 H0 static OCI identity and proposed H1/H2 path
-inventory under Beryllium's own controls; it does not accept H0 or authorize
-H1-H4.
+`PMR-032` and `PMD-20260916-004` establish that all seven expected candidate
+names are present and the inbound archive hash matches its recorded value;
+the six non-archive files had expected-name verification only at that stage.
+`PMR-078` is closed at owner decision `db2293b` and return `3ce96fe`: exact
+Fedora 44 OCI archive SHA-256
+`fcf6c595140a9dd55d6afb633ac7777162492cdae6b77cd27a59e4541c1bd1f5`
+and conservative 19-path H1 / 22-path H2 baselines are selected as H0 inputs;
+the physical checklist is retained only as a passive collection instrument.
+They are not yet incorporated into candidate `102f2b0`; `PMR-080` requests
+that bounded non-privileged update under the existing H0-only authorization,
+and `PMR-079` tracks private backup. H0 remains unaccepted and H1-H4
+unauthorized.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize
