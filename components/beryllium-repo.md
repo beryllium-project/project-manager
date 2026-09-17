@@ -13,12 +13,12 @@
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
-- **Observed state:** see `../../COMPONENTS.md`. Active dirty owner branch
-  `beryllium/r8-h0-pmr-080` at base `1f6109f` with 108 changed entries and no
-  upstream; do not write concurrently. Clean branch
-  `beryllium/single-hart-runtime-r0` remains at owner return `3ce96fe`, two
-  ahead of last-fetched private `origin` at `f05ccb3`; `PMR-078` is closed,
-  `PMR-080` is in progress, and backup follow-up is `PMR-079`
+- **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
+  `beryllium/single-hart-runtime-r0` at blocked owner return `fc6795b`, three
+  ahead of last-fetched private `origin` at `f05ccb3`; local candidate branch
+  `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-080` is
+  closed on its blocked result; live reachability remains `unknown`,
+  plan-revision follow-up is `PMR-081`, and backup is `PMR-082`
 
 ## Role
 
@@ -76,10 +76,14 @@ Fedora 44 OCI archive SHA-256
 `fcf6c595140a9dd55d6afb633ac7777162492cdae6b77cd27a59e4541c1bd1f5`
 and conservative 19-path H1 / 22-path H2 baselines are selected as H0 inputs;
 the physical checklist is retained only as a passive collection instrument.
-They are not yet incorporated into candidate `102f2b0`; `PMR-080` requests
-that bounded non-privileged update under the existing H0-only authorization,
-and `PMR-079` tracks private backup. H0 remains unaccepted and H1-H4
-unauthorized.
+They are incorporated into exact local candidate `6e93461`, which remains
+unaccepted and records 80 H0 blockers. Standalone H0 and Chromium
+documentation gates pass; full `make check` stops on the existing
+source-policy checker treating two non-text binary sequences as retired
+namespace text. `PMR-080` is closed on that blocked result. `PMR-081`
+prepares a narrow reviewed R8 plan revision without implementing the checker
+change; `PMR-082` tracks private backup. H0 remains unaccepted, H1-H4
+unauthorized, and K3 `NOT RUN`.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize

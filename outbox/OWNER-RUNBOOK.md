@@ -156,7 +156,7 @@ Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
 with exact commit and paths. Do not select an implementation target, approve
 a comparator baseline, or push without a separate human decision.
 
-### P2 PMR-080 - Incorporate selected inputs into an exact H0 candidate
+### P2 PMR-081 - Prepare the narrow R8 plan revision
 
 Start the ordinary Beryllium owner context:
 
@@ -174,31 +174,29 @@ Then explicitly approve the read-only resolver and give this task:
 Run:
 bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
-Complete PMR-080 only under the already-recorded R8-H0 implementation
-authorization and accepted R8/R8-A boundaries. Incorporate the exact OCI
-identity and H1/H2 path baselines selected by PMR-078 into a new exact
-non-privileged H0 candidate, or stop for a reviewed plan revision. Rederive
-all authenticated contracts, hashes, counts, and report identities. Validate
-the exact candidate in three separate fresh clean detached checkouts, one per
-command: ./tests/r8/run-make.sh r8-check, ./be docs-check, and make check. The
-PMR-078 environment lacked supported Chromium for the final browser-render
-subgate; provide it or record the exact blocker and do not claim that subgate passed.
-Return the exact candidate commit and remaining blockers in
-planning/HANDOFF.md. Do not accept H0, start H1-H4 or K3, treat the passive
-checklist as supplied evidence, add an unlisted path, relax
-UNKNOWN/fail-closed rules, or combine PMR-077.
+Complete PMR-081 only. Prepare a narrow R8 plan revision that enumerates the
+minimum change to retained Helium checker
+pathfinder/tests/check-source-policy.sh needed to handle non-text binary
+inputs without false retired-namespace matches while preserving actual
+text-match detection, exact H0 path/claim boundaries, and accepted predecessor pins.
+Define retained false-positive evidence, negative tests, exact allowed paths,
+and separate plan-acceptance and implementation-authorization gates. Do not
+modify the checker, candidate 6e93461, accepted R8/R8-A objects, predecessor
+pins, or generated evidence to make the gate pass. Return the exact plan
+candidate in planning/HANDOFF.md for responsible-human review.
 ```
 
-`PMR-078` selected inputs only. The current candidate `102f2b0` still records
-the selected fields as `UNKNOWN`, and board/firmware/hardware blockers remain.
+`PMR-080` is closed on blocked candidate `6e93461`; H0 remains unaccepted,
+H1-H4 unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
 
 ## Deferred P3 housekeeping
 
-- **P3 PMR-079:** Beryllium owner commits `db2293b` and `3ce96fe` remain
-  local two ahead of last-fetched private `origin` at `f05ccb3`. Live
-  reachability is `unknown`; after an authorized credential can reach
-  `origin`, review only `f05ccb3..3ce96fe` and decide whether to push. Never
-  push inactive `msft-downstream`.
+- **P3 PMR-082:** active Beryllium return `fc6795b` is three ahead of
+  last-fetched private `origin` at `f05ccb3`, and candidate branch
+  `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
+  is `unknown`; after authorized access returns, review the exact active and
+  candidate refs and decide whether to push. Never push inactive
+  `msft-downstream`; no push accepts H0 or authorizes H1-H4/K3.
 - **PMR-076:** locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
   revision-bound comparisons with upstream and peer projects across LLM
@@ -336,6 +334,10 @@ The relevant local component commits are:
 
 - `analysis-workbook` carry `c7cc0fa` (`PML-0030`) is the only outgoing
   commit; owner `1ef1ac6` and predecessors are already synchronized;
+- `beryllium-repo` active return `fc6795b` is three ahead of last-fetched
+  `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
+  with no upstream. It is excluded from generic helper delivery and remains
+  exact backup request `PMR-082`;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive
