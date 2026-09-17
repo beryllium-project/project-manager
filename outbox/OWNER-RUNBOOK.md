@@ -156,7 +156,7 @@ Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
 with exact commit and paths. Do not select an implementation target, approve
 a comparator baseline, or push without a separate human decision.
 
-### P2 PMR-081 - Prepare the narrow R8 plan revision
+### P2 PMR-083 - Complete the R8-C owner return state
 
 Start the ordinary Beryllium owner context:
 
@@ -174,29 +174,31 @@ Then explicitly approve the read-only resolver and give this task:
 Run:
 bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
-Complete PMR-081 only. Prepare a narrow R8 plan revision that enumerates the
-minimum change to retained Helium checker
-pathfinder/tests/check-source-policy.sh needed to handle non-text binary
-inputs without false retired-namespace matches while preserving actual
-text-match detection, exact H0 path/claim boundaries, and accepted predecessor pins.
-Define retained false-positive evidence, negative tests, exact allowed paths,
-and separate plan-acceptance and implementation-authorization gates. Do not
-modify the checker, candidate 6e93461, accepted R8/R8-A objects, predecessor
-pins, or generated evidence to make the gate pass. Return the exact plan
-candidate in planning/HANDOFF.md for responsible-human review.
+Complete PMR-083 only. In planning/HANDOFF.md, refresh the existing PMR-081
+structured return to name acceptance-record commit d18b1c9, current
+coordination/status correction 7ecf8bd, the clean active branch's current
+behind 0 / ahead 7 state, and whether any Beryllium owner session remains
+active. Commit and return that coordination-only correction with validation.
+Do not modify accepted R8-C plan target f47ae60, checker implementation,
+candidate 6e93461, any implementation base/relation, H1-H4, K3, or
+publication state.
 ```
 
-`PMR-080` is closed on blocked candidate `6e93461`; H0 remains unaccepted,
-H1-H4 unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
+`PMR-081` is already closed from verified plan/acceptance evidence. R8-C plan
+target `f47ae60` is accepted as plan text only; implementation authorization
+is none. Until this return correction is committed, owner-session state is
+`unknown`. Candidate `6e93461` remains blocked and unaccepted, H1-H4
+unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
 
 ## Deferred P3 housekeeping
 
-- **P3 PMR-082:** active Beryllium return `fc6795b` is three ahead of
+- **P3 PMR-082:** active Beryllium status commit `7ecf8bd` is seven ahead of
   last-fetched private `origin` at `f05ccb3`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
-  is `unknown`; after authorized access returns, review the exact active and
-  candidate refs and decide whether to push. Never push inactive
-  `msft-downstream`; no push accepts H0 or authorizes H1-H4/K3.
+  is `unknown`; after authorized access returns, review active history
+  including `f47ae60`, `0b8fdad`, and `d18b1c9` plus the exact candidate ref
+  and decide whether to push. Never push inactive `msft-downstream`; no push
+  accepts H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **PMR-076:** locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
   revision-bound comparisons with upstream and peer projects across LLM
@@ -334,7 +336,7 @@ The relevant local component commits are:
 
 - `analysis-workbook` carry `c7cc0fa` (`PML-0030`) is the only outgoing
   commit; owner `1ef1ac6` and predecessors are already synchronized;
-- `beryllium-repo` active return `fc6795b` is three ahead of last-fetched
+- `beryllium-repo` active status `7ecf8bd` is seven ahead of last-fetched
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
   exact backup request `PMR-082`;

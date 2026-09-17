@@ -14,11 +14,12 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at blocked owner return `fc6795b`, three
+  `beryllium/single-hart-runtime-r0` at status correction `7ecf8bd`, seven
   ahead of last-fetched private `origin` at `f05ccb3`; local candidate branch
-  `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-080` is
-  closed on its blocked result; live reachability remains `unknown`,
-  plan-revision follow-up is `PMR-081`, and backup is `PMR-082`
+  `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-081` is
+  closed at accepted R8-C plan target `f47ae60`; live reachability and
+  owner-session release remain `unknown`, backup is `PMR-082`, and
+  coordination-only return correction is `PMR-083`
 
 ## Role
 
@@ -36,9 +37,12 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 - Plans, implementation authorization, exact-target acceptance, validation
   evidence, push, tag, publication, and release are distinct gates. Never infer
   or record responsible-human acceptance.
-- Accepted work is bounded through R7. The branch contains a committed R8-H0
-  profile-freeze candidate; committed content is not H0 acceptance. Privileged
-  H1-H4 work is not authorized and K3 hardware remains `NOT RUN`.
+- Accepted implementation work is bounded through R7. R8-C plan target
+  `f47ae60` is accepted as plan text only; it grants no implementation
+  authorization, implementation base/relation, H0 acceptance, or successor
+  H0 candidate. The branch contains committed blocked H0 candidate `6e93461`;
+  committed content is not H0 acceptance. Privileged H1-H4 work is not
+  authorized and K3 hardware remains `NOT RUN`.
 - Prefer `./be` for maintained workflows. Do not bypass the checked launchers
   or exact accepted-revision controls with ad hoc build inputs. Authorized
   R8-H0 work uses `./tests/r8/run-make.sh r8-check` with the component's
@@ -80,10 +84,12 @@ They are incorporated into exact local candidate `6e93461`, which remains
 unaccepted and records 80 H0 blockers. Standalone H0 and Chromium
 documentation gates pass; full `make check` stops on the existing
 source-policy checker treating two non-text binary sequences as retired
-namespace text. `PMR-080` is closed on that blocked result. `PMR-081`
-prepares a narrow reviewed R8 plan revision without implementing the checker
-change; `PMR-082` tracks private backup. H0 remains unaccepted, H1-H4
-unauthorized, and K3 `NOT RUN`.
+namespace text. `PMR-080` is closed on that blocked result. `PMR-081` is
+closed at exact R8-C plan target `f47ae60`, packet `0b8fdad`, and acceptance
+record `d18b1c9`; the checker remains unchanged and R8-C implementation
+authorization is none. `PMR-082` tracks private backup through current status
+commit `7ecf8bd`; `PMR-083` requests the omitted owner-session/ahead-state
+return fields. H0 remains unaccepted, H1-H4 unauthorized, and K3 `NOT RUN`.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize
