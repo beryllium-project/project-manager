@@ -110,6 +110,14 @@ must act. P1/P2 requests are shown individually; P3/P4 rows are grouped only
 when owner/context and blocking state match. The Project Manager acknowledges
 that the human may have relevant priorities outside its view.
 
+Cross-repository consumption follows `PMD-20260917-001`. Owner tasking that
+uses sibling research or analysis explicitly loads
+`cross-repo-collaboration`, reads the source `COLLAB.md` when present, and
+records completed destination use only within the source's guest budget.
+Missing or read-only ledgers grant no source write; completed-use evidence
+returns through the source owner and Project Manager. Pointer triage alone
+does not trigger guest logging unless it becomes substantive use.
+
 ## Inputs
 
 | Input | Locator form | Authority and handling |

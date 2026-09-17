@@ -52,3 +52,18 @@ mistaken for work owned by the current component.
 
 The view is discovery only. Owner results return through the component-owned
 handoff protocol in `PMD-20260914-002`; no view grants a human gate.
+
+When a resolved request consumes, incorporates, qualifies, or applies sibling
+research or analysis, the human also tells the destination owner:
+
+```text
+Load and follow the `cross-repo-collaboration` skill before using sibling
+research or analysis.
+```
+
+Under `PMD-20260917-001`, the destination owner reads the source `COLLAB.md`
+when present, completes and validates destination work first, and records
+completed use only within the ledger's explicit guest budget. A missing or
+read-only ledger grants no source write; return completed-use evidence through
+the source owner and Project Manager instead. Pointer triage alone triggers
+this only when it becomes substantive destination use.

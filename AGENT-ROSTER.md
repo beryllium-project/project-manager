@@ -20,6 +20,15 @@ validation, backup state, and requested PM action. The Project Manager pulls
 and verifies that return on startup; neither agent writes the other's
 repository (`PMD-20260914-002`).
 
+When a task consumes, incorporates, qualifies, or applies sibling research or
+analysis, the destination owner first loads `cross-repo-collaboration` and
+reads the source repository's root `COLLAB.md` when present
+(`PMD-20260917-001`). Complete and validate destination work before recording
+use. Write the source only within its explicit guest budget; a missing or
+read-only ledger means return completed-use evidence through the source owner
+and Project Manager instead. Pointer triage alone does not require this unless
+it becomes substantive destination use.
+
 From a registered component's workspace entry, the owner can resolve current
 Project Manager tasking without pasted request details:
 

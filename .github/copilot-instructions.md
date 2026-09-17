@@ -111,6 +111,15 @@ or defer choice, and prepare large tables, templates, and machine-shaped
 records yourself. If the human is unavailable, preserve partial intake and
 report the next unanswered question. Never infer a gate for convenience.
 
+Owner tasking that consumes, incorporates, qualifies, or applies sibling
+research/analysis follows `PMD-20260917-001`: explicitly load
+`cross-repo-collaboration`, read the source `COLLAB.md` when present, complete
+and validate destination work first, and log completed use only within the
+source ledger's guest budget. A missing/read-only ledger or absent guest
+budget grants no source write; return the use report through the source owner
+and Project Manager. Pointer triage alone triggers this only if it becomes
+substantive destination use.
+
 `pm-auditor` is write-disabled (read and search only). It compares the
 registry, handoff, roster, ledger, and requests with live component state and
 sibling interface documents, checks every carried request against its named

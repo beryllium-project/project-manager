@@ -58,6 +58,13 @@ closure is the acknowledgement; a distinct follow-up receives a new request
 identifier. The existing handoffs and request ledger are sufficient at the
 current scale, so there is no second generic returns queue.
 
+Cross-repository consumption follows `PMD-20260917-001`: destination owners
+load `cross-repo-collaboration` before using sibling research or analysis,
+read the source `COLLAB.md` when present, and record completed use only within
+its explicit guest budget. Missing/read-only ledgers grant no source write;
+the use report returns through the source owner and Project Manager. Pointer
+triage alone triggers this only if it becomes substantive destination use.
+
 Human intake follows `PMD-20260915-002`: when a decision can be decomposed,
 the Project Manager asks one short structured question at a time, carries
 prior answers forward, offers a safe recommended default plus exception or

@@ -195,6 +195,14 @@ Everything outside the three classes, and everything in `helium-te-poc/` or
    component notes and pending coordination.
 3. Update the affected `components/<component>.md` cards and `AGENT-ROSTER.md`
    when a component's commands, boundaries, agents, or outbox contract changed.
+   Under `PMD-20260917-001`, any owner task that consumes, incorporates,
+   qualifies, or applies sibling research or analysis explicitly tells the
+   destination owner to load `cross-repo-collaboration`, read the source
+   `COLLAB.md` when present, and record completed destination use only within
+   the ledger's guest budget. A missing/read-only ledger or absent guest
+   budget grants no source write; use the owner-return path instead. Pointer
+   triage alone triggers this rule only if it becomes substantive destination
+   use.
 4. Record a coordination decision with
    `bash ./scripts/new-record.sh decision <slug>` whenever the Project Manager
    takes a position that later turns must honor. Fill every section of the

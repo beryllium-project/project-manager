@@ -55,6 +55,18 @@ as `routed`, replace the packet's stale `OPEN-001` instruction with current
 
 `PMR-046` is also complete and was not a prerequisite for `CRQ-002`.
 
+Under `PMD-20260917-001`, for `PMR-052`, `PMR-053`, and `PMR-054`, add this
+before the task-specific instructions:
+
+```text
+Load and follow the `cross-repo-collaboration` skill before using sibling
+research or analysis. Read the source repository's root COLLAB.md when
+present and follow its guest budget. Complete and validate destination work
+before logging use. If the source has no writable guest ledger, write nothing
+there and return completed-use evidence through the source owner and Project
+Manager.
+```
+
 ## Project-wide tasking startup adoption
 
 `PMD-20260915-008` requires every registered owner context to map
@@ -123,6 +135,15 @@ Start the XRV owner and provide analysis-workbook commit `a46dba2`:
 ```sh
 cd /home/jmorris/src/beryllium-project/xrv-research-repo
 copilot
+```
+
+First say:
+
+```text
+Load and follow the `cross-repo-collaboration` skill before using sibling
+research or analysis. Analysis-workbook has no root COLLAB.md, so do not
+create one or write that repository; return completed-use evidence through
+its owner and the Project Manager.
 ```
 
 Ask the owner to review:
@@ -264,7 +285,9 @@ the selected fields as `UNKNOWN`, and board/firmware/hardware blockers remain.
   row `Superseded`. Keep the two request IDs distinct in the owner return.
 - **PMR-058:** `PMR-045` is closed; the XRV owner may now triage `PMQ-027`,
   `PMQ-028`, and corrected `PMQ-030` under `review-log.md`; `PMQ-029` is not
-  separately pursued because `PMQ-030` supersedes it.
+  separately pursued because `PMQ-030` supersedes it. Load
+  `cross-repo-collaboration` only if triage becomes substantive destination
+  use; analysis-workbook has no root `COLLAB.md`, so write no source ledger.
 - **PMR-059:** owner commit `1ef1ac6` preserves and backs up
   `AWB-20260915-001`; Project Manager carry `c7cc0fa` applies the exact
   `PMQ-029` rejection. Refresh repository `HANDOFF.md` and append the

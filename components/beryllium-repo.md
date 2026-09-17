@@ -13,12 +13,12 @@
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
-- **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at owner return `3ce96fe`, two ahead of
-  last-fetched private `origin` at `f05ccb3`; decision commit `db2293b`
-  selects the bounded H0 inputs. `PMR-078`, `PMR-057`, and `PMR-061` are
-  closed; live remote reachability remains `unknown` under the active
-  credential and private backup follow-up is `PMR-079`
+- **Observed state:** see `../../COMPONENTS.md`. Active dirty owner branch
+  `beryllium/r8-h0-pmr-080` at base `1f6109f` with 108 changed entries and no
+  upstream; do not write concurrently. Clean branch
+  `beryllium/single-hart-runtime-r0` remains at owner return `3ce96fe`, two
+  ahead of last-fetched private `origin` at `f05ccb3`; `PMR-078` is closed,
+  `PMR-080` is in progress, and backup follow-up is `PMR-079`
 
 ## Role
 

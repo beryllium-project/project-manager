@@ -327,6 +327,20 @@ require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20260916
 require_text "$repository_root/../.github/copilot-instructions.md" 'blocking status'
 require_text "$repository_root/../.github/copilot-instructions.md" 'human-focused'
 
+collaboration_record=$repository_root/records/decisions/PMD-20260917-001-cross-repo-collaboration-tasking-hint.md
+require_file "$collaboration_record"
+require_text "$collaboration_record" '**Status:** recorded'
+for f in "$agent" "$instructions" "$skill" "$interface" "$readme" "$roster"; do
+    require_text "$f" 'PMD-20260917-001'
+    require_text "$f" 'cross-repo-collaboration'
+done
+require_text "$repository_root/outbox/tasking/README.md" 'cross-repo-collaboration'
+require_text "$repository_root/outbox/tasking/README.md" 'PMD-20260917-001'
+require_text "$repository_root/outbox/OWNER-RUNBOOK.md" 'cross-repo-collaboration'
+require_text "$repository_root/outbox/OWNER-RUNBOOK.md" 'PMD-20260917-001'
+require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20260917-001'
+require_text "$repository_root/../.github/copilot-instructions.md" 'cross-repo-collaboration'
+
 require_text "$auditor" 'You never edit, execute, run Git, use the web'
 require_text "$auditor" 'not decisions, dispositions, or'
 require_text "$readme" '/agent project-manager'
