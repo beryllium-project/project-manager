@@ -20,44 +20,43 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## P1 owner-worker canary bootstrap
+## P1 next blocking condition: release the canary session
 
-`PMR-084` is the only next owner-agent rollout action. Start one ordinary
-analysis-workbook repository-owner context; the new hidden owner profile does
-not exist yet, so the Project Manager cannot invoke this bootstrap itself:
+`PMR-084` is closed from verified local checkpoint `ea72522`. Hidden
+`analysis-workbook-owner` exists, but its durable return says active owner
+session `self`. The Project Manager cannot infer release from a clean
+worktree and must not start the native handshake yet.
+
+Close the analysis-workbook bootstrap Copilot session so it will make no
+further repository changes. Then return to the Project Manager and state:
+
+```text
+The analysis-workbook PMR-084 bootstrap session is closed.
+```
+
+Reload a multi-directory Project Manager context:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/analysis-workbook
-git status --short --branch
+cd /home/jmorris/src/beryllium-project
 copilot
 ```
 
-Then provide:
+Then run:
 
 ```text
-Run:
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
-
-Complete PMR-084 only. Add and validate the hidden analysis-workbook-owner
-profile with model gpt-5.6-sol, reasoning max, context long_context, and the
-PM-mediated response mode exactly as requested. Preserve the existing
-user-facing analysis-workbook orchestrator unchanged. Do not start an analysis
-session, change research/session content, close PMR-063, push, or broaden the
-maintained command allowlist. Create local work and structured owner-return
-commits, then stop for Project Manager verification.
+/add-dir project-manager
+/add-dir analysis-workbook
+/agent project-manager
 ```
 
-Run the component's maintained checks before its local commit:
+Re-select `max` effort if Copilot CLI resets it. The Project Manager will
+perform only the read-only native discovery/root/isolation handshake first.
+No write-enabled owner task begins until that proof succeeds.
 
-```sh
-bash ./tests/validate-agent.sh
-bash ./scripts/update-workbook.sh --check
-git diff --check
-```
-
-After the return, reload `/agent project-manager`. The Project Manager first
-performs a read-only native discovery/root/isolation handshake; it does not
-dispatch write-enabled work merely because `PMR-084` returned.
+After the handshake, P2 `PMR-086` is the preferred first write-enabled canary:
+it repairs only the eight stale HET-001 fixture expectations so the component
+suite no longer needs a pre-existing-baseline exception. `PMR-063` follows
+separately.
 
 ## Repository reorganization complete
 
@@ -231,6 +230,11 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
 
 ## Deferred P3 housekeeping
 
+- **P3 PMR-085:** analysis-workbook clean `main` at `ea72522` is eight ahead
+  of last-fetched private `origin/main` `1ef1ac6`, comprising Project Manager
+  carry `c7cc0fa` plus seven PMR-084 owner commits. After authorized private
+  access, review that exact range and decide whether to fast-forward push.
+  No force, tag, publication, analysis disposition, or handshake authority.
 - **P3 PMR-082:** active Beryllium status commit `7ecf8bd` is seven ahead of
   last-fetched private `origin` at `f05ccb3`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
@@ -373,8 +377,9 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` carry `c7cc0fa` (`PML-0030`) is the only outgoing
-  commit; owner `1ef1ac6` and predecessors are already synchronized;
+- `analysis-workbook` clean `main` `ea72522` is eight ahead of last-fetched
+  `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa` plus seven
+  PMR-084 owner commits. It remains exact backup request `PMR-085`;
 - `beryllium-repo` active status `7ecf8bd` is seven ahead of last-fetched
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains

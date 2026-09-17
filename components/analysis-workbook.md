@@ -10,20 +10,23 @@
   `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing inside this component;
   nothing else
 - **Agents:** `analysis-workbook` (user-invocable orchestrator),
+  `analysis-workbook-owner` (hidden PM-invocable owner),
   `analysis-evidence` and `analysis-research` (write-disabled specialists);
-  skill `beryllium-analysis`. P1 `PMR-084` requests a separate hidden
-  `analysis-workbook-owner` canary; it does not exist until an owner return is
-  verified
+  skill `beryllium-analysis`. `PMR-084` is closed from local checkpoint
+  `ea72522`; the owner is not dispatchable until explicit session release and
+  a read-only native discovery/root/isolation handshake
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at Project Manager carry `c7cc0fa`, one
-  ahead of `origin/main`. Owner commit `1ef1ac6` preserves and backs up
-  complete private session `AWB-20260915-001-smdbltrp-consideration` and
-  source rows `PMQ-027..030`; carry `c7cc0fa` applies `PML-0030`.
-  `PMR-059` remains only for the repository handoff refresh and structured
-  return. `PMR-084` is the one-time owner-worker bootstrap; `PMR-063` remains
-  open for the later dispatch pilot. `PMD-20260915-001` keeps this
-  Be-specific workbench under `beryllium-project` for now
+- **Observed state:** clean `main` at owner-return checkpoint `ea72522`,
+  behind 0 / ahead 8 of last-fetched `origin/main` `1ef1ac6`, local and
+  unpushed. The range contains Project Manager carry `c7cc0fa` plus seven
+  PMR-084 owner commits. Full component validation remains 349 passed / 8
+  failed on pre-existing stale HET-001 fixtures, with zero new PMR-084
+  failures; `PMR-086` owns that repair. The durable return reports active
+  owner session `self`; handshake/write use is blocked pending explicit
+  release. `PMR-059`, `PMR-063`, and backup `PMR-085` remain open.
+  `PMD-20260915-001` keeps this Be-specific workbench under
+  `beryllium-project` for now
 
 ## Role
 
@@ -43,10 +46,15 @@ topic and chronology in the generated `WORKBOOK.md`.
 - After `PMR-063`, the exact read-only Project Manager tasking resolver is a
   single startup-discovery exception outside an analysis package. It is not
   target execution and grants no other sibling command.
-- `PMD-20260917-002` creates only the PM control plane. `PMR-084` must add and
-  validate the hidden owner profile through this component's owner before any
-  PM invocation; the first invocation is a read-only discovery/root/isolation
-  handshake, not analysis or write authority.
+- `PMD-20260917-002` creates only the PM control plane. `PMR-084` added the
+  hidden owner profile, but the first PM invocation remains a read-only
+  discovery/root/isolation handshake after explicit session release; the
+  committed profile alone grants no analysis or write authority.
+- The owner profile's local-Git exception is limited to repository
+  status/identity/diff inspection, staging exact PMR paths, and validated
+  local work/return commits. It cannot fetch, pull, push, mutate remotes, tag,
+  merge, rebase, amend, stash, reset, clean, switch/create branches or
+  worktrees, or rewrite history.
 - Maintained scripts only: `scripts/new-session.sh`, `scripts/new-inquiry.sh`,
   `scripts/readonly-inspect.sh`, `scripts/update-workbook.sh`,
   `scripts/validate-session.sh`, `scripts/validate-helium-transfer-queue.sh`
@@ -105,7 +113,8 @@ topic and chronology in the generated `WORKBOOK.md`.
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
   its log; observed synchronized (0 behind, 0 ahead) at 2026-09-06T10:30Z.
   Owner commit `1ef1ac6` was observed synchronized on 2026-09-15; Project
-  Manager carry `c7cc0fa` now leaves `main` one ahead of `origin/main`.
+  Manager carry `c7cc0fa` plus the seven PMR-084 owner commits now leave
+  `main` eight ahead of `origin/main`. `PMR-085` tracks private backup.
 
 ## Outbound queue
 
