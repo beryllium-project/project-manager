@@ -15,9 +15,9 @@
   skill `beryllium-analysis`. `PMR-084` is closed from local checkpoint
   `ea72522`; the responsible human explicitly released the bootstrap session
   on 2026-09-17. The selected Project Manager runtime registers the profile.
-  Dedicated P1 `PMR-087` is the only next invocation and must complete the
-  read-only native discovery/root/task-fingerprint/isolation handshake under
-  single-use `PMD-20260918-001`
+  Dedicated `PMR-087` passed the read-only native
+  discovery/root/task-fingerprint/isolation handshake and is closed by
+  `PMD-20260918-002`; the single-use `PMD-20260918-001` exception is consumed
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean `main` at owner-return checkpoint `ea72522`,
@@ -27,9 +27,10 @@
   failed on pre-existing stale HET-001 fixtures, with zero new PMR-084
   failures; `PMR-086` owns that repair. The durable return's historical
   `active_session: self` is superseded for coordination locking by the
-  responsible human's exact release statement. Handshake/write use remains
-  blocked pending the exact committed/generated `PMR-087` tasking and
-  successful read-only probe. P2 `PMR-086` remains blocked by `PMR-087`;
+  responsible human's exact release statement. The later no-write probe also
+  returned `active_session: self`; that synchronous invocation ended and
+  leaves no writer reservation. P2 `PMR-086` remains open as a distinct later
+  write-enabled candidate and was not dispatched in the closeout;
   `PMR-059`, `PMR-063`, and backup `PMR-085` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
@@ -53,17 +54,17 @@ topic and chronology in the generated `WORKBOOK.md`.
   single startup-discovery exception outside an analysis package. It is not
   target execution and grants no other sibling command.
 - `PMD-20260917-002` creates only the PM control plane. `PMR-084` added the
-  hidden owner profile, and the responsible human has released its bootstrap
-  session. `PMD-20260918-001` and P1 `PMR-087` define the single-use first
-  invocation: read/search plus permitted read-only local Git identity/status
-  checks only, exact profile/root/task fingerprint and clean `main`
-  `ea72522a7d6448dfa2f3af841c2511522d5bc228`, unchanged pre/post state, no
-  specialist, no write-capable operation, and exactly one live
-  `OWNER_AGENT_RESPONSE_V1` `progress` document with empty work lists and a
-  null handoff checkpoint. PM-side verification may close only `PMR-087`
-  without a component handoff write; failure leaves it and `PMR-086` blocked.
-  The committed profile and release alone grant no analysis or write
-  authority.
+  hidden owner profile, and the responsible human released its bootstrap
+  session. `PMD-20260918-002` verifies that the single-use first invocation
+  under `PMD-20260918-001` selected the exact profile and task fingerprint,
+  stayed at clean `main`
+  `ea72522a7d6448dfa2f3af841c2511522d5bc228` / tree
+  `e157f199636944977fb613b89efce4b559d03404`, used exactly one tool call
+  containing only read-only local Git identity/status queries before and
+  after, returned the admitted `progress` shape, and changed no path or Git
+  metadata. The synchronous `active_session: self` ended with no reservation.
+  This closes only `PMR-087`; it does not prove a write-enabled run or
+  authorize `PMR-086`.
 - The owner profile's local-Git exception is limited to repository
   status/identity/diff inspection, staging exact PMR paths, and validated
   local work/return commits. It cannot fetch, pull, push, mutate remotes, tag,
@@ -199,9 +200,11 @@ These are request-only because the collaboration queue and analysis content
 are outside class 1. Nothing treats a session as review or acceptance.
 `PMR-063` asks the owner to map `check Project Manager tasking` to the exact
 fail-closed resolver and prohibit session-history fallback.
-`PMR-087` is the dedicated P1 no-write owner capability probe under
-`PMD-20260918-001`; `PMR-086` remains open P2 and cannot begin unless that
-probe is independently verified and closed.
+`PMR-087` is closed by `PMD-20260918-002` after the exact no-write owner
+capability probe passed under `PMD-20260918-001`. `PMR-086` remains open P2
+as a possible distinct later action; it was not dispatched or started in the
+closeout and still requires fresh tasking, state, active-session, and
+one-writer checks.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"
