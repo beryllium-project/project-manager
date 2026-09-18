@@ -23,7 +23,7 @@
   `6553092`. Inactive `gim-inactive` preserves the old internal home, and
   private `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`. `PMR-046`, `PMR-029`, and `PMR-020` are closed; `PMR-051`
-  remains separate
+  remains only for a structured current-head/validation/backup/session return
 
 ## Role
 
@@ -67,8 +67,10 @@ temporary database must reconcile to `references/references.bib`. The two
 `PMQ-008`/`PMQ-011` pointers require the owner's D4 admission decision before
 any class-2 metadata entry; exact
 metadata is in `../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
-public mirror; and reconciliation of the committed handoff/status with the
-now-synchronized topic branch (`PMR-051`). Topic backup is evidenced by the
+public mirror; and the structured current-state return still requested by
+`PMR-051`. The handoff/status already record the successful 2026-09-16
+Validate run for preserved revision `ae09213` and successor topic history
+through `9a4c5ef`. Topic backup is evidenced by the
 matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
 remains `unknown` (`PMR-020` closed on the observed backup result).
 

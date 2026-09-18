@@ -50,6 +50,25 @@ The synchronous owner session ended with no reservation. `PMR-086` is closed;
 no other PMR, specialist, push, or gate was combined. `PMR-063` remains
 separate.
 
+## Operational housekeeping closure
+
+`PMD-20260918-003` stops further process expansion before development resumes.
+Repository reorganization and the analysis owner-worker pilot are complete.
+No project-wide owner rollout or Git-maintainer specialist is required.
+
+Finish only:
+
+1. the six exact analysis-workbook housekeeping PMRs (`PMR-004`, `PMR-038`,
+   `PMR-050`, `PMR-055`, `PMR-059`, `PMR-063`) sequentially through the
+   proven owner, with one dispatch/return/verification per PMR; and
+2. one ordinary Beryllium owner session for coordination-only `PMR-083` and
+   startup-contract `PMR-067`.
+
+Then declare the repository/PM housekeeping workstream operationally complete
+and stop. Research, source admission, external dependencies, backup/push
+gates, and opportunistic configuration remain visible but do not block
+development.
+
 ## Repository reorganization complete
 
 Do not rerun the former P1 migration lanes. The Project Manager verified and
@@ -240,7 +259,8 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
   including `f47ae60`, `0b8fdad`, and `d18b1c9` plus the exact candidate ref
   and decide whether to push. Never push inactive `msft-downstream`; no push
   accepts H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
-- **PMR-076:** locate the responsible human's `kcopilotd` project, then
+- **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
+  locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
   revision-bound comparisons with upstream and peer projects across LLM
   policy, development workflow, licensing/redistribution, governance/release,
@@ -261,33 +281,17 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
 
   The successor research history and `PMR-045` are already complete; this is
   a non-blocking backup decision and includes no research or symlink change.
-- **PMR-073:** Project Manager designs and implements the planned
-  `git-maintainer` specialist. Required design inputs:
-  - only `project-manager` can invoke it; component agents submit durable
-    requests through PM tasking or owner returns;
-  - every invocation names exact repository, operation, paths/refs, expected
-    initial state, validation, and requested evidence;
-  - refuse unregistered, dirty, or active repositories unless a separately
-    recorded contract explicitly handles the exact state;
-  - in component repositories, no reset, clean, checkout/switch, stash,
-    rebase, amend, force, or other destructive/history-rewriting operation;
-    any future exception requires a new superseding decision and explicit
-    same-turn responsible-human confirmation;
-  - no remote creation/change, push, tag, publication, or release under the
-    current specialist authority;
-  - produce reviewed diffs/status, exact commit/ref evidence, and a
-    restartable result for the Project Manager;
-  - add synthetic tests for allowed/refused operations and prove component
-    agents cannot invoke it directly.
+- **PMR-073:** withdrawn by `PMD-20260918-003`; the proven owner-worker path
+  supplies the bounded need and no current request requires a separate
+  Git-maintainer specialist.
 
 - **PMR-038:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
-  use `/agent analysis-workbook` to finish the partial owner result at
-  `2374115`: change the remaining `AGENT-INTERFACE.md` sentence that says the
-  outbox contains two surfaces, reconcile `HANDOFF.md` with the clean
-  committed `2374115` state, and append the structured Project Manager
-  return. The `CRQ-001` completion mirror and `PMQ-023` reference correction
-  are already present. Preserve that completion is coordination state, not
-  source review or approval.
+  use the proven hidden owner for this exact request only: reconcile root
+  `HANDOFF.md` so it no longer describes clean committed `2374115` work as
+  uncommitted, and append the structured PMR-038 return. The three-interface
+  wording, `CRQ-001` completion mirror, and `PMQ-023` reference correction are
+  already present. Preserve that completion is coordination state, not source
+  review or approval.
 - **PMR-004 and PMR-050:** threat-modeler completed both registrations at
   synchronized owner commit `c4126b6` and threat-owned `PMR-022` is closed.
   The analysis-workbook owner decides whether its owner-only
@@ -309,12 +313,11 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
   bibliography pointers.
 - **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
   pointers at `c55065c` and `784be93`.
-- **PMR-051:** in `cheri-riscv-notes-repo`, refresh `meta/handoff.md` and
-  `meta/status.md` to state that topic commit `ae09213` is committed and
-  synchronized with `origin/docs/reconcile-project-status`, report the actual
-  hosted workflow-run state (or `unknown`), and add the structured Project
-  Manager return with exact validation. No merge to `main` or remote workflow
-  run is required.
+- **PMR-051:** in `cheri-riscv-notes-repo`, append only the structured
+  current-head/paths/validation/backup/session return. Current `9a4c5ef`
+  handoff/status already record the successful 2026-09-16 remote Validate run
+  for preserved `ae09213` and successor topic history. No merge, new remote
+  workflow run, visibility change, or publication decision is required.
 - **PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`. The bibliography-format half

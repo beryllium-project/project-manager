@@ -31,9 +31,10 @@
   `unaccepted` state and history, every session and analysis/research
   artifact, `WORKBOOK.md`, other outboxes, and source-discovery records are
   unchanged from `ea72522`. The synchronous owner invocation's
-  `active_session: self` ended with no writer reservation. `PMR-059`,
-  `PMR-063`, prior-range backup `PMR-085`, and separate later-commit backup
-  `PMR-088` remain open.
+  `active_session: self` ended with no writer reservation. Housekeeping
+  `PMR-004`, `PMR-038`, `PMR-050`, `PMR-055`, `PMR-059`, and `PMR-063`
+  remains; externally sequenced analysis `PMR-054` is separate. Prior-range
+  backup `PMR-085` and later-commit backup `PMR-088` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
 
@@ -131,7 +132,8 @@ topic and chronology in the generated `WORKBOOK.md`.
   and mirrors `CRQ-001` as `routed`; `PMR-036` is closed. XRV owner commit
   `d618935` completes the requested interface, and the maintainer mirrored
   `CRQ-001` as `completed` at `2374115`; `PMR-038` remains open for residual
-  interface/handoff wording and the structured return.
+  root-handoff wording and the structured return. The prior "two surfaces"
+  interface clause is already satisfied at current `858a73b`.
 - Backup: the owner pushed `main` to private `origin` on 2026-09-05
   (`efde667..ff12f2f`) and 2026-09-06 (`ff12f2f..d003dec`) through the
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
@@ -173,10 +175,10 @@ Owner commit `2374115` mirrors `CRQ-001` as `completed`, corrects the
 coordination packet. `PMD-20260915-004` pulls `CRQ-002` and routes the three
 owner stages as `PMR-052..PMR-054`; `PMR-055` requests its derived `routed`
 mirror and correction of the packet's stale `OPEN-001` reference to current
-`OPEN-003`. `PMR-038` remains open because `AGENT-INTERFACE.md` still says
-the outbox has two surfaces, `HANDOFF.md` still calls the clean committed
-update uncommitted, and no structured Project Manager return names the
-partial result.
+`OPEN-003`. At current `858a73b`, `AGENT-INTERFACE.md` correctly states three
+pull-only interfaces. `PMR-038` remains open only because `HANDOFF.md` still
+calls the clean committed update uncommitted and no structured Project
+Manager return names the partial result.
 
 Owner commit `1ef1ac6` adds `PMQ-027..030`. Ledger rows
 `PML-0028`, `PML-0029`, and `PML-0031` route the specification, QEMU series,
