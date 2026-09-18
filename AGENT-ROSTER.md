@@ -63,11 +63,15 @@ Owner-worker pilot: `PMR-084` is closed from analysis-workbook checkpoint
 `ea72522`, which adds hidden `analysis-workbook-owner`. The profile is
 model-invocable, not user-invocable, has no `ask_user`, and writes only its
 own repository. Its return recorded active session `self`; the responsible
-human explicitly released that bootstrap session on 2026-09-17. It remains
-non-dispatchable until a reloaded two-directory Project Manager context passes
-the read-only native discovery/root/task-fingerprint/isolation handshake.
-Failure stops before the later Beryllium bootstrap; no Beryllium owner profile
-exists.
+human explicitly released that bootstrap session on 2026-09-17. The selected
+Project Manager runtime registers the profile, and dedicated P1 `PMR-087` is
+the only next invocation: a read-only native
+discovery/root/task-fingerprint/isolation proof under single-use
+`PMD-20260918-001`. Only one live `OWNER_AGENT_RESPONSE_V1` `progress`
+document with empty work lists and a null checkpoint is admissible; the
+Project Manager verifies unchanged pre/post state and records disposition
+PM-side. `PMR-086` remains blocked, failure stops before write-enabled use,
+and no Beryllium owner profile exists.
 
 Planned only: `PMR-073` requests a `git-maintainer` specialist invocable
 exclusively by `project-manager`. Component agents may request Git service
@@ -95,7 +99,7 @@ workspace symlinks did not move. Owner results continue through
 | Component | Entry agents | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
 | `project-manager/` | `project-manager` (`gpt-5.6-sol`, `max`, `long_context` under project-wide matrix `PMD-20260916-001`) | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context` under `PMD-20260916-001`, extending `PMD-20260915-007`) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
-| `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) at local checkpoint `ea72522`; tasking startup `PMR-063` remains open | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; owner local Git is limited to identity/diff inspection, exact-path staging, and validated local work/return commits; no push |
+| `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) at local checkpoint `ea72522`; P1 read-only probe `PMR-087`; tasking startup `PMR-063` remains open | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1` (single-use `PMR-087` admits only live `progress` with no component write) | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; `PMR-087` permits only read/search and read-only local Git identity/status checks; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits; no push |
 | `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking startup adoption `PMR-064` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
 | `security-reviewer/` | `security-reviewer` (`gpt-5.3-codex`, `max`, `long_context` at owner `2e8d205` under `PMD-20260916-001`, `PMR-074` closed; tasking startup adopted at `f2051a4`) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; `gpt-5.3-codex` / `max` / `long_context`) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, while the PM resolver is separate startup discovery |
 | `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
@@ -237,9 +241,9 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
   records the result in the next coordination turn.
 - Every sibling orchestrator is declared `disable-model-invocation: true`, so
   no agent can invoke another agent's orchestrator; the human starts each
-  direct engagement. A later hidden `<component>-owner` profile is the only
-  narrow exception and remains separately named, tested, and
-  `user-invocable: false`.
+  direct engagement. Hidden `analysis-workbook-owner` is currently the only
+  narrow `<component>-owner` exception and remains separately named, tested,
+  and `user-invocable: false`.
 - Under `PMD-20260917-002`, dispatch is limited to one exact PMR packet,
   four concurrent repositories, and one writer/reservation per repository.
   Owner workers return human questions to the Project Manager and preserve

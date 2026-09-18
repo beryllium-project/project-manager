@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-17
+**Last refreshed:** 2026-09-18
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -20,15 +20,23 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## P1 next action: reload and probe the canary
+## P1 next action: run PMR-087 read-only handshake
 
 `PMR-084` is closed from verified local checkpoint `ea72522`. Hidden
 `analysis-workbook-owner` exists. The responsible human explicitly stated
 `"The analysis-workbook PMR-084 bootstrap session is closed."` on
-2026-09-17, releasing the repository lock. The currently loaded Project
-Manager context predates the profile, so it must be reloaded before discovery.
+2026-09-17, releasing the repository lock. Dedicated P1 `PMR-087` is the only
+next owner invocation. It is a read-only capability probe under the
+single-use exception `PMD-20260918-001`; this publication turn does not invoke
+it.
 
-Reload a multi-directory Project Manager context:
+After the containing Project Manager commit and generated tasking are current,
+the next Project Manager context must bind the invocation to exact request
+`PMR-087`, the generated Project Manager commit/request-blob fingerprint,
+physical root `/home/jmorris/src/beryllium-project/analysis-workbook`, clean
+branch `main`, and full expected HEAD
+`ea72522a7d6448dfa2f3af841c2511522d5bc228`. If a restart is needed, reload a
+multi-directory Project Manager context:
 
 ```sh
 cd /home/jmorris/src/beryllium-project
@@ -43,17 +51,37 @@ Then run:
 /agent project-manager
 ```
 
-Re-select `max` effort if Copilot CLI resets it. The Project Manager will
-perform only the read-only native
-discovery/root/task-fingerprint/isolation handshake first. The context the
-responsible human reports running must remain read-only until the containing
-Project Manager commit and regenerated tasking are current.
-No write-enabled owner task begins until that proof succeeds.
+Re-select `max` effort if Copilot CLI resets it. Invoke only the hidden
+`analysis-workbook-owner` for `PMR-087`, using read/search and its permitted
+read-only local Git identity/status checks. It may not call `ask_user`, invoke
+a specialist or subagent, use a write-capable operation, write or stage any
+path or Git metadata, act on another PMR, or leave the one analysis-workbook
+repository.
 
-After the handshake, P2 `PMR-086` is the preferred first write-enabled canary:
-it repairs only the eight stale HET-001 fixture expectations so the component
-suite no longer needs a pre-existing-baseline exception. Run no `PMR-086`
-step before the handshake passes. `PMR-063` follows separately.
+In the later probe turn, emit the exact read-only packet from the committed
+Project Manager repository before native invocation:
+
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/project-tasking.sh dispatch analysis-workbook PMR-087
+```
+
+Do not run that command in this publication turn. Packet emission launches
+nothing, writes nothing, and grants no gate; the later orchestrator must still
+verify every prerequisite and invoke only the exact registered profile.
+
+Only one live `OWNER_AGENT_RESPONSE_V1` document is admissible:
+`state: progress`, `work.commits: []`, `work.paths: []`,
+`handoff.checkpoint_commit: null`, `question: null`, and `push: null`, with
+the exact invocation identity and unchanged repository state. The Project
+Manager independently verifies unchanged pre/post root, branch, full HEAD,
+tree, cleanliness, and one-repository isolation, then records the disposition
+PM-side. Failure leaves `PMR-087` open and blocked.
+
+P2 `PMR-086` remains open and blocked by `PMR-087`. Do not start or dispatch
+it in the handshake publication turn. Only after `PMR-087` is verified and
+closed may a later Project Manager turn decide whether to begin that
+write-enabled fixture repair. `PMR-063` remains separate.
 
 ## Repository reorganization complete
 
@@ -149,6 +177,12 @@ branch, and backup state.
 ```
 
 ## P2 repository actions
+
+### PMR-086 - blocked by the read-only handshake
+
+Do not start or dispatch `PMR-086`. It remains open P2 and may be considered
+only in a later Project Manager turn after `PMR-087` is independently
+verified and closed. The exact handshake boundary is in the P1 section above.
 
 ### PMR-026 - Helium checkout and handoff disagree
 
