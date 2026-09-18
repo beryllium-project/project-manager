@@ -75,10 +75,14 @@ handoff remains authoritative. Owner workers return blocking human questions
 to the PM instead of calling `ask_user`. At most four repositories run
 concurrently and never more than one writer/reservation per repository.
 
-No owner profile exists yet. Analysis-workbook and Beryllium are the planned
-pilot, with a read-only native discovery/isolation proof before write-enabled
-use. V1 adds no dispatch/return queue, historical request migration,
-execution ledger, daemon, lease database, or general Git automation.
+One owner profile exists: hidden `analysis-workbook-owner`, introduced at
+`ea72522`, proven read-only under closed `PMR-087`, and used for one exact
+write-enabled fixture-maintenance request under closed `PMR-086` (work
+`efbfdb8`, durable return `858a73b`). Those bounded results grant no broader
+owner or Project Manager authority. No Beryllium owner profile exists; its
+bootstrap remains planned. V1 adds no dispatch/return queue, historical
+request migration, execution ledger, daemon, lease database, or general Git
+automation.
 
 Cross-repository consumption follows `PMD-20260917-001`: destination owners
 load `cross-repo-collaboration` before using sibling research or analysis,

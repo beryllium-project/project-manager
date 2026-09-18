@@ -58,11 +58,12 @@ It must use `/beryllium-project-management` for every coordination turn.
 
 ## Component owner-worker boundary
 
-`PMD-20260917-002` defines a dormant owner-worker control plane. A component
-may later adopt one hidden `<component>-owner` profile that is
-model-invocable, not user-invocable, has no `ask_user`, and writes only its
-own repository under that component's maintained policy. Existing
-user-invocable orchestrators remain unchanged.
+`PMD-20260917-002` defines the owner-worker control plane, active for one
+adopted component. Analysis-workbook has hidden
+`analysis-workbook-owner`; another component may later adopt one hidden
+`<component>-owner` profile that is model-invocable, not user-invocable, has
+no `ask_user`, and writes only its own repository under that component's
+maintained policy. Existing user-invocable orchestrators remain unchanged.
 
 The Project Manager may invoke an adopted owner only for one exact directly
 assigned open PMR after independently verifying recorded authority and
@@ -80,10 +81,14 @@ results remain in the existing component handoff. For `needs_human`, the PM
 validates and presents one blocking `ask_user` form; the owner never prompts
 the human directly.
 
-No owner worker or pilot exists until a component-owned adoption is verified.
-The first analysis-workbook invocation must prove native cross-directory
-discovery, target-root isolation, tasking fingerprints, and write boundaries
-read-only before any write-enabled pilot.
+No owner worker exists for a component until its component-owned adoption is
+verified. Analysis-workbook adoption at `ea72522` is verified; its first
+invocation proved native cross-directory discovery, target-root isolation,
+tasking fingerprints, and write boundaries read-only under `PMR-087`, and
+one bounded write-enabled fixture-maintenance run completed under `PMR-086`
+at `efbfdb8` / `858a73b`. Those results do not establish another component's
+owner. Beryllium still requires its own adoption and read-only proof before
+any write-enabled use.
 
 ## Specialist boundary
 

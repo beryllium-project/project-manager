@@ -20,7 +20,7 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## Owner-worker read-only handshake result
+## Owner-worker PMR-086 result
 
 `PMR-087` is closed by
 `records/decisions/PMD-20260918-002-analysis-workbook-read-only-handshake-verified.md`.
@@ -39,12 +39,16 @@ The synchronous probe ended. Its returned `active_session: self` is released
 and leaves no writer reservation. The `PMD-20260918-001` exception is consumed
 and proves only this exact read-only handshake.
 
-P2 `PMR-086` remains open as the next possible write-enabled owner-worker
-action, but it was not dispatched or started in this closeout. A later
-Project Manager turn must independently re-check committed/generated tasking,
-exact component branch/HEAD, cleanliness, active-session availability, and
-the one-writer lock before deciding whether to emit a new packet. `PMR-063`
-remains separate.
+The responsible human then directed the distinct PMR-086 turn. After fresh
+fingerprint, clean/idle, and one-writer checks, the Project Manager dispatched
+only `PMR-086` from exact PM commit `9c81f57` / request blob `18a5343d`
+against analysis-workbook `ea72522`. Verified work `efbfdb8` changes only
+`tests/validate-agent.sh`; durable return `858a73b` changes only `HANDOFF.md`.
+The component reports 357 passed / 0 failed, and Project Manager diff checks
+confirm the transfer queue and every analysis/session artifact are unchanged.
+The synchronous owner session ended with no reservation. `PMR-086` is closed;
+no other PMR, specialist, push, or gate was combined. `PMR-063` remains
+separate.
 
 ## Repository reorganization complete
 
@@ -141,18 +145,6 @@ branch, and backup state.
 
 ## P2 repository actions
 
-### PMR-086 - next candidate, not dispatched
-
-`PMR-087` has satisfied the read-only prerequisite, but that closure does not
-authorize or start this write-enabled task. `PMR-086` remains open P2 and was
-not dispatched in the handshake closeout. In a distinct later Project Manager
-turn, first require current generated tasking plus exact clean/idle
-analysis-workbook state and one-writer availability. Only if that fresh
-readiness and scope review passes may the Project Manager separately decide
-whether to prepare a dispatch under the established control plane. The owner
-must still preserve the exact fixture-only scope, component rules, validation,
-local commit/return protocol, and no-push boundary.
-
 ### PMR-026 - Helium checkout and handoff disagree
 
 The clean checkout is detached at `1ab289c`, which is also
@@ -235,6 +227,12 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
   carry `c7cc0fa` plus seven PMR-084 owner commits. After authorized private
   access, review that exact range and decide whether to fast-forward push.
   No force, tag, publication, analysis disposition, or handshake authority.
+- **P3 PMR-088:** after `PMR-085` is independently resolved, review only
+  PMR-086 work `efbfdb8` and durable return `858a73b` with
+  `git -C /home/jmorris/src/beryllium-project/analysis-workbook diff ea72522..858a73b -- tests/validate-agent.sh HANDOFF.md`.
+  A later separately confirmed private fast-forward may back up those two
+  commits. This request was not dispatched or combined with PMR-086; no
+  force, tag, queue change, analysis disposition, publication, or gate.
 - **P3 PMR-082:** active Beryllium status commit `7ecf8bd` is seven ahead of
   last-fetched private `origin` at `f05ccb3`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
@@ -377,9 +375,11 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `ea72522` is eight ahead of last-fetched
-  `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa` plus seven
-  PMR-084 owner commits. It remains exact backup request `PMR-085`;
+- `analysis-workbook` clean `main` `858a73b` is ten ahead of last-fetched
+  `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
+  owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
+  `858a73b`. The first range remains exact backup request `PMR-085`; separate
+  dependent `PMR-088` tracks only the two later commits;
 - `beryllium-repo` active status `7ecf8bd` is seven ahead of last-fetched
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains

@@ -17,21 +17,23 @@
   on 2026-09-17. The selected Project Manager runtime registers the profile.
   Dedicated `PMR-087` passed the read-only native
   discovery/root/task-fingerprint/isolation handshake and is closed by
-  `PMD-20260918-002`; the single-use `PMD-20260918-001` exception is consumed
+  `PMD-20260918-002`; the single-use `PMD-20260918-001` exception is
+  consumed. Exact write-enabled `PMR-086` is closed from fixture work `efbfdb8` and
+  durable return checkpoint `858a73b`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at owner-return checkpoint `ea72522`,
-  behind 0 / ahead 8 of last-fetched `origin/main` `1ef1ac6`, local and
-  unpushed. The range contains Project Manager carry `c7cc0fa` plus seven
-  PMR-084 owner commits. Full component validation remains 349 passed / 8
-  failed on pre-existing stale HET-001 fixtures, with zero new PMR-084
-  failures; `PMR-086` owns that repair. The durable return's historical
-  `active_session: self` is superseded for coordination locking by the
-  responsible human's exact release statement. The later no-write probe also
-  returned `active_session: self`; that synchronous invocation ended and
-  leaves no writer reservation. P2 `PMR-086` remains open as a distinct later
-  write-enabled candidate and was not dispatched in the closeout;
-  `PMR-059`, `PMR-063`, and backup `PMR-085` remain open.
+- **Observed state:** clean `main` at PMR-086 durable return `858a73b`, exact
+  tree `f043642`, behind 0 / ahead 10 of last-fetched `origin/main`
+  `1ef1ac6`, local and unpushed. Exact work commit `efbfdb8` changes only
+  `tests/validate-agent.sh`; checkpoint `858a73b` changes only `HANDOFF.md`.
+  Full component validation passes 357 / 0. Project Manager diff verification
+  confirms `outbox/helium-transfer-queue.md`, HET-001 `recorded` /
+  `unaccepted` state and history, every session and analysis/research
+  artifact, `WORKBOOK.md`, other outboxes, and source-discovery records are
+  unchanged from `ea72522`. The synchronous owner invocation's
+  `active_session: self` ended with no writer reservation. `PMR-059`,
+  `PMR-063`, prior-range backup `PMR-085`, and separate later-commit backup
+  `PMR-088` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
 
@@ -65,6 +67,13 @@ topic and chronology in the generated `WORKBOOK.md`.
   metadata. The synchronous `active_session: self` ended with no reservation.
   This closes only `PMR-087`; it does not prove a write-enabled run or
   authorize `PMR-086`.
+- The later exact `PMR-086` dispatch was bound to Project Manager
+  `9c81f57ff981d18bcdeee324768f857a325d58ce`, request blob
+  `18a5343d444ba93485d3143e78d5743b0d0b995f`, and expected clean `main`
+  `ea72522a7d6448dfa2f3af841c2511522d5bc228`. It proves only that bounded
+  fixture-maintenance run: work `efbfdb8`, durable return `858a73b`, 357 / 0
+  contract tests, protected-path preservation, no specialist, no sibling or
+  other PMR work, and no push or human gate.
 - The owner profile's local-Git exception is limited to repository
   status/identity/diff inspection, staging exact PMR paths, and validated
   local work/return commits. It cannot fetch, pull, push, mutate remotes, tag,
@@ -128,8 +137,10 @@ topic and chronology in the generated `WORKBOOK.md`.
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
   its log; observed synchronized (0 behind, 0 ahead) at 2026-09-06T10:30Z.
   Owner commit `1ef1ac6` was observed synchronized on 2026-09-15; Project
-  Manager carry `c7cc0fa` plus the seven PMR-084 owner commits now leave
-  `main` eight ahead of `origin/main`. `PMR-085` tracks private backup.
+  Manager carry `c7cc0fa` plus the seven PMR-084 owner commits leave the
+  `PMR-085` range eight ahead of `origin/main`. PMR-086 work `efbfdb8` and
+  return `858a73b` make current `main` ten ahead; separate `PMR-088` tracks
+  those two later commits without silently expanding `PMR-085`.
 
 ## Outbound queue
 
@@ -181,6 +192,7 @@ repository handoff and structured return only.
 /agent analysis-workbook                  # in Copilot CLI
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-session.sh [--draft|--baseline <prior-copy>] sessions/AWB-YYYYMMDD-NNN-short-name
+bash ./scripts/validate-helium-transfer-queue.sh [--baseline <prior-copy>]
 bash ./scripts/update-workbook.sh --check
 git diff --check
 ```
@@ -201,10 +213,10 @@ are outside class 1. Nothing treats a session as review or acceptance.
 `PMR-063` asks the owner to map `check Project Manager tasking` to the exact
 fail-closed resolver and prohibit session-history fallback.
 `PMR-087` is closed by `PMD-20260918-002` after the exact no-write owner
-capability probe passed under `PMD-20260918-001`. `PMR-086` remains open P2
-as a possible distinct later action; it was not dispatched or started in the
-closeout and still requires fresh tasking, state, active-session, and
-one-writer checks.
+capability probe passed under `PMD-20260918-001`. `PMR-086` is closed from
+verified fixture-only work `efbfdb8` and durable return `858a73b`; the queue
+and every analysis/session artifact are unchanged, and the suite passes
+357 / 0. `PMR-088` separately tracks later backup and was not dispatched.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"
