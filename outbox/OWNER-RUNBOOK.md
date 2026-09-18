@@ -20,19 +20,13 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## P1 next blocking condition: release the canary session
+## P1 next action: reload and probe the canary
 
 `PMR-084` is closed from verified local checkpoint `ea72522`. Hidden
-`analysis-workbook-owner` exists, but its durable return says active owner
-session `self`. The Project Manager cannot infer release from a clean
-worktree and must not start the native handshake yet.
-
-Close the analysis-workbook bootstrap Copilot session so it will make no
-further repository changes. Then return to the Project Manager and state:
-
-```text
-The analysis-workbook PMR-084 bootstrap session is closed.
-```
+`analysis-workbook-owner` exists. The responsible human explicitly stated
+`"The analysis-workbook PMR-084 bootstrap session is closed."` on
+2026-09-17, releasing the repository lock. The currently loaded Project
+Manager context predates the profile, so it must be reloaded before discovery.
 
 Reload a multi-directory Project Manager context:
 
@@ -50,13 +44,16 @@ Then run:
 ```
 
 Re-select `max` effort if Copilot CLI resets it. The Project Manager will
-perform only the read-only native discovery/root/isolation handshake first.
+perform only the read-only native
+discovery/root/task-fingerprint/isolation handshake first. The context the
+responsible human reports running must remain read-only until the containing
+Project Manager commit and regenerated tasking are current.
 No write-enabled owner task begins until that proof succeeds.
 
 After the handshake, P2 `PMR-086` is the preferred first write-enabled canary:
 it repairs only the eight stale HET-001 fixture expectations so the component
-suite no longer needs a pre-existing-baseline exception. `PMR-063` follows
-separately.
+suite no longer needs a pre-existing-baseline exception. Run no `PMR-086`
+step before the handshake passes. `PMR-063` follows separately.
 
 ## Repository reorganization complete
 

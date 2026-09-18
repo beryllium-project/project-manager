@@ -62,10 +62,12 @@ handoff.
 Owner-worker pilot: `PMR-084` is closed from analysis-workbook checkpoint
 `ea72522`, which adds hidden `analysis-workbook-owner`. The profile is
 model-invocable, not user-invocable, has no `ask_user`, and writes only its
-own repository. Its return still reports active owner session `self`, so it is
-not dispatchable until explicit release and a read-only native
-discovery/root/isolation handshake. Failure stops before the later Beryllium
-bootstrap; no Beryllium owner profile exists.
+own repository. Its return recorded active session `self`; the responsible
+human explicitly released that bootstrap session on 2026-09-17. It remains
+non-dispatchable until a reloaded two-directory Project Manager context passes
+the read-only native discovery/root/task-fingerprint/isolation handshake.
+Failure stops before the later Beryllium bootstrap; no Beryllium owner profile
+exists.
 
 Planned only: `PMR-073` requests a `git-maintainer` specialist invocable
 exclusively by `project-manager`. Component agents may request Git service

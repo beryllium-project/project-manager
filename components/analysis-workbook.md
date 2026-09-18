@@ -13,8 +13,10 @@
   `analysis-workbook-owner` (hidden PM-invocable owner),
   `analysis-evidence` and `analysis-research` (write-disabled specialists);
   skill `beryllium-analysis`. `PMR-084` is closed from local checkpoint
-  `ea72522`; the owner is not dispatchable until explicit session release and
-  a read-only native discovery/root/isolation handshake
+  `ea72522`; the responsible human explicitly released the bootstrap session
+  on 2026-09-17. The owner is not dispatchable until a reloaded Project
+  Manager context completes the read-only native
+  discovery/root/task-fingerprint/isolation handshake
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean `main` at owner-return checkpoint `ea72522`,
@@ -22,9 +24,11 @@
   unpushed. The range contains Project Manager carry `c7cc0fa` plus seven
   PMR-084 owner commits. Full component validation remains 349 passed / 8
   failed on pre-existing stale HET-001 fixtures, with zero new PMR-084
-  failures; `PMR-086` owns that repair. The durable return reports active
-  owner session `self`; handshake/write use is blocked pending explicit
-  release. `PMR-059`, `PMR-063`, and backup `PMR-085` remain open.
+  failures; `PMR-086` owns that repair. The durable return's historical
+  `active_session: self` is superseded for coordination locking by the
+  responsible human's exact release statement. Handshake/write use remains
+  blocked only pending the required Project Manager reload and read-only
+  probe. `PMR-059`, `PMR-063`, and backup `PMR-085` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
 
@@ -47,9 +51,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   single startup-discovery exception outside an analysis package. It is not
   target execution and grants no other sibling command.
 - `PMD-20260917-002` creates only the PM control plane. `PMR-084` added the
-  hidden owner profile, but the first PM invocation remains a read-only
-  discovery/root/isolation handshake after explicit session release; the
-  committed profile alone grants no analysis or write authority.
+  hidden owner profile, and the responsible human has released its bootstrap
+  session. The first PM invocation remains a read-only
+  discovery/root/task-fingerprint/isolation handshake after reloading the
+  two-directory context; the committed profile and release alone grant no
+  analysis or write authority.
 - The owner profile's local-Git exception is limited to repository
   status/identity/diff inspection, staging exact PMR paths, and validated
   local work/return commits. It cannot fetch, pull, push, mutate remotes, tag,

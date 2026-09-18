@@ -1,17 +1,15 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-17
-**Update scope:** thirty-ninth coordination turn; verified analysis-workbook
-PMR-084 owner-canary checkpoint `ea72522` and closed the bootstrap on its
-bounded result. Hidden `analysis-workbook-owner` is present with the recorded
-model, invocation, one-repository, command, Git, typed-response, and durable
-return boundaries. Full component tests remain explicitly failed at 349
-passed / 8 failed; all eight are independently corroborated pre-existing stale
-HET-001 fixture cases with zero new PMR-084 failures. P2 `PMR-086` owns that
-repair and P3 `PMR-085` owns backup. The durable return says active owner
-session `self`. The responsible human was unavailable to confirm release, so
-the native read-only handshake and every new analysis write remain blocked.
-The Project Manager wrote no component.
+**Update scope:** fortieth coordination turn; the responsible human explicitly
+stated `"The analysis-workbook PMR-084 bootstrap session is closed."`,
+releasing the analysis-workbook repository lock recorded as `self` in the
+durable return. Hidden `analysis-workbook-owner` remains non-dispatchable in
+the currently loaded Project Manager context, which predates the profile. The
+next and only action is to reload a context containing both
+`project-manager` and `analysis-workbook`, reselect max effort if reset, and
+run the read-only native discovery/root/task-fingerprint/isolation handshake.
+No component was modified.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -23,14 +21,14 @@ The Project Manager wrote no component.
 
 | Area | Current state |
 | --- | --- |
-| Owner-worker control plane | Phase 1 is complete at `1ee0f77`. `PMR-084` is closed from verified analysis-workbook checkpoint `ea72522`; the hidden owner exists but is not dispatchable because its durable return says active session `self`. The next condition is an explicit responsible-human session-release statement, followed by a multi-directory PM reload and read-only native discovery/root/isolation handshake. No queue, execution ledger, or active write-enabled pilot exists. |
+| Owner-worker control plane | Phase 1 is complete at `1ee0f77`; PMR-084 reconciliation is at `f2cb586`. Hidden `analysis-workbook-owner` exists at `ea72522`, and the responsible human explicitly released its bootstrap session. The currently loaded PM context predates the profile, so discovery remains blocked until the required two-directory reload and read-only handshake. No write-enabled pilot is active. |
 | Planned OSS alignment | `PMR-076` is a non-blocking P3 Project Manager-owned todo. Locate and scope the responsible human's `kcopilotd` project first, then decide whether the maintained interface is a skill, agent, or pair. Comparisons must be revision-pinned and distinguish fact, inference, proposal, and unknown; licensing, redistribution, governance, adoption, and release remain human decisions. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references; tracked workspace symlinks are unchanged. |
 | Beryllium runtime | R0-R7 are accepted. R8-C plan target `f47ae60` is accepted as plan text only; R8-C implementation authorization is none, no implementation base/relation is selected, and no successor H0 candidate is authorized. Exact local H0 candidate `6e93461` remains blocked, unreviewed, and unaccepted with 80 H0 blockers. Clean active/default status is `7ecf8bd`, seven ahead; owner-session release is `unknown` pending `PMR-083`. `PMR-082` is backup. H1-H4 unauthorized; K3 `NOT RUN`; external `PMR-077` separate. |
 | Helium | Clean detached HEAD at `1ab289c`, also named by synchronized `for-review`; separate refs include travel `52cc71a` and `public/main` plus tag `v0.6.0` at `1c9e526`. The checked-out handoff says release remains blocked, so `PMR-026` asks the owner to reconcile checkout/ref/handoff state. The Project Manager infers no release or approval from ref names or commit subjects. Helium remains a review-and-test PoC, not formally verified or hardware validated. |
 | Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
 | XRV | Owner return `456c70b` records private active `origin` and reviewed history through `d618935`, including durable `REV-*` and `COLLAB.md`. Clean local `main` is two ahead with `22095a1` and `456c70b`; `PMR-075` tracks their backup but is blocked until an authorized credential can reach `origin`. `legacy-backup/main` remains last-fetched at `706e708`; `msft-inactive` remains unmodified. Live remote reachability is currently `unknown`; the workspace symlink is unchanged. |
-| Analysis-workbook | Clean `main` at owner checkpoint `ea72522`, behind 0 / ahead 8 of last-fetched `origin/main` `1ef1ac6`. Hidden `analysis-workbook-owner` is present; no analysis/session/outbox work occurred. Full tests remain 349 passed / 8 pre-existing stale HET-001 fixture failures, not a pass; P2 `PMR-086` repairs them. The return says active session `self`, blocking the handshake. P3 `PMR-085` tracks backup; `PMR-059` still needs its distinct return. |
+| Analysis-workbook | Clean `main` at owner checkpoint `ea72522`, behind 0 / ahead 8 of last-fetched `origin/main` `1ef1ac6`. Hidden `analysis-workbook-owner` is present; no analysis/session/outbox work occurred. Full tests remain 349 passed / 8 pre-existing stale HET-001 fixture failures, not a pass; P2 `PMR-086` repairs them. The responsible human explicitly released the bootstrap session; only PM reload/handshake remains. P3 `PMR-085` tracks backup; `PMR-059` still needs its distinct return. |
 | CHERI-RISC-V notes | Owner return `9a4c5ef` records private active `origin`; last-fetched refs show the topic branch synchronized, `main` at `6553092`, and prior Wiki history at `archive/gim-wiki` `cd7dc81`. The 21:53Z run could not refresh `origin` with the active credential, so live reachability is `unknown`. Issues 2 and 3 remain owner-reported preserved; the workspace symlink is unchanged; Pages and publication gates remain closed. |
 | Formal verification | Clean `main` at `784be93`, two ahead of last-fetched `origin/main`; live reachability was unavailable under the active credential at 21:53Z. The latest carry adds metadata-only `PMQ-023`; `PMR-037` remains open for remote/handoff wording. |
 | Other drift | OS-security is clean and synchronized at active private successor return `49fbfd6`; root `58f8023` is restricted-free, while complete old private history remains at inactive `legacy-personal/main` `e275544`. The personal quarantine exists empty with clean history; no restricted file was opened or copied. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
@@ -54,22 +52,22 @@ The Project Manager wrote no component.
 
 ### Current todo choices
 
-The Project Manager needs one human fact before continuing: whether the
-analysis-workbook PMR-084 bootstrap session is closed and will make no further
-repository changes. The user was unavailable when asked, so release remains
-unknown. Once confirmed, reload the two-directory PM context and run only the
-read-only owner discovery/root/isolation handshake. The responsible human may
-choose differently based on priorities outside Project Manager visibility.
+The repository lock is released and the responsible human reports the
+two-directory context is running. That context must remain read-only until
+this reconciliation commits and tasking is regenerated; it can then run only
+the owner discovery/root/task-fingerprint/isolation handshake. The responsible
+human may choose differently based on priorities outside Project Manager
+visibility.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P1 | Owner capability probe | **Blocked - analysis-workbook owner session still reports `self`** | Confirm the bootstrap session is closed, then prove native profile discovery and repository isolation read-only; no owner write is permitted yet. |
-| P2 | `PMR-086` | **Blocked by release and read-only handshake** | Repair the eight stale HET-001 test expectations as the first write-enabled canary, eliminating the baseline exception without changing transfer state. |
+| P1 | Owner capability probe | **Blocked until this PM commit and tasking regeneration** | The two-directory context is running; once current, prove native profile discovery/root/task-fingerprint/isolation read-only. No owner write is permitted yet. |
+| P2 | `PMR-086` | **Blocked by read-only handshake** | Repair the eight stale HET-001 test expectations as the first write-enabled canary, eliminating the baseline exception without changing transfer state. |
 | P2 | `PMR-083` | **Ready - Beryllium owner coordination only** | Complete the R8-C structured return with current commit/ahead and active-session state; this releases or preserves the Beryllium write lock without changing any plan or implementation gate. |
 | P2 | `PMR-026` | **Ready - Helium owner action** | Reconcile the detached checkout, refs, and handoff so future Helium work does not rely on contradictory release/ref state; it grants no release approval. |
 | P2 | `PMR-040` | **Ready - XRV owner review** | Decide whether the proposed CHERI hypervisor architecture should be incorporated, qualified, deferred, or declined; this is research review, not implementation selection. |
 | P2 | `PMR-067` | **Ready - Beryllium owner configuration** | Make ordinary Beryllium sessions resolve current PM tasking reliably instead of searching stale session state; no implementation work is included. |
-| P3 | `PMR-004`, `038`, `050`, `055`, `059`, `063` | **Wait for canary release/handshake - analysis-workbook owner maintenance** | Clear stale interfaces, returns, tasking startup, and queue-mirror housekeeping after the owner path is proven; no analysis result is blocked. |
+| P3 | `PMR-004`, `038`, `050`, `055`, `059`, `063` | **Wait for canary handshake - analysis-workbook owner maintenance** | Clear stale interfaces, returns, tasking startup, and queue-mirror housekeeping after the owner path is proven; no analysis result is blocked. |
 | P3 | `PMR-085` | **Blocked - private reachability unknown** | Back up analysis-workbook through `ea72522` after review; no handshake, analysis disposition, or gate follows. |
 | P3 | `PMR-009`, `051`, `071` | **Ready - CHERI notes owner/human gates** | Reconcile its return/tasking state and separately decide two source admissions; source inclusion remains a human corpus decision. |
 | P3 | `PMR-014`, `037`, `041`, `069` | **Ready - formal-verification owner maintenance** | Triage routed bibliography pointers and clean up remote/handoff/tasking wording; no verification or licensing claim follows. |
@@ -86,16 +84,11 @@ choose differently based on priorities outside Project Manager visibility.
 
 ### One recommended next action
 
-First provide the missing release fact:
-
-```text
-The analysis-workbook PMR-084 bootstrap session is closed.
-```
-
-Then follow the multi-directory reload commands in
-`outbox/OWNER-RUNBOOK.md`. Re-select max effort if needed. The Project
-Manager will run only the read-only native handshake before deciding whether
-`PMR-086` may start.
+Finish this PM commit and regenerate tasking. In the running two-directory
+context, reselect max effort if needed and run only the read-only
+discovery/root/task-fingerprint/isolation handshake before deciding whether
+`PMR-086` may start. The reload commands in `outbox/OWNER-RUNBOOK.md` remain
+the restart fallback.
 
 ### Minimal restart commands
 
@@ -114,6 +107,21 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
+- Recorded the responsible-human release statement exactly:
+  `"The analysis-workbook PMR-084 bootstrap session is closed."`
+- Responsible-human runtime status:
+  `"ok, running the two-dir pm context"`. That new context must remain
+  read-only until this reconciliation commit and regenerated tasking are
+  current.
+- Released the analysis-workbook repository lock for future coordination. The
+  historical component return still says `active_session: self`, but the
+  later responsible-human statement is the current lock evidence.
+- Narrowed the capability-probe blocker to a Project Manager reload. The
+  currently loaded PM runtime does not expose the newly added owner profile,
+  so no substitute general-purpose agent or inferred handshake was used.
+- Updated `PMR-086`, the analysis card, roster, runbook, handoff, and parent
+  registry consistently. No component write or owner dispatch occurred.
+Previous turn (thirty-ninth):
 - Verified analysis-workbook clean `main` at PMR-084 checkpoint `ea72522`,
   behind 0 / ahead 8, with six work commits `9793f62..186a7f6`, the final
   HANDOFF-only checkpoint, and the six requested implementation paths.
@@ -133,9 +141,9 @@ git -C .. status --short --branch
   `PMR-085` for private backup through `ea72522`. Updated `PMR-059` and
   `PMR-063` with the exact remaining return/blob-pin work.
 - The durable return reports active owner session `self`. The responsible
-  human was unavailable when asked whether it is closed, so the native
-  handshake and any new analysis write remain blocked; no release was
-  inferred from the clean worktree.
+  human was unavailable when first asked whether it was closed; that
+  thirty-ninth-turn state is superseded by the later quoted release. No
+  release was inferred from the clean worktree.
 Previous turn (thirty-eighth):
 - Recorded `PMD-20260917-002`, the minimal owner-worker control plane selected
   by the responsible human: dedicated hidden component owners, automatic
@@ -327,8 +335,8 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P1 | Owner capability probe | Blocked until the responsible human explicitly confirms the PMR-084 analysis-workbook bootstrap session is closed; then reload the two-directory PM context and run only the read-only discovery/root/isolation handshake. |
-| P2 | `PMR-086` | After session release and the handshake, repair only the eight stale HET-001 fixture cases as the preferred first write-enabled owner-worker task. |
+| P1 | Owner capability probe | The two-directory context is running; wait for this PM commit and regenerated tasking, then run only the read-only discovery/root/task-fingerprint/isolation handshake. |
+| P2 | `PMR-086` | After the handshake, repair only the eight stale HET-001 fixture cases as the preferred first write-enabled owner-worker task. No steps run before the handshake passes. |
 | P2 | `PMR-026` | Reconcile Helium's detached checkout, current handoff, and observed refs; no gate is inferred. |
 | P2 | `PMR-067` | Teach the ordinary Beryllium Copilot owner context the exact resolver contract whose absence caused the observed failure. |
 | P2 | `PMR-083` | Refresh the completed R8-C return with acceptance-record/current-tip identities, seven-ahead state, and explicit owner-session state; no plan or implementation change. |
@@ -362,10 +370,11 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 ## Open human gates
 
 - The analysis owner profile now exists at `ea72522`, but cross-directory
-  discovery and isolation remain unproven. Its durable return says active
-  session `self`; the responsible human was unavailable to release that lock.
-  The PM must reload the two-directory context and verify the owner read-only
-  only after explicit release. No owner-agent push is authorized in this turn.
+  discovery and isolation remain unproven. The responsible human released the
+  bootstrap session on 2026-09-17. The running two-directory context must stay
+  read-only until this commit and regenerated tasking are current, then verify
+  discovery/root/task-fingerprint/isolation before any owner write. No
+  owner-agent push is authorized in this turn.
 - The organization rename is complete. No repository creation, repository
   transfer, history push, remote change, symlink retarget, visibility change,
   quarantine transfer, or Pages publication was executed by the Project
@@ -389,7 +398,7 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   remains `unknown` under `PMR-083`.
 - Other component and coordination commits reported ahead of their remotes
   remain unpushed until separately reviewed and confirmed. Project Manager
-  `1ee0f77` and parent `75aae5b` were already nine commits ahead before this
+  `f2cb586` and parent `f477051` were already ten commits ahead before this
   turn; this turn's commits remain unpushed. The prior `"yes, push"` covered
   only the completed reorganization closure. XRV `PMR-075` remains separate.
 - Beryllium H0 acceptance remains open. H1-H4 remain unauthorized. K3
@@ -439,13 +448,11 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 ## Validation and commit state
 
 This turn's write-disabled `pm-auditor` (`claude-opus-5`, `max`,
-`long_context`) found the PMR-084 profile/scope evidence sufficient for
-bounded closure and independently corroborated the eight pre-existing stale
-HET-001 fixture failures. It found no closure blocker after preserving the
-failed suite result and opening `PMR-086`. It also found that active session
-`self` blocks the native handshake. Stale PM/card/roster/runbook/registry
-facts were corrected; component-side residuals were routed through existing
-`PMR-038`, `PMR-059`, `PMR-063`, and new `PMR-086`.
+`long_context`) found no policy blocker after the responsible-human release.
+It identified stale release, prior-turn, ahead-state, next-action, validation,
+and provenance wording. All were corrected so the running two-directory
+context remains read-only until this commit and regenerated tasking are
+current.
 
 Pre-commit validation passed:
 
@@ -461,7 +468,7 @@ Pre-commit validation passed:
 Post-commit tasking generation and current-view checking follow the Project
 Manager commit so each ignored view can name the exact containing HEAD.
 
-This handoff is included in the thirty-ninth-turn Project Manager commit. Its
+This handoff is included in the fortieth-turn Project Manager commit. Its
 exact HEAD is recorded afterward in the `project-manager/` row of
 `../COMPONENTS.md`, followed by the parent commit. No push is authorized in
 this turn; the prior turn's `"yes, push"` covered only the completed
@@ -469,6 +476,16 @@ reorganization closure and its confirmation records.
 
 ## Provenance
 
+- Live state: `scripts/inspect-components.sh status` and `registry-check` at
+  2026-09-18T00:44Z observed parent `f477051` clean before this turn and ten
+  ahead, Project Manager `f2cb586` clean before this turn and ten ahead,
+  analysis-workbook clean `ea72522` behind 0 / ahead 8, every component
+  revision exact, and all tracked symlinks resolved. The later dirty entries
+  are only this Project Manager turn's PM-owned files.
+- Responsible-human release:
+  `"The analysis-workbook PMR-084 bootstrap session is closed."`
+- Responsible-human reload status:
+  `"ok, running the two-dir pm context"`.
 - Live state: `scripts/inspect-components.sh status`, `state
   analysis-workbook`, `refs analysis-workbook`, and `registry-check` at
   2026-09-17T22:32Z/22:33Z observed parent `75aae5b` clean nine ahead,
@@ -480,8 +497,8 @@ reorganization closure and its confirmation records.
   on a last-fetched remote-tracking branch.
 - Responsible-human prompt: `"now what"`.
 - The Project Manager asked whether the bootstrap Copilot session was closed.
-  The responsible human was unavailable, so no answer or release was
-  inferred; component evidence remains active session `self`.
+  The responsible human was initially unavailable; that thirty-ninth-turn
+  state is superseded by the later exact release quoted above.
 - The write-disabled `pm-auditor` read the owner profile, skill, instructions,
   interface, README, handoff, and contract tests; it corroborated the bounded
   PMR-084 result and the eight pre-existing stale HET fixture failures.
@@ -594,4 +611,4 @@ reorganization closure and its confirmation records.
   `2e8d205`, verified by `git -C ../security-reviewer show --stat` and the
   `model:` lines of the four profiles.
 - Previous full Project Manager handoff: Git object
-  `1ee0f77:HANDOFF.md`.
+  `f2cb586:HANDOFF.md`.
