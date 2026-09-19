@@ -19,22 +19,23 @@
   discovery/root/task-fingerprint/isolation handshake and is closed by
   `PMD-20260918-002`; the single-use `PMD-20260918-001` exception is
   consumed. Exact write-enabled `PMR-086` is closed from fixture work `efbfdb8` and
-  durable return checkpoint `858a73b`
+  durable return checkpoint `858a73b`. Exact housekeeping `PMR-038` is closed
+  from historical work `2374115`, return `f7079fb`, and boundary checkpoint
+  `5e037b1`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at PMR-086 durable return `858a73b`, exact
-  tree `f043642`, behind 0 / ahead 10 of last-fetched `origin/main`
-  `1ef1ac6`, local and unpushed. Exact work commit `efbfdb8` changes only
-  `tests/validate-agent.sh`; checkpoint `858a73b` changes only `HANDOFF.md`.
-  Full component validation passes 357 / 0. Project Manager diff verification
-  confirms `outbox/helium-transfer-queue.md`, HET-001 `recorded` /
-  `unaccepted` state and history, every session and analysis/research
-  artifact, `WORKBOOK.md`, other outboxes, and source-discovery records are
-  unchanged from `ea72522`. The synchronous owner invocation's
-  `active_session: self` ended with no writer reservation. Housekeeping
-  `PMR-004`, `PMR-038`, `PMR-050`, `PMR-055`, `PMR-059`, and `PMR-063`
-  remains; externally sequenced analysis `PMR-054` is separate. Prior-range
-  backup `PMR-085` and later-commit backup `PMR-088` remain open.
+- **Observed state:** clean `main` at PMR-038 boundary checkpoint `5e037b1`,
+  behind 0 / ahead 12 of last-fetched `origin/main` `1ef1ac6`, local and
+  unpushed. Return `f7079fb` and checkpoint `5e037b1` change only
+  `HANDOFF.md` from expected `858a73b`; historical `2374115` contains the
+  already-complete PMR-038 interface and outbox corrections and was not
+  reapplied. Full component validation reports 357 / 0, with transfer-queue,
+  workbook, and diff checks passing. Project Manager lineage and exact-scope
+  verification agree. The synchronous invocation ended with no writer
+  reservation. Housekeeping `PMR-004`, `PMR-050`, `PMR-055`, `PMR-059`, and
+  `PMR-063` remains sequential; externally sequenced analysis `PMR-054` is
+  separate. Prior-range backup `PMR-085`, PMR-086 backup `PMR-088`, and
+  prospective closure-range backup `PMR-089` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
 
@@ -131,9 +132,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   protocol. Owner commit `62ee356` assigns status mirroring to the maintainer
   and mirrors `CRQ-001` as `routed`; `PMR-036` is closed. XRV owner commit
   `d618935` completes the requested interface, and the maintainer mirrored
-  `CRQ-001` as `completed` at `2374115`; `PMR-038` remains open for residual
-  root-handoff wording and the structured return. The prior "two surfaces"
-  interface clause is already satisfied at current `858a73b`.
+  `CRQ-001` as `completed` at `2374115`. Return `f7079fb` removes the residual
+  root-handoff wording and records the structured result; checkpoint
+  `5e037b1` preserves the owner/tool boundary. `PMR-038` is closed. The prior
+  "two surfaces" interface clause was already satisfied and was not changed
+  by this invocation.
 - Backup: the owner pushed `main` to private `origin` on 2026-09-05
   (`efde667..ff12f2f`) and 2026-09-06 (`ff12f2f..d003dec`) through the
   human-run `../scripts/owner-actions.sh`, each verified with `ls-remote` in
@@ -141,8 +144,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   Owner commit `1ef1ac6` was observed synchronized on 2026-09-15; Project
   Manager carry `c7cc0fa` plus the seven PMR-084 owner commits leave the
   `PMR-085` range eight ahead of `origin/main`. PMR-086 work `efbfdb8` and
-  return `858a73b` make current `main` ten ahead; separate `PMR-088` tracks
-  those two later commits without silently expanding `PMR-085`.
+  return `858a73b` make ten ahead; separate `PMR-088` tracks those two
+  commits. PMR-038 return `f7079fb` and checkpoint `5e037b1` make current
+  `main` twelve ahead. Prospective `PMR-089` will freeze the exact
+  post-`858a73b` closure-sequence range after PMR-063 without expanding
+  either earlier backup request.
 
 ## Outbound queue
 
@@ -175,10 +181,9 @@ Owner commit `2374115` mirrors `CRQ-001` as `completed`, corrects the
 coordination packet. `PMD-20260915-004` pulls `CRQ-002` and routes the three
 owner stages as `PMR-052..PMR-054`; `PMR-055` requests its derived `routed`
 mirror and correction of the packet's stale `OPEN-001` reference to current
-`OPEN-003`. At current `858a73b`, `AGENT-INTERFACE.md` correctly states three
-pull-only interfaces. `PMR-038` remains open only because `HANDOFF.md` still
-calls the clean committed update uncommitted and no structured Project
-Manager return names the partial result.
+`OPEN-003`. `AGENT-INTERFACE.md` correctly states three pull-only interfaces.
+PMR-038 return `f7079fb` and checkpoint `5e037b1` correct the remaining root
+handoff state and provide the structured return; the request is closed.
 
 Owner commit `1ef1ac6` adds `PMQ-027..030`. Ledger rows
 `PML-0028`, `PML-0029`, and `PML-0031` route the specification, QEMU series,
@@ -205,9 +210,8 @@ A new analysis session on a named aspect; registration of `project-manager/`
 and `security-reviewer` in its `scripts/readonly-inspect.sh` registered list
 (`PMR-004`, `PMR-050`; the `RESEARCH-SOURCES.md` Project Manager part was
 carried at `83b97a3`; exact edit in `../outbox/OWNER-RUNBOOK.md`);
-the remaining stale interface/handoff wording and structured return under
-`PMR-038`; the `CRQ-002` routed mirror and stale open-ID correction under
-`PMR-055`; the repository handoff and structured return for owner commit
+the `CRQ-002` routed mirror and stale open-ID correction under `PMR-055`; the
+repository handoff and structured return for owner commit
 `1ef1ac6` under `PMR-059`; and, only after `PMR-052` and
 `PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
 These are request-only because the collaboration queue and analysis content
@@ -218,7 +222,11 @@ fail-closed resolver and prohibit session-history fallback.
 capability probe passed under `PMD-20260918-001`. `PMR-086` is closed from
 verified fixture-only work `efbfdb8` and durable return `858a73b`; the queue
 and every analysis/session artifact are unchanged, and the suite passes
-357 / 0. `PMR-088` separately tracks later backup and was not dispatched.
+357 / 0. `PMR-038` is closed from historical work `2374115`, HANDOFF-only
+return `f7079fb`, and HANDOFF-only boundary checkpoint `5e037b1`; the
+Project Manager performed the fleet todo update that the owner correctly
+refused outside its repository boundary. `PMR-088` and prospective
+closure-range backup `PMR-089` are separate and undispatched.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

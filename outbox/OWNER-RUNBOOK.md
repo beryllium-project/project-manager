@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-18
+**Last refreshed:** 2026-09-19
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -20,7 +20,7 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## Owner-worker PMR-086 result
+## Owner-worker closure results
 
 `PMR-087` is closed by
 `records/decisions/PMD-20260918-002-analysis-workbook-read-only-handshake-verified.md`.
@@ -50,19 +50,28 @@ The synchronous owner session ended with no reservation. `PMR-086` is closed;
 no other PMR, specialist, push, or gate was combined. `PMR-063` remains
 separate.
 
+After a fresh preflight, exact PMR-038 was dispatched from Project Manager
+`6da2b8f` / request blob `4d9661d` against clean analysis-workbook `858a73b`.
+Historical correction commit `2374115` was not reapplied. Return `f7079fb`
+and boundary checkpoint `5e037b1` change only root `HANDOFF.md`, report
+357 / 0 and maintained queue/workbook checks passing, and leave clean
+`main` twelve ahead. The owner returned `partial` only because the external
+fleet todo table is outside its repository boundary; the Project Manager
+verified the complete repository result and performed that bookkeeping.
+`PMR-038` is closed. No analysis, source admission, sibling write, push,
+other PMR, or gate was combined.
+
 ## Operational housekeeping closure
 
 `PMD-20260918-003` stops further process expansion before development resumes.
 Repository reorganization and the analysis owner-worker pilot are complete.
 No project-wide owner rollout or Git-maintainer specialist is required.
 
-Finish only:
-
-1. the six exact analysis-workbook housekeeping PMRs (`PMR-004`, `PMR-038`,
-   `PMR-050`, `PMR-055`, `PMR-059`, `PMR-063`) sequentially through the
-   proven owner, with one dispatch/return/verification per PMR; and
-2. one ordinary Beryllium owner session for coordination-only `PMR-083` and
-   startup-contract `PMR-067`.
+The ordinary Beryllium owner session is complete and released at `416b2e9`;
+`PMR-067` and `PMR-083` are closed. Finish only the five remaining exact
+analysis-workbook housekeeping PMRs (`PMR-004`, `PMR-050`, `PMR-055`,
+`PMR-059`, `PMR-063`) sequentially through the proven owner, with one
+dispatch/return/verification per PMR.
 
 Then declare the repository/PM housekeeping workstream operationally complete
 and stop. Research, source admission, external dependencies, backup/push
@@ -141,7 +150,6 @@ fallback documented by `PMD-20260915-008`.
 | `PMR-063` | P3 | `cd /home/jmorris/src/beryllium-project/analysis-workbook && copilot` | `Complete PMR-063 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
 | `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
 | `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
-| `PMR-067` | P2 | `cd /home/jmorris/src/beryllium-project/beryllium-repo && copilot` | `Complete PMR-067; first report pwd and pwd -P, and do not combine implementation work.` |
 | `PMR-068` | P3 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
 | `PMR-069` | P3 | `cd /home/jmorris/src/beryllium-project/formal-verification-research && copilot` | `Complete PMR-069 without changing research or bibliography dispositions.` |
 | `PMR-070` | P3 | `cd /home/jmorris/src/beryllium-project/osr-claude && copilot`; use the successor's owner workflow after the responsible human confirms the write | `Complete PMR-070 without opening restricted-microsoft.` |
@@ -205,39 +213,20 @@ Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
 with exact commit and paths. Do not select an implementation target, approve
 a comparator baseline, or push without a separate human decision.
 
-### P2 PMR-083 - Complete the R8-C owner return state
+## Completed this turn - do not rerun
 
-Start the ordinary Beryllium owner context:
+`PMR-067` and `PMR-083` are closed at final owner return correction
+`416b2e9`, following tasking implementation `9b726c1`, structured return
+`32300c1`, section-boundary/Chromium remediation `b5bd8cc`, and fence-parser
+hardening `364552c`. The responsible human's `"all ready"`, given in direct
+response to the Project Manager's Beryllium owner-session release request,
+releases the historical `active_session: self` lock.
 
-```sh
-cd /home/jmorris/src/beryllium-project/beryllium-repo
-pwd
-pwd -P
-git status --short --branch
-copilot
-```
-
-Then explicitly approve the read-only resolver and give this task:
-
-```text
-Run:
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
-
-Complete PMR-083 only. In planning/HANDOFF.md, refresh the existing PMR-081
-structured return to name acceptance-record commit d18b1c9, current
-coordination/status correction 7ecf8bd, the clean active branch's current
-behind 0 / ahead 7 state, and whether any Beryllium owner session remains
-active. Commit and return that coordination-only correction with validation.
-Do not modify accepted R8-C plan target f47ae60, checker implementation,
-candidate 6e93461, any implementation base/relation, H1-H4, K3, or
-publication state.
-```
-
-`PMR-081` is already closed from verified plan/acceptance evidence. R8-C plan
-target `f47ae60` is accepted as plan text only; implementation authorization
-is none. Until this return correction is committed, owner-session state is
-`unknown`. Candidate `6e93461` remains blocked and unaccepted, H1-H4
-unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
+The exact resolver startup mapping, fence-aware validation, and explicit
+Chromium documentation gates passed. Full `make check` stops first on
+unchanged R3 Node executable digest drift, not a PMR-067 semantic failure.
+R8-C remains plan-only; candidate `6e93461` remains blocked and unaccepted;
+H1-H4 remain unauthorized; K3 remains `NOT RUN`. No push occurred.
 
 ## Deferred P3 housekeeping
 
@@ -252,13 +241,19 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
   A later separately confirmed private fast-forward may back up those two
   commits. This request was not dispatched or combined with PMR-086; no
   force, tag, queue change, analysis disposition, publication, or gate.
-- **P3 PMR-082:** active Beryllium status commit `7ecf8bd` is seven ahead of
+- **P4 PMR-089:** do not act until PMR-063 closes and freezes the endpoint,
+  and until `PMR-085` plus `PMR-088` are independently resolved. It will
+  cover only the exact six-request housekeeping range after `858a73b`,
+  beginning with HANDOFF-only commits `f7079fb` and `5e037b1`. The request
+  is undispatched; no force, tag, analysis/source change, publication, or
+  gate is included.
+- **P3 PMR-090:** active Beryllium return correction `416b2e9` is twelve ahead of
   last-fetched private `origin` at `f05ccb3`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
-  is `unknown`; after authorized access returns, review active history
-  including `f47ae60`, `0b8fdad`, and `d18b1c9` plus the exact candidate ref
-  and decide whether to push. Never push inactive `msft-downstream`; no push
-  accepts H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
+  is `unknown`; after authorized access returns, review the complete active
+  range and exact candidate ref and decide whether to push. `PMR-090`
+  supersedes `PMR-082`. Never push inactive `msft-downstream`; no push accepts
+  H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -285,30 +280,33 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
 
-- **PMR-038:** in `/home/jmorris/src/beryllium-project/analysis-workbook`,
-  use the proven hidden owner for this exact request only: reconcile root
-  `HANDOFF.md` so it no longer describes clean committed `2374115` work as
-  uncommitted, and append the structured PMR-038 return. The three-interface
-  wording, `CRQ-001` completion mirror, and `PMQ-023` reference correction are
-  already present. Preserve that completion is coordination state, not source
-  review or approval.
-- **PMR-004 and PMR-050:** threat-modeler completed both registrations at
+- **PMR-004:** threat-modeler completed its corresponding registration at
   synchronized owner commit `c4126b6` and threat-owned `PMR-022` is closed.
-  The analysis-workbook owner decides whether its owner-only
-  `scripts/readonly-inspect.sh` target list should add `project-manager` and
-  `security-reviewer`; scripts are outside the Project Manager carry
-  authority. Review and add the two names to the existing array:
+  Dispatch only PMR-004. The analysis-workbook owner adds `project-manager`
+  to its owner-only `scripts/readonly-inspect.sh` target list; scripts are
+  outside Project Manager carry authority. Add only this name to the existing
+  array:
 
   ```sh
   registered_components=(
       project-manager
-      security-reviewer
       # keep every existing entry below
   )
   ```
 
   Then run analysis-workbook's `readonly-inspect.sh components` mode and
-  maintained validation before committing with `PMR-004` and `PMR-050`.
+  maintained validation before committing only PMR-004. The component
+  checkpoint still records the just-ended PMR-038 owner's `partial`,
+  `record_blocker`, and `active_session: self` state because that owner could
+  not write the external fleet database. Project Manager closure above
+  supersedes those execution-time fields: the repository work was verified,
+  todo `pmd-20260918-003-pmr-038` is `done`, and the synchronous owner has
+  ended with no reservation. This is preflight evidence only, not authority
+  to redo or amend PMR-038.
+- **PMR-050:** only after PMR-004 has returned, been verified, reconciled,
+  committed, and regenerated, freshly preflight and dispatch this request
+  alone to add `security-reviewer` to the same owner-only registered list.
+  Do not combine it with PMR-004.
 - **PMR-014:** the formal-verification owner triages the five original routed
   bibliography pointers.
 - **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
@@ -322,11 +320,11 @@ unauthorized, K3 `NOT RUN`, and `PMR-077` separate.
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`. The bibliography-format half
   was carried at `784be93`.
-- **PMR-055:** in the same analysis-workbook owner session as `PMR-038` if
-  convenient, mirror `CRQ-002` to `routed` from `PMD-20260915-004` and
-  `PMR-052..PMR-054`, and change the execution packet's stale `OPEN-001`
-  instruction to current `OPEN-003`; mark the already-superseded `OPEN-001`
-  row `Superseded`. Keep the two request IDs distinct in the owner return.
+- **PMR-055:** after PMR-050 has independently returned and been reconciled,
+  dispatch this request alone. Mirror `CRQ-002` to `routed` from
+  `PMD-20260915-004` and `PMR-052..PMR-054`, change the execution packet's
+  stale `OPEN-001` instruction to current `OPEN-003`, and mark the already
+  superseded `OPEN-001` row `Superseded`. Do not combine another PMR.
 - **PMR-058:** `PMR-045` is closed; the XRV owner may now triage `PMQ-027`,
   `PMQ-028`, and corrected `PMQ-030` under `review-log.md`; `PMQ-029` is not
   separately pursued because `PMQ-030` supersedes it. Load
@@ -378,15 +376,17 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `858a73b` is ten ahead of last-fetched
+- `analysis-workbook` clean `main` `5e037b1` is twelve ahead of last-fetched
   `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
-  `858a73b`. The first range remains exact backup request `PMR-085`; separate
-  dependent `PMR-088` tracks only the two later commits;
-- `beryllium-repo` active status `7ecf8bd` is seven ahead of last-fetched
+  `858a73b`, followed by PMR-038 HANDOFF-only commits `f7079fb` and
+  `5e037b1`. The first range remains exact backup request `PMR-085`; separate
+  dependent `PMR-088` tracks only the two PMR-086 commits; prospective
+  `PMR-089` will freeze the post-`858a73b` closure range at PMR-063;
+- `beryllium-repo` active/default return `416b2e9` is twelve ahead of last-fetched
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
-  exact backup request `PMR-082`;
+  exact backup request `PMR-090`;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive

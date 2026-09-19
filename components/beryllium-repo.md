@@ -10,18 +10,20 @@
 - **Agent:** none user-invocable; maintained skills `helium-documentation`,
   `human-review-summary`, `reviewable-turn-summary`. Beryllium is pilot 2
   under `PMD-20260917-002`, only after the analysis-workbook owner passes its
-  read-only native discovery/isolation proof; no owner profile exists yet
+  read-only native discovery/isolation proof; no hidden owner profile was
+  needed for the completed ordinary PMR-067/PMR-083 housekeeping session
 - **Local instructions to read first:** on the selected active branch,
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at status correction `7ecf8bd`, seven
+  `beryllium/single-hart-runtime-r0` at final owner return `416b2e9`, twelve
   ahead of last-fetched private `origin` at `f05ccb3`; local candidate branch
-  `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-081` is
-  closed at accepted R8-C plan target `f47ae60`; live reachability and
-  owner-session release remain `unknown`, backup is `PMR-082`, and
-  coordination-only return correction is `PMR-083`
+  `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-067` and
+  `PMR-083` are closed; the responsible human's `"all ready"`, given in
+  direct response to the Project Manager's Beryllium owner-session release
+  request, releases the owner-session lock. Live reachability remains
+  `unknown`; backup follow-up is `PMR-090`
 
 ## Role
 
@@ -89,16 +91,20 @@ source-policy checker treating two non-text binary sequences as retired
 namespace text. `PMR-080` is closed on that blocked result. `PMR-081` is
 closed at exact R8-C plan target `f47ae60`, packet `0b8fdad`, and acceptance
 record `d18b1c9`; the checker remains unchanged and R8-C implementation
-authorization is none. `PMR-082` tracks private backup through current status
-commit `7ecf8bd`; `PMR-083` requests the omitted owner-session/ahead-state
-return fields. H0 remains unaccepted, H1-H4 unauthorized, and K3 `NOT RUN`.
+authorization is none. `PMR-083` is closed by final return correction
+`416b2e9`, following tasking implementation `9b726c1` and bounded remediation
+commits. `PMR-067` is also closed: exact resolver startup, fence-aware
+contract checks, generated documentation, and explicit-Chromium docs checks
+pass; full `make check` stops first on unchanged R3 Node digest drift rather
+than a PMR-067 semantic failure. `PMR-090` tracks private backup. H0 remains
+unaccepted, H1-H4 unauthorized, and K3 `NOT RUN`.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize
 H1-H4, or count as Beryllium hardware validation. `PMR-061` is closed by
-synchronized private backup. `PMR-067` asks the
-ordinary Copilot owner context to implement the exact tasking resolver mapping
-whose absence caused the observed session-history fallback.
+synchronized private backup. The ordinary Copilot owner context now
+implements the exact tasking resolver mapping whose absence caused the
+observed session-history fallback.
 
 ## Helium-to-Beryllium transfer input
 
