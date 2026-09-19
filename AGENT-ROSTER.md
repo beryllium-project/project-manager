@@ -92,7 +92,11 @@ adds only `project-manager` to `scripts/readonly-inspect.sh`, return
 `e161e24` / request blob `6b8122a` against clean `635719e`: work `231cca4`
 adds only `security-reviewer` after `project-manager`, return `692caeb`
 changes only `HANDOFF.md`, validation passes 357 / 0, and clean `main` is
-sixteen ahead. PMR-055 remains separate and untouched.
+sixteen ahead. Exact PMR-055 then ran from Project Manager `656a792` /
+request blob `ac82be0` against clean `692caeb`: work `70bea16` changes only
+the CRQ-002 mirror, execution packet, and OPEN-001 question row; return
+`6d5d03d` changes only `HANDOFF.md`, validation passes 357 / 0, and clean
+`main` is eighteen ahead. PMR-059/063 remain separate and untouched.
 
 Withdrawn: `PMR-073` no longer requests a `git-maintainer` specialist.
 `PMD-20260918-003` records that the proven owner-worker path supplies the
@@ -119,7 +123,7 @@ workspace symlinks did not move. Owner results continue through
 | Component | Entry agents | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
 | `project-manager/` | `project-manager` (`gpt-5.6-sol`, `max`, `long_context` under project-wide matrix `PMD-20260916-001`) | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context` under `PMD-20260916-001`, extending `PMD-20260915-007`) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-repo`) |
-| `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) introduced at `ea72522`; read-only probe `PMR-087` closed by `PMD-20260918-002`; write-enabled `PMR-086` closed at `858a73b`; exact housekeeping `PMR-038` closed at `5e037b1`; inspection registrations `PMR-004` and `PMR-050` closed at `635719e` and `692caeb`; tasking startup `PMR-063` remains open | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1`; PMR-050 adds script work `231cca4` plus HANDOFF checkpoint `692caeb` without changing PMR-055 or analysis content | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits. PMR-004/050/038/086 commits are local and unpushed; exact earlier backup `PMR-088` and prospective closure-range backup `PMR-089` remain separate |
+| `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) introduced at `ea72522`; read-only probe `PMR-087` closed by `PMD-20260918-002`; write-enabled `PMR-086` closed at `858a73b`; exact housekeeping `PMR-038` closed at `5e037b1`; inspection registrations `PMR-004` and `PMR-050` closed at `635719e` and `692caeb`; derived housekeeping `PMR-055` closed at `6d5d03d`; tasking startup `PMR-063` remains open | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1`; PMR-055 adds three-path coordination work `70bea16` plus HANDOFF checkpoint `6d5d03d` without starting analysis or changing PMR-059/063 | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits. PMR-004/050/055/038/086 commits are local and unpushed; exact earlier backup `PMR-088` and prospective closure-range backup `PMR-089` remain separate |
 | `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking startup adoption `PMR-064` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
 | `security-reviewer/` | `security-reviewer` (`gpt-5.3-codex`, `max`, `long_context` at owner `2e8d205` under `PMD-20260916-001`, `PMR-074` closed; tasking startup adopted at `f2051a4`) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; `gpt-5.3-codex` / `max` / `long_context`) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, while the PM resolver is separate startup discovery |
 | `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
@@ -165,8 +169,9 @@ Manager; `PMR-038` requests the completion mirror after verified XRV commit
 checkpoint `5e037b1` finish the distinct root-handoff return, closing the
 request without reapplying those historical changes.
 `PMD-20260915-004` records successor-first handling for `CRQ-002`;
-`PMR-052..PMR-054` are the three sequenced owner tasks and `PMR-055` is the
-workbook's derived routed-status and stale-open-ID correction.
+`PMR-052..PMR-054` are the three sequenced owner tasks; PMR-055's derived
+routed-status and stale-open-ID correction is closed at work `70bea16` /
+return `6d5d03d`.
 Owner commit `1ef1ac6` adds complete `AWB-20260915-001` and
 `PMQ-027..030`; Project Manager carry `c7cc0fa` applies `PML-0030`.
 

@@ -85,10 +85,10 @@ No owner worker exists for a component until its component-owned adoption is
 verified. Analysis-workbook adoption at `ea72522` is verified; its first
 invocation proved native cross-directory discovery, target-root isolation,
 tasking fingerprints, and write boundaries read-only under `PMR-087`, and
-one bounded write-enabled fixture-maintenance run completed under `PMR-086`
-at `efbfdb8` / `858a73b`. Those results do not establish another component's
-owner. Beryllium still requires its own adoption and read-only proof before
-any write-enabled use.
+bounded write-enabled runs completed under PMR-086, PMR-038, PMR-004,
+PMR-050, and PMR-055 through latest return `6d5d03d`. Those results do not
+establish another component's owner. Beryllium still requires its own
+adoption and read-only proof before any write-enabled use.
 
 ## Specialist boundary
 
@@ -99,13 +99,12 @@ any write-enabled use.
 Specialist returns are inputs. The orchestrator verifies them, decides, and
 writes.
 
-`PMR-073` is a planned, not-yet-implemented `git-maintainer` specialist. Its
-design must keep invocation exclusive to the Project Manager; component
-agents request service through durable PM tasking or owner returns. Until the
-request closes, no such specialist or authority exists. The design may not
-weaken repository ownership, carry classes, dirty/active-session locks,
-prohibited destructive/history-rewriting operations, or same-turn human
-confirmation for remotes, pushes, tags, and publication.
+`PMR-073` is withdrawn by `PMD-20260918-003`; no `git-maintainer` specialist
+or authority exists. Component agents continue to use durable PM tasking and
+owner returns without weakening repository ownership, carry classes,
+dirty/active-session locks, prohibited destructive/history-rewriting
+operations, or same-turn human confirmation for remotes, pushes, tags, and
+publication.
 
 `PMR-076` is a planned, not-yet-implemented OSS project-alignment
 skill/agent. It first requires the responsible human's `kcopilotd` project to

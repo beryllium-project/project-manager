@@ -76,10 +76,10 @@ to the PM instead of calling `ask_user`. At most four repositories run
 concurrently and never more than one writer/reservation per repository.
 
 One owner profile exists: hidden `analysis-workbook-owner`, introduced at
-`ea72522`, proven read-only under closed `PMR-087`, and used for one exact
-write-enabled fixture-maintenance request under closed `PMR-086` (work
-`efbfdb8`, durable return `858a73b`). Those bounded results grant no broader
-owner or Project Manager authority. No Beryllium owner profile exists; its
+`ea72522`, proven read-only under closed `PMR-087`, and used for bounded
+write-enabled PMR-086, PMR-038, PMR-004, PMR-050, and PMR-055 requests
+through latest return `6d5d03d`. Those bounded results grant no broader owner
+or Project Manager authority. No Beryllium owner profile exists; its
 bootstrap remains planned. V1 adds no dispatch/return queue, historical
 request migration, execution ledger, daemon, lease database, or general Git
 automation.
@@ -173,11 +173,10 @@ Manager, unchanged expected tips, and component-policy permission. Force,
 tags, public pushes, remote mutation, publication, and release remain outside
 the owner-worker control plane.
 
-`PMR-073` is the planned Git-maintainer specialist todo. It is not yet
-implemented and grants no authority. The intended design permits invocation
-only by the Project Manager; component agents request service through durable
-PM tasking/returns. Existing repository ownership, operation prohibitions,
-active-session locks, and human gates remain binding.
+`PMR-073` is withdrawn by `PMD-20260918-003`; no Git-maintainer specialist or
+authority exists. Component agents continue to use durable PM tasking/returns,
+and existing repository ownership, operation prohibitions, active-session
+locks, and human gates remain binding.
 
 `PMR-076` is the planned OSS project-alignment skill/agent todo. It is not yet
 implemented and grants no authority. It requires the responsible human's
