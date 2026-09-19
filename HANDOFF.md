@@ -82,8 +82,8 @@ remain visible but do not block development.
 
 ### One recommended next action
 
-Commit this final PMR-063 reconciliation, regenerate tasking, update and
-commit the parent registry, then resume the responsible human's Beryllium
+After this final handoff checkpoint is committed, regenerate tasking, update
+and commit the parent registry, then resume the responsible human's Beryllium
 development/hardware work. Do not dispatch more process-expansion work or
 push any repository without a separate exact confirmation.
 
@@ -646,9 +646,10 @@ four configuration/test paths and `HANDOFF.md` changed, the hidden owner is
 unchanged, clean `main` is behind 0 / ahead 22, and no analysis content
 changed. The synchronous owner has ended, so its execution-time
 `active_session: self` leaves no reservation. Audit and validation are
-complete; the draft is ready for the Project Manager-first commit sequence.
-Generated tasking remains bound to `c51a633` until that commit. No push is
-authorized.
+complete. Final closure content is committed at `1a2b4a1`, and generated
+tasking was regenerated at that commit. This handoff-only checkpoint records
+the resulting restart state; its containing commit must be followed by one
+final tasking regeneration and parent registry update. No push is authorized.
 
 ## Provenance
 
