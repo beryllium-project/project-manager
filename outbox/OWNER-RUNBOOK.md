@@ -68,13 +68,10 @@ Repository reorganization and the analysis owner-worker pilot are complete.
 No project-wide owner rollout or Git-maintainer specialist is required.
 
 The ordinary Beryllium owner session is complete and released at `416b2e9`;
-`PMR-067` and `PMR-083` are closed. Analysis PMR-004, PMR-050, PMR-055, and
-PMR-059 are complete. Finish only the sole remaining exact analysis-workbook
-housekeeping request `PMR-063` through the proven owner, with one
-dispatch/return/verification per PMR.
-
-Then declare the repository/PM housekeeping workstream operationally complete
-and stop. Research, source admission, external dependencies, backup/push
+`PMR-067` and `PMR-083` are closed. All six exact analysis-workbook
+housekeeping requests are complete through PMR-063 return `8b5a301`. The
+repository/PM housekeeping workstream is operationally complete. Stop process
+expansion. Research, source admission, external dependencies, backup/push
 gates, and opportunistic configuration remain visible but do not block
 development.
 
@@ -147,7 +144,6 @@ fallback documented by `PMD-20260915-008`.
 
 | Request | Priority | Component owner invocation | Exact task phrase after the approved resolver runs |
 | --- | --- | --- | --- |
-| `PMR-063` | P3 | Project Manager invokes hidden `analysis-workbook-owner` after PMR-059 reconciliation | `Complete only PMR-063 under PMD-20260915-008; preserve every analysis result and do not combine another PMR.` |
 | `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
 | `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
 | `PMR-068` | P3 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
@@ -233,10 +229,11 @@ Analysis PMR-004 and PMR-050 are also complete. Hidden
 return `635719e`, then only `security-reviewer` at work `231cca4` / return
 `692caeb`. It then completed exact PMR-055 coordination housekeeping at work
 `70bea16` / return `6d5d03d`, followed by the HANDOFF-only PMR-059 refresh
-at work `9d76048` / return `e6c8aad`. All four returns report 357 / 0, clean
-local state, no push, and no later-PMR work.
+at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
+`8b5a301` activates the fail-closed startup resolver and expands the suite to
+410 / 0. All returns record clean local state, no push, and no combined PMR.
 
-## Deferred P3 housekeeping
+## Deferred and non-blocking work
 
 - **P3 PMR-085:** analysis-workbook clean `main` at `ea72522` is eight ahead
   of last-fetched private `origin/main` `1ef1ac6`, comprising Project Manager
@@ -249,14 +246,17 @@ local state, no push, and no later-PMR work.
   A later separately confirmed private fast-forward may back up those two
   commits. This request was not dispatched or combined with PMR-086; no
   force, tag, queue change, analysis disposition, publication, or gate.
-- **P4 PMR-089:** do not act until PMR-063 closes and freezes the endpoint,
-  and until `PMR-085` plus `PMR-088` are independently resolved. It will
-  cover only the exact six-request housekeeping range after `858a73b`,
+- **P4 PMR-089:** the twelve-commit closure range `858a73b..8b5a301` is
+  frozen. Do not act until `PMR-085` plus `PMR-088` are independently
+  resolved and private access is authorized. The request covers only that
+  exact six-request housekeeping range,
   beginning with HANDOFF-only commits `f7079fb` and `5e037b1`, followed by
   PMR-004 work `5684317` / return `635719e` and PMR-050 work `231cca4` /
   return `692caeb`, PMR-055 work `70bea16` / return `6d5d03d`, then PMR-059
-  work `9d76048` / return `e6c8aad`. The request is undispatched; no force,
-  tag, analysis/source change, publication, or gate is included.
+  work `9d76048` / return `e6c8aad`, and PMR-063 work `62bd071` / return
+  `8b5a301`. The range is frozen; the request remains undispatched and blocked
+  by PMR-085/088 plus private access. No force, tag, analysis/source change,
+  publication, or gate is included.
 - **P3 PMR-090:** active Beryllium return correction `416b2e9` is twelve ahead of
   last-fetched private `origin` at `f05ccb3`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
@@ -271,7 +271,7 @@ local state, no push, and no later-PMR work.
   policy, development workflow, licensing/redistribution, governance/release,
   automation/CI, and contribution practices. Preserve fact/inference/proposal/
   unknown labels; do not write peer repositories or infer human gates.
-- **PMR-075:** XRV owner documentation commits `22095a1` and `456c70b`
+- **P3 PMR-075:** XRV owner documentation commits `22095a1` and `456c70b`
   remain local two ahead of last-fetched `origin/main` at `d618935`. The
   active credential could not reach that remote in the 21:53Z helper run, so
   wait for an authorized credential. Then review only that range and, if
@@ -286,33 +286,28 @@ local state, no push, and no later-PMR work.
 
   The successor research history and `PMR-045` are already complete; this is
   a non-blocking backup decision and includes no research or symlink change.
-- **PMR-073:** withdrawn by `PMD-20260918-003`; the proven owner-worker path
+- **Withdrawn PMR-073:** `PMD-20260918-003` records that the proven owner-worker path
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
 
-- **PMR-014:** the formal-verification owner triages the five original routed
+- **P3 PMR-014:** the formal-verification owner triages the five original routed
   bibliography pointers.
-- **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
+- **P3 PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
   pointers at `c55065c` and `784be93`.
-- **PMR-051:** in `cheri-riscv-notes-repo`, append only the structured
+- **P3 PMR-051:** in `cheri-riscv-notes-repo`, append only the structured
   current-head/paths/validation/backup/session return. Current `9a4c5ef`
   handoff/status already record the successful 2026-09-16 remote Validate run
   for preserved `ae09213` and successor topic history. No merge, new remote
   workflow run, visibility change, or publication decision is required.
-- **PMR-037:** in `formal-verification-research`, refresh the owner-maintained
+- **P3 PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`. The bibliography-format half
   was carried at `784be93`.
-- **PMR-058:** `PMR-045` is closed; the XRV owner may now triage `PMQ-027`,
+- **P3 PMR-058:** `PMR-045` is closed; the XRV owner may now triage `PMQ-027`,
   `PMQ-028`, and corrected `PMQ-030` under `review-log.md`; `PMQ-029` is not
   separately pursued because `PMQ-030` supersedes it. Load
   `cross-repo-collaboration` only if triage becomes substantive destination
   use; analysis-workbook has no root `COLLAB.md`, so write no source ledger.
-- **PMR-059:** owner commit `1ef1ac6` preserves and backs up
-  `AWB-20260915-001`; Project Manager carry `c7cc0fa` applies the exact
-  `PMQ-029` rejection. **Completed:** HANDOFF-only work `9d76048` and return
-  `e6c8aad` bind both existing commits without reapplying them, report
-  357 / 0, and leave clean `main` ahead 20. PMR-063 was untouched.
 
 ## Additional P3 source triage
 
@@ -354,16 +349,16 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `e6c8aad` is twenty ahead of last-fetched
+- `analysis-workbook` clean `main` `8b5a301` is twenty-two ahead of last-fetched
   `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
   `858a73b`, followed by PMR-038 HANDOFF-only commits `f7079fb` and
   `5e037b1`, then PMR-004 work `5684317` / return `635719e`, PMR-050 work
   `231cca4` / return `692caeb`, PMR-055 work `70bea16` / return `6d5d03d`,
-  and PMR-059 work `9d76048` / return `e6c8aad`. The first range remains
-  exact backup request `PMR-085`; separate dependent `PMR-088` tracks only
-  the two PMR-086 commits; prospective `PMR-089` will freeze the
-  post-`858a73b` closure range at PMR-063;
+  PMR-059 work `9d76048` / return `e6c8aad`, and PMR-063 work `62bd071` /
+  return `8b5a301`. The first range remains exact backup request `PMR-085`;
+  separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
+  now freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
 - `beryllium-repo` active/default return `416b2e9` is twelve ahead of last-fetched
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains

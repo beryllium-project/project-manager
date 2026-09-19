@@ -86,9 +86,9 @@ verified. Analysis-workbook adoption at `ea72522` is verified; its first
 invocation proved native cross-directory discovery, target-root isolation,
 tasking fingerprints, and write boundaries read-only under `PMR-087`, and
 bounded write-enabled runs completed under PMR-086, PMR-038, PMR-004,
-PMR-050, PMR-055, and PMR-059 through latest return `e6c8aad`. Those results
-do not establish another component's owner. Beryllium still requires its own
-adoption and read-only proof before any write-enabled use.
+PMR-050, PMR-055, PMR-059, and PMR-063 through latest return `8b5a301`.
+Those results do not establish another component's owner. Beryllium still
+requires its own adoption and read-only proof before any write-enabled use.
 
 ## Specialist boundary
 

@@ -77,9 +77,9 @@ concurrently and never more than one writer/reservation per repository.
 
 One owner profile exists: hidden `analysis-workbook-owner`, introduced at
 `ea72522`, proven read-only under closed `PMR-087`, and used for bounded
-write-enabled PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, and PMR-059
-requests through latest return `e6c8aad`. Those bounded results grant no
-broader owner or Project Manager authority. No Beryllium owner profile exists; its
+write-enabled PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and
+PMR-063 requests through latest return `8b5a301`. Those bounded results
+grant no broader owner or Project Manager authority. No Beryllium owner profile exists; its
 bootstrap remains planned. V1 adds no dispatch/return queue, historical
 request migration, execution ledger, daemon, lease database, or general Git
 automation.

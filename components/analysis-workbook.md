@@ -26,20 +26,19 @@
   registration `PMR-050` is closed from work `231cca4` and return `692caeb`.
   Derived collaboration housekeeping `PMR-055` is closed from work `70bea16`
   and return `6d5d03d`. Root-handoff return `PMR-059` is closed from work
-  `9d76048` and return `e6c8aad`
+  `9d76048` and return `e6c8aad`. Tasking-startup request `PMR-063` is closed
+  from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at PMR-059 return checkpoint `e6c8aad`,
-  behind 0 / ahead 20 of last-fetched `origin/main` `1ef1ac6`, local and
-  unpushed. Work `9d76048` and checkpoint `e6c8aad` change only root
-  `HANDOFF.md`, binding existing synchronized owner commit `1ef1ac6` and
-  existing carry `c7cc0fa` without reapplying either. PMR-063 is untouched.
-  Full component validation reports 357 / 0, with transfer-queue, workbook,
-  exact-scope, local-Git, and diff checks passing; the commit-local session
-  handoff records complete-session validation with 1 inquiry / 26 evidence
-  records. The synchronous invocation ended with no writer reservation.
-  Housekeeping `PMR-063`
-  remains as the sole closure-line request;
+- **Observed state:** clean `main` at PMR-063 return checkpoint `8b5a301`,
+  behind 0 / ahead 22 of last-fetched `origin/main` `1ef1ac6`, local and
+  unpushed. Work `62bd071` changes only the user-facing agent, repository
+  instructions, interface, and agent tests; checkpoint `8b5a301` changes only
+  `HANDOFF.md`. The exact fail-closed Project Manager tasking startup mapping,
+  orchestrator blob pin, and deduplicated allowlist pass the expanded 410 / 0
+  suite; transfer-queue, workbook, exact-scope, hidden-owner-preservation, and
+  diff checks also pass. The synchronous invocation ended with no writer
+  reservation. The six-request operational housekeeping line is complete;
   externally sequenced analysis `PMR-054` is
   separate. Prior-range backup `PMR-085`, PMR-086 backup `PMR-088`, and
   prospective closure-range backup `PMR-089` remain open.
@@ -157,10 +156,10 @@ topic and chronology in the generated `WORKBOOK.md`.
   ahead; PMR-004 work `5684317` / return `635719e` make fourteen ahead,
   PMR-050 work `231cca4` / return `692caeb` make sixteen ahead, and PMR-055
   work `70bea16` / return `6d5d03d` make eighteen ahead.
-  PMR-059 work `9d76048` / return `e6c8aad` make current `main` twenty ahead.
-  Prospective `PMR-089` will freeze the exact post-`858a73b`
-  closure-sequence range after PMR-063 without expanding either earlier
-  backup request.
+  PMR-059 work `9d76048` / return `e6c8aad` make twenty ahead, and PMR-063
+  work `62bd071` / return `8b5a301` make current `main` twenty-two ahead.
+  PMR-089 freezes the exact post-`858a73b` closure range at `8b5a301`
+  without expanding either earlier backup request.
 
 ## Outbound queue
 
@@ -218,17 +217,17 @@ git diff --check
 
 ## What the Project Manager may request
 
-A new analysis session on a named aspect; the completed `project-manager` and
-`security-reviewer` inspection registrations (`PMR-004` at `5684317`,
-`PMR-050` at `231cca4`, and the `RESEARCH-SOURCES.md` part at `83b97a3`);
-the `CRQ-002` routed mirror and stale open-ID correction under `PMR-055`; the
-repository handoff and structured return for owner commit `1ef1ac6` are
-complete under PMR-059; and, only after `PMR-052` and `PMR-053` return, the
-bounded cap-talk follow-up inquiry under `PMR-054`.
-These are request-only because the collaboration queue and analysis content
-are outside class 1. Nothing treats a session as review or acceptance.
-`PMR-063` asks the owner to map `check Project Manager tasking` to the exact
-fail-closed resolver and prohibit session-history fallback.
+A new analysis session on a named aspect and, only after `PMR-052` and
+`PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
+Analysis content and the collaboration queue remain request-only outside
+Project Manager carry authority. Nothing treats a session as review or
+acceptance. The operational housekeeping requests PMR-038, PMR-004, PMR-050,
+PMR-055, PMR-059, and PMR-063 are complete; their evidence is retained below,
+not presented as new work.
+`PMR-063` is closed at work `62bd071` / return `8b5a301`: the user-facing
+orchestrator maps `check Project Manager tasking` to the exact fail-closed
+resolver and prohibits session-history/task-database/background-agent
+fallback.
 `PMR-087` is closed by `PMD-20260918-002` after the exact no-write owner
 capability probe passed under `PMD-20260918-001`. `PMR-086` is closed from
 verified fixture-only work `efbfdb8` and durable return `858a73b`; the queue
@@ -243,8 +242,8 @@ closure-range backup `PMR-089` are separate and undispatched.
 return `692caeb`. PMR-055 is closed from exact three-path work `70bea16` and
 durable return `6d5d03d`. PMR-059 is closed from HANDOFF-only work `9d76048`
 and durable return `e6c8aad`, binding existing synchronized owner commit
-`1ef1ac6` and carry `c7cc0fa` without reapplying them. PMR-063 remains
-separate and untouched.
+`1ef1ac6` and carry `c7cc0fa` without reapplying them. PMR-063 is closed from
+four-path configuration/test work `62bd071` and durable return `8b5a301`.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"
