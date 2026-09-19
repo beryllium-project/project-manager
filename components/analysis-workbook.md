@@ -25,17 +25,21 @@
   `5684317` and return checkpoint `635719e`; exact sibling inspection
   registration `PMR-050` is closed from work `231cca4` and return `692caeb`.
   Derived collaboration housekeeping `PMR-055` is closed from work `70bea16`
-  and return `6d5d03d`
+  and return `6d5d03d`. Root-handoff return `PMR-059` is closed from work
+  `9d76048` and return `e6c8aad`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at PMR-055 return checkpoint `6d5d03d`,
-  behind 0 / ahead 18 of last-fetched `origin/main` `1ef1ac6`, local and
-  unpushed. Work `70bea16` changes exactly the CRQ-002 mirror, execution
-  packet, and OPEN-001 question row; checkpoint `6d5d03d` changes only
-  `HANDOFF.md`. PMR-059 and PMR-063 are untouched. Full component validation
-  reports 357 / 0, with session, transfer-queue, workbook, exact-scope, and
-  diff checks passing. The synchronous invocation ended with no writer
-  reservation. Housekeeping `PMR-059` and `PMR-063` remain sequential;
+- **Observed state:** clean `main` at PMR-059 return checkpoint `e6c8aad`,
+  behind 0 / ahead 20 of last-fetched `origin/main` `1ef1ac6`, local and
+  unpushed. Work `9d76048` and checkpoint `e6c8aad` change only root
+  `HANDOFF.md`, binding existing synchronized owner commit `1ef1ac6` and
+  existing carry `c7cc0fa` without reapplying either. PMR-063 is untouched.
+  Full component validation reports 357 / 0, with transfer-queue, workbook,
+  exact-scope, local-Git, and diff checks passing; the commit-local session
+  handoff records complete-session validation with 1 inquiry / 26 evidence
+  records. The synchronous invocation ended with no writer reservation.
+  Housekeeping `PMR-063`
+  remains as the sole closure-line request;
   externally sequenced analysis `PMR-054` is
   separate. Prior-range backup `PMR-085`, PMR-086 backup `PMR-088`, and
   prospective closure-range backup `PMR-089` remain open.
@@ -152,9 +156,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   commits. PMR-038 return `f7079fb` and checkpoint `5e037b1` make twelve
   ahead; PMR-004 work `5684317` / return `635719e` make fourteen ahead,
   PMR-050 work `231cca4` / return `692caeb` make sixteen ahead, and PMR-055
-  work `70bea16` / return `6d5d03d` make current `main` eighteen ahead.
-  Prospective `PMR-089` will freeze the exact post-`858a73b` closure-sequence
-  range after PMR-063 without expanding either earlier backup request.
+  work `70bea16` / return `6d5d03d` make eighteen ahead.
+  PMR-059 work `9d76048` / return `e6c8aad` make current `main` twenty ahead.
+  Prospective `PMR-089` will freeze the exact post-`858a73b`
+  closure-sequence range after PMR-063 without expanding either earlier
+  backup request.
 
 ## Outbound queue
 
@@ -196,8 +202,8 @@ Owner commit `1ef1ac6` adds `PMQ-027..030`. Ledger rows
 and corrected exact OpenSBI pointer to XRV under now-actionable `PMR-058`;
 `PMR-045` is closed.
 `PML-0030` rejects `PMQ-029` because `PMQ-030` supersedes it; the exact
-class-1 source edit is carried at `c7cc0fa`. `PMR-059` remains for the
-repository handoff and structured return only.
+class-1 source edit is carried at `c7cc0fa`. PMR-059's repository handoff and
+structured return are closed at `e6c8aad`.
 
 ## Commands (run by the human, from `../analysis-workbook/`)
 
@@ -216,9 +222,9 @@ A new analysis session on a named aspect; the completed `project-manager` and
 `security-reviewer` inspection registrations (`PMR-004` at `5684317`,
 `PMR-050` at `231cca4`, and the `RESEARCH-SOURCES.md` part at `83b97a3`);
 the `CRQ-002` routed mirror and stale open-ID correction under `PMR-055`; the
-repository handoff and structured return for owner commit
-`1ef1ac6` under `PMR-059`; and, only after `PMR-052` and
-`PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
+repository handoff and structured return for owner commit `1ef1ac6` are
+complete under PMR-059; and, only after `PMR-052` and `PMR-053` return, the
+bounded cap-talk follow-up inquiry under `PMR-054`.
 These are request-only because the collaboration queue and analysis content
 are outside class 1. Nothing treats a session as review or acceptance.
 `PMR-063` asks the owner to map `check Project Manager tasking` to the exact
@@ -235,7 +241,10 @@ closure-range backup `PMR-089` are separate and undispatched.
 `PMR-004` is closed from exact script work `5684317` and durable return
 `635719e`; PMR-050 is closed from exact script work `231cca4` and durable
 return `692caeb`. PMR-055 is closed from exact three-path work `70bea16` and
-durable return `6d5d03d`. PMR-059 remains separate and untouched.
+durable return `6d5d03d`. PMR-059 is closed from HANDOFF-only work `9d76048`
+and durable return `e6c8aad`, binding existing synchronized owner commit
+`1ef1ac6` and carry `c7cc0fa` without reapplying them. PMR-063 remains
+separate and untouched.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

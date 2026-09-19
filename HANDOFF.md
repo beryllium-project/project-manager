@@ -1,13 +1,13 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-19
-**Update scope:** forty-eighth coordination turn; hidden
-`analysis-workbook-owner` completed only PMR-055. Work commit `70bea16`
-changes exactly the CRQ-002 mirror, execution packet, and OPEN-001 question
-row; durable return `6d5d03d` changes only `HANDOFF.md`, reports 357 / 0,
-and leaves clean `main` behind 0 / ahead 18. PMR-059 and PMR-063 were
-untouched. PMR-055 closes on verified evidence; two exact analysis
-housekeeping PMRs remain sequential. No
+**Update scope:** forty-ninth coordination turn; hidden
+`analysis-workbook-owner` completed only PMR-059. Work commit `9d76048` and
+durable return `e6c8aad` change only root `HANDOFF.md`, bind existing
+synchronized owner commit `1ef1ac6` and carry `c7cc0fa` without reapplying
+them, report 357 / 0, and leave clean `main` behind 0 / ahead 20. PMR-063 was
+untouched. PMR-059 closes on verified evidence; only PMR-063 remains on the
+analysis housekeeping line. No
 analysis, source admission, sibling write, push, publication, or human gate
 was combined.
 
@@ -21,7 +21,7 @@ was combined.
 
 | Area | Current state |
 | --- | --- |
-| Operational PM closure | PMR-038, PMR-004, PMR-050, PMR-055, PMR-067, and PMR-083 are closed; the Beryllium owner lock is released. PMR-055 completed at work `70bea16` / return `6d5d03d`. Two exact analysis housekeeping PMRs remain sequential, beginning with PMR-059. Beryllium finish-line housekeeping is complete. |
+| Operational PM closure | PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, PMR-067, and PMR-083 are closed; the Beryllium owner lock is released. PMR-059 completed at work `9d76048` / return `e6c8aad`. Only exact analysis housekeeping PMR-063 remains. Beryllium finish-line housekeeping is complete. |
 | Owner-worker control plane | Phase 1 is complete at `1ee0f77`; PMR-084 reconciliation and release are at `f2cb586` and `04746d8`. Hidden `analysis-workbook-owner` was introduced at `ea72522`. The read-only proof passed under PMR-087; write-enabled PMR-086 completed at `efbfdb8` / `858a73b`; PMR-038 completed at `f7079fb` / `5e037b1`; PMR-004, PMR-050, and PMR-055 then completed at `5684317` / `635719e`, `231cca4` / `692caeb`, and `70bea16` / `6d5d03d`. Each synchronous lane ended with no reservation. No Beryllium owner or broader write authority follows. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references; tracked workspace symlinks are unchanged. |
@@ -29,7 +29,7 @@ was combined.
 | Helium | Clean detached HEAD at `1ab289c`, also named by synchronized `for-review`; separate refs include travel `52cc71a` and `public/main` plus tag `v0.6.0` at `1c9e526`. The checked-out handoff says release remains blocked, so `PMR-026` asks the owner to reconcile checkout/ref/handoff state. The Project Manager infers no release or approval from ref names or commit subjects. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
 | Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
 | XRV | Owner return `456c70b` records private active `origin` and reviewed history through `d618935`, including durable `REV-*` and `COLLAB.md`. Clean local `main` is two ahead with `22095a1` and `456c70b`; `PMR-075` tracks their backup but is blocked until an authorized credential can reach `origin`. `legacy-backup/main` remains last-fetched at `706e708`; `msft-inactive` remains unmodified. Live remote reachability is currently `unknown`; the workspace symlink is unchanged. |
-| Analysis-workbook | Clean `main` at PMR-055 return checkpoint `6d5d03d`, behind 0 / ahead 18 of last-fetched `origin/main` `1ef1ac6`. Work `70bea16` changes exactly the CRQ-002 mirror, execution packet, and OPEN-001 row; return `6d5d03d` changes only `HANDOFF.md`. The component reports 357 / 0 plus session, transfer-queue, workbook, exact-scope, and diff checks passing. PMR-055 is closed; PMR-059 remains separate and next after this reconciliation commit/tasking regeneration. Prospective backup PMR-089 remains undispatched. |
+| Analysis-workbook | Clean `main` at PMR-059 return checkpoint `e6c8aad`, behind 0 / ahead 20 of last-fetched `origin/main` `1ef1ac6`. Work `9d76048` and return `e6c8aad` change only root `HANDOFF.md`, binding existing synchronized owner commit `1ef1ac6` and carry `c7cc0fa` without reapplying them. The component reports 357 / 0 plus transfer-queue, workbook, exact-scope, local-Git, and diff checks passing; the commit-local session handoff records complete-session validation with 1 inquiry / 26 evidence records. PMR-059 is closed; PMR-063 remains separate and next after this reconciliation commit/tasking regeneration. Prospective backup PMR-089 remains undispatched. |
 | CHERI-RISC-V notes | Owner return `9a4c5ef` records private active `origin`; last-fetched refs show the topic branch synchronized, `main` at `6553092`, and prior Wiki history at `archive/gim-wiki` `cd7dc81`. The 21:53Z run could not refresh `origin` with the active credential, so live reachability is `unknown`. Issues 2 and 3 remain owner-reported preserved; the workspace symlink is unchanged; Pages and publication gates remain closed. |
 | Formal verification | Clean `main` at `784be93`, two ahead of last-fetched `origin/main`; live reachability was unavailable under the active credential at 21:53Z. The latest carry adds metadata-only `PMQ-023`; `PMR-037` remains open for remote/handoff wording. |
 | Other drift | OS-security is clean and synchronized at active private successor return `49fbfd6`; root `58f8023` is restricted-free, while complete old private history remains at inactive `legacy-personal/main` `e275544`. The personal quarantine exists empty with clean history; no restricted file was opened or copied. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
@@ -54,17 +54,17 @@ was combined.
 ### Current todo choices
 
 The Beryllium finish-line owner session is complete and released. The Project
-Manager recommends committing this PMR-055 reconciliation, regenerating
-tasking, and then finishing the two remaining sequential analysis-workbook
-housekeeping requests under `PMD-20260918-003`, beginning with PMR-059. After PMR-063
-closes, stop process expansion and return to development. Everything else
-remains visible but outside this closure line.
+Manager recommends committing this PMR-059 reconciliation, regenerating
+tasking, and then finishing sole remaining analysis-workbook housekeeping
+request PMR-063 under `PMD-20260918-003`. After PMR-063 closes, stop process
+expansion and return to development. Everything else remains visible but
+outside this closure line.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
 | P2 | `PMR-026` | **Ready but outside closure line** | Helium checkout/handoff cleanup remains opportunistic and grants no release; it does not block development. |
 | P2 | `PMR-040` | **Substantive research - outside closure line** | XRV architecture review is project work, not repository/PM housekeeping. |
-| P3 | `PMR-059`, `063` | **Sequential; PMR-059 ready after commit/regeneration** | Finish the two remaining bounded analysis housekeeping items one at a time; no new analysis result or source admission is included. |
+| P3 | `PMR-063` | **Sole remaining closure request; ready after commit/regeneration** | Add the fail-closed Project Manager tasking startup mapping without changing analysis results or source admission. |
 | P3 | `PMR-085` | **Blocked - private reachability unknown** | Back up the prior analysis-workbook range through `ea72522` after review; no handshake, analysis disposition, or gate follows. |
 | P3 | `PMR-088` | **Blocked by `PMR-085`; not dispatched** | After the prior range is independently resolved, review and back up only PMR-086 commits `efbfdb8` and `858a73b`; this separates downstream backup from the completed fixture task and grants no gate. |
 | P4 | `PMR-089` | **Blocked by closure sequence and `PMR-085`/`088`; not dispatched** | After PMR-063 freezes the endpoint and the earlier ranges are resolved, review and back up only the six-request housekeeping commit range beginning after `858a73b`; no owner work, analysis result, or gate follows. |
@@ -82,10 +82,10 @@ remains visible but outside this closure line.
 
 ### One recommended next action
 
-Commit this PMR-055 reconciliation, regenerate tasking, update and commit the
-parent registry, then freshly preflight and dispatch only PMR-059 through the
-already loaded hidden `analysis-workbook-owner`. Do not amend PMR-055,
-combine PMR-063 or another request, or push.
+Commit this PMR-059 reconciliation, regenerate tasking, update and commit the
+parent registry, then freshly preflight and dispatch only PMR-063 through the
+already loaded hidden `analysis-workbook-owner`. Do not amend PMR-059,
+combine another request, or push.
 
 ### Minimal restart commands
 
@@ -104,6 +104,21 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
+- Fresh preflight verified Project Manager `88cb849`, request blob `5bf6149`,
+  clean idle analysis-workbook `6d5d03d`, and the one-writer boundary, then
+  dispatched only PMR-059.
+- Verified existing synchronized owner commit `1ef1ac6` and existing carry
+  `c7cc0fa`; neither was reapplied. Work `9d76048` and return `e6c8aad`
+  change only root `HANDOFF.md`, refresh the bounded restart surfaces, and
+  record the structured PMR-059 return. The owner reports 357 / 0 plus
+  transfer-queue, workbook, exact-scope, local-Git, and diff checks passing;
+  the commit-local session handoff records complete-session validation with
+  1 inquiry / 26 evidence records.
+- The synchronous owner invocation ended, releasing its execution-time
+  `active_session: self`; clean `main` is behind 0 / ahead 20. Both new
+  commits are local and unpushed. This draft closes only PMR-059.
+
+Previous turn (forty-eighth):
 - Fresh preflight verified Project Manager `656a792`, request blob `ac82be0`,
   clean idle analysis-workbook `692caeb`, and the one-writer boundary, then
   dispatched only PMR-055.
@@ -450,7 +465,7 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P1 | Operational closure | Commit/regenerate the verified PMR-055 return, then continue the two exact analysis housekeeping PMRs beginning with PMR-059. |
+| P1 | Operational closure | Commit/regenerate the verified PMR-059 return, then complete sole remaining analysis housekeeping PMR-063. |
 | P2 | `PMR-026` | Reconcile Helium's detached checkout, current handoff, and observed refs; no gate is inferred. |
 | P2 | `PMR-040` | XRV owner reviews the three proposed-architecture documents at analysis-workbook `a46dba2`. |
 | P3 | `PMR-014` | Triage the five original formal-verification bibliography pointers. |
@@ -461,7 +476,6 @@ Previous turn (thirty-sixth):
 | P3 | `PMR-053` | After `PMR-052`, XRV reviews only materially relevant returned cap-talk threads in the verified successor. |
 | P3 | `PMR-054` | After verified OS-security and XRV returns, analysis-workbook appends the revision-bound follow-up inquiry. |
 | P3 | `PMR-058` | `PMR-045` is closed; XRV may now triage the new double-trap specification, QEMU series, and corrected exact OpenSBI pointer. |
-| P3 | `PMR-059` | Refresh the workbook repository handoff and add the structured return for synchronized owner commit `1ef1ac6`; `PML-0030` is already applied at `c7cc0fa`. |
 | P3 | `PMR-063` | Add the explicit fail-closed tasking startup contract to analysis-workbook. |
 | P3 | `PMR-064` | Add the explicit fail-closed tasking startup contract to threat-modeler and its maintainer. |
 | P3 | `PMR-066` | Add the explicit fail-closed tasking startup contract to provenance-review. |
@@ -512,8 +526,8 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   authorization or candidate acceptance.
 - Other component and coordination commits reported ahead of their remotes
   remain unpushed until separately reviewed and confirmed. Pre-turn Project
-  Manager baseline `656a792`, parent registry `4099f16`, and analysis-workbook
-  PMR-055 commits `70bea16` / `6d5d03d` are local and unpushed. The prior
+  Manager baseline `88cb849`, parent registry `d4862ae`, and analysis-workbook
+  PMR-059 commits `9d76048` / `e6c8aad` are local and unpushed. The prior
   `"yes, push"` covered
   only the completed reorganization closure. Analysis-workbook `PMR-085`,
   `PMR-088`, prospective `PMR-089`, and XRV `PMR-075` remain separate.
@@ -553,7 +567,7 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
 - `outbox/component-requests.md` (`PMR-004`, `PMR-038`, `PMR-050`,
-  `PMR-055`, `PMR-084`, `PMR-086`, and `PMR-087` closed; P3 `PMR-059`,
+  `PMR-055`, `PMR-059`, `PMR-084`, `PMR-086`, and `PMR-087` closed; P3
   `PMR-063`, `PMR-085` / `PMR-088` and P4 prospective `PMR-089` open and
   undispatched)
 - `components/analysis-workbook.md`
@@ -571,6 +585,9 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - analysis-workbook PMR-055 work
   `70bea16e99add7a1a430c2b0d330e60c7f9feb32` and durable return
   `6d5d03d0da0d677a14c2c4514a5d66275b42ea43`
+- analysis-workbook PMR-059 HANDOFF-only work
+  `9d76048b07c4da2607ce945fb8503b675cf785fe` and durable return
+  `e6c8aad4ad458a0517d8ba0671ac2c587845512a`
 - analysis-workbook fixture work
   `efbfdb8d26e43a346677af0d5615ef40341d944d` and durable return
   `858a73b1ab40a22b0e298d7a7326bdb0cf61c6b4`
@@ -587,11 +604,11 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 
 ## Validation and commit state
 
-The required write-disabled PMR-055 audit (`claude-opus-5`, `max`,
-`long_context`) found no blocking discrepancy. Its stale dependency,
-completed-action, owner-run count, withdrawn-specialist, PMR-059 scope,
-backup-endpoint, and duplicate-pending-row findings were corrected.
-Pre-commit checks against analysis-workbook `6d5d03d` and released Beryllium
+The required write-disabled PMR-059 audit (`claude-opus-5`, `max`,
+`long_context`) found no blocking discrepancy. Its runbook head/range,
+CRQ-002 registry, owner-run summary, backup qualification, session-validation
+precision, and roster findings were corrected.
+Pre-commit checks against analysis-workbook `e6c8aad` and released Beryllium
 `416b2e9` reported:
 
 - `bash ./scripts/validate-pm.sh`: 421 passed / 0 failed;
@@ -603,17 +620,17 @@ Pre-commit checks against analysis-workbook `6d5d03d` and released Beryllium
 - `bash ./scripts/inspect-components.sh registry-check`: every registered
   component exact.
 
-Fresh PMR-055 preflight found clean idle analysis-workbook `692caeb` and
+Fresh PMR-059 preflight found clean idle analysis-workbook `6d5d03d` and
 emitted dispatch key
-`analysis-workbook/PMR-055/656a792576ffce5e3ed30796a7fad2aec752513d/ac82be068c869b3d933016debf6fa97108aaf681`.
-Hidden `analysis-workbook-owner` returned completed work `70bea16` and
-durable checkpoint `6d5d03d`; independent verification confirms only the
-three requested housekeeping paths and `HANDOFF.md` changed, clean `main` is
-behind 0 / ahead 18, and PMR-059/063 were untouched. The synchronous owner has ended, so
-its execution-time `active_session: self` leaves no reservation. Audit and
-validation are complete; the draft is ready for the Project Manager-first
-commit sequence. Generated tasking remains bound to `656a792` until that
-commit. No push is authorized.
+`analysis-workbook/PMR-059/88cb84915e443e73f02f98b2a0eb439f5caef789/5bf6149abda44b2a7220dfa1424652f4a0f1d16f`.
+Hidden `analysis-workbook-owner` returned completed work `9d76048` and
+durable checkpoint `e6c8aad`; independent verification confirms only root
+`HANDOFF.md` changed, existing `1ef1ac6` / `c7cc0fa` were not reapplied,
+clean `main` is behind 0 / ahead 20, and PMR-063 was untouched. The
+synchronous owner has ended, so its execution-time `active_session: self`
+leaves no reservation. Audit and validation are complete; the draft is ready
+for the Project Manager-first commit sequence. Generated tasking remains
+bound to `88cb849` until that commit. No push is authorized.
 
 ## Provenance
 
@@ -861,4 +878,4 @@ commit. No push is authorized.
   `2e8d205`, verified by `git -C ../security-reviewer show --stat` and the
   `model:` lines of the four profiles.
 - Previous full Project Manager handoff: Git object
-  `656a792:HANDOFF.md`.
+  `88cb849:HANDOFF.md`.
