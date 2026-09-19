@@ -22,18 +22,19 @@
   durable return checkpoint `858a73b`. Exact housekeeping `PMR-038` is closed
   from historical work `2374115`, return `f7079fb`, and boundary checkpoint
   `5e037b1`. Exact inspection registration `PMR-004` is closed from work
-  `5684317` and return checkpoint `635719e`
+  `5684317` and return checkpoint `635719e`; exact sibling inspection
+  registration `PMR-050` is closed from work `231cca4` and return `692caeb`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at PMR-004 return checkpoint `635719e`,
-  behind 0 / ahead 14 of last-fetched `origin/main` `1ef1ac6`, local and
-  unpushed. Work `5684317` changes only `scripts/readonly-inspect.sh`, adding
-  `project-manager`; checkpoint `635719e` changes only `HANDOFF.md`.
-  `security-reviewer` and PMR-050 are untouched. Full component validation
-  reports 357 / 0, with syntax, inventory, transfer-queue, workbook,
-  exact-scope, and diff checks passing. The synchronous invocation ended with
-  no writer reservation. Housekeeping `PMR-050`, `PMR-055`, `PMR-059`, and
-  `PMR-063` remain sequential; externally sequenced analysis `PMR-054` is
+- **Observed state:** clean `main` at PMR-050 return checkpoint `692caeb`,
+  behind 0 / ahead 16 of last-fetched `origin/main` `1ef1ac6`, local and
+  unpushed. Work `231cca4` changes only `scripts/readonly-inspect.sh`, adding
+  `security-reviewer` after `project-manager`; checkpoint `692caeb` changes
+  only `HANDOFF.md`. PMR-055 is untouched. Full component validation reports
+  357 / 0, with syntax, inventory, transfer-queue, workbook, exact-scope, and
+  diff checks passing. The synchronous invocation ended with no writer
+  reservation. Housekeeping `PMR-055`, `PMR-059`, and `PMR-063` remain
+  sequential; externally sequenced analysis `PMR-054` is
   separate. Prior-range backup `PMR-085`, PMR-086 backup `PMR-088`, and
   prospective closure-range backup `PMR-089` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
@@ -100,7 +101,8 @@ topic and chronology in the generated `WORKBOOK.md`.
   parent `HANDOFF.md` as the remaining compatibility redirect and points
   current assurance lookup directly to `../project-manager/records/assurance/`.
   At `5684317` (`PMR-004`), `project-manager` is added to the owner-only
-  `scripts/readonly-inspect.sh` registered list. At
+  `scripts/readonly-inspect.sh` registered list. At `231cca4` (`PMR-050`),
+  `security-reviewer` is added immediately after it. At
   `ff12f2f` (carried `PMR-015`, 2026-09-05) its "Source-discovery reference
   set" also names `../project-manager/queue/LEDGER.md`.
 - At `efde667` (the owner's session, 2026-09-04) the component emits a
@@ -146,8 +148,9 @@ topic and chronology in the generated `WORKBOOK.md`.
   `PMR-085` range eight ahead of `origin/main`. PMR-086 work `efbfdb8` and
   return `858a73b` make ten ahead; separate `PMR-088` tracks those two
   commits. PMR-038 return `f7079fb` and checkpoint `5e037b1` make twelve
-  ahead; PMR-004 work `5684317` and return `635719e` make current `main`
-  fourteen ahead. Prospective `PMR-089` will freeze the exact post-`858a73b`
+  ahead; PMR-004 work `5684317` / return `635719e` make fourteen ahead, and
+  PMR-050 work `231cca4` / return `692caeb` make current `main` sixteen
+  ahead. Prospective `PMR-089` will freeze the exact post-`858a73b`
   closure-sequence range after PMR-063 without expanding either earlier
   backup request.
 
@@ -207,10 +210,9 @@ git diff --check
 
 ## What the Project Manager may request
 
-A new analysis session on a named aspect; registration of `security-reviewer`
-in its `scripts/readonly-inspect.sh` registered list (`PMR-050`; the
-`project-manager` registration is complete at `5684317`, and the
-`RESEARCH-SOURCES.md` part was carried at `83b97a3`);
+A new analysis session on a named aspect; the completed `project-manager` and
+`security-reviewer` inspection registrations (`PMR-004` at `5684317`,
+`PMR-050` at `231cca4`, and the `RESEARCH-SOURCES.md` part at `83b97a3`);
 the `CRQ-002` routed mirror and stale open-ID correction under `PMR-055`; the
 repository handoff and structured return for owner commit
 `1ef1ac6` under `PMR-059`; and, only after `PMR-052` and
@@ -229,7 +231,8 @@ Project Manager performed the fleet todo update that the owner correctly
 refused outside its repository boundary. `PMR-088` and prospective
 closure-range backup `PMR-089` are separate and undispatched.
 `PMR-004` is closed from exact script work `5684317` and durable return
-`635719e`; PMR-050 remains separate and untouched.
+`635719e`; PMR-050 is closed from exact script work `231cca4` and durable
+return `692caeb`. PMR-055 remains separate and untouched.
 `PMR-019` and `PMR-036` are closed at `62ee356`. `PMR-015` (the ledger in the source-discovery reference set)
 was carried at `ff12f2f` on 2026-09-05. The push of the carried `83b97a3` and
 `ff12f2f` was done by the owner at 19:05Z on 2026-09-05 (see "Backup"

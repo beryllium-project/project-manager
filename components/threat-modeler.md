@@ -69,8 +69,9 @@ is generated. `THREAT-MODELS.md` is the generated index.
   allocated again as a new `DISC-NNN` row.
 - At owner commit `c4126b6`, `scripts/readonly-inspect.sh` registers both
   `project-manager` (`PMR-004`) and `security-reviewer` (`PMR-022`) as
-  exact-snapshot targets. `PMR-022` is closed; `PMR-004` and new
-  analysis-workbook follow-up `PMR-050` carry the remaining workbook actions.
+  exact-snapshot targets. `PMR-022` is closed; the corresponding
+  analysis-workbook registrations are also closed at PMR-004 work `5684317`
+  and PMR-050 work `231cca4`.
 
 ## Outbound queue
 
