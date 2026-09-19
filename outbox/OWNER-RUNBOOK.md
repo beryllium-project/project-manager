@@ -68,9 +68,10 @@ Repository reorganization and the analysis owner-worker pilot are complete.
 No project-wide owner rollout or Git-maintainer specialist is required.
 
 The ordinary Beryllium owner session is complete and released at `416b2e9`;
-`PMR-067` and `PMR-083` are closed. Finish only the five remaining exact
-analysis-workbook housekeeping PMRs (`PMR-004`, `PMR-050`, `PMR-055`,
-`PMR-059`, `PMR-063`) sequentially through the proven owner, with one
+`PMR-067` and `PMR-083` are closed. Analysis PMR-004 is complete at work
+`5684317` and return `635719e`. Finish only the four remaining exact
+analysis-workbook housekeeping PMRs (`PMR-050`, `PMR-055`, `PMR-059`,
+`PMR-063`) sequentially through the proven owner, with one
 dispatch/return/verification per PMR.
 
 Then declare the repository/PM housekeeping workstream operationally complete
@@ -147,7 +148,7 @@ fallback documented by `PMD-20260915-008`.
 
 | Request | Priority | Component owner invocation | Exact task phrase after the approved resolver runs |
 | --- | --- | --- | --- |
-| `PMR-063` | P3 | `cd /home/jmorris/src/beryllium-project/analysis-workbook && copilot` | `Complete PMR-063 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
+| `PMR-063` | P3 | Project Manager invokes hidden `analysis-workbook-owner` after PMR-059 reconciliation | `Complete only PMR-063 under PMD-20260915-008; preserve every analysis result and do not combine another PMR.` |
 | `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
 | `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
 | `PMR-068` | P3 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
@@ -244,9 +245,9 @@ H1-H4 remain unauthorized; K3 remains `NOT RUN`. No push occurred.
 - **P4 PMR-089:** do not act until PMR-063 closes and freezes the endpoint,
   and until `PMR-085` plus `PMR-088` are independently resolved. It will
   cover only the exact six-request housekeeping range after `858a73b`,
-  beginning with HANDOFF-only commits `f7079fb` and `5e037b1`. The request
-  is undispatched; no force, tag, analysis/source change, publication, or
-  gate is included.
+  beginning with HANDOFF-only commits `f7079fb` and `5e037b1`, followed by
+  PMR-004 work `5684317` and return `635719e`. The request is undispatched;
+  no force, tag, analysis/source change, publication, or gate is included.
 - **P3 PMR-090:** active Beryllium return correction `416b2e9` is twelve ahead of
   last-fetched private `origin` at `f05ccb3`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
@@ -280,33 +281,14 @@ H1-H4 remain unauthorized; K3 remains `NOT RUN`. No push occurred.
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
 
-- **PMR-004:** threat-modeler completed its corresponding registration at
-  synchronized owner commit `c4126b6` and threat-owned `PMR-022` is closed.
-  Dispatch only PMR-004. The analysis-workbook owner adds `project-manager`
-  to its owner-only `scripts/readonly-inspect.sh` target list; scripts are
-  outside Project Manager carry authority. Add only this name to the existing
-  array:
-
-  ```sh
-  registered_components=(
-      project-manager
-      # keep every existing entry below
-  )
-  ```
-
-  Then run analysis-workbook's `readonly-inspect.sh components` mode and
-  maintained validation before committing only PMR-004. The component
-  checkpoint still records the just-ended PMR-038 owner's `partial`,
-  `record_blocker`, and `active_session: self` state because that owner could
-  not write the external fleet database. Project Manager closure above
-  supersedes those execution-time fields: the repository work was verified,
-  todo `pmd-20260918-003-pmr-038` is `done`, and the synchronous owner has
-  ended with no reservation. This is preflight evidence only, not authority
-  to redo or amend PMR-038.
-- **PMR-050:** only after PMR-004 has returned, been verified, reconciled,
-  committed, and regenerated, freshly preflight and dispatch this request
-  alone to add `security-reviewer` to the same owner-only registered list.
-  Do not combine it with PMR-004.
+- **PMR-004:** complete. Hidden `analysis-workbook-owner` added only
+  `project-manager` to `scripts/readonly-inspect.sh` at work commit `5684317`;
+  return `635719e` records 357 / 0 and clean `main` ahead 14. PMR-050 and
+  `security-reviewer` were untouched.
+- **PMR-050:** after the containing Project Manager reconciliation is
+  committed and tasking regenerated, freshly preflight and dispatch this
+  request alone to decide whether to add `security-reviewer` to the same
+  owner-only registered list. Do not amend PMR-004 or combine another PMR.
 - **PMR-014:** the formal-verification owner triages the five original routed
   bibliography pointers.
 - **PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
@@ -376,13 +358,14 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `5e037b1` is twelve ahead of last-fetched
+- `analysis-workbook` clean `main` `635719e` is fourteen ahead of last-fetched
   `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
   `858a73b`, followed by PMR-038 HANDOFF-only commits `f7079fb` and
-  `5e037b1`. The first range remains exact backup request `PMR-085`; separate
-  dependent `PMR-088` tracks only the two PMR-086 commits; prospective
-  `PMR-089` will freeze the post-`858a73b` closure range at PMR-063;
+  `5e037b1`, then PMR-004 work `5684317` and return `635719e`. The first
+  range remains exact backup request `PMR-085`; separate dependent `PMR-088`
+  tracks only the two PMR-086 commits; prospective `PMR-089` will freeze the
+  post-`858a73b` closure range at PMR-063;
 - `beryllium-repo` active/default return `416b2e9` is twelve ahead of last-fetched
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
