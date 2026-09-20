@@ -7,13 +7,18 @@
 - **Agent:** none user-invocable; maintained skill `helium-documentation`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `LLM_POLICY_ALIGNMENT.md`
-- **Observed state:** clean detached HEAD at
-  `1ab289c066b69acdd8b55c9f77055b0145be1316` on 2026-09-12; local
-  `for-review` and `origin/for-review` point to the same commit. The ref
-  listing also contains `helium-te-travel-fedora44` at `52cc71a` and
+- **Observed state:** clean attached `for-review` at
+  `f928aac5979b6166f3f68a76a9acf1fc916161d8` on 2026-09-19, behind 0 /
+  ahead 2 of last-fetched `origin/for-review` at
+  `1ab289c066b69acdd8b55c9f77055b0145be1316`. Owner work `e202c6e`
+  reconciles the checkout and ref inventory; PMR-026 is closed from that work
+  and durable return `f928aac`. No `local-history` ref is present. Separately
+  observed refs include `helium-te-travel-fedora44` at `52cc71a` and
   `public/main`, `helium-te-final-release-h7-approved`, and tag `v0.6.0` at
   `1c9e526`. The Project Manager records those refs but infers no release,
-  review, or acceptance from their names or commit subjects (`PMR-026`)
+  review, acceptance, approval, or publication from their names or commit
+  subjects. Distinct P3 `PMR-091` tracks optional private backup of the two
+  local PMR-026 commits.
 
 ## Role
 
@@ -117,7 +122,6 @@ npm ci                 # locked documentation dependencies
 ./he build             # build the fixed TE image
 ./he demo              # two-subject demonstration
 ./he test              # host, QEMU, target-assurance, and report tests
-./he fv-check          # fixed-profile CBMC properties
 ./he check             # complete local validation
 ./he docs-check        # regenerate and validate documentation
 ./he evaluate          # rootless independent evaluation
@@ -133,12 +137,13 @@ the Helium root.
 
 ## What the Project Manager may request
 
-Responsible-human reconciliation of the current detached checkout,
-`HANDOFF.md`, and the separately observed review, travel, and public refs
-(`PMR-026`); preservation of frozen refs; and decisions on what, if anything,
-may proceed. The backup push recorded by `PMR-018` remains historical
-evidence. A remote-tracking ref or tag is not publication evidence or gate
-review by the Project Manager. The Project Manager never creates an H7 gate,
-pushes, publishes, or releases. `PMR-068` asks the ordinary Copilot/skill
-owner context to map `check Project Manager tasking` to the exact fail-closed
-resolver without session-history fallback; it changes no frozen ref or gate.
+`PMR-026` is closed from owner work `e202c6e` and durable return `f928aac`;
+future checkout, ref, frozen-history, or publication decisions remain with
+the responsible human and Helium owner. The backup push recorded by
+`PMR-018` remains historical evidence; distinct `PMR-091` tracks optional
+private backup of the two local PMR-026 commits. A remote-tracking ref or tag
+is not publication evidence or gate review by the Project Manager. The
+Project Manager never creates an H7 gate, pushes, publishes, or releases.
+`PMR-068` asks the ordinary Copilot/skill owner context to map `check Project
+Manager tasking` to the exact fail-closed resolver without session-history
+fallback; it changes no frozen ref or gate.

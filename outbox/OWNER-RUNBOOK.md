@@ -168,19 +168,6 @@ branch, and backup state.
 
 ## P2 repository actions
 
-### PMR-026 - Helium checkout and handoff disagree
-
-The clean checkout is detached at `1ab289c`, which is also
-`for-review`/`origin/for-review`. Other observed refs include the travel
-branch at `52cc71a` and `public/main` plus `v0.6.0` at `1c9e526`. In a Helium
-owner session, confirm the intended operational checkout and reconcile
-`HANDOFF.md`; do not infer release or approval from names:
-
-```sh
-cd /home/jmorris/src/beryllium-project/helium-te-poc
-copilot
-```
-
 ### PMR-040 - XRV review of proposed architecture
 
 Start the XRV owner and provide analysis-workbook commit `a46dba2`:
@@ -264,6 +251,23 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   range and exact candidate ref and decide whether to push. `PMR-090`
   supersedes `PMR-082`. Never push inactive `msft-downstream`; no push accepts
   H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
+- **P3 PMR-091:** Helium `for-review` at PMR-026 durable return `f928aac` is
+  two ahead of last-fetched `origin/for-review` at `1ab289c`. After confirming
+  that `origin` remains the intended private backup target and giving separate
+  same-turn push authorization, review and fast-forward push only this exact
+  range:
+
+  ```sh
+  cd /home/jmorris/src/beryllium-project/helium-te-poc
+  git status --short --branch
+  git log --oneline origin/for-review..for-review
+  git diff --stat origin/for-review..for-review
+  git push origin for-review
+  ```
+
+  Do not push `public`, tags, or any other branch. This backup does not reopen
+  PMR-026 or grant review, acceptance, approval, publication, release,
+  formal-verification, or hardware-validation status.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -363,6 +367,10 @@ The relevant local component commits are:
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
   exact backup request `PMR-090`;
+- `helium-te-poc` clean attached `for-review` at PMR-026 durable return
+  `f928aac` is two ahead of last-fetched `origin/for-review` at `1ab289c`;
+  exact owner-only backup request `PMR-091` requires separate confirmation
+  and excludes `public`, tags, and every other branch;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive
