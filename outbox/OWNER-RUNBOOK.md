@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-19
+**Last refreshed:** 2026-09-20
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -256,22 +256,19 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   2026-09-20T06:39Z, after the responsible human stated exactly `"push
   authorized, also set PMR-068 to P4 as the project is complete"`, the
   applicable push clause authorized only this exact two-commit HANDOFF-only
-  range. The Project Manager cannot execute a component push or the generic
-  helper. The human owner now runs:
-
-  ```sh
-  cd /home/jmorris/src/beryllium-project/helium-te-poc
-  git status --short --branch
-  git log --oneline origin/for-review..for-review
-  git diff --stat origin/for-review..for-review
-  git push origin for-review
-  ```
-
-  Do not push `public`, tags, or any other branch. This backup does not reopen
-  PMR-026 or grant review, acceptance, approval, publication, release,
-  formal-verification, or hardware-validation status. Report the result,
-  including any authentication or reachability failure, to the next Project
-  Manager turn.
+  range. The human ran the scoped command and reported `Repository not
+  found`; the private URL is deliberately not recorded. Read-only inspection
+  at 2026-09-20T08:28Z confirms no change: clean `for-review` remains
+  `f928aac`, two ahead of last-fetched `origin/for-review` at `1ab289c`.
+  **Do not retry, create a repository, or change a remote.** First verify the
+  intended target's existence and reachability read-only. The next separate
+  responsible-human decision is whether to restore access to that existing
+  target, designate a different existing private target, create a replacement
+  private target, or defer backup. A later mutation or push requires a new
+  exact command, unchanged-tip check, and applicable same-turn authorization.
+  The Project Manager cannot execute a component push or the generic helper.
+  This backup does not reopen PMR-026 or grant review, acceptance, approval,
+  publication, release, formal-verification, or hardware-validation status.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -349,10 +346,10 @@ After reviewing the listed local component commits and the Project
 Manager/parent commits, the responsible human may use the maintained helper.
 It now targets parent `main -> upstream`:
 
-The 2026-09-19 authorization covers only Helium `for-review -> origin`. It
-does not authorize any parent, Project Manager, other component, branch, tag,
-or generic-helper step. `owner-actions.sh` has no PMR-091 path and must not be
-used for that push.
+The 2026-09-19 authorization covered only Helium `for-review -> origin`, was
+exercised by the failed attempt on 2026-09-20, and is consumed. No push is
+authorized now. `owner-actions.sh` has no PMR-091 path, and no parent, Project
+Manager, other component, branch, tag, or generic-helper step is authorized.
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
@@ -378,8 +375,9 @@ The relevant local component commits are:
   exact backup request `PMR-090`;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is two ahead of last-fetched `origin/for-review` at `1ab289c`;
-  exact owner-only backup request `PMR-091` requires separate confirmation
-  and excludes `public`, tags, and every other branch;
+  exact owner-only backup request `PMR-091` is blocked on target availability
+  or access after `Repository not found`; no retry is authorized, and
+  `public`, tags, and every other branch remain excluded;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive

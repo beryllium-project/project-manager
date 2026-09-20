@@ -8,7 +8,7 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `LLM_POLICY_ALIGNMENT.md`
 - **Observed state:** clean attached `for-review` at
-  `f928aac5979b6166f3f68a76a9acf1fc916161d8` on 2026-09-19, behind 0 /
+  `f928aac5979b6166f3f68a76a9acf1fc916161d8` on 2026-09-20, behind 0 /
   ahead 2 of last-fetched `origin/for-review` at
   `1ab289c066b69acdd8b55c9f77055b0145be1316`. Owner work `e202c6e`
   reconciles the checkout and ref inventory; PMR-026 is closed from that work
@@ -18,8 +18,10 @@
   `1c9e526`. The Project Manager records those refs but infers no release,
   review, acceptance, approval, or publication from their names or commit
   subjects. Distinct P3 `PMR-091` tracks private backup of the two local
-  PMR-026 commits; the responsible human authorized that exact push on
-  2026-09-19, and owner execution remains pending.
+  PMR-026 commits. The responsible human authorized that exact push, but the
+  human attempt returned `Repository not found`; read-only inspection at
+  2026-09-20T08:28Z confirms clean `for-review` remains two ahead. PMR-091 is
+  blocked on target availability or access.
 
 ## Role
 
@@ -142,10 +144,12 @@ the Helium root.
 future checkout, ref, frozen-history, or publication decisions remain with
 the responsible human and Helium owner. The backup push recorded by
 `PMR-018` remains historical evidence; distinct `PMR-091` tracks optional
-private backup of the two local PMR-026 commits. A remote-tracking ref or tag
-is not publication evidence or gate review by the Project Manager. The
-Project Manager never creates an H7 gate, pushes, publishes, or releases.
-P4 `PMR-068` asks the ordinary Copilot/skill owner context to map `check
-Project Manager tasking` to the exact fail-closed resolver without
-session-history fallback; the responsible human reprioritized it because the
-project is complete. It changes no frozen ref or gate.
+private backup of the two local PMR-026 commits and is blocked after the
+intended target returned `Repository not found`. Do not retry, create, or
+retarget without a new responsible-human decision. A remote-tracking ref or
+tag is not publication evidence or gate review by the Project Manager. The
+Project Manager never creates an H7 gate, pushes, publishes, or releases. P4
+`PMR-068` asks the ordinary Copilot/skill owner context to map `check Project
+Manager tasking` to the exact fail-closed resolver without session-history
+fallback; the responsible human reprioritized it because the project is
+complete. It changes no frozen ref or gate.
