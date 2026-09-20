@@ -17,8 +17,9 @@
   `public/main`, `helium-te-final-release-h7-approved`, and tag `v0.6.0` at
   `1c9e526`. The Project Manager records those refs but infers no release,
   review, acceptance, approval, or publication from their names or commit
-  subjects. Distinct P3 `PMR-091` tracks optional private backup of the two
-  local PMR-026 commits.
+  subjects. Distinct P3 `PMR-091` tracks private backup of the two local
+  PMR-026 commits; the responsible human authorized that exact push on
+  2026-09-19, and owner execution remains pending.
 
 ## Role
 
@@ -144,6 +145,7 @@ the responsible human and Helium owner. The backup push recorded by
 private backup of the two local PMR-026 commits. A remote-tracking ref or tag
 is not publication evidence or gate review by the Project Manager. The
 Project Manager never creates an H7 gate, pushes, publishes, or releases.
-`PMR-068` asks the ordinary Copilot/skill owner context to map `check Project
-Manager tasking` to the exact fail-closed resolver without session-history
-fallback; it changes no frozen ref or gate.
+P4 `PMR-068` asks the ordinary Copilot/skill owner context to map `check
+Project Manager tasking` to the exact fail-closed resolver without
+session-history fallback; the responsible human reprioritized it because the
+project is complete. It changes no frozen ref or gate.

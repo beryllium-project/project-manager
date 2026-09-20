@@ -146,7 +146,7 @@ fallback documented by `PMD-20260915-008`.
 | --- | --- | --- | --- |
 | `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
 | `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
-| `PMR-068` | P3 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
+| `PMR-068` | P4 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
 | `PMR-069` | P3 | `cd /home/jmorris/src/beryllium-project/formal-verification-research && copilot` | `Complete PMR-069 without changing research or bibliography dispositions.` |
 | `PMR-070` | P3 | `cd /home/jmorris/src/beryllium-project/osr-claude && copilot`; use the successor's owner workflow after the responsible human confirms the write | `Complete PMR-070 without opening restricted-microsoft.` |
 | `PMR-071` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo && copilot` | `Complete PMR-071; first report pwd and pwd -P, with no corpus or publication change.` |
@@ -252,10 +252,12 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   supersedes `PMR-082`. Never push inactive `msft-downstream`; no push accepts
   H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **P3 PMR-091:** Helium `for-review` at PMR-026 durable return `f928aac` is
-  two ahead of last-fetched `origin/for-review` at `1ab289c`. After confirming
-  that `origin` remains the intended private backup target and giving separate
-  same-turn push authorization, review and fast-forward push only this exact
-  range:
+  two ahead of last-fetched `origin/for-review` at `1ab289c`. At
+  2026-09-20T06:39Z, after the responsible human stated exactly `"push
+  authorized, also set PMR-068 to P4 as the project is complete"`, the
+  applicable push clause authorized only this exact two-commit HANDOFF-only
+  range. The Project Manager cannot execute a component push or the generic
+  helper. The human owner now runs:
 
   ```sh
   cd /home/jmorris/src/beryllium-project/helium-te-poc
@@ -267,7 +269,9 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 
   Do not push `public`, tags, or any other branch. This backup does not reopen
   PMR-026 or grant review, acceptance, approval, publication, release,
-  formal-verification, or hardware-validation status.
+  formal-verification, or hardware-validation status. Report the result,
+  including any authentication or reachability failure, to the next Project
+  Manager turn.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -344,6 +348,11 @@ accept H0, authorize H1-H4, or establish Beryllium hardware validation.
 After reviewing the listed local component commits and the Project
 Manager/parent commits, the responsible human may use the maintained helper.
 It now targets parent `main -> upstream`:
+
+The 2026-09-19 authorization covers only Helium `for-review -> origin`. It
+does not authorize any parent, Project Manager, other component, branch, tag,
+or generic-helper step. `owner-actions.sh` has no PMR-091 path and must not be
+used for that push.
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
