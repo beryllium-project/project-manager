@@ -260,40 +260,52 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   URL, but also identifies a material scope difference: a new empty target has
   no `origin/for-review`, so the push creates that branch and transfers the
   full history reachable from local `for-review`, not only the two commits
-  shown by the stale remote-tracking comparison. The responsible human was
-  unavailable to confirm this full-branch transfer. **Do not run the commands
-  below until that exact scope is confirmed.**
-
-  Proposed human commands after confirmation:
+  shown by the stale remote-tracking comparison. At 2026-09-20T22:53Z the
+  responsible human replied exactly `"confirm"` to that full-history,
+  one-branch scope. The human owner now runs this block:
 
   ```sh
+  set -euo pipefail
+
   cd /home/jmorris/src/beryllium-project/helium-te-poc
-  git remote get-url origin
+  git remote get-url origin | grep -Eq \
+    '/beryllium-project/helium-te-poc-historical(\.git)?/?$'
+  test "$(git rev-parse HEAD)" = \
+    "f928aac5979b6166f3f68a76a9acf1fc916161d8"
+  test -z "$(git status --porcelain)"
 
-  gh repo view beryllium-project/helium-te-poc-historical \
-    --json nameWithOwner,visibility \
-    --jq '.nameWithOwner + " " + .visibility'
+  if gh repo view beryllium-project/helium-te-poc-historical \
+      --json nameWithOwner,visibility >/dev/null 2>&1; then
+    echo "STOP: target already exists; report before changing anything" >&2
+    exit 1
+  fi
+
   gh repo create beryllium-project/helium-te-poc-historical --private
-  gh repo view beryllium-project/helium-te-poc-historical \
-    --json nameWithOwner,visibility \
-    --jq '.nameWithOwner + " " + .visibility'
+  test "$(gh repo view beryllium-project/helium-te-poc-historical \
+    --json visibility --jq '.visibility')" = "PRIVATE"
 
-  git status --short --branch
-  git log --oneline for-review
-  git push origin for-review
+  git -c push.followTags=false push \
+    origin refs/heads/for-review:refs/heads/for-review
+  test "$(git ls-remote --heads origin refs/heads/for-review | cut -f1)" = \
+    "f928aac5979b6166f3f68a76a9acf1fc916161d8"
+  test "$(git ls-remote --heads origin | wc -l)" -eq 1
+  test "$(git ls-remote --tags origin | wc -l)" -eq 0
+  git ls-remote --heads --tags origin
   ```
 
-  The first `gh repo view` is read-only: if it finds an existing target, stop
-  and report before creation. After confirmed creation, continue to the push
-  only if visibility is `PRIVATE`. If identity differs, creation says the
-  repository exists, visibility is not private, or authentication fails, stop
-  and report without changing `origin`. The Project Manager cannot execute
-  `gh repo create`, a component push, or the generic helper. Do not push
-  `main`, `public`, tags, or another branch. A fresh target will receive the
-  full reachable `for-review` history while those excluded refs remain
-  unbacked. This backup does not reopen PMR-026 or grant review, acceptance,
-  approval, publication, release, formal-verification, or hardware-validation
-  status.
+  `set -e` stops before creation if configured `origin` differs, HEAD moved,
+  the worktree became dirty, or the target already exists; it stops before
+  push if creation fails or visibility is not `PRIVATE`; and it stops after
+  push if the target does not expose exactly `for-review` at `f928aac` with
+  zero tags. Report the complete result. The Project Manager cannot execute
+  `gh repo create`, a component push, or the generic helper. Specifically do
+  not run `bash ./scripts/owner-actions.sh --helium-branches` (step
+  `push_helium`), which would push multiple historical no-upstream branches.
+  Do not push `main`, `public`, tags, or another branch. The fresh target
+  receives the full reachable `for-review` history while those excluded refs
+  remain unbacked. This backup does not reopen PMR-026 or grant review,
+  acceptance, approval, publication, release, formal-verification, or
+  hardware-validation status.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -370,12 +382,11 @@ accept H0, authorize H1-H4, or establish Beryllium hardware validation.
 The maintained helper is documented here for a future separately authorized
 turn and targets parent `main -> upstream`; it is not authorized now.
 
-No PMR-091 creation or push is currently executable: full reachable
-`for-review` history transfer to a new empty target awaits explicit human
-confirmation. The opt-in `owner-actions.sh --helium-branches` path belongs to
-historical PMR-018 and would push multiple no-upstream branches; it must not be
-used for PMR-091. No default or opt-in helper step, parent, Project Manager,
-other component, branch, or tag push is authorized this turn.
+PMR-091 authorizes only the explicit human command block above. The opt-in
+`owner-actions.sh --helium-branches` path belongs to historical PMR-018 and
+would push multiple no-upstream branches; it must not be used for PMR-091. No
+default or opt-in helper step, parent, Project Manager, other component,
+branch, or tag push is authorized this turn.
 
 **Not authorized this turn - do not run:**
 
@@ -403,9 +414,10 @@ The relevant local component commits are:
   exact backup request `PMR-090`;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is two ahead of last-fetched `origin/for-review` at `1ab289c`;
-  exact owner-only backup request `PMR-091` awaits confirmation that a new
-  private target may receive the full reachable `for-review` history;
-  `main`, `public`, tags, and every other branch remain excluded;
+  exact owner-only backup request `PMR-091` authorizes human creation of the
+  named private target and transfer of full reachable `for-review` history as
+  its only branch; `main`, `public`, tags, and every other branch remain
+  excluded;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive
