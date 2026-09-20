@@ -253,22 +253,47 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **P3 PMR-091:** Helium `for-review` at PMR-026 durable return `f928aac` is
   two ahead of last-fetched `origin/for-review` at `1ab289c`. At
-  2026-09-20T06:39Z, after the responsible human stated exactly `"push
-  authorized, also set PMR-068 to P4 as the project is complete"`, the
-  applicable push clause authorized only this exact two-commit HANDOFF-only
-  range. The human ran the scoped command and reported `Repository not
-  found`; the private URL is deliberately not recorded. Read-only inspection
-  at 2026-09-20T08:28Z confirms no change: clean `for-review` remains
-  `f928aac`, two ahead of last-fetched `origin/for-review` at `1ab289c`.
-  **Do not retry, create a repository, or change a remote.** First verify the
-  intended target's existence and reachability read-only. The next separate
-  responsible-human decision is whether to restore access to that existing
-  target, designate a different existing private target, create a replacement
-  private target, or defer backup. A later mutation or push requires a new
-  exact command, unchanged-tip check, and applicable same-turn authorization.
-  The Project Manager cannot execute a component push or the generic helper.
-  This backup does not reopen PMR-026 or grant review, acceptance, approval,
-  publication, release, formal-verification, or hardware-validation status.
+  2026-09-20T22:12Z, after the failed `Repository not found` attempt and an
+  unchanged-tip check, the responsible human stated exactly `"create the repo
+  & push"` for `beryllium-project/helium-te-poc-historical`. Read-only audit
+  confirms configured `origin` identifies that target without recording its
+  URL, but also identifies a material scope difference: a new empty target has
+  no `origin/for-review`, so the push creates that branch and transfers the
+  full history reachable from local `for-review`, not only the two commits
+  shown by the stale remote-tracking comparison. The responsible human was
+  unavailable to confirm this full-branch transfer. **Do not run the commands
+  below until that exact scope is confirmed.**
+
+  Proposed human commands after confirmation:
+
+  ```sh
+  cd /home/jmorris/src/beryllium-project/helium-te-poc
+  git remote get-url origin
+
+  gh repo view beryllium-project/helium-te-poc-historical \
+    --json nameWithOwner,visibility \
+    --jq '.nameWithOwner + " " + .visibility'
+  gh repo create beryllium-project/helium-te-poc-historical --private
+  gh repo view beryllium-project/helium-te-poc-historical \
+    --json nameWithOwner,visibility \
+    --jq '.nameWithOwner + " " + .visibility'
+
+  git status --short --branch
+  git log --oneline for-review
+  git push origin for-review
+  ```
+
+  The first `gh repo view` is read-only: if it finds an existing target, stop
+  and report before creation. After confirmed creation, continue to the push
+  only if visibility is `PRIVATE`. If identity differs, creation says the
+  repository exists, visibility is not private, or authentication fails, stop
+  and report without changing `origin`. The Project Manager cannot execute
+  `gh repo create`, a component push, or the generic helper. Do not push
+  `main`, `public`, tags, or another branch. A fresh target will receive the
+  full reachable `for-review` history while those excluded refs remain
+  unbacked. This backup does not reopen PMR-026 or grant review, acceptance,
+  approval, publication, release, formal-verification, or hardware-validation
+  status.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -342,14 +367,17 @@ accept H0, authorize H1-H4, or establish Beryllium hardware validation.
 
 ## Push the completed coordination carries
 
-After reviewing the listed local component commits and the Project
-Manager/parent commits, the responsible human may use the maintained helper.
-It now targets parent `main -> upstream`:
+The maintained helper is documented here for a future separately authorized
+turn and targets parent `main -> upstream`; it is not authorized now.
 
-The 2026-09-19 authorization covered only Helium `for-review -> origin`, was
-exercised by the failed attempt on 2026-09-20, and is consumed. No push is
-authorized now. `owner-actions.sh` has no PMR-091 path, and no parent, Project
-Manager, other component, branch, tag, or generic-helper step is authorized.
+No PMR-091 creation or push is currently executable: full reachable
+`for-review` history transfer to a new empty target awaits explicit human
+confirmation. The opt-in `owner-actions.sh --helium-branches` path belongs to
+historical PMR-018 and would push multiple no-upstream branches; it must not be
+used for PMR-091. No default or opt-in helper step, parent, Project Manager,
+other component, branch, or tag push is authorized this turn.
+
+**Not authorized this turn - do not run:**
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
@@ -375,9 +403,9 @@ The relevant local component commits are:
   exact backup request `PMR-090`;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is two ahead of last-fetched `origin/for-review` at `1ab289c`;
-  exact owner-only backup request `PMR-091` is blocked on target availability
-  or access after `Repository not found`; no retry is authorized, and
-  `public`, tags, and every other branch remain excluded;
+  exact owner-only backup request `PMR-091` awaits confirmation that a new
+  private target may receive the full reachable `for-review` history;
+  `main`, `public`, tags, and every other branch remain excluded;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive
