@@ -8,28 +8,19 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `LLM_POLICY_ALIGNMENT.md`
 - **Observed state:** clean attached `for-review` at
-  `f928aac5979b6166f3f68a76a9acf1fc916161d8` on 2026-09-20, behind 0 /
-  ahead 2 of last-fetched `origin/for-review` at
-  `1ab289c066b69acdd8b55c9f77055b0145be1316`. Owner work `e202c6e`
+  `f928aac5979b6166f3f68a76a9acf1fc916161d8` on 2026-09-21, synchronized
+  0/0 with `origin/for-review`. Owner work `e202c6e`
   reconciles the checkout and ref inventory; PMR-026 is closed from that work
   and durable return `f928aac`. No `local-history` ref is present. Separately
   observed refs include `helium-te-travel-fedora44` at `52cc71a` and
   `public/main`, `helium-te-final-release-h7-approved`, and tag `v0.6.0` at
   `1c9e526`. The Project Manager records those refs but infers no release,
   review, acceptance, approval, or publication from their names or commit
-  subjects. Distinct P3 `PMR-091` tracks private backup of full history
-  reachable from `for-review` as the only branch this backup updates. The first push
-  returned `Repository not found`; fresh read-only preflight at
-  2026-09-20T22:53Z confirms clean `for-review` remains two ahead. The
-  responsible human explicitly confirmed that full-history scope and later
-  stated that `xjamesmorris` is the required GitHub identity. Under that
-  identity the named target is visible and already exists. Local stale
-  `origin/*` refs were checked against live inventory: the target is private,
-  non-empty, unarchived, not a fork, and has 23 heads / zero tags; live
-  `for-review` is `1ab289c` and is a fast-forward ancestor of local
-  `f928aac`. The exact two-commit fast-forward is authorized for human
-  execution; `main`, other branches, tags, and the `public` remote remain
-  excluded.
+  subjects. PMR-091 is closed from human-run maintained push evidence and
+  independent read-only inspection: only private `for-review` fast-forwarded
+  `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved;
+  the prior active account was restored. `main`, other branches, tags, and
+  the `public` remote were excluded.
 
 ## Role
 
@@ -151,16 +142,10 @@ the Helium root.
 `PMR-026` is closed from owner work `e202c6e` and durable return `f928aac`;
 future checkout, ref, frozen-history, or publication decisions remain with
 the responsible human and Helium owner. The backup push recorded by
-`PMR-018` remains historical evidence; distinct `PMR-091` tracks private
-backup of full history reachable from `for-review` as the target's only
-branch. After the intended target returned `Repository not found`, the
-responsible human explicitly confirmed the full-history, one-branch scope and
-stated that `xjamesmorris` is the required GitHub identity. The target is
-visible and already exists under that identity, so no creation is performed.
-Live inventory verifies private `for-review` at `1ab289c`, 22 other branches,
-zero tags, and fast-forward ancestry to `f928aac`; maintained
-`../outbox/pmr091-push.sh` binds the exact human action and verifies all other
-refs remain unchanged. The Project Manager never creates repositories or
+`PMR-018` remains historical evidence; PMR-091 is closed from the exact
+private `for-review` fast-forward and synchronized state at `f928aac`.
+Maintained `../outbox/pmr091-push.sh` verified all other refs unchanged and
+restored the prior account. The Project Manager never creates repositories or
 pushes components. A
 remote-tracking ref or tag is not publication evidence or gate review by the
 Project Manager. The Project Manager never creates an H7 gate, pushes,
