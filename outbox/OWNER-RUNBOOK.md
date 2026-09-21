@@ -260,93 +260,19 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   target was visible and the creation guard stopped because it already
   exists. Do not create it again. Local stale evidence includes many
   historical `origin/*` refs, so the target must not be assumed empty. The
-  human owner saves the block below outside every repository (for example
-  `~/scripts/pmr091-inventory.sh`) and runs it with `bash`; do not paste or
-  source it into an interactive shell. It is read-only with respect to every
-  repository and remote, temporarily changes the machine-wide active `gh`
-  account, verifies and reports restoration of the prior account on exit, and
-  performs no push:
+  maintained script is `outbox/pmr091-inventory.sh`. From the workspace root,
+  run exactly:
 
   ```sh
-  #!/usr/bin/env bash
-  set -euo pipefail
-
-  stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
-  printf 'pmr091-start=%s gh=%s\n' \
-    "$(stamp)" "$(gh --version | head -n1)"
-
-  prior_user="$(gh api user --jq '.login')"
-  gh auth switch --hostname github.com --user xjamesmorris
-  restore_account() {
-    local status=$?
-    if gh auth switch --hostname github.com --user "$prior_user" \
-        >/dev/null 2>&1 &&
-       [ "$(gh api user --jq '.login')" = "$prior_user" ]; then
-      printf 'restored-active-account=%s\n' "$prior_user"
-    else
-      printf 'ERROR: account NOT restored; run: gh auth switch --hostname github.com --user %s\n' \
-        "$prior_user" >&2
-      status=1
-    fi
-    exit "$status"
-  }
-  trap restore_account EXIT
-
-  test "$(gh api user --jq '.login')" = "xjamesmorris" || {
-    printf 'ERROR: xjamesmorris is not active\n' >&2
-    exit 1
-  }
-  gh repo view beryllium-project/helium-te-poc-historical \
-    --json 'nameWithOwner,visibility,isEmpty,defaultBranchRef,isFork,parent,isArchived,viewerPermission,pushedAt'
-
-  cd /home/jmorris/src/beryllium-project/helium-te-poc
-  origin_url="$(git remote get-url origin)"
-  printf '%s\n' "$origin_url" | grep -Eq \
-    '^https://github\.com/beryllium-project/helium-te-poc-historical(\.git)?/?$' || {
-      printf 'ERROR: origin is not the expected GitHub HTTPS target\n' >&2
-      exit 1
-    }
-  git config --get-all 'credential.https://github.com.helper' |
-    grep -q 'gh auth git-credential' || {
-      printf 'ERROR: GitHub HTTPS is not using gh auth git-credential\n' >&2
-      exit 1
-    }
-  branch="$(git symbolic-ref --quiet --short HEAD)"
-  test "$branch" = "for-review" || {
-    printf 'ERROR: expected attached for-review branch\n' >&2
-    exit 1
-  }
-  head_oid="$(git rev-parse --verify refs/heads/for-review)"
-  test "$head_oid" = \
-    "f928aac5979b6166f3f68a76a9acf1fc916161d8" || {
-      printf 'ERROR: for-review tip moved\n' >&2
-      exit 1
-    }
-  dirty="$(GIT_OPTIONAL_LOCKS=0 git status --porcelain)"
-  test -z "$dirty" || {
-    printf 'ERROR: Helium worktree is dirty\n' >&2
-    exit 1
-  }
-  remote_refs="$(git ls-remote --heads --tags origin)"
-  ref_count="$(printf '%s\n' "$remote_refs" |
-    awk 'NF { count++ } END { print count + 0 }')"
-  printf 'local-branch=%s local-head=%s clean=yes remote-ref-count=%s\n' \
-    "$branch" "$head_oid" "$ref_count"
-  printf '%s\n' "$remote_refs"
-  remote_for_review="$(printf '%s\n' "$remote_refs" |
-    awk '$2 == "refs/heads/for-review" { print $1 }')"
-  if [ -n "$remote_for_review" ]; then
-    if git cat-file -e "${remote_for_review}^{commit}" 2>/dev/null &&
-       git merge-base --is-ancestor "$remote_for_review" "$head_oid"; then
-      printf 'remote-for-review=%s fast-forward-from-local=yes\n' \
-        "$remote_for_review"
-    else
-      printf 'remote-for-review=%s fast-forward-from-local=no-or-object-absent\n' \
-        "$remote_for_review"
-    fi
-  fi
-  printf 'pmr091-end=%s\n' "$(stamp)"
+  bash ./project-manager/outbox/pmr091-inventory.sh
   ```
+
+  Do not paste or source its contents into an interactive shell. It is
+  read-only with respect to every repository and remote, temporarily changes
+  the machine-wide active `gh` account, verifies and reports restoration of
+  the prior account on exit, and performs no push. Its contents are maintained
+  only in `outbox/pmr091-inventory.sh`; read that file rather than a copied
+  block in this runbook.
 
   Report the complete output. Neither normal command prints the remote URL,
   and `origin_url` is validated but never echoed; if a Git error quotes a URL,

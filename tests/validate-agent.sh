@@ -180,6 +180,17 @@ expect_pass "project-tasking passes bash -n" \
     bash -n "$repository_root/scripts/project-tasking.sh"
 refute_pattern "$repository_root/scripts/project-tasking.sh" \
     'git_pm (add|commit|push|fetch|remote|checkout|reset|clean|stash|rebase|tag)'
+pmr091_inventory="$repository_root/outbox/pmr091-inventory.sh"
+require_file "$pmr091_inventory"
+expect_pass "pmr091-inventory passes bash -n" \
+    bash -n "$pmr091_inventory"
+require_text "$pmr091_inventory" 'export LC_ALL=C'
+require_text "$pmr091_inventory" 'ERROR: run this script with bash; do not source it'
+require_text "$pmr091_inventory" 'trap restore_account EXIT INT TERM HUP'
+require_text "$pmr091_inventory" \
+    'gh auth switch --hostname github.com --user xjamesmorris'
+refute_pattern "$pmr091_inventory" \
+    'git (push|fetch)|gh repo create|git remote (add|set-url|remove)'
 require_executable "$repository_root/tests/validate-agent.sh"
 expect_pass "owner-actions passes bash -n" \
     bash -n "$repository_root/scripts/owner-actions.sh"

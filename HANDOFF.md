@@ -14,7 +14,9 @@ target's visibility, empty/default-branch fields, live heads, and tags.
 excluded. The Project Manager cannot run `gh` or a component push. PMR-091
 remains open and blocked on that read-only target inventory. PMR-068 remains
 open at P4; no review, acceptance, approval, publication, release,
-formal-verification, or hardware-validation gate changes.
+formal-verification, or hardware-validation gate changes. The maintained
+inventory is now a single file, `outbox/pmr091-inventory.sh`, with contract
+tests; the human runs one `bash` command rather than copying script text.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -88,9 +90,16 @@ development.
 ### One recommended next action
 
 The human owner should run the read-only PMR-091 inventory block in
-`outbox/OWNER-RUNBOOK.md` and return its JSON plus live heads/tags. It switches
-temporarily to `xjamesmorris`, restores `jamorris_microsoft` on exit, and
-performs no creation, remote mutation, or push.
+`outbox/pmr091-inventory.sh` and return its output:
+
+```sh
+cd /home/jmorris/src/beryllium-project
+bash ./project-manager/outbox/pmr091-inventory.sh
+```
+
+It temporarily switches to `xjamesmorris`, verifies restoration of the
+previous active account on exit, and performs no creation, remote mutation, or
+push.
 
 ### Minimal restart commands
 
@@ -117,6 +126,9 @@ git -C .. status --short --branch
   under `xjamesmorris`. Local stale evidence includes many historical
   `origin/*` refs, so the next route depends on live visibility,
   empty/default-branch, heads, and tags evidence.
+- Added maintained executable input file
+  `outbox/pmr091-inventory.sh`; the human now runs one `bash` command instead
+  of assembling or copying the audited script.
 - Previous turn (fifty-fifth): recorded the responsible human's exact
   `"confirm"` response for the full-history, one-branch scope and prepared the
   earlier creation-or-stop command. The Project Manager ran none of it.
@@ -686,7 +698,7 @@ artifact.
 Pre-commit checks against clean Helium `for-review` at `f928aac` reported:
 
 - `bash ./scripts/validate-pm.sh`: 421 passed / 0 failed;
-- `bash ./tests/validate-agent.sh`: 507 passed / 0 failed;
+- `bash ./tests/validate-agent.sh`: 514 passed / 0 failed;
 - `bash ./scripts/pull-queues.sh check`: 31 total source rows
   (30 source-discovery plus 1 transfer) / 31 ledger rows exact;
 - Project Manager and parent `git diff --check`: passed;
