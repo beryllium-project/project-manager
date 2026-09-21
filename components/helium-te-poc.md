@@ -18,15 +18,18 @@
   `1c9e526`. The Project Manager records those refs but infers no release,
   review, acceptance, approval, or publication from their names or commit
   subjects. Distinct P3 `PMR-091` tracks private backup of full history
-  reachable from `for-review` as the target's only branch. The first push
+  reachable from `for-review` as the only branch this backup updates. The first push
   returned `Repository not found`; fresh read-only preflight at
   2026-09-20T22:53Z confirms clean `for-review` remains two ahead. The
   responsible human explicitly confirmed that full-history scope and later
   stated that `xjamesmorris` is the required GitHub identity. Under that
   identity the named target is visible and already exists. Local stale
-  `origin/*` refs mean it must not be assumed empty; human read-only inventory
-  of visibility, default branch, live heads, and tags is required before any
-  push. `main`, other branches, tags, and the `public` remote remain excluded.
+  `origin/*` refs were checked against live inventory: the target is private,
+  non-empty, unarchived, not a fork, and has 23 heads / zero tags; live
+  `for-review` is `1ab289c` and is a fast-forward ancestor of local
+  `f928aac`. The exact two-commit fast-forward is authorized for human
+  execution; `main`, other branches, tags, and the `public` remote remain
+  excluded.
 
 ## Role
 
@@ -154,8 +157,10 @@ branch. After the intended target returned `Repository not found`, the
 responsible human explicitly confirmed the full-history, one-branch scope and
 stated that `xjamesmorris` is the required GitHub identity. The target is
 visible and already exists under that identity, so no creation is performed.
-Its live visibility, heads, tags, and default branch require read-only
-inventory before any push. The Project Manager never creates repositories or
+Live inventory verifies private `for-review` at `1ab289c`, 22 other branches,
+zero tags, and fast-forward ancestry to `f928aac`; maintained
+`../outbox/pmr091-push.sh` binds the exact human action and verifies all other
+refs remain unchanged. The Project Manager never creates repositories or
 pushes components. A
 remote-tracking ref or tag is not publication evidence or gate review by the
 Project Manager. The Project Manager never creates an H7 gate, pushes,

@@ -253,41 +253,40 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **P3 PMR-091:** Helium `for-review` at PMR-026 durable return `f928aac` is
   two ahead of last-fetched `origin/for-review` at `1ab289c`. The responsible
-  human confirmed full reachable `for-review` history as the target's only
-  branch and then stated exactly `"it needs to be xjamesmorris"`. Human
+  human confirmed full reachable `for-review` history as the only branch this
+  backup updates and then stated exactly `"it needs to be xjamesmorris"`. Human
   evidence shows `jamorris_microsoft` is an Enterprise Managed User whose
   create attempt was rejected; after switching to `xjamesmorris`, the named
   target was visible and the creation guard stopped because it already
-  exists. Do not create it again. Local stale evidence includes many
-  historical `origin/*` refs, so the target must not be assumed empty. The
-  maintained script is `outbox/pmr091-inventory.sh`. From the workspace root,
-  run exactly:
+  exists. Do not create it again. Maintained inventory
+  `outbox/pmr091-inventory.sh` then verified the target is `PRIVATE`,
+  non-empty, unarchived, not a fork, administered by `xjamesmorris`, and has
+  23 heads / zero tags. Live `for-review` is exactly `1ab289c`, locally
+  available, and a fast-forward ancestor of `f928aac`; the prior active
+  account was restored. The responsible human now authorizes that exact
+  two-commit fast-forward while preserving every other ref.
+
+  The maintained push script is `outbox/pmr091-push.sh`. From the workspace
+  root, run exactly:
 
   ```sh
-  bash ./project-manager/outbox/pmr091-inventory.sh
+  bash ./project-manager/outbox/pmr091-push.sh
   ```
 
   Do not paste or source its contents into an interactive shell. It is
-  read-only with respect to every repository and remote, temporarily changes
-  the machine-wide active `gh` account, verifies and reports restoration of
-  the prior account on exit, and performs no push. Its contents are maintained
-  only in `outbox/pmr091-inventory.sh`; read that file rather than a copied
-  block in this runbook.
-
-  Report the complete output. Neither normal command prints the remote URL,
-  and `origin_url` is validated but never echoed; if a Git error quotes a URL,
-  redact its host and path before reporting. No push is authorized until the
-  Project Manager records whether the target is empty or populated, verifies
-  permission/archive/fork state and fast-forward ancestry, and binds the exact
-  existing-target action. The block restores whichever account was active
-  before it ran; a later push block will perform its own switch and verified
-  restore. The Project Manager cannot execute `gh`, a component push, or the
-  generic helper. Specifically do not run
+  fail-closed: it temporarily switches to `xjamesmorris`, revalidates private
+  write access, exact old/new tips, fast-forward ancestry, clean state, 23
+  heads, and zero tags; pushes only explicit `for-review`; verifies every
+  other ref is byte-for-byte unchanged; and restores the prior active account.
+  Report the complete output. If it exits nonzero after printing the
+  `pre-push` line, rerun `outbox/pmr091-inventory.sh` before any retry and
+  report both outputs. The Project Manager cannot execute `gh`, a component
+  push, or the generic helper. Specifically do not run
   `bash ./scripts/owner-actions.sh --helium-branches` (step `push_helium`),
   which would push multiple historical no-upstream branches. Do not create,
-  push, change a remote, or alter any ref. This backup does not reopen PMR-026
-  or grant review, acceptance, approval, publication, release,
-  formal-verification, or hardware-validation status.
+  change a remote, push `main`, `public`, tags, or another branch. This backup
+  does not reopen PMR-026 or grant review, acceptance, approval, publication,
+  release, formal-verification, or hardware-validation status.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -364,11 +363,13 @@ accept H0, authorize H1-H4, or establish Beryllium hardware validation.
 The maintained helper is documented here for a future separately authorized
 turn and targets parent `main -> upstream`; it is not authorized now.
 
-PMR-091 authorizes only the read-only inventory block above. The opt-in
-`owner-actions.sh --helium-branches` path belongs to historical PMR-018 and
-would push multiple no-upstream branches; it must not be used for PMR-091. No
-default or opt-in helper step, parent, Project Manager, other component,
-branch, or tag push is authorized this turn.
+PMR-091 authorizes exactly one human-run
+`outbox/pmr091-push.sh` fast-forward of `for-review` from `1ab289c` to
+`f928aac`, plus the read-only inventory if recovery evidence is needed. The
+opt-in `owner-actions.sh --helium-branches` path belongs to historical
+PMR-018 and would push multiple no-upstream branches; it must not be used for
+PMR-091. No default or opt-in helper step, parent, Project Manager, other
+component, branch, or tag push is authorized this turn.
 
 **Not authorized this turn - do not run:**
 
@@ -396,9 +397,9 @@ The relevant local component commits are:
   exact backup request `PMR-090`;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is two ahead of last-fetched `origin/for-review` at `1ab289c`;
-  exact owner-only backup request `PMR-091` awaits live target inventory under
-  `xjamesmorris` before any push; creation, `main`, `public`, tags, and every
-  other branch remain excluded;
+  exact owner-only backup request `PMR-091` authorizes one human-run
+  fast-forward through maintained `outbox/pmr091-push.sh`; creation, `main`,
+  `public`, tags, and every other branch remain excluded;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive

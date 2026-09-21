@@ -191,6 +191,23 @@ require_text "$pmr091_inventory" \
     'gh auth switch --hostname github.com --user xjamesmorris'
 refute_pattern "$pmr091_inventory" \
     'git (push|fetch)|gh repo create|git remote (add|set-url|remove)'
+pmr091_push="$repository_root/outbox/pmr091-push.sh"
+require_file "$pmr091_push"
+expect_pass "pmr091-push passes bash -n" \
+    bash -n "$pmr091_push"
+require_pattern "$pmr091_push" '^set -euo pipefail$'
+require_text "$pmr091_push" 'export LC_ALL=C'
+require_text "$pmr091_push" 'ERROR: run this script with bash; do not source it'
+require_text "$pmr091_push" 'trap restore_account EXIT INT TERM HUP'
+require_text "$pmr091_push" \
+    'gh auth switch --hostname github.com --user xjamesmorris'
+require_text "$pmr091_push" 'git -c push.followTags=false'
+require_text "$pmr091_push" "credential.helper='!gh auth git-credential' push"
+require_text "$pmr091_push" \
+    'origin refs/heads/for-review:refs/heads/for-review'
+require_text "$pmr091_push" 'other-refs-preserved=yes'
+refute_pattern "$pmr091_push" \
+    '--force|--mirror|--follow-tags|push .*--tags|gh repo create|git remote (add|set-url|remove)'
 require_executable "$repository_root/tests/validate-agent.sh"
 expect_pass "owner-actions passes bash -n" \
     bash -n "$repository_root/scripts/owner-actions.sh"
