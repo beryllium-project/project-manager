@@ -252,60 +252,116 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   supersedes `PMR-082`. Never push inactive `msft-downstream`; no push accepts
   H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **P3 PMR-091:** Helium `for-review` at PMR-026 durable return `f928aac` is
-  two ahead of last-fetched `origin/for-review` at `1ab289c`. At
-  2026-09-20T22:12Z, after the failed `Repository not found` attempt and an
-  unchanged-tip check, the responsible human stated exactly `"create the repo
-  & push"` for `beryllium-project/helium-te-poc-historical`. Read-only audit
-  confirms configured `origin` identifies that target without recording its
-  URL, but also identifies a material scope difference: a new empty target has
-  no `origin/for-review`, so the push creates that branch and transfers the
-  full history reachable from local `for-review`, not only the two commits
-  shown by the stale remote-tracking comparison. At 2026-09-20T22:53Z the
-  responsible human replied exactly `"confirm"` to that full-history,
-  one-branch scope. The human owner now runs this block:
+  two ahead of last-fetched `origin/for-review` at `1ab289c`. The responsible
+  human confirmed full reachable `for-review` history as the target's only
+  branch and then stated exactly `"it needs to be xjamesmorris"`. Human
+  evidence shows `jamorris_microsoft` is an Enterprise Managed User whose
+  create attempt was rejected; after switching to `xjamesmorris`, the named
+  target was visible and the creation guard stopped because it already
+  exists. Do not create it again. Local stale evidence includes many
+  historical `origin/*` refs, so the target must not be assumed empty. The
+  human owner saves the block below outside every repository (for example
+  `~/scripts/pmr091-inventory.sh`) and runs it with `bash`; do not paste or
+  source it into an interactive shell. It is read-only with respect to every
+  repository and remote, temporarily changes the machine-wide active `gh`
+  account, verifies and reports restoration of the prior account on exit, and
+  performs no push:
 
   ```sh
+  #!/usr/bin/env bash
   set -euo pipefail
 
-  cd /home/jmorris/src/beryllium-project/helium-te-poc
-  git remote get-url origin | grep -Eq \
-    '/beryllium-project/helium-te-poc-historical(\.git)?/?$'
-  test "$(git rev-parse HEAD)" = \
-    "f928aac5979b6166f3f68a76a9acf1fc916161d8"
-  test -z "$(git status --porcelain)"
+  stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+  printf 'pmr091-start=%s gh=%s\n' \
+    "$(stamp)" "$(gh --version | head -n1)"
 
-  if gh repo view beryllium-project/helium-te-poc-historical \
-      --json nameWithOwner,visibility >/dev/null 2>&1; then
-    echo "STOP: target already exists; report before changing anything" >&2
+  prior_user="$(gh api user --jq '.login')"
+  gh auth switch --hostname github.com --user xjamesmorris
+  restore_account() {
+    local status=$?
+    if gh auth switch --hostname github.com --user "$prior_user" \
+        >/dev/null 2>&1 &&
+       [ "$(gh api user --jq '.login')" = "$prior_user" ]; then
+      printf 'restored-active-account=%s\n' "$prior_user"
+    else
+      printf 'ERROR: account NOT restored; run: gh auth switch --hostname github.com --user %s\n' \
+        "$prior_user" >&2
+      status=1
+    fi
+    exit "$status"
+  }
+  trap restore_account EXIT
+
+  test "$(gh api user --jq '.login')" = "xjamesmorris" || {
+    printf 'ERROR: xjamesmorris is not active\n' >&2
     exit 1
+  }
+  gh repo view beryllium-project/helium-te-poc-historical \
+    --json 'nameWithOwner,visibility,isEmpty,defaultBranchRef,isFork,parent,isArchived,viewerPermission,pushedAt'
+
+  cd /home/jmorris/src/beryllium-project/helium-te-poc
+  origin_url="$(git remote get-url origin)"
+  printf '%s\n' "$origin_url" | grep -Eq \
+    '^https://github\.com/beryllium-project/helium-te-poc-historical(\.git)?/?$' || {
+      printf 'ERROR: origin is not the expected GitHub HTTPS target\n' >&2
+      exit 1
+    }
+  git config --get-all 'credential.https://github.com.helper' |
+    grep -q 'gh auth git-credential' || {
+      printf 'ERROR: GitHub HTTPS is not using gh auth git-credential\n' >&2
+      exit 1
+    }
+  branch="$(git symbolic-ref --quiet --short HEAD)"
+  test "$branch" = "for-review" || {
+    printf 'ERROR: expected attached for-review branch\n' >&2
+    exit 1
+  }
+  head_oid="$(git rev-parse --verify refs/heads/for-review)"
+  test "$head_oid" = \
+    "f928aac5979b6166f3f68a76a9acf1fc916161d8" || {
+      printf 'ERROR: for-review tip moved\n' >&2
+      exit 1
+    }
+  dirty="$(GIT_OPTIONAL_LOCKS=0 git status --porcelain)"
+  test -z "$dirty" || {
+    printf 'ERROR: Helium worktree is dirty\n' >&2
+    exit 1
+  }
+  remote_refs="$(git ls-remote --heads --tags origin)"
+  ref_count="$(printf '%s\n' "$remote_refs" |
+    awk 'NF { count++ } END { print count + 0 }')"
+  printf 'local-branch=%s local-head=%s clean=yes remote-ref-count=%s\n' \
+    "$branch" "$head_oid" "$ref_count"
+  printf '%s\n' "$remote_refs"
+  remote_for_review="$(printf '%s\n' "$remote_refs" |
+    awk '$2 == "refs/heads/for-review" { print $1 }')"
+  if [ -n "$remote_for_review" ]; then
+    if git cat-file -e "${remote_for_review}^{commit}" 2>/dev/null &&
+       git merge-base --is-ancestor "$remote_for_review" "$head_oid"; then
+      printf 'remote-for-review=%s fast-forward-from-local=yes\n' \
+        "$remote_for_review"
+    else
+      printf 'remote-for-review=%s fast-forward-from-local=no-or-object-absent\n' \
+        "$remote_for_review"
+    fi
   fi
-
-  gh repo create beryllium-project/helium-te-poc-historical --private
-  test "$(gh repo view beryllium-project/helium-te-poc-historical \
-    --json visibility --jq '.visibility')" = "PRIVATE"
-
-  git -c push.followTags=false push \
-    origin refs/heads/for-review:refs/heads/for-review
-  test "$(git ls-remote --heads origin refs/heads/for-review | cut -f1)" = \
-    "f928aac5979b6166f3f68a76a9acf1fc916161d8"
-  test "$(git ls-remote --heads origin | wc -l)" -eq 1
-  test "$(git ls-remote --tags origin | wc -l)" -eq 0
-  git ls-remote --heads --tags origin
+  printf 'pmr091-end=%s\n' "$(stamp)"
   ```
 
-  `set -e` stops before creation if configured `origin` differs, HEAD moved,
-  the worktree became dirty, or the target already exists; it stops before
-  push if creation fails or visibility is not `PRIVATE`; and it stops after
-  push if the target does not expose exactly `for-review` at `f928aac` with
-  zero tags. Report the complete result. The Project Manager cannot execute
-  `gh repo create`, a component push, or the generic helper. Specifically do
-  not run `bash ./scripts/owner-actions.sh --helium-branches` (step
-  `push_helium`), which would push multiple historical no-upstream branches.
-  Do not push `main`, `public`, tags, or another branch. The fresh target
-  receives the full reachable `for-review` history while those excluded refs
-  remain unbacked. This backup does not reopen PMR-026 or grant review,
-  acceptance, approval, publication, release, formal-verification, or
-  hardware-validation status.
+  Report the complete output. Neither normal command prints the remote URL,
+  and `origin_url` is validated but never echoed; if a Git error quotes a URL,
+  redact its host and path before reporting. No push is authorized until the
+  Project Manager records whether the target is empty or populated, verifies
+  permission/archive/fork state and fast-forward ancestry, and binds the exact
+  existing-target action. The block restores whichever account was active
+  before it ran; a later push block will perform its own switch and verified
+  restore. The Project Manager cannot execute `gh`, a component push, or the
+  generic helper. Specifically do not run
+  `bash ./scripts/owner-actions.sh --helium-branches` (step `push_helium`),
+  which would push multiple historical no-upstream branches. Do not create,
+  push, change a remote, or alter any ref. This backup does not reopen PMR-026
+  or grant review, acceptance, approval, publication, release,
+  formal-verification, or hardware-validation status.
 - **P4 PMR-076:** parked by `PMD-20260918-003`. If explicitly resumed later,
   locate the responsible human's `kcopilotd` project, then
   design a Project Manager-owned OSS alignment skill/agent that maintains
@@ -382,7 +438,7 @@ accept H0, authorize H1-H4, or establish Beryllium hardware validation.
 The maintained helper is documented here for a future separately authorized
 turn and targets parent `main -> upstream`; it is not authorized now.
 
-PMR-091 authorizes only the explicit human command block above. The opt-in
+PMR-091 authorizes only the read-only inventory block above. The opt-in
 `owner-actions.sh --helium-branches` path belongs to historical PMR-018 and
 would push multiple no-upstream branches; it must not be used for PMR-091. No
 default or opt-in helper step, parent, Project Manager, other component,
@@ -414,10 +470,9 @@ The relevant local component commits are:
   exact backup request `PMR-090`;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is two ahead of last-fetched `origin/for-review` at `1ab289c`;
-  exact owner-only backup request `PMR-091` authorizes human creation of the
-  named private target and transfer of full reachable `for-review` history as
-  its only branch; `main`, `public`, tags, and every other branch remain
-  excluded;
+  exact owner-only backup request `PMR-091` awaits live target inventory under
+  `xjamesmorris` before any push; creation, `main`, `public`, tags, and every
+  other branch remain excluded;
 - `xrv-research-repo` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive

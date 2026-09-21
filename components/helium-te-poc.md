@@ -21,9 +21,12 @@
   reachable from `for-review` as the target's only branch. The first push
   returned `Repository not found`; fresh read-only preflight at
   2026-09-20T22:53Z confirms clean `for-review` remains two ahead. The
-  responsible human explicitly confirmed creation of the named private target
-  and that full-history scope; `main`, other branches, tags, and the `public`
-  remote remain excluded. Execution and verification are pending.
+  responsible human explicitly confirmed that full-history scope and later
+  stated that `xjamesmorris` is the required GitHub identity. Under that
+  identity the named target is visible and already exists. Local stale
+  `origin/*` refs mean it must not be assumed empty; human read-only inventory
+  of visibility, default branch, live heads, and tags is required before any
+  push. `main`, other branches, tags, and the `public` remote remain excluded.
 
 ## Role
 
@@ -148,10 +151,12 @@ the responsible human and Helium owner. The backup push recorded by
 `PMR-018` remains historical evidence; distinct `PMR-091` tracks private
 backup of full history reachable from `for-review` as the target's only
 branch. After the intended target returned `Repository not found`, the
-responsible human explicitly confirmed creation of private
-`beryllium-project/helium-te-poc-historical` and that full-history,
-one-branch scope. Human execution remains pending. The Project Manager never
-creates repositories or pushes components. A
+responsible human explicitly confirmed the full-history, one-branch scope and
+stated that `xjamesmorris` is the required GitHub identity. The target is
+visible and already exists under that identity, so no creation is performed.
+Its live visibility, heads, tags, and default branch require read-only
+inventory before any push. The Project Manager never creates repositories or
+pushes components. A
 remote-tracking ref or tag is not publication evidence or gate review by the
 Project Manager. The Project Manager never creates an H7 gate, pushes,
 publishes, or releases. P4 `PMR-068` asks the ordinary Copilot/skill owner

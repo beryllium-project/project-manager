@@ -1,18 +1,20 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-20
-**Update scope:** fifty-fifth coordination turn; the responsible human replied
-exactly `"confirm"` to the structured PMR-091 scope: create private
-`beryllium-project/helium-te-poc-historical`, then create its only branch
-`for-review` by pushing the full history reachable from local `for-review` at
-`f928aac`; exclude `main`, every other branch, all tags, and `public`. Fresh
-read-only preflight at 2026-09-20T22:53Z confirms the worktree is clean and
-the branch tip is unchanged. Exact fail-closed human commands are recorded.
-The Project Manager cannot run `gh repo create`, a component push, or the
-generic helper. PMR-091 remains open until creation, push, and synchronized
-state are observed. PMR-068 remains open at P4; no review, acceptance,
-approval, publication, release, formal-verification, or hardware-validation
-gate changes.
+**Update scope:** fifty-sixth coordination turn; the responsible human stated
+exactly `"it needs to be xjamesmorris"`. Human evidence shows
+`jamorris_microsoft` is an Enterprise Managed User whose create request was
+rejected; after switching to `xjamesmorris`, the named PMR-091 target was
+visible and the creation guard correctly stopped because it already exists.
+Local stale evidence contains many historical `origin/*` refs, so the target
+must not be assumed empty. The corrected fail-closed path performs no creation
+or push yet: switch to and verify `xjamesmorris`, then return the existing
+target's visibility, empty/default-branch fields, live heads, and tags.
+`main`, every other branch, all tags, `public`, and every helper path remain
+excluded. The Project Manager cannot run `gh` or a component push. PMR-091
+remains open and blocked on that read-only target inventory. PMR-068 remains
+open at P4; no review, acceptance, approval, publication, release,
+formal-verification, or hardware-validation gate changes.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -29,7 +31,7 @@ gate changes.
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references; tracked workspace symlinks are unchanged. |
 | Beryllium runtime | R0-R7 are accepted. R8-C plan target `f47ae60` is accepted as plan text only; implementation authorization remains none, no implementation base/relation is selected, and no successor H0 candidate is authorized. Exact local H0 candidate `6e93461` remains blocked, unreviewed, and unaccepted with 80 H0 blockers. Clean active/default is final PMR-067/PMR-083 return `416b2e9`, behind 0 / ahead 12. Exact resolver startup and bounded validation pass; full `make check` stops first on unchanged R3 Node digest drift. The responsible human released the owner session with `"all ready"` in direct response to the Project Manager's release request. PMR-067 and PMR-083 are closed; H1-H4 unauthorized; K3 `NOT RUN`; external PMR-077 separate. |
-| Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. After the first PMR-091 push returned `Repository not found`, the responsible human confirmed creation of private `beryllium-project/helium-te-poc-historical` and transfer of full history reachable from `for-review` as its only branch. Clean attached `for-review` remains behind 0 / ahead 2 of the stale last-fetched `origin/for-review` observation at `1ab289c`; human execution and verification are pending. `main`, other branches, tags, and `public` remain excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
+| Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. The responsible human identifies `xjamesmorris` as the required GitHub account; under it the target is visible and already exists. Local stale evidence includes many historical `origin/*` refs, so emptiness and one-head state are unverified. PMR-091 is blocked pending read-only `PRIVATE`/empty/default-branch plus live heads/tags inventory; no push is currently authorized. Clean attached `for-review` remains behind 0 / ahead 2 of stale `origin/for-review` at `1ab289c`. `main`, other branches, tags, `public`, and helpers remain excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
 | Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
 | XRV | Owner return `456c70b` records private active `origin` and reviewed history through `d618935`, including durable `REV-*` and `COLLAB.md`. Clean local `main` is two ahead with `22095a1` and `456c70b`; `PMR-075` tracks their backup but is blocked until an authorized credential can reach `origin`. `legacy-backup/main` remains last-fetched at `706e708`; `msft-inactive` remains unmodified. Live remote reachability is currently `unknown`; the workspace symlink is unchanged. |
 | Analysis-workbook | Clean `main` at final PMR-063 return `8b5a301`, behind 0 / ahead 22 of last-fetched `origin/main` `1ef1ac6`. Work `62bd071` changes only `.github/agents/analysis-workbook.agent.md`, `.github/copilot-instructions.md`, `AGENT-INTERFACE.md`, and `tests/validate-agent.sh`; return `8b5a301` changes only `HANDOFF.md`. The expanded contract suite passes 410 / 0; transfer-queue, workbook, exact-scope, hidden-owner-preservation, diff, and clean-state checks pass. All six operational housekeeping requests are closed. PMR-089 freezes the twelve-commit closure range `858a73b..8b5a301` and remains undispatched. |
@@ -37,7 +39,7 @@ gate changes.
 | Formal verification | Clean `main` at `784be93`, two ahead of last-fetched `origin/main`; live reachability was unavailable under the active credential at 21:53Z. The latest carry adds metadata-only `PMQ-023`; `PMR-037` remains open for remote/handoff wording. |
 | Other drift | OS-security is clean and synchronized at active private successor return `49fbfd6`; root `58f8023` is restricted-free, while complete old private history remains at inactive `legacy-personal/main` `e275544`. The personal quarantine exists empty with clean history; no restricted file was opened or copied. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | Security-reviewer is clean and synchronized at owner commit `2e8d205`; all four profiles use `gpt-5.3-codex` / `max` / `long_context`, the tasking startup contract is active, `PMR-062`, `PMR-065`, and `PMR-074` are closed independently, and no engagement ran. |
-| Remote access | The human-run PMR-091 Helium push returned `Repository not found`; read-only verification confirms no local or remote-tracking change. The responsible human now confirms creation of the named private target and transfer of full reachable `for-review` history as its only branch. The earlier 21:53Z helper also could not push analysis-workbook or Project Manager or refresh several private remotes. Remote-tracking refs remain last-fetched evidence. Existing `PMR-037`, `PMR-075`, `PMR-091`, and component/coordination ahead-state records cover the relevant follow-ups; no other repository creation, remote mutation, or push is authorized. |
+| Remote access | The first PMR-091 push used the wrong active account and returned `Repository not found`; the later `jamorris_microsoft` create attempt was rejected by Enterprise Managed User policy. The responsible human identifies `xjamesmorris` as required; under it the target is visible and already exists. The corrected path first inventories `PRIVATE`/empty/default-branch and live heads/tags read-only; no push is currently authorized. The earlier 21:53Z helper also could not push analysis-workbook or Project Manager or refresh several private remotes. Remote-tracking refs remain last-fetched evidence. Existing `PMR-037`, `PMR-075`, `PMR-091`, and component/coordination ahead-state records cover the follow-ups; no other repository, remote mutation, or push is authorized. |
 | Queues | 30 source-discovery rows / 30 source ledger rows plus one transfer row are exact. `PMQ-027`, `028`, and corrected `030` are routed to XRV; `PMQ-029` is rejected and its source edit is applied at `c7cc0fa`. `PMQ-008` and `011` remain routed; `HET-001` remains `recorded`/`unaccepted`. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -73,7 +75,7 @@ development.
 | P3 | `PMR-058`, `072` | **Ready - XRV owner action** | Triage new source pointers or add tasking startup behavior; neither blocks the completed reorganization. |
 | P3 | `PMR-075` | **Blocked - active credential cannot currently reach XRV `origin`** | Once an authorized credential is available, optionally push two owner documentation commits; reviewed research history is already recorded as backed up by the prior owner return. |
 | P3 | `PMR-090` | **Blocked - Beryllium private reachability unknown** | Back up active history through `416b2e9` plus candidate branch `6e93461` after authorized access; supersedes PMR-082 and changes no H0/R8-C gate. |
-| P3 | `PMR-091` | **Authorized - human creation and full branch push pending** | Create the named private target and push full reachable `for-review` history as its only branch. The human acts; exact fail-closed commands exclude `main`, all other branches, tags, `public`, and the generic helper. |
+| P3 | `PMR-091` | **Blocked - live existing-target inventory required** | Use `xjamesmorris` to return target visibility, empty/default-branch fields, and live heads/tags. No creation or push is authorized until the Project Manager records the exact existing-target route. |
 | P3 | `PMR-064`, `066` | **Ready - separate component-owner configuration actions** | Add deterministic tasking startup to threat and provenance contexts; process reliability only, with each owner acting separately. |
 | P3 | `PMR-070` | **Ready - OS-security owner configuration; ask human first** | Add deterministic tasking startup to the new Copilot owner workflow without accessing restricted material; process reliability only. |
 | P3 | `PMR-053`, `054` | **Blocked by `PMR-052`** | XRV cap-talk review and workbook follow-up cannot begin until the archive result returns. |
@@ -85,11 +87,10 @@ development.
 
 ### One recommended next action
 
-The human owner should run the confirmed PMR-091 command block in
-`outbox/OWNER-RUNBOOK.md`, then return the complete result for read-only
-verification and closure. Stop automatically if the target already exists,
-creation fails, visibility is not `PRIVATE`, configured `origin` differs,
-HEAD moved, or the worktree became dirty.
+The human owner should run the read-only PMR-091 inventory block in
+`outbox/OWNER-RUNBOOK.md` and return its JSON plus live heads/tags. It switches
+temporarily to `xjamesmorris`, restores `jamorris_microsoft` on exit, and
+performs no creation, remote mutation, or push.
 
 ### Minimal restart commands
 
@@ -108,13 +109,17 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
-- Recorded the responsible human's exact `"confirm"` response for private
-  target creation and full reachable `for-review` history as the target's
-  only branch.
-- Reverified clean Helium `for-review` at `f928aac` and recorded an executable
-  human block with fail-closed identity, visibility, HEAD, and worktree
-  checks plus post-push one-head/zero-tag evidence. The Project Manager ran
-  none of those commands.
+- Recorded the responsible human's exact statement `"it needs to be
+  xjamesmorris"`. Human evidence distinguishes the rejected
+  `jamorris_microsoft` Enterprise Managed User create attempt from the
+  required `xjamesmorris` account, under which the target already exists.
+- Replaced repository creation and push with a read-only target inventory
+  under `xjamesmorris`. Local stale evidence includes many historical
+  `origin/*` refs, so the next route depends on live visibility,
+  empty/default-branch, heads, and tags evidence.
+- Previous turn (fifty-fifth): recorded the responsible human's exact
+  `"confirm"` response for the full-history, one-branch scope and prepared the
+  earlier creation-or-stop command. The Project Manager ran none of it.
 - Previous turn (fifty-fourth): identified and recorded the material
   full-branch-transfer scope from the `"create the repo & push"` direction,
   prepared guarded commands, and withheld execution pending confirmation.
@@ -523,7 +528,7 @@ Previous turn (thirty-sixth):
 | P3 | `PMR-069..PMR-072` | Add the explicit fail-closed tasking startup contract to formal-verification, OS-security, CHERI notes, and XRV owner contexts. |
 | P3 | `PMR-075` | After review, decide whether to push XRV owner documentation commits `22095a1` and `456c70b` to private active `origin/main`; the successor research history through `d618935` is already backed up. |
 | P3 | `PMR-090` | Back up Beryllium active history through `416b2e9` plus candidate branch `6e93461` when authorized private access is available. |
-| P3 | `PMR-091` | Human execution authorized: create the named private target and push full reachable `for-review` history as its only branch using the fail-closed runbook block; return the complete result. |
+| P3 | `PMR-091` | Run only the read-only inventory under required account `xjamesmorris`; return target visibility/empty/default-branch and live heads/tags before any push route is authorized. |
 | P3 | `PMR-085` | Back up analysis-workbook through `ea72522` when authorized private access is available. |
 | P3 | `PMR-088` | After `PMR-085` is independently resolved, review and separately back up only PMR-086 commits `efbfdb8` and `858a73b`; it was not dispatched or combined with the owner run. |
 | P4 | `PMR-089` | The twelve-commit `858a73b..8b5a301` range is frozen; after `PMR-085`/`088` are resolved and private access is authorized, review and separately back it up. |
@@ -568,13 +573,13 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   authorization or candidate acceptance.
 - Other component and coordination commits reported ahead of their remotes
   remain unpushed until separately reviewed and confirmed. Pre-turn Project
-  Manager baseline `7b637f7`, parent registry `d3f7af8`, Helium PMR-026
+  Manager baseline `a728d93`, parent registry `5a65904`, Helium PMR-026
   commits `e202c6e` / `f928aac`, and analysis-workbook PMR-063 commits
   `62bd071` / `8b5a301` are local and unpushed. The first PMR-091
-  authorization was consumed by the failed `Repository not found` attempt.
-  The current `"confirm"` response authorizes only human creation of private
-  `beryllium-project/helium-te-poc-historical` and transfer of full reachable
-  `for-review` history as its only branch. The prior
+  attempt used the wrong active account. The current responsible-human
+  statement requires `xjamesmorris`; under that account the target already
+  exists, so creation is excluded. Only read-only target inventory is
+  authorized until the exact existing-target push route is recorded. The prior
   `"yes, push"` covered
   only the completed reorganization closure. Analysis-workbook `PMR-085`,
   `PMR-088`, frozen-range `PMR-089`, Helium `PMR-091`, and XRV `PMR-075`
@@ -583,10 +588,10 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   execution remains `NOT RUN`.
 - Helium checkout/ref reconciliation is complete at `e202c6e` / `f928aac`.
   The first exact PMR-091 private `origin` push failed with `Repository not
-  found`; private target creation plus full reachable `for-review` history
-  transfer is now explicitly confirmed for human execution. Execution and
-  read-only verification remain. Review, acceptance, approval, publication,
-  and release remain separate responsible-human gates. The Project Manager
+  found`; the required `xjamesmorris` account can see the existing target.
+  Its visibility, empty/default-branch state, and live refs require read-only
+  inventory before any push. Review, acceptance, approval, publication, and
+  release remain separate responsible-human gates. The Project Manager
   records none of them.
 - The complete privately backed-up paused threat model has no risk-acceptance
   effect and remains paused.
@@ -621,9 +626,9 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - `outbox/OWNER-RUNBOOK.md`
 - `outbox/component-requests.md` (`PMR-004`, `PMR-038`, `PMR-050`,
   `PMR-055`, `PMR-059`, `PMR-063`, `PMR-084`, `PMR-086`, and `PMR-087`
-  closed; Helium `PMR-026` closed, PMR-091 open at P3 with private target
-  creation and full reachable `for-review` history transfer confirmed for
-  human execution, and PMR-068 open at P4; P3 `PMR-085` / `PMR-088` and P4
+  closed; Helium `PMR-026` closed, PMR-091 open at P3 with required account
+  `xjamesmorris` and read-only existing-target inventory required before any
+  push route, and PMR-068 open at P4; P3 `PMR-085` / `PMR-088` and P4
   frozen-range `PMR-089` remain open and undispatched)
 - `components/helium-te-poc.md`
 - `components/analysis-workbook.md`
@@ -668,13 +673,15 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 
 ## Validation and commit state
 
-The required write-disabled fifty-fifth-turn audit (`claude-opus-5`, `max`,
-`long_context`) verified the confirmed full-history, one-branch scope and
-found stale validation wording plus command-hardening issues. All local
-identity, HEAD, and cleanliness checks now run before creation; tag following
-is disabled; the historical multi-branch helper is explicitly forbidden; and
-post-push checks require exactly one target head at `f928aac` and zero tags.
-The private remote URL was not copied into any Project Manager artifact.
+The required write-disabled fifty-sixth-turn audit (`claude-opus-5`, `max`,
+`long_context`) found that target existence does not establish emptiness and
+that the earlier interactive-shell account restoration was not guaranteed.
+The corrected standalone read-only inventory captures and restores the prior
+account with verification, requires `xjamesmorris`, checks expanded target
+metadata, validates the strict GitHub HTTPS origin and credential helper,
+reports live refs and fast-forward ancestry, and mutates no repository or
+remote. No token or private remote URL is copied into any Project Manager
+artifact.
 
 Pre-commit checks against clean Helium `for-review` at `f928aac` reported:
 
@@ -695,16 +702,21 @@ Fresh PMR-091 preflight found clean attached Helium `for-review` at
 `1ab289c`, with no active writer. The local delta remains owner work `e202c6e`
 plus return `f928aac`, changing only `HANDOFF.md`; a fresh empty target would
 receive all history reachable from `for-review`. The responsible human
-confirmed that exact transfer scope; `main`, other branches, tags, and
-`public` remain excluded. PMR-068 remains P4. Audit and pre-commit validation
-are complete. The containing Project Manager commit is recorded in
-`../COMPONENTS.md`; generated tasking and the parent registry are refreshed
-from that exact commit. Human execution of the fail-closed PMR-091 block is
-authorized; the Project Manager executed no repository creation or push.
+confirmed that exact transfer scope and selected `xjamesmorris`; under that
+account the target is visible and already exists, while live contents remain
+unknown. `main`, other branches, tags, `public`, creation, and helper paths
+remain excluded. PMR-068 remains P4. This turn authorizes only the read-only
+inventory block; the Project Manager executed no `gh` command, repository
+creation, or push. The containing commit and regenerated tasking follow this
+draft validation checkpoint.
 
 ## Provenance
 
-- Current responsible-human response: `"confirm"` to the exact structured
+- Current responsible-human statement: `"it needs to be xjamesmorris"`.
+  Human evidence shows the target is visible and already exists under that
+  account; no token or private URL is retained. Live target contents remain
+  to be inventoried read-only.
+- Previous responsible-human response: `"confirm"` to the exact structured
   scope: create private `beryllium-project/helium-te-poc-historical`, then
   create `for-review` as its only branch by transferring full history
   reachable from local `for-review` at `f928aac`; exclude `main`, all other
