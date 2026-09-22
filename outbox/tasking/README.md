@@ -41,11 +41,13 @@ owner-worker packet:
 bash ./project-manager/scripts/project-tasking.sh dispatch <component> <PMR-NNN>
 ```
 
-`dispatch` is PM-only. It accepts a canonical component name, not a path;
-requires the PMR to be directly assigned to that component, open, unresolved,
-and structurally valid; reads the row from the committed request-table object;
-and binds the packet to the current Project Manager commit and request blob.
-It writes and launches nothing. Cross-named rows remain discovery only.
+`dispatch` is a read-only selection helper emitted by the Project Manager or
+embedded by the human-run ordinary-owner launcher, never invoked by a
+component agent. It accepts a canonical component name, not a path; requires
+the PMR to be directly assigned to that component, open, unresolved, and
+structurally valid; reads the row from the committed request-table object; and
+binds the packet to the current Project Manager commit and request blob. It
+writes and launches nothing. Cross-named rows remain discovery only.
 Missing, duplicated, closed, wrong-component, dirty, or stale input fails
 without a partial packet.
 
@@ -78,13 +80,32 @@ return durably through the component-owned handoff protocol in
 `PMD-20260914-002`; a live PM-invoked worker uses
 `templates/owner-agent-response.md`. Neither grants a human gate.
 
-When a resolved request consumes, incorporates, qualifies, or applies sibling
-research or analysis, the human also tells the destination owner:
+## Human-started ordinary owner sessions
 
-```text
-Load and follow the `cross-repo-collaboration` skill before using sibling
-research or analysis.
+Do not ask the responsible human to copy or paste an owner prompt. From the
+workspace root, give one exact command:
+
+```sh
+bash ./project-manager/scripts/owner-session.sh launch <component> <PMR-NNN>...
 ```
+
+The human-run launcher validates current committed tasking, direct open
+assignment of each PMR, a clean component at an exact HEAD, and a clean
+Project Manager worktree. It writes the full timestamped packet under ignored
+`scratch/owner-sessions/` and starts interactive
+`copilot --no-auto-update --yolo` with a short packet path/SHA/HEAD prompt.
+`launch` holds a per-component `flock` reservation until Copilot exits;
+`prepare` performs the same checks without launching and reserves no writer.
+The Project Manager
+agent never uses it for live owner work; maintained validation uses sandbox
+state and an explicit Copilot stub. This path invokes no hidden owner worker
+and grants no gate, push, remote mutation, publication, or expanded write
+scope.
+
+When a selected request consumes, incorporates, qualifies, or applies sibling
+research or analysis, the generated owner-session packet carries the
+`cross-repo-collaboration` trigger automatically. The human does not paste a
+second prompt.
 
 Under `PMD-20260917-001`, the destination owner reads the source `COLLAB.md`
 when present, completes and validates destination work first, and records

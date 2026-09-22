@@ -190,8 +190,8 @@ governance, adoption, redistribution, and release remain human decisions.
 
 The maintained helpers target the Beryllium Linux workstation and require Bash
 4 or later, Git, and GNU userland tools including `awk`, `sed`, `grep`,
-`sort`, `sha256sum`, and `mktemp`. Missing tools are reported as hard
-limitations; the agent never installs them implicitly.
+`sort`, `sha256sum`, and `mktemp`, plus util-linux `flock`. Missing tools are
+reported as hard limitations; the agent never installs them implicitly.
 
 ## Layout
 
@@ -214,6 +214,7 @@ templates/owner-return.md                    component HANDOFF return shape for 
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
+scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet and interactive copilot --yolo launch
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
 ```
@@ -232,6 +233,8 @@ bash ./scripts/project-tasking.sh generate
 bash ./scripts/project-tasking.sh check
 bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
 bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
+bash ./scripts/owner-session.sh prepare <component> <PMR-NNN>...
+bash ./scripts/owner-session.sh launch <component> <PMR-NNN>...
 bash ./scripts/new-record.sh decision <slug>
 bash ./scripts/validate-pm.sh
 bash ./tests/validate-agent.sh
@@ -267,6 +270,27 @@ Tracked-symlink owners verify `pwd` versus `pwd -P` and use the documented
 `PM_TASKING_ROOT` / `PM_TASKING_WORKSPACE` inputs when the logical entry is
 not preserved. Generated rows show `Assigned to` so cross-named requests are
 not mistaken for owner assignments.
+
+## Ordinary owner sessions (human-run)
+
+Do not copy or reconstruct owner prompts. Run one exact command from the
+workspace root:
+
+```sh
+bash ./project-manager/scripts/owner-session.sh launch <component> <PMR-NNN>...
+```
+
+The launcher requires clean current PM tasking and a clean component, writes a
+private revision-bound packet under `project-manager/scratch/owner-sessions/`,
+and starts interactive `copilot --no-auto-update --yolo` with a short packet
+path/hash/HEAD prompt. `prepare` performs the same checks without launching.
+Only `launch` holds the per-component `flock` writer reservation through the
+Copilot process; `prepare` reserves no writer.
+The Project Manager agent never uses it for live owner work; maintained
+validation uses only sandbox state and a Copilot stub. The helper writes no
+component file before Copilot starts, invokes no hidden owner worker, grants
+no gate, and performs no push. The human starts the real command and answers
+only genuine unresolved gates.
 
 ## Owner actions (human-run)
 

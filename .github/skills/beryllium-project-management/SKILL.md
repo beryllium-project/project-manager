@@ -47,6 +47,14 @@ research, analysis, threat models, provenance findings, or human decisions.
   owner-side helper (fetch, push, opt-in remote creation, opt-in recorded
   edits and artifact search); the agent never executes it, in any mode, and
   hands the human its invocation and `outbox/OWNER-RUNBOOK.md` instead.
+- `scripts/owner-session.sh` is another human-run helper. The Project Manager
+  never uses it for live owner work; maintained validation uses sandbox state
+  and a Copilot stub. Give the human one exact
+  `launch <component> <PMR-NNN>...` command instead of prompt text. It binds
+  clean PM tasking/component state into ignored
+  `scratch/owner-sessions/` and starts interactive
+  `copilot --no-auto-update --yolo`; it creates no pre-launch component
+  write, owner worker, gate grant, or push.
 - `git push`, `git remote`, `gh repo create`, tags, and publication require an
   explicit user confirmation in the same turn, quoted in `HANDOFF.md`, for
   this repository, the parent, and any component. A carried commit leaves the

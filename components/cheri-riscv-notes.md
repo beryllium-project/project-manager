@@ -14,17 +14,23 @@
 - **Agent:** none
 - **Local instructions to read first:** `README.md`, `CONTRIBUTING.md`,
   `meta/handoff.md` (non-standard handoff path), `automation/design.md`,
-  `automation/schema.md`, and the `.github/` policy files; no
-  `.github/copilot-instructions.md` observed. `CONTRIBUTING.md`,
-  `meta/decisions.md`, and `meta/handoff.md` are reconciled at `ae09213`
-- **Observed state:** clean `docs/reconcile-project-status` at owner return
-  `9a4c5ef`, synchronized with private active
-  `origin/docs/reconcile-project-status`; `main` / `origin/main` remain
-  `6553092`. Inactive `gim-inactive` preserves the old internal home, and
-  private `origin/archive/gim-wiki` preserves complete Wiki history through
-  `cd7dc81`. `PMR-046`, `PMR-029`, and `PMR-020` are closed; `PMR-051`
-  remains for the consolidated logical/physical path correction plus a
-  structured current-head/validation/backup/session return
+  `automation/schema.md`, and the `.github/` policy files. PMR-071 adds
+  `.github/copilot-instructions.md` and maintained
+  `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
+  `meta/decisions.md`, and `meta/handoff.md` remain controlling
+- **Observed state:** clean `docs/reconcile-project-status` at final PMR-071
+  return `6ac70af`, behind 0 / ahead 5 of last-fetched private active
+  `origin/docs/reconcile-project-status` `9a4c5ef`; `main` / `origin/main`
+  remain `6553092`. Inactive `gim-inactive` preserves the old internal home,
+  and private `origin/archive/gim-wiki` preserves complete Wiki history
+  through `cd7dc81`. `PMR-051` and `PMR-071` are closed; PMR-009 remains open
+  and untouched pending two D4 decisions; PMR-093 tracks the five local owner
+  commits. The handoff's explicit PMR-009 non-disposition is accepted evidence
+  that the selected request was not executed, not a missing success return.
+  PMR-051/071 use separate complete owner-return tables rather than one
+  canonical `## Project Manager return` table; this bounded deviation is
+  accepted for those closures. Any later PMR-009 result uses the canonical
+  return shape.
 
 ## Role
 
@@ -68,12 +74,15 @@ temporary database must reconcile to `references/references.bib`. The two
 `PMQ-008`/`PMQ-011` pointers require the owner's D4 admission decision before
 any class-2 metadata entry; exact
 metadata is in `../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
-public mirror; and the path correction plus structured current-state return
-still requested by `PMR-051`. The handoff/status already record the successful 2026-09-16
+public mirror. PMR-051 is closed: the handoff/status record corrected current
+paths, remote-run evidence, and a structured return. The successful 2026-09-16
 Validate run for preserved revision `ae09213` and successor topic history
 through `9a4c5ef`. Topic backup is evidenced by the
 matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
-remains `unknown` (`PMR-020` closed on the observed backup result).
+remains `unknown` (`PMR-020` closed on the observed backup result). PMR-071 is also closed:
+exact fail-closed startup instructions, a maintained 27-mutation regression,
+and workflow validation are local through return `6ac70af`; PMR-093 tracks
+their backup.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

@@ -82,6 +82,14 @@ fetch, fast-forward push, opt-in remote creation, opt-in recorded edits and
 artifact search): never execute it, in any mode including `--plan`; hand the
 user its invocation and point at `outbox/OWNER-RUNBOOK.md`.
 
+`scripts/owner-session.sh` is a human-run ordinary-owner launcher; this agent
+never uses it for live owner work, while maintained validation uses sandbox
+state and a Copilot stub. Give the human one exact launch command instead of
+prompt text. It binds clean PM tasking/component state into
+ignored `scratch/owner-sessions/` and starts interactive
+`copilot --no-auto-update --yolo`; it creates no pre-launch component write,
+hidden owner worker, gate grant, or push.
+
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,
 the parent, and any component. Quote the confirmation in `HANDOFF.md`. A

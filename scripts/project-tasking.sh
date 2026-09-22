@@ -19,7 +19,7 @@ check     reject any generated view whose PM commit or request blob is stale
 resolve   identify a registered component by name or workspace path, validate
           its generated view, then print it
 dispatch  validate one directly assigned open request and print a deterministic
-          PM-only owner-worker packet; it writes and launches nothing
+          exact-request packet; it writes and launches nothing
 
 Run generate after each Project Manager commit. Resolve stops rather than
 showing tasking when the Project Manager repository, view, source commit, or
@@ -333,7 +333,7 @@ dispatch_request() {
     printf '## Coordination note\n\n%s\n\n' "${note:-None recorded.}"
     printf '## Control boundary\n\n'
     printf '%s\n' \
-        'The Project Manager emits this packet only after separately establishing that the request is already authorized and ready.' \
+        'This packet may be emitted by the Project Manager after its readiness checks or embedded by the human-run ordinary-owner launcher after its fail-closed state checks; selection is not authorization in either path.' \
         'This packet does not grant or infer implementation authorization, exact-target acceptance, review approval, risk acceptance, sign-off, licensing, redistribution, publication, release, formal verification, or hardware validation.' \
         'Work relies only on previously recorded authority. Stop on an unresolved gate, dependency, scope conflict, dirty worktree, or active writer.' \
         'The owner returns durable evidence through its component handoff under PMD-20260914-002.'

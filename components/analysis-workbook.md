@@ -30,9 +30,11 @@
   from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at PMR-063 return checkpoint `8b5a301`,
-  behind 0 / ahead 22 of last-fetched `origin/main` `1ef1ac6`, local and
-  unpushed. Work `62bd071` changes only the user-facing agent, repository
+- **Observed state:** clean `main` at Project Manager class-1 carry `5a646df`,
+  behind 0 / ahead 23 of last-fetched `origin/main` `1ef1ac6`, local and
+  unpushed. The carry changes only `outbox/pm-queue.md`, applying accepted
+  statuses for PML-0028/0029/0031 after verified XRV PMR-058 pointer records.
+  Earlier work `62bd071` changes only the user-facing agent, repository
   instructions, interface, and agent tests; checkpoint `8b5a301` changes only
   `HANDOFF.md`. The exact fail-closed Project Manager tasking startup mapping,
   orchestrator blob pin, and deduplicated allowlist pass the expanded 410 / 0
@@ -41,7 +43,8 @@
   reservation. The six-request operational housekeeping line is complete;
   externally sequenced analysis `PMR-054` is
   separate. Prior-range backup `PMR-085`, PMR-086 backup `PMR-088`, and
-  prospective closure-range backup `PMR-089` remain open.
+  prospective closure-range backup `PMR-089`, and dependent carry backup
+  `PMR-095` remain open.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
 
@@ -157,8 +160,9 @@ topic and chronology in the generated `WORKBOOK.md`.
   PMR-050 work `231cca4` / return `692caeb` make sixteen ahead, and PMR-055
   work `70bea16` / return `6d5d03d` make eighteen ahead.
   PMR-059 work `9d76048` / return `e6c8aad` make twenty ahead, and PMR-063
-  work `62bd071` / return `8b5a301` make current `main` twenty-two ahead.
-  PMR-089 freezes the exact post-`858a73b` closure range at `8b5a301`
+  work `62bd071` / return `8b5a301` plus carry `5a646df` make current `main`
+  twenty-three ahead. PMR-089 freezes the exact post-`858a73b` closure range at `8b5a301`
+  and PMR-095 separately tracks `5a646df`
   without expanding either earlier backup request.
 
 ## Outbound queue
@@ -197,9 +201,11 @@ PMR-038 return `f7079fb` and checkpoint `5e037b1` correct the remaining root
 handoff state and provide the structured return; the request is closed.
 
 Owner commit `1ef1ac6` adds `PMQ-027..030`. Ledger rows
-`PML-0028`, `PML-0029`, and `PML-0031` route the specification, QEMU series,
-and corrected exact OpenSBI pointer to XRV under now-actionable `PMR-058`;
-`PMR-045` is closed.
+`PML-0028`, `PML-0029`, and `PML-0031` accept the specification, QEMU series,
+and corrected exact OpenSBI pointer after XRV owner work `81ba24e`,
+provenance correction `40e076f`, and return `07e86ab` close PMR-058. Their
+class-1 source statuses are applied at carry `5a646df`; PMR-095 separately
+tracks that one later commit.
 `PML-0030` rejects `PMQ-029` because `PMQ-030` supersedes it; the exact
 class-1 source edit is carried at `c7cc0fa`. PMR-059's repository handoff and
 structured return are closed at `e6c8aad`.

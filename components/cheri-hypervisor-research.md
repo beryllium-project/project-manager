@@ -12,14 +12,14 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
 - **Observed state:** the renamed tracked symlink resolves to clean `main` at
-  PMR-040 return `d5d33a2`, behind 0 / ahead 4 of last-fetched private active
+  PMR-058 corrected return `07e86ab`, behind 0 / ahead 9 of last-fetched private active
   `origin/main` at `d618935`; live reachability is `unknown`.
   `legacy-backup/main` remains `706e708`; `msft-inactive/main` remains
   `ca41490` and was unreachable with the active credential. The active
   successor preserves history through `d618935`, including `REV-*` and
-  `COLLAB.md`; `PMR-040` and `PMR-045` are closed. Deferred backup request
-  `PMR-075` covers the two earlier owner documentation commits; dependent
-  `PMR-092` separately covers PMR-040 work `38a69bd` and return `d5d33a2`
+  `COLLAB.md`; `PMR-040`, `PMR-045`, `PMR-058`, and `PMR-072` are closed.
+  PMR-075 covers the two earlier owner documentation commits; PMR-092 covers
+  PMR-040; dependent PMR-094 separately covers the later PMR-058/072 batch
 
 ## Role
 
@@ -68,10 +68,13 @@ incorporates immutable mutation-record and cross-layer assurance obligations
 as proposed architecture, corrects rollback wording, and defers the Helium
 parity plan without selecting a target or comparator baseline. `PMR-092`
 tracks those two local commits after PMR-075.
-After the verified successor in `PMR-045`, `PMR-058` asks the owner to
-triage the new double-trap specification, QEMU support series, and corrected
-exact OpenSBI pointer from `PML-0028..0031`; they do not establish target
-support or Beryllium adoption.
+PMR-058 is closed by work `81ba24e`, provenance correction `40e076f`, and
+return `07e86ab`: unique pointer-only `REV-20260922-002..004` are `arrived`
+and awaiting review, with no source adoption, support claim, or Beryllium
+implication. PML-0028/0029/0031 source statuses were mirrored at
+analysis-workbook carry `5a646df`. PMR-072 is closed by work `4c567fa` and
+the same final return: exact tasking startup and current path wording are
+active without research or review-ID changes.
 After `PMR-052`, `PMR-053` separately asks the owner to review only materially
 relevant returned cap-talk threads.
 
@@ -88,10 +91,11 @@ existing private backup and old Microsoft-origin home remain explicit
 inactive-reference remotes. History through `d618935`, including `REV-*` and
 `COLLAB.md`, is reachable. Owner documentation commits `22095a1` and
 `456c70b` remain local pending `PMR-075`; PMR-040 commits `38a69bd` and
-`d5d33a2` remain local under dependent `PMR-092`.
+`d5d33a2` remain local under PMR-092; PMR-058/072 range
+`d5d33a2..07e86ab` remains local under dependent PMR-094.
 Microsoft-origin repository state remains an inactive historical
 reference. The responsible human later renamed and retargeted the workspace
-symlink to the verified active successor. `PMR-072` asks the owner context to
-map `check Project Manager tasking` to the exact fail-closed resolver without
-session-history fallback and correct the current handoff paths; it includes no
-research, review-ID, collaboration, component push, or publication change.
+symlink to the verified active successor. PMR-072 is closed: the owner context
+maps `check Project Manager tasking` to the exact fail-closed resolver without
+session-history fallback and the handoff records current paths. No research,
+review-ID, collaboration, component push, or publication change was included.

@@ -179,7 +179,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Queue ledger | `queue/LEDGER.md` | Ledger-first dispositions; see `queue/README.md` |
 | Component requests | `outbox/component-requests.md` | Requests to component owners; those inside the three classes of `PMD-20260904-003` are carried by this agent and closed with the component commit, every other request is carried by the human |
 | Generated tasking views | `outbox/tasking/<component>.md` | Ignored local projections generated from the committed request table after each PM commit; resolved only while the recorded PM commit and request blob are current |
-| Exact dispatch packet | `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` | PM-only, read-only selection of one directly assigned open row, bound to the current PM commit and request blob; writes and launches nothing |
+| Exact dispatch packet | `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` | Read-only selection of one directly assigned open row, bound to the current PM commit and request blob; emitted by the Project Manager or embedded by the human-run owner launcher, never by a component agent; writes and launches nothing |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
 | Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked component symlink objects | Project Manager-owned; edited and committed in the parent repository. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
 
@@ -271,6 +271,23 @@ coordination turn that follows records the run from the human's statement and
 the observed remote state. `scripts/validate-pm.sh` checks statically that
 the script declares itself human-run, parses, and contains no forced,
 deleting, or history-rewriting Git token.
+
+`scripts/owner-session.sh` is the **human-run** ordinary component-owner
+launcher. The Project Manager never uses it for live owner work; maintained
+validation executes only sandbox preparation and an explicitly stubbed
+Copilot launch. It replaces copied prompts with one exact command, validates
+committed/current tasking plus a clean component, writes a timestamped
+SHA-256-bound packet under ignored
+`scratch/owner-sessions/`, and launches interactive
+`copilot --no-auto-update --yolo -C <logical-entry> -i <packet-locator>`.
+Only `launch` holds a per-component `flock` writer reservation through the
+Copilot process; `prepare` reserves no writer.
+The packet contains exact separately validated PMR dispatch packets,
+component/PM fingerprints, local-instruction and one-writer checks,
+collaboration triggers, validation/local-commit/owner-return requirements,
+and explicit no-gate/no-push boundaries. It creates no component file before
+Copilot starts, invokes no hidden owner worker, and does not alter the
+Project Manager's authority.
 
 ## Queue protocol (ledger-first)
 

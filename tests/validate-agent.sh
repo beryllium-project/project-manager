@@ -168,7 +168,7 @@ for component in helium-te-poc formal-verification-research osr-claude \
     require_text "$repository_root/components/$component.md" '**Ownership:**'
 done
 
-for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh owner-actions.sh; do
+for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh owner-actions.sh owner-session.sh; do
     require_executable "$repository_root/scripts/$script"
     require_pattern "$repository_root/scripts/$script" '^set -(euo pipefail|u)$'
     require_text "$repository_root/scripts/$script" 'export LC_ALL=C'
@@ -216,6 +216,19 @@ require_text "$repository_root/scripts/owner-actions.sh" 'files_search-only: ski
 require_text "$repository_root/scripts/owner-actions.sh" '--only files_search needs --files-search'
 require_text "$repository_root/scripts/owner-actions.sh" '((${#selected[@]} == 1))'
 require_text "$repository_root/README.md" '--only files_search --files-search'
+owner_session=$repository_root/scripts/owner-session.sh
+expect_pass "owner-session passes bash -n" bash -n "$owner_session"
+require_text "$owner_session" 'HUMAN-RUN launcher'
+require_text "$owner_session" 'copilot --no-auto-update --yolo'
+require_text "$owner_session" 'copilot_args=(--no-auto-update --yolo)'
+require_text "$owner_session" 'copilot_args+=(--agent "$owner_agent")'
+require_text "$owner_session" 'bash "$tasking" dispatch "$component" "$pmr"'
+require_text "$owner_session" 'scratch/owner-sessions'
+require_text "$owner_session" 'Project Manager HEAD changed while preparing the owner packet'
+require_text "$owner_session" 'another owner session holds the writer reservation'
+require_text "$owner_session" 'component HEAD changed before Copilot launch'
+refute_pattern "$owner_session" '--(prompt|add-dir)([ =]|$)'
+refute_pattern "$owner_session" 'exec .* -p([ =]|$)'
 
 for f in "$repository_root/.gitignore"; do
     require_text "$f" '/files'
@@ -258,6 +271,16 @@ for f in "$agent" "$skill" "$instructions" "$interface" "$readme" \
     require_text "$f" 'background agents'
     require_text "$f" 'PMD-20260915-008'
 done
+owner_session_record=$repository_root/records/decisions/PMD-20260922-003-human-owner-session-launcher.md
+require_file "$owner_session_record"
+require_text "$owner_session_record" '**Status:** recorded'
+for f in "$agent" "$skill" "$instructions" "$interface" "$readme" "$roster" \
+    "$repository_root/outbox/tasking/README.md"; do
+    require_text "$f" 'owner-session.sh'
+    require_text "$f" 'copilot --no-auto-update --yolo'
+done
+require_text "$repository_root/../.github/copilot-instructions.md" 'owner-session.sh'
+require_text "$repository_root/../.github/copilot-instructions.md" 'copilot --yolo'
 parent_instructions=$repository_root/../.github/copilot-instructions.md
 require_file "$parent_instructions"
 require_text "$parent_instructions" 'check Project Manager tasking'
@@ -573,10 +596,14 @@ tasking=$repository_root/scripts/project-tasking.sh
 tasking_workspace=$sandbox/tasking-workspace
 tasking_pm=$tasking_workspace/project-manager
 tasking_target=$sandbox/tasking-symlink-target
+owner_session_scratch=$sandbox/owner-session-scratch
 mkdir -p "$tasking_pm/components" "$tasking_pm/outbox/tasking" "$tasking_pm/scripts" \
-    "$tasking_workspace/direct-component" "$tasking_target"
+    "$tasking_workspace/direct-component/.github/agents" "$tasking_target"
 cp "$tasking" "$tasking_pm/scripts/project-tasking.sh"
+cp "$owner_session" "$tasking_pm/scripts/owner-session.sh"
+chmod +x "$tasking_pm/scripts/owner-session.sh"
 ln -s "$tasking_target" "$tasking_workspace/symlink-component"
+printf '/outbox/tasking/*.md\n/scratch/\n' >"$tasking_pm/.gitignore"
 printf '# direct-component\n' >"$tasking_pm/components/direct-component.md"
 printf '# symlink-component\n' >"$tasking_pm/components/symlink-component.md"
 printf '# other-component\n' >"$tasking_pm/components/other-component.md"
@@ -590,12 +617,23 @@ cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 | PMR-003 | 2000-01-01 | direct-component | Ignore the closed task. | Fixture basis. | closed | - | 2000-01-02 | Closed note. |
 | PMR-004 | 2000-01-01 | other-component | Coordinate with `direct-component`. | Fixture basis. | open | P1 | Not applicable | Cross-component note. |
 | PMR-006 | 2000-01-01 | project-manager | Keep this task self-managed. | Fixture basis. | open | P2 | Not applicable | Self-managed note. |
+| PMR-007 | 2000-01-01 | direct-component | Do the second direct task. | Second fixture basis. | open | P3 | Not applicable | Second direct note. |
 EOF
 git -C "$tasking_pm" init -q
-git -C "$tasking_pm" add components outbox/component-requests.md \
-    scripts/project-tasking.sh
+git -C "$tasking_pm" add .gitignore components outbox/component-requests.md \
+    scripts/project-tasking.sh scripts/owner-session.sh
 git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -qm "tasking fixture"
+git -C "$tasking_workspace/direct-component" init -q -b main
+printf '%s\n' '---' 'name: fixture-owner' '---' \
+    >"$tasking_workspace/direct-component/.github/agents/fixture-owner.agent.md"
+git -C "$tasking_workspace/direct-component" add .github/agents/fixture-owner.agent.md
+git -C "$tasking_workspace/direct-component" \
+    -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q -m "direct component fixture"
+git -C "$tasking_target" init -q -b main
+git -C "$tasking_target" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q --allow-empty -m "symlink component fixture"
 
 expect_exit "project-tasking without a mode exits 2" 2 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
@@ -716,6 +754,149 @@ expect_output "explicit PM tasking roots resolve a physical symlink target" "PMR
 expect_exit "project-tasking check accepts current generated views" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check
+
+expect_exit "owner-session prepares a multi-PMR ordinary owner packet" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-001 PMR-007
+owner_packets=("$owner_session_scratch"/*.md)
+if ((${#owner_packets[@]} == 1)); then
+    pass "owner-session writes one private packet"
+    owner_packet=${owner_packets[0]}
+    require_text "$owner_packet" '# Human-started component owner session packet v1'
+    require_text "$owner_packet" '**Selected requests:** `PMR-001` `PMR-007`'
+    require_text "$owner_packet" 'components/direct-component.md'
+    require_text "$owner_packet" 'Do the direct task.'
+    require_text "$owner_packet" 'Do the second direct task.'
+    refute_pattern "$owner_packet" 'PMR-00[2346]'
+    require_text "$owner_packet" 'Never infer an unanswered gate.'
+    require_text "$owner_packet" 'Do not perform another PMR, push, fetch'
+else
+    fail "owner-session did not write exactly one private packet"
+fi
+expect_exit "owner-session rejects a wrong-component request" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-002
+expect_exit "owner-session rejects a closed request" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-003
+expect_exit "owner-session rejects duplicate request IDs" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-001 PMR-001
+
+copilot_stub=$sandbox/copilot-stub
+copilot_capture=$sandbox/copilot-argv.txt
+cat >"$copilot_stub" <<'EOF'
+#!/bin/sh
+: >"$COPILOT_CAPTURE"
+for argument in "$@"; do
+    printf '%s\n' "$argument" >>"$COPILOT_CAPTURE"
+done
+if [ -n "${COPILOT_READY:-}" ]; then
+    : >"$COPILOT_READY"
+fi
+if [ "${COPILOT_SLEEP:-0}" != 0 ]; then
+    sleep "$COPILOT_SLEEP"
+fi
+EOF
+chmod +x "$copilot_stub"
+expect_exit "owner-session launches Copilot with the preloaded packet" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+    bash "$owner_session" launch direct-component PMR-001
+require_text "$copilot_capture" '--no-auto-update'
+require_text "$copilot_capture" '--yolo'
+require_text "$copilot_capture" '-C'
+require_text "$copilot_capture" "$tasking_workspace/direct-component"
+require_text "$copilot_capture" '-i'
+require_text "$copilot_capture" 'Read the complete owner-session packet at '
+refute_pattern "$copilot_capture" '^-p$|^--prompt$|^--add-dir$|^--agent$'
+expect_exit "owner-session selects an explicit component agent" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+    bash "$owner_session" --agent fixture-owner launch direct-component PMR-001
+require_text "$copilot_capture" '--agent'
+require_text "$copilot_capture" 'fixture-owner'
+expect_exit "owner-session rejects an unavailable component agent" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" --agent missing-owner prepare direct-component PMR-001
+expect_exit "owner-session rejects an invalid component name" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare Bad_Component PMR-001
+expect_exit "owner-session rejects an invalid PMR ID" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-1
+expect_exit "owner-session prepares through a tracked symlink entry" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare symlink-component PMR-002
+expect_exit "owner-session rejects a missing Copilot binary" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$sandbox/missing-copilot" \
+    bash "$owner_session" launch direct-component PMR-001
+
+printf '\n# dirty fixture\n' >>"$tasking_pm/.gitignore"
+expect_exit "owner-session rejects a dirty Project Manager worktree" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-001
+git -C "$tasking_pm" checkout -q -- .gitignore
+
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q --allow-empty -m "stale owner packet fixture"
+expect_exit "owner-session rejects stale generated tasking" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-001
+expect_exit "owner-session accepts regenerated tasking" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+
+copilot_ready=$sandbox/copilot-ready
+copilot_first_capture=$sandbox/copilot-first-argv.txt
+env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_first_capture" \
+    COPILOT_READY="$copilot_ready" COPILOT_SLEEP=2 \
+    bash "$owner_session" launch direct-component PMR-001 >/dev/null 2>&1 &
+owner_session_pid=$!
+for _ in $(seq 1 20); do
+    [[ -e $copilot_ready ]] && break
+    sleep 0.1
+done
+if [[ -e $copilot_ready ]]; then
+    pass "owner-session first writer holds the launcher"
+    expect_exit "owner-session rejects a concurrent writer" 1 \
+        env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+        PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+        COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+        bash "$owner_session" launch direct-component PMR-001
+else
+    fail "owner-session first writer did not reach Copilot"
+fi
+wait "$owner_session_pid"
+if (($? == 0)); then
+    pass "owner-session releases the writer reservation on exit"
+else
+    fail "owner-session first writer failed"
+fi
+
+printf 'dirty\n' >"$tasking_workspace/direct-component/untracked.txt"
+expect_exit "owner-session rejects a dirty component" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_session" prepare direct-component PMR-001
+rm -f -- "$tasking_workspace/direct-component/untracked.txt"
+
 rm -f -- "$tasking_pm/outbox/tasking/symlink-component.md"
 expect_exit "project-tasking dispatch rejects a missing component view" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \

@@ -121,17 +121,10 @@ and superseded `OPEN-001` is marked consistently.
 
 `PMR-046` is also complete and was not a prerequisite for `CRQ-002`.
 
-Under `PMD-20260917-001`, for `PMR-052`, `PMR-053`, and `PMR-054`, add this
-before the task-specific instructions:
-
-```text
-Load and follow the `cross-repo-collaboration` skill before using sibling
-research or analysis. Read the source repository's root COLLAB.md when
-present and follow its guest budget. Complete and validate destination work
-before logging use. If the source has no writable guest ledger, write nothing
-there and return completed-use evidence through the source owner and Project
-Manager.
-```
+Under `PMD-20260917-001`, the generated owner-session packet automatically
+carries the `cross-repo-collaboration` trigger, source-ledger budget rule, and
+completed-use return path for PMR-052/053/054. Do not ask the human to paste a
+second prompt.
 
 ## Project-wide tasking startup adoption
 
@@ -153,29 +146,31 @@ For tracked symlinks, record `pwd` and `pwd -P`; if logical `PWD` is not
 preserved, stop and use the `PM_TASKING_ROOT` / `PM_TASKING_WORKSPACE`
 fallback documented by `PMD-20260915-008`.
 
-| Request | Priority | Component owner invocation | Exact task phrase after the approved resolver runs |
-| --- | --- | --- | --- |
-| `PMR-064` | P3 | `cd /home/jmorris/src/beryllium-project/threat-modeler && copilot`, then `/agent threat-model-maintainer` | `Complete PMR-064 under PMD-20260915-008; do not resume the paused model.` |
-| `PMR-066` | P3 | `cd /home/jmorris/src/beryllium-project/provenance-review && copilot` | `Complete PMR-066 under PMD-20260915-008 in this ordinary configuration-maintenance session.` |
-| `PMR-068` | P4 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
-| `PMR-069` | P3 | `cd /home/jmorris/src/beryllium-project/formal-verification-research && copilot` | `Complete PMR-069 without changing research or bibliography dispositions.` |
-| `PMR-070` | P3 | `cd /home/jmorris/src/beryllium-project/osr-claude && copilot`; use the successor's owner workflow after the responsible human confirms the write | `Complete PMR-070 without opening restricted-microsoft.` |
-| `PMR-071` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-riscv-notes && copilot` | `Complete PMR-071; first report pwd and pwd -P, with no corpus or publication change.` |
-| `PMR-072` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research && copilot` | `Complete PMR-072, including the current logical/physical handoff path correction; first report pwd and pwd -P, with no research or review-ID change.` |
+The selected PMR-051/071 and PMR-058/072 batches are complete and verified;
+do not rerun them. PMR-009 remains selected but blocked on two genuine D4
+answers. Do not copy a prompt; run one command from the workspace root:
 
-For each owner session, say:
-
-```text
-I approve this exact read-only startup command for this session:
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
-
-Run it now. Treat its validated output as discovery, not authorization. Do
-not search session history, task databases, background agents, prior chat, or
-memory. Then use the exact PMR-specific phrase from the matrix above.
-Implement PMD-20260915-008 in owner instructions and maintained tests, and
-append the structured Project Manager return with exact commit, validation,
-branch, and backup state.
+```sh
+bash ./project-manager/scripts/owner-session.sh launch \
+  cheri-riscv-notes PMR-009
 ```
+
+The command prepares and preloads the full revision-bound owner packet, uses
+interactive `copilot --no-auto-update --yolo`, and asks PMQ-008 and PMQ-011
+one at a time. The human does not precompose or paste either decision.
+
+| Request | Priority | One-command owner invocation | Packet boundary |
+| --- | --- | --- | --- |
+| `PMR-064` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064` | Packet preloaded; do not resume the paused model. |
+| `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
+| `PMR-068` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068` | Packet preloaded; preserve frozen refs and gates. |
+| `PMR-069` | P3 | `bash ./project-manager/scripts/owner-session.sh launch formal-verification-research PMR-069` | Packet preloaded; no research or bibliography disposition. |
+| `PMR-070` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
+
+Do not paste a follow-up phrase. The generated packet already includes the
+exact resolver, PM/request fingerprints, selected PMR text, local instruction
+checklist, one-writer rule, validation/commit/return contract, and no-gate /
+no-push boundary.
 
 ## Completed - do not rerun
 
@@ -186,6 +181,12 @@ cross-layer assurance refinements, corrected rollback wording, and deferred
 the Helium parity plan. No target, comparator baseline, implementation,
 approval, publication, backup, or formal-verification gate follows. Dependent
 P3 `PMR-092` separately tracks backup of those two commits after PMR-075.
+
+`PMR-051` and `PMR-071` are closed through final CHERI notes return
+`6ac70af`; PMR-009 was untouched. `PMR-058` and `PMR-072` are closed through
+corrected XRV return `07e86ab`; analysis-workbook carry `5a646df` mirrors the
+three accepted pointer statuses. PMR-093, PMR-094, and PMR-095 keep their
+three later backup ranges separate.
 
 `PMR-067` and `PMR-083` are closed at final owner return correction
 `416b2e9`, following tasking implementation `9b726c1`, structured return
@@ -258,7 +259,7 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   automation/CI, and contribution practices. Preserve fact/inference/proposal/
   unknown labels; do not write peer repositories or infer human gates.
 - **P3 PMR-075:** XRV owner documentation commits `22095a1` and `456c70b`
-  are the first two commits in clean `main`'s current four-commit outgoing
+  are the first two commits in clean `main`'s current nine-commit outgoing
   range from last-fetched `origin/main` at `d618935`. The
   active credential could not reach that remote in the 21:53Z helper run, so
   wait for an authorized credential. Then review only that range and, if
@@ -273,8 +274,9 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   git push origin 456c70b:refs/heads/main
   ```
 
-  `origin/main..main` now includes later PMR-040 commits `38a69bd` and
-  `d5d33a2`, which belong to PMR-092 and must not be pushed under PMR-075.
+  `origin/main..main` now also includes PMR-040 commits `38a69bd` /
+  `d5d33a2` under PMR-092 and the later five PMR-058/072 commits through
+  `07e86ab` under PMR-094; none may be pushed under PMR-075.
   The generic `push_xrv` helper pushes the branch tip and is therefore not a
   valid PMR-075 execution path. The successor research history and PMR-045
   are already complete; this is a non-blocking backup decision and includes
@@ -284,6 +286,16 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `38a69bd` plus return `d5d33a2` to private active `origin/main`. Do not
   combine this with PMR-075, force, tags, inactive remotes, publication,
   research changes, target/baseline selection, acceptance, or any other gate.
+- **P3 PMR-093:** review exactly `9a4c5ef..6ac70af` and decide whether to
+  fast-forward only `docs/reconcile-project-status` to its private active
+  origin. The five commits close PMR-051/071 and do not touch PMR-009,
+  `references/`, `wiki/`, or `sok/`.
+- **P3 PMR-094:** after PMR-075 and PMR-092 are independently resolved,
+  review exactly `d5d33a2..07e86ab` and decide whether to back up the five
+  PMR-058/072 commits. Do not combine the three XRV backup scopes without a
+  new responsible-human decision.
+- **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
+  analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
 - **Withdrawn PMR-073:** `PMD-20260918-003` records that the proven owner-worker path
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
@@ -292,21 +304,10 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   bibliography pointers.
 - **P3 PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
   pointers at `c55065c` and `784be93`.
-- **P3 PMR-051:** in `cheri-riscv-notes`, correct the handoff/status logical
-  and physical workspace paths after consolidation, then append only the
-  structured current-head/paths/validation/backup/session return. Current
-  `9a4c5ef` already records the successful 2026-09-16 remote Validate run for
-  preserved `ae09213` and successor topic history. No merge, new remote
-  workflow run, visibility change, or publication decision is required.
 - **P3 PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`. The bibliography-format half
   was carried at `784be93`.
-- **P3 PMR-058:** `PMR-045` is closed; the XRV owner may now triage `PMQ-027`,
-  `PMQ-028`, and corrected `PMQ-030` under `review-log.md`; `PMQ-029` is not
-  separately pursued because `PMQ-030` supersedes it. Load
-  `cross-repo-collaboration` only if triage becomes substantive destination
-  use; analysis-workbook has no root `COLLAB.md`, so write no source ledger.
 
 ## Additional P3 source triage
 
@@ -368,7 +369,7 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `8b5a301` is twenty-two ahead of last-fetched
+- `analysis-workbook` clean `main` `5a646df` is twenty-three ahead of last-fetched
   `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
   `858a73b`, followed by PMR-038 HANDOFF-only commits `f7079fb` and
@@ -377,7 +378,8 @@ The relevant local component commits are:
   PMR-059 work `9d76048` / return `e6c8aad`, and PMR-063 work `62bd071` /
   return `8b5a301`. The first range remains exact backup request `PMR-085`;
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
-  now freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
+  freezes the twelve-commit post-`858a73b` closure range at `8b5a301`, and
+  PMR-095 separately tracks carry `5a646df`;
 - `beryllium-hypervisor/` active/default return `416b2e9` is twelve ahead of
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
@@ -386,11 +388,15 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
+- `cheri-riscv-notes` clean topic branch `6ac70af` is five ahead of
+  last-fetched active origin `9a4c5ef`; exact range PMR-093 excludes PMR-009
+  and all corpus paths;
 - `cheri-hypervisor-research` reviewed history through `d618935` is backed up
   on active private `origin/main`; earlier owner documentation commits
   `22095a1` and `456c70b` remain outgoing under `PMR-075`, and PMR-040 work
-  `38a69bd` plus return `d5d33a2` under dependent PMR-092, leaving clean
-  `main` four ahead; inactive `legacy-backup/main` remains `706e708`;
+  `38a69bd` plus return `d5d33a2` under PMR-092. The later PMR-058/072
+  five-commit range ends at `07e86ab` under dependent PMR-094, leaving clean
+  `main` nine ahead; inactive `legacy-backup/main` remains `706e708`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` is already backed up through synchronized owner maintenance
@@ -406,12 +412,12 @@ component's own approved workflow or direct a later Project Manager change to
 retarget the helper; do not create a duplicate remote implicitly.
 
 For XRV, `push_xrv` targets active private `origin`; inactive
-`legacy-backup` is not a push target. Since PMR-040 closure, clean `main`
-`d5d33a2` is four ahead of `origin/main` `d618935`, so a branch-tip push
-would also deliver PMR-092's commits. `push_xrv` is therefore not a valid
+`legacy-backup` is not a push target. Clean `main` `07e86ab` is nine ahead of
+`origin/main` `d618935`, so a branch-tip push would deliver PMR-075,
+PMR-092, and PMR-094 ranges together. `push_xrv` is therefore not a valid
 PMR-075 execution path. PMR-075 alone requires the explicit partial-ref push
-shown above after review, or a new responsible-human decision to combine
-PMR-075 and PMR-092 into one authorized four-commit backup.
+shown above after review, or a new responsible-human decision to combine all
+three ranges into one authorized nine-commit backup.
 
 The helper prompts before every push, warns on a dirty worktree and skips it
 automatically only under `--yes`, never forces, and does not publish. Report

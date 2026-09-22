@@ -157,6 +157,15 @@ component; quote it in `HANDOFF.md`. A carried commit leaves the component
 ahead of its remote; pushing it is the owner's decision. Use the web tool only
 for public coordination facts with generic public-safe queries.
 
+`scripts/owner-session.sh` is also human-run. This agent never uses it for
+live owner work; maintained validation uses sandbox state and a Copilot stub.
+Give the human one exact
+`launch <component> <PMR-NNN>...` command instead of prompt text. It
+fail-closes on stale or dirty PM/component state, writes a private packet
+under ignored `scratch/owner-sessions/`, and starts interactive
+`copilot --no-auto-update --yolo`. It creates no pre-launch component write,
+hidden owner worker, gate grant, or push.
+
 Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 
 The `agent` tool may invoke an adopted component-local owner profile under

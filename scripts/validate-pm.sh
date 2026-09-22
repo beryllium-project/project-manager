@@ -473,5 +473,40 @@ else
     pass "scripts/owner-actions.sh checks skipped for fixture without scripts"
 fi
 
+# --- owner-session (human-run) ----------------------------------------------
+# Only hermetic sandbox/stub execution occurs in validate-agent.sh. These
+# static checks bind the live human-run path to current PM dispatch, private
+# scratch, interactive --yolo startup, and a no-push/no-remote boundary.
+
+owner_session=$root/scripts/owner-session.sh
+if [[ -f $owner_session ]]; then
+    if grep -Fq 'HUMAN-RUN launcher' "$owner_session"; then
+        pass "scripts/owner-session.sh declares itself human-run"
+    else
+        fail "scripts/owner-session.sh does not declare itself human-run"
+    fi
+    if bash -n "$owner_session"; then
+        pass "scripts/owner-session.sh passes bash -n"
+    else
+        fail "scripts/owner-session.sh fails bash -n"
+    fi
+    if grep -Fq 'copilot_args=(--no-auto-update --yolo)' "$owner_session" &&
+       grep -Fq ' -i "$initial_prompt"' "$owner_session" &&
+       grep -Fq 'bash "$tasking" dispatch "$component" "$pmr"' "$owner_session" &&
+       grep -Fq 'scratch/owner-sessions' "$owner_session"; then
+        pass "scripts/owner-session.sh binds dispatch to private interactive --yolo packets"
+    else
+        fail "scripts/owner-session.sh lost its dispatch, scratch, or interactive --yolo binding"
+    fi
+    if grep -Ev '^[[:space:]]*#' "$owner_session" |
+        grep -Eq 'git_safe .* (push|fetch|remote|tag)([[:space:]]|$)'; then
+        fail "scripts/owner-session.sh contains a component push/fetch/remote/tag command"
+    else
+        pass "scripts/owner-session.sh contains no component push/fetch/remote/tag command"
+    fi
+else
+    pass "scripts/owner-session.sh checks skipped for fixture without scripts"
+fi
+
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"
 ((fail_count == 0))
