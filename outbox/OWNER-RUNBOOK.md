@@ -353,26 +353,27 @@ fast-forwards; `scratch/owner-actions/owner-actions-20260922T060342Z.log`
 records exact `ls-remote` verification. Independent inspection reports both
 clean branches synchronized 0/0. That prior authorization is consumed.
 
-The responsible human now directs `"update project and push"` for the
-CHERI/XRV symlink consolidation. This applies only to the next validated
-Project Manager `main -> origin/main` and parent `main -> upstream/main`
-coordination tips produced by this turn. The exact tips must be reported
-before the human runs `--only push_pm`. It does not include
+The responsible human's `"update project and push"` direction for the
+CHERI/XRV consolidation is complete and consumed. Human-run
+`scripts/owner-actions.sh --only push_pm` fast-forwarded Project Manager
+`165b15b..74220dc` and parent `72a6c42..560a921`; helper live-tip checks and
+independent inspection confirm both synchronized 0/0. It did not include
 `cheri-riscv-notes`, `cheri-hypervisor-research`, PMR-075, any tag, force,
 remote mutation, publication, or release.
 
 PMR-091 is complete; its one authorized push has been consumed and grants no
 later push authority. The opt-in `owner-actions.sh --helium-branches` path
 belongs to historical PMR-018 and remains outside PMR-091. No default or
-opt-in helper step and no component, branch, tag, or remote mutation is
-authorized; only the bounded `push_pm` step above is pending.
+opt-in helper step and no parent, Project Manager, component, branch, tag, or
+remote mutation is authorized.
 
-**Do not run the generic helper. After the exact two coordination tips are
-reported, run only:**
+**No further push is authorized; do not run again without a new exact
+responsible-human confirmation:**
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --only push_pm
+bash ./scripts/owner-actions.sh --plan
+bash ./scripts/owner-actions.sh
 ```
 
 The relevant local component commits are:

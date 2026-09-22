@@ -1,16 +1,14 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-22
-**Update scope:** sixty-first coordination turn; the responsible human
-requested consolidation of the CHERI notes and XRV research workspace links,
-then update and push of the coordination repositories. The staged replacements
-are tracked symlinks to the verified `agentic-os-research` successors:
-`cheri-riscv-notes` resolves clean at synchronized `9a4c5ef`, and
-`cheri-hypervisor-research` resolves clean at `456c70b`, behind 0 / ahead 2
-of `origin/main`. The former `cheri-riscv-notes-repo` and
-`xrv-research-repo` links are retired. No component repository was written,
-and no research, source admission, licensing, publication, or assurance gate
-changes.
+**Update scope:** sixty-second coordination turn; the responsible human
+reported `"done"` after running the maintained coordination-only push.
+`scratch/owner-actions/owner-actions-20260922T070756Z.log` records normal
+fast-forwards Project Manager `165b15b..74220dc -> origin/main` and parent
+`72a6c42..560a921 -> upstream/main`, with exact live-tip verification.
+Independent maintained inspection confirms both clean `main` branches
+synchronized 0/0. The authorization is consumed; no component, PMR-075, tag,
+force, remote mutation, research publication, or release action occurred.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -32,10 +30,10 @@ changes.
 | XRV | Current tracked entry `cheri-hypervisor-research` resolves to the verified successor. Owner return `456c70b` records private active `origin` and reviewed history through `d618935`, including durable `REV-*` and `COLLAB.md`. Clean local `main` is two ahead with `22095a1` and `456c70b`; `PMR-075` tracks their backup but is blocked until an authorized credential can reach `origin`. `legacy-backup/main` remains last-fetched at `706e708`; `msft-inactive` remains unmodified. Live remote reachability is currently `unknown`. |
 | Analysis-workbook | Clean `main` at final PMR-063 return `8b5a301`, behind 0 / ahead 22 of last-fetched `origin/main` `1ef1ac6`. Work `62bd071` changes only `.github/agents/analysis-workbook.agent.md`, `.github/copilot-instructions.md`, `AGENT-INTERFACE.md`, and `tests/validate-agent.sh`; return `8b5a301` changes only `HANDOFF.md`. The expanded contract suite passes 410 / 0; transfer-queue, workbook, exact-scope, hidden-owner-preservation, diff, and clean-state checks pass. All six operational housekeeping requests are closed. PMR-089 freezes the twelve-commit closure range `858a73b..8b5a301` and remains undispatched. |
 | CHERI-RISC-V notes | Current tracked entry `cheri-riscv-notes` resolves to the verified successor. Owner return `9a4c5ef` records private active `origin`; maintained refs show the topic branch synchronized 0/0, `main` synchronized at `6553092`, and prior Wiki history at `archive/gim-wiki` `cd7dc81`. Issues 2 and 3 remain owner-reported preserved; Pages and publication gates remain closed. |
-| Formal verification | Clean `main` at `784be93`, two ahead of last-fetched `origin/main`; live reachability was unavailable under the active credential at 21:53Z. The latest carry adds metadata-only `PMQ-023`; `PMR-037` remains open for remote/handoff wording. |
+| Formal verification | Clean `main` at `784be93`, two ahead of last-fetched `origin/main`; live reachability was unavailable under the active credential at 2026-09-16 21:53Z and has not been retested for that remote. The latest carry adds metadata-only `PMQ-023`; `PMR-037` remains open for remote/handoff wording. |
 | Other drift | OS-security is clean and synchronized at active private successor return `49fbfd6`; root `58f8023` is restricted-free, while complete old private history remains at inactive `legacy-personal/main` `e275544`. The personal quarantine exists empty with clean history; no restricted file was opened or copied. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | Security-reviewer is clean and synchronized at owner commit `2e8d205`; all four profiles use `gpt-5.3-codex` / `max` / `long_context`, the tasking startup contract is active, `PMR-062`, `PMR-065`, and `PMR-074` are closed independently, and no engagement ran. |
-| Remote access | The prior coordination pushes through Project Manager `165b15b` and parent `72a6c42` were independently observed synchronized 0/0. The responsible human now directs `"update project and push"` for this CHERI/XRV consolidation; this is recorded narrowly for the next validated Project Manager and parent coordination tips. The Project Manager cannot execute the push. No component repository, tag, force, remote mutation, research publication, or PMR-075 push is included. |
+| Remote access | Human-run helper completed the exact CHERI/XRV consolidation coordination pushes: Project Manager `165b15b..74220dc` to `origin/main` and parent `72a6c42..560a921` to `upstream/main`; both are independently observed synchronized 0/0. The authorization is consumed. No component repository, PMR-075, tag, force, remote mutation, publication, or release push is authorized. |
 | Queues | 30 source-discovery rows / 30 source ledger rows plus one transfer row are exact. `PMQ-027`, `028`, and corrected `030` are routed to XRV; `PMQ-029` is rejected and its source edit is applied at `c7cc0fa`. `PMQ-008` and `011` remain routed; `HET-001` remains `recorded`/`unaccepted`. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -49,7 +47,7 @@ changes.
 | Human interaction | `PMD-20260915-002` requires one short structured question at a time where appropriate. The Project Manager carries answers forward and prepares matrices and machine-shaped records; the human is not used as a parsing engine. Responsible-human preference on 2026-09-21: future human-run scripts should write timestamped output to a Project Manager-owned ignored log path, print that path, and let the Project Manager retrieve it rather than asking the human to paste output. |
 | Role-to-model matrix | `PMD-20260916-001` extends `PMD-20260915-007`: planning, coding, coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and audit use `claude-opus-5`; deep or adversarial security review uses `gpt-5.3-codex`; every row is `max` / `long_context` unless the human specifies otherwise for a named task. The `project-manager` orchestrator is now `gpt-5.6-sol`; `pm-auditor` stays `claude-opus-5`. Fable 5.1 is no default in any active role. Security-reviewer moved to `gpt-5.3-codex` at owner commit `2e8d205` (`PMR-074` closed; human choice `all_codex`). Historical artifacts are unchanged; no launched task is restarted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Workspace root is current. `beryllium-hypervisor/` is an ignored canonical direct checkout; CHERI notes and XRV remain tracked symlinks under current names `cheri-riscv-notes` and `cheri-hypervisor-research`, targeting the verified active successors. Their former `*-repo` links and the former tracked `beryllium-repo` symlink are retired. Parent `HANDOFF.md` remains the sole compatibility redirect. |
+| Parent coordination | Workspace root is current. Consolidation commit `560a921` is synchronized 0/0 with `upstream/main`. `beryllium-hypervisor/` is an ignored canonical direct checkout; CHERI notes and XRV remain tracked symlinks under current names `cheri-riscv-notes` and `cheri-hypervisor-research`, targeting the verified active successors. Their former `*-repo` links and the former tracked `beryllium-repo` symlink are retired. Parent `HANDOFF.md` remains the sole compatibility redirect. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -83,8 +81,9 @@ development.
 ### One recommended next action
 
 Resume the responsible human's Beryllium development/hardware work. PMR-091
-requires no further action. If the Project Manager backlog is selected,
-PMR-040 remains the highest ordinary P2 item.
+requires no further action. The CHERI/XRV consolidation coordination-push
+authorization is consumed and requires no further action. If the Project
+Manager backlog is selected, PMR-040 remains the highest ordinary P2 item.
 
 ### Minimal restart commands
 
@@ -103,6 +102,20 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
+- Recorded the responsible human's `"done"` completion report for the bounded
+  coordination-only push.
+- Verified maintained helper log
+  `scratch/owner-actions/owner-actions-20260922T070756Z.log`: normal
+  fast-forward `165b15b..74220dc` to Project Manager `origin/main`, normal
+  fast-forward `72a6c42..560a921` to parent `upstream/main`, and exact
+  `ls-remote` tip checks.
+- Independently observed both clean branches synchronized behind 0 / ahead 0.
+  The authorization is consumed; no component, PMR-075, tag, force, remote
+  mutation, publication, or release action was included.
+- The `PMD-20260922-002` follow-up step is satisfied and consumed by this
+  human-run coordination push.
+- Previous turn (sixty-first): consolidated the CHERI notes and XRV workspace
+  links in Project Manager `74220dc` and parent `560a921`.
 - Adopted the responsible human's staged CHERI/XRV consolidation as two
   renamed and retargeted tracked symlinks, not direct checkouts.
 - Maintained inspection verifies `cheri-riscv-notes` at clean synchronized
@@ -616,10 +629,9 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   authorization or candidate acceptance.
 - Other component commits reported ahead of their remotes remain unpushed
   until separately reviewed and confirmed. Analysis-workbook PMR-063 commits
-  `62bd071` / `8b5a301` are local and unpushed. The prior pushed coordination
-  tips `165b15b` and `72a6c42` are synchronized; current pre-commit Project
-  Manager `6368429` and parent `587e9cc` are each one ahead, with this turn's
-  commits still pending. Helium PMR-026 commits
+  `62bd071` / `8b5a301` are local and unpushed. Current pushed coordination
+  tips Project Manager `74220dc` and parent `560a921` are synchronized.
+  Helium PMR-026 commits
   `e202c6e` / `f928aac` are now backed up by
   closed PMR-091. The prior
   `"yes, push"` covered
@@ -676,11 +688,10 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 
 ## Validation and commit state
 
-The required write-disabled sixty-first-turn audit (`claude-opus-5`, `max`,
-`long_context`) found no blocking discrepancy. Its active-surface stale and
-minor findings were reconciled; owner-controlled handoff path corrections are
-added to existing open PMR-051 and PMR-072 rather than written by the Project
-Manager.
+The required write-disabled sixty-second-turn audit (`claude-opus-5`, `max`,
+`long_context`) found no blocking discrepancy. Its stale and minor
+active-surface findings were reconciled; generated tasking is regenerated
+after the containing closure commit.
 
 Pre-commit checks for this closure pass:
 
@@ -690,21 +701,22 @@ Pre-commit checks for this closure pass:
 - `bash ./scripts/inspect-components.sh registry-check`: every component
   exact;
 - Project Manager and parent `git diff --check`: passed;
-- pre-commit Project Manager `main` at `6368429`, behind 0 / ahead 1 of
-  `origin/main`, dirty only with this turn's PM-owned updates;
-- pre-commit parent `main` at `587e9cc`, behind 0 / ahead 1 of
-  `upstream/main`, dirty only with PM-owned root updates and the four staged
-  symlink objects;
-- generated tasking is intentionally regenerated after the containing
-  Project Manager commit and must then pass `project-tasking.sh check`.
+- Project Manager clean `main` at `74220dc`, behind 0 / ahead 0 of
+  `origin/main` before this closure draft;
+- parent clean `main` at `560a921`, behind 0 / ahead 0 of `upstream/main`;
+- helper live-tip checks match those exact tips.
 
 ## Provenance
 
 - Current human-run result: maintained `scripts/owner-actions.sh` log
+  `scratch/owner-actions/owner-actions-20260922T070756Z.log` records and
+  verifies Project Manager `165b15b..74220dc -> origin/main` and parent
+  `72a6c42..560a921 -> upstream/main`.
+- Previous coordination push result: maintained `scripts/owner-actions.sh` log
   `scratch/owner-actions/owner-actions-20260922T060342Z.log` records and
   verifies Project Manager `055deea..165b15b -> origin/main` and parent
   `9266a93..72a6c42 -> upstream/main`.
-- Previous human-run result: maintained `outbox/pmr091-push.sh` completed the
+- Previous Helium push result: maintained `outbox/pmr091-push.sh` completed the
   exact normal private fast-forward `1ab289c -> f928aac`, reported
   `other-refs-preserved=yes`, 23 heads / zero tags, and restored active account
   `xjamesmorris`.

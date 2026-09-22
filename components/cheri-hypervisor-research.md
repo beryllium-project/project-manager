@@ -12,8 +12,8 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
 - **Observed state:** the renamed tracked symlink resolves to clean `main` at
-  owner return `456c70b`, behind 0 / ahead 2 of private active `origin/main`
-  at `d618935`.
+  owner return `456c70b`, behind 0 / ahead 2 of last-fetched private active
+  `origin/main` at `d618935`; live reachability is `unknown`.
   `legacy-backup/main` remains `706e708`; `msft-inactive/main` remains
   `ca41490` and was unreachable with the active credential. The active
   successor preserves history through `d618935`, including `REV-*` and
