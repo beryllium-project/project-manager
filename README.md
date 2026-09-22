@@ -147,7 +147,7 @@ The agent writes only:
   the request identifier.
 
 It never writes inside another component directory outside those classes,
-never writes `helium-te-poc/` or `beryllium-repo` at all, never stages
+never writes `helium-te-poc/` or `beryllium-hypervisor/` at all, never stages
 component contents in the parent, never resets, cleans, or reconciles a
 component worktree, and never retargets a tracked symlink without user
 direction. Component outbox queues are consumed ledger-first: the three
@@ -298,7 +298,7 @@ creation (`--fvr-backup`), `push_sr` remote creation (`--sr-backup`),
 `git ls-remote`; nothing is ever forced; a component file is changed only by
 `apply_edits`, only to the exact text recorded in `outbox/owner-edits/`, only
 in a clean worktree, after the diff and a `y`, and never in `helium-te-poc/`
-or `beryllium-repo` (`records/decisions/PMD-20260906-001-owner-edits-and-request-priorities.md`).
+or `beryllium-hypervisor/` (`records/decisions/PMD-20260906-001-owner-edits-and-request-priorities.md`).
 The run ends with the open requests by priority; `outbox/OWNER-RUNBOOK.md` has
 the exact steps for each. Logs go to `scratch/owner-actions/` (ignored).
 Afterwards, start a Project Manager session and say what the run did.

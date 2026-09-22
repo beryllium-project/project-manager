@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-21
+**Last refreshed:** 2026-09-22
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -254,12 +254,13 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
 - **P3 PMR-090:** active Beryllium return correction `416b2e9` is twelve ahead of
-  last-fetched private `origin` at `f05ccb3`, and candidate branch
+  `origin/beryllium/single-hart-runtime-r0`, and candidate branch
   `beryllium/r8-h0-pmr-080` at `6e93461` has no upstream. Live reachability
-  is `unknown`; after authorized access returns, review the complete active
-  range and exact candidate ref and decide whether to push. `PMR-090`
-  supersedes `PMR-082`. Never push inactive `msft-downstream`; no push accepts
-  H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
+  is `unknown`; the responsible human states that origin is now in the public
+  project. Review the complete active range, exact candidate ref, and component
+  publication gate before separately deciding whether to publish either ref.
+  `PMR-090` supersedes `PMR-082`. Never push inactive `msft-downstream`; no
+  push accepts H0, authorizes R8-C implementation, or authorizes H1-H4/K3.
 - **Closed PMR-091:** human-run maintained `outbox/pmr091-push.sh`
   fast-forwarded only private `for-review` from `1ab289c` to `f928aac`.
   Script evidence reports `other-refs-preserved=yes`, 23 heads / zero tags,
@@ -371,10 +372,10 @@ The relevant local component commits are:
   return `8b5a301`. The first range remains exact backup request `PMR-085`;
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   now freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
-- `beryllium-repo` active/default return `416b2e9` is twelve ahead of last-fetched
+- `beryllium-hypervisor/` active/default return `416b2e9` is twelve ahead of
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
-  exact backup request `PMR-090`;
+  exact publication-review request `PMR-090`; no push is authorized;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;

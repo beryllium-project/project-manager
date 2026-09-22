@@ -49,6 +49,7 @@ workspace_root=${PM_WORKSPACE_ROOT:-$(CDPATH= cd -- "$repository_root/.." && pwd
 # registry-check reports any difference in either direction.
 registered_direct=(
     project-manager
+    beryllium-hypervisor
     helium-te-poc
     formal-verification-research
     osr-claude
@@ -58,7 +59,6 @@ registered_direct=(
     security-reviewer
 )
 registered_symlinks=(
-    beryllium-repo
     cheri-riscv-notes-repo
     xrv-research-repo
 )

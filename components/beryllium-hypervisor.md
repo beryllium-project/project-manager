@@ -1,33 +1,35 @@
-# beryllium-repo
+# beryllium-hypervisor
 
-- **Workspace entry:** `../beryllium-repo` (tracked symlink to
-  `../copilot/msft/beryllium`, the canonical private implementation
-  repository on this workstation)
+- **Workspace entry:** `../beryllium-hypervisor/` (ignored canonical direct
+  checkout in this workspace)
 - **Ownership:** agent-owned implementation repository; ask before modifying;
-  the Project Manager writes nothing here and only maintains the parent
-  symlink object. Carry-ineligible under `../records/decisions/PMD-20260904-003-standing-carry-authority.md`: every change is a
+  the Project Manager writes nothing here; the component is an ignored direct
+  checkout and the parent tracks no object for it. Carry-ineligible under
+  `../records/decisions/PMD-20260904-003-standing-carry-authority.md`: every change is a
   `PMR-NNN` request handed to the human
 - **Agent:** none user-invocable; maintained skills `helium-documentation`,
-  `human-review-summary`, `reviewable-turn-summary`. Beryllium is pilot 2
-  under `PMD-20260917-002`, only after the analysis-workbook owner passes its
-  read-only native discovery/isolation proof; no hidden owner profile was
-  needed for the completed ordinary PMR-067/PMR-083 housekeeping session
+  `human-review-summary`, `reviewable-turn-summary`. No Beryllium owner profile
+  exists. The analysis-workbook read-only proof is closed; any Beryllium owner
+  still requires its own adoption and proof, while `PMD-20260918-003` parks
+  further rollout. No hidden owner profile was needed for the completed
+  ordinary PMR-067/PMR-083 housekeeping session
 - **Local instructions to read first:** on the selected active branch,
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at final owner return `416b2e9`, twelve
-  ahead of last-fetched private `origin` at `f05ccb3`; local candidate branch
+  `beryllium/single-hart-runtime-r0` at final owner return `416b2e9`, behind
+  zero and twelve ahead of `origin/beryllium/single-hart-runtime-r0`; local candidate branch
   `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-067` and
   `PMR-083` are closed; the responsible human's `"all ready"`, given in
   direct response to the Project Manager's Beryllium owner-session release
-  request, releases the owner-session lock. Live reachability remains
-  `unknown`; backup follow-up is `PMR-090`
+  request, releases the owner-session lock. The responsible human states the
+  origin is now in the public project; the local inspector does not
+  independently verify remote visibility. Publication follow-up is `PMR-090`
 
 ## Role
 
-Canonical private Beryllium (`Be` / `be`) implementation: restricted-C
+Canonical Beryllium (`Be` / `be`) implementation: restricted-C
 architecture models, the bounded single-hart runtime sequence, Rocq and host
 evidence, QEMU packages, documentation, exact responsible-human acceptance
 records, and the retained Helium pathfinder under `pathfinder/`. The stable
@@ -51,8 +53,10 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
   or exact accepted-revision controls with ad hoc build inputs. Authorized
   R8-H0 work uses `./tests/r8/run-make.sh r8-check` with the component's
   fresh-worktree validation requirements.
-- The repository is private internal history. Public migration, release, Linux
-  submission, and human sign-off remain separately controlled. Automation must
+- The responsible human states the repository has moved to the public project;
+  local inspection does not verify this. Public visibility does not itself
+  approve release. Public release, Linux submission, and human sign-off remain
+  separately controlled. Automation must
   not add a human `Signed-off-by`, approve public release, or edit
   `pathfinder/publication-gate.conf`.
 - The root Makefile is an inspectable lower-level graph without a `help`
@@ -96,7 +100,8 @@ authorization is none. `PMR-083` is closed by final return correction
 commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
-than a PMR-067 semantic failure. `PMR-090` tracks private backup. H0 remains
+than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
+decision. H0 remains
 unaccepted, H1-H4 unauthorized, and K3 `NOT RUN`.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
@@ -131,7 +136,9 @@ commits `3221231` and `f05ccb3` restore the active checkout, default-branch
 record, inactive `msft-downstream`, maintained workflow, and structured
 return; `PMR-057` is closed. The active branch and both return commits through
 `f05ccb3` are synchronized with private `origin`; `PMR-061` is closed.
-No workspace symlink change is directed. Repository creation, history push,
-remote and default-branch changes, handoff updates, and any future local
-symlink retarget remain owner actions; none changes acceptance or
+At that historical checkpoint no workspace symlink change was directed.
+The responsible human moved the canonical checkout to
+`../beryllium-hypervisor/` on 2026-09-21; the former `beryllium-repo` symlink
+is retired. Repository creation, history push, remote and default-branch
+changes, and handoff updates remain owner actions; none changes acceptance or
 authorization state.

@@ -28,7 +28,7 @@ research, analysis, threat models, provenance findings, or human decisions.
   Project Manager-role and coordination wording in the component's Markdown
   interface, collaboration, research-source, and handoff documents.
 - Never write inside another component directory outside those three classes.
-  `helium-te-poc/` and `beryllium-repo` are carry-ineligible and are never
+  `helium-te-poc/` and `beryllium-hypervisor/` are carry-ineligible and are never
   written. Never write any component's `inbox/`, Git metadata, source code,
   tests, scripts, build graphs, generated outputs, assurance or gate files, or
   research, analysis, threat-model, provenance, session, or model content.
@@ -105,7 +105,7 @@ read that table directly; otherwise report resolver failure as a blocker
    writing is not, except for carried requests in the three classes of
    `PMD-20260904-003` (Phase 4b).
 2. If the human asks for a change inside a component that lies outside those
-   three classes, or in `helium-te-poc/` or `beryllium-repo`, do not perform
+   three classes, or in `helium-te-poc/` or `beryllium-hypervisor/`, do not perform
    it. Raise a `PMR-NNN` request with the exact edit or command, or hand the
    human the invocation of that component's agent from `AGENT-ROSTER.md`.
 3. Use `ask_user` for any action whose ownership, scope, or gate status is
@@ -222,7 +222,7 @@ each class-1 queue edit printed above:
    `../COMPONENTS.md` (observed revision and backup state) in Phase 5.
 
 Everything outside the three classes, and everything in `helium-te-poc/` or
-`beryllium-repo`, stays a request handed to the human.
+`beryllium-hypervisor/`, stays a request handed to the human.
 
 ## Phase 5: reconcile
 

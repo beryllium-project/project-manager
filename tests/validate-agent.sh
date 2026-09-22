@@ -161,7 +161,7 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" "$roster" \
 done
 
 for component in helium-te-poc formal-verification-research osr-claude \
-    beryllium-repo cheri-riscv-notes-repo xrv-research-repo provenance-review \
+    beryllium-hypervisor cheri-riscv-notes-repo xrv-research-repo provenance-review \
     analysis-workbook threat-modeler security-reviewer; do
     require_file "$repository_root/components/$component.md"
     require_text "$repository_root/components/$component.md" "# $component"
@@ -314,7 +314,7 @@ for f in "$agent" "$instructions" "$skill" "$interface" "$readme" "$roster"; do
 done
 for f in "$agent" "$instructions" "$skill" "$interface"; do
     require_prose "$f" 'three classes'
-    require_prose "$f" '`helium-te-poc/` and `beryllium-repo` are carry-ineligible'
+    require_prose "$f" '`helium-te-poc/` and `beryllium-hypervisor/` are carry-ineligible'
     require_prose "$f" '`status`, `diff`, `log`, `show`, `add <exact paths>`, and `commit`'
     require_prose "$f" 'clean worktree'
     require_prose "$f" '(A|a) carried commit leaves the component ahead of its remote'
@@ -443,7 +443,7 @@ expect_exit "inspect-components components rejects extra arguments" 2 \
 # symlink targets live beside the workspace, as the tracked ../copilot/...
 # links expect.
 synth=$sandbox/workspace
-mkdir -p "$synth" "$sandbox/copilot/msft" "$sandbox/copilot/gim"
+mkdir -p "$synth" "$sandbox/copilot/gim"
 init_repo() {
     local dir=$1 name=$2
     mkdir -p "$dir" &&
@@ -452,21 +452,19 @@ init_repo() {
             -c commit.gpgsign=false commit -q --allow-empty -m "fixture $name"
 }
 init_repo "$synth" workspace
-for name in project-manager helium-te-poc formal-verification-research osr-claude \
+for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
     provenance-review analysis-workbook threat-modeler security-reviewer; do
     init_repo "$synth/$name" "$name"
 done
-init_repo "$sandbox/copilot/msft/beryllium" beryllium
 init_repo "$sandbox/copilot/gim/cheri-riscv-notes" cheri
 init_repo "$sandbox/copilot/gim/xrv-research" xrv
-ln -s ../copilot/msft/beryllium "$synth/beryllium-repo"
 ln -s ../copilot/gim/cheri-riscv-notes "$synth/cheri-riscv-notes-repo"
 ln -s ../copilot/gim/xrv-research "$synth/xrv-research-repo"
 
 expect_exit "inspect-components components succeeds on the synthetic workspace" 0 \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" components
-expect_output "inspect-components components reports the symlink integration" \
-    "beryllium-repo	symlink	clean	main" \
+expect_output "inspect-components components reports the direct Beryllium integration" \
+    "beryllium-hypervisor	direct	clean	main" \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" components
 expect_output "inspect-components symlinks reports resolution" \
     "cheri-riscv-notes-repo	../copilot/gim/cheri-riscv-notes	resolved" \
@@ -483,12 +481,12 @@ registry=$synth/COMPONENTS.md
     printf '**Current workstation root:** `%s`\n\n' "$synth"
     printf '| Workspace entry | Integration | Observed state | Role and boundary |\n'
     printf '| --- | --- | --- | --- |\n'
-    for name in project-manager helium-te-poc formal-verification-research osr-claude \
+    for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
         provenance-review analysis-workbook threat-modeler security-reviewer; do
         printf '| `%s/` | Ignored direct checkout | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$synth/$name" rev-parse --short HEAD)"
     done
-    for name in beryllium-repo cheri-riscv-notes-repo xrv-research-repo; do
+    for name in cheri-riscv-notes-repo xrv-research-repo; do
         printf '| `%s` | Tracked symlink | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$synth/$name" rev-parse --short HEAD)"
     done

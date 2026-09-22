@@ -200,7 +200,7 @@ allows exactly three classes:
    interface, collaboration, research-source, and handoff documents.
 
 Never write inside another component directory outside those three classes.
-`helium-te-poc/` and `beryllium-repo` are carry-ineligible and are never
+`helium-te-poc/` and `beryllium-hypervisor/` are carry-ineligible and are never
 written. The agent never writes any component's `inbox/`, Git metadata,
 source code, tests, scripts, build graphs, generated outputs, assurance or
 gate files, or research, analysis, threat-model, provenance, session, or
@@ -255,7 +255,7 @@ backup remote (`--fvr-backup`, `PMR-001`), opt-in pushes of the Helium
 local-only branches (`--helium-branches`, `PMR-018`), opt-in application of
 the exact owner-side edits recorded in `outbox/owner-edits/` (`--apply-edits`:
 diff, the component's own validator, `y/N`, then a commit inside the component
-made by the human; never `helium-te-poc/` or `beryllium-repo`;
+made by the human; never `helium-te-poc/` or `beryllium-hypervisor/`;
 `records/decisions/PMD-20260906-001-owner-edits-and-request-priorities.md`),
 an opt-in read-only search for the lost retained PM artifacts
 (`--files-search`), and the fetch that lets the next coordination turn observe

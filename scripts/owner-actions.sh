@@ -18,7 +18,7 @@
 # a push, never rewrites history, and never edits a component file except in
 # the opt-in apply_edits step, which changes only the exact recorded text
 # (outbox/owner-edits/; the token @DATE@ becomes the day of application),
-# only in a clean worktree, and never inside helium-te-poc or beryllium-repo.
+# only in a clean worktree, and never inside helium-te-poc or beryllium-hypervisor.
 # The only other filesystem change it can make is the opt-in removal of the
 # broken, Git-ignored parent "files" link in files_search, after a y.
 #
@@ -787,7 +787,7 @@ step_push_sr() {
 # Exact recorded text edits, one PMR at a time. The old/anchor and new text
 # live in outbox/owner-edits/<name>.{old,anchor,new}.txt so that the request
 # record, not this script, holds the words. Never helium-te-poc or
-# beryllium-repo.
+# beryllium-hypervisor.
 
 # edit table: PMR | component | file | mode (block: replace an exact multi-line
 # block; line: replace the single line containing the anchor) | name.
@@ -909,7 +909,7 @@ apply_one_pmr() {
         die "apply_edits: no recorded edit for $pmr"
     fi
     hr "apply_edits: $pmr in $comp"
-    if [[ $comp == helium-te-poc || $comp == beryllium-repo ]]; then
+    if [[ $comp == helium-te-poc || $comp == beryllium-hypervisor ]]; then
         die "apply_edits refuses to touch $comp"
     fi
     if ! is_repo "$dir"; then
@@ -998,7 +998,7 @@ apply_one_pmr() {
 step_apply_edits() {
     local rc=0 pmr
     hr "apply_edits: exact recorded owner-side edits (outbox/owner-edits/)"
-    note "Each edit is shown as a diff first; you commit it as owner. helium-te-poc and beryllium-repo are never touched."
+    note "Each edit is shown as a diff first; you commit it as owner. helium-te-poc and beryllium-hypervisor are never touched."
     if ((${#edit_pmrs[@]} == 0)); then
         note "no recorded edit is pending; nothing to apply (see outbox/OWNER-RUNBOOK.md for the remaining items)"
         return 0
@@ -1116,7 +1116,7 @@ step_fetch_snapshot() {
     local -a entries=("$ws_root" "$pm_root")
     local e dir r url
     for e in helium-te-poc formal-verification-research osr-claude provenance-review \
-        analysis-workbook threat-modeler security-reviewer beryllium-repo cheri-riscv-notes-repo \
+        analysis-workbook threat-modeler security-reviewer beryllium-hypervisor cheri-riscv-notes-repo \
         xrv-research-repo; do
         entries+=("$ws_root/$e")
     done

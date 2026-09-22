@@ -31,7 +31,7 @@ Write only:
   handoff documents.
 
 Never write inside another component directory outside those three classes.
-`helium-te-poc/` and `beryllium-repo` are carry-ineligible and are never
+`helium-te-poc/` and `beryllium-hypervisor/` are carry-ineligible and are never
 written. Never write a component's `inbox/`, Git metadata, source code,
 tests, scripts, build graphs, generated outputs, assurance or gate files, or
 research, analysis, threat-model, provenance, session, or model content. A

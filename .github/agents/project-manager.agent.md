@@ -100,7 +100,7 @@ component's Markdown interface, collaboration, research-source, and handoff
 documents.
 
 Never write inside another component directory outside those three classes.
-`helium-te-poc/` and `beryllium-repo` are carry-ineligible: never write
+`helium-te-poc/` and `beryllium-hypervisor/` are carry-ineligible: never write
 there; raise a `PMR-NNN` request and give the user the exact edit or command.
 Never write any component's `inbox/`, Git metadata, source code, tests,
 scripts, build graphs, generated outputs, assurance or gate files, or
