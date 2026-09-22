@@ -23,7 +23,7 @@ refs            local refs, remote-tracking refs as of the last fetch, tags,
                 commit-ref checks for one entry
 state           branch, head, worktree, upstream, ahead/behind, and porcelain
                 status for one entry
-symlinks        readlink, resolution, and Git root for every tracked *-repo link
+symlinks        readlink, resolution, and Git root for every tracked component symlink
 status          the restart snapshot: parent, symlinks, components, upstreams
 registry-check  compare each component row in ../COMPONENTS.md with the live
                 HEAD or an explicit leading **Absent** marker; exit 1 on drift
@@ -59,8 +59,8 @@ registered_direct=(
     security-reviewer
 )
 registered_symlinks=(
-    cheri-riscv-notes-repo
-    xrv-research-repo
+    cheri-riscv-notes
+    cheri-hypervisor-research
 )
 
 clean_environment=(

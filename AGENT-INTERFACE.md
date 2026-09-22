@@ -13,7 +13,7 @@ research, analysis, threat-model, or provenance content.
 ```text
                     parent root (SOT.md, COMPONENTS.md, README.md,
                     .gitignore, HANDOFF.md compatibility redirect,
-                    tracked *-repo symlink objects)
+                    tracked component symlink objects)
                                    ^ maintains
                                    |
    component repositories -----> project-manager <----- human decisions
@@ -181,7 +181,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Generated tasking views | `outbox/tasking/<component>.md` | Ignored local projections generated from the committed request table after each PM commit; resolved only while the recorded PM commit and request blob are current |
 | Exact dispatch packet | `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` | PM-only, read-only selection of one directly assigned open row, bound to the current PM commit and request blob; writes and launches nothing |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
-| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked `../*-repo` symlink objects | Project Manager-owned; edited and committed in the parent repository. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
+| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked component symlink objects | Project Manager-owned; edited and committed in the parent repository. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
 
 ## Write and execution boundaries
 

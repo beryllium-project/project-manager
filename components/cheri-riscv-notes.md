@@ -1,7 +1,7 @@
-# cheri-riscv-notes-repo
+# cheri-riscv-notes
 
-- **Workspace entry:** `../cheri-riscv-notes-repo` (tracked symlink to
-  `../copilot/gim/cheri-riscv-notes`)
+- **Workspace entry:** `../cheri-riscv-notes` (tracked symlink to
+  `../agentic-os-research/cheri-riscv-notes`)
 - **Ownership:** internal GIM research repository; agent-owned; the Project
   Manager maintains the parent symlink object and writes here only to carry a
   class-3 Project Manager-role wording request under the standing carry
@@ -23,7 +23,8 @@
   `6553092`. Inactive `gim-inactive` preserves the old internal home, and
   private `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`. `PMR-046`, `PMR-029`, and `PMR-020` are closed; `PMR-051`
-  remains only for a structured current-head/validation/backup/session return
+  remains for the consolidated logical/physical path correction plus a
+  structured current-head/validation/backup/session return
 
 ## Role
 
@@ -67,8 +68,8 @@ temporary database must reconcile to `references/references.bib`. The two
 `PMQ-008`/`PMQ-011` pointers require the owner's D4 admission decision before
 any class-2 metadata entry; exact
 metadata is in `../outbox/OWNER-RUNBOOK.md`); resolution of the content license before any
-public mirror; and the structured current-state return still requested by
-`PMR-051`. The handoff/status already record the successful 2026-09-16
+public mirror; and the path correction plus structured current-state return
+still requested by `PMR-051`. The handoff/status already record the successful 2026-09-16
 Validate run for preserved revision `ae09213` and successor topic history
 through `9a4c5ef`. Topic backup is evidenced by the
 matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
@@ -83,15 +84,14 @@ The active private home is
 `main`, `docs/reconcile-project-status`, required refs, checked-in Wiki state,
 and hosted issues 2 and 3; private `archive/gim-wiki` retains the full prior
 Wiki history because the current organization plan has no private hosted
-Wiki. The verified successor is `origin`, the internal home is
-`gim-inactive`, and the tracked symlink is unchanged. No repository is
-public-approved now. The `sok/`
+Wiki. The verified successor is `origin`, and the internal home is
+`gim-inactive`. No repository is public-approved now. The `sok/`
 artifact is branded the
 CHERI-RISC-V SoK and is the first publication/Pages candidate only after the
 license, authorship, public-mirror, and corpus-integrity gates
 close. The existing internal repository remains the inactive
-`gim-inactive` reference, and the workspace symlink remained unchanged after
-owner verification. `PMR-071` asks
+`gim-inactive` reference. The responsible human later renamed and retargeted
+the workspace symlink to the verified active successor. `PMR-071` asks
 the owner-facing instructions to map `check Project Manager tasking` to the
 exact fail-closed resolver without session-history fallback; it changes no
 corpus or publication gate.

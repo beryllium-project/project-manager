@@ -161,7 +161,7 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" "$roster" \
 done
 
 for component in helium-te-poc formal-verification-research osr-claude \
-    beryllium-hypervisor cheri-riscv-notes-repo xrv-research-repo provenance-review \
+    beryllium-hypervisor cheri-riscv-notes cheri-hypervisor-research provenance-review \
     analysis-workbook threat-modeler security-reviewer; do
     require_file "$repository_root/components/$component.md"
     require_text "$repository_root/components/$component.md" "# $component"
@@ -440,10 +440,10 @@ expect_exit "inspect-components components rejects extra arguments" 2 \
 
 # Build a synthetic workspace of tiny repositories so registry-check and the
 # table modes are tested without depending on live component state. The
-# symlink targets live beside the workspace, as the tracked ../copilot/...
-# links expect.
+# symlink targets live beside the workspace, as the tracked
+# ../agentic-os-research/... links expect.
 synth=$sandbox/workspace
-mkdir -p "$synth" "$sandbox/copilot/gim"
+mkdir -p "$synth" "$sandbox/agentic-os-research"
 init_repo() {
     local dir=$1 name=$2
     mkdir -p "$dir" &&
@@ -456,10 +456,10 @@ for name in project-manager beryllium-hypervisor helium-te-poc formal-verificati
     provenance-review analysis-workbook threat-modeler security-reviewer; do
     init_repo "$synth/$name" "$name"
 done
-init_repo "$sandbox/copilot/gim/cheri-riscv-notes" cheri
-init_repo "$sandbox/copilot/gim/xrv-research" xrv
-ln -s ../copilot/gim/cheri-riscv-notes "$synth/cheri-riscv-notes-repo"
-ln -s ../copilot/gim/xrv-research "$synth/xrv-research-repo"
+init_repo "$sandbox/agentic-os-research/cheri-riscv-notes" cheri
+init_repo "$sandbox/agentic-os-research/cheri-hypervisor-research" xrv
+ln -s ../agentic-os-research/cheri-riscv-notes "$synth/cheri-riscv-notes"
+ln -s ../agentic-os-research/cheri-hypervisor-research "$synth/cheri-hypervisor-research"
 
 expect_exit "inspect-components components succeeds on the synthetic workspace" 0 \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" components
@@ -467,7 +467,7 @@ expect_output "inspect-components components reports the direct Beryllium integr
     "beryllium-hypervisor	direct	clean	main" \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" components
 expect_output "inspect-components symlinks reports resolution" \
-    "cheri-riscv-notes-repo	../copilot/gim/cheri-riscv-notes	resolved" \
+    "cheri-riscv-notes	../agentic-os-research/cheri-riscv-notes	resolved" \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" symlinks
 expect_output "inspect-components state reports no upstream" "upstream	none" \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" state threat-modeler
@@ -486,7 +486,7 @@ registry=$synth/COMPONENTS.md
         printf '| `%s/` | Ignored direct checkout | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$synth/$name" rev-parse --short HEAD)"
     done
-    for name in cheri-riscv-notes-repo xrv-research-repo; do
+    for name in cheri-riscv-notes cheri-hypervisor-research; do
         printf '| `%s` | Tracked symlink | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$synth/$name" rev-parse --short HEAD)"
     done

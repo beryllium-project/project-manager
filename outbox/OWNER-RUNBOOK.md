@@ -96,8 +96,10 @@ closed all three requests:
 | `PMR-046` | `agentic-os-research/cheri-riscv-notes` | `9a4c5ef` | Private hosted Wiki unavailable; complete history is preserved at `archive/gim-wiki` |
 
 All three successors are private and active as `origin`; old homes remain
-inactive references; no tracked workspace symlink moved. Publication,
-licensing, redistribution, release, and assurance gates are unchanged.
+inactive references. At that closure checkpoint no tracked workspace symlink
+had moved; on 2026-09-22 the responsible human renamed and retargeted the
+CHERI notes and XRV links to the verified successors. Publication, licensing,
+redistribution, release, and assurance gates are unchanged.
 
 ## CRQ-002 successor-first sequence
 
@@ -158,8 +160,8 @@ fallback documented by `PMD-20260915-008`.
 | `PMR-068` | P4 | `cd /home/jmorris/src/beryllium-project/helium-te-poc && copilot` | `Complete PMR-068 without changing frozen refs or gates.` |
 | `PMR-069` | P3 | `cd /home/jmorris/src/beryllium-project/formal-verification-research && copilot` | `Complete PMR-069 without changing research or bibliography dispositions.` |
 | `PMR-070` | P3 | `cd /home/jmorris/src/beryllium-project/osr-claude && copilot`; use the successor's owner workflow after the responsible human confirms the write | `Complete PMR-070 without opening restricted-microsoft.` |
-| `PMR-071` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-riscv-notes-repo && copilot` | `Complete PMR-071; first report pwd and pwd -P, with no corpus or publication change.` |
-| `PMR-072` | P3 | `cd /home/jmorris/src/beryllium-project/xrv-research-repo && copilot` | `Complete PMR-072; first report pwd and pwd -P, with no research or review-ID change.` |
+| `PMR-071` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-riscv-notes && copilot` | `Complete PMR-071; first report pwd and pwd -P, with no corpus or publication change.` |
+| `PMR-072` | P3 | `cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research && copilot` | `Complete PMR-072, including the current logical/physical handoff path correction; first report pwd and pwd -P, with no research or review-ID change.` |
 
 For each owner session, say:
 
@@ -182,7 +184,7 @@ branch, and backup state.
 Start the XRV owner and provide analysis-workbook commit `a46dba2`:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/xrv-research-repo
+cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research
 copilot
 ```
 
@@ -284,7 +286,7 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   explicitly confirmed in the owner turn, push it without force:
 
   ```sh
-  cd /home/jmorris/src/beryllium-project/xrv-research-repo
+  cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research
   git status --short --branch
   git log --oneline origin/main..main
   git diff --stat origin/main..main
@@ -300,10 +302,11 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   bibliography pointers.
 - **P3 PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
   pointers at `c55065c` and `784be93`.
-- **P3 PMR-051:** in `cheri-riscv-notes-repo`, append only the structured
-  current-head/paths/validation/backup/session return. Current `9a4c5ef`
-  handoff/status already record the successful 2026-09-16 remote Validate run
-  for preserved `ae09213` and successor topic history. No merge, new remote
+- **P3 PMR-051:** in `cheri-riscv-notes`, correct the handoff/status logical
+  and physical workspace paths after consolidation, then append only the
+  structured current-head/paths/validation/backup/session return. Current
+  `9a4c5ef` already records the successful 2026-09-16 remote Validate run for
+  preserved `ae09213` and successor topic history. No merge, new remote
   workflow run, visibility change, or publication decision is required.
 - **P3 PMR-037:** in `formal-verification-research`, refresh the owner-maintained
   handoff to state that the restored clone tracks the reachable
@@ -348,21 +351,28 @@ The responsible human selected exact scope `"both"` for Project Manager
 `scripts/owner-actions.sh --only push_pm` completed both normal
 fast-forwards; `scratch/owner-actions/owner-actions-20260922T060342Z.log`
 records exact `ls-remote` verification. Independent inspection reports both
-clean branches synchronized 0/0. That authorization is consumed.
+clean branches synchronized 0/0. That prior authorization is consumed.
+
+The responsible human now directs `"update project and push"` for the
+CHERI/XRV symlink consolidation. This applies only to the next validated
+Project Manager `main -> origin/main` and parent `main -> upstream/main`
+coordination tips produced by this turn. The exact tips must be reported
+before the human runs `--only push_pm`. It does not include
+`cheri-riscv-notes`, `cheri-hypervisor-research`, PMR-075, any tag, force,
+remote mutation, publication, or release.
 
 PMR-091 is complete; its one authorized push has been consumed and grants no
 later push authority. The opt-in `owner-actions.sh --helium-branches` path
-belongs to historical PMR-018 and remains outside PMR-091. No further default
-or opt-in helper step, parent, Project Manager, component, branch, or tag push
-is authorized.
+belongs to historical PMR-018 and remains outside PMR-091. No default or
+opt-in helper step and no component, branch, tag, or remote mutation is
+authorized; only the bounded `push_pm` step above is pending.
 
-**No further push is authorized - do not run again without a new exact
-responsible-human confirmation:**
+**Do not run the generic helper. After the exact two coordination tips are
+reported, run only:**
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --plan
-bash ./scripts/owner-actions.sh
+bash ./scripts/owner-actions.sh --only push_pm
 ```
 
 The relevant local component commits are:
@@ -385,7 +395,7 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `xrv-research-repo` reviewed history through `d618935` is backed up on
+- `cheri-hypervisor-research` reviewed history through `d618935` is backed up on
   active private `origin/main`; local owner documentation commits `22095a1`
   and `456c70b` remain two ahead under `PMR-075`; inactive
   `legacy-backup/main` remains `706e708`;

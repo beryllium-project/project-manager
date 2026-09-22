@@ -28,7 +28,7 @@ session, model, or review content.
 The parent workspace root remains the thin coordination shell: `SOT.md`
 (canonical topology), `COMPONENTS.md` (component registry), `README.md`,
 `.gitignore`, `.github/copilot-instructions.md`, the compatibility redirect
-`HANDOFF.md`, and the tracked `*-repo` symlink objects. This component owns
+`HANDOFF.md`, and the tracked component symlink objects. This component owns
 the Project Manager handoff, component knowledge cards, the agent roster,
 assurance-transfer records, decision records, the queue ledger, and the
 component-request outbox.
@@ -108,9 +108,11 @@ The repository-reorganization critical path in `PMD-20260916-002` is
 complete: `PMR-044`, `PMR-045`, and `PMR-046` closed at verified owner
 returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The active private
 OS-security, XRV, and CHERI-RISC-V notes successors are under
-`agentic-os-research`; old homes remain inactive references and tracked
-workspace symlinks did not move. Publication, licensing, redistribution,
-release, and assurance gates remain unchanged.
+`agentic-os-research`; old homes remain inactive references. At that closure
+checkpoint the tracked workspace symlinks had not moved; on 2026-09-22 the
+responsible human renamed and retargeted the CHERI notes and XRV links to the
+verified successors. Publication, licensing, redistribution, release, and
+assurance gates remain unchanged.
 
 Project-wide model assignment follows the role-to-model matrix of
 `PMD-20260916-001` (extending `PMD-20260915-007`): planning, coding,
@@ -285,7 +287,7 @@ bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
 ```
 
 Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
-`push_tm` (threat-modeler), `push_xrv` (xrv-research-repo to its current
+`push_tm` (threat-modeler), `push_xrv` (cheri-hypervisor-research to its current
 tracked active `origin`), `push_osr`
 (osr-claude), `push_fvr` (formal-verification-research `main -> backup` when
 the component and remote exist),

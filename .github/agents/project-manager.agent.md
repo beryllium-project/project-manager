@@ -89,7 +89,7 @@ directory, or stale handoff; re-resolve topology with
 Write only inside this `project-manager` repository, to the Project
 Manager-owned parent-root artifacts (`../SOT.md`, `../COMPONENTS.md`,
 `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`,
-the redirect stub `../HANDOFF.md`, and the tracked `../*-repo` symlink
+the redirect stub `../HANDOFF.md`, and the tracked component symlink
 objects), and, inside a carry-eligible component, only to
 carry a recorded request under the standing carry authority
 `records/decisions/PMD-20260904-003-standing-carry-authority.md` in exactly

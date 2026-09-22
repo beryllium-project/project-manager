@@ -1,7 +1,7 @@
-# xrv-research-repo
+# cheri-hypervisor-research
 
-- **Workspace entry:** `../xrv-research-repo` (tracked symlink to
-  `../copilot/gim/xrv-research`)
+- **Workspace entry:** `../cheri-hypervisor-research` (tracked symlink to
+  `../agentic-os-research/cheri-hypervisor-research`)
 - **Ownership:** private research survey; agent-owned; the Project Manager
   maintains the parent symlink object and writes here only to carry requests
   under the standing carry authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`. XRV source intake remains
@@ -11,8 +11,9 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
-- **Observed state:** the unchanged symlink resolves to clean `main` at owner
-  return `456c70b`, two ahead of private active `origin/main` at `d618935`.
+- **Observed state:** the renamed tracked symlink resolves to clean `main` at
+  owner return `456c70b`, behind 0 / ahead 2 of private active `origin/main`
+  at `d618935`.
   `legacy-backup/main` remains `706e708`; `msft-inactive/main` remains
   `ca41490` and was unreachable with the active credential. The active
   successor preserves history through `d618935`, including `REV-*` and
@@ -83,8 +84,8 @@ inactive-reference remotes. History through `d618935`, including `REV-*` and
 `COLLAB.md`, is reachable. Owner documentation commits `22095a1` and
 `456c70b` remain local pending `PMR-075`.
 Microsoft-origin repository state remains an inactive historical
-reference. The current local path and tracked symlink do not move without a
-later explicit target-specific direction. `PMR-072` asks the owner context to
+reference. The responsible human later renamed and retargeted the workspace
+symlink to the verified active successor. `PMR-072` asks the owner context to
 map `check Project Manager tasking` to the exact fail-closed resolver without
-session-history fallback; it includes no research, review-ID, collaboration,
-or push change.
+session-history fallback and correct the current handoff paths; it includes no
+research, review-ID, collaboration, component push, or publication change.

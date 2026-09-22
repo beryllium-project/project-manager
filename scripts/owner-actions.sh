@@ -36,7 +36,7 @@
 #   review          list the commits each selected push would publish
 #   push_awb        analysis-workbook          main -> origin
 #   push_tm         threat-modeler             main -> origin
-#   push_xrv        xrv-research-repo          main -> current origin,
+#   push_xrv        cheri-hypervisor-research  main -> current origin,
 #                   and main -> backup when a remote named "backup" exists
 #   push_osr        osr-claude                 main -> origin
 #   push_fvr        formal-verification-research main -> backup, once the
@@ -339,8 +339,7 @@ run() {
 targets=(
     "push_awb|analysis-workbook|$ws_root/analysis-workbook|origin|main|0"
     "push_tm|threat-modeler|$ws_root/threat-modeler|origin|main|0"
-    "push_xrv|xrv-research-repo|$ws_root/xrv-research-repo|origin|main|0"
-    "push_xrv|xrv-research-repo|$ws_root/xrv-research-repo|backup|main|1"
+    "push_xrv|cheri-hypervisor-research|$ws_root/cheri-hypervisor-research|origin|main|0"
     "push_osr|osr-claude|$ws_root/osr-claude|origin|main|0"
     "push_fvr|formal-verification-research|$ws_root/formal-verification-research|backup|main|1"
     "push_sr|security-reviewer|$ws_root/security-reviewer|origin|main|1"
@@ -1116,8 +1115,8 @@ step_fetch_snapshot() {
     local -a entries=("$ws_root" "$pm_root")
     local e dir r url
     for e in helium-te-poc formal-verification-research osr-claude provenance-review \
-        analysis-workbook threat-modeler security-reviewer beryllium-hypervisor cheri-riscv-notes-repo \
-        xrv-research-repo; do
+        analysis-workbook threat-modeler security-reviewer beryllium-hypervisor cheri-riscv-notes \
+        cheri-hypervisor-research; do
         entries+=("$ws_root/$e")
     done
     for dir in "${entries[@]}"; do

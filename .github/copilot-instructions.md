@@ -20,7 +20,7 @@ Write only:
 - to the Project Manager-owned parent-root artifacts: `../SOT.md`,
   `../COMPONENTS.md`, `../README.md`, `../.gitignore`,
   `../.github/copilot-instructions.md`, the redirect stub `../HANDOFF.md`,
-  and the tracked `../*-repo` symlink objects; and
+  and the tracked component symlink objects; and
 - inside a carry-eligible component, only to carry a recorded request under
   the standing carry authority
   `records/decisions/PMD-20260904-003-standing-carry-authority.md`, in

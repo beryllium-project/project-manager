@@ -122,7 +122,7 @@ read that table directly; otherwise report resolver failure as a blocker
 1. `bash ./scripts/inspect-components.sh components` produces the observed
    state table.
 2. `bash ./scripts/inspect-components.sh symlinks` confirms that every tracked
-   `*-repo` link resolves to the expected repository.
+   component symlink resolves to the expected repository.
 3. `bash ./scripts/inspect-components.sh registry-check` reports rows of
    `../COMPONENTS.md` whose observed revision differs from the live HEAD.
 4. Read each component's `HANDOFF.md`, `outbox/`, and, when they changed,
