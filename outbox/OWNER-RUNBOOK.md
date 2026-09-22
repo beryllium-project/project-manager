@@ -343,16 +343,21 @@ accept H0, authorize H1-H4, or establish Beryllium hardware validation.
 
 ## Push the completed coordination carries
 
-The maintained helper is documented here for a future separately authorized
-turn and targets parent `main -> upstream`; it is not authorized now.
+The responsible human selected exact scope `"both"` for Project Manager
+`165b15b -> origin/main` and parent `72a6c42 -> upstream/main`. Human-run
+`scripts/owner-actions.sh --only push_pm` completed both normal
+fast-forwards; `scratch/owner-actions/owner-actions-20260922T060342Z.log`
+records exact `ls-remote` verification. Independent inspection reports both
+clean branches synchronized 0/0. That authorization is consumed.
 
 PMR-091 is complete; its one authorized push has been consumed and grants no
 later push authority. The opt-in `owner-actions.sh --helium-branches` path
-belongs to historical PMR-018 and remains outside PMR-091. No default or
-opt-in helper step, parent, Project Manager, component, branch, or tag push is
-authorized this turn.
+belongs to historical PMR-018 and remains outside PMR-091. No further default
+or opt-in helper step, parent, Project Manager, component, branch, or tag push
+is authorized.
 
-**Not authorized this turn - do not run:**
+**No further push is authorized - do not run again without a new exact
+responsible-human confirmation:**
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
