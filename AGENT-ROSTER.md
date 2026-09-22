@@ -254,7 +254,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; tasking startup adoption `PMR-069`; restored clean direct checkout observed at `e5740de`, then carried to `c55065c` and `784be93` | none configured | Owner |
 | `osr-claude/` | Copilot skill `.github/skills/os-security-research/`; `.github/copilot-instructions.md`; `HANDOFF.md`; active private successor at owner return `49fbfd6`; tasking startup adoption `PMR-070` | `tools/md-to-html.sh --check` | Owner |
 | `cheri-riscv-notes` | `meta/handoff.md`; `CONTRIBUTING.md`; `.github/` policy files; no agent definition observed; active private successor at owner return `9a4c5ef`; tasking startup adoption `PMR-071` | `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build [owner/repo]` (successor identity is the default) | Human |
-| `cheri-hypervisor-research` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; active private successor at owner return `456c70b`; tasking startup adoption `PMR-072` | none configured | Owner |
+| `cheri-hypervisor-research` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; PMR-040 qualified selective incorporation return `d5d33a2`; active private successor reviewed history remains backed up through `d618935`; tasking startup adoption `PMR-072` | none configured | Owner |
 
 ## Orchestration rules
 

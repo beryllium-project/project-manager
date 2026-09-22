@@ -12,13 +12,14 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
 - **Observed state:** the renamed tracked symlink resolves to clean `main` at
-  owner return `456c70b`, behind 0 / ahead 2 of last-fetched private active
+  PMR-040 return `d5d33a2`, behind 0 / ahead 4 of last-fetched private active
   `origin/main` at `d618935`; live reachability is `unknown`.
   `legacy-backup/main` remains `706e708`; `msft-inactive/main` remains
   `ca41490` and was unreachable with the active credential. The active
   successor preserves history through `d618935`, including `REV-*` and
-  `COLLAB.md`; `PMR-045` is closed and deferred backup request `PMR-075`
-  covers the two local owner documentation commits
+  `COLLAB.md`; `PMR-040` and `PMR-045` are closed. Deferred backup request
+  `PMR-075` covers the two earlier owner documentation commits; dependent
+  `PMR-092` separately covers PMR-040 work `38a69bd` and return `d5d33a2`
 
 ## Role
 
@@ -61,8 +62,12 @@ Manager to allocate or change review IDs, integrate guest branches, edit
 research, or push. `PMR-039` is superseded because active private
 `origin/main` now preserves `d618935`; `PMR-075` separately asks whether to
 back up local owner documentation commits `22095a1` and `456c70b`.
-`PMR-040` asks the XRV owner to review the proposed architecture in
-analysis-workbook commit `a46dba2`.
+`PMR-040` is closed by qualified selective incorporation work `38a69bd` and
+HANDOFF-only return `d5d33a2`: source-aware record `REV-20260922-001`
+incorporates immutable mutation-record and cross-layer assurance obligations
+as proposed architecture, corrects rollback wording, and defers the Helium
+parity plan without selecting a target or comparator baseline. `PMR-092`
+tracks those two local commits after PMR-075.
 After the verified successor in `PMR-045`, `PMR-058` asks the owner to
 triage the new double-trap specification, QEMU support series, and corrected
 exact OpenSBI pointer from `PML-0028..0031`; they do not establish target
@@ -82,7 +87,8 @@ the successor starts private. The organization rename is complete
 existing private backup and old Microsoft-origin home remain explicit
 inactive-reference remotes. History through `d618935`, including `REV-*` and
 `COLLAB.md`, is reachable. Owner documentation commits `22095a1` and
-`456c70b` remain local pending `PMR-075`.
+`456c70b` remain local pending `PMR-075`; PMR-040 commits `38a69bd` and
+`d5d33a2` remain local under dependent `PMR-092`.
 Microsoft-origin repository state remains an inactive historical
 reference. The responsible human later renamed and retargeted the workspace
 symlink to the verified active successor. `PMR-072` asks the owner context to

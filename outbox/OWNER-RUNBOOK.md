@@ -177,37 +177,15 @@ append the structured Project Manager return with exact commit, validation,
 branch, and backup state.
 ```
 
-## P2 repository actions
-
-### PMR-040 - XRV review of proposed architecture
-
-Start the XRV owner and provide analysis-workbook commit `a46dba2`:
-
-```sh
-cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research
-copilot
-```
-
-First say:
-
-```text
-Load and follow the `cross-repo-collaboration` skill before using sibling
-research or analysis. Analysis-workbook has no root COLLAB.md, so do not
-create one or write that repository; return completed-use evidence through
-its owner and the Project Manager.
-```
-
-Ask the owner to review:
-
-- `../analysis-workbook/sessions/AWB-20260914-002-cheri-hypervisor-security-model/cheri-hypervisor-security-model.md`;
-- `../analysis-workbook/sessions/AWB-20260914-002-cheri-hypervisor-security-model/capability-resource-correspondence.md`;
-- `../analysis-workbook/sessions/AWB-20260914-002-cheri-hypervisor-security-model/helium-cheri-parity-plan.md`.
-
-Return `incorporate`, `qualify`, `defer`, or `decline` through XRV's handoff
-with exact commit and paths. Do not select an implementation target, approve
-a comparator baseline, or push without a separate human decision.
-
 ## Completed - do not rerun
+
+`PMR-040` is closed at qualified selective incorporation work `38a69bd` and
+HANDOFF-only return `d5d33a2`. The owner recorded source-aware
+`REV-20260922-001`, incorporated only proposed immutable mutation-record and
+cross-layer assurance refinements, corrected rollback wording, and deferred
+the Helium parity plan. No target, comparator baseline, implementation,
+approval, publication, backup, or formal-verification gate follows. Dependent
+P3 `PMR-092` separately tracks backup of those two commits after PMR-075.
 
 `PMR-067` and `PMR-083` are closed at final owner return correction
 `416b2e9`, following tasking implementation `9b726c1`, structured return
@@ -280,20 +258,32 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   automation/CI, and contribution practices. Preserve fact/inference/proposal/
   unknown labels; do not write peer repositories or infer human gates.
 - **P3 PMR-075:** XRV owner documentation commits `22095a1` and `456c70b`
-  remain local two ahead of last-fetched `origin/main` at `d618935`. The
+  are the first two commits in clean `main`'s current four-commit outgoing
+  range from last-fetched `origin/main` at `d618935`. The
   active credential could not reach that remote in the 21:53Z helper run, so
   wait for an authorized credential. Then review only that range and, if
-  explicitly confirmed in the owner turn, push it without force:
+  explicitly confirmed in the owner turn, fast-forward only the PMR-075
+  boundary without force:
 
   ```sh
   cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research
   git status --short --branch
-  git log --oneline origin/main..main
-  git diff --stat origin/main..main
+  git log --oneline d618935..456c70b
+  git diff --stat d618935..456c70b
+  git push origin 456c70b:refs/heads/main
   ```
 
-  The successor research history and `PMR-045` are already complete; this is
-  a non-blocking backup decision and includes no research or symlink change.
+  `origin/main..main` now includes later PMR-040 commits `38a69bd` and
+  `d5d33a2`, which belong to PMR-092 and must not be pushed under PMR-075.
+  The generic `push_xrv` helper pushes the branch tip and is therefore not a
+  valid PMR-075 execution path. The successor research history and PMR-045
+  are already complete; this is a non-blocking backup decision and includes
+  no research or symlink change.
+- **P3 PMR-092:** after PMR-075 is independently resolved, review exactly
+  `456c70b..d5d33a2` and decide whether to fast-forward back up PMR-040 work
+  `38a69bd` plus return `d5d33a2` to private active `origin/main`. Do not
+  combine this with PMR-075, force, tags, inactive remotes, publication,
+  research changes, target/baseline selection, acceptance, or any other gate.
 - **Withdrawn PMR-073:** `PMD-20260918-003` records that the proven owner-worker path
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
@@ -396,10 +386,11 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-hypervisor-research` reviewed history through `d618935` is backed up on
-  active private `origin/main`; local owner documentation commits `22095a1`
-  and `456c70b` remain two ahead under `PMR-075`; inactive
-  `legacy-backup/main` remains `706e708`;
+- `cheri-hypervisor-research` reviewed history through `d618935` is backed up
+  on active private `origin/main`; earlier owner documentation commits
+  `22095a1` and `456c70b` remain outgoing under `PMR-075`, and PMR-040 work
+  `38a69bd` plus return `d5d33a2` under dependent PMR-092, leaving clean
+  `main` four ahead; inactive `legacy-backup/main` remains `706e708`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` is already backed up through synchronized owner maintenance
@@ -414,8 +405,13 @@ the restored formal-verification clone has only `origin`. It will not push
 component's own approved workflow or direct a later Project Manager change to
 retarget the helper; do not create a duplicate remote implicitly.
 
-For XRV, `push_xrv` now targets active private `origin` and corresponds only
-to deferred `PMR-075`; inactive `legacy-backup` is not a push target.
+For XRV, `push_xrv` targets active private `origin`; inactive
+`legacy-backup` is not a push target. Since PMR-040 closure, clean `main`
+`d5d33a2` is four ahead of `origin/main` `d618935`, so a branch-tip push
+would also deliver PMR-092's commits. `push_xrv` is therefore not a valid
+PMR-075 execution path. PMR-075 alone requires the explicit partial-ref push
+shown above after review, or a new responsible-human decision to combine
+PMR-075 and PMR-092 into one authorized four-commit backup.
 
 The helper prompts before every push, warns on a dirty worktree and skips it
 automatically only under `--yes`, never forces, and does not publish. Report
