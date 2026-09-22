@@ -12,9 +12,11 @@ preloaded. The Project Manager never runs it. The selected CHERI batch
 PMR-009/051/071 and XRV batch PMR-058/072 each became one human launch
 command. Verified owner returns now close PMR-051/071 at CHERI notes
 `6ac70af` and PMR-058/072 at corrected XRV return `07e86ab`; PMR-009 remains
-untouched pending two D4 decisions. Class-1 analysis-workbook carry `5a646df`
-applies accepted status for PMQ-027/028/030. PMR-093/094/095 keep the three
-new backup ranges separate. No component push or human gate was inferred.
+untouched pending two D4 decisions. The later human-started PMR-009 session
+records both explicit approvals, owner work `e95922f`, and return `6cb15e3`;
+class-1 carry `8da398d` applies PMQ-008/011 statuses. PMR-096/097 keep those
+two later backup commits separate. No component push, D5 licensing resolution,
+publication, or broader gate was inferred.
 
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 **Project Manager repository:** `project-manager/`, branch `main`
@@ -34,13 +36,13 @@ new backup ranges separate. No component push or human gate was inferred.
 | Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. PMR-091 is closed: only private `for-review` fast-forwarded `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved; independent inspection confirms clean synchronized 0/0 state. `main`, other branches, tags, `public`, remotes, and helpers were excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
 | Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
 | XRV | Clean `cheri-hypervisor-research` `main` at corrected PMR-058/072 return `07e86ab`, behind 0 / ahead 9 of last-fetched `origin/main` `d618935`. PMR-058 records unique pointer-only `REV-20260922-002..004` as arrived/awaiting review with no adoption; PMR-072 activates exact tasking startup and current path wording. PMR-040/058/072 are closed and the owner reservation released. PMR-075, PMR-092, and dependent PMR-094 keep the three backup ranges separate. |
-| Analysis-workbook | Clean `main` at Project Manager carry `5a646df`, behind 0 / ahead 23 of last-fetched `origin/main` `1ef1ac6`. The carry changes only `outbox/pm-queue.md`, applying accepted status for PML-0028/0029/0031 after verified PMR-058 pointer records. Earlier closure ranges remain PMR-085/088/089; dependent PMR-095 separately tracks `5a646df`. No analysis/session content changed. |
-| CHERI-RISC-V notes | Clean `docs/reconcile-project-status` at final PMR-071 return `6ac70af`, behind 0 / ahead 5 of last-fetched active `origin` `9a4c5ef`; `main` remains synchronized at `6553092`. PMR-051 corrects current paths/status and returns; PMR-071 activates exact fail-closed tasking with a 27-mutation regression. Both are closed and PMR-093 tracks the range. PMR-009 remains open and untouched pending PMQ-008/011 D4 decisions; corpus and publication gates remain unchanged. |
+| Analysis-workbook | Clean `main` at Project Manager carry `8da398d`, behind 0 / ahead 24 of last-fetched `origin/main` `1ef1ac6`. Carries `5a646df` and `8da398d` change only `outbox/pm-queue.md`, applying accepted status for verified PMR-058 and PMR-009 records. Earlier closure ranges remain PMR-085/088/089; PMR-095/097 separately track the two carries. No analysis/session content changed. |
+| CHERI-RISC-V notes | Clean `docs/reconcile-project-status` at PMR-009 return `6cb15e3`, behind 0 / ahead 7 of last-fetched active `origin` `9a4c5ef`; `main` remains synchronized at `6553092`. PMR-051/071/009 are closed. The owner return records separate explicit D4 approvals and metadata-only pointers `seaborn2015exploiting` / `ender2020unpatchable`; D5 licensing, redistribution, publication, Pages, merge, and push gates remain open. PMR-093 and PMR-096 keep the five-commit and two-commit backup ranges separate. |
 | Formal verification | Clean `main` at `784be93`, two ahead of last-fetched `origin/main`; live reachability was unavailable under the active credential at 2026-09-16 21:53Z and has not been retested for that remote. The latest carry adds metadata-only `PMQ-023`; `PMR-037` remains open for remote/handoff wording. |
 | Other drift | OS-security is clean and synchronized at active private successor return `49fbfd6`; root `58f8023` is restricted-free, while complete old private history remains at inactive `legacy-personal/main` `e275544`. The personal quarantine exists empty with clean history; no restricted file was opened or copied. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | Security-reviewer is clean and synchronized at owner commit `2e8d205`; all four profiles use `gpt-5.3-codex` / `max` / `long_context`, the tasking startup contract is active, `PMR-062`, `PMR-065`, and `PMR-074` are closed independently, and no engagement ran. |
 | Remote access | Human-run helper completed the exact CHERI/XRV consolidation coordination pushes: Project Manager `165b15b..74220dc` to `origin/main` and parent `72a6c42..560a921` to `upstream/main`; both are independently observed synchronized 0/0. The authorization is consumed. No component repository, PMR-075, tag, force, remote mutation, publication, or release push is authorized. |
-| Queues | 30 source-discovery rows / 30 source ledger rows plus one transfer row are exact. `PMQ-027`, `028`, and corrected `030` are accepted from pointer-only XRV records and source status is applied at analysis-workbook `5a646df`; `PMQ-029` remains rejected from prior carry `c7cc0fa`. `PMQ-008` and `011` remain routed pending D4; `HET-001` remains `recorded`/`unaccepted`. |
+| Queues | 30 source-discovery rows / 30 source ledger rows plus one transfer row are exact, with no source row awaiting PM disposition. `PMQ-027`, `028`, and corrected `030` are applied at carry `5a646df`; D4-approved `PMQ-008` and `011` are applied at `8da398d`; `PMQ-029` remains rejected from prior carry `c7cc0fa`. `HET-001` remains `recorded`/`unaccepted`. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
 | Cross-repo collaboration | `PMD-20260917-001` requires owner tasking to load `cross-repo-collaboration` when destination work consumes sibling research/analysis. Source `COLLAB.md` budgets remain controlling; missing or read-only ledgers grant no source write. Completed-use evidence is recorded only after destination work and validation. |
@@ -68,11 +70,11 @@ development.
 | --- | --- | --- | --- |
 | P3 | `PMR-085` | **Blocked - private reachability unknown** | Back up the prior analysis-workbook range through `ea72522` after review; no handshake, analysis disposition, or gate follows. |
 | P3 | `PMR-088` | **Blocked by `PMR-085`; not dispatched** | After the prior range is independently resolved, review and back up only PMR-086 commits `efbfdb8` and `858a73b`; this separates downstream backup from the completed fixture task and grants no gate. |
-| P3 | `PMR-009` | **Ready - one owner launch; two D4 answers remain** | One preloaded CHERI owner session asks PMQ-008 and PMQ-011 admission questions one at a time; PMR-051/071 are complete. |
 | P3 | `PMR-014`, `037`, `041`, `069` | **Ready - formal-verification owner maintenance** | Triage routed bibliography pointers and clean up remote/handoff/tasking wording; no verification or licensing claim follows. |
 | P3 | `PMR-075` | **Blocked - active credential cannot currently reach XRV `origin`** | Once an authorized credential is available, optionally push the two earlier owner documentation commits; reviewed research history is already recorded as backed up by the prior owner return. |
 | P3 | `PMR-092` | **Blocked by `PMR-075`; not dispatched** | After PMR-075 is independently resolved, separately review and back up only PMR-040 work `38a69bd` and return `d5d33a2`; no research or human gate changes. |
 | P3 | `PMR-093` | **Ready for separate private-backup review** | Review the exact five-commit CHERI PMR-051/071 batch; PMR-009 and corpus paths are excluded. |
+| P3 | `PMR-096` | **Blocked by `PMR-093`; not dispatched** | After the earlier CHERI range is resolved, separately review PMR-009 work `e95922f` and return `6cb15e3`; D5/publication gates remain separate. |
 | P3 | `PMR-094` | **Blocked by `PMR-075`/`092`; not dispatched** | After earlier XRV ranges are resolved, separately review the five PMR-058/072 commits. |
 | P3 | `PMR-090` | **Ready to review; push blocked pending separate publication authorization** | Review active history through `416b2e9`, candidate branch `6e93461`, and the component publication gate before separately deciding whether either ref may be pushed to the public-project origin; supersedes PMR-082 and changes no H0/R8-C gate. |
 | P3 | `PMR-064`, `066` | **Ready - separate component-owner configuration actions** | Add deterministic tasking startup to threat and provenance contexts; process reliability only, with each owner acting separately. |
@@ -80,6 +82,7 @@ development.
 | P3 | `PMR-053`, `054` | **Blocked by `PMR-052`** | XRV cap-talk review and workbook follow-up cannot begin until the archive result returns. |
 | P4 | `PMR-089` | **Range frozen; blocked by `PMR-085`/`088` and private access** | Review and back up only the twelve-commit `858a73b..8b5a301` housekeeping range after the earlier ranges are resolved; no owner work, analysis result, or gate follows. |
 | P4 | `PMR-095` | **Blocked by `PMR-085`/`088`/`089`** | Separately back up only analysis-workbook carry `5a646df` after all earlier ranges; no analysis or source-admission gate follows. |
+| P4 | `PMR-097` | **Blocked by `PMR-095`** | Separately back up only analysis-workbook carry `8da398d`; no analysis, D5, or publication gate follows. |
 | P4 | `PMR-052` | **Blocked - waiting on cap-talk archive owners** | The responsible human is already pursuing the external response; no agent action is useful until it arrives. |
 | P4 | `PMR-077` | **Blocked - responsible human completing external K3 COM260 bring-up** | When that separate project is ready, return only non-sensitive readiness and platform facts needed to decide whether Beryllium H0/H1 planning inputs can be prepared; completion is not Beryllium hardware validation or authorization. |
 | P4 | `PMR-068` | **Parked - project complete** | Helium tasking-startup maintenance remains open but non-urgent; the Helium owner acts if it is resumed, and no gate follows. |
@@ -87,16 +90,13 @@ development.
 
 ### One recommended next action
 
-Continue hardware bring-up. PMR-051/071 and PMR-058/072 are complete. When
-ready to answer the two genuine D4 questions, launch only PMR-009; no prompt
-paste is required:
+Continue hardware bring-up. All five selected PMRs are closed; no P1/P2 work
+remains. Choose a ready P3 owner-maintenance/source-triage item only when it
+fits external priorities.
 
-```sh
-bash ./project-manager/scripts/owner-session.sh launch \
-  cheri-riscv-notes PMR-009
-```
-
-Only the two CHERI D4 admission questions require human answers.
+No open Project Manager question remains. CHERI D5 licensing,
+redistribution, publication, Pages, merge, and push gates stay open and
+unasked.
 
 ### Minimal restart commands
 
@@ -115,11 +115,23 @@ git -C .. status --short --branch
 
 ## What changed in this turn
 
+- Verified and closed PMR-009 at work `e95922f` and HANDOFF-only return
+  `6cb15e3`; the owner records separate explicit D4 approvals, two
+  metadata-only canonical/curated pointers, clean 0/7 state, no push, and a
+  released reservation. The component table cannot self-embed its return
+  commit, so the Project Manager binds `6cb15e3` by read-only Git inspection.
+  D5/licensing/publication gates remain open.
+- Set PML-0008/0011 `accepted` and carried only the two printed class-1
+  source-status edits at clean analysis-workbook commit `8da398d`.
+- Allocated dependent PMR-096 for exact PMR-009 range
+  `6ac70af..6cb15e3` after PMR-093 and PMR-097 for exact carry range
+  `5a646df..8da398d` after PMR-095.
 - Independently verified and closed PMR-051/071 at CHERI notes return
   `6ac70af`; exact five-commit range is clean, 0/5, leaves
   `references/`, `wiki/`, and `sok/` unchanged, and explicitly does not act
-  on PMR-009. That explicit non-disposition is accepted evidence, while the
-  request remains open for D4. PMR-093 tracks backup.
+  on PMR-009. At that checkpoint the explicit non-disposition kept the
+  request open for D4; the later PMR-009 closure above supersedes that state.
+  PMR-093 tracks backup.
 - Independently revalidated and closed PMR-058/072 at corrected XRV return
   `07e86ab`; provenance labels match authoritative PMQ states, three unique
   pointer-only arrivals remain awaiting review, tasking/path work is exact,
@@ -127,7 +139,9 @@ git -C .. status --short --branch
   tracks the later range.
 - Set PML-0028/0029/0031 `accepted` and carried only the printed class-1
   source-status edits at clean analysis-workbook commit `5a646df`; PMR-095
-  tracks that one later carry. PMR-009 and PML-0008/0011 remain open/routed.
+  tracks that one later carry. At that checkpoint PMR-009 and
+  PML-0008/0011 remained open/routed; the later closure/carry above supersedes
+  that state.
 - Recorded `PMD-20260922-003`: human owner sessions use one generated launch
   command and preloaded private packet; no owner prompt copying.
 - Added human-run `scripts/owner-session.sh` with `prepare` and `launch`
@@ -140,14 +154,14 @@ git -C .. status --short --branch
   explicit component-agent launch, and captured CLI arguments.
 - Replaced current owner prompt-copy instructions with one-command prepared
   batches. The completed sessions returned durable evidence; future direct
-  owner launches use the same mechanism. PMR-009 remains one command that
-  asks D4 questions interactively.
+  owner launches use the same mechanism. PMR-009 used one later command to
+  ask and record both D4 decisions.
 - The Project Manager did not launch a component session or write owner
   content. Subsequent human-started sessions produced the verified returns
   above; no human gate, push, publication, or broader Project Manager
   authority was inferred.
-- The `PMD-20260922-003` follow-up is satisfied and consumed for
-  PMR-051/071 and PMR-058/072; PMR-009 remains the one selected exception.
+- The `PMD-20260922-003` follow-up is satisfied and consumed for all five
+  selected PMRs.
 - Previous turn (sixty-third): verified PMR-040 owner work `38a69bd` and
   return `d5d33a2`, closed PMR-040, and allocated PMR-092.
 - Verified XRV owner work `38a69bd` and HANDOFF-only return `d5d33a2`;
@@ -642,7 +656,6 @@ Previous turn (thirty-sixth):
 | P3 | `PMR-014` | Triage the five original formal-verification bibliography pointers. |
 | P3 | `PMR-037` | Refresh formal-verification remote/handoff wording; bibliography formatting is complete at `784be93`. |
 | P3 | `PMR-041` | Formal-verification owner triages the later `PMQ-021` and `PMQ-023` pointers. |
-| P3 | `PMR-009` | CHERI notes owner triages the two remaining source pointers under the current BibTeX-first D4 gate. |
 | P3 | `PMR-053` | After `PMR-052`, XRV reviews only materially relevant returned cap-talk threads in the verified successor. |
 | P3 | `PMR-054` | After verified OS-security and XRV returns, analysis-workbook appends the revision-bound follow-up inquiry. |
 | P3 | `PMR-064` | Add the explicit fail-closed tasking startup contract to threat-modeler and its maintainer. |
@@ -651,12 +664,14 @@ Previous turn (thirty-sixth):
 | P3 | `PMR-075` | After review, decide whether to push XRV owner documentation commits `22095a1` and `456c70b` to private active `origin/main`; the successor research history through `d618935` is already backed up. |
 | P3 | `PMR-092` | After PMR-075 is independently resolved, separately review and back up only PMR-040 work `38a69bd` and return `d5d33a2`. |
 | P3 | `PMR-093` | Review and optionally back up exact CHERI PMR-051/071 range `9a4c5ef..6ac70af`; PMR-009 is excluded. |
+| P3 | `PMR-096` | After PMR-093, separately review and back up PMR-009 work/return range `6ac70af..6cb15e3`. |
 | P3 | `PMR-094` | After PMR-075/092, separately review and back up XRV PMR-058/072 range `d5d33a2..07e86ab`. |
 | P3 | `PMR-090` | Review Beryllium active history through `416b2e9`, candidate branch `6e93461`, and the component publication gate before a separate responsible-human decision on pushing either ref to the public-project origin. |
 | P3 | `PMR-085` | Back up analysis-workbook through `ea72522` when authorized private access is available. |
 | P3 | `PMR-088` | After `PMR-085` is independently resolved, review and separately back up only PMR-086 commits `efbfdb8` and `858a73b`; it was not dispatched or combined with the owner run. |
 | P4 | `PMR-089` | The twelve-commit `858a73b..8b5a301` range is frozen; after `PMR-085`/`088` are resolved and private access is authorized, review and separately back it up. |
 | P4 | `PMR-095` | After PMR-085/088/089, separately review and back up only analysis-workbook carry `5a646df`. |
+| P4 | `PMR-097` | After PMR-095, separately review and back up only analysis-workbook carry `8da398d`. |
 | P4 | `PMR-052` | Waiting on the cap-talk archive owners' response; the responsible human is working on it. |
 | P4 | `PMR-077` | Waiting for the responsible human to complete external K3 COM260 bring-up and return readiness for a later Beryllium hardware-bring-up decision. |
 | P4 | `PMR-068` | Parked because the responsible human states the project is complete; deterministic Helium tasking-startup maintenance remains open and grants no gate. |
@@ -742,17 +757,18 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - `HANDOFF.md`
 - `outbox/OWNER-RUNBOOK.md`
 - `outbox/tasking/README.md`
-- `outbox/component-requests.md` (PMR-051/058/071/072 closed;
-  PMR-093/094/095 allocated; PMR-009 remains open)
-- `queue/LEDGER.md` (PML-0028/0029/0031 accepted and applied)
+- `outbox/component-requests.md` (PMR-009/051/058/071/072 closed;
+  PMR-093/094/095/096/097 allocated)
+- `queue/LEDGER.md` (PML-0008/0011 and PML-0028/0029/0031 accepted/applied)
 - `components/cheri-riscv-notes.md`
 - `components/cheri-hypervisor-research.md`
 - `components/analysis-workbook.md`
-- `../cheri-riscv-notes/meta/handoff.md` at `6ac70af`
+- `../cheri-riscv-notes/meta/handoff.md` at `6cb15e3`
 - `../cheri-hypervisor-research/HANDOFF.md` at `07e86ab`
 - CHERI owner range `9a4c5ef..6ac70af`
+- PMR-009 owner range `6ac70af..6cb15e3`
 - XRV owner range `d5d33a2..07e86ab`
-- analysis-workbook carry `5a646df`
+- analysis-workbook carries `5a646df` and `8da398d`
 - `../.github/copilot-instructions.md`
 - `../README.md`
 - `../COMPONENTS.md`
@@ -762,12 +778,14 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 
 ## Validation and commit state
 
-The required write-disabled sixty-fourth-turn audit (`claude-opus-5`, `max`,
-`long_context`) found no blocking discrepancy. Its stale/minor findings were
-reconciled: current component/backup state, no-copy collaboration prompts,
-component-card packet input, dual dispatch paths, PMR-009 non-disposition,
-return-format deviation, `launch`-only locking, and historical queue-status
-wording are now explicit.
+The initial write-disabled sixty-fourth-turn audit (`claude-opus-5`, `max`,
+`long_context`) found no blocking discrepancy. The final PMR-009 closure audit
+found one blocking stale recommendation that still called the already-answered
+D4 questions open; it and every stale/minor finding were reconciled. Current
+component/backup state, no-copy collaboration prompts, component-card packet
+input, dual dispatch paths, completed PMR-009, owner-reported D4 evidence,
+return self-reference binding, `launch`-only locking, and queue status are now
+explicit.
 
 A focused `claude-opus-5` code review found and the implementation fixes:
 
@@ -785,8 +803,9 @@ Current pre-commit checks pass:
 - `bash ./scripts/pull-queues.sh check`: 31 source rows / 31 ledger rows;
 - `bash ./scripts/pull-queues.sh edits`: no edit due;
 - `bash ./scripts/inspect-components.sh registry-check`: every component
-  exact at `5a646df`, `6ac70af`, and `07e86ab`;
-- Project Manager, parent, and analysis-workbook `git diff --check`: passed.
+  exact at `8da398d`, `6cb15e3`, and `07e86ab`;
+- Project Manager, parent, analysis-workbook, and CHERI notes
+  `git diff --check`: passed.
 
 ## Provenance
 
@@ -794,9 +813,11 @@ Current pre-commit checks pass:
   place owner instructions for the agent to use; automate prompt/task
   transfer so the human only performs critically required actions and does
   not act as an agent.
-- Current owner results: CHERI PMR-051/071 final return `6ac70af` and XRV
-  PMR-058/072 corrected return `07e86ab`; both reservations are released,
-  PMR-009 was not executed, and no component was pushed.
+- Current owner results: CHERI PMR-051/071 final return `6ac70af`, later
+  PMR-009 work `e95922f` / return `6cb15e3`, and XRV PMR-058/072 corrected
+  return `07e86ab`; all reservations are released and no component was
+  pushed. PMR-009 was not executed in the first CHERI batch, then completed
+  in its separate owner session.
 - Previous owner result: PMR-040 work `38a69bd` and durable return `d5d33a2`,
   initiated after the responsible human selected PMR-040 while continuing
   hardware bring-up.
@@ -1053,13 +1074,13 @@ Current pre-commit checks pass:
   `"add to project todo: create a git maintainer agent which can be invoked
   by project manager agent, and requested by sub agents"`.
 - Queue state: `scripts/pull-queues.sh list`, `edits`, and `check`; 31/31,
-  only PMQ-008/011 remain awaiting, and no edit is due after carry `5a646df`.
+  no source row remains awaiting, and no edit is due after carry `8da398d`.
 - Analysis-workbook owner evidence: clean synchronized owner commit
   `1ef1ac6`; session handoff is complete, and PMR-059's repository
   handoff/structured return closed at `e6c8aad`.
 - Analysis-workbook carries: clean-state and instruction checks preceded both
-  changes; `c7cc0fa` applies PML-0030, and `5a646df` applies
-  PML-0028/0029/0031.
+  changes; `c7cc0fa` applies PML-0030, `5a646df` applies
+  PML-0028/0029/0031, and `8da398d` applies PML-0008/0011.
 - Security-reviewer history: Project Manager carry `79c664f` closed
   `PMR-060` and was then four ahead; owner commit `f2051a4` now closes
   `PMR-062`/`PMR-065` and is synchronized 0/0 with private `origin/main`.

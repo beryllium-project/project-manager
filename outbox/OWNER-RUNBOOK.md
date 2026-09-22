@@ -146,18 +146,10 @@ For tracked symlinks, record `pwd` and `pwd -P`; if logical `PWD` is not
 preserved, stop and use the `PM_TASKING_ROOT` / `PM_TASKING_WORKSPACE`
 fallback documented by `PMD-20260915-008`.
 
-The selected PMR-051/071 and PMR-058/072 batches are complete and verified;
-do not rerun them. PMR-009 remains selected but blocked on two genuine D4
-answers. Do not copy a prompt; run one command from the workspace root:
-
-```sh
-bash ./project-manager/scripts/owner-session.sh launch \
-  cheri-riscv-notes PMR-009
-```
-
-The command prepares and preloads the full revision-bound owner packet, uses
-interactive `copilot --no-auto-update --yolo`, and asks PMQ-008 and PMQ-011
-one at a time. The human does not precompose or paste either decision.
+The selected PMR-009/051/071 and PMR-058/072 batches are complete and
+verified; do not rerun them. Future ordinary owner work uses the same
+one-command launcher and preloaded packet; never ask the human to paste a
+prompt.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
@@ -187,6 +179,12 @@ P3 `PMR-092` separately tracks backup of those two commits after PMR-075.
 corrected XRV return `07e86ab`; analysis-workbook carry `5a646df` mirrors the
 three accepted pointer statuses. PMR-093, PMR-094, and PMR-095 keep their
 three later backup ranges separate.
+
+`PMR-009` is now also closed at owner work `e95922f` / return `6cb15e3` after
+separate explicit D4 approvals. Analysis-workbook carry `8da398d` mirrors
+PML-0008/0011. PMR-096 and PMR-097 keep the two later backup commits
+separate; D5 licensing, redistribution, publication, Pages, merge, and push
+gates remain open.
 
 `PMR-067` and `PMR-083` are closed at final owner return correction
 `416b2e9`, following tasking implementation `9b726c1`, structured return
@@ -290,12 +288,17 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   fast-forward only `docs/reconcile-project-status` to its private active
   origin. The five commits close PMR-051/071 and do not touch PMR-009,
   `references/`, `wiki/`, or `sok/`.
+- **P3 PMR-096:** after PMR-093, separately review
+  `6ac70af..6cb15e3` and decide whether to back up PMR-009 work `e95922f`
+  plus return `6cb15e3`. D5/publication/Pages remain separate.
 - **P3 PMR-094:** after PMR-075 and PMR-092 are independently resolved,
   review exactly `d5d33a2..07e86ab` and decide whether to back up the five
   PMR-058/072 commits. Do not combine the three XRV backup scopes without a
   new responsible-human decision.
 - **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
   analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
+- **P4 PMR-097:** after PMR-095, separately review and back up only
+  analysis-workbook carry `8da398d` (`5a646df..8da398d`).
 - **Withdrawn PMR-073:** `PMD-20260918-003` records that the proven owner-worker path
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
@@ -308,22 +311,6 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   handoff to state that the restored clone tracks the reachable
   `beryllium-project` repository as `origin`. The bibliography-format half
   was carried at `784be93`.
-
-## Additional P3 source triage
-
-- **PMR-009:** the CHERI notes owner decides whether to record
-  analysis-workbook rows `PMQ-008` (Rowhammer/PTE privilege
-  escalation) and `PMQ-011` (Starbleed). The current queue rows remain
-  `new`; ledger rows `PML-0008` and `PML-0011` remain `routed`. Use these
-  metadata-only pointers under the component's current human inclusion gate:
-
-  | Field | PMQ-008 | PMQ-011 |
-  | --- | --- | --- |
-  | Title | Exploiting the DRAM rowhammer bug to gain kernel privileges | The Unpatchable Silicon: A Full Break of the Bitstream Encryption of Xilinx 7-Series FPGAs (Starbleed) |
-  | Authors | Mark Seaborn; Thomas Dullien | Maik Ender; Amir Moradi; Christof Paar |
-  | Year / type / venue | 2015 / blog / Google Project Zero | 2020 / paper / USENIX Security |
-  | Stable locator | The Project Zero URL in `../analysis-workbook/outbox/pm-queue.md` row `PMQ-008` | The USENIX presentation URL in row `PMQ-011` |
-  | Scope note | Hardware-fault counter-source: PTE bit flips as a privilege-escalation path outside a capability model | FPGA-readback counter-source: configuration-interface secrets recovered from the device |
 
 ## External Beryllium dependency
 
@@ -369,7 +356,7 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `5a646df` is twenty-three ahead of last-fetched
+- `analysis-workbook` clean `main` `8da398d` is twenty-four ahead of last-fetched
   `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
   `858a73b`, followed by PMR-038 HANDOFF-only commits `f7079fb` and
@@ -378,8 +365,8 @@ The relevant local component commits are:
   PMR-059 work `9d76048` / return `e6c8aad`, and PMR-063 work `62bd071` /
   return `8b5a301`. The first range remains exact backup request `PMR-085`;
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
-  freezes the twelve-commit post-`858a73b` closure range at `8b5a301`, and
-  PMR-095 separately tracks carry `5a646df`;
+  freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
+  PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
 - `beryllium-hypervisor/` active/default return `416b2e9` is twelve ahead of
   `origin`; local candidate branch `beryllium/r8-h0-pmr-080` is `6e93461`
   with no upstream. It is excluded from generic helper delivery and remains
@@ -388,9 +375,9 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-riscv-notes` clean topic branch `6ac70af` is five ahead of
-  last-fetched active origin `9a4c5ef`; exact range PMR-093 excludes PMR-009
-  and all corpus paths;
+- `cheri-riscv-notes` clean topic branch `6cb15e3` is seven ahead of
+  last-fetched active origin `9a4c5ef`; PMR-093 tracks the first five
+  non-corpus commits, and PMR-096 separately tracks PMR-009 work/return;
 - `cheri-hypervisor-research` reviewed history through `d618935` is backed up
   on active private `origin/main`; earlier owner documentation commits
   `22095a1` and `456c70b` remain outgoing under `PMR-075`, and PMR-040 work
