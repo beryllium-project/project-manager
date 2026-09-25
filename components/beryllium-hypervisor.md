@@ -18,14 +18,26 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at final owner return `416b2e9`, behind
-  zero and twelve ahead of `origin/beryllium/single-hart-runtime-r0`; local candidate branch
-  `beryllium/r8-h0-pmr-080` is `6e93461` with no upstream. `PMR-067` and
-  `PMR-083` are closed; the responsible human's `"all ready"`, given in
-  direct response to the Project Manager's Beryllium owner-session release
-  request, releases the owner-session lock. The responsible human states the
-  origin is now in the public project; the local inspector does not
-  independently verify remote visibility. Publication follow-up is `PMR-090`
+  `beryllium/single-hart-runtime-r0` at `80345e1`, behind zero and ahead zero
+  of last-fetched `origin/beryllium/single-hart-runtime-r0`. This is thirteen
+  owner commits after the registered PMR-067/083 return `416b2e9`.
+  Last-fetched refs contain active/default `80345e1` and renamed
+  `origin/historical_he/*` refs. Local candidate `6e93461` and local R8-C/H0
+  branch tip `0d53120` have no remote-tracking containment. The latest
+  component return instead records last-fetched upstream `f05ccb3`, predicts
+  the first later commit at ahead 13, and says no fetch, push, remote change,
+  publication, or backup occurred; PMR-098 requires the owner to reconcile
+  that return with the observed remote advance and namespace rename. The later series
+  adds a component-side exact-target acceptance record, KVM0/B0/B1
+  orientation, repository-rehoming and historical-ref guidance, and identity
+  policy, but no canonical PMR return covers the complete range. The
+  responsible human selected `defer` for Project Manager acceptance
+  reconciliation in `PMD-20260925-001`; `PMR-098` requests the complete
+  return and `PMR-099` is the dependent KVM0 planning request. `PMR-090`
+  remains open for unresolved visibility, publication, and ref scope.
+  Maintained component records at `80345e1` call the active repository and
+  `origin` private, conflicting with the responsible human's earlier statement
+  that origin is in the public project
 
 ## Role
 
@@ -43,20 +55,24 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 - Plans, implementation authorization, exact-target acceptance, validation
   evidence, push, tag, publication, and release are distinct gates. Never infer
   or record responsible-human acceptance.
-- Accepted implementation work is bounded through R7. R8-C plan target
-  `f47ae60` is accepted as plan text only; it grants no implementation
-  authorization, implementation base/relation, H0 acceptance, or successor
-  H0 candidate. The branch contains committed blocked H0 candidate `6e93461`;
-  committed content is not H0 acceptance. Privileged H1-H4 work is not
-  authorized and K3 hardware remains `NOT RUN`.
+- Project Manager acceptance remains bounded through R7 under
+  `PMD-20260925-001`. R8-C plan target `f47ae60` is accepted as plan text.
+  The component at `80345e1` records exact H0/R8-C target `1999ee7` as
+  accepted, but the responsible human deferred Project Manager
+  reconciliation of that claim; Project Manager records therefore continue
+  to treat R8-H0 as a committed candidate that is not accepted. Older blocked
+  candidate `6e93461` remains local. Privileged H1-H4 work is not authorized
+  and K3 hardware remains `NOT RUN`.
 - Prefer `./be` for maintained workflows. Do not bypass the checked launchers
   or exact accepted-revision controls with ad hoc build inputs. Authorized
   R8-H0 work uses `./tests/r8/run-make.sh r8-check` with the component's
   fresh-worktree validation requirements.
-- The responsible human states the repository has moved to the public project;
-  local inspection does not verify this. Public visibility does not itself
-  approve release. Public release, Linux submission, and human sign-off remain
-  separately controlled. Automation must
+- The responsible human previously stated the repository moved to the public
+  project, while maintained component records at `80345e1` call the active
+  repository and `origin` private. Local inspection does not authenticate
+  visibility. `PMR-098` requires the owner to reconcile that conflict.
+  Visibility does not itself approve release. Public release, Linux
+  submission, and human sign-off remain separately controlled. Automation must
   not add a human `Signed-off-by`, approve public release, or edit
   `pathfinder/publication-gate.conf`.
 - The root Makefile is an inspectable lower-level graph without a `help`
@@ -101,8 +117,24 @@ commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
 than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
-decision. H0 remains
-unaccepted, H1-H4 unauthorized, and K3 `NOT RUN`.
+decision. Read-only inspection now observes active/default `80345e1`
+synchronized with last-fetched `origin`, but local `6e93461` and `0d53120`
+remain without remote-tracking containment and the Project Manager has no
+same-turn publication-authorization record for the observed active update.
+The request therefore remains open.
+
+`PMR-098` requests a canonical owner return for the exact thirteen-commit
+range `416b2e9..80345e1`, including validation, active-session, backup/ref,
+visibility, and publication state, including an account of the observed
+`origin` advance and `helium/* -> historical_he/*` namespace rename.
+`PMD-20260925-001` records the responsible human's
+choice to defer Project Manager reconciliation of the component-side
+`1999ee7` acceptance claim; until a separate decision, Project Manager state
+remains R8-H0 committed but unaccepted. `PMR-099` is blocked by PMR-098 and a
+separate responsible-human selection; if selected, it prepares only one exact
+decision-neutral KVM0 plan. KVM0 build/execution, B0, development-kernel/BSP
+selection, B1, a retained H0 successor, H1-H4, publication, and release remain
+separate gates. H1-H4 are unauthorized and K3 remains `NOT RUN`.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize
