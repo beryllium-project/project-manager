@@ -26,12 +26,13 @@
   and two Wiki pages. The component handoff still contains only the verified
   PMR-009 return and no return for these edits. The responsible human
   classified this state as `unfinished`; it is an active coordination lock
-  and no new CHERI owner session may launch. Current owner-session liveness is
-  `unknown`. P1 `PMR-101` directly tasks the CHERI owner context through the
-  maintained resolver to validate and return this work, or record a precise
-  blocked result; no human prompt relay is required. `PMR-009`, `PMR-051`,
-  and `PMR-071` remain closed and must not be rerun. `PMR-093` and
-  `PMR-096` are withdrawn so PMR-101 is the sole open CHERI row. Inactive
+  and no unbound CHERI owner session may launch. The responsible human later
+  confirmed the prior owner session is closed. P1 `PMR-101` is the sole open
+  row, and `PMD-20260926-004` plus exact
+  `../outbox/owner-recovery/PMR-101.tsv` permit only the human-run
+  fingerprinted recovery launcher; no human prompt relay is required.
+  `PMR-009`, `PMR-051`, and `PMR-071` remain closed and must not be rerun.
+  `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`.
@@ -96,6 +97,17 @@ retained change or returns `blocked`, appends the
 final active-session status. Preserve the work in place; do not launch
 another writer, push, merge, publish, enable Pages, or infer a new source or
 D5 disposition until PMR-101 returns a clean durable checkpoint.
+
+The exact recovery command is human-run from the workspace root:
+
+```sh
+bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-101
+```
+
+It refuses any change to the recorded branch, HEAD, thirteen-path status,
+Project Manager commit/request blob, sole visible request, or writer lock and
+retains its packet, terminal transcript, and before/after state log under
+ignored Project Manager scratch.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

@@ -90,6 +90,16 @@ ignored `scratch/owner-sessions/` and starts interactive
 `copilot --no-auto-update --yolo`; it creates no pre-launch component write,
 hidden owner worker, gate grant, or push.
 
+`scripts/owner-recovery.sh` is human-run only and this agent never executes
+it. Under `PMD-20260926-004`, it may restart exactly one responsible-human-
+confirmed closed owner session while preserving one recorded dirty worktree.
+It requires a committed exact recovery specification, sole visible open PMR,
+matching branch/HEAD/porcelain status and tracked-diff SHA-256, current clean
+PM tasking, no conflict or untracked path, and the shared writer lock. It
+writes only ignored Project Manager packet, transcript, and state-log files
+before/after Copilot and grants no
+retroactive component authority, gate, push, remote change, or publication.
+
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,
 the parent, and any component. Quote the confirmation in `HANDOFF.md`. A

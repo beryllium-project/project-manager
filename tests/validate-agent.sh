@@ -152,6 +152,8 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" "$roster" \
     "$repository_root/records/assurance/helium-te-fv-pathfinder.md" \
     "$repository_root/queue/README.md" "$repository_root/queue/LEDGER.md" \
     "$repository_root/outbox/component-requests.md" \
+    "$repository_root/outbox/owner-recovery/README.md" \
+    "$repository_root/outbox/owner-recovery/PMR-101.tsv" \
     "$repository_root/templates/owner-agent-response.md" \
     "$repository_root/templates/owner-return.md" \
     "$repository_root/templates/decision.md" \
@@ -159,6 +161,22 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" "$roster" \
     "$repository_root/templates/request-row.md"; do
     require_file "$f"
 done
+
+owner_recovery=$repository_root/scripts/owner-recovery.sh
+require_file "$owner_recovery"
+require_pattern "$owner_recovery" '^set -euo pipefail$'
+require_text "$owner_recovery" 'HUMAN-RUN'
+require_text "$owner_recovery" 'outbox/owner-recovery'
+require_text "$owner_recovery" 'prior owner session is not recorded closed'
+require_text "$owner_recovery" 'component dirty state does not match the recovery specification'
+require_text "$owner_recovery" 'component tracked diff does not match the recovery specification'
+require_text "$owner_recovery" 'recovery requires exactly one visible component request'
+require_text "$owner_recovery" 'script --quiet --flush --return'
+require_text "$owner_recovery" 'GIT_OPTIONAL_LOCKS=0'
+require_text "$owner_recovery" 'the available script command is not the required util-linux implementation'
+require_text "$owner_recovery" 'request table changed before Copilot launch'
+require_text "$owner_recovery" 'component branch changed before Copilot launch'
+expect_pass "owner-recovery passes bash -n" bash -n "$owner_recovery"
 
 for component in helium-te-poc formal-verification-research osr-claude \
     beryllium-hypervisor cheri-riscv-notes cheri-hypervisor-research provenance-review \
@@ -431,6 +449,27 @@ require_text "$repository_root/outbox/component-requests.md" 'context `long_cont
 require_text "$repository_root/scripts/project-tasking.sh" 'dispatch_request()'
 require_text "$repository_root/scripts/project-tasking.sh" '# Project Manager dispatch packet v1'
 require_text "$repository_root/scripts/project-tasking.sh" 'it writes and launches nothing'
+recovery_record=$repository_root/records/decisions/PMD-20260926-004-closed-dirty-owner-recovery.md
+require_file "$recovery_record"
+require_text "$recovery_record" '**Status:** recorded'
+require_text "$recovery_record" 'scripts/owner-recovery.sh'
+for f in "$agent" "$skill" "$instructions" "$interface" "$readme" "$roster" \
+    "$repository_root/outbox/tasking/README.md"; do
+    require_text "$f" 'PMD-20260926-004'
+    require_text "$f" 'owner-recovery.sh'
+done
+require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20260926-004'
+require_text "$repository_root/../.github/copilot-instructions.md" 'owner-recovery.sh'
+require_text "$repository_root/../README.md" 'PMD-20260926-004'
+require_text "$repository_root/../README.md" 'owner-recovery.sh'
+require_text "$repository_root/outbox/owner-recovery/PMR-101.tsv" \
+    'component cheri-riscv-notes'
+require_text "$repository_root/outbox/owner-recovery/PMR-101.tsv" \
+    'request PMR-101'
+require_text "$repository_root/outbox/owner-recovery/PMR-101.tsv" \
+    'prior-session closed'
+require_text "$repository_root/outbox/owner-recovery/PMR-101.tsv" \
+    'tracked-diff-sha256 6736270acf9ef1f908718679884d3e5b83699526debdafcbac9c33e48677422d'
 
 require_text "$auditor" 'You never edit, execute, run Git, use the web'
 require_text "$auditor" 'not decisions, dispositions, or'
@@ -497,6 +536,20 @@ expect_output "inspect-components state reports no upstream" "upstream	none" \
 expect_output "inspect-components status includes the parent section" \
     "== parent coordination repository ==" \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" status
+printf 'base\n' >"$synth/beryllium-hypervisor/fingerprint.txt"
+git -C "$synth/beryllium-hypervisor" add fingerprint.txt
+git -C "$synth/beryllium-hypervisor" \
+    -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q -m "fingerprint fixture"
+printf 'dirty\n' >>"$synth/beryllium-hypervisor/fingerprint.txt"
+expect_output "inspect-components fingerprints a tracked dirty state" \
+    "tracked-diff-sha256	" \
+    env PM_WORKSPACE_ROOT="$synth" bash "$inspect" fingerprint beryllium-hypervisor
+git -C "$synth/beryllium-hypervisor" checkout -q -- fingerprint.txt
+printf 'untracked\n' >"$synth/beryllium-hypervisor/untracked.txt"
+expect_exit "inspect-components fingerprint rejects untracked state" 1 \
+    env PM_WORKSPACE_ROOT="$synth" bash "$inspect" fingerprint beryllium-hypervisor
+rm -f -- "$synth/beryllium-hypervisor/untracked.txt"
 
 registry=$synth/COMPONENTS.md
 {
@@ -604,17 +657,23 @@ tasking=$repository_root/scripts/project-tasking.sh
 tasking_workspace=$sandbox/tasking-workspace
 tasking_pm=$tasking_workspace/project-manager
 tasking_target=$sandbox/tasking-symlink-target
+recovery_component=$tasking_workspace/recovery-component
 owner_session_scratch=$sandbox/owner-session-scratch
+owner_recovery_scratch=$sandbox/owner-recovery-scratch
 mkdir -p "$tasking_pm/components" "$tasking_pm/outbox/tasking" "$tasking_pm/scripts" \
-    "$tasking_workspace/direct-component/.github/agents" "$tasking_target"
+    "$tasking_pm/outbox/owner-recovery" \
+    "$tasking_workspace/direct-component/.github/agents" "$tasking_target" \
+    "$recovery_component"
 cp "$tasking" "$tasking_pm/scripts/project-tasking.sh"
 cp "$owner_session" "$tasking_pm/scripts/owner-session.sh"
+cp "$owner_recovery" "$tasking_pm/scripts/owner-recovery.sh"
 chmod +x "$tasking_pm/scripts/owner-session.sh"
 ln -s "$tasking_target" "$tasking_workspace/symlink-component"
 printf '/outbox/tasking/*.md\n/scratch/\n' >"$tasking_pm/.gitignore"
 printf '# direct-component\n' >"$tasking_pm/components/direct-component.md"
 printf '# symlink-component\n' >"$tasking_pm/components/symlink-component.md"
 printf '# other-component\n' >"$tasking_pm/components/other-component.md"
+printf '# recovery-component\n' >"$tasking_pm/components/recovery-component.md"
 cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 # Component requests
 
@@ -626,10 +685,34 @@ cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 | PMR-004 | 2000-01-01 | other-component | Coordinate with `direct-component`. | Fixture basis. | open | P1 | Not applicable | Cross-component note. |
 | PMR-006 | 2000-01-01 | project-manager | Keep this task self-managed. | Fixture basis. | open | P2 | Not applicable | Self-managed note. |
 | PMR-007 | 2000-01-01 | direct-component | Do the second direct task. | Second fixture basis. | open | P3 | Not applicable | Second direct note. |
+| PMR-008 | 2000-01-01 | recovery-component | Recover the exact dirty work. | Recovery fixture basis. | open | P1 | Not applicable | Sole recovery task. |
+EOF
+git -C "$recovery_component" init -q -b main
+printf 'base\n' >"$recovery_component/work.txt"
+git -C "$recovery_component" add work.txt
+git -C "$recovery_component" \
+    -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q -m "recovery component fixture"
+recovery_head=$(git -C "$recovery_component" rev-parse HEAD)
+printf 'dirty\n' >>"$recovery_component/work.txt"
+recovery_diff_sha=$(
+    git -C "$recovery_component" -c diff.external= \
+        diff --binary --full-index --no-ext-diff --no-textconv HEAD -- |
+        sha256sum | awk '{ print $1 }'
+)
+cat >"$tasking_pm/outbox/owner-recovery/PMR-008.tsv" <<EOF
+component	recovery-component
+request	PMR-008
+branch	main
+head	$recovery_head
+prior-session	closed
+tracked-diff-sha256	$recovery_diff_sha
+status	 M work.txt
 EOF
 git -C "$tasking_pm" init -q
 git -C "$tasking_pm" add .gitignore components outbox/component-requests.md \
-    scripts/project-tasking.sh scripts/owner-session.sh
+    outbox/owner-recovery/PMR-008.tsv scripts/project-tasking.sh \
+    scripts/owner-session.sh scripts/owner-recovery.sh
 git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -qm "tasking fixture"
 git -C "$tasking_workspace/direct-component" init -q -b main
@@ -654,6 +737,7 @@ expect_exit "project-tasking generates committed request views" 0 \
     bash "$tasking" generate
 require_file "$tasking_pm/outbox/tasking/direct-component.md"
 require_file "$tasking_pm/outbox/tasking/other-component.md"
+require_file "$tasking_pm/outbox/tasking/recovery-component.md"
 require_file "$tasking_pm/outbox/tasking/symlink-component.md"
 require_text "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-004'
 require_text "$tasking_pm/outbox/tasking/direct-component.md" '| Assigned to |'
@@ -904,6 +988,116 @@ expect_exit "owner-session rejects a dirty component" 1 \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
     bash "$owner_session" prepare direct-component PMR-001
 rm -f -- "$tasking_workspace/direct-component/untracked.txt"
+
+expect_exit "owner-recovery rejects missing arguments" 2 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$owner_recovery" prepare recovery-component
+expect_exit "owner-recovery rejects an unknown mode" 2 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$owner_recovery" bogus recovery-component PMR-008
+expect_exit "owner-recovery prepares the exact dirty state" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    bash "$owner_recovery" prepare recovery-component PMR-008
+recovery_packets=("$owner_recovery_scratch"/*.md)
+if ((${#recovery_packets[@]} == 1)); then
+    pass "owner-recovery writes one private packet"
+    recovery_packet=${recovery_packets[0]}
+    require_text "$recovery_packet" '# Human-started dirty owner recovery packet v1'
+    require_text "$recovery_packet" '**Recovery request:** `PMR-008`'
+    require_text "$recovery_packet" '**Expected tracked diff SHA-256:**'
+    require_text "$recovery_packet" ' M work.txt'
+    require_text "$recovery_packet" 'Recover the exact dirty work.'
+else
+    fail "owner-recovery did not write exactly one private packet"
+fi
+expect_exit "owner-recovery launches Copilot with the recovery packet" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+    bash "$owner_recovery" launch recovery-component PMR-008
+require_text "$copilot_capture" '--no-auto-update'
+require_text "$copilot_capture" '--yolo'
+require_text "$copilot_capture" "$recovery_component"
+require_text "$copilot_capture" 'Read the complete owner-recovery packet at '
+recovery_logs=("$owner_recovery_scratch"/*.log)
+recovery_transcripts=("$owner_recovery_scratch"/*.typescript)
+if ((${#recovery_logs[@]} == 1 && ${#recovery_transcripts[@]} == 1)); then
+    pass "owner-recovery retains one state log and transcript"
+    require_text "${recovery_logs[0]}" 'copilot-exit: 0'
+    require_text "${recovery_logs[0]}" 'post-status:'
+else
+    fail "owner-recovery did not retain exactly one log and transcript"
+fi
+rm -f -- "$copilot_ready"
+recovery_first_capture=$sandbox/recovery-first-argv.txt
+env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$recovery_first_capture" \
+    COPILOT_READY="$copilot_ready" COPILOT_SLEEP=2 \
+    bash "$owner_recovery" launch recovery-component PMR-008 >/dev/null 2>&1 &
+recovery_pid=$!
+for _ in $(seq 1 20); do
+    [[ -e $copilot_ready ]] && break
+    sleep 0.1
+done
+if [[ -e $copilot_ready ]]; then
+    pass "owner-recovery first writer holds the shared launcher lock"
+    expect_exit "owner-recovery rejects a concurrent recovery writer" 1 \
+        env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+        PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+        PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+        COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+        bash "$owner_recovery" launch recovery-component PMR-008
+else
+    fail "owner-recovery first writer did not reach Copilot"
+fi
+wait "$recovery_pid"
+if (($? == 0)); then
+    pass "owner-recovery releases the shared writer lock on exit"
+else
+    fail "owner-recovery first writer failed"
+fi
+printf 'unexpected\n' >>"$recovery_component/work.txt"
+expect_exit "owner-recovery rejects changed dirty state" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    bash "$owner_recovery" prepare recovery-component PMR-008
+printf 'base\ndirty\n' >"$recovery_component/work.txt"
+sed -i $'s/prior-session\tclosed/prior-session\tunknown/' \
+    "$tasking_pm/outbox/owner-recovery/PMR-008.tsv"
+expect_exit "owner-recovery rejects a prior session not recorded closed" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    bash "$owner_recovery" prepare recovery-component PMR-008
+git -C "$tasking_pm" checkout -q -- outbox/owner-recovery/PMR-008.tsv
+printf 'status\t?? untracked.txt\n' >>"$tasking_pm/outbox/owner-recovery/PMR-008.tsv"
+expect_exit "owner-recovery rejects an untracked recovery specification" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    bash "$owner_recovery" prepare recovery-component PMR-008
+git -C "$tasking_pm" checkout -q -- outbox/owner-recovery/PMR-008.tsv
+git -C "$recovery_component" checkout -q -- work.txt
+expect_exit "owner-recovery rejects a clean component" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    bash "$owner_recovery" prepare recovery-component PMR-008
+printf 'dirty\n' >>"$recovery_component/work.txt"
+cat >>"$tasking_pm/outbox/component-requests.md" <<'EOF'
+| PMR-009 | 2000-01-01 | recovery-component | Do another recovery task. | Additional recovery fixture basis. | open | P2 | Not applicable | Additional visible recovery row. |
+EOF
+git -C "$tasking_pm" add outbox/component-requests.md
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -qm "multiple recovery task fixture"
+env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate >/dev/null
+expect_exit "owner-recovery rejects multiple visible requests" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+    bash "$owner_recovery" prepare recovery-component PMR-008
 
 rm -f -- "$tasking_pm/outbox/tasking/symlink-component.md"
 expect_exit "project-tasking dispatch rejects a missing component view" 1 \

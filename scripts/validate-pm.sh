@@ -508,5 +508,50 @@ else
     pass "scripts/owner-session.sh checks skipped for fixture without scripts"
 fi
 
+# --- owner-recovery (human-run) -------------------------------------------
+# Recovery is a human-run exact dirty-state exception. Static checks preserve
+# its committed-specification, shared-lock, transcript, dispatch, and
+# no-remote/no-destructive-operation boundaries.
+
+owner_recovery=$root/scripts/owner-recovery.sh
+if [[ -f $owner_recovery ]]; then
+    if grep -Fq 'HUMAN-RUN launcher' "$owner_recovery"; then
+        pass "scripts/owner-recovery.sh declares itself human-run"
+    else
+        fail "scripts/owner-recovery.sh does not declare itself human-run"
+    fi
+    if bash -n "$owner_recovery"; then
+        pass "scripts/owner-recovery.sh passes bash -n"
+    else
+        fail "scripts/owner-recovery.sh fails bash -n"
+    fi
+    if grep -Fq 'outbox/owner-recovery' "$owner_recovery" &&
+       grep -Fq 'bash "$tasking" dispatch "$component" "$request"' "$owner_recovery" &&
+       grep -Fq 'flock -n "$lock_fd"' "$owner_recovery" &&
+       grep -Fq 'script --quiet --flush --return' "$owner_recovery" &&
+       grep -Fq 'GIT_OPTIONAL_LOCKS=0' "$owner_recovery" &&
+       grep -Fq 'tracked_diff_sha256' "$owner_recovery"; then
+        pass "scripts/owner-recovery.sh binds exact specs, digest, dispatch, lock, and transcript"
+    else
+        fail "scripts/owner-recovery.sh lost its spec, digest, dispatch, lock, or transcript binding"
+    fi
+    if grep -Ev '^[[:space:]]*#' "$owner_recovery" |
+        grep -Eq 'git_safe .* (push|fetch|remote|tag|reset|clean|checkout|stash|add|commit)([[:space:]]|$)'; then
+        fail "scripts/owner-recovery.sh contains a prohibited component Git command"
+    else
+        pass "scripts/owner-recovery.sh contains no prohibited component Git command"
+    fi
+    if grep -Ev '^[[:space:]]*#' "$owner_recovery" |
+        grep -E '(^|[;&|()[:space:]])git[[:space:]]' |
+        grep -Fv 'git -c core.hooksPath=/dev/null' |
+        grep -q .; then
+        fail "scripts/owner-recovery.sh contains Git outside its sanitized wrapper"
+    else
+        pass "scripts/owner-recovery.sh uses Git only through its sanitized wrapper"
+    fi
+else
+    pass "scripts/owner-recovery.sh checks skipped for fixture without scripts"
+fi
+
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"
 ((fail_count == 0))

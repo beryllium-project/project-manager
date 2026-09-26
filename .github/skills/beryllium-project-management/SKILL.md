@@ -55,6 +55,15 @@ research, analysis, threat models, provenance findings, or human decisions.
   `scratch/owner-sessions/` and starts interactive
   `copilot --no-auto-update --yolo`; it creates no pre-launch component
   write, owner worker, gate grant, or push.
+- `scripts/owner-recovery.sh` is a separate human-run, exact-state recovery
+  path under `PMD-20260926-004`; the Project Manager never executes it. It
+  requires a responsible-human record that the prior owner session closed, a
+  committed PMR-specific specification, one visible request, exact
+  branch/HEAD/dirty-status and tracked-diff SHA-256 agreement, current clean
+  PM tasking, no conflict or untracked path, and the shared writer lock. It
+  writes only ignored Project Manager packet,
+  transcript, and state-log files around Copilot. It is not a general dirty
+  bypass and grants no retroactive component authority or human gate.
 - `git push`, `git remote`, `gh repo create`, tags, and publication require an
   explicit user confirmation in the same turn, quoted in `HANDOFF.md`, for
   this repository, the parent, and any component. A carried commit leaves the

@@ -190,8 +190,9 @@ governance, adoption, redistribution, and release remain human decisions.
 
 The maintained helpers target the Beryllium Linux workstation and require Bash
 4 or later, Git, and GNU userland tools including `awk`, `sed`, `grep`,
-`sort`, `sha256sum`, and `mktemp`, plus util-linux `flock`. Missing tools are
-reported as hard limitations; the agent never installs them implicitly.
+`sort`, `sha256sum`, and `mktemp`, plus util-linux `flock` and `script`.
+Missing tools are reported as hard limitations; the agent never installs them
+implicitly.
 
 ## Layout
 
@@ -207,6 +208,7 @@ records/assurance/                           assurance-transfer records
 records/decisions/PMD-YYYYMMDD-NNN-*.md      decision records
 queue/LEDGER.md                              ledger-first dispositions of component queue rows
 outbox/component-requests.md                 requests to component owners, each with a priority; three classes carried by the agent
+outbox/owner-recovery/                       exact tracked dirty-recovery specifications
 outbox/tasking/README.md                     contract for ignored generated per-component tasking views
 outbox/OWNER-RUNBOOK.md                      open items by priority with exact human steps (refreshed each turn)
 outbox/owner-edits/                          exact text of the recorded owner-side edits applied by the human-run helper
@@ -215,6 +217,7 @@ templates/owner-agent-response.md            live PM/owner response and guided-q
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
 scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet and interactive copilot --yolo launch
+scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and copilot --yolo launch
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
 ```
@@ -223,6 +226,7 @@ tests/validate-agent.sh                      component contract suite
 
 ```sh
 bash ./scripts/inspect-components.sh components
+bash ./scripts/inspect-components.sh fingerprint <component>
 bash ./scripts/inspect-components.sh status
 bash ./scripts/inspect-components.sh registry-check
 bash ./scripts/inspect-components.sh refs <component> [<ref>...]
@@ -235,6 +239,8 @@ bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
 bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
 bash ./scripts/owner-session.sh prepare <component> <PMR-NNN>...
 bash ./scripts/owner-session.sh launch <component> <PMR-NNN>...
+bash ./scripts/owner-recovery.sh prepare <component> <PMR-NNN>
+bash ./scripts/owner-recovery.sh launch <component> <PMR-NNN>
 bash ./scripts/new-record.sh decision <slug>
 bash ./scripts/validate-pm.sh
 bash ./tests/validate-agent.sh
@@ -291,6 +297,31 @@ validation uses only sandbox state and a Copilot stub. The helper writes no
 component file before Copilot starts, invokes no hidden owner worker, grants
 no gate, and performs no push. The human starts the real command and answers
 only genuine unresolved gates.
+
+## Closed dirty owner recovery (human-run)
+
+Ordinary owner launch intentionally refuses a dirty component. When the
+responsible human confirms the prior owner session closed and the Project
+Manager records one exact preserved dirty state under `PMD-20260926-004`, run
+the request-specific recovery command from the workspace root:
+
+```sh
+bash ./project-manager/scripts/owner-recovery.sh launch <component> <PMR-NNN>
+```
+
+The launcher requires a committed `outbox/owner-recovery/<PMR-NNN>.tsv`, one
+visible directly assigned request, exact branch/HEAD/porcelain-status
+agreement and tracked full-index binary-diff SHA-256, current clean PM
+tasking, no merge conflict or untracked path, and the shared per-component
+writer lock. It preloads the exact packet into interactive
+Copilot and records a terminal transcript plus before/after state under
+ignored `scratch/owner-recoveries/`. The Project Manager agent never runs
+this helper. It writes no component file before Copilot starts and never
+cleans, stashes, resets, stages, commits, pushes, or changes a remote.
+Recovery supplies coordination, not retroactive authority for dirty content;
+missing component authority returns a blocked owner result. The transcript is
+private ignored scratch and may contain sensitive interactive output; never
+quote secrets or private locators from it into durable records.
 
 ## Owner actions (human-run)
 

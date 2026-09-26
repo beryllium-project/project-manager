@@ -179,6 +179,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Queue ledger | `queue/LEDGER.md` | Ledger-first dispositions; see `queue/README.md` |
 | Component requests | `outbox/component-requests.md` | Requests to component owners; those inside the three classes of `PMD-20260904-003` are carried by this agent and closed with the component commit, every other request is carried by the human |
 | Generated tasking views | `outbox/tasking/<component>.md` | Ignored local projections generated from the committed request table after each PM commit; resolved only while the recorded PM commit and request blob are current |
+| Dirty owner recovery specifications | `outbox/owner-recovery/<PMR-NNN>.tsv` | Project Manager-owned exact branch/HEAD/status fingerprints for a responsible-human-confirmed closed owner session; consumed only by the human-run recovery launcher |
 | Exact dispatch packet | `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` | Read-only selection of one directly assigned open row, bound to the current PM commit and request blob; emitted by the Project Manager or embedded by the human-run owner launcher, never by a component agent; writes and launches nothing |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
 | Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked component symlink objects | Project Manager-owned; edited and committed in the parent repository. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
@@ -288,6 +289,21 @@ collaboration triggers, validation/local-commit/owner-return requirements,
 and explicit no-gate/no-push boundaries. It creates no component file before
 Copilot starts, invokes no hidden owner worker, and does not alter the
 Project Manager's authority.
+
+`scripts/owner-recovery.sh` is a separate **human-run** launcher for the
+bounded case recorded by `PMD-20260926-004`: the responsible human confirms
+the previous owner session closed, but one exact dirty worktree must be
+preserved and resumed. The Project Manager never executes it. A committed
+`outbox/owner-recovery/<PMR-NNN>.tsv` binds one open directly assigned
+request to the exact component, branch, full HEAD, and complete porcelain
+status plus the SHA-256 of the tracked full-index binary diff. Untracked
+recovery states are refused. The launcher requires that request to be the
+sole visible row, shares the ordinary launcher lock, rejects conflicts and
+every fingerprint or PM tasking change, and writes only ignored PM packet,
+transcript, and state-log files around Copilot. It never cleans, stashes, resets, stages, commits,
+pushes, changes a remote, or writes a component before Copilot starts. Dirty
+recovery grants no retroactive content authority or human gate; a clean
+component uses `owner-session.sh`.
 
 ## Queue protocol (ledger-first)
 

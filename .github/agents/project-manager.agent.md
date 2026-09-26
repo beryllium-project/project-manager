@@ -166,6 +166,16 @@ under ignored `scratch/owner-sessions/`, and starts interactive
 `copilot --no-auto-update --yolo`. It creates no pre-launch component write,
 hidden owner worker, gate grant, or push.
 
+`scripts/owner-recovery.sh` is a separate human-run exception under
+`PMD-20260926-004` for one exact dirty component state after the responsible
+human records the prior owner session closed. This agent never runs it. It requires a committed
+`outbox/owner-recovery/<PMR-NNN>.tsv`, one visible directly assigned open
+request, exact branch/HEAD/status and tracked-diff SHA-256 agreement, current
+clean Project Manager tasking, no merge conflict or untracked path, and the
+shared writer lock. It preloads Copilot,
+writes only ignored PM scratch, and grants no retroactive content authority,
+gate, push, or component write by the Project Manager.
+
 Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 
 The `agent` tool may invoke an adopted component-local owner profile under

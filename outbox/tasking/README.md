@@ -102,6 +102,26 @@ state and an explicit Copilot stub. This path invokes no hidden owner worker
 and grants no gate, push, remote mutation, publication, or expanded write
 scope.
 
+## Human-started closed dirty recovery
+
+Ordinary owner launch refuses dirty state. Under `PMD-20260926-004`, when the
+responsible human has recorded the prior owner session closed, the Project
+Manager may commit one exact
+`outbox/owner-recovery/<PMR-NNN>.tsv` and give the human:
+
+```sh
+bash ./project-manager/scripts/owner-recovery.sh launch <component> <PMR-NNN>
+```
+
+The recovery request must be the sole visible row. The human-run helper
+requires exact branch, full HEAD, complete porcelain-status, and tracked
+full-index binary-diff SHA-256 agreement, current committed tasking, no
+conflict or untracked path, and the same per-component writer lock as
+`owner-session.sh`. It preloads the exact dispatch packet and writes
+only ignored PM packet, transcript, and state logs before/after Copilot. The
+Project Manager agent never executes it. Recovery is not a general dirty
+bypass and grants no content authority, gate, push, or remote operation.
+
 When a selected request consumes, incorporates, qualifies, or applies sibling
 research or analysis, the generated owner-session packet carries the
 `cross-repo-collaboration` trigger automatically. The human does not paste a

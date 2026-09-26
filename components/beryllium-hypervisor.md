@@ -17,18 +17,19 @@
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
-- **Observed state:** see `../../COMPONENTS.md`. Dirty active/default branch
-  `beryllium/single-hart-runtime-r0` at `d490183`, behind zero and ahead seven
+- **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
+  `beryllium/single-hart-runtime-r0` at `abd092a`, behind zero and ahead eight
   of last-fetched `origin/beryllium/single-hart-runtime-r0` at `80345e1`.
-  Seven modified paths are all under `tests/kvm0/`: `README.md`, four checker
-  or report scripts, the contract JSON, and `test-rejections.mjs`;
-  `run-make.sh` is no longer dirty. `PMD-20260926-002` records the exact K0-A plan
+  Commit `abd092a` changes seven `tests/kvm0/` paths with 3,016 insertions
+  and 297 deletions and follows offline-tooling commits `1795400` and
+  `d490183`. `PMD-20260926-002` records the exact K0-A plan
   acceptance and closes plan-only PMR-099. The component still has no
   canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
-  `PMR-100` return for the later committed/current-session KVM0 series. The
-  dirty worktree is a coordination lock: do not launch another owner session
-  or infer that KVM0 implementation, execution, backup, publication, or
-  either reconciliation request is complete. Last-fetched refs previously contained active/default
+  `PMR-100` return for the later eight-commit KVM0 series. The clean worktree
+  does not release the owner lock without a return: do not launch another
+  owner session or infer that KVM0 implementation authority, execution,
+  backup, publication, or either reconciliation request is complete.
+  Last-fetched refs previously contained active/default
   `80345e1` and renamed `origin/historical_he/*` refs; local candidate
   `6e93461` and local R8-C/H0 branch tip `0d53120` had no remote-tracking
   containment. The responsible human selected `defer` for Project Manager

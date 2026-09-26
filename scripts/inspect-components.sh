@@ -10,6 +10,7 @@ usage() {
     cat >&2 <<'EOF'
 Usage:
   inspect-components.sh components
+  inspect-components.sh fingerprint <component|workspace|project-manager>
   inspect-components.sh refs <component|workspace|project-manager> [<ref>...]
   inspect-components.sh state <component|workspace|project-manager>
   inspect-components.sh symlinks
@@ -18,6 +19,9 @@ Usage:
 
 components      one TSV row per registered entry: name, integration, worktree,
                 branch, head
+fingerprint     exact HEAD/status plus SHA-256 of the tracked full-index
+                binary diff for one entry; refuses untracked or restricted
+                OS-security paths
 refs            local refs, remote-tracking refs as of the last fetch, tags,
                 unmerged collab/* branches relative to main, and optional
                 commit-ref checks for one entry
@@ -167,6 +171,32 @@ git_branch() {
 
 git_porcelain() {
     "${component_git[@]}" status --porcelain 2>/dev/null || true
+}
+
+print_fingerprint() {
+    local requested=$1 status untracked_count diff_sha
+    open_entry "$requested"
+    status=$("${component_git[@]}" status --porcelain=v1 --untracked-files=all)
+    [[ -n $status ]] || die "entry is clean: $requested"
+    if [[ $requested == osr-claude &&
+          $status == *"sources/restricted-microsoft/"* ]]; then
+        die "fingerprint refuses restricted OS-security paths"
+    fi
+    untracked_count=$(printf '%s\n' "$status" | awk 'substr($0, 1, 2) == "??" { n++ } END { print n + 0 }')
+    ((untracked_count == 0)) ||
+        die "fingerprint requires a tracked-only dirty state: $requested"
+    diff_sha=$(
+        "${component_git[@]}" diff --binary --full-index --no-ext-diff --no-textconv HEAD -- |
+            sha256sum | awk '{ print $1 }'
+    ) || die "cannot fingerprint tracked diff: $requested"
+    printf 'entry\t%s\n' "$requested"
+    printf 'branch\t%s\n' "$(git_branch)"
+    printf 'head\t%s\n' "$(git_head)"
+    printf 'tracked-diff-sha256\t%s\n' "$diff_sha"
+    printf 'status-count\t%s\n' "$(printf '%s\n' "$status" | awk 'END { print NR }')"
+    while IFS= read -r line; do
+        printf 'status\t%s\n' "$line"
+    done <<<"$status"
 }
 
 git_upstream() {
@@ -515,6 +545,10 @@ case $mode in
 components)
     (($# == 0)) || { usage; exit 2; }
     print_components_table
+    ;;
+fingerprint)
+    (($# == 1)) || { usage; exit 2; }
+    print_fingerprint "$1"
     ;;
 refs)
     (($# >= 1)) || { usage; exit 2; }

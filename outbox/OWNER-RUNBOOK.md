@@ -28,6 +28,10 @@ must write timestamped output under a Project Manager-owned ignored
 `scratch/` path, print the exact log path, and leave retrieval to the Project
 Manager instead of asking the human to paste command output. If logging cannot
 be made reliable, stop and explain that exception before asking for output.
+The PMR-101 recovery launcher writes its state log and private terminal
+transcript under ignored `scratch/owner-recoveries/` and prints both paths.
+The transcript may contain sensitive interactive output and is never copied
+wholesale into a durable record.
 
 ## Owner-worker closure results
 
@@ -131,16 +135,17 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection later on 2026-09-25 observes dirty active/default
-`beryllium/single-hart-runtime-r0` at `d490183`, behind 0 / ahead 7 of
-last-fetched `origin` `80345e1`. Seven modified paths are all under
-`tests/kvm0/`. The component handoff now includes later K0-A planning and
+Maintained inspection on 2026-09-26 observes clean active/default
+`beryllium/single-hart-runtime-r0` at `abd092a`, behind 0 / ahead 8 of
+last-fetched `origin` `80345e1`. The latest commit changes seven
+`tests/kvm0/` paths and follows `1795400` / `d490183`. The component handoff includes K0-A planning and
 acceptance material. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
 canonical return names open earlier-series `PMR-098` or
-later-series/current-session `PMR-100`. This dirty state is a coordination
-lock: do not run a new Beryllium owner launcher or infer KVM0 implementation,
-execution, backup, publication, or any assurance gate.
+later-series `PMR-100`. The clean worktree does not release the coordination
+lock without a return: do not run a new Beryllium owner launcher or infer
+KVM0 implementation authority, execution, backup, publication, or any
+assurance gate.
 
 The unreconciled range `416b2e9..80345e1` still records the component-side
 exact H0/R8-C acceptance claim for `1999ee7`, the
@@ -155,8 +160,8 @@ should confirm, reject, or defer the component acceptance claim.
 Beryllium is accepted through R7; R8-H0 is committed but not accepted;
 H1-H4 are unauthorized; K3 remains `NOT RUN`.
 
-**P2 `PMR-098` and `PMR-100` are both blocked by the existing dirty owner
-session.** The existing owner must first return a clean durable checkpoint
+**P2 `PMR-098` and `PMR-100` are both blocked by missing owner returns and
+unknown session state.** The existing owner must first return a durable checkpoint
 that names the two exact reconciliation scopes. Only after Project Manager
 verification may a new owner command be generated. K0-I tooling, K0-S source
 preparation/evidence import, K0-X native execution, K0-R result acceptance,
@@ -172,24 +177,25 @@ as `unfinished` and directed the Project Manager to tell the repository what
 is needed instead of using the human as a prompt relay.
 
 PMR-101 is now the sole open CHERI row and direct pull-based task. Current
-owner-session liveness is `unknown`; do not launch a second writer and do not
-ask the human to copy, translate, or select instructions. After the Project
-Manager commit and tasking regeneration, the owner context retrieves the exact
-committed request with:
+responsible-human state is that the prior owner session is closed. Do not ask
+the human to copy, translate, or select instructions. `PMD-20260926-004` and
+the committed exact-state specification provide one fail-closed recovery
+launch from the workspace root:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/cheri-riscv-notes
-bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
+cd /home/jmorris/src/beryllium-project
+bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-101
 ```
 
-It then identifies and justifies the actual scope under the component's own
-rules, validates, commits locally with PMR-101 and the Copilot trailer only if
-existing authority including D4 covers every retained change or returns a
-precise blocked result, refreshes `meta/handoff.md` using
-`templates/owner-return.md`, reports final active-session status, and leaves
-the checkout clean. PMR-093/096 are withdrawn. Do not rerun PMR-009, perform
-backup, push, merge, publish, enable Pages, or decide D4/D5 through this
-request.
+The helper requires exact branch `docs/reconcile-project-status`, full HEAD
+`6cb15e3`, all thirteen status lines, sole visible PMR-101, current clean PM
+tasking, no conflict, and the shared writer lock. It preloads Copilot and logs
+the transcript plus before/after state under ignored
+`scratch/owner-recoveries/`. The recovered owner then justifies scope,
+validates, commits only if existing authority including D4 covers every
+retained change or returns `blocked`, and writes the structured return.
+PMR-093/096 are withdrawn. Do not rerun PMR-009, perform backup, push, merge,
+publish, enable Pages, or decide D4/D5 through this request.
 
 ## Project-wide tasking startup adoption
 
@@ -243,14 +249,14 @@ Backup-only PMR-092 later closes from synchronized private `60d5ceb`.
 `6ac70af`; PMR-009 was untouched. `PMR-058` and `PMR-072` are closed through
 corrected XRV return `07e86ab`; analysis-workbook carry `5a646df` mirrors the
 three accepted pointer statuses. PMR-094 later closes from synchronized
-private `60d5ceb`; PMR-093 and PMR-095 retain their separate CHERI and
-analysis-workbook backup ranges.
+private `60d5ceb`; PMR-093 is withdrawn and PMR-095 retains the separate
+analysis-workbook backup range.
 
 `PMR-009` is now also closed at owner work `e95922f` / return `6cb15e3` after
 separate explicit D4 approvals. Analysis-workbook carry `8da398d` mirrors
-PML-0008/0011. PMR-096 and PMR-097 keep the two later backup commits
-separate; D5 licensing, redistribution, publication, Pages, merge, and push
-gates remain open.
+PML-0008/0011. PMR-096 is withdrawn and PMR-097 keeps the later analysis
+carry backup separate; D5 licensing, redistribution, publication, Pages,
+merge, and push gates remain open.
 
 `PMR-067` and `PMR-083` are closed at their final owner return correction
 `416b2e9`, following tasking implementation `9b726c1`, structured return
@@ -415,9 +421,9 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` is dirty at active/default `d490183`, behind 0 /
-  ahead 7 of last-fetched `origin` `80345e1`; no push path is safe while the
-  current owner session remains active. Local candidate
+- `beryllium-hypervisor/` is clean at active/default `abd092a`, behind 0 /
+  ahead 8 of last-fetched `origin` `80345e1`; no push path is authorized and
+  missing PMR-098/100 returns leave session release unknown. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
   remote-tracking containment. PMR-098 and PMR-100 request distinct canonical
@@ -430,8 +436,8 @@ The relevant local component commits are:
   `main`, `public`, tags, and every other branch were unchanged;
 - `cheri-riscv-notes` is dirty at topic HEAD `6cb15e3`, seven ahead of
   last-fetched active origin `9a4c5ef`, with thirteen unfinished modified
-  paths. P1 PMR-101 is posted directly to its resolver; PMR-093/096 remain
-  blocked and no push path is safe;
+  paths. The prior session is closed; exact recovery is ready for sole P1
+  PMR-101. PMR-093/096 are withdrawn and no push path is authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later
