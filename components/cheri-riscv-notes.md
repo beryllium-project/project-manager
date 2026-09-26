@@ -26,13 +26,15 @@
   and two Wiki pages. The component handoff still contains only the verified
   PMR-009 return and no return for these edits. The responsible human
   classified this state as `unfinished`; it is an active coordination lock
-  and no new CHERI owner session may launch. `PMR-009`, `PMR-051`, and
-  `PMR-071` remain closed and must not be rerun. `PMR-093` and dependent
-  `PMR-096` remain open but blocked until the existing owner session
-  validates, commits or explicitly returns a blocked result, refreshes
-  `meta/handoff.md`, and leaves the worktree clean. Inactive `gim-inactive`
-  preserves the old internal home, and private `origin/archive/gim-wiki`
-  preserves complete Wiki history through `cd7dc81`.
+  and no new CHERI owner session may launch. Current owner-session liveness is
+  `unknown`. P1 `PMR-101` directly tasks the CHERI owner context through the
+  maintained resolver to validate and return this work, or record a precise
+  blocked result; no human prompt relay is required. `PMR-009`, `PMR-051`,
+  and `PMR-071` remain closed and must not be rerun. `PMR-093` and
+  `PMR-096` are withdrawn so PMR-101 is the sole open CHERI row. Inactive
+  `gim-inactive` preserves the old internal home, and private
+  `origin/archive/gim-wiki` preserves complete Wiki history through
+  `cd7dc81`.
 
 ## Role
 
@@ -78,15 +80,22 @@ through `9a4c5ef`. Topic backup is evidenced by the
 matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
 remains `unknown` (`PMR-020` closed on the observed backup result). PMR-071 is also closed:
 exact fail-closed startup instructions, a maintained 27-mutation regression,
-and workflow validation are local through return `6ac70af`; PMR-093 tracks
-their backup. PMR-009 adds canonical/curated metadata-only entries
+and workflow validation are local through return `6ac70af`. Historical
+backup requests PMR-093/096 are withdrawn by `PMD-20260926-003` so PMR-101
+is the sole current row. PMR-009 adds canonical/curated metadata-only entries
 `seaborn2015exploiting` and `ender2020unpatchable`; no third-party content or
 D5/publication gate follows.
 
 The current thirteen-file dirty owner session is separate from PMR-009 and is
-unfinished by responsible-human statement. Preserve it in place; do not
-launch PMR-093 or PMR-096, push, merge, publish, enable Pages, or infer a new
-source or D5 disposition until the owner returns a clean durable checkpoint.
+unfinished by responsible-human statement. `PMR-101` is its exact direct
+owner task: the owner context resolves the sole open row, identifies and
+justifies the actual scope, runs maintained validation, commits locally only
+if existing authority including any required D4 approval covers every
+retained change or returns `blocked`, appends the
+`templates/owner-return.md`-shaped return to `meta/handoff.md`, and states
+final active-session status. Preserve the work in place; do not launch
+another writer, push, merge, publish, enable Pages, or infer a new source or
+D5 disposition until PMR-101 returns a clean durable checkpoint.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

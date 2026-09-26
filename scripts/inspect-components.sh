@@ -452,8 +452,8 @@ registry_check() {
             } else {
                 while (match(state, /`[0-9a-f]{7,40}`/)) {
                     token = substr(state, RSTART + 1, RLENGTH - 2)
-                    if (token ~ /[0-9]/ || length(token) >= 12) { hash = token; break }
-                    state = substr(state, RSTART + RLENGTH)
+                    hash = token
+                    break
                 }
             }
             printf "%s\t%s\n", name, hash

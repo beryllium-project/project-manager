@@ -517,6 +517,14 @@ registry=$synth/COMPONENTS.md
 expect_exit "registry-check passes when every recorded revision matches" 0 \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" registry-check "$registry"
 
+alpha_registry=$synth/COMPONENTS.alpha.md
+cp "$registry" "$alpha_registry"
+sed -i 's/`project-manager\/`.*Clean `main` at `[0-9a-f]\{7\}`/`project-manager\/` | Ignored direct checkout | Clean `main` at `abcdefa`/' \
+    "$alpha_registry"
+expect_output "registry-check parses an all-alpha abbreviated revision" \
+    "project-manager	abcdefa	" \
+    env PM_WORKSPACE_ROOT="$synth" bash "$inspect" registry-check "$alpha_registry"
+
 absent_registry=$synth/COMPONENTS.absent.md
 cp "$registry" "$absent_registry"
 mv "$synth/provenance-review" "$sandbox/provenance-review-absent"

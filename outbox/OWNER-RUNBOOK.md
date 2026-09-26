@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-25
+**Last refreshed:** 2026-09-26
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -132,8 +132,8 @@ second prompt.
 ## Beryllium drift reconciliation and new planning
 
 Maintained inspection later on 2026-09-25 observes dirty active/default
-`beryllium/single-hart-runtime-r0` at `1795400`, behind 0 / ahead 6 of
-last-fetched `origin` `80345e1`. Eight modified paths are all under
+`beryllium/single-hart-runtime-r0` at `d490183`, behind 0 / ahead 7 of
+last-fetched `origin` `80345e1`. Seven modified paths are all under
 `tests/kvm0/`. The component handoff now includes later K0-A planning and
 acceptance material. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
@@ -163,23 +163,33 @@ preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P1 current CHERI-RISC-V notes owner lock
+## P1 PMR-101: direct CHERI-RISC-V owner return
 
 Maintained inspection observes unchanged HEAD `6cb15e3` with thirteen
 modified research/status paths. `meta/handoff.md` still contains only the
 already-verified PMR-009 return. The responsible human classified this state
-as `unfinished`.
+as `unfinished` and directed the Project Manager to tell the repository what
+is needed instead of using the human as a prompt relay.
 
-Do not rerun PMR-009 and do not start PMR-093 or PMR-096. Resume only the
-existing owner session. It must validate its actual scope, commit it or return
-a precise blocked result, refresh `meta/handoff.md` with a structured owner
-return, release its reservation, and leave the checkout clean. After that
-owner action, verify from the Project Manager repository with:
+PMR-101 is now the sole open CHERI row and direct pull-based task. Current
+owner-session liveness is `unknown`; do not launch a second writer and do not
+ask the human to copy, translate, or select instructions. After the Project
+Manager commit and tasking regeneration, the owner context retrieves the exact
+committed request with:
 
 ```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/inspect-components.sh state cheri-riscv-notes
+cd /home/jmorris/src/beryllium-project/cheri-riscv-notes
+bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 ```
+
+It then identifies and justifies the actual scope under the component's own
+rules, validates, commits locally with PMR-101 and the Copilot trailer only if
+existing authority including D4 covers every retained change or returns a
+precise blocked result, refreshes `meta/handoff.md` using
+`templates/owner-return.md`, reports final active-session status, and leaves
+the checkout clean. PMR-093/096 are withdrawn. Do not rerun PMR-009, perform
+backup, push, merge, publish, enable Pages, or decide D4/D5 through this
+request.
 
 ## Project-wide tasking startup adoption
 
@@ -325,15 +335,11 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   synchronized 0/0 `main`. The three exact backup ranges are therefore
   closed independently; the broader research review remains owner evidence
   and grants no Project Manager source disposition or publication gate.
-- **P3 PMR-093:** blocked by the current unfinished dirty CHERI owner session.
-  Once that session returns clean, review exactly `9a4c5ef..6ac70af` and
-  decide whether to fast-forward only `docs/reconcile-project-status` to its
-  private active origin. The five commits close PMR-051/071 and do not touch
-  PMR-009, `references/`, `wiki/`, or `sok/`.
-- **P3 PMR-096:** blocked by the unfinished owner session and PMR-093. After
-  both clear, separately review `6ac70af..6cb15e3` and decide whether to back
-  up PMR-009 work `e95922f` plus return `6cb15e3`.
-  D5/publication/Pages remain separate.
+- **Withdrawn PMR-093/096:** `PMD-20260926-003` removes the two backup rows
+  from current CHERI resolution so P1 PMR-101 is the sole task and no human
+  selection is needed. Their exact historical ranges remain evidence. If
+  backup is still needed after PMR-101 returns clean, allocate a new request
+  against the then-current branch.
 - **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
   analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
 - **P4 PMR-097:** after PMR-095, separately review and back up only
@@ -409,8 +415,8 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` is dirty at active/default `1795400`, behind 0 /
-  ahead 6 of last-fetched `origin` `80345e1`; no push path is safe while the
+- `beryllium-hypervisor/` is dirty at active/default `d490183`, behind 0 /
+  ahead 7 of last-fetched `origin` `80345e1`; no push path is safe while the
   current owner session remains active. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
@@ -424,7 +430,8 @@ The relevant local component commits are:
   `main`, `public`, tags, and every other branch were unchanged;
 - `cheri-riscv-notes` is dirty at topic HEAD `6cb15e3`, seven ahead of
   last-fetched active origin `9a4c5ef`, with thirteen unfinished modified
-  paths. PMR-093/096 remain blocked and no push path is safe;
+  paths. P1 PMR-101 is posted directly to its resolver; PMR-093/096 remain
+  blocked and no push path is safe;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later

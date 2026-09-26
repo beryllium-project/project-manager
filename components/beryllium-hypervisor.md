@@ -18,11 +18,11 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Dirty active/default branch
-  `beryllium/single-hart-runtime-r0` at `1795400`, behind zero and ahead six
+  `beryllium/single-hart-runtime-r0` at `d490183`, behind zero and ahead seven
   of last-fetched `origin/beryllium/single-hart-runtime-r0` at `80345e1`.
-  Eight modified paths are all under `tests/kvm0/`: `README.md`, four checker
-  or report scripts, the contract JSON, `run-make.sh`, and
-  `test-rejections.mjs`. `PMD-20260926-002` records the exact K0-A plan
+  Seven modified paths are all under `tests/kvm0/`: `README.md`, four checker
+  or report scripts, the contract JSON, and `test-rejections.mjs`;
+  `run-make.sh` is no longer dirty. `PMD-20260926-002` records the exact K0-A plan
   acceptance and closes plan-only PMR-099. The component still has no
   canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
   `PMR-100` return for the later committed/current-session KVM0 series. The
