@@ -17,27 +17,24 @@
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
-- **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at `80345e1`, behind zero and ahead zero
-  of last-fetched `origin/beryllium/single-hart-runtime-r0`. This is thirteen
-  owner commits after the registered PMR-067/083 return `416b2e9`.
-  Last-fetched refs contain active/default `80345e1` and renamed
-  `origin/historical_he/*` refs. Local candidate `6e93461` and local R8-C/H0
-  branch tip `0d53120` have no remote-tracking containment. The latest
-  component return instead records last-fetched upstream `f05ccb3`, predicts
-  the first later commit at ahead 13, and says no fetch, push, remote change,
-  publication, or backup occurred; PMR-098 requires the owner to reconcile
-  that return with the observed remote advance and namespace rename. The later series
-  adds a component-side exact-target acceptance record, KVM0/B0/B1
-  orientation, repository-rehoming and historical-ref guidance, and identity
-  policy, but no canonical PMR return covers the complete range. The
-  responsible human selected `defer` for Project Manager acceptance
-  reconciliation in `PMD-20260925-001`; `PMR-098` requests the complete
-  return and `PMR-099` is the dependent KVM0 planning request. `PMR-090`
+- **Observed state:** see `../../COMPONENTS.md`. Dirty active/default branch
+  `beryllium/single-hart-runtime-r0` at `1795400`, behind zero and ahead six
+  of last-fetched `origin/beryllium/single-hart-runtime-r0` at `80345e1`.
+  Eight modified paths are all under `tests/kvm0/`: `README.md`, four checker
+  or report scripts, the contract JSON, `run-make.sh`, and
+  `test-rejections.mjs`. `PMD-20260926-002` records the exact K0-A plan
+  acceptance and closes plan-only PMR-099. The component still has no
+  canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
+  `PMR-100` return for the later committed/current-session KVM0 series. The
+  dirty worktree is a coordination lock: do not launch another owner session
+  or infer that KVM0 implementation, execution, backup, publication, or
+  either reconciliation request is complete. Last-fetched refs previously contained active/default
+  `80345e1` and renamed `origin/historical_he/*` refs; local candidate
+  `6e93461` and local R8-C/H0 branch tip `0d53120` had no remote-tracking
+  containment. The responsible human selected `defer` for Project Manager
+  acceptance reconciliation in `PMD-20260925-001`, so Project Manager state
+  remains R0-R7 accepted and R8-H0 committed but unaccepted. `PMR-090`
   remains open for unresolved visibility, publication, and ref scope.
-  Maintained component records at `80345e1` call the active repository and
-  `origin` private, conflicting with the responsible human's earlier statement
-  that origin is in the public project
 
 ## Role
 
@@ -75,6 +72,10 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
   submission, and human sign-off remain separately controlled. Automation must
   not add a human `Signed-off-by`, approve public release, or edit
   `pathfinder/publication-gate.conf`.
+- `PMD-20260926-002` records responsible-human acceptance of exact KVM0 Plan
+  revision K0-A target `5227266`, satisfying K0-P only. K0-I, K0-S, K0-X,
+  and K0-R remain blocked; KVM0 and K3 remain `NOT RUN`; the development
+  kernel/BSP remains `UNDECIDED`.
 - The root Makefile is an inspectable lower-level graph without a `help`
   target.
 
@@ -130,11 +131,15 @@ visibility, and publication state, including an account of the observed
 `PMD-20260925-001` records the responsible human's
 choice to defer Project Manager reconciliation of the component-side
 `1999ee7` acceptance claim; until a separate decision, Project Manager state
-remains R8-H0 committed but unaccepted. `PMR-099` is blocked by PMR-098 and a
-separate responsible-human selection; if selected, it prepares only one exact
-decision-neutral KVM0 plan. KVM0 build/execution, B0, development-kernel/BSP
-selection, B1, a retained H0 successor, H1-H4, publication, and release remain
-separate gates. H1-H4 are unauthorized and K3 remains `NOT RUN`.
+remains R8-H0 committed but unaccepted. `PMR-099` is closed on exact
+human-accepted K0-A plan target `5227266` under `PMD-20260926-002`; that
+closes plan preparation only and satisfies only K0-P. New `PMR-100` requests
+the distinct canonical return for the post-`80345e1` committed KVM0 series
+and current dirty owner session. K0-I tooling, K0-S source preparation and
+evidence import, K0-X native execution, K0-R result acceptance, B0,
+development-kernel/BSP selection, B1, a retained H0 successor, H1-H4,
+publication, and release remain separate blocked gates. H1-H4 are
+unauthorized and K3 remains `NOT RUN`.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize

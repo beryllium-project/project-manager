@@ -12,14 +12,15 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
 - **Observed state:** the renamed tracked symlink resolves to clean `main` at
-  PMR-058 corrected return `07e86ab`, behind 0 / ahead 9 of last-fetched private active
-  `origin/main` at `d618935`; live reachability is `unknown`.
-  `legacy-backup/main` remains `706e708`; `msft-inactive/main` remains
-  `ca41490` and was unreachable with the active credential. The active
-  successor preserves history through `d618935`, including `REV-*` and
-  `COLLAB.md`; `PMR-040`, `PMR-045`, `PMR-058`, and `PMR-072` are closed.
-  PMR-075 covers the two earlier owner documentation commits; PMR-092 covers
-  PMR-040; dependent PMR-094 separately covers the later PMR-058/072 batch
+  `60d5ceb`, synchronized behind 0 / ahead 0 with private active
+  `origin/main`. The current handoff records the responsible human's explicit
+  private push scope as all nine previously local commits after `d618935`
+  plus a separate current research-review change set. This independently
+  closes backup-only `PMR-075`, `PMR-092`, and `PMR-094`; the broader push
+  does not convert the later source review into a Project Manager
+  disposition. `legacy-backup/main` remains `706e708`; `msft-inactive/main`
+  remains `ca41490` and was previously unreachable with the active
+  credential. `PMR-040`, `PMR-045`, `PMR-058`, and `PMR-072` remain closed.
 
 ## Role
 
@@ -40,9 +41,10 @@ non-CHERI comparisons include Supervisor Domain Isolation / SmMTT.
   currently materialized as `REV-20260914-001..009` at `706e708`; this is a
   reconciliation, not identifier reuse or a reversal of historical ledger
   dispositions.
-- `PMQ-017..020` are pointer-only `arrived` records
-  `REV-20260914-010..013` at `d618935`, pending owner review as non-CHERI
-  comparisons.
+- `PMQ-017..020` entered as pointer-only `arrived` records
+  `REV-20260914-010..013` at `d618935`. The owner handoff at `60d5ceb`
+  reports all current review-log records incorporated; that later research
+  state is not a Project Manager queue or source-admission decision.
 - Guest agents follow the exact append-only budget in `COLLAB.md`; only the
   XRV owner integrates a `collab/*` branch.
 - Update `HANDOFF.md` before every push from that repository and include the
@@ -60,8 +62,11 @@ The Project Manager may request owner review and disposition of
 owner-controlled collaboration protocol. Nothing authorizes the Project
 Manager to allocate or change review IDs, integrate guest branches, edit
 research, or push. `PMR-039` is superseded because active private
-`origin/main` now preserves `d618935`; `PMR-075` separately asks whether to
-back up local owner documentation commits `22095a1` and `456c70b`.
+`origin/main` preserves `d618935`. The later responsible-human-authorized
+private fast-forward through synchronized `60d5ceb` also backs up owner
+documentation commits `22095a1` and `456c70b`, PMR-040 commits `38a69bd` and
+`d5d33a2`, and the PMR-058/072 range through `07e86ab`; backup-only
+`PMR-075`, `PMR-092`, and `PMR-094` are closed on that observed state.
 `PMR-040` is closed by qualified selective incorporation work `38a69bd` and
 HANDOFF-only return `d5d33a2`: source-aware record `REV-20260922-001`
 incorporates immutable mutation-record and cross-layer assurance obligations
@@ -75,6 +80,10 @@ implication. PML-0028/0029/0031 source statuses were mirrored at
 analysis-workbook carry `5a646df`. PMR-072 is closed by work `4c567fa` and
 the same final return: exact tasking startup and current path wording are
 active without research or review-ID changes.
+The later owner research review at synchronized `60d5ceb` reports those and
+the repository's other current review records incorporated. It does not
+retroactively change PMR-058's bounded pointer-arrival return, the queue
+ledger, or any Project Manager support, adoption, or publication gate.
 After `PMR-052`, `PMR-053` separately asks the owner to review only materially
 relevant returned cap-talk threads.
 
@@ -90,9 +99,9 @@ the successor starts private. The organization rename is complete
 existing private backup and old Microsoft-origin home remain explicit
 inactive-reference remotes. History through `d618935`, including `REV-*` and
 `COLLAB.md`, is reachable. Owner documentation commits `22095a1` and
-`456c70b` remain local pending `PMR-075`; PMR-040 commits `38a69bd` and
-`d5d33a2` remain local under PMR-092; PMR-058/072 range
-`d5d33a2..07e86ab` remains local under dependent PMR-094.
+`456c70b`, PMR-040 commits `38a69bd` and `d5d33a2`, and the PMR-058/072 range
+`d5d33a2..07e86ab` are now contained by synchronized private
+`origin/main` at `60d5ceb`; their three backup requests are closed.
 Microsoft-origin repository state remains an inactive historical
 reference. The responsible human later renamed and retargeted the workspace
 symlink to the verified active successor. PMR-072 is closed: the owner context

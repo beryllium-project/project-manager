@@ -18,20 +18,21 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** clean `docs/reconcile-project-status` at final PMR-071
-  return plus PMR-009 return `6cb15e3`, behind 0 / ahead 7 of last-fetched private active
-  `origin/docs/reconcile-project-status` `9a4c5ef`; `main` / `origin/main`
-  remain `6553092`. Inactive `gim-inactive` preserves the old internal home,
-  and private `origin/archive/gim-wiki` preserves complete Wiki history
-  through `cd7dc81`. `PMR-009`, `PMR-051`, and `PMR-071` are closed.
-  PMR-093 tracks the first five local owner commits; dependent PMR-096 tracks
-  PMR-009 work `e95922f` and return `6cb15e3`.
-  PMR-051/071 use separate complete owner-return tables rather than one
-  canonical `## Project Manager return` table; this bounded deviation is
-  accepted for those closures. PMR-009 uses the canonical return shape; its
-  owner return records separate explicit D4 approvals without resolving
-  D5/publication. Its handoff table cannot embed its own return object ID; the
-  Project Manager binds return `6cb15e3` through read-only Git inspection.
+- **Observed state:** dirty `docs/reconcile-project-status` at unchanged
+  PMR-009 return HEAD `6cb15e3`, behind 0 / ahead 7 of last-fetched private
+  active `origin/docs/reconcile-project-status` `9a4c5ef`; `main` /
+  `origin/main` remain `6553092`. Thirteen modified paths span
+  `meta/roadmap.md`, `meta/status.md`, three reference files, six SoK files,
+  and two Wiki pages. The component handoff still contains only the verified
+  PMR-009 return and no return for these edits. The responsible human
+  classified this state as `unfinished`; it is an active coordination lock
+  and no new CHERI owner session may launch. `PMR-009`, `PMR-051`, and
+  `PMR-071` remain closed and must not be rerun. `PMR-093` and dependent
+  `PMR-096` remain open but blocked until the existing owner session
+  validates, commits or explicitly returns a blocked result, refreshes
+  `meta/handoff.md`, and leaves the worktree clean. Inactive `gim-inactive`
+  preserves the old internal home, and private `origin/archive/gim-wiki`
+  preserves complete Wiki history through `cd7dc81`.
 
 ## Role
 
@@ -57,13 +58,9 @@ one-to-one with it.
 ## Commands (run by the human, from the repository root)
 
 ```sh
+node --check automation/*.mjs
+node automation/validate-project-tasking.mjs
 node automation/build-wiki.mjs ../wiki-build [owner/repo]
-```
-
-The topic branch adds a dependency-free corpus validator as a committed
-maintained command:
-
-```sh
 node automation/validate-corpus.mjs
 ```
 
@@ -85,6 +82,11 @@ and workflow validation are local through return `6ac70af`; PMR-093 tracks
 their backup. PMR-009 adds canonical/curated metadata-only entries
 `seaborn2015exploiting` and `ender2020unpatchable`; no third-party content or
 D5/publication gate follows.
+
+The current thirteen-file dirty owner session is separate from PMR-009 and is
+unfinished by responsible-human statement. Preserve it in place; do not
+launch PMR-093 or PMR-096, push, merge, publish, enable Pages, or infer a new
+source or D5 disposition until the owner returns a clean durable checkpoint.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug
