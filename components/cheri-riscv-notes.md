@@ -18,21 +18,19 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** dirty `docs/reconcile-project-status` at unchanged
-  PMR-009 return HEAD `6cb15e3`, behind 0 / ahead 7 of last-fetched private
+- **Observed state:** dirty `docs/reconcile-project-status` at handoff-only
+  blocked PMR-101 return `c6606ff`, behind 0 / ahead 8 of last-fetched private
   active `origin/docs/reconcile-project-status` `9a4c5ef`; `main` /
   `origin/main` remain `6553092`. Thirteen modified paths span
   `meta/roadmap.md`, `meta/status.md`, three reference files, six SoK files,
-  and two Wiki pages. The component handoff still contains only the verified
-  PMR-009 return and no return for these edits. The responsible human
-  classified this state as `unfinished`; it is an active coordination lock
-  and no unbound CHERI owner session may launch. The responsible human later
-  confirmed the prior owner session is closed. P1 `PMR-101` is the sole open
-  row, and `PMD-20260926-004` plus exact
-  `../outbox/owner-recovery/PMR-101.tsv` permit only the human-run
-  fingerprinted recovery launcher; no human prompt relay is required.
-  `PMR-009`, `PMR-051`, and `PMR-071` remain closed and must not be rerun.
-  `PMR-093` and `PMR-096` are withdrawn. Inactive
+  and two Wiki pages. The component handoff now records PMR-101 `blocked`,
+  successful maintained validation, unchanged tracked-diff SHA-256
+  `6736270acf9ef1f908718679884d3e5b83699526debdafcbac9c33e48677422d`,
+  no remote operation, and released recovery reservation. `PMD-20260926-005`
+  closes PMR-101 as acknowledgement of that return; it does not approve D4.
+  Conditional P2 `PMR-102` is blocked until the responsible human approves,
+  rejects, or defers this exact set. `PMR-009`, `PMR-051`, and `PMR-071`
+  remain closed; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`.
@@ -87,27 +85,13 @@ is the sole current row. PMR-009 adds canonical/curated metadata-only entries
 `seaborn2015exploiting` and `ender2020unpatchable`; no third-party content or
 D5/publication gate follows.
 
-The current thirteen-file dirty owner session is separate from PMR-009 and is
-unfinished by responsible-human statement. `PMR-101` is its exact direct
-owner task: the owner context resolves the sole open row, identifies and
-justifies the actual scope, runs maintained validation, commits locally only
-if existing authority including any required D4 approval covers every
-retained change or returns `blocked`, appends the
-`templates/owner-return.md`-shaped return to `meta/handoff.md`, and states
-final active-session status. Preserve the work in place; do not launch
-another writer, push, merge, publish, enable Pages, or infer a new source or
-D5 disposition until PMR-101 returns a clean durable checkpoint.
-
-The exact recovery command is human-run from the workspace root:
-
-```sh
-bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-101
-```
-
-It refuses any change to the recorded branch, HEAD, thirteen-path status,
-Project Manager commit/request blob, sole visible request, or writer lock and
-retains its packet, terminal transcript, and before/after state log under
-ignored Project Manager scratch.
+The exact thirteen-file dirty set is separate from PMR-009. PMR-101 has
+returned `blocked` because `references/references.bib` and dependent
+reference/synthesis corrections require a distinct D4 citation-review
+decision. Preserve the exact fingerprint in place. Do not launch PMR-102,
+push, merge, publish, enable Pages, or infer a new source or D5 disposition
+until the responsible human records `approve_exact`; `reject_exact` requires
+revised owner tasking and `defer` preserves the block.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

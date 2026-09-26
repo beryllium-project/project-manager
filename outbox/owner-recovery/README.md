@@ -4,7 +4,7 @@ These tracked specifications allow the responsible human to restart one exact
 closed owner session whose component worktree must remain dirty. Ordinary
 clean owner work uses `scripts/owner-session.sh`.
 
-Each `<PMR-NNN>.tsv` file is Project Manager-owned and records exactly one
+Each active `<PMR-NNN>.tsv` file is Project Manager-owned and records exactly one
 component, directly assigned open request, branch, full HEAD, responsible-human
 statement that the prior session is closed, and complete
 `git status --porcelain=v1 --untracked-files=all` output, plus the SHA-256 of
@@ -14,6 +14,12 @@ refused. The human-run
 uncommitted specification, additional visible request, merge conflict, or
 concurrent writer. It writes only ignored Project Manager scratch before
 Copilot starts.
+
+A specification may remain as historical evidence after its request closes,
+but it is no longer launchable: the sole-visible-open-request and dispatch
+checks fail closed. Any later request, including PMR-102 after an approval,
+requires a newly committed request-specific specification at the then-current
+HEAD and fingerprint.
 
 The terminal transcript is private, mode-restricted, ignored scratch and may
 contain sensitive interactive output. Never quote credentials, private

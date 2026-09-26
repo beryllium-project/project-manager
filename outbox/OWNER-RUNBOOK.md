@@ -168,34 +168,24 @@ preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P1 PMR-101: direct CHERI-RISC-V owner return
+## P2 PMR-102: blocked on CHERI D4
 
-Maintained inspection observes unchanged HEAD `6cb15e3` with thirteen
-modified research/status paths. `meta/handoff.md` still contains only the
-already-verified PMR-009 return. The responsible human classified this state
-as `unfinished` and directed the Project Manager to tell the repository what
-is needed instead of using the human as a prompt relay.
+PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
+Maintained validation passed; the recovery reservation is released; no remote
+operation occurred; and the exact thirteen content paths remain dirty with
+tracked-diff SHA-256
+`6736270acf9ef1f908718679884d3e5b83699526debdafcbac9c33e48677422d`.
+`PMD-20260926-005` closes PMR-101 as acknowledgement without approving D4.
 
-PMR-101 is now the sole open CHERI row and direct pull-based task. Current
-responsible-human state is that the prior owner session is closed. Do not ask
-the human to copy, translate, or select instructions. `PMD-20260926-004` and
-the committed exact-state specification provide one fail-closed recovery
-launch from the workspace root:
-
-```sh
-cd /home/jmorris/src/beryllium-project
-bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-101
-```
-
-The helper requires exact branch `docs/reconcile-project-status`, full HEAD
-`6cb15e3`, all thirteen status lines, sole visible PMR-101, current clean PM
-tasking, no conflict, and the shared writer lock. It preloads Copilot and logs
-the transcript plus before/after state under ignored
-`scratch/owner-recoveries/`. The recovered owner then justifies scope,
-validates, commits only if existing authority including D4 covers every
-retained change or returns `blocked`, and writes the structured return.
-PMR-093/096 are withdrawn. Do not rerun PMR-009, perform backup, push, merge,
-publish, enable Pages, or decide D4/D5 through this request.
+Conditional PMR-102 is blocked until the responsible human answers one
+question: approve, reject, or defer that exact fingerprint. Safe default is
+defer. Do not run an owner or alter the preserved state before an
+`approve_exact` record. Approval would permit only local integration of the
+exact validated set; it does not resolve D5 or authorize backup, merge, push,
+Pages, publication, remotes, or sibling writes. A rejection receives revised
+owner tasking; a deferral preserves the current state. The historical
+`PMR-101.tsv` is not reusable; any approval first requires a committed
+`PMR-102.tsv` bound to current HEAD `c6606ff` and the preserved digest.
 
 ## Project-wide tasking startup adoption
 
@@ -342,10 +332,10 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   closed independently; the broader research review remains owner evidence
   and grants no Project Manager source disposition or publication gate.
 - **Withdrawn PMR-093/096:** `PMD-20260926-003` removes the two backup rows
-  from current CHERI resolution so P1 PMR-101 is the sole task and no human
-  selection is needed. Their exact historical ranges remain evidence. If
-  backup is still needed after PMR-101 returns clean, allocate a new request
-  against the then-current branch.
+  from current CHERI resolution so no human row selection was needed. Their
+  exact historical ranges remain evidence. PMR-101 has now returned blocked;
+  if backup is still needed after D4 and any PMR-102 integration, allocate a
+  new request against the then-current clean branch.
 - **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
   analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
 - **P4 PMR-097:** after PMR-095, separately review and back up only
@@ -434,10 +424,11 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-riscv-notes` is dirty at topic HEAD `6cb15e3`, seven ahead of
-  last-fetched active origin `9a4c5ef`, with thirteen unfinished modified
-  paths. The prior session is closed; exact recovery is ready for sole P1
-  PMR-101. PMR-093/096 are withdrawn and no push path is authorized;
+- `cheri-riscv-notes` is dirty at handoff-only blocked return `c6606ff`,
+  eight ahead of last-fetched active origin `9a4c5ef`, with thirteen content
+  paths retaining exact SHA-256 `6736270…`. PMR-101 is closed as an
+  acknowledged blocked return; conditional PMR-102 waits for the human D4
+  choice. PMR-093/096 are withdrawn and no push path is authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later
