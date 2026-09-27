@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-26
+**Last refreshed:** 2026-09-27
 **Workspace root:** `/home/jmorris/src/beryllium-project`
 
 The Project Manager does not execute this file's commands, run component
@@ -28,7 +28,7 @@ must write timestamped output under a Project Manager-owned ignored
 `scratch/` path, print the exact log path, and leave retrieval to the Project
 Manager instead of asking the human to paste command output. If logging cannot
 be made reliable, stop and explain that exception before asking for output.
-The PMR-101 recovery launcher writes its state log and private terminal
+The current recovery launcher writes its state log and private terminal
 transcript under ignored `scratch/owner-recoveries/` and prints both paths.
 The transcript may contain sensitive interactive output and is never copied
 wholesale into a durable record.
@@ -118,7 +118,7 @@ operation.
 | --- | --- | --- | --- |
 | Done | - | `PMR-027` | OS-security is clean and synchronized at `e275544`. |
 | Done | - | `PMR-044`, `PMR-045` | Private OS-security and XRV successors are verified; old homes remain inactive references. |
-| Blocked | P4 | `PMR-052` | Wait for the cap-talk archive owners' response; only then may OS-security identify and inspect, or precisely bound as inaccessible, the public continuation from the `2016-04-01` start bound. |
+| Blocked | P4 | `PMR-052` | Wait for the cap-talk archive owners' response; only then may OS-security identify and inspect, or precisely bound as inaccessible, the public continuation from the `2016-04-01` start bound. Independent synchronized backlog integration `86645d4` does not execute this request. |
 | 2 | P3 | `PMR-053` | XRV reviews only materially relevant returned threads through its owner intake lifecycle. |
 | 3 | P3 | `PMR-054` | Analysis-workbook adds the revision-bound follow-up inquiry and states whether Q-001 through Q-004 change. |
 
@@ -135,17 +135,17 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection on 2026-09-26 observes clean active/default
-`beryllium/single-hart-runtime-r0` at `abd092a`, behind 0 / ahead 8 of
-last-fetched `origin` `80345e1`. The latest commit changes seven
-`tests/kvm0/` paths and follows `1795400` / `d490183`. The component handoff includes K0-A planning and
+Maintained inspection on 2026-09-27 observes active/default
+`beryllium/single-hart-runtime-r0` at `478d588`, synchronized with
+last-fetched `origin` and dirty with 82 generated `docs/html/` changes. The
+responsible human reports a separate K0 session running, and fleet read-only
+observation found a linked K0-S remediation worktree. The component handoff includes K0-A planning and
 acceptance material. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
 canonical return names open earlier-series `PMR-098` or
-later-series `PMR-100`. The clean worktree does not release the coordination
-lock without a return: do not run a new Beryllium owner launcher or infer
-KVM0 implementation authority, execution, backup, publication, or any
-assurance gate.
+later-series `PMR-100`. The active-session lock remains regardless of primary
+worktree cleanliness: do not run a new Beryllium owner launcher or infer
+K0-S authority, execution, backup, publication, or any assurance gate.
 
 The unreconciled range `416b2e9..80345e1` still records the component-side
 exact H0/R8-C acceptance claim for `1999ee7`, the
@@ -163,12 +163,14 @@ H1-H4 are unauthorized; K3 remains `NOT RUN`.
 **P2 `PMR-098` and `PMR-100` are both blocked by missing owner returns and
 unknown session state.** The existing owner must first return a durable checkpoint
 that names the two exact reconciliation scopes. Only after Project Manager
-verification may a new owner command be generated. K0-I tooling, K0-S source
+verification may a new owner command be generated. K0-I is
+component-recorded accepted at exact target `abd092a` and remains
+unreconciled in Project Manager state pending PMR-098/100. K0-S source
 preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P2 PMR-102: blocked on CHERI D4
+## P1 PMR-103: bounded CHERI proposal correction
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -177,15 +179,27 @@ tracked-diff SHA-256
 `6736270acf9ef1f908718679884d3e5b83699526debdafcbac9c33e48677422d`.
 `PMD-20260926-005` closes PMR-101 as acknowledgement without approving D4.
 
-Conditional PMR-102 is blocked until the responsible human answers one
-question: approve, reject, or defer that exact fingerprint. Safe default is
-defer. Do not run an owner or alter the preserved state before an
-`approve_exact` record. Approval would permit only local integration of the
-exact validated set; it does not resolve D5 or authorize backup, merge, push,
-Pages, publication, remotes, or sibling writes. A rejection receives revised
-owner tasking; a deferral preserves the current state. The historical
-`PMR-101.tsv` is not reusable; any approval first requires a committed
-`PMR-102.tsv` bound to current HEAD `c6606ff` and the preserved digest.
+The responsible human selected D4 `defer` for that fingerprint and separately
+authorized exactly two `meta/status.md` proposal corrections. PMR-102 is
+superseded. PMR-103 must change only:
+
+1. the `Phases 0–9: COMPLETE` headline, aligning it with Phases 0–8 complete,
+   Phase 9 scaffold complete, and submission readiness open; and
+2. remove the resolved `Intel MPX Explained` venue/DOI item from the
+   missing/not-yet-retrieved list.
+
+It stages or commits no content path, runs maintained validation, and commits
+only a structured handoff return carrying the new fingerprint. The revised
+set then requires a new D4 decision. After this Project Manager turn is
+committed and tasking regenerated, run exactly from the workspace root:
+
+```sh
+cd /home/jmorris/src/beryllium-project
+bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-103
+```
+
+This does not resolve D5 or authorize content integration, backup, merge,
+push, Pages, publication, remotes, or sibling writes.
 
 ## Project-wide tasking startup adoption
 
@@ -333,9 +347,10 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   and grants no Project Manager source disposition or publication gate.
 - **Withdrawn PMR-093/096:** `PMD-20260926-003` removes the two backup rows
   from current CHERI resolution so no human row selection was needed. Their
-  exact historical ranges remain evidence. PMR-101 has now returned blocked;
-  if backup is still needed after D4 and any PMR-102 integration, allocate a
-  new request against the then-current clean branch.
+  exact historical ranges remain evidence. PMR-101 returned blocked and
+  PMR-102 is superseded; if backup is still needed after PMR-103 and a later
+  D4-approved integration, allocate a new request against the then-current
+  clean branch.
 - **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
   analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
 - **P4 PMR-097:** after PMR-095, separately review and back up only
@@ -411,9 +426,10 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` is clean at active/default `abd092a`, behind 0 /
-  ahead 8 of last-fetched `origin` `80345e1`; no push path is authorized and
-  missing PMR-098/100 returns leave session release unknown. Local candidate
+- `beryllium-hypervisor/` primary is at `478d588`, synchronized with
+  last-fetched `origin` and dirty with generated documentation; a separate
+  K0 remediation worktree is active. No push path is authorized and missing
+  PMR-098/100 returns leave session release unknown. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
   remote-tracking containment. PMR-098 and PMR-100 request distinct canonical
@@ -426,9 +442,9 @@ The relevant local component commits are:
   `main`, `public`, tags, and every other branch were unchanged;
 - `cheri-riscv-notes` is dirty at handoff-only blocked return `c6606ff`,
   eight ahead of last-fetched active origin `9a4c5ef`, with thirteen content
-  paths retaining exact SHA-256 `6736270…`. PMR-101 is closed as an
-  acknowledged blocked return; conditional PMR-102 waits for the human D4
-  choice. PMR-093/096 are withdrawn and no push path is authorized;
+  paths retaining exact SHA-256 `6736270…`. D4 is deferred; PMR-102 is
+  superseded; bounded proposal-revision PMR-103 is ready. PMR-093/096 are
+  withdrawn and no push path is authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later
@@ -463,8 +479,10 @@ plan text. The component records exact target `1999ee7` as accepted, but the
 responsible human selected `defer` for Project Manager reconciliation;
 `PMD-20260925-001` therefore keeps Project Manager R8-H0 state committed but
 unaccepted. Exact KVM0 K0-A plan target `5227266` is responsible-human
-accepted under `PMD-20260926-002`, satisfying K0-P only. K0-I, K0-S, K0-X,
-and K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is
+accepted under `PMD-20260926-002`, satisfying K0-P only. K0-I is
+component-recorded accepted at exact target `abd092a` and remains
+unreconciled in Project Manager state pending PMR-098/100. K0-S, K0-X, and
+K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is
 `UNDECIDED`. H1-H4 are not authorized. Helium is a review-and-test proof of
 concept, not formally verified or hardware validated. No coordination action
 grants acceptance, approval, risk acceptance, sign-off, licensing,

@@ -17,8 +17,8 @@ Copilot starts.
 
 A specification may remain as historical evidence after its request closes,
 but it is no longer launchable: the sole-visible-open-request and dispatch
-checks fail closed. Any later request, including PMR-102 after an approval,
-requires a newly committed request-specific specification at the then-current
+checks fail closed. Any later request requires a newly committed
+request-specific specification at the then-current
 HEAD and fingerprint.
 
 The terminal transcript is private, mode-restricted, ignored scratch and may

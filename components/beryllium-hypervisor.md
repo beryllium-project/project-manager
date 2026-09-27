@@ -17,18 +17,26 @@
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
-- **Observed state:** see `../../COMPONENTS.md`. Clean active/default branch
-  `beryllium/single-hart-runtime-r0` at `abd092a`, behind zero and ahead eight
-  of last-fetched `origin/beryllium/single-hart-runtime-r0` at `80345e1`.
-  Commit `abd092a` changes seven `tests/kvm0/` paths with 3,016 insertions
-  and 297 deletions and follows offline-tooling commits `1795400` and
-  `d490183`. `PMD-20260926-002` records the exact K0-A plan
-  acceptance and closes plan-only PMR-099. The component still has no
+- **Observed state:** see `../../COMPONENTS.md`. The responsible human reports
+  a separate K0 session running, so Beryllium is coordination-locked and
+  read-only to this Project Manager turn. Maintained inspection observes
+  active/default `beryllium/single-hart-runtime-r0` at `478d588`, behind zero
+  and ahead zero of last-fetched `origin/beryllium/single-hart-runtime-r0`,
+  with 82 generated `docs/html/` changes in the primary checkout. Fleet
+  read-only observation also found a linked K0-S remediation worktree; its
+  contents are not Project Manager state and are not modified here. The
+  component roadmap and `planning/k3-kvm0-k0i-review-summary.md` record exact
+  K0-I acceptance at earlier target `abd092a`
+  but still has no canonical PMR-098/100 return or explicit session release.
+  `PMD-20260926-002` records the exact K0-A plan
+  acceptance and closes plan-only PMR-099, satisfying K0-P only. K0-I is
+  component-recorded accepted at exact target `abd092a` and remains
+  unreconciled in Project Manager state pending PMR-098/100. K0-S, K0-X, and
+  K0-R remain blocked. The component still has no
   canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
-  `PMR-100` return for the later eight-commit KVM0 series. The clean worktree
-  does not release the owner lock without a return: do not launch another
-  owner session or infer that KVM0 implementation authority, execution,
-  backup, publication, or either reconciliation request is complete.
+  `PMR-100` return for the later KVM0 series through current `478d588`. Do
+  not launch another owner session or infer K0-S authority, execution, backup,
+  publication, or either reconciliation request complete.
   Last-fetched refs previously contained active/default
   `80345e1` and renamed `origin/historical_he/*` refs; local candidate
   `6e93461` and local R8-C/H0 branch tip `0d53120` had no remote-tracking
@@ -74,8 +82,10 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
   not add a human `Signed-off-by`, approve public release, or edit
   `pathfinder/publication-gate.conf`.
 - `PMD-20260926-002` records responsible-human acceptance of exact KVM0 Plan
-  revision K0-A target `5227266`, satisfying K0-P only. K0-I, K0-S, K0-X,
-  and K0-R remain blocked; KVM0 and K3 remain `NOT RUN`; the development
+  revision K0-A target `5227266`, satisfying K0-P only. K0-I is
+  component-recorded accepted at exact target `abd092a` and remains
+  unreconciled in Project Manager state pending PMR-098/100. K0-S, K0-X, and
+  K0-R remain blocked; KVM0 and K3 remain `NOT RUN`; the development
   kernel/BSP remains `UNDECIDED`.
 - The root Makefile is an inspectable lower-level graph without a `help`
   target.
@@ -136,8 +146,8 @@ remains R8-H0 committed but unaccepted. `PMR-099` is closed on exact
 human-accepted K0-A plan target `5227266` under `PMD-20260926-002`; that
 closes plan preparation only and satisfies only K0-P. New `PMR-100` requests
 the distinct canonical return for the post-`80345e1` committed KVM0 series
-and current dirty owner session. K0-I tooling, K0-S source preparation and
-evidence import, K0-X native execution, K0-R result acceptance, B0,
+and current dirty owner session. K0-S source preparation and evidence import,
+K0-X native execution, K0-R result acceptance, B0,
 development-kernel/BSP selection, B1, a retained H0 successor, H1-H4,
 publication, and release remain separate blocked gates. H1-H4 are
 unauthorized and K3 remains `NOT RUN`.

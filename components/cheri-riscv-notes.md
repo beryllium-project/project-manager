@@ -28,9 +28,12 @@
   `6736270acf9ef1f908718679884d3e5b83699526debdafcbac9c33e48677422d`,
   no remote operation, and released recovery reservation. `PMD-20260926-005`
   closes PMR-101 as acknowledgement of that return; it does not approve D4.
-  Conditional P2 `PMR-102` is blocked until the responsible human approves,
-  rejects, or defers this exact set. `PMR-009`, `PMR-051`, and `PMR-071`
-  remain closed; `PMR-093` and `PMR-096` are withdrawn. Inactive
+  `PMD-20260927-001` records D4 `defer` for that exact fingerprint;
+  PMR-102 is superseded. `PMD-20260927-002` separately authorizes exactly two
+  `meta/status.md` proposal corrections. P1 PMR-103 is ready through a fresh
+  exact-state recovery and must return a new fingerprint without staging or
+  committing any content path. `PMR-009`, `PMR-051`, and `PMR-071` remain
+  closed; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`.
@@ -88,10 +91,21 @@ D5/publication gate follows.
 The exact thirteen-file dirty set is separate from PMR-009. PMR-101 has
 returned `blocked` because `references/references.bib` and dependent
 reference/synthesis corrections require a distinct D4 citation-review
-decision. Preserve the exact fingerprint in place. Do not launch PMR-102,
-push, merge, publish, enable Pages, or infer a new source or D5 disposition
-until the responsible human records `approve_exact`; `reject_exact` requires
-revised owner tasking and `defer` preserves the block.
+decision. The responsible human deferred that fingerprint, then separately
+authorized only two corrections in `meta/status.md`: align the Phase 0–9
+headline with the Phase 9 scaffold/submission-open boundary, and remove the
+resolved Intel MPX venue/DOI item from the missing-documents list. PMR-103
+changes no other content byte, stages no content, validates, and writes only
+a handoff return with the revised fingerprint. The revised set still requires
+a new D4 decision. Do not push, merge, publish, enable Pages, or infer a new
+source or D5 disposition.
+
+After current Project Manager tasking is committed, the exact human-run
+command from the workspace root is:
+
+```sh
+bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-103
+```
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

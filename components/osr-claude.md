@@ -9,10 +9,15 @@
   `.github/skills/os-security-research/`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`
-- **Observed state:** clean `main` at `49fbfd6`, synchronized with private
-  active `origin/main`; clean root snapshot `58f8023` contains the reviewed
-  non-restricted tree, while inactive `legacy-personal/main` preserves old
-  private history at `e275544`. `PMR-044` and `PMR-027` are closed
+- **Observed state:** clean `main` at `86645d4`, synchronized with private
+  active `origin/main`; owner return records independently authorized
+  executable-backlog integration with maintained checks passing and no
+  restricted access. Clean root snapshot `58f8023` remains the reviewed
+  non-restricted base, while inactive `legacy-personal/main` preserves old
+  private history at `e275544`. `PMR-044` and `PMR-027` are closed;
+  `PMR-052` remains unstarted and blocked on the cap-talk archive response;
+  its stated `PMR-044` prerequisite is already satisfied at verified return
+  `49fbfd6`
 
 ## Role
 
@@ -56,6 +61,10 @@ remote is a personal account rather than the organization).
 The active private identity is
 `agentic-os-research/os-security-research` (`PMD-20260914-003`, `PMR-044`,
 closed at owner return `49fbfd6`).
+Owner integration `86645d4` adds the independently authorized public-source
+security backlog described in `HANDOFF.md`; it is synchronized to the private
+origin, grants no publication or assurance gate, and does not execute or
+close `PMR-052`.
 The bounded local D0 inventory is recorded in `PMD-20260914-004`;
 the guided owner inventory is closed by `PMD-20260915-001` / `PMR-049`.
 The organization rename is complete (`PMD-20260915-003`) and local checkout
