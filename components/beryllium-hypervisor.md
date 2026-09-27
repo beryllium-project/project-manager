@@ -144,7 +144,8 @@ remains R8-H0 committed but unaccepted. `PMR-099` is closed on exact
 human-accepted K0-A plan target `5227266` under `PMD-20260926-002`; that
 closes plan preparation only and satisfies only K0-P. New `PMR-100` requests
 the distinct canonical return for the post-`80345e1` committed KVM0 series
-and current dirty owner session. K0-S source preparation and evidence import,
+and current active K0 session, whose primary checkout is now clean at
+`478d588`. K0-S source preparation and evidence import,
 K0-X native execution, K0-R result acceptance, B0,
 development-kernel/BSP selection, B1, a retained H0 successor, H1-H4,
 publication, and release remain separate blocked gates. H1-H4 are

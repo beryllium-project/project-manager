@@ -18,22 +18,19 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** dirty `docs/reconcile-project-status` at handoff-only
-  completed PMR-103 return `b203181`, behind 0 / ahead 9 of last-fetched private
+- **Observed state:** clean `docs/reconcile-project-status` at class-3
+  coordination refresh `34a8b50`, behind 0 / ahead 12 of last-fetched private
   active `origin/docs/reconcile-project-status` `9a4c5ef`; `main` /
-  `origin/main` remain `6553092`. Thirteen modified paths span
-  `meta/roadmap.md`, `meta/status.md`, three reference files, six SoK files,
-  and two Wiki pages. The component handoff records PMR-103 `completed`,
-  exactly the two authorized `meta/status.md` proposal corrections,
-  successful maintained validation, new tracked-diff SHA-256
-  `8bfec6744d26ba96e3e6c8e6eb3611c9caa1d38f4d6cdabb2bdaccc2a47010ca`,
-  no remote operation, and released recovery reservation. `PMD-20260927-003`
-  closes PMR-103 as acknowledgement only; the revised-set D4 question was
-  later answered `approve_exact` in `PMD-20260927-004`. P1 PMR-104 is ready
-  through a fresh exact-state recovery specification bound to `b203181` and
-  the revised fingerprint; any state mismatch must return `blocked`.
-  `PMR-009`, `PMR-051`, `PMR-071`, `PMR-101`, and `PMR-103` remain closed;
-  PMR-102 is superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
+  `origin/main` remain `6553092`. Owner work `41e4125` integrates exactly the
+  thirteen D4-approved content paths; return `4deec95` changes only
+  `meta/handoff.md`. Maintained validation passed, no remote operation
+  occurred, and the recovery wrapper exited 0 with clean post-status and
+  released reservation. PMR-106 carry `34a8b50` then updates only the stale
+  handoff date and next action. `PMD-20260927-005` closes PMR-104 as
+  acknowledgement only. P2 PMR-105 tracks private backup through `34a8b50`
+  and requires new exact push confirmation. `PMR-009`, `PMR-051`, `PMR-071`,
+  `PMR-101`, `PMR-103`, `PMR-104`, and `PMR-106` remain closed; PMR-102 is
+  superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`.
@@ -97,17 +94,14 @@ headline with the Phase 9 scaffold/submission-open boundary, and remove the
 resolved Intel MPX venue/DOI item from the missing-documents list. PMR-103
 completed exactly that proposal revision and returned fingerprint
 `8bfec674…` without staging content. `PMD-20260927-004` records
-responsible-human D4 `approve_exact` for that exact set. P1 PMR-104 may
-revalidate, stage, and commit exactly those thirteen paths locally through the
-fresh recovery specification, then return durably. Do not push, merge to
+responsible-human D4 `approve_exact` for that exact set. PMR-104 completed:
+work `41e4125` commits exactly those thirteen paths and return `4deec95`
+records successful validation and a released reservation. The clean topic
+branch remains private and unpushed beyond `9a4c5ef`; PMR-106 refreshes only
+the handoff at `34a8b50`. P2 PMR-105 is the
+separate backup request and grants no push until the responsible human
+confirms the exact private fast-forward in the same turn. Do not merge to
 `main`, publish, enable Pages, or infer a new source or D5 disposition.
-
-After current Project Manager tasking is committed, the exact human-run
-command from the workspace root is:
-
-```sh
-bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-104
-```
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

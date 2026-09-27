@@ -171,7 +171,7 @@ preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P1 PMR-104: integrate exact revised CHERI set
+## P2 PMR-105: private CHERI topic backup
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -190,18 +190,26 @@ reservation is released. The revised tracked-diff SHA-256 is
 
 `PMD-20260927-003` closes PMR-103 as acknowledgement. The responsible human
 later selected `approve_exact`; `PMD-20260927-004` binds that D4 authority
-only to the exact revised fingerprint. P1 PMR-104 now has a fresh
-request-specific recovery specification. After this Project Manager turn is
-committed and tasking regenerated, run exactly:
+only to the exact revised fingerprint. PMR-104 completed: owner work
+`41e4125` integrates exactly the thirteen approved paths, handoff-only return
+`4deec95` records maintained validation, and the human-run wrapper exited 0
+with clean post-status and released reservation.
 
-```sh
-cd /home/jmorris/src/beryllium-project
-bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-104
+`PMD-20260927-005` closes PMR-104 as acknowledgement. Class-3 PMR-106 carry
+`34a8b50` refreshes only the handoff date and next action. The clean local
+topic is behind 0 / ahead 12 of last-fetched private origin `9a4c5ef`; no
+backup exists beyond that remote tip. PMR-105 is the distinct private
+fast-forward-only follow-up. Before generating any owner command, obtain a
+new exact same-turn responsible-human confirmation for:
+
+```text
+agentic-os-research/cheri-riscv-notes
+origin/docs/reconcile-project-status: 9a4c5ef -> 34a8b50
 ```
 
-The owner may integrate only the exact thirteen-path set locally and return
-durably. This does not resolve D5 or authorize backup, merge to `main`, push,
-Pages, publication, remotes, or sibling writes.
+No push is authorized yet. Force, tags, remote mutation, merge to `main`,
+Pages, publication, visibility change, D5, redistribution, and sibling writes
+remain excluded.
 
 ## Project-wide tasking startup adoption
 
@@ -350,9 +358,8 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 - **Withdrawn PMR-093/096:** `PMD-20260926-003` removes the two backup rows
   from current CHERI resolution so no human row selection was needed. Their
   exact historical ranges remain evidence. PMR-101 returned blocked and
-  PMR-102 is superseded; if backup is still needed after a later
-  `approve_exact` D4 decision and PMR-104 integration, allocate a new request
-  against the then-current clean branch.
+  PMR-102 is superseded. That later backup allocation is now complete:
+  PMR-105 covers clean topic range `9a4c5ef..34a8b50`.
 - **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
   analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
 - **P4 PMR-097:** after PMR-095, separately review and back up only
@@ -443,12 +450,11 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-riscv-notes` is dirty at handoff-only completed return `b203181`,
-  nine ahead of last-fetched active origin `9a4c5ef`, with thirteen content
-  paths retaining revised SHA-256 `8bfec674…`. PMR-103 is closed;
-  responsible-human D4 `approve_exact` makes P1 PMR-104 ready through a fresh
-  exact-state recovery. PMR-093/096 are withdrawn and no push path is
-  authorized;
+- `cheri-riscv-notes` is clean at class-3 coordination tip `34a8b50`, twelve
+  ahead of last-fetched active origin `9a4c5ef`. Owner work `41e4125`
+  integrates exactly the thirteen D4-approved paths; PMR-104 and PMR-106 are
+  closed. PMR-093/096 are withdrawn; P2 PMR-105 tracks the complete private
+  topic backup, but no push is authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later
