@@ -29,9 +29,9 @@
   `8bfec6744d26ba96e3e6c8e6eb3611c9caa1d38f4d6cdabb2bdaccc2a47010ca`,
   no remote operation, and released recovery reservation. `PMD-20260927-003`
   closes PMR-103 as acknowledgement only; the revised-set D4 question was
-  presented but the responsible human was unavailable, so no answer was
-  inferred. Conditional P2 PMR-104 has no recovery specification and cannot
-  launch unless `approve_exact` is later recorded for that exact fingerprint.
+  later answered `approve_exact` in `PMD-20260927-004`. P1 PMR-104 is ready
+  through a fresh exact-state recovery specification bound to `b203181` and
+  the revised fingerprint; any state mismatch must return `blocked`.
   `PMR-009`, `PMR-051`, `PMR-071`, `PMR-101`, and `PMR-103` remain closed;
   PMR-102 is superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
@@ -96,11 +96,18 @@ authorized only two corrections in `meta/status.md`: align the Phase 0–9
 headline with the Phase 9 scaffold/submission-open boundary, and remove the
 resolved Intel MPX venue/DOI item from the missing-documents list. PMR-103
 completed exactly that proposal revision and returned fingerprint
-`8bfec674…` without staging content. Revised-set D4 is unanswered. Conditional
-PMR-104 is blocked and has no recovery specification or owner command; a
-later `approve_exact` must precede any exact-state integration recovery. Do
-not push, merge, publish, enable Pages, or infer a new source or D5
-disposition.
+`8bfec674…` without staging content. `PMD-20260927-004` records
+responsible-human D4 `approve_exact` for that exact set. P1 PMR-104 may
+revalidate, stage, and commit exactly those thirteen paths locally through the
+fresh recovery specification, then return durably. Do not push, merge to
+`main`, publish, enable Pages, or infer a new source or D5 disposition.
+
+After current Project Manager tasking is committed, the exact human-run
+command from the workspace root is:
+
+```sh
+bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-104
+```
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

@@ -171,7 +171,7 @@ preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P2 PMR-104: blocked on revised CHERI D4
+## P1 PMR-104: integrate exact revised CHERI set
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -189,14 +189,19 @@ reservation is released. The revised tracked-diff SHA-256 is
 `8bfec6744d26ba96e3e6c8e6eb3611c9caa1d38f4d6cdabb2bdaccc2a47010ca`.
 
 `PMD-20260927-003` closes PMR-103 as acknowledgement. The responsible human
-was unavailable for revised-set D4, so conditional PMR-104 remains blocked.
-It has no recovery specification and no owner command. Ask one question:
-`approve_exact`, `reject_exact`, or `defer` for the exact revised fingerprint.
-Safe default is `defer` until the responsible human personally reviews the
-thirteen-path diff.
+later selected `approve_exact`; `PMD-20260927-004` binds that D4 authority
+only to the exact revised fingerprint. P1 PMR-104 now has a fresh
+request-specific recovery specification. After this Project Manager turn is
+committed and tasking regenerated, run exactly:
 
-This does not resolve D5 or authorize content integration, backup, merge,
-push, Pages, publication, remotes, or sibling writes.
+```sh
+cd /home/jmorris/src/beryllium-project
+bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-104
+```
+
+The owner may integrate only the exact thirteen-path set locally and return
+durably. This does not resolve D5 or authorize backup, merge to `main`, push,
+Pages, publication, remotes, or sibling writes.
 
 ## Project-wide tasking startup adoption
 
@@ -440,9 +445,10 @@ The relevant local component commits are:
   `main`, `public`, tags, and every other branch were unchanged;
 - `cheri-riscv-notes` is dirty at handoff-only completed return `b203181`,
   nine ahead of last-fetched active origin `9a4c5ef`, with thirteen content
-  paths retaining revised SHA-256 `8bfec674…`. PMR-103 is closed; conditional
-  PMR-104 is blocked on the unanswered exact D4 choice. PMR-093/096 are
-  withdrawn and no push path is authorized;
+  paths retaining revised SHA-256 `8bfec674…`. PMR-103 is closed;
+  responsible-human D4 `approve_exact` makes P1 PMR-104 ready through a fresh
+  exact-state recovery. PMR-093/096 are withdrawn and no push path is
+  authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later

@@ -1,0 +1,19 @@
+component	cheri-riscv-notes
+request	PMR-104
+branch	docs/reconcile-project-status
+head	b2031812d8644d79d0841a454f2e80a935c595d6
+prior-session	closed
+tracked-diff-sha256	8bfec6744d26ba96e3e6c8e6eb3611c9caa1d38f4d6cdabb2bdaccc2a47010ca
+status	 M meta/roadmap.md
+status	 M meta/status.md
+status	 M references/papers.md
+status	 M references/references.bib
+status	 M references/specs-standards.md
+status	 M sok/draft.md
+status	 M sok/gap-analysis.md
+status	 M sok/outline.md
+status	 M sok/related-work-matrix.md
+status	 M sok/research-questions.md
+status	 M sok/venues.md
+status	 M wiki/01-Capability-Foundations.md
+status	 M wiki/03-CHERI-RISC-V.md

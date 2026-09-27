@@ -4,7 +4,7 @@
 - **Created:** 2026-09-27
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20260927-004` (D4-pending disposition only)
 
 ## Scope
 
