@@ -137,7 +137,8 @@ second prompt.
 
 Maintained inspection on 2026-09-27 observes active/default
 `beryllium/single-hart-runtime-r0` at `478d588`, synchronized with
-last-fetched `origin` and dirty with 82 generated `docs/html/` changes. The
+last-fetched `origin` and dirty with changing generated documentation output,
+including generated asset paths. The
 responsible human reports a separate K0 session running, and fleet read-only
 observation found a linked K0-S remediation worktree. The component handoff includes K0-A planning and
 acceptance material. `PMD-20260926-002` records exact human-accepted K0-A

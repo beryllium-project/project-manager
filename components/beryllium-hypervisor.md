@@ -22,7 +22,8 @@
   read-only to this Project Manager turn. Maintained inspection observes
   active/default `beryllium/single-hart-runtime-r0` at `478d588`, behind zero
   and ahead zero of last-fetched `origin/beryllium/single-hart-runtime-r0`,
-  with 82 generated `docs/html/` changes in the primary checkout. Fleet
+  with changing generated documentation output, including generated asset
+  paths, in the primary checkout. Fleet
   read-only observation also found a linked K0-S remediation worktree; its
   contents are not Project Manager state and are not modified here. The
   component roadmap and `planning/k3-kvm0-k0i-review-summary.md` record exact
