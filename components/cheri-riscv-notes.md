@@ -19,21 +19,21 @@
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
 - **Observed state:** dirty `docs/reconcile-project-status` at handoff-only
-  blocked PMR-101 return `c6606ff`, behind 0 / ahead 8 of last-fetched private
+  completed PMR-103 return `b203181`, behind 0 / ahead 9 of last-fetched private
   active `origin/docs/reconcile-project-status` `9a4c5ef`; `main` /
   `origin/main` remain `6553092`. Thirteen modified paths span
   `meta/roadmap.md`, `meta/status.md`, three reference files, six SoK files,
-  and two Wiki pages. The component handoff now records PMR-101 `blocked`,
-  successful maintained validation, unchanged tracked-diff SHA-256
-  `6736270acf9ef1f908718679884d3e5b83699526debdafcbac9c33e48677422d`,
-  no remote operation, and released recovery reservation. `PMD-20260926-005`
-  closes PMR-101 as acknowledgement of that return; it does not approve D4.
-  `PMD-20260927-001` records D4 `defer` for that exact fingerprint;
-  PMR-102 is superseded. `PMD-20260927-002` separately authorizes exactly two
-  `meta/status.md` proposal corrections. P1 PMR-103 is ready through a fresh
-  exact-state recovery and must return a new fingerprint without staging or
-  committing any content path. `PMR-009`, `PMR-051`, and `PMR-071` remain
-  closed; `PMR-093` and `PMR-096` are withdrawn. Inactive
+  and two Wiki pages. The component handoff records PMR-103 `completed`,
+  exactly the two authorized `meta/status.md` proposal corrections,
+  successful maintained validation, new tracked-diff SHA-256
+  `8bfec6744d26ba96e3e6c8e6eb3611c9caa1d38f4d6cdabb2bdaccc2a47010ca`,
+  no remote operation, and released recovery reservation. `PMD-20260927-003`
+  closes PMR-103 as acknowledgement only; the revised-set D4 question was
+  presented but the responsible human was unavailable, so no answer was
+  inferred. Conditional P2 PMR-104 has no recovery specification and cannot
+  launch unless `approve_exact` is later recorded for that exact fingerprint.
+  `PMR-009`, `PMR-051`, `PMR-071`, `PMR-101`, and `PMR-103` remain closed;
+  PMR-102 is superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`.
@@ -83,29 +83,24 @@ matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
 remains `unknown` (`PMR-020` closed on the observed backup result). PMR-071 is also closed:
 exact fail-closed startup instructions, a maintained 27-mutation regression,
 and workflow validation are local through return `6ac70af`. Historical
-backup requests PMR-093/096 are withdrawn by `PMD-20260926-003` so PMR-101
-is the sole current row. PMR-009 adds canonical/curated metadata-only entries
+backup requests PMR-093/096 are withdrawn by `PMD-20260926-003`. PMR-009 adds
+canonical/curated metadata-only entries
 `seaborn2015exploiting` and `ender2020unpatchable`; no third-party content or
 D5/publication gate follows.
 
-The exact thirteen-file dirty set is separate from PMR-009. PMR-101 has
-returned `blocked` because `references/references.bib` and dependent
+The exact thirteen-file dirty set is separate from PMR-009. PMR-101 returned
+`blocked` because `references/references.bib` and dependent
 reference/synthesis corrections require a distinct D4 citation-review
 decision. The responsible human deferred that fingerprint, then separately
 authorized only two corrections in `meta/status.md`: align the Phase 0–9
 headline with the Phase 9 scaffold/submission-open boundary, and remove the
 resolved Intel MPX venue/DOI item from the missing-documents list. PMR-103
-changes no other content byte, stages no content, validates, and writes only
-a handoff return with the revised fingerprint. The revised set still requires
-a new D4 decision. Do not push, merge, publish, enable Pages, or infer a new
-source or D5 disposition.
-
-After current Project Manager tasking is committed, the exact human-run
-command from the workspace root is:
-
-```sh
-bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-103
-```
+completed exactly that proposal revision and returned fingerprint
+`8bfec674…` without staging content. Revised-set D4 is unanswered. Conditional
+PMR-104 is blocked and has no recovery specification or owner command; a
+later `approve_exact` must precede any exact-state integration recovery. Do
+not push, merge, publish, enable Pages, or infer a new source or D5
+disposition.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

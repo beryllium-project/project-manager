@@ -137,10 +137,10 @@ second prompt.
 
 Maintained inspection on 2026-09-27 observes active/default
 `beryllium/single-hart-runtime-r0` at `478d588`, synchronized with
-last-fetched `origin` and dirty with changing generated documentation output,
-including generated asset paths. The
-responsible human reports a separate K0 session running, and fleet read-only
-observation found a linked K0-S remediation worktree. The component handoff includes K0-A planning and
+last-fetched `origin` and clean at the latest checkpoint after earlier
+generated-output churn. The responsible human reports a separate K0 session
+running, and fleet read-only observation found a linked K0-S remediation
+worktree. The component handoff includes K0-A planning and
 acceptance material. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
 canonical return names open earlier-series `PMR-098` or
@@ -171,7 +171,7 @@ preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P1 PMR-103: bounded CHERI proposal correction
+## P2 PMR-104: blocked on revised CHERI D4
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -182,22 +182,18 @@ tracked-diff SHA-256
 
 The responsible human selected D4 `defer` for that fingerprint and separately
 authorized exactly two `meta/status.md` proposal corrections. PMR-102 is
-superseded. PMR-103 must change only:
+superseded. PMR-103 completed at handoff-only return `b203181`: both
+authorized corrections are present, all thirteen paths remain unstaged,
+maintained validation passed, no remote operation occurred, and the
+reservation is released. The revised tracked-diff SHA-256 is
+`8bfec6744d26ba96e3e6c8e6eb3611c9caa1d38f4d6cdabb2bdaccc2a47010ca`.
 
-1. the `Phases 0–9: COMPLETE` headline, aligning it with Phases 0–8 complete,
-   Phase 9 scaffold complete, and submission readiness open; and
-2. remove the resolved `Intel MPX Explained` venue/DOI item from the
-   missing/not-yet-retrieved list.
-
-It stages or commits no content path, runs maintained validation, and commits
-only a structured handoff return carrying the new fingerprint. The revised
-set then requires a new D4 decision. After this Project Manager turn is
-committed and tasking regenerated, run exactly from the workspace root:
-
-```sh
-cd /home/jmorris/src/beryllium-project
-bash ./project-manager/scripts/owner-recovery.sh launch cheri-riscv-notes PMR-103
-```
+`PMD-20260927-003` closes PMR-103 as acknowledgement. The responsible human
+was unavailable for revised-set D4, so conditional PMR-104 remains blocked.
+It has no recovery specification and no owner command. Ask one question:
+`approve_exact`, `reject_exact`, or `defer` for the exact revised fingerprint.
+Safe default is `defer` until the responsible human personally reviews the
+thirteen-path diff.
 
 This does not resolve D5 or authorize content integration, backup, merge,
 push, Pages, publication, remotes, or sibling writes.
@@ -349,9 +345,9 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 - **Withdrawn PMR-093/096:** `PMD-20260926-003` removes the two backup rows
   from current CHERI resolution so no human row selection was needed. Their
   exact historical ranges remain evidence. PMR-101 returned blocked and
-  PMR-102 is superseded; if backup is still needed after PMR-103 and a later
-  D4-approved integration, allocate a new request against the then-current
-  clean branch.
+  PMR-102 is superseded; if backup is still needed after a later
+  `approve_exact` D4 decision and PMR-104 integration, allocate a new request
+  against the then-current clean branch.
 - **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
   analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
 - **P4 PMR-097:** after PMR-095, separately review and back up only
@@ -428,9 +424,10 @@ The relevant local component commits are:
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
 - `beryllium-hypervisor/` primary is at `478d588`, synchronized with
-  last-fetched `origin` and dirty with generated documentation; a separate
-  K0 remediation worktree is active. No push path is authorized and missing
-  PMR-098/100 returns leave session release unknown. Local candidate
+  last-fetched `origin`; generated-output churn was later observed clean in
+  the primary checkout, while a separate K0 remediation worktree remains
+  reported active. No push path is authorized and missing PMR-098/100 returns
+  leave session release unknown. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
   remote-tracking containment. PMR-098 and PMR-100 request distinct canonical
@@ -441,10 +438,10 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-riscv-notes` is dirty at handoff-only blocked return `c6606ff`,
-  eight ahead of last-fetched active origin `9a4c5ef`, with thirteen content
-  paths retaining exact SHA-256 `6736270…`. D4 is deferred; PMR-102 is
-  superseded; bounded proposal-revision PMR-103 is ready. PMR-093/096 are
+- `cheri-riscv-notes` is dirty at handoff-only completed return `b203181`,
+  nine ahead of last-fetched active origin `9a4c5ef`, with thirteen content
+  paths retaining revised SHA-256 `8bfec674…`. PMR-103 is closed; conditional
+  PMR-104 is blocked on the unanswered exact D4 choice. PMR-093/096 are
   withdrawn and no push path is authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
