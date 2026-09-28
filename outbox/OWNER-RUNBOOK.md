@@ -1,11 +1,14 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-27
-**Workspace root:** `/home/jmorris/src/beryllium-project`
+**Last refreshed:** 2026-09-28
+**Workspace root:** parent of `project-manager/`; exact current root is
+recorded in `../COMPONENTS.md`
 
 The Project Manager does not execute this file's commands, run component
 validation, modify carry-ineligible components, or push any repository.
+In addition to open `PMR-NNN` rows, this runbook may list Project
+Manager-owned non-request coordination items explicitly marked `no PMR`.
 Review each component's own handoff and diff before acting.
 Before any repository write, confirm the worktree and active-session state;
 a clean tree alone is not permission. If another agent is active, coordinate
@@ -32,6 +35,36 @@ The current recovery launcher writes its state log and private terminal
 transcript under ignored `scratch/owner-recoveries/` and prints both paths.
 The transcript may contain sensitive interactive output and is never copied
 wholesale into a durable record.
+
+## P2 workspace worktree container (planning only)
+
+The responsible human directed that the growing set of linked worktrees stop
+accumulating at the workspace top level. Record workspace-root `worktrees/`
+as the shared container for future linked worktrees across project
+repositories, using:
+
+```text
+worktrees/<repository>/<purpose-or-branch>
+```
+
+This is a future workspace-layout action, not authority to execute it now.
+The Project Manager's parent-root write boundary does not include creating an
+arbitrary directory, so the responsible human creates it when this P2 item is
+selected. From `project-manager/`:
+
+```sh
+cd ..
+mkdir -p worktrees
+```
+
+After that human action, the Project Manager may update only its allowed
+parent-root artifacts, including adding `/worktrees/` to `../.gitignore` and
+documenting the topology in `../SOT.md`, `../README.md`, and
+`../COMPONENTS.md`. Existing linked worktrees are not moved, renamed,
+removed, or recreated by this item. Each existing worktree requires a
+separate clean/active-session check and coordination with its repository
+owner; use that repository's proper Git worktree workflow rather than a
+filesystem move. The shared directory does not relax the one-writer rule.
 
 ## Owner-worker closure results
 
@@ -307,7 +340,8 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   No force, tag, publication, analysis disposition, or handshake authority.
 - **P3 PMR-088:** after `PMR-085` is independently resolved, review only
   PMR-086 work `efbfdb8` and durable return `858a73b` with
-  `git -C /home/jmorris/src/beryllium-project/analysis-workbook diff ea72522..858a73b -- tests/validate-agent.sh HANDOFF.md`.
+  `git -C ../analysis-workbook diff ea72522..858a73b -- tests/validate-agent.sh HANDOFF.md`
+  from `project-manager/`.
   A later separately confirmed private fast-forward may back up those two
   commits. This request was not dispatched or combined with PMR-086; no
   force, tag, queue change, analysis disposition, publication, or gate.
@@ -416,8 +450,9 @@ remote mutation is authorized.
 **No further push is authorized; do not run again without a new exact
 responsible-human confirmation:**
 
+From `project-manager/`:
+
 ```sh
-cd /home/jmorris/src/beryllium-project/project-manager
 bash ./scripts/owner-actions.sh --plan
 bash ./scripts/owner-actions.sh
 ```
