@@ -163,6 +163,7 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" "$roster" \
 done
 
 owner_recovery=$repository_root/scripts/owner-recovery.sh
+require_text "$owner_recovery" '[[ -f $tasking && -r $tasking ]]'
 require_file "$owner_recovery"
 require_pattern "$owner_recovery" '^set -euo pipefail$'
 require_text "$owner_recovery" 'HUMAN-RUN'
@@ -239,6 +240,7 @@ require_text "$pmr105_push" 'scratch/owner-actions'
 require_text "$pmr105_push" 'scratch/owner-sessions'
 require_text "$pmr105_push" 'PM_OWNER_SESSION_SCRATCH'
 require_text "$pmr105_push" 'another owner session holds the writer reservation'
+require_text "$pmr105_push" '[[ -f $tasking && -r $tasking ]]'
 require_text "$pmr105_push" 'bash "$tasking" check'
 require_text "$pmr105_push" 'expected exactly one visible CHERI request'
 require_text "$pmr105_push" 'agentic-os-research/cheri-riscv-notes'
@@ -265,6 +267,7 @@ expect_exit "pmr105-push rejects an unknown mode" 2 \
     bash "$pmr105_push" --unknown
 refute_pattern "$pmr105_push" \
     'gh auth switch|--force|--force-with-lease|--mirror|--follow-tags|push .*--tags|gh repo create|git remote (add|set-url|remove)|refs/heads/main'
+refute_pattern "$pmr105_push" '-x[[:space:]]+"?\$tasking'
 require_executable "$repository_root/tests/validate-agent.sh"
 expect_pass "owner-actions passes bash -n" \
     bash -n "$repository_root/scripts/owner-actions.sh"
@@ -274,6 +277,7 @@ require_text "$repository_root/scripts/owner-actions.sh" '--only files_search ne
 require_text "$repository_root/scripts/owner-actions.sh" '((${#selected[@]} == 1))'
 require_text "$repository_root/README.md" '--only files_search --files-search'
 owner_session=$repository_root/scripts/owner-session.sh
+require_text "$owner_session" '[[ -f $tasking && -r $tasking ]]'
 expect_pass "owner-session passes bash -n" bash -n "$owner_session"
 require_text "$owner_session" 'HUMAN-RUN launcher'
 require_text "$owner_session" 'copilot --no-auto-update --yolo'

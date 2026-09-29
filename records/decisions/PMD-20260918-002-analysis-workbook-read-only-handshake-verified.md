@@ -33,8 +33,8 @@ Project Manager-owned coordination artifacts. It verifies
   profile `analysis-workbook-owner` with `gpt-5.6-sol`, reasoning `max`, and
   context `long_context`, and exactly one tool call. That call used only
   `printf` plus `GIT_OPTIONAL_LOCKS=0` read-only local Git identity and status
-  queries against
-  `/home/jmorris/src/beryllium-project/analysis-workbook`; it invoked no
+  queries against canonical repository
+  `component://analysis-workbook`; it invoked no
   specialist, subagent, skill, user question, edit, or other repository. It
   used no output redirection, exited 0, and the synchronous invocation ended
   at `2026-09-18T01:29:34Z`.
@@ -49,8 +49,7 @@ Project Manager-owned coordination artifacts. It verifies
   Project Manager action `continue`.
 - `scripts/inspect-components.sh state analysis-workbook` at
   `2026-09-18T01:31:38Z`, plus read-only `git show` and diff inspection:
-  physical root
-  `/home/jmorris/src/beryllium-project/analysis-workbook`, branch `main`,
+  canonical repository `component://analysis-workbook`, branch `main`,
   exact HEAD `ea72522a7d6448dfa2f3af841c2511522d5bc228`, exact tree
   `e157f199636944977fb613b89efce4b559d03404`, clean with zero changed
   entries, upstream `origin/main`, behind 0 / ahead 8, and no staged or
@@ -60,9 +59,11 @@ Project Manager-owned coordination artifacts. It verifies
   `07bde415a085631b0e0c872e862a326cf2d9f4d4`, current generated tasking, and
   exact registry rows for every component.
 
-The absolute physical root is quoted because it is a required proof value
-under `PMD-20260918-001`. This evidence citation does not change the general
-workspace-relative or `component://` locator rule.
+Repository-root identity was a required proof value under
+`PMD-20260918-001`. After workspace relocation, this durable record uses
+stable `component://analysis-workbook`; the verified runtime trace remains
+the historical evidence. This does not change the general workspace-relative
+or `component://` locator rule.
 
 ## Disposition
 

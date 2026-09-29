@@ -115,7 +115,8 @@ sanitize_remote_output() {
     die "Project Manager repository is invalid"
 [[ -z $(git_safe -C "$pm_root" status --porcelain 2>/dev/null) ]] ||
     die "Project Manager worktree is dirty"
-[[ -x $tasking ]] || die "project-tasking helper is unavailable"
+[[ -f $tasking && -r $tasking ]] ||
+    die "project-tasking helper is unavailable"
 env PM_TASKING_ROOT="$pm_root" PM_TASKING_WORKSPACE="$workspace_root" \
     bash "$tasking" check >/dev/null ||
     die "generated Project Manager tasking is stale"

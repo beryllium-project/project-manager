@@ -8,6 +8,10 @@ fi
 set -euo pipefail
 export LC_ALL=C
 
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+pm_root=$(CDPATH= cd -- "$script_dir/.." && pwd -P)
+workspace_root=$(CDPATH= cd -- "$pm_root/.." && pwd -P)
+
 stamp() {
   date -u +%Y-%m-%dT%H:%M:%SZ
 }
@@ -54,7 +58,7 @@ printf 'inventory-active-account=%s\n' "$active_user"
 gh repo view beryllium-project/helium-te-poc-historical \
   --json 'nameWithOwner,visibility,isEmpty,defaultBranchRef,isFork,parent,isArchived,viewerPermission,pushedAt'
 
-cd /home/jmorris/src/beryllium-project/helium-te-poc
+cd "$workspace_root/helium-te-poc"
 
 origin_url="$(git remote get-url origin)"
 printf '%s\n' "$origin_url" | grep -Eq \

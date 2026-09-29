@@ -1,8 +1,12 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-09-28
-**Update scope:** seventy-fifth coordination turn and PMR-105 preparation.
-Ledgered and routed analysis-workbook `PMQ-031..PMQ-033` as
+**Last updated:** 2026-09-29
+**Update scope:** seventy-sixth coordination follow-up. Corrected the
+PMR-105 preflight helper's readable-file check after the first human `--plan`
+attempt stopped before tasking, component, GitHub, or remote access; normalized
+stale pre-relocation absolute paths to relative or `component://` locators;
+and preserved every PMR-105 gate. The preceding seventy-fifth preparation
+ledgered and routed analysis-workbook `PMQ-031..PMQ-033` as
 `PML-0032..0034` / ask-first OS-security `PMR-107`; no source queue edit is
 due for routed rows. Verified synchronized formal-verification refresh
 `388690d` and closed PMR-014/037/041/069. Reconciled observed
@@ -164,6 +168,36 @@ git -C .. status --short --branch
   preservation, and final 0/0 verification.
 - PMR-105 remains open and unapproved. No preflight, push, account switch,
   force, tag, remote mutation, merge, publication, or gate action occurred.
+- First responsible-human `--plan` attempt at `2026-09-29T01:11:22Z` stopped
+  before tasking, component, GitHub, or remote inspection because the script
+  incorrectly required readable `scripts/project-tasking.sh` to have an
+  executable mode. The ignored log is
+  `scratch/owner-actions/pmr105-push-20260929T011122Z.log`; this turn corrects
+  the check to require a readable regular file and leaves every PMR-105 gate
+  open.
+- Updating the canonical root in `../COMPONENTS.md` exposed stale absolute
+  workstation paths in historical PM records and closed PMR-091 helpers.
+  Those locators now use repository-relative paths or stable `component://`
+  identities; no historical decision, commit, task fingerprint, or gate was
+  changed.
+
+## Seventy-sixth-turn preflight-repair validation and audit
+
+- Retrieved ignored log
+  `scratch/owner-actions/pmr105-push-20260929T011122Z.log`; it contains only
+  the start record and local helper-availability failure.
+- Corrected `outbox/pmr105-push.sh` to require readable regular
+  `scripts/project-tasking.sh`, matching its maintained `bash` invocation.
+- `bash ./scripts/validate-pm.sh`: passed.
+- `bash ./tests/validate-agent.sh`: 702 passed / 0 failed.
+- `bash ./scripts/pull-queues.sh check`: 34 source rows / 34 ledger rows;
+  passed.
+- `git diff --check` and `git -C .. diff --check`: passed.
+- Repository-wide search found no former absolute workspace root in Project
+  Manager artifacts.
+- Required write-disabled audit found no blocker. Its stale/minor findings
+  were reconciled in this follow-up; no component, GitHub, or remote action
+  occurred and no human gate changed.
 
 ## Seventy-fifth-turn validation and audit
 
@@ -1409,7 +1443,7 @@ Current pre-commit checks pass:
   `2026-09-18T01:29:34Z`.
 - Previous turn (forty-second) closeout inspection at
   `2026-09-18T01:31:38Z` observed analysis-workbook
-  physical root `/home/jmorris/src/beryllium-project/analysis-workbook`,
+  physical repository `component://analysis-workbook`,
   clean `main`, full HEAD
   `ea72522a7d6448dfa2f3af841c2511522d5bc228`, tree
   `e157f199636944977fb613b89efce4b559d03404`, zero changed entries,

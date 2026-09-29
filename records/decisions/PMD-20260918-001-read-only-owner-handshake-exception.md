@@ -14,10 +14,11 @@ Project Manager task identity, and one-repository isolation without writing a
 component handoff. This is a single-use coordination exception for
 `PMR-087`; it changes only Project Manager-owned artifacts.
 
-The physical root is itself a required proof value, so this record quotes the
-absolute workstation path from the current root in `../COMPONENTS.md`. That
-single-use evidence citation does not change the general workspace-relative
-or `component://` locator rule for Project Manager records.
+Repository-root identity is itself a required proof value. After workspace
+relocation, this durable record uses stable
+`component://analysis-workbook`; the verified runtime trace remains the
+historical evidence. This does not change the general workspace-relative or
+`component://` locator rule for Project Manager records.
 
 Pre-publication inspection at 2026-09-18T01:11Z observed parent
 `3d8b6ab179d873c58f7a8fe6ff32db50cad24f67`, Project Manager
@@ -58,8 +59,8 @@ the following single-use exception:
    warranted, is a later Project Manager-side disposition in PM-owned
    artifacts.
 2. Success requires native selection of exact profile
-   `analysis-workbook-owner`, physical root
-   `/home/jmorris/src/beryllium-project/analysis-workbook`, request
+   `analysis-workbook-owner`, canonical repository
+   `component://analysis-workbook`, request
    `PMR-087`, the post-publication Project Manager commit and
    `outbox/component-requests.md` blob from its generated tasking, branch
    `main`, and full component HEAD

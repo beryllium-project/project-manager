@@ -62,9 +62,9 @@ hardware is `NOT RUN`.
 - The responsible human runs:
 
   ```sh
-  cd /home/jmorris/src/beryllium-project/project-manager
-  bash ./scripts/owner-actions.sh --files-search \
-    --files-root /home/jmorris/src/beryllium-project/files
+  cd project-manager
+  bash ./scripts/owner-actions.sh --only files_search --files-search \
+    --files-root ../files
   ```
 
   and reports the log path and hash result. The next Project Manager turn

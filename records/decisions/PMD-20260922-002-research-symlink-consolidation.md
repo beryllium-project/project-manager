@@ -75,9 +75,9 @@ their existing owner and cross-repository-collaboration boundaries.
 ## Follow-up
 
 - After Project Manager and parent validation and commits, run only the
-  maintained human-owned coordination push step:
-  `cd /home/jmorris/src/beryllium-project/project-manager && bash
-  ./scripts/owner-actions.sh --only push_pm`; then verify both exact tips.
+  maintained human-owned coordination push step from `project-manager/`:
+  `bash ./scripts/owner-actions.sh --only push_pm`; then verify both exact
+  tips.
 
 ## Provenance
 

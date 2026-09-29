@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-28
+**Last refreshed:** 2026-09-29
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -205,6 +205,12 @@ B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
 ## P2 PMR-105: private CHERI topic backup
+
+The first human `--plan` attempt at `2026-09-29T01:11:22Z` stopped before
+tasking, component, GitHub, or remote access because the prepared script
+incorrectly required the readable tasking helper to be executable. The
+Project Manager corrected and revalidated that local precondition; all push
+and confirmation gates remain open.
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote

@@ -66,8 +66,8 @@ integration, and every push remain open owner or responsible-human gates.
 
 ## Follow-up
 
-- Complete `PMR-025`, then start the XRV owner in
-  `/home/jmorris/src/beryllium-project/xrv-research-repo` and hand it
+- Complete `PMR-025`, then start the XRV owner at
+  `component://xrv-research-repo` and hand it
   `PMR-034` from `outbox/component-requests.md`.
 
 ## Provenance
