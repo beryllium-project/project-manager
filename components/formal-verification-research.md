@@ -11,13 +11,16 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `COLLAB.md`, `HANDOFF.md`
-- **Observed state:** clean canonical direct checkout on `main` at `784be93`,
-  two ahead of `origin/main`. The latest Project Manager carry records
-  `PML-0024` and completes the bibliography-format half of `PMR-037`;
-  `PMR-024` remains closed. `PMD-20260914-003` keeps the component
-  independent and mixed for now. `PMD-20260914-004` records the bounded local
-  D0 inventory; `PMD-20260915-001` closes the guided owner inventory and
-  retains the current `beryllium-project` placement for now
+- **Observed state:** clean canonical direct checkout on `main` at
+  handoff-only successor `388690d`, synchronized 0/0 with reachable
+  `origin/main`. Research refresh `62cc207` and owner-control commit `9109345`
+  update the maintained survey, triage all seven routed pointers, reconcile
+  current topology, and adopt the exact fail-closed tasking resolver. The
+  component handoff reports 48 changed/new URL checks, no unmerged
+  `collab/*`, and no sibling write. `PMR-014`, `PMR-037`, `PMR-041`, and
+  `PMR-069` are closed from that durable evidence. `PMD-20260914-003` keeps
+  the component independent and mixed for now; `PMD-20260915-001` retains
+  the current `beryllium-project` placement
 
 ## Role
 
@@ -76,17 +79,18 @@ claim that Helium is formally verified.
 - Those branch and remote statements are pre-relocation observations. The
   restored checkout observed on 2026-09-14 contains only local `main`, has no
   local `collab/*` branches, and tracks `origin/main` at `e5740de`; `origin`
-  now denotes the reachable `beryllium-project` backup repository
-  (`PMR-037` requests owner-maintained handoff reconciliation).
+  now denotes the reachable `beryllium-project` backup repository; owner
+  refresh `388690d` completed that reconciliation and closed `PMR-037`.
 - Class-2 pointers carried by the Project Manager live in the
   `sources/bibliography.md` section "Routed pointers awaiting owner triage",
   in the file's own entry format, never interleaved with the owner's curated
   topic sections; the owner moves, annotates, or removes them
   (`PMD-20260904-004`). Five were recorded at `ccb48f6` (`PMR-008`), a sixth
   at `c55065c` (`PMR-035` / `PML-0022`), and a seventh at `784be93`
-  (`PMR-042` / `PML-0024`). The heading and `PMQ-021` author format were normalized in
-  the same `784be93` carry; `PMR-037` remains open only for owner-maintained
-  remote/handoff wording.
+  (`PMR-042` / `PML-0024`). The heading and `PMQ-021` author format were
+  normalized in the same `784be93` carry; synchronized owner refresh
+  `388690d` completed the owner-maintained remote/handoff wording and closed
+  `PMR-037`.
 
 ## Commands
 
@@ -101,16 +105,16 @@ owner created the private `beryllium-project/formal-verification-research`
 backup and pushed through the human-run
 `../scripts/owner-actions.sh --fvr-backup`; after relocation the restored
 clone uses that repository as `origin` and tracks `origin/main` (`PMR-037`
-requests corresponding owner-handoff refresh);
-triage of the five original routed pointers (`PMR-014`, P3) and the two later
-pointers (`PMR-041`, P3); the alignment of the
+closed at `388690d`);
+triage of the five original routed pointers (`PMR-014`) and the two later
+pointers (`PMR-041`) is complete at `388690d`; the alignment of the
 owner-only `.github/copilot-instructions.md` bullet and `README.md` sentences
 with the carried `COLLAB.md` wording was applied by the owner at `e5740de` on
 2026-09-06 and pushed to `backup`). `PMR-012` and `PMR-008` were carried by the
 Project Manager itself on 2026-09-04 (`ccb48f6`) and `PMR-017` on 2026-09-05
 (`8246147`). `PMR-035` carried the metadata-only `PMQ-021` pointer at
 `c55065c`; `PMR-042` / `PML-0024` carried `PMQ-023` at `784be93`. Neither
-admits or validates a source. `PMR-069` asks the owner startup context to map
-`check Project Manager tasking` to the exact fail-closed resolver without
-session-history fallback; it includes no research or bibliography
+admits or validates a source. `PMR-069` is closed by owner-control commit
+`9109345` and synchronized handoff-only successor `388690d`; the exact
+fail-closed resolver is active without changing a research or bibliography
 disposition.

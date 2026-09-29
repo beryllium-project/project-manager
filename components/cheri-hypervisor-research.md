@@ -12,15 +12,16 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
 - **Observed state:** the renamed tracked symlink resolves to clean `main` at
-  `60d5ceb`, synchronized behind 0 / ahead 0 with private active
-  `origin/main`. The current handoff records the responsible human's explicit
-  private push scope as all nine previously local commits after `d618935`
-  plus a separate current research-review change set. This independently
-  closes backup-only `PMR-075`, `PMR-092`, and `PMR-094`; the broader push
-  does not convert the later source review into a Project Manager
-  disposition. `legacy-backup/main` remains `706e708`; `msft-inactive/main`
-  remains `ca41490` and was previously unreachable with the active
-  credential. `PMR-040`, `PMR-045`, `PMR-058`, and `PMR-072` remain closed.
+  `5e7387a`, synchronized behind 0 / ahead 0 with private active
+  `origin/main`. The owner handoff records a separate responsible-human
+  authorization and push for the complete Bao-CHERI survey, reference,
+  review-record, README, and handoff change set. The package pins public
+  experimental code and an open-access thesis, labels it unreproduced,
+  non-upstream, unreleased, and not a complete decomposed hypervisor, and
+  changes no Project Manager queue or gate. Prior backup-only
+  `PMR-075`, `PMR-092`, and `PMR-094` remain closed; `legacy-backup/main`
+  remains `706e708`, `msft-inactive/main` remains `ca41490`, and
+  `PMR-040`, `PMR-045`, `PMR-058`, and `PMR-072` remain closed.
 
 ## Role
 

@@ -20,11 +20,12 @@
 - **Observed state:** see `../../COMPONENTS.md`. The responsible human reports
   a separate K0 session running, so Beryllium is coordination-locked and
   read-only to this Project Manager turn. Maintained inspection observes
-  active/default `beryllium/single-hart-runtime-r0` at `478d588`, behind zero
-  and ahead zero of last-fetched `origin/beryllium/single-hart-runtime-r0`,
-  and clean at the latest checkpoint after earlier generated-output churn.
-  Fleet read-only observation also found a linked K0-S remediation worktree;
-  its contents are not Project Manager state and are not modified here. The
+  active/default `beryllium/single-hart-runtime-r0` dirty at `d3499c3`,
+  behind zero / ahead two of last-fetched
+  `origin/beryllium/single-hart-runtime-r0` `478d588`. Read-only ref
+  inspection also observes multiple local K0 topic branches, including K0-S,
+  K0-B, K0-C, and renewed K0-I lines; their worktrees and contents are not
+  Project Manager state and are not modified here. The
   component roadmap and `planning/k3-kvm0-k0i-review-summary.md` record exact
   K0-I acceptance at earlier target `abd092a`, but the component still has no
   canonical PMR-098/100 return or explicit session release.
@@ -32,7 +33,7 @@
   acceptance and closes plan-only PMR-099, satisfying K0-P only. K0-S, K0-X,
   and K0-R remain blocked. The component still has no
   canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
-  `PMR-100` return for the later KVM0 series through current `478d588`. Do
+  `PMR-100` return for the later KVM0 series through current `d3499c3`. Do
   not launch another owner session or infer K0-S authority, execution, backup,
   publication, or either reconciliation request complete.
   Last-fetched refs previously contained active/default

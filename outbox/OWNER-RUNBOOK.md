@@ -168,12 +168,12 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection on 2026-09-27 observes active/default
-`beryllium/single-hart-runtime-r0` at `478d588`, synchronized with
-last-fetched `origin` and clean at the latest checkpoint after earlier
-generated-output churn. The responsible human reports a separate K0 session
-running, and fleet read-only observation found a linked K0-S remediation
-worktree. The component handoff includes K0-A planning and
+Maintained inspection on 2026-09-28 observes active/default
+`beryllium/single-hart-runtime-r0` dirty at `d3499c3`, behind 0 / ahead 2 of
+last-fetched `origin` `478d588`. Multiple local K0 topic branches are visible.
+The responsible human reports separate K0 work, and no canonical PMR-098/100
+return or session release exists. The component handoff includes K0-A
+planning and
 acceptance material. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
 canonical return names open earlier-series `PMR-098` or
@@ -244,6 +244,50 @@ No push is authorized yet. Force, tags, remote mutation, merge to `main`,
 Pages, publication, visibility change, D5, redistribution, and sibling writes
 remain excluded.
 
+`PMD-20260928-001` selects dedicated human-run
+`outbox/pmr105-push.sh`; it does not grant the push. The responsible human
+first runs from `project-manager/`:
+
+```sh
+bash ./outbox/pmr105-push.sh --plan
+```
+
+The script prints an ignored UTC-stamped log under
+`scratch/owner-actions/`. The Project Manager retrieves that log and requires
+the exact active GitHub account, private target identity, write permission,
+shared-lock availability, clean branch, live remote predecessor `9a4c5ef`,
+local tip `34a8b50`, and unchanged other refs. Only after a fresh same-turn
+exact confirmation does the Project Manager hand the responsible human:
+
+```sh
+bash ./outbox/pmr105-push.sh --execute
+```
+
+The script never switches accounts, mutates remotes, forces, tags, merges, or
+touches another ref. A mismatch or nonzero exit leaves PMR-105 open and is
+not retried automatically.
+
+## P3 PMR-107: OS-security pointer triage
+
+The synchronized analysis-workbook added three public-source pointers from
+`AWB-20260928-001`, now ledgered as `PML-0032..0034`: Sirius, the *Secure
+Programming with Dispersed Compartments* thesis, and Deluminator. Read-only
+search found no matching public-index entry in synchronized OS-security
+`86645d4`.
+
+This component is ask-first. Before any owner write, the responsible human
+must approve starting the OS-security owner session. The exact prepared
+request is run from the workspace root:
+
+```sh
+bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-107
+```
+
+The owner may record public metadata/lawful routes, report an existing
+record, or decline each pointer. It must not access
+`sources/restricted-microsoft/`, copy full text, decide redistribution,
+publish, or turn pointer triage into an architecture or assurance gate.
+
 ## Project-wide tasking startup adoption
 
 `PMD-20260915-008` requires every registered owner context to map
@@ -274,7 +318,6 @@ prompt.
 | `PMR-064` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064` | Packet preloaded; do not resume the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068` | Packet preloaded; preserve frozen refs and gates. |
-| `PMR-069` | P3 | `bash ./project-manager/scripts/owner-session.sh launch formal-verification-research PMR-069` | Packet preloaded; no research or bibliography disposition. |
 | `PMR-070` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
 
 Do not paste a follow-up phrase. The generated packet already includes the
@@ -333,21 +376,20 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 
 ## Deferred and non-blocking work
 
-- **P3 PMR-085:** analysis-workbook clean `main` at `ea72522` is eight ahead
-  of last-fetched private `origin/main` `1ef1ac6`, comprising Project Manager
-  carry `c7cc0fa` plus seven PMR-084 owner commits. After authorized private
-  access, review that exact range and decide whether to fast-forward push.
-  No force, tag, publication, analysis disposition, or handshake authority.
-- **P3 PMR-088:** after `PMR-085` is independently resolved, review only
-  PMR-086 work `efbfdb8` and durable return `858a73b` with
+- **P3 PMR-085:** synchronized analysis-workbook `origin/main` at `3c9d2a3`
+  contains the exact predecessor range through `ea72522`. Reconcile who
+  reviewed and authorized the encompassing push before closure. No force,
+  publication, analysis disposition, or handshake authority follows.
+- **P3 PMR-088:** synchronized `3c9d2a3` contains PMR-086 work `efbfdb8` and
+  durable return `858a73b`. After `PMR-085`'s push evidence is independently
+  reconciled, review the exact range with
   `git -C ../analysis-workbook diff ea72522..858a73b -- tests/validate-agent.sh HANDOFF.md`
   from `project-manager/`.
-  A later separately confirmed private fast-forward may back up those two
-  commits. This request was not dispatched or combined with PMR-086; no
-  force, tag, queue change, analysis disposition, publication, or gate.
-- **P4 PMR-089:** the twelve-commit closure range `858a73b..8b5a301` is
-  frozen. Do not act until `PMR-085` plus `PMR-088` are independently
-  resolved and private access is authorized. The request covers only that
+  This request was not dispatched or combined with PMR-086; no queue change,
+  analysis disposition, publication, or gate follows.
+- **P4 PMR-089:** synchronized `3c9d2a3` contains the frozen twelve-commit
+  closure range `858a73b..8b5a301`. Do not close it until `PMR-085` plus
+  `PMR-088` push evidence is independently reconciled. The request covers only that
   exact six-request housekeeping range,
   beginning with HANDOFF-only commits `f7079fb` and `5e037b1`, followed by
   PMR-004 work `5684317` / return `635719e` and PMR-050 work `231cca4` /
@@ -394,22 +436,25 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   exact historical ranges remain evidence. PMR-101 returned blocked and
   PMR-102 is superseded. That later backup allocation is now complete:
   PMR-105 covers clean topic range `9a4c5ef..34a8b50`.
-- **P4 PMR-095:** after PMR-085/088/089, separately review and back up only
-  analysis-workbook carry `5a646df` (`8b5a301..5a646df`).
-- **P4 PMR-097:** after PMR-095, separately review and back up only
-  analysis-workbook carry `8da398d` (`5a646df..8da398d`).
+- **P4 PMR-095:** synchronized `3c9d2a3` contains analysis-workbook carry
+  `5a646df` (`8b5a301..5a646df`); close only after predecessor push
+  dispositions are reconciled.
+- **P4 PMR-097:** synchronized `3c9d2a3` contains analysis-workbook carry
+  `8da398d` (`5a646df..8da398d`); close only after PMR-095's disposition is
+  reconciled.
 - **Withdrawn PMR-073:** `PMD-20260918-003` records that the proven owner-worker path
   supplies the bounded need and no current request requires a separate
   Git-maintainer specialist.
 
-- **P3 PMR-014:** the formal-verification owner triages the five original routed
-  bibliography pointers.
-- **P3 PMR-041:** the same owner triages the later `PMQ-021` and `PMQ-023`
-  pointers at `c55065c` and `784be93`.
-- **P3 PMR-037:** in `formal-verification-research`, refresh the owner-maintained
-  handoff to state that the restored clone tracks the reachable
-  `beryllium-project` repository as `origin`. The bibliography-format half
-  was carried at `784be93`.
+- **Closed PMR-014/037/041/069:** synchronized formal-verification refresh
+  `388690d` contains research `62cc207`, owner controls `9109345`, all routed
+  pointer dispositions, current topology/remote wording, and the exact
+  fail-closed tasking resolver. The owner reports 48 URL checks and no sibling
+  write. Pointer removal or admission changes no licensing, verification,
+  Beryllium, or publication gate.
+- **P3 PMR-107:** after the responsible human satisfies OS-security's
+  ask-first convention, triage only PMQ-031..033 under the public-source
+  rules; never access restricted material.
 
 ## External Beryllium dependency
 

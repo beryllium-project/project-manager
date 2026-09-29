@@ -30,11 +30,15 @@
   from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at Project Manager class-1 carry `8da398d`,
-  behind 0 / ahead 24 of last-fetched `origin/main` `1ef1ac6`, local and
-  unpushed. Carries `5a646df` and `8da398d` change only
-  `outbox/pm-queue.md`, applying accepted statuses for PML-0028/0029/0031
-  after verified XRV PMR-058 pointer records and PML-0008/0011 after PMR-009.
+- **Observed state:** clean `main` at `3c9d2a3`, synchronized 0/0 with
+  `origin/main`. Complete private session
+  `AWB-20260928-001-microguards-cheri-fallback` records one medium-confidence
+  architecture inquiry, 40 evidence records, 414 / 0 agent tests, and queue
+  rows `PMQ-031..033`; the Project Manager routes those new pointers to the
+  ask-first OS-security owner as `PML-0032..0034` / `PMR-107`. Earlier
+  carries `5a646df` and `8da398d` change only `outbox/pm-queue.md`, applying
+  accepted statuses for PML-0028/0029/0031 after verified XRV PMR-058 pointer
+  records and PML-0008/0011 after PMR-009.
   Earlier work `62bd071` changes only the user-facing agent, repository
   instructions, interface, and agent tests; checkpoint `8b5a301` changes only
   `HANDOFF.md`. The exact fail-closed Project Manager tasking startup mapping,
@@ -45,7 +49,8 @@
   externally sequenced analysis `PMR-054` is
   separate. Prior-range backup `PMR-085`, PMR-086 backup `PMR-088`, and
   prospective closure-range backup `PMR-089`, and dependent carry backups
-  `PMR-095` / `PMR-097` remain open.
+  `PMR-095` / `PMR-097` remain open pending reconciliation of the observed
+  synchronized state with their review/authorization requirements.
   `PMD-20260915-001` keeps this Be-specific workbench under
   `beryllium-project` for now
 
@@ -159,10 +164,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   commits. PMR-038 return `f7079fb` and checkpoint `5e037b1` make twelve
   ahead; PMR-004 work `5684317` / return `635719e` make fourteen ahead,
   PMR-050 work `231cca4` / return `692caeb` make sixteen ahead, and PMR-055
-  work `70bea16` / return `6d5d03d` make eighteen ahead.
-  PMR-059 work `9d76048` / return `e6c8aad` make twenty ahead, and PMR-063
-  work `62bd071` / return `8b5a301` plus carries `5a646df` / `8da398d` make
-  current `main` twenty-four ahead. PMR-089 freezes the exact
+  work `70bea16` / return `6d5d03d` historically made eighteen ahead.
+  PMR-059 work `9d76048` / return `e6c8aad` made twenty ahead, and PMR-063
+  work `62bd071` / return `8b5a301` plus carries `5a646df` / `8da398d`
+  historically made twenty-four ahead. Current `main` is synchronized 0/0
+  with `origin/main` at `3c9d2a3`. PMR-089 freezes the exact
   post-`858a73b` closure range at `8b5a301`; PMR-095 and PMR-097 separately
   track the two carries
   without expanding either earlier backup request.

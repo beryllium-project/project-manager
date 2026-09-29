@@ -33,7 +33,10 @@
   superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
-  `cd7dc81`.
+  `cd7dc81`. `PMD-20260928-001` selects a dedicated human-run
+  `outbox/pmr105-push.sh`: `--plan` inventories the active account, exact
+  private target, writer lock, and ref boundary; `--execute` remains withheld
+  until a fresh exact same-turn confirmation.
 
 ## Role
 
@@ -100,8 +103,12 @@ records successful validation and a released reservation. The clean topic
 branch remains private and unpushed beyond `9a4c5ef`; PMR-106 refreshes only
 the handoff at `34a8b50`. P2 PMR-105 is the
 separate backup request and grants no push until the responsible human
-confirms the exact private fast-forward in the same turn. Do not merge to
-`main`, publish, enable Pages, or infer a new source or D5 disposition.
+confirms the exact private fast-forward in the same turn. The responsible
+human first runs `bash ./outbox/pmr105-push.sh --plan` from the Project
+Manager repository; after log verification and exact confirmation, the human
+alone runs `--execute`. The script never switches accounts, forces, tags,
+mutates remotes, or touches another ref. Do not merge to `main`, publish,
+enable Pages, or infer a new source or D5 disposition.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

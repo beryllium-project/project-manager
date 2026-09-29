@@ -212,6 +212,7 @@ outbox/owner-recovery/                       exact tracked dirty-recovery specif
 outbox/tasking/README.md                     contract for ignored generated per-component tasking views
 outbox/OWNER-RUNBOOK.md                      open items by priority with exact human steps (refreshed each turn)
 outbox/owner-edits/                          exact text of the recorded owner-side edits applied by the human-run helper
+outbox/pmr105-push.sh                        HUMAN-RUN exact CHERI PMR-105 preflight/push; never executed by the agent
 templates/owner-return.md                    component HANDOFF return shape for PMR/PML owner results
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
@@ -359,3 +360,26 @@ or `beryllium-hypervisor/` (`records/decisions/PMD-20260906-001-owner-edits-and-
 The run ends with the open requests by priority; `outbox/OWNER-RUNBOOK.md` has
 the exact steps for each. Logs go to `scratch/owner-actions/` (ignored).
 Afterwards, start a Project Manager session and say what the run did.
+
+PMR-105 uses a separate one-request script rather than the generic helper.
+The script is not authority and the Project Manager never executes it. From
+this directory, the responsible human first runs:
+
+```sh
+bash ./outbox/pmr105-push.sh --plan
+```
+
+The Project Manager retrieves the printed ignored log, verifies the active
+GitHub account, private target, permission, clean exact branch, writer lock,
+and `9a4c5ef -> 34a8b50` boundary, then presents the exact same-turn push
+confirmation. Only after that confirmation does the responsible human run:
+
+```sh
+bash ./outbox/pmr105-push.sh --execute
+```
+
+Execution pushes only
+`refs/heads/docs/reconcile-project-status`, uses no force or tags, verifies
+all other remote refs are unchanged, refreshes only the corresponding
+remote-tracking ref, and requires final clean 0/0 state. Logs are private
+ignored files under `scratch/owner-actions/`.

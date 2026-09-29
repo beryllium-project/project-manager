@@ -226,6 +226,45 @@ require_text "$pmr091_push" \
 require_text "$pmr091_push" 'other-refs-preserved=yes'
 refute_pattern "$pmr091_push" \
     '--force|--mirror|--follow-tags|push .*--tags|gh repo create|git remote (add|set-url|remove)'
+pmr105_push="$repository_root/outbox/pmr105-push.sh"
+require_file "$pmr105_push"
+expect_pass "pmr105-push passes bash -n" \
+    bash -n "$pmr105_push"
+require_pattern "$pmr105_push" '^set -euo pipefail$'
+require_text "$pmr105_push" 'export LC_ALL=C'
+require_text "$pmr105_push" 'export GIT_TERMINAL_PROMPT=0'
+require_text "$pmr105_push" 'umask 077'
+require_text "$pmr105_push" 'ERROR: run this script with bash; do not source it'
+require_text "$pmr105_push" 'scratch/owner-actions'
+require_text "$pmr105_push" 'scratch/owner-sessions'
+require_text "$pmr105_push" 'PM_OWNER_SESSION_SCRATCH'
+require_text "$pmr105_push" 'another owner session holds the writer reservation'
+require_text "$pmr105_push" 'bash "$tasking" check'
+require_text "$pmr105_push" 'expected exactly one visible CHERI request'
+require_text "$pmr105_push" 'agentic-os-research/cheri-riscv-notes'
+require_text "$pmr105_push" 'docs/reconcile-project-status'
+require_text "$pmr105_push" '9a4c5effef3b87fc7529ec7ff265179ad1130d58'
+require_text "$pmr105_push" '34a8b508eb68f0b61b463bd0f75d55b348c844d1'
+require_text "$pmr105_push" "gh api user --jq '.login'"
+require_text "$pmr105_push" 'nameWithOwner,visibility,isArchived,viewerPermission'
+require_text "$pmr105_push" 'target repository is not private'
+require_text "$pmr105_push" 'active account lacks write permission'
+require_text "$pmr105_push" "credential.helper='!gh auth git-credential'"
+require_text "$pmr105_push" 'core.hooksPath=/dev/null'
+require_text "$pmr105_push" 'ls-remote --get-url'
+require_text "$pmr105_push" 'Git URL rewriting changes the exact target'
+require_text "$pmr105_push" '"$expected_ref:$expected_ref"'
+require_text "$pmr105_push" 'other-refs-preserved=yes'
+require_text "$pmr105_push" 'refs/remotes/origin/$expected_branch'
+require_text "$pmr105_push" 'final branch/upstream state is not 0 behind / 0 ahead'
+expect_exit "pmr105-push help is read-only" 0 \
+    bash "$pmr105_push" --help
+expect_exit "pmr105-push rejects a missing mode" 2 \
+    bash "$pmr105_push"
+expect_exit "pmr105-push rejects an unknown mode" 2 \
+    bash "$pmr105_push" --unknown
+refute_pattern "$pmr105_push" \
+    'gh auth switch|--force|--force-with-lease|--mirror|--follow-tags|push .*--tags|gh repo create|git remote (add|set-url|remove)|refs/heads/main'
 require_executable "$repository_root/tests/validate-agent.sh"
 expect_pass "owner-actions passes bash -n" \
     bash -n "$repository_root/scripts/owner-actions.sh"
