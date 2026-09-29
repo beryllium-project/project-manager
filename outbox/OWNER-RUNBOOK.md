@@ -168,9 +168,10 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection on 2026-09-28 observes active/default
-`beryllium/single-hart-runtime-r0` dirty at `d3499c3`, behind 0 / ahead 2 of
-last-fetched `origin` `478d588`. Multiple local K0 topic branches are visible.
+Maintained inspection on 2026-09-29 observes active/default
+`beryllium/single-hart-runtime-r0` dirty at synchronized last-fetched tip
+`238ced0`, behind 0 / ahead 0, with 31 generated HTML/SVG/asset changes.
+Multiple local K0 topic branches are visible.
 The responsible human reports separate K0 work, and no canonical PMR-098/100
 return or session release exists. The component handoff includes K0-A
 planning and
@@ -404,8 +405,8 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** active/default Beryllium is now observed at `80345e1`,
-  synchronized 0/0 with last-fetched
+- **P3 PMR-090:** active/default Beryllium is now observed dirty at
+  synchronized `238ced0`, 0/0 with last-fetched
   `origin/beryllium/single-hart-runtime-r0`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
   `0d53120` have no remote-tracking containment. This partially changes the
@@ -510,8 +511,9 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` clean `main` `8da398d` is twenty-four ahead of last-fetched
-  `origin/main` `1ef1ac6`: Project Manager carry `c7cc0fa`, seven PMR-084
+- `analysis-workbook` clean `main` is synchronized 0/0 at `3c9d2a3`.
+  Its contained historical range includes Project Manager carry `c7cc0fa`,
+  seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and
   `858a73b`, followed by PMR-038 HANDOFF-only commits `f7079fb` and
   `5e037b1`, then PMR-004 work `5684317` / return `635719e`, PMR-050 work
@@ -521,10 +523,10 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is at `478d588`, synchronized with
-  last-fetched `origin`; generated-output churn was later observed clean in
-  the primary checkout, while a separate K0 remediation worktree remains
-  reported active. No push path is authorized and missing PMR-098/100 returns
+- `beryllium-hypervisor/` primary is dirty at synchronized last-fetched tip
+  `238ced0`, with 31 generated HTML/SVG/asset changes, while active K0 topic
+  work remains owner-controlled. No push path is authorized and missing
+  PMR-098/100 returns
   leave session release unknown. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
@@ -542,7 +544,7 @@ The relevant local component commits are:
   closed. PMR-093/096 are withdrawn; P2 PMR-105 tracks the complete private
   topic backup, but no push is authorized;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
-  `origin/main` `60d5ceb`. Exact PMR-075/092/094 predecessor ranges are
+  `origin/main` `5e7387a`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later
   research-review change set is separate owner evidence; inactive
   `legacy-backup/main` remains `706e708`;

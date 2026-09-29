@@ -20,9 +20,9 @@
 - **Observed state:** see `../../COMPONENTS.md`. The responsible human reports
   a separate K0 session running, so Beryllium is coordination-locked and
   read-only to this Project Manager turn. Maintained inspection observes
-  active/default `beryllium/single-hart-runtime-r0` dirty at `d3499c3`,
-  behind zero / ahead two of last-fetched
-  `origin/beryllium/single-hart-runtime-r0` `478d588`. Read-only ref
+  active/default `beryllium/single-hart-runtime-r0` dirty at synchronized
+  last-fetched tip `238ced0`, behind zero / ahead zero, with 31 generated
+  HTML/SVG/asset changes. Read-only ref
   inspection also observes multiple local K0 topic branches, including K0-S,
   K0-B, K0-C, and renewed K0-I lines; their worktrees and contents are not
   Project Manager state and are not modified here. The
@@ -33,7 +33,7 @@
   acceptance and closes plan-only PMR-099, satisfying K0-P only. K0-S, K0-X,
   and K0-R remain blocked. The component still has no
   canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
-  `PMR-100` return for the later KVM0 series through current `d3499c3`. Do
+  `PMR-100` return for the later KVM0 series through current `238ced0`. Do
   not launch another owner session or infer K0-S authority, execution, backup,
   publication, or either reconciliation request complete.
   Last-fetched refs previously contained active/default
@@ -128,10 +128,11 @@ commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
 than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
-decision. Read-only inspection now observes active/default `80345e1`
-synchronized with last-fetched `origin`, but local `6e93461` and `0d53120`
-remain without remote-tracking containment and the Project Manager has no
-same-turn publication-authorization record for the observed active update.
+decision. Read-only inspection now observes active/default `238ced0`
+synchronized with last-fetched `origin` but dirty with 31 generated outputs;
+local `6e93461` and `0d53120` remain without remote-tracking containment and
+the Project Manager has no same-turn publication-authorization record for
+the observed active update.
 The request therefore remains open.
 
 `PMR-098` requests a canonical owner return for the exact thirteen-commit
@@ -145,8 +146,8 @@ remains R8-H0 committed but unaccepted. `PMR-099` is closed on exact
 human-accepted K0-A plan target `5227266` under `PMD-20260926-002`; that
 closes plan preparation only and satisfies only K0-P. New `PMR-100` requests
 the distinct canonical return for the post-`80345e1` committed KVM0 series
-and current active K0 session, whose primary checkout is now clean at
-`478d588`. K0-S source preparation and evidence import,
+and current active K0 session, whose primary checkout is now dirty and
+synchronized at `238ced0`. K0-S source preparation and evidence import,
 K0-X native execution, K0-R result acceptance, B0,
 development-kernel/BSP selection, B1, a retained H0 successor, H1-H4,
 publication, and release remain separate blocked gates. H1-H4 are
