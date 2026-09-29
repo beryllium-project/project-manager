@@ -27,16 +27,19 @@
   occurred, and the recovery wrapper exited 0 with clean post-status and
   released reservation. PMR-106 carry `34a8b50` then updates only the stale
   handoff date and next action. `PMD-20260927-005` closes PMR-104 as
-  acknowledgement only. P2 PMR-105 tracks private backup through `34a8b50`
-  and requires new exact push confirmation. `PMR-009`, `PMR-051`, `PMR-071`,
+  acknowledgement only. P2 PMR-105 tracks private backup through `34a8b50`;
+  its preflight is verified and the exact authorize/defer answer is
+  unanswered.
+  `PMR-009`, `PMR-051`, `PMR-071`,
   `PMR-101`, `PMR-103`, `PMR-104`, and `PMR-106` remain closed; PMR-102 is
   superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`. `PMD-20260928-001` selects a dedicated human-run
-  `outbox/pmr105-push.sh`: `--plan` inventories the active account, exact
-  private target, writer lock, and ref boundary; `--execute` remains withheld
-  until a fresh exact same-turn confirmation.
+  `outbox/pmr105-push.sh`: corrected `--plan` verified active account
+  `xjamesmorris`, private target, `ADMIN`, writer lock, clean branch, exact
+  `9a4c5ef -> 34a8b50`, three heads, zero tags, and no remote write;
+  `--execute` remains withheld until a fresh exact same-turn confirmation.
 
 ## Role
 
@@ -77,7 +80,7 @@ licensing/redistribution/publication remains open. Future source admission
 remains human-gated. The Project Manager may request resolution of the content
 license before any public mirror. PMR-051 is closed: the handoff/status record corrected current
 paths, remote-run evidence, and a structured return. The successful 2026-09-16
-Validate run for preserved revision `ae09213` and successor topic history
+Validate run covers preserved revision `ae09213` and successor topic history
 through `9a4c5ef`. Topic backup is evidenced by the
 matching active private `origin` ref at `9a4c5ef`; the authentication mechanism
 remains `unknown` (`PMR-020` closed on the observed backup result). PMR-071 is also closed:
@@ -104,9 +107,9 @@ branch remains private and unpushed beyond `9a4c5ef`; PMR-106 refreshes only
 the handoff at `34a8b50`. P2 PMR-105 is the
 separate backup request and grants no push until the responsible human
 confirms the exact private fast-forward in the same turn. The responsible
-human first runs `bash ./outbox/pmr105-push.sh --plan` from the Project
-Manager repository; after log verification and exact confirmation, the human
-alone runs `--execute`. The script never switches accounts, forces, tags,
+human preflight is complete; after the exact confirmation, the human alone
+runs `bash ./outbox/pmr105-push.sh --execute` from the Project Manager
+repository. The script never switches accounts, forces, tags,
 mutates remotes, or touches another ref. Do not merge to `main`, publish,
 enable Pages, or infer a new source or D5 disposition.
 

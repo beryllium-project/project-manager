@@ -207,11 +207,20 @@ progression, publication, and release remain separate blocked gates.
 
 ## P2 PMR-105: private CHERI topic backup
 
-The first human `--plan` attempt at `2026-09-29T01:11:22Z` stopped before
-tasking, component, GitHub, or remote access because the prepared script
-incorrectly required the readable tasking helper to be executable. The
-Project Manager corrected and revalidated that local precondition; all push
-and confirmation gates remain open.
+Two human `--plan` attempts at `2026-09-29T01:11:12Z` and
+`2026-09-29T01:11:22Z` stopped before tasking, component, GitHub, or remote
+access because the prepared script incorrectly required the readable tasking
+helper to be executable. The Project Manager corrected and revalidated that
+local precondition; all push and confirmation gates remain open.
+
+The corrected human `--plan` completed at `2026-09-29T01:31:02Z`. Ignored log
+`scratch/owner-actions/pmr105-push-20260929T013100Z.log` verifies active
+account `xjamesmorris`, private target
+`agentic-os-research/cheri-riscv-notes`, `ADMIN` permission, shared lock,
+clean exact topic, remote `9a4c5ef`, local `34a8b50`, three heads, zero tags,
+and no remote write. Independent local inspection agrees. The responsible
+human was unavailable for the exact authorize/defer question, so no push is
+authorized and `--execute` must not be run.
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -252,23 +261,10 @@ Pages, publication, visibility change, D5, redistribution, and sibling writes
 remain excluded.
 
 `PMD-20260928-001` selects dedicated human-run
-`outbox/pmr105-push.sh`; it does not grant the push. The responsible human
-first runs from `project-manager/`:
-
-```sh
-bash ./outbox/pmr105-push.sh --plan
-```
-
-The script prints an ignored UTC-stamped log under
-`scratch/owner-actions/`. The Project Manager retrieves that log and requires
-the exact active GitHub account, private target identity, write permission,
-shared-lock availability, clean branch, live remote predecessor `9a4c5ef`,
-local tip `34a8b50`, and unchanged other refs. Only after a fresh same-turn
-exact confirmation does the Project Manager hand the responsible human:
-
-```sh
-bash ./outbox/pmr105-push.sh --execute
-```
+`outbox/pmr105-push.sh`; it does not grant the push. Preflight is complete.
+Only after a fresh same-turn exact confirmation does the Project Manager hand
+the responsible human `bash ./outbox/pmr105-push.sh --execute` from
+`project-manager/` (shown for review only; not authorized).
 
 The script never switches accounts, mutates remotes, forces, tags, merges, or
 touches another ref. A mismatch or nonzero exit leaves PMR-105 open and is
