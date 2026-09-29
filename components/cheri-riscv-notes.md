@@ -28,8 +28,8 @@
   released reservation. PMR-106 carry `34a8b50` then updates only the stale
   handoff date and next action. `PMD-20260927-005` closes PMR-104 as
   acknowledgement only. P2 PMR-105 tracks private backup through `34a8b50`;
-  its preflight is verified and the exact authorize/defer answer is
-  unanswered.
+  its preflight is verified and the exact one-use fast-forward is authorized;
+  execution and post-verification remain pending.
   `PMR-009`, `PMR-051`, `PMR-071`,
   `PMR-101`, `PMR-103`, `PMR-104`, and `PMR-106` remain closed; PMR-102 is
   superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
@@ -38,8 +38,8 @@
   `cd7dc81`. `PMD-20260928-001` selects a dedicated human-run
   `outbox/pmr105-push.sh`: corrected `--plan` verified active account
   `xjamesmorris`, private target, `ADMIN`, writer lock, clean branch, exact
-  `9a4c5ef -> 34a8b50`, three heads, zero tags, and no remote write;
-  `--execute` remains withheld until a fresh exact same-turn confirmation.
+  `9a4c5ef -> 34a8b50`, three heads, zero tags, and no remote write; the
+  responsible human later authorized the exact private fast-forward once.
 
 ## Role
 
@@ -106,8 +106,8 @@ records successful validation and a released reservation. The clean topic
 branch remains private and unpushed beyond `9a4c5ef`; PMR-106 refreshes only
 the handoff at `34a8b50`. P2 PMR-105 is the
 separate backup request and grants no push until the responsible human
-confirms the exact private fast-forward in the same turn. The responsible
-human preflight is complete; after the exact confirmation, the human alone
+confirms the exact private fast-forward in the same turn. That confirmation
+was recorded on 2026-09-29. The responsible human preflight is complete; the human alone
 runs `bash ./outbox/pmr105-push.sh --execute` from the Project Manager
 repository. The script never switches accounts, forces, tags,
 mutates remotes, or touches another ref. Do not merge to `main`, publish,

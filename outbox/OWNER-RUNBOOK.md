@@ -219,8 +219,10 @@ account `xjamesmorris`, private target
 `agentic-os-research/cheri-riscv-notes`, `ADMIN` permission, shared lock,
 clean exact topic, remote `9a4c5ef`, local `34a8b50`, three heads, zero tags,
 and no remote write. Independent local inspection agrees. The responsible
-human was unavailable for the exact authorize/defer question, so no push is
-authorized and `--execute` must not be run.
+human was unavailable for the exact authorize/defer question at that
+checkpoint. The responsible human later stated exactly
+`"authorize PMR-105 exact private fast-forward"`. This is a single-use
+authorization for the exact verified account/repository/ref/tips only.
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -248,23 +250,29 @@ with clean post-status and released reservation.
 `34a8b50` refreshes only the handoff date and next action. The clean local
 topic is behind 0 / ahead 12 of last-fetched private origin `9a4c5ef`; no
 backup exists beyond that remote tip. PMR-105 is the distinct private
-fast-forward-only follow-up. Before generating any owner command, obtain a
-new exact same-turn responsible-human confirmation for:
+fast-forward-only follow-up. The recorded exact same-turn confirmation is:
 
 ```text
 agentic-os-research/cheri-riscv-notes
 origin/docs/reconcile-project-status: 9a4c5ef -> 34a8b50
 ```
 
-No push is authorized yet. Force, tags, remote mutation, merge to `main`,
-Pages, publication, visibility change, D5, redistribution, and sibling writes
-remain excluded.
+Only this single-use PMR-105 fast-forward is authorized. Force, tags, remote
+mutation, merge to `main`, Pages, publication, visibility change, D5,
+redistribution, sibling writes, and every other push remain excluded.
 
 `PMD-20260928-001` selects dedicated human-run
 `outbox/pmr105-push.sh`; it does not grant the push. Preflight is complete.
-Only after a fresh same-turn exact confirmation does the Project Manager hand
-the responsible human `bash ./outbox/pmr105-push.sh --execute` from
-`project-manager/` (shown for review only; not authorized).
+The exact confirmation is now recorded. The responsible human runs
+`bash ./outbox/pmr105-push.sh --execute` from `project-manager/` exactly
+once. Any mismatch or nonzero exit consumes no broader authority and is not
+retried automatically.
+
+After it returns, the Project Manager retrieves the printed
+`scratch/owner-actions/pmr105-push-<UTC>.log` and requires
+`pmr105-push-complete=`, `other-refs-preserved=yes`, `behind=0`, `ahead=0`,
+the exact account/repository/ref/tips, and independent maintained inspection
+before closing PMR-105.
 
 The script never switches accounts, mutates remotes, forces, tags, merges, or
 touches another ref. A mismatch or nonzero exit leaves PMR-105 open and is
@@ -529,7 +537,8 @@ The relevant local component commits are:
   remote-tracking containment. PMR-098 and PMR-100 request distinct canonical
   returns; PMR-090 retains unresolved publication/ref review. PMR-099 is
   closed at exact K0-A plan acceptance only. Generic helper delivery remains
-  excluded and no push is authorized;
+  excluded; only the single-use PMR-105 topic fast-forward is authorized and
+  has not been executed;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
@@ -538,7 +547,8 @@ The relevant local component commits are:
   ahead of last-fetched active origin `9a4c5ef`. Owner work `41e4125`
   integrates exactly the thirteen D4-approved paths; PMR-104 and PMR-106 are
   closed. PMR-093/096 are withdrawn; P2 PMR-105 tracks the complete private
-  topic backup, but no push is authorized;
+  topic backup; only its single-use exact fast-forward is authorized and has
+  not been executed;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `5e7387a`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later

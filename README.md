@@ -372,11 +372,8 @@ bash ./outbox/pmr105-push.sh --plan
 The Project Manager retrieves the printed ignored log, verifies the active
 GitHub account, private target, permission, clean exact branch, writer lock,
 and `9a4c5ef -> 34a8b50` boundary, then presents the exact same-turn push
-confirmation. Only after that confirmation does the responsible human run:
-
-```sh
-bash ./outbox/pmr105-push.sh --execute
-```
+confirmation. Only after that confirmation does the responsible human run
+`bash ./outbox/pmr105-push.sh --execute` from `project-manager/`.
 
 Execution pushes only
 `refs/heads/docs/reconcile-project-status`, uses no force or tags, verifies

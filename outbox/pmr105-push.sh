@@ -40,6 +40,7 @@ esac
 
 expected_component=cheri-riscv-notes
 expected_request=PMR-105
+expected_account=xjamesmorris
 expected_slug=agentic-os-research/cheri-riscv-notes
 expected_branch=docs/reconcile-project-status
 expected_ref=refs/heads/docs/reconcile-project-status
@@ -160,6 +161,8 @@ origin_url=$(git_safe -C "$component_root" remote get-url origin)
 command -v gh >/dev/null 2>&1 || die "gh is required"
 active_account=$(gh api user --jq '.login') ||
     die "cannot resolve the active GitHub account"
+[[ $active_account == "$expected_account" ]] ||
+    die "active GitHub account changed from $expected_account"
 repo_fields=$(
     gh repo view "$expected_slug" \
         --json 'nameWithOwner,visibility,isArchived,viewerPermission' \
