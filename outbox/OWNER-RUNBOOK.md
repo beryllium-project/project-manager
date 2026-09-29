@@ -169,8 +169,8 @@ second prompt.
 ## Beryllium drift reconciliation and new planning
 
 Maintained inspection on 2026-09-29 observes active/default
-`beryllium/single-hart-runtime-r0` dirty at synchronized last-fetched tip
-`238ced0`, behind 0 / ahead 0, with 31 generated HTML/SVG/asset changes.
+`beryllium/single-hart-runtime-r0` clean at synchronized last-fetched tip
+`3467bc6`, behind 0 / ahead 0.
 Multiple local K0 topic branches are visible.
 The responsible human reports separate K0 work, and no canonical PMR-098/100
 return or session release exists. The component handoff includes K0-A
@@ -205,7 +205,7 @@ preparation/evidence import, K0-X native execution, K0-R result acceptance,
 B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
 progression, publication, and release remain separate blocked gates.
 
-## P2 PMR-105: private CHERI topic backup
+## Closed PMR-105: private CHERI topic backup
 
 Two human `--plan` attempts at `2026-09-29T01:11:12Z` and
 `2026-09-29T01:11:22Z` stopped before tasking, component, GitHub, or remote
@@ -223,6 +223,14 @@ human was unavailable for the exact authorize/defer question at that
 checkpoint. The responsible human later stated exactly
 `"authorize PMR-105 exact private fast-forward"`. This is a single-use
 authorization for the exact verified account/repository/ref/tips only.
+
+The human-run execute completed at `2026-09-29T06:30:54Z`. Ignored log
+`scratch/owner-actions/pmr105-push-20260929T063042Z.log` records exact
+private fast-forward `9a4c5ef -> 34a8b50`,
+`other-refs-preserved=yes`, three heads, zero tags, and final
+`behind=0 ahead=0 clean=yes`. Independent maintained inspection confirms the
+clean local and `origin` topic refs at exact `34a8b50`. `PMD-20260929-002`
+closes PMR-105, and the single-use authorization is consumed.
 
 PMR-101 returned durably as `blocked` at handoff-only commit `c6606ff`.
 Maintained validation passed; the recovery reservation is released; no remote
@@ -247,36 +255,23 @@ only to the exact revised fingerprint. PMR-104 completed: owner work
 with clean post-status and released reservation.
 
 `PMD-20260927-005` closes PMR-104 as acknowledgement. Class-3 PMR-106 carry
-`34a8b50` refreshes only the handoff date and next action. The clean local
-topic is behind 0 / ahead 12 of last-fetched private origin `9a4c5ef`; no
-backup exists beyond that remote tip. PMR-105 is the distinct private
-fast-forward-only follow-up. The recorded exact same-turn confirmation is:
+`34a8b50` refreshes only the handoff date and next action. PMR-105 then
+privately backed up that complete topic range. The consumed exact
+confirmation was:
 
 ```text
 agentic-os-research/cheri-riscv-notes
 origin/docs/reconcile-project-status: 9a4c5ef -> 34a8b50
 ```
 
-Only this single-use PMR-105 fast-forward is authorized. Force, tags, remote
-mutation, merge to `main`, Pages, publication, visibility change, D5,
-redistribution, sibling writes, and every other push remain excluded.
+That single-use PMR-105 fast-forward is complete and no longer authorized for
+reuse. Force, tags, remote mutation, merge to `main`, Pages, publication,
+visibility change, D5, redistribution, sibling writes, and every other push
+remain excluded.
 
-`PMD-20260928-001` selects dedicated human-run
-`outbox/pmr105-push.sh`; it does not grant the push. Preflight is complete.
-The exact confirmation is now recorded. The responsible human runs
-`bash ./outbox/pmr105-push.sh --execute` from `project-manager/` exactly
-once. Any mismatch or nonzero exit consumes no broader authority and is not
-retried automatically.
-
-After it returns, the Project Manager retrieves the printed
-`scratch/owner-actions/pmr105-push-<UTC>.log` and requires
-`pmr105-push-complete=`, `other-refs-preserved=yes`, `behind=0`, `ahead=0`,
-the exact account/repository/ref/tips, and independent maintained inspection
-before closing PMR-105.
-
-The script never switches accounts, mutates remotes, forces, tags, merges, or
-touches another ref. A mismatch or nonzero exit leaves PMR-105 open and is
-not retried automatically.
+`PMD-20260928-001` selected the dedicated human-run mechanism;
+`PMD-20260929-001` recorded authorization; and `PMD-20260929-002` records
+verified completion. Do not rerun `outbox/pmr105-push.sh`.
 
 ## P3 PMR-107: OS-security pointer triage
 
@@ -409,8 +404,8 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** active/default Beryllium is now observed dirty at
-  synchronized `238ced0`, 0/0 with last-fetched
+- **P3 PMR-090:** active/default Beryllium is now observed clean at
+  synchronized `3467bc6`, 0/0 with last-fetched
   `origin/beryllium/single-hart-runtime-r0`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
   `0d53120` have no remote-tracking containment. This partially changes the
@@ -527,9 +522,9 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is dirty at synchronized last-fetched tip
-  `238ced0`, with 31 generated HTML/SVG/asset changes, while active K0 topic
-  work remains owner-controlled. No push path is authorized and missing
+- `beryllium-hypervisor/` primary is clean at synchronized last-fetched tip
+  `3467bc6`, while active K0 topic work remains owner-controlled. No push
+  path is authorized and missing
   PMR-098/100 returns
   leave session release unknown. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
@@ -537,18 +532,16 @@ The relevant local component commits are:
   remote-tracking containment. PMR-098 and PMR-100 request distinct canonical
   returns; PMR-090 retains unresolved publication/ref review. PMR-099 is
   closed at exact K0-A plan acceptance only. Generic helper delivery remains
-  excluded; only the single-use PMR-105 topic fast-forward is authorized and
-  has not been executed;
+  excluded; PMR-105's single-use topic fast-forward is complete and consumed;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-riscv-notes` is clean at class-3 coordination tip `34a8b50`, twelve
-  ahead of last-fetched active origin `9a4c5ef`. Owner work `41e4125`
+- `cheri-riscv-notes` is clean and synchronized 0/0 at class-3 coordination
+  tip `34a8b50`. Owner work `41e4125`
   integrates exactly the thirteen D4-approved paths; PMR-104 and PMR-106 are
-  closed. PMR-093/096 are withdrawn; P2 PMR-105 tracks the complete private
-  topic backup; only its single-use exact fast-forward is authorized and has
-  not been executed;
+  closed. PMR-093/096 are withdrawn; PMR-105 private topic backup is complete
+  and its single-use authorization is consumed;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `5e7387a`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later

@@ -18,28 +18,28 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** clean `docs/reconcile-project-status` at class-3
-  coordination refresh `34a8b50`, behind 0 / ahead 12 of last-fetched private
-  active `origin/docs/reconcile-project-status` `9a4c5ef`; `main` /
+- **Observed state:** clean `docs/reconcile-project-status` synchronized 0/0
+  with private active `origin/docs/reconcile-project-status` at class-3
+  coordination refresh `34a8b50`; `main` /
   `origin/main` remain `6553092`. Owner work `41e4125` integrates exactly the
   thirteen D4-approved content paths; return `4deec95` changes only
   `meta/handoff.md`. Maintained validation passed, no remote operation
   occurred, and the recovery wrapper exited 0 with clean post-status and
   released reservation. PMR-106 carry `34a8b50` then updates only the stale
   handoff date and next action. `PMD-20260927-005` closes PMR-104 as
-  acknowledgement only. P2 PMR-105 tracks private backup through `34a8b50`;
-  its preflight is verified and the exact one-use fast-forward is authorized;
-  execution and post-verification remain pending.
+  acknowledgement only. PMR-105 is closed by exact private fast-forward
+  `9a4c5ef -> 34a8b50`; other refs were preserved, final state is clean 0/0,
+  and the single-use authorization is consumed.
   `PMR-009`, `PMR-051`, `PMR-071`,
   `PMR-101`, `PMR-103`, `PMR-104`, and `PMR-106` remain closed; PMR-102 is
   superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
   `cd7dc81`. `PMD-20260928-001` selects a dedicated human-run
-  `outbox/pmr105-push.sh`: corrected `--plan` verified active account
-  `xjamesmorris`, private target, `ADMIN`, writer lock, clean branch, exact
-  `9a4c5ef -> 34a8b50`, three heads, zero tags, and no remote write; the
-  responsible human later authorized the exact private fast-forward once.
+  `outbox/pmr105-push.sh`: corrected preflight and execution verified active
+  account `xjamesmorris`, private target, `ADMIN`, writer lock, exact
+  `9a4c5ef -> 34a8b50`, three heads, zero tags, other-ref preservation, and
+  final clean 0/0. Do not rerun it.
 
 ## Role
 
@@ -103,15 +103,10 @@ completed exactly that proposal revision and returned fingerprint
 responsible-human D4 `approve_exact` for that exact set. PMR-104 completed:
 work `41e4125` commits exactly those thirteen paths and return `4deec95`
 records successful validation and a released reservation. The clean topic
-branch remains private and unpushed beyond `9a4c5ef`; PMR-106 refreshes only
-the handoff at `34a8b50`. P2 PMR-105 is the
-separate backup request and grants no push until the responsible human
-confirms the exact private fast-forward in the same turn. That confirmation
-was recorded on 2026-09-29. The responsible human preflight is complete; the human alone
-runs `bash ./outbox/pmr105-push.sh --execute` from the Project Manager
-repository. The script never switches accounts, forces, tags,
-mutates remotes, or touches another ref. Do not merge to `main`, publish,
-enable Pages, or infer a new source or D5 disposition.
+branch is privately backed up through `34a8b50`; PMR-106 refreshes only the
+handoff at that same tip. PMR-105 is closed and its authorization consumed.
+Do not rerun its script, merge to `main`, publish, enable Pages, or infer a
+new source or D5 disposition.
 
 The active private home is
 `agentic-os-research/cheri-riscv-notes`, retaining the current slug

@@ -361,22 +361,8 @@ The run ends with the open requests by priority; `outbox/OWNER-RUNBOOK.md` has
 the exact steps for each. Logs go to `scratch/owner-actions/` (ignored).
 Afterwards, start a Project Manager session and say what the run did.
 
-PMR-105 uses a separate one-request script rather than the generic helper.
-The script is not authority and the Project Manager never executes it. From
-this directory, the responsible human first runs:
-
-```sh
-bash ./outbox/pmr105-push.sh --plan
-```
-
-The Project Manager retrieves the printed ignored log, verifies the active
-GitHub account, private target, permission, clean exact branch, writer lock,
-and `9a4c5ef -> 34a8b50` boundary, then presents the exact same-turn push
-confirmation. Only after that confirmation does the responsible human run
-`bash ./outbox/pmr105-push.sh --execute` from `project-manager/`.
-
-Execution pushes only
-`refs/heads/docs/reconcile-project-status`, uses no force or tags, verifies
-all other remote refs are unchanged, refreshes only the corresponding
-remote-tracking ref, and requires final clean 0/0 state. Logs are private
-ignored files under `scratch/owner-actions/`.
+PMR-105 used a separate one-request script rather than the generic helper.
+The exact private topic fast-forward completed on 2026-09-29 and is closed by
+`PMD-20260929-002`; do not rerun `outbox/pmr105-push.sh`. Its retained private
+logs under `scratch/owner-actions/` show exact account/ref/tip checks,
+other-ref preservation, and final clean 0/0 state.
