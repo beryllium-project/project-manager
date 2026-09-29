@@ -155,7 +155,7 @@ does not trigger guest logging unless it becomes substantive use.
 
 | Input | Locator form | Authority and handling |
 | --- | --- | --- |
-| Canonical topology | `../SOT.md` | Binding rules for path resolution and relocation |
+| Canonical topology and status | `../SOT.md` | Binding rules for path resolution and relocation, and the project-wide topology/workstation-status anchor |
 | Component registry | `../COMPONENTS.md` | Project Manager-owned; reconciled each turn |
 | Component repositories | `../<component>/...`, `component://<name>/...` | Read-only inspection through `scripts/inspect-components.sh`; local instructions, handoffs, and `COLLAB.md` files narrow what may be requested of them and how a carried request is formatted |
 | Component queues | `../analysis-workbook/outbox/pm-queue.md`, `../threat-modeler/outbox/pm-queue.md`, `../security-reviewer/outbox/pm-queue.md`, `../analysis-workbook/outbox/helium-transfer-queue.md` | Pull-only; consumed ledger-first; status edits applied as class-1 carried writes only for the three `outbox/pm-queue.md` files (`PMD-20260904-003`, extended to the security-reviewer queue by `PMD-20260906-004`); the transfer queue is read-only tracking and is never edited by the PM |

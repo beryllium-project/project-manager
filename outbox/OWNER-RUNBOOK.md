@@ -66,6 +66,42 @@ separate clean/active-session check and coordination with its repository
 owner; use that repository's proper Git worktree workflow rather than a
 filesystem move. The shared directory does not relax the one-writer rule.
 
+## P2 PMR-108: global startup status and quiescence gate
+
+`../SOT.md` is the existing global topology/status anchor. It now records the
+temporary Fedora `lx2` placement, the `~/src/l1/src` root convention, and the
+2026-10-09 review date. That date does not automatically switch the canonical
+host or path.
+
+Do not begin `PMR-108` while any project session is active. The responsible
+human reports another session running. Maintained inspection first found
+`beryllium-hypervisor` dirty at synchronized `3467bc6` with 138 changed
+entries, then observed it advance to clean local `2b404ca`, behind zero /
+ahead one. Final ref inspection observed local and last-fetched `origin`
+synchronized 0/0 at `2b404ca`. That clean, remotely contained state does not
+release the user-reported session. No child repository is changed by this
+coordination item.
+
+Project-wide quiescence cannot be inferred from Git cleanliness alone.
+`PMR-108` first adds and validates a maintained read-only check that fails
+closed unless the parent, Project Manager, registry, queues, generated
+tasking, and every registered worktree are clean/current; no owner-session,
+owner-recovery, or global maintenance writer reservation is held; and no
+handoff, return, user statement, or current runtime reports an active
+session. The responsible human must also confirm in the same turn that no
+non-instrumented CLI, desktop, background, or external agent session is
+active. Recheck immediately and hold a global maintenance reservation before
+the first rollout write.
+
+After that gate passes, the Project Manager may update only its own and
+allowed parent-root startup/status tooling, inventory every owner context,
+and allocate separate PMRs for child-owned startup changes. Resolve the
+blocked request from `project-manager/` with:
+
+```sh
+bash ./scripts/project-tasking.sh resolve project-manager
+```
+
 ## Owner-worker closure results
 
 `PMR-087` is closed by
@@ -168,19 +204,21 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection on 2026-09-29 observes active/default
-`beryllium/single-hart-runtime-r0` clean at synchronized last-fetched tip
-`3467bc6`, behind 0 / ahead 0.
+Maintained inspection on 2026-09-29 first observed active/default
+`beryllium/single-hart-runtime-r0` dirty at synchronized `3467bc6`, then
+observed the branch clean at local `2b404ca`, initially ahead one, and finally
+synchronized 0/0 with last-fetched `origin`.
 Multiple local K0 topic branches are visible.
 The responsible human reports separate K0 work, and no canonical PMR-098/100
 return or session release exists. The component handoff includes K0-A
-planning and
-acceptance material. `PMD-20260926-002` records exact human-accepted K0-A
+planning and acceptance material plus a bounded non-PMR K0-S
+preparation/status return. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
 canonical return names open earlier-series `PMR-098` or
 later-series `PMR-100`. The active-session lock remains regardless of primary
 worktree cleanliness: do not run a new Beryllium owner launcher or infer
-K0-S authority, execution, backup, publication, or any assurance gate.
+current-package readiness, import, execution, backup, publication, or any
+assurance gate.
 
 The unreconciled range `416b2e9..80345e1` still records the component-side
 exact H0/R8-C acceptance claim for `1999ee7`, the
@@ -404,13 +442,16 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** active/default Beryllium is now observed clean at
-  synchronized `3467bc6`, 0/0 with last-fetched
+- **P3 PMR-090:** active/default Beryllium is now observed clean and
+  synchronized 0/0 at `2b404ca` with last-fetched
   `origin/beryllium/single-hart-runtime-r0`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
-  `0d53120` have no remote-tracking containment. This partially changes the
-  old backup facts but supplies no Project Manager publication authorization
-  and no canonical owner return for the update. Keep PMR-090 open behind
+  `0d53120` have no remote-tracking containment. The reported active-session
+  lock remains despite the clean, remotely contained primary, and this turn
+  has no authorization evidence for the observed remote-tracking advance.
+  This partially changes the old backup facts but supplies no Project Manager
+  publication authorization and no canonical PMR-098/100 return for the
+  update. Keep PMR-090 open behind
   PMR-098; review the exact refs and publication gate before any later
   decision. Never push inactive `msft-downstream`; no observed or future push
   accepts H0, authorizes H1-H4/K3, or grants publication approval.
@@ -522,9 +563,12 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is clean at synchronized last-fetched tip
-  `3467bc6`, while active K0 topic work remains owner-controlled. No push
-  path is authorized and missing
+- `beryllium-hypervisor/` primary is clean and synchronized 0/0 at `2b404ca`
+  with last-fetched `origin`, while active K0 topic work remains
+  owner-controlled. The earlier dirty `3467bc6` state advanced during this
+  turn; the responsible-human session lock remains and no authorization
+  evidence for the remote-tracking advance is recorded. No push path is
+  authorized and missing
   PMR-098/100 returns
   leave session release unknown. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
@@ -578,8 +622,10 @@ responsible human selected `defer` for Project Manager reconciliation;
 unaccepted. Exact KVM0 K0-A plan target `5227266` is responsible-human
 accepted under `PMD-20260926-002`, satisfying K0-P only. K0-I is
 component-recorded accepted at exact target `abd092a` and remains
-unreconciled in Project Manager state pending PMR-098/100. K0-S, K0-X, and
-K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is
+unreconciled in Project Manager state pending PMR-098/100. K0-S
+preparation/status documentation is accepted only at exact target
+`c65705582c243dd908ff47d3189df07601167400`; current-package readiness,
+K0-X, and K0-R remain blocked. KVM0 and K3 are `NOT RUN`; development kernel/BSP is
 `UNDECIDED`. H1-H4 are not authorized. Helium is a review-and-test proof of
 concept, not formally verified or hardware validated. No coordination action
 grants acceptance, approval, risk acceptance, sign-off, licensing,

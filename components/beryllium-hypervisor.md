@@ -19,22 +19,32 @@
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. The responsible human reports
   a separate K0 session running, so Beryllium is coordination-locked and
-  read-only to this Project Manager turn. Maintained inspection observes
-  active/default `beryllium/single-hart-runtime-r0` clean at synchronized
-  last-fetched tip `3467bc6`, behind zero / ahead zero. Read-only ref
-  inspection also observes multiple local K0 topic branches, including K0-S,
-  K0-B, K0-C, and renewed K0-I lines; their worktrees and contents are not
-  Project Manager state and are not modified here. The
+  read-only to this Project Manager turn. Maintained inspection first
+  observed synchronized `3467bc6` dirty with 138 changed entries, then at
+  `2026-09-29T10:26:12Z` observed the active/default branch advanced to clean
+  local `2b404ca`, behind zero / ahead one of last-fetched `origin`. The
+  final maintained state/ref check at `2026-09-29T10:38:26Z` observed local
+  and last-fetched `origin/beryllium/single-hart-runtime-r0` synchronized
+  0/0 at `2b404ca`. No responsible-human release or authorization evidence
+  for that remote-tracking advance was supplied to this turn. The
+  current handoff includes a non-PMR documentation-only return, but it is not
+  a canonical PMR-098/100 return or an explicit responsible-human release of
+  the reported session. Read-only ref inspection also observes multiple
+  local K0 topic branches, including K0-S, K0-B, K0-C, and renewed K0-I
+  lines; their worktrees and contents are not Project Manager state and are
+  not modified here. The
   component roadmap and `planning/k3-kvm0-k0i-review-summary.md` record exact
   K0-I acceptance at earlier target `abd092a`, but the component still has no
   canonical PMR-098/100 return or explicit session release.
   `PMD-20260926-002` records the exact K0-A plan
-  acceptance and closes plan-only PMR-099, satisfying K0-P only. K0-S, K0-X,
-  and K0-R remain blocked. The component still has no
+  acceptance and closes plan-only PMR-099, satisfying K0-P only. The current
+  package remains unaccepted and not ready; K0-X and K0-R remain blocked. The
+  component still has no
   canonical `PMR-098` return for `416b2e9..80345e1` and no canonical
-  `PMR-100` return for the later KVM0 series through current `3467bc6`. Do
-  not launch another owner session or infer K0-S authority, execution, backup,
-  publication, or either reconciliation request complete.
+  `PMR-100` return for the later KVM0 series through current `2b404ca`. Do
+  not launch another owner session or infer current-package readiness,
+  import, execution, backup, publication, or either reconciliation request
+  complete.
   Last-fetched refs previously contained active/default
   `80345e1` and renamed `origin/historical_he/*` refs; local candidate
   `6e93461` and local R8-C/H0 branch tip `0d53120` had no remote-tracking
@@ -127,8 +137,8 @@ commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
 than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
-decision. Read-only inspection now observes active/default `3467bc6`
-clean and synchronized with last-fetched `origin`;
+decision. Read-only inspection now observes clean active/default `2b404ca`
+synchronized 0/0 with last-fetched `origin`;
 local `6e93461` and `0d53120` remain without remote-tracking containment and
 the Project Manager has no same-turn publication-authorization record for
 the observed active update.
@@ -145,9 +155,14 @@ remains R8-H0 committed but unaccepted. `PMR-099` is closed on exact
 human-accepted K0-A plan target `5227266` under `PMD-20260926-002`; that
 closes plan preparation only and satisfies only K0-P. New `PMR-100` requests
 the distinct canonical return for the post-`80345e1` committed KVM0 series
-and current active K0 session, whose primary checkout is now clean and
-synchronized at `3467bc6`. K0-S source preparation and evidence import,
-K0-X native execution, K0-R result acceptance, B0,
+and current active K0 session, whose primary checkout is now clean at
+`2b404ca`, synchronized 0/0 with last-fetched `origin`. The component
+handoff records bounded
+K0-S preparation/status documentation accepted only at exact target
+`c65705582c243dd908ff47d3189df07601167400` in
+`planning/k3-kvm0-k0s-review-summary.md`, but the current package remains
+mutable, unaccepted, and not ready; K0-X native execution, K0-R result
+acceptance, B0,
 development-kernel/BSP selection, B1, a retained H0 successor, H1-H4,
 publication, and release remain separate blocked gates. H1-H4 are
 unauthorized and K3 remains `NOT RUN`.
