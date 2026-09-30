@@ -30,7 +30,12 @@ fail() {
 }
 
 sandbox=$(mktemp -d "${TMPDIR:-/tmp}/project-manager-tests.XXXXXX") || exit 2
+external_cleanup_paths=()
 cleanup() {
+    local path
+    for path in "${external_cleanup_paths[@]}"; do
+        rm -rf -- "$path"
+    done
     rm -rf -- "$sandbox"
 }
 trap cleanup EXIT
@@ -1021,6 +1026,152 @@ if [[ $settings_after_hash == "$settings_hash" ]]; then
     pass "governance install does not edit settings.json"
 else
     fail "governance install modified settings.json"
+fi
+
+cross_device_root=
+cross_device_diagnostic=
+if ! sandbox_device=$(stat -Lc '%d' -- "$sandbox"); then
+    fail "governance cross-device regression cannot resolve sandbox filesystem"
+    cross_device_diagnostic="sandbox filesystem identity is unavailable"
+else
+    for cross_device_candidate in /dev/shm /run/shm /var/tmp /tmp; do
+        [[ -d $cross_device_candidate && -w $cross_device_candidate &&
+            -x $cross_device_candidate ]] || continue
+        candidate_device=$(stat -Lc '%d' -- "$cross_device_candidate" \
+            2>/dev/null) || continue
+        [[ $candidate_device != "$sandbox_device" ]] || continue
+        if candidate_root=$(mktemp -d \
+            "$cross_device_candidate/project-manager-cross-device.XXXXXX"); then
+            external_cleanup_paths+=("$candidate_root")
+            candidate_root_device=$(stat -Lc '%d' -- "$candidate_root" \
+                2>/dev/null) || candidate_root_device=
+            if [[ -n $candidate_root_device &&
+                $candidate_root_device != "$sandbox_device" ]]; then
+                cross_device_root=$candidate_root
+                break
+            fi
+            rm -rf -- "$candidate_root"
+        fi
+    done
+fi
+
+if [[ -z $cross_device_root ]]; then
+    if [[ -z $cross_device_diagnostic ]]; then
+        cross_device_diagnostic="no writable temporary directory is available on a distinct resolved device"
+    fi
+    printf 'diag governance cross-device regression not run: %s\n' \
+        "$cross_device_diagnostic"
+else
+    cross_device_home=$sandbox/cross-device-copilot-home
+    cross_device_hooks=$cross_device_root/hooks
+    mkdir -p -- "$cross_device_home/agents" \
+        "$cross_device_home/skills/beryllium-scope-management" \
+        "$cross_device_hooks"
+    ln -s -- "$cross_device_hooks" "$cross_device_home/hooks"
+    cp "$settings_baseline" "$cross_device_home/settings.json"
+
+    cross_device_files=(
+        "$cross_device_home/agents/beryllium-scope-review.agent.md"
+        "$cross_device_home/skills/beryllium-scope-management/SKILL.md"
+        "$cross_device_hooks/beryllium-governance-hook.sh"
+        "$cross_device_hooks/beryllium-governance.json"
+    )
+    for i in "${!cross_device_files[@]}"; do
+        printf 'cross-device managed fixture %s\n' "$i" \
+            >"${cross_device_files[$i]}"
+    done
+    chmod 0600 "${cross_device_files[0]}"
+    chmod 0640 "${cross_device_files[1]}"
+    chmod 0700 "${cross_device_files[2]}"
+    chmod 0660 "${cross_device_files[3]}"
+
+    cross_device_unrelated_files=(
+        "$cross_device_home/unrelated.keep"
+        "$cross_device_hooks/unrelated.keep"
+    )
+    printf 'sandbox unrelated fixture\n' \
+        >"${cross_device_unrelated_files[0]}"
+    printf 'external unrelated fixture\n' \
+        >"${cross_device_unrelated_files[1]}"
+    chmod 0604 "${cross_device_unrelated_files[0]}"
+    chmod 0642 "${cross_device_unrelated_files[1]}"
+
+    cross_device_hashes=()
+    cross_device_modes=()
+    for f in "${cross_device_files[@]}"; do
+        cross_device_hashes+=("$(sha256sum "$f" | awk '{ print $1 }')")
+        cross_device_modes+=("$(stat -c '%a' "$f")")
+    done
+    cross_device_unrelated_hashes=()
+    cross_device_unrelated_modes=()
+    for f in "${cross_device_unrelated_files[@]}"; do
+        cross_device_unrelated_hashes+=(
+            "$(sha256sum "$f" | awk '{ print $1 }')"
+        )
+        cross_device_unrelated_modes+=("$(stat -c '%a' "$f")")
+    done
+
+    cross_device_install_output=$(env COPILOT_HOME="$cross_device_home" \
+        bash "$governance_installer" install 2>&1)
+    cross_device_install_status=$?
+    if ((cross_device_install_status == 1)); then
+        pass "governance install refuses a symlinked cross-device destination"
+    else
+        fail "governance cross-device install returned $cross_device_install_status instead of 1"
+    fi
+    if grep -Fq -- \
+        'cannot atomically install governance hook across filesystems' \
+        <<<"$cross_device_install_output"; then
+        pass "governance cross-device refusal comes from the resolved destination guard"
+    else
+        fail "governance cross-device refusal did not report the destination filesystem mismatch"
+    fi
+
+    cross_device_intact=1
+    for i in "${!cross_device_files[@]}"; do
+        f=${cross_device_files[$i]}
+        if [[ ! -f $f || -L $f ]] ||
+            [[ $(sha256sum "$f" | awk '{ print $1 }') != \
+                "${cross_device_hashes[$i]}" ]] ||
+            [[ $(stat -c '%a' "$f") != "${cross_device_modes[$i]}" ]]; then
+            cross_device_intact=0
+            fail "governance cross-device refusal changed original hash or mode: $f"
+        fi
+    done
+    if ((cross_device_intact)); then
+        pass "governance cross-device refusal preserves every original managed hash and mode"
+    fi
+
+    cross_device_symlink_intact=1
+    for i in 2 3; do
+        f=${cross_device_files[$i]}
+        if [[ $(sha256sum "$f" | awk '{ print $1 }') != \
+            "${cross_device_hashes[$i]}" ]] ||
+            [[ $(stat -c '%a' "$f") != "${cross_device_modes[$i]}" ]]; then
+            cross_device_symlink_intact=0
+        fi
+    done
+    if ((cross_device_symlink_intact)); then
+        pass "governance cross-device refusal writes no managed file through the destination symlink"
+    else
+        fail "governance cross-device refusal wrote a managed file through the destination symlink"
+    fi
+
+    cross_device_unrelated_intact=1
+    for i in "${!cross_device_unrelated_files[@]}"; do
+        f=${cross_device_unrelated_files[$i]}
+        if [[ ! -f $f || -L $f ]] ||
+            [[ $(sha256sum "$f" | awk '{ print $1 }') != \
+                "${cross_device_unrelated_hashes[$i]}" ]] ||
+            [[ $(stat -c '%a' "$f") != \
+                "${cross_device_unrelated_modes[$i]}" ]]; then
+            cross_device_unrelated_intact=0
+            fail "governance cross-device refusal changed or removed unrelated file: $f"
+        fi
+    done
+    if ((cross_device_unrelated_intact)); then
+        pass "governance cross-device refusal removes no unrelated file"
+    fi
 fi
 
 for i in "${!installed_governance_files[@]}"; do

@@ -306,7 +306,8 @@ verify_committed_files() {
 }
 
 install_governance() {
-    local rendered_config stage stage_device destination_dir i
+    local rendered_config stage stage_device destination_dir
+    local destination_device i
     local -a destinations staged backups labels expected_hashes
     local -a expected_modes had_backup committed
     check_failures=0
@@ -367,13 +368,22 @@ install_governance() {
         fi
     done
 
-    stage_device=$(stat -c '%d' "$stage")
+    if ! stage_device=$(stat -Lc '%d' -- "$stage"); then
+        rm -rf -- "$stage"
+        die "cannot resolve installation staging filesystem"
+    fi
     for i in "${!destinations[@]}"; do
         destination_dir=${destinations[$i]%/*}
-        if [[ $(stat -c '%d' "$destination_dir") != "$stage_device" ]]; then
+        if ! destination_device=$(stat -Lc '%d' -- "$destination_dir"); then
+            rm -rf -- "$stage"
+            die "cannot resolve destination filesystem for ${labels[$i]}: $destination_dir"
+        fi
+        if [[ $destination_device != "$stage_device" ]]; then
             rm -rf -- "$stage"
             die "cannot atomically install ${labels[$i]} across filesystems"
         fi
+    done
+    for i in "${!destinations[@]}"; do
         if [[ -e ${destinations[$i]} ]]; then
             if ! cp -p -- "${destinations[$i]}" "${backups[$i]}" ||
                 [[ ! -f ${backups[$i]} || -L ${backups[$i]} ]] ||
