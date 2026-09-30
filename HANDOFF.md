@@ -416,7 +416,7 @@ git -C .. status --short --branch
 
 ## Eighty-fifth-turn validation
 
-- `bash ./tests/validate-agent.sh`: 1015 passed / 0 failed. The prior 946
+- `bash ./tests/validate-agent.sh`: 1017 passed / 0 failed. The prior 946
   checks remain and the added behavioral cases cover every confirmed
   specialist type with omitted/null/empty Codex fields, exact
   Codex/xhigh/default acceptance, precise effort/context mismatch denials,
