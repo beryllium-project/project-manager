@@ -35,7 +35,13 @@
   Opus migration and `PMD-20260915-008` tasking startup contract.
   `PMD-20260916-001` (responsible-human `all_codex` choice) assigns
   deep/adversarial security review to `gpt-5.3-codex`; owner commit
-  `2e8d205` completes `PMR-074` and no engagement is authorized by it
+  `2e8d205` completes `PMR-074` and no engagement is authorized by it.
+  Open `PMR-109` is the sole component policy exception found by the
+  `PMD-20260930-001` discovery and conflict audit: the active
+  instructions, orchestrator profile, and skill still permit an unbounded
+  responsible-human effort override, which the recorded floor bounds to
+  `high`, `xhigh`, or `max`. It is owner wording work only and grants no
+  engagement, model change, or gate
 
 ## Role
 

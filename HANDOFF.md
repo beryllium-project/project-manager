@@ -9,9 +9,12 @@ implemented `PMD-20260930-001`: project-wide Copilot CLI reasoning effort is
 `beryllium-scope-management` is mandatory before non-trivial plans, material
 re-planning, and new human steering. Added one user-level task hook plus a
 human-run install/check/uninstall utility, with deterministic sandbox tests.
-No component repository or real user configuration was modified. The active
-Beryllium session was not restarted or contacted and remains a hard lock for
-PMR-108 and Beryllium reconciliation. The prior temporary Fedora `lx2`
+No component repository or real user configuration was modified. A read-only
+follow-up audit then checked user-level discovery and active local policy
+across every registered component, the parent, both tracked symlink targets,
+and the linked worktrees; it found exactly one conflict and raised only
+`PMR-109`. The active Beryllium session was not restarted or contacted and
+remains a hard lock for PMR-108 and Beryllium reconciliation. The prior temporary Fedora `lx2`
 status, PMR-108 quiescence prerequisite, Beryllium `2b404ca` observation,
 PMR-098/100 return blockers, consumed PMR-105 authorization, and all
 acceptance/publication/licensing/release gates remain unchanged.
@@ -33,6 +36,7 @@ in `../COMPONENTS.md`
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
 | Global startup-status rollout | **P2 `PMR-108`, blocked on positive project quiescence.** The first step is a maintained fail-closed check covering clean/current coordination state, every registered worktree, maintained writer reservations, active-session evidence, and same-turn human confirmation for non-instrumented sessions. Only then may the Project Manager update its own/root tooling and allocate separate child-owner requests. |
 | Max-effort scope governance | **Implemented locally; human user-level install remains open.** `PMD-20260930-001` preserves the role-model matrix, makes `max` default and `high` the floor, adds the hidden Opus 5.5 scope reviewer and mandatory scope skill, and supplies a task-only user hook plus SHA-256 installer/check. Installation reaches only new Copilot CLI sessions; non-Copilot tooling is outside enforcement. |
+| Component policy exceptions | **Audited; one exception raised.** Read-only probes at the recorded parent root place the parent, all nine registered direct checkouts, the in-root linked worktrees, and both resolved tracked symlink targets inside task-hook scope, while user-level agents, skills, and settings are home-scoped and reach every new session. Only `security-reviewer` carries active local text permitting an unbounded human effort override, raised as `PMR-109`. `beryllium-hypervisor` already states a MAX default with a HIGH minimum. Beryllium linked worktrees under session-state remain outside hook scope by the recorded design of `PMD-20260930-001`. `osr-claude/.claude/` is non-Copilot tooling and is not integrated. |
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Human-started ordinary owner sessions are now separately automated by `scripts/owner-session.sh`: one private revision-bound packet and interactive `copilot --no-auto-update --yolo`, with no copied prompt. This launcher is not an owner worker and grants no Project Manager/component authority. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references. The responsible human now renamed and retargeted the CHERI notes and XRV workspace links to those verified successors. |
@@ -75,7 +79,8 @@ future shared, namespaced container; no directory or worktree operation has
 occurred. P2 PMR-108 records the deferred global startup-status rollout and
 its positive-quiescence prerequisite; no child startup file changed.
 Formal-verification PMR-014/037/041/069 are closed. P3 PMR-107 is ask-first
-OS-security pointer triage.
+OS-security pointer triage. New P3 `PMR-109` is the sole component policy
+exception found by the user-level discovery and conflict audit.
 Research/source admission, owner maintenance, external dependencies,
 backup/publication gates, and elective work remain visible.
 
@@ -93,6 +98,7 @@ backup/publication gates, and elective work remain visible.
 | P3 | `PMR-064` | **Ready - threat owner maintenance** | Add deterministic tasking startup to threat contexts without resuming the paused model. |
 | P3 | `PMR-066` | **Ready - provenance owner maintenance** | Add deterministic tasking startup to provenance contexts without modifying a review package. |
 | P3 | `PMR-070` | **Ready - OS-security owner configuration; ask human first** | Add deterministic tasking startup to the new Copilot owner workflow without accessing restricted material; process reliability only. |
+| P3 | `PMR-109` | **Ready - security-reviewer owner maintenance** | Bound the component's unbounded human effort-override wording to the `high` floor so its written policy matches `PMD-20260930-001`; wording only, with no engagement, model change, or gate. |
 | P3 | `PMR-053` | **Blocked by `PMR-052`** | The XRV owner reviews only materially relevant cap-talk threads after the archive result returns; no research adoption follows automatically. |
 | P3 | `PMR-054` | **Blocked by `PMR-052` and `PMR-053`** | The analysis-workbook owner records the bounded follow-up only after the external and XRV stages complete; no existing analysis disposition changes automatically. |
 | P4 | `PMR-089` | **Containment observed — blocked by `PMR-085`/`088` disposition** | Synchronized `3c9d2a3` contains the frozen twelve-commit `858a73b..8b5a301` range; reconcile predecessor push evidence before closure. |
