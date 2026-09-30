@@ -109,8 +109,13 @@ editing settings. Repository/local settings, command-line choices, and live
 session overrides remain a later per-workspace verification surface.
 User-level installation reaches registered component Copilot CLI sessions
 only when they start after installation. Do not restart or interact with an
-already active Beryllium session. This enforcement does not cover non-Copilot
-tooling unless separately integrated.
+already active Beryllium session. Under `PMD-20260930-002`, omitted, null, or
+empty in-scope task effort is rewritten to `max` through `modifiedArgs`
+without a permission decision, explicit below-floor or unknown effort is
+denied, and in-scope `run_dynamic_workflow` is denied. Direct custom-agent
+sessions, SDK-started workflows, out-of-scope worktrees, disabled hooks,
+hook timeout, and non-Copilot tooling remain outside or beyond this
+command-hook enforcement.
 
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,
@@ -183,15 +188,22 @@ and finding iteration use `claude-opus-5`; deep or adversarial security
 review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
 context tier `long_context`. `PMD-20260930-001` makes `max` the project-wide
 default and permits the responsible human to override one named task only at
-`high`, `xhigh`, or `max`; `high` is the absolute floor. Unset, `medium`,
-`low`, and `minimal` are prohibited, and an unsupported required level stops
-rather than silently falling back. The `project-manager` orchestrator is
-`gpt-5.6-sol`;
-`pm-auditor` remains `claude-opus-5`; read-only
-`beryllium-scope-review` is the explicit `claude-opus-5.5` / `max` /
-`long_context` scope-control exception. Claude Fable 5.1 is no longer a
-default in any active role. Preserve historical artifacts and do not restart
-an already launched task merely to apply the matrix or user-level governance.
+`high`, `xhigh`, or `max`; `high` is the absolute floor. Under
+`PMD-20260930-002`, absent, null, or empty in-scope task effort is rewritten
+to `max` through `modifiedArgs` without a permission decision; explicit
+`medium`, `low`, `minimal`, or unknown effort is denied, and an unsupported
+required level stops rather than silently falling back. In-scope
+`run_dynamic_workflow` is denied because nested agents are not command-hook
+enforceable. The deep-security row remains `gpt-5.3-codex` / `max` /
+`long_context`, but Copilot CLI 1.0.90-5 does not advertise that required
+combination, so deep or adversarial security review is blocked pending
+responsible-human model selection; no substitute is inferred. The
+`project-manager` orchestrator is `gpt-5.6-sol`; `pm-auditor` remains
+`claude-opus-5`; read-only `beryllium-scope-review` is the explicit
+`claude-opus-5.5` / `max` / `long_context` scope-control exception. Claude
+Fable 5.1 is no longer a default in any active role. Preserve historical
+artifacts and do not restart an already launched task merely to apply the
+matrix or user-level governance.
 
 The orchestrator invokes `beryllium-scope-management` before adopting a
 non-trivial plan, at every material reassessment or re-plan, and after new

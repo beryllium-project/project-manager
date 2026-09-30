@@ -119,8 +119,16 @@ Project-wide model assignment follows the role-to-model matrix of
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
 audit use `claude-opus-5`; deep or adversarial security review uses
 `gpt-5.3-codex`; every row uses reasoning effort `max` and context tier
-`long_context`, unless the responsible human explicitly specifies otherwise.
-The `project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
+`long_context`. `PMD-20260930-001` permits only a responsible-human
+named-task override to `high`, `xhigh`, or `max`. Under
+`PMD-20260930-002`, omitted or empty in-scope task effort is rewritten to
+`max` through `modifiedArgs` without a permission decision, explicit
+below-floor or unknown effort is denied, and in-scope
+`run_dynamic_workflow` is denied. The deep-security row remains
+`gpt-5.3-codex` / `max` / `long_context`, but deep or adversarial security
+review is blocked pending responsible-human model selection because Copilot
+CLI 1.0.90-5 does not advertise that required combination. The
+`project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
 `claude-opus-5`. Historical artifacts are unchanged; component-owned changes
 are routed to their owners (`PMR-074` for `security-reviewer`, closed at
 owner commit `2e8d205`).

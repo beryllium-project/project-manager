@@ -52,12 +52,20 @@ background agents, prior chat, or memory for a PMR fallback
 Project-wide Copilot CLI effort and scope control follows
 `PMD-20260930-001`: `max` is the default, and only the responsible human may
 override one named task to `high`, `xhigh`, or `max`; `high` is the absolute
-floor. The hidden read-only `beryllium-scope-review` specialist is the explicit
+floor. `PMD-20260930-002` makes the hook inject `max` through `modifiedArgs`
+for absent, null, or empty in-scope task effort, deny explicit below-floor or
+unknown effort, and deny in-scope `run_dynamic_workflow`. The hidden
+read-only `beryllium-scope-review` specialist is the explicit
 `claude-opus-5.5` / `max` / `long_context` exception and is invoked only
-through `beryllium-scope-management` for one bounded
-`SCOPE_REVIEW_V1` result. User-level installation reaches new registered
-component Copilot CLI sessions without component-local copies; non-Copilot
-tooling is outside this enforcement unless separately integrated.
+through `beryllium-scope-management` for one bounded `SCOPE_REVIEW_V1`
+result. The recorded deep-security row remains `gpt-5.3-codex` / `max` /
+`long_context`, but deep or adversarial security review is blocked pending
+responsible-human model selection because Copilot CLI 1.0.90-5 does not
+advertise that required combination. User-level installation reaches new
+registered component Copilot CLI sessions without component-local copies;
+direct custom-agent sessions, SDK-started workflows, out-of-scope worktrees,
+disabled hooks, hook timeout, and non-Copilot tooling remain outside or
+beyond this command-hook enforcement.
 
 For allow-listed orchestrators, this resolver is startup discovery outside an
 analysis, threat-model, provenance, or security-review package. It is not
@@ -148,7 +156,7 @@ verified successors. Owner results continue through
 PMR-085/088/089/095/097 remain open for review/authorization reconciliation,
 not for missing containment; exact earlier backups PMR-085/088/089 and dependent carry backups PMR-095/097 remain separate |
 | `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking startup adoption `PMR-064` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
-| `security-reviewer/` | `security-reviewer` (`gpt-5.3-codex`, `max`, `long_context` at owner `2e8d205` under `PMD-20260916-001`, `PMR-074` closed; tasking startup adopted at `f2051a4`) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; `gpt-5.3-codex` / `max` / `long_context`) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, while the PM resolver is separate startup discovery |
+| `security-reviewer/` | `security-reviewer` (`gpt-5.3-codex`, `max`, `long_context` at owner `2e8d205` under `PMD-20260916-001`, `PMR-074` closed; tasking startup adopted at `f2051a4`; engagement launch currently blocked pending responsible-human model selection under `PMD-20260930-002`) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; recorded `gpt-5.3-codex` / `max` / `long_context`; model-invocable launches denied pending that human choice) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md` | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, while the PM resolver is separate startup discovery |
 | `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
 
 ## Invocation and validation

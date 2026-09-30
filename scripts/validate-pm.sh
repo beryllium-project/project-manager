@@ -570,7 +570,8 @@ if [[ -f $governance_hook && -f $governance_config &&
     else
         fail "a Beryllium governance script fails bash -n"
     fi
-    require_text "$governance_config" '"matcher": "task"'
+    require_text "$governance_config" \
+        '"matcher": "task|run_dynamic_workflow"'
     require_text "$governance_installer" 'COPILOT_HOME'
     require_text "$governance_installer" 'sha256sum'
     require_text "$governance_installer" 'disableAllHooks'

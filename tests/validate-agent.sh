@@ -192,10 +192,12 @@ expect_pass "governance installer passes bash -n" \
 expect_pass "governance hook config is valid JSON" \
     jq -e '.version == 1 and (.hooks.preToolUse | type == "array")' \
     "$governance_hook_config"
-require_text "$governance_hook_config" '"matcher": "task"'
+require_text "$governance_hook_config" \
+    '"matcher": "task|run_dynamic_workflow"'
 require_text "$governance_hook_config" '"timeoutSec": 30'
 require_text "$governance_hook_config" 'BERYLLIUM_TRACKED_TARGETS'
 require_text "$governance_hook" 'permissionDecision:"deny"'
+require_text "$governance_hook" 'modifiedArgs'
 require_text "$governance_hook" 'reasoning_effort'
 require_text "$governance_hook" 'high | xhigh | max'
 require_text "$governance_hook" 'claude-opus-5.5'
@@ -463,6 +465,24 @@ for f in "$agent" "$skill" "$instructions" \
     require_prose "$f" '[Nn]on-Copilot tooling'
 done
 
+governance_remediation_record=$repository_root/records/decisions/PMD-20260930-002-governance-findings-remediation.md
+require_file "$governance_remediation_record"
+require_text "$governance_remediation_record" '**Status:** recorded'
+for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
+    "$roster" "$readme" "$handoff" \
+    "$repository_root/components/security-reviewer.md" \
+    "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md"; do
+    require_text "$f" 'PMD-20260930-002'
+    require_prose "$f" 'blocked pending responsible-human model selection'
+done
+for f in "$agent" "$skill" "$instructions" "$interface" "$roster" \
+    "$readme" "$handoff" "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md"; do
+    require_text "$f" 'modifiedArgs'
+    require_text "$f" 'run_dynamic_workflow'
+done
+
 # --- boundary statements -------------------------------------------------------
 
 for f in "$agent" "$instructions" "$skill" "$interface"; do
@@ -649,15 +669,27 @@ make_hook_payload() {
     fi
 }
 
+invoke_hook() {
+    local payload=$1 root=$2 targets=$3
+    if [[ $root == __UNSET__ ]]; then
+        printf '%s\n' "$payload" |
+            env -u BERYLLIUM_PARENT_ROOT \
+                BERYLLIUM_TRACKED_TARGETS="$targets" \
+                bash "$governance_hook" 2>/dev/null
+    else
+        printf '%s\n' "$payload" |
+            env BERYLLIUM_PARENT_ROOT="$root" \
+                BERYLLIUM_TRACKED_TARGETS="$targets" \
+                bash "$governance_hook" 2>/dev/null
+    fi
+}
+
 expect_hook_deny() {
     local description=$1 payload=$2 needle=$3
     local root=${4:-$governance_workspace}
     local targets=${5:-[]}
     local output
-    output=$(printf '%s\n' "$payload" |
-        env BERYLLIUM_PARENT_ROOT="$root" \
-            BERYLLIUM_TRACKED_TARGETS="$targets" \
-            bash "$governance_hook" 2>/dev/null)
+    output=$(invoke_hook "$payload" "$root" "$targets")
     if jq -e --arg needle "$needle" '
         .permissionDecision == "deny" and
         (.permissionDecisionReason | contains($needle))
@@ -673,11 +705,8 @@ expect_hook_pass() {
     local root=${3:-$governance_workspace}
     local targets=${4:-[]}
     local output
-    output=$(printf '%s\n' "$payload" |
-        env BERYLLIUM_PARENT_ROOT="$root" \
-            BERYLLIUM_TRACKED_TARGETS="$targets" \
-            bash "$governance_hook" 2>/dev/null)
-    if jq -e 'type == "object" and (has("permissionDecision") | not)' \
+    output=$(invoke_hook "$payload" "$root" "$targets")
+    if jq -e 'type == "object" and length == 0' \
         >/dev/null 2>&1 <<<"$output"; then
         pass "$description"
     else
@@ -685,30 +714,78 @@ expect_hook_pass() {
     fi
 }
 
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture","reasoning_effort":"medium"}')
-expect_hook_deny "governance hook rejects below-floor effort" "$payload" \
-    "below the required high floor"
+expect_hook_modified_max() {
+    local description=$1 payload=$2 expected=$3
+    local root=${4:-$governance_workspace}
+    local targets=${5:-[]}
+    local output
+    output=$(invoke_hook "$payload" "$root" "$targets")
+    if jq -e --argjson expected "$expected" '
+        type == "object" and
+        (has("permissionDecision") | not) and
+        .modifiedArgs == ($expected + {reasoning_effort:"max"})
+    ' >/dev/null 2>&1 <<<"$output"; then
+        pass "$description"
+    else
+        fail "$description (expected max-effort modifiedArgs; got: $output)"
+    fi
+}
+
+original_args=$(jq -cn '{
+    agent_type:"explore",
+    name:"fixture",
+    description:"preserve description",
+    prompt:"preserve prompt",
+    model:"gpt-5.6-sol",
+    context_tier:"long_context",
+    background:false,
+    metadata:{nested:["all", "fields"], flag:true}
+}')
+payload=$(make_hook_payload "$governance_workspace" task "$original_args")
+expect_hook_modified_max \
+    "governance hook injects max without changing permissions or fields" \
+    "$payload" "$original_args"
+
+payload=$(make_hook_payload "$governance_workspace" task "$original_args" string)
+expect_hook_modified_max \
+    "governance hook injects max into JSON-string task arguments" \
+    "$payload" "$original_args"
+
+for effort in medium low minimal; do
+    task_args=$(jq -cn --arg effort "$effort" \
+        '{agent_type:"explore",name:"fixture",reasoning_effort:$effort}')
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+    expect_hook_deny "governance hook rejects explicit $effort effort" \
+        "$payload" "below the required high floor"
+done
 
 payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture"}')
-expect_hook_deny "governance hook rejects unset effort" "$payload" \
-    "must set reasoning_effort"
+    '{"agent_type":"explore","name":"fixture","reasoning_effort":"turbo"}')
+expect_hook_deny "governance hook rejects unknown effort" "$payload" \
+    "or is unknown"
 
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture","reasoning_effort":"high"}')
-expect_hook_pass "governance hook preserves valid high-effort permissions" \
-    "$payload"
-
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture","reasoning_effort":"xhigh"}' \
-    string)
-expect_hook_pass "governance hook accepts distinct xhigh effort" "$payload"
+for effort in high xhigh max; do
+    task_args=$(jq -cn --arg effort "$effort" \
+        '{agent_type:"explore",name:"fixture",reasoning_effort:$effort}')
+    format=object
+    [[ $effort == xhigh ]] && format=string
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args" \
+        "$format")
+    expect_hook_pass \
+        "governance hook preserves valid $effort-effort permissions" \
+        "$payload"
+done
 
 payload=$(make_hook_payload "$governance_workspace" task \
     '{"agent_type":"beryllium-scope-review","name":"beryllium-scope-review","model":"claude-opus-5","reasoning_effort":"max","context_tier":"long_context"}')
 expect_hook_deny "governance hook rejects wrong reviewer settings" "$payload" \
     "requires model claude-opus-5.5"
+
+reviewer_args='{"agent_type":"beryllium-scope-review","name":"beryllium-scope-review","model":"claude-opus-5.5","context_tier":"long_context"}'
+payload=$(make_hook_payload "$governance_workspace" task "$reviewer_args")
+expect_hook_modified_max \
+    "governance hook injects max before exact reviewer enforcement" \
+    "$payload" "$reviewer_args"
 
 payload=$(make_hook_payload "$governance_workspace" task \
     '{"agent_type":"beryllium-scope-review","name":"beryllium-scope-review","model":"claude-opus-5.5","reasoning_effort":"max","context_tier":"long_context"}')
@@ -718,6 +795,36 @@ payload=$(make_hook_payload "$governance_workspace" task \
     '{"agent_type":"general-purpose","name":"beryllium-scope-review","model":"claude-opus-5.5","reasoning_effort":"max","context_tier":"long_context"}')
 expect_hook_deny "governance hook rejects spoofed reviewer display names" \
     "$payload" "must use agent_type beryllium-scope-review"
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"explore","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"max","context_tier":"long_context"}')
+expect_hook_deny "governance hook blocks explicit gpt-5.3-codex" "$payload" \
+    "responsible-human model selection is pending"
+
+for agent_type in security-evidence security-research \
+    security-finding-review; do
+    task_args=$(jq -cn --arg agent_type "$agent_type" \
+        '{agent_type:$agent_type,name:"fixture",reasoning_effort:"max"}')
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+    expect_hook_deny "governance hook blocks confirmed $agent_type profile" \
+        "$payload" "responsible-human model selection is pending"
+done
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"security-review","name":"fixture","reasoning_effort":"max"}')
+expect_hook_pass "governance hook does not block built-in security-review" \
+    "$payload"
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"security-reviewer","name":"fixture","reasoning_effort":"max"}')
+expect_hook_pass \
+    "governance hook does not block non-model-invocable orchestrator type" \
+    "$payload"
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"security-audit","name":"fixture","reasoning_effort":"max"}')
+expect_hook_pass "governance hook does not block unconfirmed security names" \
+    "$payload"
 
 payload=$(make_hook_payload "$governance_external" task \
     '{"agent_type":"explore","name":"fixture","reasoning_effort":"low"}')
@@ -735,6 +842,24 @@ payload=$(make_hook_payload "$governance_outside" task \
 expect_hook_pass "governance hook leaves outside-root tasks unchanged" "$payload"
 expect_hook_pass "governance hook leaves unrelated tasks unchanged when root is absent" \
     "$payload" "$sandbox/missing-root" '[]'
+expect_hook_pass "governance hook passes outside scope when root is unset" \
+    "$payload" __UNSET__ '[]'
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"explore","name":"fixture","reasoning_effort":"max"}')
+expect_hook_deny \
+    "governance hook denies marker-recognized scope when root is unset" \
+    "$payload" "BERYLLIUM_PARENT_ROOT is unset or unusable" __UNSET__ '[]'
+
+payload=$(make_hook_payload "$governance_workspace" run_dynamic_workflow \
+    '{"name":"fixture-workflow","args":{"scope":"fixture"}}')
+expect_hook_deny "governance hook blocks in-scope dynamic workflows" \
+    "$payload" "nested agents are not command-hook enforceable"
+
+payload=$(make_hook_payload "$governance_outside" run_dynamic_workflow \
+    '{"name":"fixture-workflow","args":{"scope":"fixture"}}')
+expect_hook_pass "governance hook leaves outside dynamic workflows unchanged" \
+    "$payload"
 
 empty_index=$sandbox/governance-empty-index
 GIT_INDEX_FILE=$empty_index git -C "$governance_workspace" read-tree --empty
@@ -763,6 +888,9 @@ expect_hook_deny "governance hook fails closed on malformed input" \
 payload=$(make_hook_payload "$governance_workspace" task 'not-json' string)
 expect_hook_deny "governance hook fails closed on malformed toolArgs" \
     "$payload" "malformed toolArgs"
+payload=$(make_hook_payload "$governance_outside" task 'not-json' string)
+expect_hook_pass "governance hook ignores malformed task args outside scope" \
+    "$payload"
 
 # --- sandbox user-level install/check ---------------------------------------
 

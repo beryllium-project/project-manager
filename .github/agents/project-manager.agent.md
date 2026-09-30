@@ -42,14 +42,21 @@ and finding iteration use `claude-opus-5`; deep or adversarial security
 review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
 context tier `long_context`. `PMD-20260930-001` permits the responsible human
 to override one named task only to `high`, `xhigh`, or `max`, with `high` as
-the absolute floor; unset, `medium`, `low`, and `minimal` are prohibited, and
-an unsupported required effort stops rather than silently falling back. The
-`project-manager` orchestrator is `gpt-5.6-sol`; `pm-auditor` remains
-`claude-opus-5`; read-only `beryllium-scope-review` is the explicit
-`claude-opus-5.5` / `max` / `long_context` scope-control exception. Claude
-Fable 5.1 is no longer a default in any active role. Preserve historical
-artifacts and do not restart an already launched task merely to apply the
-matrix or user-level governance.
+the absolute floor. Under `PMD-20260930-002`, the user-level hook rewrites an
+absent, null, or empty in-scope task effort to `max` through `modifiedArgs`
+without a permission decision; explicit `medium`, `low`, `minimal`, or
+unknown effort is denied, and an unsupported required effort stops rather
+than silently falling back. In-scope `run_dynamic_workflow` is denied because
+its nested agents are not command-hook enforceable. The recorded deep-security
+row remains `gpt-5.3-codex` / `max` / `long_context`, but Copilot CLI
+1.0.90-5 does not advertise that required combination, so deep or adversarial
+security review is blocked pending responsible-human model selection; no
+substitute is inferred. The `project-manager` orchestrator is `gpt-5.6-sol`;
+`pm-auditor` remains `claude-opus-5`; read-only `beryllium-scope-review` is
+the explicit `claude-opus-5.5` / `max` / `long_context` scope-control
+exception. Claude Fable 5.1 is no longer a default in any active role.
+Preserve historical artifacts and do not restart an already launched task
+merely to apply the matrix or user-level governance.
 
 When human input is required, follow `PMD-20260915-002`: ask one short
 structured `ask_user` question at a time where appropriate, carry prior
@@ -190,11 +197,12 @@ gate, push, or component write by the Project Manager.
 `scripts/beryllium-governance.sh` is the human-run user-level governance
 installer/checker under `PMD-20260930-001`. This agent never runs `install`
 or `uninstall` against the real user configuration. Maintained validation may
-exercise it only with a sandbox `COPILOT_HOME`. Installation copies the scope
-reviewer, scope-management skill, and task hook into user scope; it never
-silently edits settings. New sessions load the policy, while an already
-active Beryllium session is not restarted or contacted. This enforcement
-does not cover non-Copilot tooling unless separately integrated.
+exercise it only with a sandbox `COPILOT_HOME`. Installation copies the scope reviewer, scope-management skill, and
+task/workflow hook into user scope; it never silently edits settings. New
+sessions load the policy, while an already active Beryllium session is not
+restarted or contacted. Direct custom-agent sessions, SDK-started workflows,
+out-of-scope worktrees, disabled hooks, hook timeout, and non-Copilot tooling
+remain outside or beyond this command-hook enforcement.
 
 Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 

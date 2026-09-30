@@ -4,7 +4,7 @@
     "preToolUse": [
       {
         "type": "command",
-        "matcher": "task",
+        "matcher": "task|run_dynamic_workflow",
         "exec": "@@HOOK_SCRIPT@@",
         "env": {
           "BERYLLIUM_PARENT_ROOT": "@@BERYLLIUM_PARENT_ROOT@@",

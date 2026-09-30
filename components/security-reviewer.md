@@ -19,7 +19,10 @@
   specialists, also `gpt-5.3-codex`) under the deep-security-review row of
   `PMD-20260916-001` (`PMR-074` closed);
   reasoning `max` / context `long_context` defaults; skill
-  `beryllium-security-review`
+  `beryllium-security-review`. `PMD-20260930-002` retains that matrix row, but
+  deep/adversarial engagement launch is blocked pending responsible-human
+  model selection because Copilot CLI 1.0.90-5 does not advertise the
+  required `gpt-5.3-codex` / `max` / `long_context` combination.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
@@ -36,6 +39,9 @@
   `PMD-20260916-001` (responsible-human `all_codex` choice) assigns
   deep/adversarial security review to `gpt-5.3-codex`; owner commit
   `2e8d205` completes `PMR-074` and no engagement is authorized by it.
+  `PMD-20260930-002` does not replace that model; it fails closed pending a
+  responsible-human model choice and denies task launches of the three
+  model-invocable specialist types plus any explicit `gpt-5.3-codex`.
   Open `PMR-109` is the sole component policy exception found by the
   `PMD-20260930-001` discovery and conflict audit: the active
   instructions, orchestrator profile, and skill still permit an unbounded
