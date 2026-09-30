@@ -1,23 +1,22 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-30
-**Update scope:** eighty-second coordination follow-up. Recorded and
-implemented corrective `PMD-20260930-002` for four scope-reviewed governance
-findings: omitted in-scope task effort is rewritten to `max` without changing
-permission handling; in-scope `run_dynamic_workflow` is denied; broken or
-unset root configuration passes outside recognizable scope but fails closed
-inside the canonical marker boundary; and deep/adversarial security review is
-blocked pending responsible-human model selection because Copilot CLI
-1.0.90-5 does not advertise the recorded `gpt-5.3-codex` / `max` /
-`long_context` combination. Maintained validation passes at 909 / 0 and
-660 / 0. The read-only real governance check confirms only the expected
-installed governance-hook and hook-config SHA-256 drift, so human reinstall
-and recheck are required. No component repository, PMR, real user
-configuration, or active Beryllium session was modified; `PMR-109` is
-unchanged. The prior temporary Fedora `lx2` status, PMR-108 quiescence
-prerequisite, Beryllium `2b404ca` observation, PMR-098/100 return blockers,
-consumed PMR-105 authorization, and all
-acceptance/publication/licensing/release gates remain unchanged.
+**Update scope:** eighty-third coordination follow-up. The scope-review
+disposition was `adjust`, bounded to the minimal reinstall-safety correction.
+Recorded `PMD-20260930-003`, superseding only `PMD-20260930-002` item 6 and
+its Follow-up session-effect sentence in part. The installer now verifies all
+staged files before live replacement, copies same-filesystem backups while
+leaving destinations present, atomically replaces one file at a time, and
+atomically restores replaced prior files on commit or verification failure.
+New sessions load hook configuration, matcher, and environment; a registered
+running session can execute a replaced fixed-path hook script at its next
+originally matched call but gains no new matcher coverage. Agent/skill reread
+behavior in running sessions is unknown. Human reinstall remains required
+and is recommended only while governed sessions are idle. The separate
+deep/adversarial security model gate remains open. The reported active
+Beryllium session predates the initial governance install; this turn did not
+inspect, restart, or contact it. No component repository, PMR, real user
+configuration, or human gate was modified; `PMR-109` is unchanged.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -35,7 +34,7 @@ in `../COMPONENTS.md`
 | Workspace worktree layout | **P2 planning item only.** Future linked worktrees should use root-relative `worktrees/<repository>/<purpose-or-branch>` so they do not accumulate at the workspace top level. The responsible human must create the root directory; the Project Manager can then update its allowed root artifacts. Existing worktrees remain where they are until separately inventoried and moved through the owning repository's workflow; one-writer locks remain unchanged. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
 | Global startup-status rollout | **P2 `PMR-108`, blocked on positive project quiescence.** The first step is a maintained fail-closed check covering clean/current coordination state, every registered worktree, maintained writer reservations, active-session evidence, and same-turn human confirmation for non-instrumented sessions. Only then may the Project Manager update its own/root tooling and allocate separate child-owner requests. |
-| Max-effort scope governance | **Corrected locally; human user-level reinstall remains open.** `PMD-20260930-001` retains the matrix, `max` default, `high` floor, Opus 5.5 scope reviewer, and mandatory scope skill. `PMD-20260930-002` makes the hook match exactly `task|run_dynamic_workflow`, injects `max` through `modifiedArgs` for absent/null/empty task effort without a permission decision, denies explicit below-floor or unknown effort, and denies in-scope dynamic workflows. The real read-only check reports exactly two expected copied-file drifts: governance hook and hook configuration. |
+| Max-effort scope governance | **Corrected locally; idle-time human reinstall remains open.** `PMD-20260930-001` retains the matrix, `max` default, `high` floor, Opus 5.5 scope reviewer, and mandatory scope skill. `PMD-20260930-002` retains exact `task|run_dynamic_workflow` scope, permission-preserving `max` injection, below-floor denial, and in-scope dynamic-workflow denial. `PMD-20260930-003` corrects reinstall atomicity and session effects: new sessions load matcher/environment, while a registered running session may execute a replaced script body only for calls matched by its already loaded matcher. The read-only real check remains the live-validation boundary; no running session was inspected. |
 | Component policy exceptions | **PMR-109 unchanged; security execution separately blocked.** Read-only probes still place the parent, all nine registered direct checkouts, the in-root linked worktrees, and both resolved tracked symlink targets inside configured hook scope. `PMR-109` remains the sole component wording exception and authorizes no model change. Direct custom-agent sessions, SDK-started workflows, out-of-root worktrees, disabled hooks, and hook timeout remain documented limits rather than claimed enforcement. |
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Human-started ordinary owner sessions are now separately automated by `scripts/owner-session.sh`: one private revision-bound packet and interactive `copilot --no-auto-update --yolo`, with no copied prompt. This launcher is not an owner worker and grants no Project Manager/component authority. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
@@ -61,9 +60,9 @@ in `../COMPONENTS.md`
 | Tasking startup contract | `PMD-20260915-008` requires every owner context to map `check Project Manager tasking` and obvious variants to the exact resolver. Project Manager, analysis-workbook, security-reviewer, Beryllium, CHERI notes PMR-071, XRV PMR-072, and formal-verification PMR-069 are complete. PMR-064, PMR-066, and PMR-070 remain P3; Helium PMR-068 remains P4. |
 | Planned Git maintenance | `PMR-073` is withdrawn by `PMD-20260918-003`. The proven owner-worker path supplies the bounded PM-driven component execution need; no current request depends on a separate Git-maintainer specialist. |
 | Human interaction | The responsible human selected the dedicated PMR-105 mechanism, completed preflight, stated exactly `"authorize PMR-105 exact private fast-forward"`, and ran the bound human-owned execution. Exact log and independent inspection close PMR-105; the single-use authorization is consumed. |
-| Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review, all at `max` / `long_context`. `PMD-20260930-001` keeps `high` as the explicit floor and adds only `beryllium-scope-review` as a `claude-opus-5.5` exception. `PMD-20260930-002` changes no row and chooses no substitute: the deep-security row is currently blocked pending responsible-human model selection. Historical artifacts and already active sessions are unchanged. |
+| Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review, all at `max` / `long_context`. `PMD-20260930-001` keeps `high` as the explicit floor and adds only `beryllium-scope-review` as a `claude-opus-5.5` exception. `PMD-20260930-002` changes no row and chooses no substitute: the deep-security row is currently blocked pending responsible-human model selection. `PMD-20260930-003` changes no model or enforcement row and makes no claim about agent/skill reread in running sessions. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this remediation's commits, parent `64751266aa86279ff859e4a9edc56e70e8ba1131` is behind 0 / ahead 21 of `upstream/main`, and Project Manager base `ce1cef64d2218dcfb055458c5128696210e823d7` is behind 0 / ahead 10 of `origin/main`; request blob `f1354da9c784a5e0e63867efd9f2f224c646c28c` is unchanged. Tracked changes are limited to the Project Manager-owned remediation artifacts and parent policy summaries listed for review; pre-existing untracked `be-doc-repro-*` directories are untouched. The parent registry update follows the Project Manager commit. |
+| Parent coordination | Before this correction's commits, parent `566d5a5622ce28ea105c355d82e17eebaceffbff` is behind 0 / ahead 22 of `upstream/main`, and Project Manager base `072ba215ed0c5782d97ec390b3de9175464cbfad` is behind 0 / ahead 11 of `origin/main`; request blob `f1354da9c784a5e0e63867efd9f2f224c646c28c` is unchanged. Tracked changes are limited to the exact Project Manager and parent paths listed for review; pre-existing untracked `be-doc-repro-*` directories are untouched. The parent registry update follows the Project Manager commit. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -86,7 +85,7 @@ backup/publication gates, and elective work remain visible.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P1 | `User-level governance reinstall` (no PMR) | **Ready after reviewing the local commits - responsible-human user-config action** | The read-only check reports hook and hook-config SHA-256 drift. Run the exact install/check command below to copy the corrected task/workflow hook for new sessions. Do not restart the active Beryllium session. |
+| P1 | `User-level governance reinstall` (no PMR) | **Ready after commit review and when governed sessions are idle - responsible-human user-config action** | Run the unchanged install/check command below. New sessions load configuration/matcher/environment; a registered running session may execute a replaced hook body on its next already-matched call. The reported active Beryllium session predates the initial install and was not observed this turn; do not restart it merely for reinstall. |
 | P1 | `Deep/adversarial security model choice` (no PMR) | **Blocked - responsible-human model decision required** | Select a model that actually supports the required effort/context, or explicitly revise the requirement. Until then, explicit `gpt-5.3-codex` and task launches of `security-evidence`, `security-research`, and `security-finding-review` remain denied; no agent substitutes a model. |
 | P2 | `Workspace worktree container` (no PMR) | **Ready when selected — responsible-human filesystem action; planning only this turn** | Create workspace-root `worktrees/` for future linked worktrees, then let the Project Manager add the parent ignore and topology wording it owns. Use `worktrees/<repository>/<purpose-or-branch>` to avoid collisions. Existing worktrees stay in place until their owners coordinate a proper move; this reduces top-level clutter but does not relax one-writer locks. |
 | P2 | `PMR-108` | **Blocked — another project session is active; global quiescence check not yet implemented** | After the human confirms every session is closed, the Project Manager first adds the fail-closed machine check and global maintenance reservation, then wires `SOT.md` status through its own/root startup tooling and allocates separate child-owner requests. This improves relocation safety without touching a child now or automatically moving anything on 2026-10-09. |
@@ -112,8 +111,9 @@ backup/publication gates, and elective work remain visible.
 
 ### One recommended next action
 
-After reviewing the two local coordination commits, reinstall and verify the
-user-level Copilot CLI governance from the workspace root:
+After reviewing the two local coordination commits and waiting until governed
+sessions are idle, reinstall and verify the user-level Copilot CLI governance
+from the workspace root:
 
 ```sh
 bash ./project-manager/scripts/beryllium-governance.sh install &&
@@ -121,11 +121,14 @@ bash ./project-manager/scripts/beryllium-governance.sh check
 ```
 
 This human action is required because the Project Manager has no authority to
-write the user configuration. It repairs the two confirmed copied-file
-drifts and affects only sessions started after installation. Do not restart
-the active Beryllium session; live end-to-end validation remains blocked, and
-PMR-108 remains blocked until the separate positive-quiescence gate is
-satisfied. Deep/adversarial security review also remains blocked until the
+write the user configuration. Configuration, matcher, and environment
+changes require a new session; an already registered hook may execute the
+replaced script body on its next originally matched call. Agent and skill
+reread behavior in running sessions is unknown. Do not restart the reported
+active Beryllium session merely for reinstall; it predates the initial
+governance install and was not directly observed this turn. Live end-to-end
+validation and PMR-108 remain blocked by their separate session/quiescence
+gates. Deep/adversarial security review also remains blocked until the
 responsible human selects a supported model. This is the best visible next
 action for policy coverage, while the responsible human may have higher
 priorities outside Project Manager visibility.
@@ -148,6 +151,42 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### Eighty-third-turn governance reinstall safety
+
+- Applied the scope-review `adjust` disposition exactly: one corrective
+  `PMD-20260930-003`, one installer transaction fix, focused deterministic
+  sandbox tests, and directly affected Project Manager/parent wording. No PMR
+  or component write was created.
+- Corrected the session model without rewriting prior decisions. New sessions
+  load hook configuration, matcher, and environment. A registered command
+  hook executes its fixed script path for each matched call, so atomic script
+  replacement can affect an already-running governed session on its next
+  originally matched call; it retains its loaded matcher/environment and does
+  not gain new `run_dynamic_workflow` coverage from replacement alone.
+  Agent/skill reread behavior in running sessions remains unknown.
+- Reworked `scripts/beryllium-governance.sh` so all replacement files are
+  staged and verified first; existing regular destinations are copied to
+  same-filesystem verified backups without disappearing; commits atomically
+  rename one staged file at a time; and failure rollback atomically renames
+  backups over replaced destinations or removes only files newly created by a
+  failed first install.
+- Preserved non-regular destination refusal, SHA-256 verification, exact
+  permissions, rollback diagnostics, read-only `check`, and drift-safe
+  `uninstall`. Help and command output now distinguish new-session
+  configuration loading from fixed-path script-body replacement and warn
+  that uninstall can leave registered running sessions pointing at removed
+  paths.
+- Added no process scanner, confirmation/acknowledgement flag, lock, daemon,
+  content-addressed version, watcher, timing loop, telemetry, or test-only
+  installer switch. Reinstall/uninstall are recommended while governed
+  sessions are idle.
+- The reported active Beryllium session predates the initial governance
+  install. This turn did not directly observe, restart, contact, or validate
+  that session, and it does not claim any agent/skill reload behavior.
+- The deep/adversarial security model choice remains a separate
+  responsible-human gate; `PMD-20260930-003` changes no model row and grants
+  no execution, review, acceptance, or release authority.
 
 ### Eighty-second-turn governance-findings remediation
 
@@ -211,9 +250,13 @@ git -C .. status --short --branch
   this handoff, and short parent registry/README pointers. No component-local
   copy or blanket PMR was created; later work owns discovery/conflict
   verification and evidence-based exceptions.
-- User-level hooks, agents, and skills load only in new sessions. The active
-  Beryllium session was not restarted or contacted. Non-Copilot tooling is
-  outside this enforcement unless separately integrated.
+- `PMD-20260930-003` later corrects this turn's blanket loading statement:
+  new sessions load hook configuration/matcher/environment, a registered
+  running session can execute a replaced hook script body on its next
+  originally matched call, and agent/skill reread behavior is unknown. The
+  reported active Beryllium session was not restarted or contacted.
+  Non-Copilot tooling is outside this enforcement unless separately
+  integrated.
 
 ### Eightieth-turn relocation and deferred-startup detail
 
@@ -299,6 +342,32 @@ git -C .. status --short --branch
 - Independent maintained inspection at `2026-09-29T06:31:32Z` confirms local
   and `origin` topic refs at exact `34a8b50`, clean 0/0. `PMD-20260929-002`
   closes PMR-105 and consumes the authorization without a component write.
+
+## Eighty-third-turn validation
+
+- `bash ./tests/validate-agent.sh`: 941 passed / 0 failed.
+- `bash ./scripts/validate-pm.sh`: 671 passed / 0 failed.
+- Focused deterministic sandbox coverage verifies first install, ordinary
+  reinstall, explicit drift repair, static absence of live-file move-aside
+  semantics, and a real permissions-induced commit failure on the later hooks
+  directory after earlier destinations can be replaced. Rollback restores
+  every original file hash and mode with no missing managed destination, and
+  test permissions are restored before continuing.
+- Sandbox checks also verify staged SHA-256/mode validation, same-filesystem
+  copied backups, atomic staged-file replacement, atomic backup-over-live
+  restoration, first-install cleanup, non-regular refusal, drift-safe
+  uninstall, and corrected help/install/uninstall messages. No timing loop,
+  watcher, process scan, acknowledgement flag, or test-only installer switch
+  is present.
+- Read-only real `bash ./scripts/beryllium-governance.sh check`: user settings,
+  reviewer, skill, and hook executable checks pass; exactly governance-hook
+  and hook-configuration SHA-256 drift remain, so responsible-human
+  reinstall/recheck is still required.
+- No real install/uninstall, component write, PMR change, Beryllium
+  interaction, remote operation, push, tag, publication, or human-gate action
+  occurred. The reported active Beryllium session predates the initial
+  governance install and was not directly observed, so no live-session or
+  agent/skill reread behavior is validated.
 
 ## Eighty-second-turn validation
 
@@ -1094,7 +1163,7 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P1 | User-level governance reinstall (no PMR) | The read-only check confirms governance-hook and hook-config SHA-256 drift. After reviewing the local Project Manager/parent commits, the responsible human runs `bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check` from the workspace root. This affects only new Copilot CLI sessions and does not restart active Beryllium work. |
+| P1 | User-level governance reinstall (no PMR) | The read-only check confirms governance-hook and hook-config SHA-256 drift. After reviewing the local Project Manager/parent commits and waiting until governed sessions are idle, the responsible human runs `bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check` from the workspace root. New sessions load configuration/matcher/environment; a registered running session may execute a replaced hook body on its next originally matched call without gaining new matcher coverage. Do not restart the reported active Beryllium session merely for reinstall. |
 | P1 | Deep/adversarial security model choice (no PMR) | The recorded `gpt-5.3-codex` row remains unchanged, but CLI 1.0.90-5 does not advertise required `max` / `long_context`. A responsible human selects a supported model or revises the requirement; no agent substitutes one. |
 | P2 | Workspace worktree container (no PMR) | When selected, the responsible human creates workspace-root `worktrees/`; the Project Manager then updates allowed root ignore/topology artifacts. Future paths use `worktrees/<repository>/<purpose-or-branch>`. Existing worktrees remain untouched until separately coordinated with their owners. |
 | P2 | `PMR-108` | Blocked by the reported active project session. After explicit all-sessions-closed confirmation, first implement and validate the fail-closed quiescence check and global maintenance reservation; then update only Project Manager/root status tooling and allocate separate child-owner startup requests. |
@@ -1125,9 +1194,16 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   configuration now drift from the corrected tracked sources. The Project
   Manager has no authority to write `${COPILOT_HOME:-$HOME/.copilot}`. The
   responsible human must run the exact install/check command above after
-  reviewing the commits. Discovery begins only in new Copilot CLI sessions;
-  the active Beryllium session must not be restarted for this change, so live
-  validation of a newly loaded hook remains blocked.
+  reviewing the commits and waiting until governed sessions are idle. New
+  sessions load hook configuration, matcher, and environment. A registered
+  running session may execute an atomically replaced script body at its next
+  call matched by its originally loaded matcher, but replacement alone does
+  not add `run_dynamic_workflow` coverage. Uninstall can leave registered
+  running sessions pointing at removed hook/configuration paths. Agent and
+  skill reread behavior in running sessions is unknown. The reported active
+  Beryllium session predates the initial governance install and was not
+  directly observed this turn; it must not be restarted merely for reinstall,
+  so live validation remains blocked.
 - Deep/adversarial security review is blocked pending a responsible-human
   model choice. The recorded matrix row remains `gpt-5.3-codex` / `max` /
   `long_context`; `PMD-20260930-002` selects no substitute and grants no
@@ -1219,6 +1295,30 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   decisions.
 
 ## What to review
+
+### Eighty-third-turn governance-reinstall review
+
+- `records/decisions/PMD-20260930-003-governance-reinstall-safety.md`
+- `scripts/beryllium-governance.sh`
+- `tests/validate-agent.sh`
+- `.github/copilot-instructions.md`
+- `.github/agents/project-manager.agent.md`
+- `.github/skills/beryllium-project-management/SKILL.md`
+- `AGENT-ROSTER.md`
+- `README.md`
+- `HANDOFF.md`
+- parent `../.github/copilot-instructions.md`
+- parent `../README.md`
+- parent `../COMPONENTS.md`
+
+Review the scope-review `adjust` disposition, copy-before-replace transaction,
+same-filesystem staged/backup checks, atomic per-file commit and rollback,
+real later-destination failure test, corrected registered-session wording,
+unknown agent/skill reread behavior, unchanged install/check command, idle
+reinstall recommendation, unchanged deep-security model gate, and explicit
+absence of a process scanner or acknowledgement flag. The reported active
+Beryllium session is chronology supplied by the responsible human, not a
+live observation by this turn. No PMR or component path changed.
 
 ### Eighty-second-turn governance-remediation review
 

@@ -108,14 +108,22 @@ user session defaults, and the user plan defaults or session fallback without
 editing settings. Repository/local settings, command-line choices, and live
 session overrides remain a later per-workspace verification surface.
 User-level installation reaches registered component Copilot CLI sessions
-only when they start after installation. Do not restart or interact with an
-already active Beryllium session. Under `PMD-20260930-002`, omitted, null, or
-empty in-scope task effort is rewritten to `max` through `modifiedArgs`
-without a permission decision, explicit below-floor or unknown effort is
-denied, and in-scope `run_dynamic_workflow` is denied. Direct custom-agent
-sessions, SDK-started workflows, out-of-scope worktrees, disabled hooks,
-hook timeout, and non-Copilot tooling remain outside or beyond this
-command-hook enforcement.
+through configuration, matcher, and environment loaded by new sessions.
+Under `PMD-20260930-003`, an already-running governed session may execute an
+atomically replaced hook script body at its next call matched by the
+originally loaded matcher; it retains that matcher/environment and does not
+gain new `run_dynamic_workflow` coverage merely from script replacement.
+Agent and skill reread behavior in running sessions is unknown. Recommend
+install, reinstall, and uninstall only while governed sessions are idle, but
+add no process scanner or acknowledgement flag. The reported active
+Beryllium session predates the initial governance install and was not
+directly observed by this turn; do not restart or interact with it. Under
+`PMD-20260930-002`, omitted, null, or empty in-scope task effort is rewritten
+to `max` through `modifiedArgs` without a permission decision, explicit
+below-floor or unknown effort is denied, and in-scope
+`run_dynamic_workflow` is denied. Direct custom-agent sessions, SDK-started
+workflows, out-of-scope worktrees, disabled hooks, hook timeout, and
+non-Copilot tooling remain outside or beyond this command-hook enforcement.
 
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,

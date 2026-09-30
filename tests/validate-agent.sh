@@ -213,8 +213,22 @@ require_text "$governance_installer" 'disabledHooks'
 require_text "$governance_installer" 'sha256sum'
 require_text "$governance_installer" 'planEffortLevel'
 require_text "$governance_installer" 'planContextTier'
-require_text "$governance_installer" 'Start new Copilot CLI sessions'
-refute_pattern "$governance_installer" 'ln -s|sqlite|telemetry'
+require_text "$governance_installer" \
+    'Configuration, matcher, and environment changes require a new Copilot CLI session'
+require_text "$governance_installer" \
+    'registered hook may execute this replaced script body at its next matching call'
+require_text "$governance_installer" \
+    'uninstall while governed sessions are idle'
+require_text "$governance_installer" \
+    'cp -p -- "${destinations[$i]}" "${backups[$i]}"'
+require_text "$governance_installer" \
+    'mv -f -- "${staged[$i]}" "${destinations[$i]}"'
+require_text "$governance_installer" \
+    'mv -f -- "${backups[$rollback_i]}"'
+refute_pattern "$governance_installer" \
+    'mv -- "\$\{destinations\[\$i\]\}" "\$stage/backup\.\$i"'
+refute_pattern "$governance_installer" \
+    'ln -s|sqlite|telemetry|inotify|sleep[[:space:]]|flock|pgrep|TEST_|--ack|--force|--yes'
 
 for component in helium-te-poc formal-verification-research osr-claude \
     beryllium-hypervisor cheri-riscv-notes cheri-hypervisor-research provenance-review \
@@ -481,6 +495,19 @@ for f in "$agent" "$skill" "$instructions" "$interface" "$roster" \
     "$repository_root/../.github/copilot-instructions.md"; do
     require_text "$f" 'modifiedArgs'
     require_text "$f" 'run_dynamic_workflow'
+done
+
+governance_reinstall_record=$repository_root/records/decisions/PMD-20260930-003-governance-reinstall-safety.md
+require_file "$governance_reinstall_record"
+require_text "$governance_reinstall_record" '**Status:** recorded'
+require_text "$governance_reinstall_record" \
+    'atomically replacing that script body can affect an already-running governed session'
+require_text "$governance_reinstall_record" \
+    'does not gain new `run_dynamic_workflow` coverage'
+require_text "$governance_reinstall_record" \
+    'Agent and skill reread behavior in running sessions is unknown'
+for f in "$agent" "$skill" "$instructions" "$roster" "$readme" "$handoff"; do
+    require_text "$f" 'PMD-20260930-003'
 done
 
 # --- boundary statements -------------------------------------------------------
@@ -911,6 +938,33 @@ installed_agent=$governance_home/agents/beryllium-scope-review.agent.md
 installed_skill=$governance_home/skills/beryllium-scope-management/SKILL.md
 installed_hook=$governance_home/hooks/beryllium-governance-hook.sh
 installed_config=$governance_home/hooks/beryllium-governance.json
+installed_governance_files=(
+    "$installed_agent"
+    "$installed_skill"
+    "$installed_hook"
+    "$installed_config"
+)
+
+governance_help_output=$(bash "$governance_installer" --help 2>&1)
+governance_help_status=$?
+governance_help_normalized=$(printf '%s\n' "$governance_help_output" |
+    tr -s '[:space:]' ' ')
+if ((governance_help_status == 0)); then
+    pass "governance help succeeds"
+else
+    fail "governance help failed with exit $governance_help_status"
+fi
+for expected_help in \
+    'Configuration, matcher, and environment changes require a new Copilot CLI session.' \
+    'replacing that script body can affect an already-running governed session at its next matching call' \
+    'Agent and skill reread behavior in running sessions is unknown.' \
+    'Uninstall can leave an already-running registered session pointing at removed hook or configuration paths.'; do
+    if grep -Fq -- "$expected_help" <<<"$governance_help_normalized"; then
+        pass "governance help states: $expected_help"
+    else
+        fail "governance help does not state: $expected_help"
+    fi
+done
 
 expect_exit "governance check fails before sandbox install" 1 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
@@ -928,9 +982,30 @@ expect_exit "governance installs into sandbox COPILOT_HOME" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" install
 expect_exit "governance sandbox check passes after install" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+ordinary_reinstall_output=$(env COPILOT_HOME="$governance_home" \
+    bash "$governance_installer" install 2>&1)
+ordinary_reinstall_status=$?
+ordinary_reinstall_normalized=$(printf '%s\n' "$ordinary_reinstall_output" |
+    tr -s '[:space:]' ' ')
+if ((ordinary_reinstall_status == 0)); then
+    pass "governance ordinary reinstall succeeds"
+else
+    fail "governance ordinary reinstall failed with exit $ordinary_reinstall_status"
+fi
+if grep -Fq -- \
+    'Configuration, matcher, and environment changes require a new Copilot CLI session.' \
+    <<<"$ordinary_reinstall_normalized" &&
+    grep -Fq -- \
+        'registered hook may execute this replaced script body at its next matching call' \
+        <<<"$ordinary_reinstall_normalized"; then
+    pass "governance install output describes configuration and script-body effects"
+else
+    fail "governance install output omits configuration or script-body effects"
+fi
+expect_exit "governance sandbox check passes after ordinary reinstall" 0 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
 
-for f in "$installed_agent" "$installed_skill" "$installed_hook" \
-    "$installed_config"; do
+for f in "${installed_governance_files[@]}"; do
     if [[ -f $f && ! -L $f ]]; then
         pass "governance installer copied a regular file: $f"
     else
@@ -947,6 +1022,66 @@ if [[ $settings_after_hash == "$settings_hash" ]]; then
 else
     fail "governance install modified settings.json"
 fi
+
+for i in "${!installed_governance_files[@]}"; do
+    printf '\nrollback fixture %s\n' "$i" \
+        >>"${installed_governance_files[$i]}"
+done
+chmod 0600 "$installed_agent" "$installed_skill" "$installed_config"
+chmod 0700 "$installed_hook"
+rollback_hashes=()
+rollback_modes=()
+for f in "${installed_governance_files[@]}"; do
+    rollback_hashes+=("$(sha256sum "$f" | awk '{ print $1 }')")
+    rollback_modes+=("$(stat -c '%a' "$f")")
+done
+hooks_dir=$governance_home/hooks
+hooks_dir_mode=$(stat -c '%a' "$hooks_dir")
+commit_failure_log=$sandbox/governance-commit-failure.log
+if chmod 0500 "$hooks_dir"; then
+    env COPILOT_HOME="$governance_home" \
+        bash "$governance_installer" install \
+        >"$commit_failure_log" 2>&1
+    commit_failure_status=$?
+    if chmod "$hooks_dir_mode" "$hooks_dir"; then
+        pass "governance commit-failure test restored hook-directory permissions"
+    else
+        fail "governance commit-failure test could not restore hook-directory permissions"
+    fi
+else
+    commit_failure_status=0
+    fail "governance commit-failure test could not restrict hook-directory permissions"
+fi
+if ((commit_failure_status != 0)); then
+    pass "governance reinstall reports a real later-destination commit failure"
+else
+    fail "governance reinstall unexpectedly succeeded with a non-writable hooks directory"
+fi
+if grep -Fq -- \
+    'cannot install governance hook; previous files were restored' \
+    "$commit_failure_log"; then
+    pass "governance commit failure occurs after earlier destinations can be replaced"
+else
+    fail "governance commit failure did not reach the governance-hook replacement"
+fi
+rollback_intact=1
+for i in "${!installed_governance_files[@]}"; do
+    f=${installed_governance_files[$i]}
+    if [[ ! -f $f || -L $f ]] ||
+        [[ $(sha256sum "$f" | awk '{ print $1 }') != \
+            "${rollback_hashes[$i]}" ]] ||
+        [[ $(stat -c '%a' "$f") != "${rollback_modes[$i]}" ]]; then
+        rollback_intact=0
+        fail "governance rollback did not restore original hash and mode: $f"
+    fi
+done
+if ((rollback_intact)); then
+    pass "governance rollback restores every original file/hash/mode with no missing destination"
+fi
+expect_exit "governance reinstall repairs rollback-fixture drift" 0 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" install
+expect_exit "governance check passes after rollback-fixture repair" 0 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
 
 printf '\n# tampered\n' >>"$installed_hook"
 expect_exit "governance check detects SHA-256 tampering" 1 \
@@ -980,8 +1115,21 @@ expect_exit "governance check rejects below-floor plan defaults" 1 \
 cp "$settings_baseline" "$governance_home/settings.json"
 expect_exit "governance check recovers after settings restoration" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
-expect_exit "governance sandbox uninstall succeeds" 0 \
-    env COPILOT_HOME="$governance_home" bash "$governance_installer" uninstall
+governance_uninstall_output=$(env COPILOT_HOME="$governance_home" \
+    bash "$governance_installer" uninstall 2>&1)
+governance_uninstall_status=$?
+if ((governance_uninstall_status == 0)); then
+    pass "governance sandbox uninstall succeeds"
+else
+    fail "governance sandbox uninstall failed with exit $governance_uninstall_status"
+fi
+if grep -Fq -- \
+    'Already-running registered sessions may still point at removed hook or configuration paths; uninstall while governed sessions are idle.' \
+    <<<"$governance_uninstall_output"; then
+    pass "governance uninstall output warns about registered running sessions"
+else
+    fail "governance uninstall output omits the registered-session warning"
+fi
 expect_exit "governance check fails after sandbox uninstall" 1 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
 

@@ -133,6 +133,14 @@ CLI 1.0.90-5 does not advertise that required combination. The
 are routed to their owners (`PMR-074` for `security-reviewer`, closed at
 owner commit `2e8d205`).
 
+`PMD-20260930-003` records the user-level reinstall boundary: new sessions
+load hook configuration, matcher, and environment, while a registered
+running session can execute an atomically replaced hook script body on its
+next originally matched call without gaining new matcher coverage. Agent and
+skill reread behavior in running sessions is unknown. Install, reinstall, and
+uninstall are recommended only while governed sessions are idle; no process
+scanner or acknowledgement flag is used.
+
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,
 handoffs, dirty state, and active session artifacts all block concurrent

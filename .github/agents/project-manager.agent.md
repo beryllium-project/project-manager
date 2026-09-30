@@ -199,10 +199,18 @@ installer/checker under `PMD-20260930-001`. This agent never runs `install`
 or `uninstall` against the real user configuration. Maintained validation may
 exercise it only with a sandbox `COPILOT_HOME`. Installation copies the scope reviewer, scope-management skill, and
 task/workflow hook into user scope; it never silently edits settings. New
-sessions load the policy, while an already active Beryllium session is not
-restarted or contacted. Direct custom-agent sessions, SDK-started workflows,
-out-of-scope worktrees, disabled hooks, hook timeout, and non-Copilot tooling
-remain outside or beyond this command-hook enforcement.
+sessions load hook configuration, matcher, and environment. Under
+`PMD-20260930-003`, an already-running governed session may execute a
+replaced hook script body at its next call matched by its originally loaded
+matcher; it retains that matcher/environment and gains no new
+`run_dynamic_workflow` coverage from script replacement alone. Agent and
+skill reread behavior in running sessions is unknown. Recommend install,
+reinstall, and uninstall only while governed sessions are idle. The reported
+active Beryllium session predates the initial install and was not directly
+observed by this turn; it is not restarted or contacted. Direct custom-agent
+sessions, SDK-started workflows, out-of-scope worktrees, disabled hooks, hook
+timeout, and non-Copilot tooling remain outside or beyond this command-hook
+enforcement.
 
 Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 

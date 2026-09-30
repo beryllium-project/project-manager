@@ -17,6 +17,15 @@ install copies the Beryllium scope reviewer, scope-management skill, task
 hook, and rendered hook configuration into ${COPILOT_HOME:-$HOME/.copilot}.
 check is read-only. uninstall removes only exact matching managed files.
 
+Configuration, matcher, and environment changes require a new Copilot CLI
+session. A registered command hook executes the installed script path for each
+matching call, so replacing that script body can affect an already-running
+governed session at its next matching call; that session keeps its loaded
+matcher and environment. Agent and skill reread behavior in running sessions
+is unknown. Install, reinstall, and uninstall while governed sessions are
+idle. Uninstall can leave an already-running registered session pointing at
+removed hook or configuration paths.
+
 The script never edits settings.json. User settings must provide a session
 default of max reasoning effort and long_context, with plan-specific values
 either unset (inherit the session defaults) or explicitly max/long_context.
@@ -69,7 +78,7 @@ git_parent() {
 
 require_tools() {
     local tool
-    for tool in jq sha256sum install git realpath mktemp; do
+    for tool in jq sha256sum install git realpath mktemp stat; do
         command -v "$tool" >/dev/null 2>&1 ||
             die "required command is unavailable: $tool"
     done
@@ -132,6 +141,10 @@ sha_file() {
 
 sha_text() {
     sha256sum | awk '{ print $1 }'
+}
+
+file_mode() {
+    stat -c '%a' "$1"
 }
 
 check_settings() {
@@ -233,9 +246,69 @@ check_installation() {
     printf 'beryllium-governance: all checks passed\n'
 }
 
+rollback_committed_files() {
+    local rollback_i rollback_failed=0
+    for ((rollback_i = ${#destinations[@]} - 1;
+        rollback_i >= 0; rollback_i--)); do
+        ((committed[rollback_i])) || continue
+        if ((had_backup[rollback_i])); then
+            if mv -f -- "${backups[$rollback_i]}" \
+                "${destinations[$rollback_i]}"; then
+                printf 'beryllium-governance: rollback restored %s\n' \
+                    "${labels[$rollback_i]}" >&2
+            else
+                printf 'beryllium-governance: ERROR: rollback could not restore %s: %s\n' \
+                    "${labels[$rollback_i]}" \
+                    "${destinations[$rollback_i]}" >&2
+                rollback_failed=1
+            fi
+        elif rm -f -- "${destinations[$rollback_i]}"; then
+            printf 'beryllium-governance: rollback removed newly installed %s\n' \
+                "${labels[$rollback_i]}" >&2
+        else
+            printf 'beryllium-governance: ERROR: rollback could not remove newly installed %s: %s\n' \
+                "${labels[$rollback_i]}" \
+                "${destinations[$rollback_i]}" >&2
+            rollback_failed=1
+        fi
+    done
+    ((rollback_failed == 0))
+}
+
+verify_committed_files() {
+    local i
+    check_failures=0
+    check_settings
+    for i in "${!destinations[@]}"; do
+        if [[ ! -f ${destinations[$i]} || -L ${destinations[$i]} ]]; then
+            bad "installed ${labels[$i]} is absent or not a regular file"
+            continue
+        fi
+        if [[ $(sha_file "${destinations[$i]}") == \
+            "${expected_hashes[$i]}" ]]; then
+            ok "installed ${labels[$i]} SHA-256 matches"
+        else
+            bad "installed ${labels[$i]} SHA-256 mismatch"
+        fi
+        if [[ $(file_mode "${destinations[$i]}") == \
+            "${expected_modes[$i]}" ]]; then
+            ok "installed ${labels[$i]} permissions match"
+        else
+            bad "installed ${labels[$i]} permissions mismatch"
+        fi
+    done
+    if ((check_failures > 0)); then
+        printf 'beryllium-governance: %d post-install check(s) failed\n' \
+            "$check_failures" >&2
+        return 1
+    fi
+    printf 'beryllium-governance: post-install checks passed\n'
+}
+
 install_governance() {
-    local rendered_config stage i fail_i rollback_i
-    local -a destinations staged labels had_backup committed
+    local rendered_config stage stage_device destination_dir i
+    local -a destinations staged backups labels expected_hashes
+    local -a expected_modes had_backup committed
     check_failures=0
     require_tools
     require_sources
@@ -257,6 +330,8 @@ install_governance() {
     stage=$(mktemp -d "$copilot_home/.beryllium-governance.XXXXXX") ||
         die "cannot create installation staging directory"
     staged=("$stage/new.0" "$stage/new.1" "$stage/new.2" "$stage/new.3")
+    backups=("$stage/backup.0" "$stage/backup.1" "$stage/backup.2" \
+        "$stage/backup.3")
     had_backup=(0 0 0 0)
     committed=(0 0 0 0)
 
@@ -270,64 +345,71 @@ install_governance() {
         rm -rf -- "$stage"
         die "cannot render hook configuration"
     fi
-    printf '%s\n' "$rendered_config" >"${staged[3]}"
-    chmod 0644 "${staged[3]}"
+    if ! printf '%s\n' "$rendered_config" >"${staged[3]}" ||
+        ! chmod 0644 "${staged[3]}"; then
+        rm -rf -- "$stage"
+        die "cannot stage rendered hook configuration"
+    fi
 
+    expected_hashes=(
+        "$(sha_file "$agent_source")"
+        "$(sha_file "$skill_source")"
+        "$(sha_file "$hook_source")"
+        "$(printf '%s\n' "$rendered_config" | sha_text)"
+    )
+    expected_modes=(644 644 755 644)
+    for i in "${!staged[@]}"; do
+        if [[ ! -f ${staged[$i]} || -L ${staged[$i]} ]] ||
+            [[ $(sha_file "${staged[$i]}") != "${expected_hashes[$i]}" ]] ||
+            [[ $(file_mode "${staged[$i]}") != "${expected_modes[$i]}" ]]; then
+            rm -rf -- "$stage"
+            die "staged ${labels[$i]} failed content or permission verification"
+        fi
+    done
+
+    stage_device=$(stat -c '%d' "$stage")
     for i in "${!destinations[@]}"; do
+        destination_dir=${destinations[$i]%/*}
+        if [[ $(stat -c '%d' "$destination_dir") != "$stage_device" ]]; then
+            rm -rf -- "$stage"
+            die "cannot atomically install ${labels[$i]} across filesystems"
+        fi
         if [[ -e ${destinations[$i]} ]]; then
-            if ! mv -- "${destinations[$i]}" "$stage/backup.$i"; then
-                fail_i=$i
-                for ((rollback_i = i - 1; rollback_i >= 0; rollback_i--)); do
-                    if ((had_backup[rollback_i])); then
-                        mv -- "$stage/backup.$rollback_i" \
-                            "${destinations[$rollback_i]}" ||
-                            die "cannot restore ${labels[$rollback_i]} after backup failure"
-                    fi
-                done
+            if ! cp -p -- "${destinations[$i]}" "${backups[$i]}" ||
+                [[ ! -f ${backups[$i]} || -L ${backups[$i]} ]] ||
+                [[ $(sha_file "${backups[$i]}") != \
+                    $(sha_file "${destinations[$i]}") ]] ||
+                [[ $(file_mode "${backups[$i]}") != \
+                    $(file_mode "${destinations[$i]}") ]]; then
                 rm -rf -- "$stage"
-                die "cannot stage existing ${labels[$fail_i]} for replacement"
+                die "cannot make a verified backup copy of ${labels[$i]}"
             fi
             had_backup[$i]=1
         fi
     done
 
     for i in "${!destinations[@]}"; do
-        if ! mv -- "${staged[$i]}" "${destinations[$i]}"; then
-            for rollback_i in "${!destinations[@]}"; do
-                if ((committed[rollback_i])); then
-                    rm -f -- "${destinations[$rollback_i]}"
-                fi
-            done
-            for rollback_i in "${!destinations[@]}"; do
-                if ((had_backup[rollback_i])); then
-                    mv -- "$stage/backup.$rollback_i" \
-                        "${destinations[$rollback_i]}" ||
-                        die "cannot restore ${labels[$rollback_i]} after install failure"
-                fi
-            done
-            rm -rf -- "$stage"
-            die "cannot install ${labels[$i]}"
+        if ! mv -f -- "${staged[$i]}" "${destinations[$i]}"; then
+            if rollback_committed_files; then
+                rm -rf -- "$stage"
+                die "cannot install ${labels[$i]}; previous files were restored"
+            fi
+            die "cannot install ${labels[$i]}; rollback was incomplete and backups remain at $stage"
         fi
         committed[$i]=1
     done
 
-    if ! check_installation; then
-        for i in "${!destinations[@]}"; do
-            rm -f -- "${destinations[$i]}"
-        done
-        for i in "${!destinations[@]}"; do
-            if ((had_backup[i])); then
-                mv -- "$stage/backup.$i" "${destinations[$i]}" ||
-                    die "cannot restore ${labels[$i]} after failed verification"
-            fi
-        done
-        rm -rf -- "$stage"
-        die "installed files failed verification; previous files were restored"
+    if ! verify_committed_files; then
+        if rollback_committed_files; then
+            rm -rf -- "$stage"
+            die "installed files failed verification; previous files were restored"
+        fi
+        die "installed files failed verification; rollback was incomplete and backups remain at $stage"
     fi
 
     rm -rf -- "$stage"
     printf '%s\n' \
-        "Installed user-level governance. Start new Copilot CLI sessions to load it; do not restart an active Beryllium session."
+        "Installed user-level governance. Configuration, matcher, and environment changes require a new Copilot CLI session. A registered hook may execute this replaced script body at its next matching call while retaining its loaded matcher and environment. Agent and skill reread behavior in running sessions is unknown; reinstall while governed sessions are idle."
 }
 
 verify_removable() {
@@ -372,7 +454,7 @@ uninstall_governance() {
     remove_managed "hook configuration" "$hook_config_dest"
     rmdir -- "$skill_dir" 2>/dev/null || true
     printf '%s\n' \
-        "Removed exact managed governance files. Existing sessions remain unchanged."
+        "Removed exact managed governance files. Already-running registered sessions may still point at removed hook or configuration paths; uninstall while governed sessions are idle."
 }
 
 (($# == 1)) || {

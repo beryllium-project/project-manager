@@ -101,12 +101,18 @@ research, analysis, threat models, provenance findings, or human decisions.
   Maintained validation may use it only with a sandbox `COPILOT_HOME`.
   `PMD-20260930-002` makes the hook inject `max` through `modifiedArgs` when
   in-scope task effort is absent, null, or empty, deny explicit below-floor
-  or unknown effort, and deny in-scope `run_dynamic_workflow`. Installation
-  reaches new registered-component Copilot CLI sessions without copying
-  policy into each component. It never restarts or contacts an active
-  Beryllium session. Direct custom-agent sessions, SDK-started workflows,
-  out-of-scope worktrees, disabled hooks, hook timeout, and non-Copilot
-  tooling remain outside or beyond this command-hook enforcement.
+  or unknown effort, and deny in-scope `run_dynamic_workflow`.
+  `PMD-20260930-003` records that new sessions load hook configuration,
+  matcher, and environment, while a registered running session can execute a
+  replaced fixed-path hook script at its next originally matched call without
+  gaining a new matcher. Agent and skill reread behavior in running sessions
+  is unknown. Recommend install, reinstall, and uninstall only while governed
+  sessions are idle; never add a process scanner or acknowledgement flag.
+  The reported active Beryllium session predates the initial install, was not
+  directly observed by this turn, and is never restarted or contacted.
+  Direct custom-agent sessions, SDK-started workflows, out-of-scope
+  worktrees, disabled hooks, hook timeout, and non-Copilot tooling remain
+  outside or beyond this command-hook enforcement.
 
 ## Phase 1: restart
 

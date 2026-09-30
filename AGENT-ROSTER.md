@@ -61,11 +61,14 @@ through `beryllium-scope-management` for one bounded `SCOPE_REVIEW_V1`
 result. The recorded deep-security row remains `gpt-5.3-codex` / `max` /
 `long_context`, but deep or adversarial security review is blocked pending
 responsible-human model selection because Copilot CLI 1.0.90-5 does not
-advertise that required combination. User-level installation reaches new
-registered component Copilot CLI sessions without component-local copies;
-direct custom-agent sessions, SDK-started workflows, out-of-scope worktrees,
-disabled hooks, hook timeout, and non-Copilot tooling remain outside or
-beyond this command-hook enforcement.
+advertise that required combination. Under `PMD-20260930-003`, new sessions
+load user-level hook configuration, matcher, and environment; a registered
+running session may execute a replaced hook script body at its next
+originally matched call but gains no new matcher from replacement alone.
+Agent/skill reread behavior is unknown. Direct custom-agent sessions,
+SDK-started workflows, out-of-scope worktrees, disabled hooks, hook timeout,
+and non-Copilot tooling remain outside or beyond this command-hook
+enforcement.
 
 For allow-listed orchestrators, this resolver is startup discovery outside an
 analysis, threat-model, provenance, or security-review package. It is not
@@ -168,7 +171,7 @@ Run each block from the named component directory.
 ```sh
 cd project-manager
 # Copilot CLI: /agent project-manager
-# Human-only user-level install/check; new sessions load it:
+# Human-only user-level install/check; run while governed sessions are idle:
 # bash ./scripts/beryllium-governance.sh install && bash ./scripts/beryllium-governance.sh check
 bash ./scripts/inspect-components.sh status
 bash ./scripts/pull-queues.sh check
