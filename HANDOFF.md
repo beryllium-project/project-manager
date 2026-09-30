@@ -1271,7 +1271,7 @@ Previous turn (thirty-sixth):
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
 | P1 | User-level governance reinstall (no PMR) | After reviewing the local Project Manager/parent commits and waiting until governed sessions are idle, the responsible human runs `bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check` from the workspace root. Review observed the live destination directories as ordinary same-device directories, so the pending reinstall was not exposed to the corrected symlink-device defect. New sessions load configuration/matcher/environment; a registered running session may execute a replaced hook body on its next originally matched call without gaining new matcher coverage. Matching `st_dev` does not exclude every bind-mount `EXDEV`; broader hardening remains deferred. Do not restart the reported active Beryllium session merely for reinstall. |
-| P1 | Deep/adversarial security model choice (no PMR) | The recorded `gpt-5.3-codex` row remains unchanged, but CLI 1.0.90-5 does not advertise required `max` / `long_context`. A responsible human selects a supported model or revises the requirement; no agent substitutes one. |
+| P3 | `PMR-109`, `PMR-110` | `PMD-20260930-005` closes the model choice. The security-reviewer owner aligns component policy, all four profiles, and component tests with the global high-floor rule and the sole named Codex `gpt-5.3-codex` / `xhigh` / `default` exception; one owner session may complete both requests. The Project Manager makes no component write. |
 | P2 | Workspace worktree container (no PMR) | When selected, the responsible human creates workspace-root `worktrees/`; the Project Manager then updates allowed root ignore/topology artifacts. Future paths use `worktrees/<repository>/<purpose-or-branch>`. Existing worktrees remain untouched until separately coordinated with their owners. |
 | P2 | `PMR-108` | Blocked by the reported active project session. After explicit all-sessions-closed confirmation, first implement and validate the fail-closed quiescence check and global maintenance reservation; then update only Project Manager/root status tooling and allocate separate child-owner startup requests. |
 | P2 | `PMR-098` | Return the exact Beryllium `416b2e9..80345e1` owner series, validation, active-session, backup/ref, and publication state in canonical PMR form; preserve `PMD-20260925-001`'s deferred H0 gate. |
@@ -1311,10 +1311,13 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   Beryllium session predates the initial governance install and was not
   directly observed this turn; it must not be restarted merely for reinstall,
   so live validation remains blocked.
-- Deep/adversarial security review is blocked pending a responsible-human
-  model choice. The recorded matrix row remains `gpt-5.3-codex` / `max` /
-  `long_context`; `PMD-20260930-002` selects no substitute and grants no
-  review, execution, risk, acceptance, publication, or release gate.
+- The deep/adversarial security model choice is closed by
+  `PMD-20260930-005` as the sole named Codex `gpt-5.3-codex` / `xhigh` /
+  `default` exception. The tracked hook implements that exception, but the
+  installed hook remains stale until the deferred responsible-human
+  idle-time install/check. This choice grants no security-review engagement
+  authorization, owner return, acceptance, sign-off, push, or publication
+  gate.
 - Project-wide quiescence is not granted. The responsible human reports
   another session running. Beryllium advanced during this turn from dirty
   `3467bc6` to clean synchronized `2b404ca`, demonstrating that clean and

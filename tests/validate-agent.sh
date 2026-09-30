@@ -525,6 +525,10 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
     require_prose "$f" 'gpt-5\.3-codex.*xhigh.*default'
     require_prose "$f" 'named capability exception'
 done
+refute_pattern "$handoff" \
+    '^\| P1 \| Deep/adversarial security model choice \(no PMR\) \| The recorded `gpt-5\.3-codex` row remains unchanged, but CLI 1\.0\.90-5 does not advertise required `max` / `long_context`\. A responsible human selects a supported model or revises the requirement; no agent substitutes one\. \|$'
+refute_pattern "$handoff" \
+    '^- Deep/adversarial security review is blocked pending a responsible-human$'
 require_text "$repository_root/outbox/component-requests.md" '| PMR-110 |'
 require_text "$repository_root/outbox/component-requests.md" \
     'PMR-109 and PMR-110'
