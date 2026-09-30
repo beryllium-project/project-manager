@@ -16,7 +16,9 @@ permission-neutral ordinary-policy handling for alternate models. Owner-only
 orchestrator; `PMR-109` remains open for its unbounded-override correction,
 and one human owner session may satisfy both. No component write, real
 install/check, active-session interaction, push, publication, or human-gate
-action occurred.
+action occurred. A final read-only registry check observed unrelated active
+Beryllium movement to dirty `d4c5ff0` with 354 changed entries and 0 behind /
+9 ahead; that worktree is preserved and remains a coordination lock.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -29,7 +31,7 @@ in `../COMPONENTS.md`
 
 | Area | Current state |
 | --- | --- |
-| Current coordination baseline | **Governance-only parent/Project Manager change; no child write.** The last maintained component snapshot remains clean, with Beryllium at synchronized `2b404ca`; its user-reported active session still blocks PMR-108 and reconciliation because no canonical PMR-098/100 return or responsible-human release followed. Queue intake remains ledger-exact at 33 source rows plus one transfer row. |
+| Current coordination baseline | **Governance-only parent/Project Manager change; no child write.** Final read-only inspection observed Beryllium dirty at `d4c5ff0`, 354 changed entries, behind 0 / ahead 9 of last-fetched `origin`; its user-reported active session still blocks PMR-108 and reconciliation because no canonical PMR-098/100 return or responsible-human release followed. The Project Manager did not inspect content, write, clean, reset, stage, or contact that session. Queue intake remains ledger-exact at 33 source rows plus one transfer row. |
 | Operational PM closure | **Complete, with independent critical paths.** CHERI PMR-104 exact local integration and PMR-105 private backup are complete and synchronized; the single-use authorization is consumed. Formal-verification PMR-014/037/041/069 are closed. Beryllium remains locked pending PMR-098/100 returns and release. |
 | Workspace worktree layout | **P2 planning item only.** Future linked worktrees should use root-relative `worktrees/<repository>/<purpose-or-branch>` so they do not accumulate at the workspace top level. The responsible human must create the root directory; the Project Manager can then update its allowed root artifacts. Existing worktrees remain where they are until separately inventoried and moved through the owning repository's workflow; one-writer locks remain unchanged. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
@@ -39,7 +41,7 @@ in `../COMPONENTS.md`
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Human-started ordinary owner sessions are now separately automated by `scripts/owner-session.sh`: one private revision-bound packet and interactive `copilot --no-auto-update --yolo`, with no copied prompt. This launcher is not an owner worker and grants no Project Manager/component authority. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references. The responsible human now renamed and retargeted the CHERI notes and XRV workspace links to those verified successors. |
-| Beryllium runtime | Active/default `beryllium/single-hart-runtime-r0` is clean and synchronized 0/0 with last-fetched `origin` at `2b404ca`, after advancing from dirty `3467bc6` during this turn. The handoff records bounded K0-S preparation/status documentation accepted only at exact target `c65705582c243dd908ff47d3189df07601167400` in `planning/k3-kvm0-k0s-review-summary.md`; this is not the canonical PMR-098/100 returns, a responsible-human session release, or authorization evidence for the observed remote-tracking advance. Project Manager performs no Beryllium write or launch. The current package remains mutable, unaccepted, and not ready; K0-X/K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is `UNDECIDED`; Project Manager R8-H0 remains unaccepted. |
+| Beryllium runtime | Active/default `beryllium/single-hart-runtime-r0` is dirty at `d4c5ff0616c78d997367a050db85512c44960acb`, with 354 changed entries and 0 behind / 9 ahead of last-fetched `origin`. This independently changed after the prior clean synchronized `2b404ca` observation. No canonical PMR-098/100 return or responsible-human session release exists, so the worktree remains an active coordination lock and the Project Manager performs no Beryllium write or launch. The current package remains mutable, unaccepted, and not ready; K0-X/K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is `UNDECIDED`; Project Manager R8-H0 remains unaccepted. |
 | Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. PMR-091 is closed: only private `for-review` fast-forwarded `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved; independent inspection confirms clean synchronized 0/0 state. `main`, other branches, tags, `public`, remotes, and helpers were excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
 | Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
 | XRV | Clean private `main` is synchronized 0/0 at `5e7387a`. The component handoff records a separate responsible-human-authorized private push of the Bao-CHERI survey/review package, bounded as public experimental evidence that is unreproduced, non-upstream, unreleased, and not a complete decomposed hypervisor. Existing PMR-075/092/094 and PMR-040/058/072 closures remain exact; the new research state is not a Project Manager source disposition or publication gate. |
@@ -185,6 +187,11 @@ git -C .. status --short --branch
   affected active instructions, skill, tests, README, interface, and handoff.
   PMR-109 remains open; only its keep-max/long wording for the named Codex
   role is superseded, and one human owner session may satisfy both.
+- Final read-only registry validation observed unrelated Beryllium movement
+  to dirty `d4c5ff0`, 354 changed entries, 0 behind / 9 ahead. The component
+  was not opened for modification, cleaned, reset, staged, or contacted; the
+  parent registry is refreshed to the observation after the final Project
+  Manager commit.
 - No component repository, real user configuration, active session,
   installer behavior, remote, or human gate was changed.
 
@@ -418,6 +425,10 @@ git -C .. status --short --branch
 - `bash ./scripts/validate-pm.sh`: 693 passed / 0 failed.
 - `bash -n` passed for the governance hook and maintained agent suite.
 - Exact parent and Project Manager `git diff --check` passed.
+- The first final `registry-check` correctly reported only the unrelated
+  Beryllium drift from recorded `2b404ca` to dirty `d4c5ff0`; parent
+  reconciliation follows the final Project Manager commit. No component
+  content or Git metadata was changed.
 - No real governance install/check, component command, component write,
   active-session interaction, remote operation, push, tag, publication, or
   human-gate action ran.
