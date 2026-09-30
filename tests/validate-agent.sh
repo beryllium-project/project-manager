@@ -207,6 +207,13 @@ require_text "$governance_hook" 'reasoning_effort'
 require_text "$governance_hook" 'high | xhigh | max'
 require_text "$governance_hook" 'claude-opus-5.5'
 require_text "$governance_hook" 'long_context'
+require_text "$governance_hook" 'gpt-5.3-codex'
+require_text "$governance_hook" \
+    'security-evidence | security-research | security-finding-review'
+require_text "$governance_hook" \
+    'capability exception requires exact reasoning_effort xhigh'
+require_text "$governance_hook" \
+    'capability exception requires exact context_tier default'
 require_text "$governance_hook" 'git_parent ls-files -s --'
 refute_pattern "$governance_hook" \
     'curl[[:space:]]|wget[[:space:]]|sqlite3|>>[^#]*\.log'
@@ -493,7 +500,6 @@ for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
     "$repository_root/../README.md" \
     "$repository_root/../.github/copilot-instructions.md"; do
     require_text "$f" 'PMD-20260930-002'
-    require_prose "$f" 'blocked pending responsible-human model selection'
 done
 for f in "$agent" "$skill" "$instructions" "$interface" "$roster" \
     "$readme" "$handoff" "$repository_root/../README.md" \
@@ -501,6 +507,27 @@ for f in "$agent" "$skill" "$instructions" "$interface" "$roster" \
     require_text "$f" 'modifiedArgs'
     require_text "$f" 'run_dynamic_workflow'
 done
+
+governance_exception_record=$repository_root/records/decisions/PMD-20260930-005-codex-capability-exception.md
+require_file "$governance_exception_record"
+require_text "$governance_exception_record" '**Status:** recorded'
+require_text "$governance_exception_record" \
+    'security_review_policy=codex_exception'
+require_text "$governance_exception_record" \
+    'sole named capability exception'
+for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
+    "$roster" "$readme" "$handoff" \
+    "$repository_root/components/security-reviewer.md" \
+    "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md" \
+    "$repository_root/../COMPONENTS.md"; do
+    require_text "$f" 'PMD-20260930-005'
+    require_prose "$f" 'gpt-5\.3-codex.*xhigh.*default'
+    require_prose "$f" 'named capability exception'
+done
+require_text "$repository_root/outbox/component-requests.md" '| PMR-110 |'
+require_text "$repository_root/outbox/component-requests.md" \
+    'PMR-109 and PMR-110'
 
 governance_reinstall_record=$repository_root/records/decisions/PMD-20260930-003-governance-reinstall-safety.md
 require_file "$governance_reinstall_record"
@@ -763,6 +790,40 @@ expect_hook_modified_max() {
     fi
 }
 
+expect_hook_modified_exact() {
+    local description=$1 payload=$2 expected=$3
+    local root=${4:-$governance_workspace}
+    local targets=${5:-[]}
+    local output
+    output=$(invoke_hook "$payload" "$root" "$targets")
+    if jq -e --argjson expected "$expected" '
+        type == "object" and
+        (has("permissionDecision") | not) and
+        .modifiedArgs == $expected
+    ' >/dev/null 2>&1 <<<"$output"; then
+        pass "$description"
+    else
+        fail "$description (expected exact modifiedArgs; got: $output)"
+    fi
+}
+
+expect_hook_exact_deny() {
+    local description=$1 payload=$2 reason=$3
+    local root=${4:-$governance_workspace}
+    local targets=${5:-[]}
+    local output
+    output=$(invoke_hook "$payload" "$root" "$targets")
+    if jq -e --arg reason "$reason" '
+        .permissionDecision == "deny" and
+        .permissionDecisionReason == $reason and
+        (has("modifiedArgs") | not)
+    ' >/dev/null 2>&1 <<<"$output"; then
+        pass "$description"
+    else
+        fail "$description (expected exact denial: $reason; got: $output)"
+    fi
+}
+
 original_args=$(jq -cn '{
     agent_type:"explore",
     name:"fixture",
@@ -829,23 +890,174 @@ expect_hook_deny "governance hook rejects spoofed reviewer display names" \
     "$payload" "must use agent_type beryllium-scope-review"
 
 payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"max","context_tier":"long_context"}')
-expect_hook_deny "governance hook blocks explicit gpt-5.3-codex" "$payload" \
-    "responsible-human model selection is pending"
+    '{"agent_type":"explore","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"xhigh","context_tier":"default"}')
+codex_outside_reason='Beryllium gpt-5.3-codex is allowed only for agent_type security-evidence, security-research, or security-finding-review under the named capability exception.'
+expect_hook_exact_deny \
+    "governance hook denies explicit Codex outside the named exception" \
+    "$payload" "$codex_outside_reason"
 
-for agent_type in security-evidence security-research \
-    security-finding-review; do
-    task_args=$(jq -cn --arg agent_type "$agent_type" \
-        '{agent_type:$agent_type,name:"fixture",reasoning_effort:"max"}')
-    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
-    expect_hook_deny "governance hook blocks confirmed $agent_type profile" \
-        "$payload" "responsible-human model selection is pending"
+codex_effort_reason='Beryllium gpt-5.3-codex capability exception requires exact reasoning_effort xhigh; high, max, lower, and unknown values are denied.'
+codex_context_reason='Beryllium gpt-5.3-codex capability exception requires exact context_tier default; long_context and other values are denied.'
+
+for agent_type in security-evidence security-research security-finding-review; do
+    base_security_args=$(jq -cn --arg agent_type "$agent_type" '{
+        agent_type:$agent_type,
+        name:"fixture",
+        description:"preserve description",
+        prompt:"preserve prompt",
+        background:false,
+        metadata:{nested:["all", "fields"], flag:true}
+    }')
+    expected=$(jq -c \
+        '. + {
+            model:"gpt-5.3-codex",
+            reasoning_effort:"xhigh",
+            context_tier:"default"
+        }' <<<"$base_security_args")
+    payload=$(make_hook_payload "$governance_workspace" task \
+        "$base_security_args")
+    expect_hook_modified_exact \
+        "governance hook defaults omitted $agent_type Codex fields" \
+        "$payload" "$expected"
+
+    null_security_args=$(jq -c \
+        '. + {model:null,reasoning_effort:null,context_tier:null}' \
+        <<<"$base_security_args")
+    payload=$(make_hook_payload "$governance_workspace" task \
+        "$null_security_args")
+    expect_hook_modified_exact \
+        "governance hook defaults null $agent_type Codex fields" \
+        "$payload" "$expected"
+
+    empty_security_args=$(jq -c \
+        '. + {model:"",reasoning_effort:"",context_tier:""}' \
+        <<<"$base_security_args")
+    payload=$(make_hook_payload "$governance_workspace" task \
+        "$empty_security_args")
+    expect_hook_modified_exact \
+        "governance hook defaults empty $agent_type Codex fields" \
+        "$payload" "$expected"
+
+    exact_codex_args=$(jq -c \
+        '. + {
+            model:"gpt-5.3-codex",
+            reasoning_effort:"xhigh",
+            context_tier:"default"
+        }' <<<"$base_security_args")
+    payload=$(make_hook_payload "$governance_workspace" task \
+        "$exact_codex_args")
+    expect_hook_pass \
+        "governance hook accepts exact $agent_type Codex exception" \
+        "$payload"
+
+    alternate_args=$(jq -c \
+        '. + {model:"claude-opus-5",context_tier:"long_context"}' \
+        <<<"$base_security_args")
+    alternate_expected=$(jq -c \
+        '. + {reasoning_effort:"max"}' <<<"$alternate_args")
+    payload=$(make_hook_payload "$governance_workspace" task \
+        "$alternate_args")
+    expect_hook_modified_exact \
+        "governance hook gives explicit non-Codex $agent_type the general max default" \
+        "$payload" "$alternate_expected"
+
+    for effort in high xhigh max; do
+        alternate_explicit=$(jq -c --arg effort "$effort" \
+            '. + {
+                model:"claude-opus-5",
+                reasoning_effort:$effort,
+                context_tier:"long_context"
+            }' <<<"$base_security_args")
+        payload=$(make_hook_payload "$governance_workspace" task \
+            "$alternate_explicit")
+        expect_hook_pass \
+            "governance hook accepts explicit non-Codex $agent_type $effort effort" \
+            "$payload"
+    done
+done
+
+for empty_form in omitted null empty; do
+    case $empty_form in
+    omitted)
+        codex_args='{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex","metadata":{"preserved":true}}'
+        ;;
+    null)
+        codex_args='{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":null,"context_tier":null,"metadata":{"preserved":true}}'
+        ;;
+    empty)
+        codex_args='{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"","context_tier":"","metadata":{"preserved":true}}'
+        ;;
+    esac
+    expected=$(jq -c \
+        '. + {reasoning_effort:"xhigh",context_tier:"default"}' \
+        <<<"$codex_args")
+    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
+    expect_hook_modified_exact \
+        "governance hook fills $empty_form effort/context for explicit Codex" \
+        "$payload" "$expected"
+done
+
+for effort in high max turbo; do
+    codex_args=$(jq -cn --arg effort "$effort" '{
+        agent_type:"security-evidence",
+        name:"fixture",
+        model:"gpt-5.3-codex",
+        reasoning_effort:$effort,
+        context_tier:"default"
+    }')
+    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
+    expect_hook_exact_deny \
+        "governance hook rejects Codex effort mismatch $effort" \
+        "$payload" "$codex_effort_reason"
+done
+
+for context in long_context unknown; do
+    codex_args=$(jq -cn --arg context "$context" '{
+        agent_type:"security-research",
+        name:"fixture",
+        model:"gpt-5.3-codex",
+        reasoning_effort:"xhigh",
+        context_tier:$context
+    }')
+    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
+    expect_hook_exact_deny \
+        "governance hook rejects Codex context mismatch $context" \
+        "$payload" "$codex_context_reason"
+done
+
+alternate_below='{"agent_type":"security-finding-review","name":"fixture","model":"claude-opus-5","reasoning_effort":"medium","context_tier":"long_context"}'
+payload=$(make_hook_payload "$governance_workspace" task "$alternate_below")
+expect_hook_deny \
+    "governance hook applies the general floor to explicit non-Codex security type" \
+    "$payload" "below the required high floor"
+
+for agent_type in security-review security-reviewer general-purpose; do
+    codex_args=$(jq -cn --arg agent_type "$agent_type" '{
+        agent_type:$agent_type,
+        name:"fixture",
+        model:"gpt-5.3-codex",
+        reasoning_effort:"xhigh",
+        context_tier:"default"
+    }')
+    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
+    expect_hook_exact_deny \
+        "governance hook denies explicit Codex for $agent_type" \
+        "$payload" "$codex_outside_reason"
 done
 
 payload=$(make_hook_payload "$governance_workspace" task \
     '{"agent_type":"security-review","name":"fixture","reasoning_effort":"max"}')
 expect_hook_pass "governance hook does not block built-in security-review" \
     "$payload"
+
+security_review_args='{"agent_type":"security-review","name":"fixture","model":"claude-opus-5","metadata":{"preserved":true}}'
+security_review_expected=$(jq -c \
+    '. + {reasoning_effort:"max"}' <<<"$security_review_args")
+payload=$(make_hook_payload "$governance_workspace" task \
+    "$security_review_args")
+expect_hook_modified_exact \
+    "governance hook gives built-in security-review the ordinary max default" \
+    "$payload" "$security_review_expected"
 
 payload=$(make_hook_payload "$governance_workspace" task \
     '{"agent_type":"security-reviewer","name":"fixture","reasoning_effort":"max"}')

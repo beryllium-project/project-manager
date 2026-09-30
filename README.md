@@ -117,21 +117,31 @@ assurance gates remain unchanged.
 Project-wide model assignment follows the role-to-model matrix of
 `PMD-20260916-001` (extending `PMD-20260915-007`): planning, coding,
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
-audit use `claude-opus-5`; deep or adversarial security review uses
-`gpt-5.3-codex`; every row uses reasoning effort `max` and context tier
-`long_context`. `PMD-20260930-001` permits only a responsible-human
-named-task override to `high`, `xhigh`, or `max`. Under
-`PMD-20260930-002`, omitted or empty in-scope task effort is rewritten to
-`max` through `modifiedArgs` without a permission decision, explicit
-below-floor or unknown effort is denied, and in-scope
-`run_dynamic_workflow` is denied. The deep-security row remains
-`gpt-5.3-codex` / `max` / `long_context`, but deep or adversarial security
-review is blocked pending responsible-human model selection because Copilot
-CLI 1.0.90-5 does not advertise that required combination. The
-`project-manager` orchestrator is `gpt-5.6-sol` and `pm-auditor` is
-`claude-opus-5`. Historical artifacts are unchanged; component-owned changes
-are routed to their owners (`PMR-074` for `security-reviewer`, closed at
-owner commit `2e8d205`).
+audit use `claude-opus-5`; those ordinary roles use reasoning effort `max`
+and context tier `long_context`. `PMD-20260930-005` keeps deep or adversarial
+security review on `gpt-5.3-codex` but requires exact `xhigh` reasoning and
+context tier `default` as the sole named capability exception.
+`PMD-20260930-001` keeps the global `max` default and `high` floor for every
+other role and explicit non-Codex selection.
+
+Under `PMD-20260930-002` as narrowed by `PMD-20260930-005`, ordinary omitted
+effort is rewritten to `max` through permission-neutral `modifiedArgs`, lower
+or unknown effort is denied, and in-scope `run_dynamic_workflow` remains
+denied. Exactly `security-evidence`, `security-research`, and
+`security-finding-review` receive the named Codex `xhigh` / `default`
+injection when model or required fields are absent, null, or empty. Explicit
+Codex is denied for every other task agent type and accepted for those three
+only with the exact exception settings. Explicit non-Codex selections retain
+ordinary max/high-floor handling without forced context. Direct
+`security-reviewer` sessions are outside the task hook and must be started
+and kept at `gpt-5.3-codex` / `xhigh` / `default`; built-in
+`security-review` is not admitted by type. There is no silent model, effort,
+or context fallback.
+
+The `project-manager` orchestrator remains `gpt-5.6-sol` and `pm-auditor`
+remains `claude-opus-5`. Historical artifacts are unchanged. Component-owned
+alignment is owner request `PMR-110`; the prior move to Codex was `PMR-074`,
+closed at owner commit `2e8d205`.
 
 `PMD-20260930-003` records the user-level reinstall boundary: new sessions
 load hook configuration, matcher, and environment, while a registered

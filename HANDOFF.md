@@ -1,23 +1,22 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-09-30
-**Update scope:** eighty-fourth coordination follow-up. Applied only the
-scope-reviewed destination-filesystem guard correction. Recorded
-`PMD-20260930-004`, superseding only `PMD-20260930-003` item 5's
-unqualified same-filesystem guarantee in part. The installer now explicitly
-dereferences symlinks while resolving staging and destination-directory
-devices and completes every device comparison before backups or commit.
-Maintained validation exercised a symlinked managed destination on a distinct
-device and proved refusal with original managed hashes/modes and unrelated
-files intact. The live `~/.copilot` destination directories observed during
-review were ordinary same-device directories, so the pending human reinstall
-was not exposed to this defect. Matching `st_dev` remains necessary but not
-universally sufficient; bind-mount or other mount topology can still yield
-`EXDEV`, and broader hardening remains deferred. Human reinstall remains
-required and is recommended only while governed sessions are idle. No real
-install/check, component write, active-session interaction, PMR change, or
-human-gate action occurred; the deep/adversarial model gate and `PMR-109`
-remain unchanged.
+**Update scope:** eighty-fifth coordination follow-up. Implemented the
+responsible-human `security_review_policy=codex_exception` choice and the
+bounded scope-review adjustments. Recorded `PMD-20260930-005`, keeping
+deep/adversarial security review on `gpt-5.3-codex` but changing only that
+role's effort/context to exact `xhigh` / `default` as the sole named
+capability exception. The project-wide `max` / `long_context` defaults and
+`high` floor remain unchanged for every other role and explicit non-Codex
+selection. The governance hook now defaults exactly the three confirmed
+model-invocable security types to Codex `xhigh` / `default`, rejects Codex
+outside those task types or with mismatched explicit settings, and preserves
+permission-neutral ordinary-policy handling for alternate models. Owner-only
+`PMR-110` covers all four component profiles, including the direct
+orchestrator; `PMR-109` remains open for its unbounded-override correction,
+and one human owner session may satisfy both. No component write, real
+install/check, active-session interaction, push, publication, or human-gate
+action occurred.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -35,8 +34,8 @@ in `../COMPONENTS.md`
 | Workspace worktree layout | **P2 planning item only.** Future linked worktrees should use root-relative `worktrees/<repository>/<purpose-or-branch>` so they do not accumulate at the workspace top level. The responsible human must create the root directory; the Project Manager can then update its allowed root artifacts. Existing worktrees remain where they are until separately inventoried and moved through the owning repository's workflow; one-writer locks remain unchanged. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
 | Global startup-status rollout | **P2 `PMR-108`, blocked on positive project quiescence.** The first step is a maintained fail-closed check covering clean/current coordination state, every registered worktree, maintained writer reservations, active-session evidence, and same-turn human confirmation for non-instrumented sessions. Only then may the Project Manager update its own/root tooling and allocate separate child-owner requests. |
-| Max-effort scope governance | **Corrected locally; idle-time human reinstall remains open.** `PMD-20260930-001` retains the matrix, `max` default, `high` floor, Opus 5.5 scope reviewer, and mandatory scope skill. `PMD-20260930-002` retains exact `task|run_dynamic_workflow` scope, permission-preserving `max` injection, below-floor denial, and in-scope dynamic-workflow denial. `PMD-20260930-003` retains reinstall transaction/session effects except for item 5's unqualified filesystem guarantee. `PMD-20260930-004` requires dereferenced destination-device resolution and a complete fail-closed device pass before backup/commit. Matching `st_dev` does not eliminate the deferred bind-mount/`EXDEV` residual. No real check or running-session inspection occurred this turn. |
-| Component policy exceptions | **PMR-109 unchanged; security execution separately blocked.** Read-only probes still place the parent, all nine registered direct checkouts, the in-root linked worktrees, and both resolved tracked symlink targets inside configured hook scope. `PMR-109` remains the sole component wording exception and authorizes no model change. Direct custom-agent sessions, SDK-started workflows, out-of-root worktrees, disabled hooks, and hook timeout remain documented limits rather than claimed enforcement. |
+| Max-effort scope governance | **Codex capability exception implemented locally; idle-time human reinstall remains open.** `PMD-20260930-001` retains the global `max` default, `high` floor, Opus 5.5 scope reviewer, and mandatory scope skill. `PMD-20260930-002` retains exact `task|run_dynamic_workflow` scope, permission-neutral ordinary `max` injection, below-floor denial, and in-scope dynamic-workflow denial. `PMD-20260930-005` changes only the deep/adversarial role to `gpt-5.3-codex` / `xhigh` / `default` as the sole named capability exception. `PMD-20260930-003` and `PMD-20260930-004` retain reinstall transaction/session and destination-device safeguards. No real check or running-session inspection occurred this turn. |
+| Component policy exceptions | **PMR-109 and PMR-110 open; model-choice gate closed.** Read-only evidence at security-reviewer `2e8d205` still records `max` / `long_context`. PMR-109 retains the global high-floor wording correction; PMR-110 applies exact Codex `xhigh` / `default` to all four profiles, including the direct orchestrator. The hook covers only the three confirmed model-invocable specialists. Direct custom-agent sessions, SDK-started workflows, out-of-root worktrees, disabled hooks, and hook timeout remain documented limits rather than claimed enforcement. |
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Human-started ordinary owner sessions are now separately automated by `scripts/owner-session.sh`: one private revision-bound packet and interactive `copilot --no-auto-update --yolo`, with no copied prompt. This launcher is not an owner worker and grants no Project Manager/component authority. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references. The responsible human now renamed and retargeted the CHERI notes and XRV workspace links to those verified successors. |
@@ -48,7 +47,7 @@ in `../COMPONENTS.md`
 | CHERI-RISC-V notes | Clean `docs/reconcile-project-status` and private `origin/docs/reconcile-project-status` are synchronized 0/0 at `34a8b50`. PMR-105 exact private fast-forward `9a4c5ef -> 34a8b50` completed under `xjamesmorris`; three heads, zero tags, and all other refs were preserved. PMR-105 is closed, and its single-use authorization is consumed. D5, licensing, redistribution, publication, Pages, and merge to `main` remain open. |
 | Formal verification | Clean `main` is synchronized 0/0 at handoff-only successor `388690d`. Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. |
 | Other drift | OS-security is clean and synchronized at active private successor `86645d4`. Its owner return records independent executable-backlog integration, maintained validation, no restricted access, and no publication; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
-| Other components | Security-reviewer is clean and synchronized at owner commit `2e8d205`; all four profiles retain recorded `gpt-5.3-codex` / `max` / `long_context`, the tasking startup contract is active, `PMR-062`, `PMR-065`, and `PMR-074` are closed independently, and no engagement ran. Task launch of the three model-invocable specialist types is now denied pending responsible-human model selection; the built-in `security-review` type and unconfirmed names are not denied merely by name. |
+| Other components | Security-reviewer is clean and synchronized at owner commit `2e8d205`; its four profiles still record `gpt-5.3-codex` / `max` / `long_context`, the tasking startup contract is active, `PMR-062`, `PMR-065`, and `PMR-074` are closed independently, and no engagement ran. `PMD-20260930-005` now requires Codex `xhigh` / `default`; the hook enforces that pair for the three model-invocable specialists, while direct orchestrator alignment is owner-only PMR-110. Built-in `security-review` is not admitted to the named capability exception. |
 | Remote access | Earlier Project Manager/parent coordination-push authorization is consumed. Formal-verification `388690d`, analysis-workbook `3c9d2a3`, XRV `5e7387a`, CHERI topic `34a8b50`, and Beryllium primary `2b404ca` are observed synchronized with their last-fetched upstreams. The Beryllium handoff records no remote action before its local commit, and this turn has no authorization evidence for the later remote-tracking advance; no backup or push authority is inferred. PMR-105's exact private push is complete and its authorization consumed. No tag, force, remote mutation, publication, release, Project Manager/parent push, or other component push is authorized. |
 | Queues | 33 analysis-workbook source rows / 33 ledger rows plus one transfer row are exact. New PMQ-031..033 are `routed` as PML-0032..0034 / PMR-107; routed maps to no source edit. The prior 30 source rows and transfer row retain their recorded dispositions. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. Independent OS-security integration `86645d4` does not execute PMR-052. `PMR-053` and `PMR-054` remain downstream. |
@@ -61,9 +60,9 @@ in `../COMPONENTS.md`
 | Tasking startup contract | `PMD-20260915-008` requires every owner context to map `check Project Manager tasking` and obvious variants to the exact resolver. Project Manager, analysis-workbook, security-reviewer, Beryllium, CHERI notes PMR-071, XRV PMR-072, and formal-verification PMR-069 are complete. PMR-064, PMR-066, and PMR-070 remain P3; Helium PMR-068 remains P4. |
 | Planned Git maintenance | `PMR-073` is withdrawn by `PMD-20260918-003`. The proven owner-worker path supplies the bounded PM-driven component execution need; no current request depends on a separate Git-maintainer specialist. |
 | Human interaction | The responsible human selected the dedicated PMR-105 mechanism, completed preflight, stated exactly `"authorize PMR-105 exact private fast-forward"`, and ran the bound human-owned execution. Exact log and independent inspection close PMR-105; the single-use authorization is consumed. |
-| Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review, all at `max` / `long_context`. `PMD-20260930-001` keeps `high` as the explicit floor and adds only `beryllium-scope-review` as a `claude-opus-5.5` exception. `PMD-20260930-002` changes no row and chooses no substitute: the deep-security row is currently blocked pending responsible-human model selection. `PMD-20260930-003` changes no model or enforcement row and makes no claim about agent/skill reread in running sessions. |
+| Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review. Ordinary roles remain `max` / `long_context`; `PMD-20260930-005` makes exact Codex `xhigh` / `default` the sole named capability exception. `PMD-20260930-001` retains `high` as the explicit floor for every non-Codex selection and `beryllium-scope-review` as the `claude-opus-5.5` / `max` / `long_context` scope-control model exception. No silent model, effort, or context fallback is permitted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this correction's commits, parent `a39fa71dd6ff862702671c279a9c4f07fb00cc79` is behind 0 / ahead 23 of `upstream/main`, and Project Manager base `fe527aaee6123808fedd7181b4212cf4ec77b7e7` is behind 0 / ahead 12 of `origin/main`; request blob `f1354da9c784a5e0e63867efd9f2f224c646c28c` is unchanged. Tracked changes are limited to the exact Project Manager and parent paths listed for review; pre-existing untracked `be-doc-repro-*` directories are untouched. The parent registry update follows the Project Manager commit. |
+| Parent coordination | Before this turn's commits, parent `9622125e5aa78fc962d374de5b3adbbac9123e89` is behind 0 / ahead 24 of `upstream/main`, and Project Manager base `0bb6c1db0dcdfb5171d7822de982a9cae7948a78` is behind 0 / ahead 13 of `origin/main`; request blob `f1354da9c784a5e0e63867efd9f2f224c646c28c`. Tracked changes are limited to the exact Project Manager and parent paths listed for review; pre-existing untracked `be-doc-repro-*` directories are untouched. The parent registry update follows the Project Manager commit. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -79,15 +78,15 @@ future shared, namespaced container; no directory or worktree operation has
 occurred. P2 PMR-108 records the deferred global startup-status rollout and
 its positive-quiescence prerequisite; no child startup file changed.
 Formal-verification PMR-014/037/041/069 are closed. P3 PMR-107 is ask-first
-OS-security pointer triage. New P3 `PMR-109` is the sole component policy
-exception found by the user-level discovery and conflict audit.
+OS-security pointer triage. P3 `PMR-109` and `PMR-110` are the paired
+security-reviewer owner-policy corrections; one owner session may satisfy
+both.
 Research/source admission, owner maintenance, external dependencies,
 backup/publication gates, and elective work remain visible.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
 | P1 | `User-level governance reinstall` (no PMR) | **Ready after commit review and when governed sessions are idle - responsible-human user-config action** | Run the unchanged install/check command below. Review observed the live destination directories as ordinary same-device directories, so the pending reinstall was not exposed to the corrected symlink defect. New sessions load configuration/matcher/environment; a registered running session may execute a replaced hook body on its next already-matched call. The reported active Beryllium session predates the initial install and was not observed this turn; do not restart it merely for reinstall. |
-| P1 | `Deep/adversarial security model choice` (no PMR) | **Blocked - responsible-human model decision required** | Select a model that actually supports the required effort/context, or explicitly revise the requirement. Until then, explicit `gpt-5.3-codex` and task launches of `security-evidence`, `security-research`, and `security-finding-review` remain denied; no agent substitutes a model. |
 | P2 | `Workspace worktree container` (no PMR) | **Ready when selected — responsible-human filesystem action; planning only this turn** | Create workspace-root `worktrees/` for future linked worktrees, then let the Project Manager add the parent ignore and topology wording it owns. Use `worktrees/<repository>/<purpose-or-branch>` to avoid collisions. Existing worktrees stay in place until their owners coordinate a proper move; this reduces top-level clutter but does not relax one-writer locks. |
 | P2 | `PMR-108` | **Blocked — another project session is active; global quiescence check not yet implemented** | After the human confirms every session is closed, the Project Manager first adds the fail-closed machine check and global maintenance reservation, then wires `SOT.md` status through its own/root startup tooling and allocates separate child-owner requests. This improves relocation safety without touching a child now or automatically moving anything on 2026-10-09. |
 | P2 | `PMR-098` | **Blocked — active K0 session / canonical return missing** | Wait for owner release, then reconcile `416b2e9..80345e1`; no acceptance or execution authority follows. |
@@ -99,7 +98,7 @@ backup/publication gates, and elective work remain visible.
 | P3 | `PMR-064` | **Ready - threat owner maintenance** | Add deterministic tasking startup to threat contexts without resuming the paused model. |
 | P3 | `PMR-066` | **Ready - provenance owner maintenance** | Add deterministic tasking startup to provenance contexts without modifying a review package. |
 | P3 | `PMR-070` | **Ready - OS-security owner configuration; ask human first** | Add deterministic tasking startup to the new Copilot owner workflow without accessing restricted material; process reliability only. |
-| P3 | `PMR-109` | **Ready - security-reviewer owner maintenance** | Bound the component's unbounded human effort-override wording to the `high` floor so its written policy matches `PMD-20260930-001`; wording only, with no engagement, model change, or gate. |
+| P3 | `PMR-109`, `PMR-110` | **Ready - one security-reviewer owner session may complete both** | Bound non-Codex overrides to the global high floor and align all four Codex profiles, including the direct orchestrator, to exact `gpt-5.3-codex` / `xhigh` / `default`. Return component validation and state; no engagement or gate is included. |
 | P3 | `PMR-053` | **Blocked by `PMR-052`** | The XRV owner reviews only materially relevant cap-talk threads after the archive result returns; no research adoption follows automatically. |
 | P3 | `PMR-054` | **Blocked by `PMR-052` and `PMR-053`** | The analysis-workbook owner records the bounded follow-up only after the external and XRV stages complete; no existing analysis disposition changes automatically. |
 | P4 | `PMR-089` | **Containment observed — blocked by `PMR-085`/`088` disposition** | Synchronized `3c9d2a3` contains the frozen twelve-commit `858a73b..8b5a301` range; reconcile predecessor push evidence before closure. |
@@ -133,10 +132,11 @@ Matching `st_dev` still cannot exclude every bind-mount or mount-topology
 bounded fallback. Do not restart the reported active Beryllium session merely
 for reinstall; it predates the initial governance install and was not directly
 observed this turn. Live end-to-end validation and PMR-108 remain blocked by
-their separate session/quiescence gates. Deep/adversarial security review also
-remains blocked until the responsible human selects a supported model. This
-is the best visible next action for policy coverage, while the responsible
-human may have higher priorities outside Project Manager visibility.
+their separate session/quiescence gates. The responsible-human deep-security model-choice gate is closed by
+`PMD-20260930-005`; component owner return under PMR-109/110 and live
+reinstall validation remain separate. This is the best visible next action
+for policy coverage, while the responsible human may have higher priorities
+outside Project Manager visibility.
 
 ### Minimal restart commands
 
@@ -156,6 +156,37 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### Eighty-fifth-turn Codex capability exception
+
+- Allocated and recorded
+  `records/decisions/PMD-20260930-005-codex-capability-exception.md` from the
+  responsible-human `security_review_policy=codex_exception` choice. It
+  supersedes only the deep/adversarial row's effort/context in
+  `PMD-20260916-001` and `PMD-20260930-001` items 1-2, plus the Codex
+  denial/model-choice portions of `PMD-20260930-002` items 4-5 and directly
+  related follow-up wording.
+- The model remains `gpt-5.3-codex`; exact `xhigh` reasoning and context tier
+  `default` are the sole named capability exception. Every other role and
+  explicit non-Codex selection retains the project-wide `max` default,
+  `long_context` default, and `high` effort floor. No fallback is silent.
+- The governance hook now recognizes exactly `security-evidence`,
+  `security-research`, and `security-finding-review` as model-invocable
+  Codex-role task types. Missing/null/empty model, effort, and context are
+  injected as Codex/xhigh/default through permission-neutral `modifiedArgs`
+  with every other argument preserved. Explicit Codex mismatches or Codex on
+  another task type are denied precisely.
+- Confirmed security types with an explicit non-Codex model follow ordinary
+  max/high-floor policy and keep their supplied context. Built-in
+  `security-review` is unaffected unless it explicitly selects Codex.
+  Direct `security-reviewer` sessions are outside the task hook and must be
+  started and kept at Codex/xhigh/default.
+- Added owner-only `PMR-110` for all four component profiles and directly
+  affected active instructions, skill, tests, README, interface, and handoff.
+  PMR-109 remains open; only its keep-max/long wording for the named Codex
+  role is superseded, and one human owner session may satisfy both.
+- No component repository, real user configuration, active session,
+  installer behavior, remote, or human gate was changed.
 
 ### Eighty-fourth-turn destination filesystem guard correction
 
@@ -375,6 +406,21 @@ git -C .. status --short --branch
 - Independent maintained inspection at `2026-09-29T06:31:32Z` confirms local
   and `origin` topic refs at exact `34a8b50`, clean 0/0. `PMD-20260929-002`
   closes PMR-105 and consumes the authorization without a component write.
+
+## Eighty-fifth-turn validation
+
+- `bash ./tests/validate-agent.sh`: 1015 passed / 0 failed. The prior 946
+  checks remain and the added behavioral cases cover every confirmed
+  specialist type with omitted/null/empty Codex fields, exact
+  Codex/xhigh/default acceptance, precise effort/context mismatch denials,
+  ordinary-policy alternate models, explicit Codex outside the exception,
+  and unaffected built-in `security-review` behavior without Codex.
+- `bash ./scripts/validate-pm.sh`: 693 passed / 0 failed.
+- `bash -n` passed for the governance hook and maintained agent suite.
+- Exact parent and Project Manager `git diff --check` passed.
+- No real governance install/check, component command, component write,
+  active-session interaction, remote operation, push, tag, publication, or
+  human-gate action ran.
 
 ## Eighty-fourth-turn validation
 
@@ -1345,6 +1391,39 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   decisions.
 
 ## What to review
+
+### Eighty-fifth-turn Codex capability exception review
+
+- `records/decisions/PMD-20260930-005-codex-capability-exception.md`
+- `scripts/beryllium-governance-hook.sh`
+- `tests/validate-agent.sh`
+- `.github/agents/project-manager.agent.md`
+- `.github/agents/pm-auditor.agent.md`
+- `.github/copilot-instructions.md`
+- `.github/skills/beryllium-project-management/SKILL.md`
+- `AGENT-INTERFACE.md`
+- `AGENT-ROSTER.md`
+- `README.md`
+- `components/security-reviewer.md`
+- `outbox/component-requests.md`
+- `outbox/OWNER-RUNBOOK.md`
+- `HANDOFF.md`
+- parent `../.github/copilot-instructions.md`
+- parent `../README.md`
+- parent `../COMPONENTS.md`
+- read-only security-reviewer evidence at commit `2e8d205`:
+  `.github/copilot-instructions.md`, all four `.github/agents/*.agent.md`
+  profiles, `.github/skills/beryllium-security-review/SKILL.md`,
+  `tests/validate-agent.sh`, `README.md`, `AGENT-INTERFACE.md`, and
+  `HANDOFF.md`
+
+Review the exact three-type allowlist, missing/null/empty
+Codex/xhigh/default rewrite with complete argument preservation and no
+permission decision, exact mismatch denials, ordinary-policy alternate-model
+path, explicit-Codex denial for every other task type, unchanged built-in
+`security-review` behavior without Codex, direct-orchestrator limitation,
+PMR-109 note, owner-only PMR-110 scope, and absence of any component or real
+user-configuration change.
 
 ### Eighty-fourth-turn destination-filesystem-guard review
 

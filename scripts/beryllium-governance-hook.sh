@@ -159,47 +159,91 @@ string)
     ;;
 esac
 
-effective_args=$tool_args
-effort_injected=0
-if jq -e '
-    (has("reasoning_effort") | not) or
-    (.reasoning_effort == null) or
-    (.reasoning_effort == "")
-' >/dev/null <<<"$tool_args"; then
-    effective_args=$(jq -c '. + {reasoning_effort:"max"}' <<<"$tool_args")
-    effort=max
-    effort_injected=1
-elif ! effort=$(jq -er \
-    '.reasoning_effort | select(type == "string" and length > 0)' \
-    <<<"$tool_args" 2>/dev/null); then
-    deny "Beryllium task launch reasoning_effort must be high, xhigh, or max; lower or unknown values are denied."
-fi
-
-case $effort in
-high | xhigh | max) ;;
-*)
-    deny "Beryllium task launch reasoning_effort is below the required high floor or is unknown; allowed values are high, xhigh, or max."
-    ;;
-esac
-
 agent_type=$(jq -r \
     'if (.agent_type? | type) == "string" then .agent_type else "" end' \
-    <<<"$effective_args")
+    <<<"$tool_args")
 task_name=$(jq -r \
     'if (.name? | type) == "string" then .name else "" end' \
-    <<<"$effective_args")
+    <<<"$tool_args")
 model=$(jq -r \
     'if (.model? | type) == "string" then .model else "" end' \
-    <<<"$effective_args")
+    <<<"$tool_args")
 
-security_model_blocked=0
+confirmed_security_type=0
 case $agent_type in
 security-evidence | security-research | security-finding-review)
-    security_model_blocked=1
+    confirmed_security_type=1
     ;;
 esac
-if [[ $model == gpt-5.3-codex || $security_model_blocked == 1 ]]; then
-    deny "Beryllium deep/adversarial security review is blocked because Copilot CLI 1.0.90-5 does not advertise the required max reasoning and long_context for gpt-5.3-codex; responsible-human model selection is pending."
+
+model_missing=0
+if jq -e '
+    (has("model") | not) or
+    (.model == null) or
+    (.model == "")
+' >/dev/null <<<"$tool_args"; then
+    model_missing=1
+fi
+
+codex_exception=0
+if ((confirmed_security_type == 1)); then
+    if ((model_missing == 1)) || [[ $model == gpt-5.3-codex ]]; then
+        codex_exception=1
+    fi
+elif [[ $model == gpt-5.3-codex ]]; then
+    deny "Beryllium gpt-5.3-codex is allowed only for agent_type security-evidence, security-research, or security-finding-review under the named capability exception."
+fi
+
+effective_args=$tool_args
+args_modified=0
+if ((codex_exception == 1)); then
+    effective_args=$(jq -c '
+        if ((has("model") | not) or (.model == null) or (.model == ""))
+        then . + {model:"gpt-5.3-codex"} else . end |
+        if ((has("reasoning_effort") | not) or
+            (.reasoning_effort == null) or
+            (.reasoning_effort == ""))
+        then . + {reasoning_effort:"xhigh"} else . end |
+        if ((has("context_tier") | not) or
+            (.context_tier == null) or
+            (.context_tier == ""))
+        then . + {context_tier:"default"} else . end
+    ' <<<"$tool_args")
+    [[ $effective_args == "$tool_args" ]] || args_modified=1
+
+    effort=$(jq -r \
+        'if (.reasoning_effort? | type) == "string" then .reasoning_effort else "" end' \
+        <<<"$effective_args")
+    [[ $effort == xhigh ]] ||
+        deny "Beryllium gpt-5.3-codex capability exception requires exact reasoning_effort xhigh; high, max, lower, and unknown values are denied."
+
+    context_tier=$(jq -r \
+        'if (.context_tier? | type) == "string" then .context_tier else "" end' \
+        <<<"$effective_args")
+    [[ $context_tier == default ]] ||
+        deny "Beryllium gpt-5.3-codex capability exception requires exact context_tier default; long_context and other values are denied."
+else
+    if jq -e '
+        (has("reasoning_effort") | not) or
+        (.reasoning_effort == null) or
+        (.reasoning_effort == "")
+    ' >/dev/null <<<"$tool_args"; then
+        effective_args=$(jq -c \
+            '. + {reasoning_effort:"max"}' <<<"$tool_args")
+        effort=max
+        args_modified=1
+    elif ! effort=$(jq -er \
+        '.reasoning_effort | select(type == "string" and length > 0)' \
+        <<<"$tool_args" 2>/dev/null); then
+        deny "Beryllium task launch reasoning_effort must be high, xhigh, or max; lower or unknown values are denied."
+    fi
+
+    case $effort in
+    high | xhigh | max) ;;
+    *)
+        deny "Beryllium task launch reasoning_effort is below the required high floor or is unknown; allowed values are high, xhigh, or max."
+        ;;
+    esac
 fi
 
 if [[ $task_name == beryllium-scope-review &&
@@ -226,6 +270,6 @@ if [[ $agent_type == beryllium-scope-review ]]; then
     fi
 fi
 
-((effort_injected == 0)) || rewrite_args "$effective_args"
+((args_modified == 0)) || rewrite_args "$effective_args"
 
 pass_through

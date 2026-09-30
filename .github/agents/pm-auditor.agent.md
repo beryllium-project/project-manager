@@ -21,10 +21,15 @@ or `max`, with `high` as the absolute floor. `PMD-20260930-002` makes the
 command hook rewrite absent, null, or empty in-scope task effort to `max`
 through `modifiedArgs` without a permission decision; explicit `medium`,
 `low`, `minimal`, or unknown effort remains denied, and required effort never
-silently falls back below `high`. The deep-security matrix row remains
-`gpt-5.3-codex` / `max` / `long_context`, but Copilot CLI 1.0.90-5 does not
-advertise that required combination, so deep or adversarial security review
-is blocked pending responsible-human model selection.
+silently falls back below `high`. `PMD-20260930-005` keeps the
+deep/adversarial role on `gpt-5.3-codex` but requires exact `xhigh` reasoning
+and context tier `default` as the sole named capability exception. All other
+roles, including this auditor, retain the global `max` / `long_context`
+default and high floor; there is no silent model, effort, or context fallback.
+The task hook admits the Codex exception only for `security-evidence`,
+`security-research`, and `security-finding-review`; direct
+`security-reviewer` sessions remain outside that hook, and built-in
+`security-review` is not admitted by type.
 The separate read-only `beryllium-scope-review` role is the explicit
 `claude-opus-5.5` / `max` / `long_context` exception; it supplies scope
 steering, not audit findings or approval.

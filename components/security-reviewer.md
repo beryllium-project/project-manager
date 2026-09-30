@@ -17,12 +17,13 @@
   `gpt-5.3-codex` at owner commit `2e8d205`), `security-evidence`,
   `security-research`, and `security-finding-review` (write-disabled
   specialists, also `gpt-5.3-codex`) under the deep-security-review row of
-  `PMD-20260916-001` (`PMR-074` closed);
-  reasoning `max` / context `long_context` defaults; skill
-  `beryllium-security-review`. `PMD-20260930-002` retains that matrix row, but
-  deep/adversarial engagement launch is blocked pending responsible-human
-  model selection because Copilot CLI 1.0.90-5 does not advertise the
-  required `gpt-5.3-codex` / `max` / `long_context` combination.
+  `PMD-20260916-001` (`PMR-074` closed). `PMD-20260930-005` keeps
+  `gpt-5.3-codex` but requires exact reasoning `xhigh` and context `default`
+  as the sole named capability exception. Current component files at
+  `2e8d205` still record `max` / `long_context`; owner-only `PMR-110` aligns
+  all four profiles, active instructions, skill, tests, README, interface,
+  and handoff. The task hook covers exactly the three model-invocable
+  specialists; direct orchestrator sessions remain outside it.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
@@ -39,15 +40,22 @@
   `PMD-20260916-001` (responsible-human `all_codex` choice) assigns
   deep/adversarial security review to `gpt-5.3-codex`; owner commit
   `2e8d205` completes `PMR-074` and no engagement is authorized by it.
-  `PMD-20260930-002` does not replace that model; it fails closed pending a
-  responsible-human model choice and denies task launches of the three
-  model-invocable specialist types plus any explicit `gpt-5.3-codex`.
-  Open `PMR-109` is the sole component policy exception found by the
-  `PMD-20260930-001` discovery and conflict audit: the active
+  `PMD-20260930-002` supplies the general hook scope and fail-closed
+  behavior; `PMD-20260930-005` narrows its Codex denial and resolves the
+  model choice without changing the model:
+  the hook defaults the three confirmed model-invocable specialist task
+  types to `gpt-5.3-codex` / `xhigh` / `default`, accepts Codex only with
+  that exact pair, denies explicit Codex for every other task type, and
+  leaves explicit non-Codex selections under the global max/high-floor
+  policy. Built-in `security-review` is not admitted by type, and there is no
+  silent fallback. Open `PMR-109` remains the component policy exception
+  found by the `PMD-20260930-001` discovery and conflict audit: the active
   instructions, orchestrator profile, and skill still permit an unbounded
   responsible-human effort override, which the recorded floor bounds to
-  `high`, `xhigh`, or `max`. It is owner wording work only and grants no
-  engagement, model change, or gate
+  `high`, `xhigh`, or `max`. `PMR-110` separately applies the named Codex
+  capability exception to all four profiles, including the direct
+  orchestrator. One human owner session may satisfy both requests. They grant
+  no engagement, acceptance, publication, push, or other gate.
 
 ## Role
 
@@ -150,6 +158,10 @@ git diff --check
 - Model reassignment of all four profiles to `gpt-5.3-codex` under
   `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`) and synchronized
   with private `origin/main`.
+- Owner-only `PMR-109` and `PMR-110` align the active effort override and
+  exact `gpt-5.3-codex` / `xhigh` / `default` named capability exception;
+  they may be completed in one human owner session and require a durable
+  owner return.
 - Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
   step `push_sr` is currently a no-op because `main` and `origin/main` are
   synchronized; the remote was created and first pushed on 2026-09-06,

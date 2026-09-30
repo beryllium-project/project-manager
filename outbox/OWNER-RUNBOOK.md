@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-29
+**Last refreshed:** 2026-09-30
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -101,6 +101,37 @@ blocked request from `project-manager/` with:
 ```sh
 bash ./scripts/project-tasking.sh resolve project-manager
 ```
+
+## P3 PMR-109 and PMR-110: security-reviewer policy alignment
+
+Both requests are owner-only and may be completed in one responsible-human
+owner session. `PMR-109` still narrows the component's unbounded override
+wording to the global `high | xhigh | max` floor for non-Codex selections.
+`PMD-20260930-005` and `PMR-110` supersede only its prior instruction to keep
+the named Codex role at `max` / `long_context`: every
+`gpt-5.3-codex` run must instead use exact `xhigh` reasoning and context tier
+`default` as the sole named capability exception.
+
+The owner updates all four Codex profiles, including direct
+`.github/agents/security-reviewer.agent.md`, plus active instructions,
+`beryllium-security-review`, component tests, README, `AGENT-INTERFACE.md`,
+and `HANDOFF.md` only as directly required. Explicit non-Codex selections
+retain the project-wide `max` default and `high` floor. There is no silent
+model, effort, or context fallback. The direct orchestrator is outside the
+task hook and must be started and kept at exact Codex `xhigh` / `default`;
+the built-in `security-review` type is not admitted to the exception.
+
+From the workspace root, after confirming the component is still clean and
+idle at the expected owner state:
+
+```sh
+bash ./project-manager/scripts/owner-session.sh launch security-reviewer PMR-109 PMR-110
+```
+
+The owner returns the exact commit, changed paths, validation totals,
+`SECURITY-REVIEWS.md` index result, `git diff --check`, branch/upstream
+state, backup state, and final active-session/reservation state. No
+engagement, push, publication, acceptance, or other gate is combined.
 
 ## Owner-worker closure results
 

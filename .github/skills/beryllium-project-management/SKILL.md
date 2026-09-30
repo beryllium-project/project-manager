@@ -323,25 +323,36 @@ auditor decides nothing.
 Project-wide, active agent roles follow the role-to-model matrix of
 `PMD-20260916-001`, which extends `PMD-20260915-007`: planning, coding,
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, audit,
-and finding iteration use `claude-opus-5`; deep or adversarial security
-review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
-context tier `long_context`. `PMD-20260930-001` permits only the responsible
-human to override one named task, and only at `high`, `xhigh`, or `max`;
-`high` is the absolute floor. Under `PMD-20260930-002`, absent, null, or
-empty in-scope task effort is rewritten to `max` through `modifiedArgs`
-without a permission decision; explicit `medium`, `low`, `minimal`, or
-unknown effort is denied, and required effort never silently falls back.
-In-scope `run_dynamic_workflow` is denied because nested agents are not
-command-hook enforceable. The deep-security row remains
-`gpt-5.3-codex` / `max` / `long_context`, but Copilot CLI 1.0.90-5 does not
-advertise that required combination, so deep or adversarial security review
-is blocked pending responsible-human model selection; no substitute is
-inferred. The `project-manager` orchestrator is `gpt-5.6-sol`; `pm-auditor`
+and finding iteration use `claude-opus-5`; those ordinary roles use
+reasoning effort `max` and context tier `long_context`.
+`PMD-20260930-005` keeps deep or adversarial security review on
+`gpt-5.3-codex` but requires exact `xhigh` reasoning and context tier
+`default` as the sole named capability exception. `PMD-20260930-001` keeps
+`max` as the default and `high` as the absolute floor for every other role
+and explicit non-Codex selection.
+
+Under `PMD-20260930-002` as narrowed by `PMD-20260930-005`, absent, null, or
+empty ordinary in-scope task effort is rewritten to `max` through
+`modifiedArgs` without a permission decision; explicit lower or unknown
+effort is denied. For exactly `security-evidence`, `security-research`, and
+`security-finding-review`, an absent, null, or empty model selects
+`gpt-5.3-codex` and missing Codex fields become `xhigh` / `default`; explicit
+Codex is accepted only with that exact pair. Explicit Codex on every other
+task agent type is denied, while explicit non-Codex selections on the three
+confirmed types retain ordinary max/high-floor handling and their context.
+There is no silent model, effort, or context fallback. In-scope
+`run_dynamic_workflow` remains denied because nested agents are not
+command-hook enforceable.
+
+Direct `security-reviewer` orchestrator sessions are outside the task hook
+and must be started and kept at `gpt-5.3-codex` / `xhigh` / `default`; the
+built-in `security-review` type is not admitted to the named capability
+exception. The `project-manager` orchestrator is `gpt-5.6-sol`; `pm-auditor`
 remains `claude-opus-5`; read-only `beryllium-scope-review` is the explicit
-`claude-opus-5.5` / `max` / `long_context` scope-control exception. Claude
-Fable 5.1 is no longer a default in any active role. Preserve historical
-artifacts and do not restart an already launched task merely to apply the
-matrix or user-level governance.
+`claude-opus-5.5` / `max` / `long_context` scope-control model exception.
+Claude Fable 5.1 is no longer a default in any active role. Preserve
+historical artifacts and do not restart an already launched task merely to
+apply the matrix or user-level governance.
 
 ## Phase 7: validate
 
