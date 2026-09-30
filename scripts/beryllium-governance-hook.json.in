@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "matcher": "task",
+        "exec": "@@HOOK_SCRIPT@@",
+        "env": {
+          "BERYLLIUM_PARENT_ROOT": "@@BERYLLIUM_PARENT_ROOT@@",
+          "BERYLLIUM_TRACKED_TARGETS": "@@BERYLLIUM_TRACKED_TARGETS@@"
+        },
+        "timeoutSec": 30
+      }
+    ]
+  }
+}

@@ -100,6 +100,18 @@ writes only ignored Project Manager packet, transcript, and state-log files
 before/after Copilot and grants no
 retroactive component authority, gate, push, remote change, or publication.
 
+`scripts/beryllium-governance.sh` is also human-run. The Project Manager
+never runs `install` or `uninstall` against the real user configuration;
+maintained tests use only a sandbox `COPILOT_HOME`. Its read-only `check`
+verifies copied-file SHA-256 values, `jq`, user hook-disable settings, the
+user session defaults, and the user plan defaults or session fallback without
+editing settings. Repository/local settings, command-line choices, and live
+session overrides remain a later per-workspace verification surface.
+User-level installation reaches registered component Copilot CLI sessions
+only when they start after installation. Do not restart or interact with an
+already active Beryllium session. This enforcement does not cover non-Copilot
+tooling unless separately integrated.
+
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,
 the parent, and any component. Quote the confirmation in `HANDOFF.md`. A
@@ -169,11 +181,26 @@ Project-wide, active agent roles follow the role-to-model matrix of
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, audit,
 and finding iteration use `claude-opus-5`; deep or adversarial security
 review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
-context tier `long_context`, unless the responsible human explicitly
-specifies otherwise for a named task. The `project-manager` orchestrator is
-`gpt-5.6-sol`; `pm-auditor` is `claude-opus-5`. Claude Fable 5.1 is no
-longer a default in any active role. Preserve historical artifacts and do
-not restart an already launched task merely to apply the matrix.
+context tier `long_context`. `PMD-20260930-001` makes `max` the project-wide
+default and permits the responsible human to override one named task only at
+`high`, `xhigh`, or `max`; `high` is the absolute floor. Unset, `medium`,
+`low`, and `minimal` are prohibited, and an unsupported required level stops
+rather than silently falling back. The `project-manager` orchestrator is
+`gpt-5.6-sol`;
+`pm-auditor` remains `claude-opus-5`; read-only
+`beryllium-scope-review` is the explicit `claude-opus-5.5` / `max` /
+`long_context` scope-control exception. Claude Fable 5.1 is no longer a
+default in any active role. Preserve historical artifacts and do not restart
+an already launched task merely to apply the matrix or user-level governance.
+
+The orchestrator invokes `beryllium-scope-management` before adopting a
+non-trivial plan, at every material reassessment or re-plan, and after new
+human steering, requirements, priorities, constraints, acceptance criteria,
+or material direction changes. Each review is a separate synchronous
+read-only `beryllium-scope-review` task with the exact
+`SCOPE_REVIEW_V1` contract. One retry is permitted; repeated failure stops
+scope-expanding work. Apply steering without review recursion. Scope review
+never grants approval or another human gate (`PMD-20260930-001`).
 
 ## Queue and request protocols
 

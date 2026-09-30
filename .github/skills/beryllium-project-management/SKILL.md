@@ -9,6 +9,16 @@ user-invocable: false
 Use this skill for every coordination turn performed by the `project-manager`
 agent.
 
+Before adopting a non-trivial plan, at every material reassessment or
+re-plan, and after new human steering, requirements, priorities, constraints,
+acceptance criteria, or material direction changes, invoke
+`beryllium-scope-management` under `PMD-20260930-001`. Each invocation is a
+fresh synchronous read-only `beryllium-scope-review` task using
+`claude-opus-5.5` / `max` / `long_context` and the exact
+`SCOPE_REVIEW_V1` contract. Apply its bounded steering without review
+recursion; one failed retry stops scope-expanding work. The reviewer grants
+no approval or human gate.
+
 A coordination turn keeps the parent workspace registry, the Project Manager
 handoff, the component knowledge cards, the agent roster, the queue ledger,
 and the component-request outbox consistent with the observed state of the
@@ -85,6 +95,14 @@ research, analysis, threat models, provenance findings, or human decisions.
   invocation never grants this Project Manager profile general component
   write or execution authority. No component is dispatchable merely because
   the control plane exists.
+- User-level governance follows `PMD-20260930-001`.
+  `scripts/beryllium-governance.sh` is human-run; the Project Manager never
+  runs `install` or `uninstall` against the real user configuration.
+  Maintained validation may use it only with a sandbox `COPILOT_HOME`.
+  Installation reaches new registered-component Copilot CLI sessions without
+  copying policy into each component. It never restarts or contacts an active
+  Beryllium session. This enforcement does not cover non-Copilot tooling
+  unless separately integrated.
 
 ## Phase 1: restart
 
@@ -118,6 +136,9 @@ read that table directly; otherwise report resolver failure as a blocker
 
 ## Phase 2: ownership and scope
 
+0. Run the mandatory `beryllium-scope-management` review for the current
+   trigger. Apply `keep` or `adjust` steering once. On `stop`, or after one
+   failed retry, do not adopt or expand the plan.
 1. Treat every component as agent-owned. Reading for coordination is allowed;
    writing is not, except for carried requests in the three classes of
    `PMD-20260904-003` (Phase 4b).
@@ -294,11 +315,16 @@ Project-wide, active agent roles follow the role-to-model matrix of
 coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, audit,
 and finding iteration use `claude-opus-5`; deep or adversarial security
 review uses `gpt-5.3-codex`; every row uses reasoning effort `max` and
-context tier `long_context`, unless the responsible human explicitly
-specifies otherwise for a named task. The `project-manager` orchestrator is
-`gpt-5.6-sol`; `pm-auditor` is `claude-opus-5`. Claude Fable 5.1 is no
-longer a default in any active role. Preserve historical artifacts and do
-not restart an already launched task merely to apply the matrix.
+context tier `long_context`. `PMD-20260930-001` permits only the responsible
+human to override one named task, and only at `high`, `xhigh`, or `max`;
+`high` is the absolute floor. Unset, `medium`, `low`, and `minimal` are
+prohibited, and required effort never silently falls back. The
+`project-manager` orchestrator is
+`gpt-5.6-sol`; `pm-auditor` remains `claude-opus-5`; read-only
+`beryllium-scope-review` is the explicit `claude-opus-5.5` / `max` /
+`long_context` scope-control exception. Claude Fable 5.1 is no longer a
+default in any active role. Preserve historical artifacts and do not restart
+an already launched task merely to apply the matrix or user-level governance.
 
 ## Phase 7: validate
 

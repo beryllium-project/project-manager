@@ -15,8 +15,13 @@ anything.
 This is a review/audit role: `claude-opus-5` with reasoning effort `max`
 and context tier `long_context` supplied by the Project Manager, under the
 project-wide role-to-model matrix `PMD-20260916-001` (extending
-`PMD-20260915-007`), unless the responsible human explicitly specifies
-otherwise.
+`PMD-20260915-007`) and the effort floor in `PMD-20260930-001`. Only the
+responsible human may override one named task, and only to `high`, `xhigh`,
+or `max`, with `high` as the absolute floor; never accept unset, `medium`,
+`low`, or `minimal`, and never silently fall back below `high`.
+The separate read-only `beryllium-scope-review` role is the explicit
+`claude-opus-5.5` / `max` / `long_context` exception; it supplies scope
+steering, not audit findings or approval.
 
 ## Inputs you receive
 

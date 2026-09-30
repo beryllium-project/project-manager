@@ -409,6 +409,9 @@ if ((check_parent)); then
     require_text "$parent/SOT.md" 'project-manager/'
     require_text "$parent/README.md" 'project-manager/'
     require_text "$parent/.github/copilot-instructions.md" '/agent project-manager'
+    require_text "$parent/README.md" 'PMD-20260930-001'
+    require_text "$parent/COMPONENTS.md" 'PMD-20260930-001'
+    require_text "$parent/.github/copilot-instructions.md" 'PMD-20260930-001'
     if [[ -f $parent/.gitignore ]] && grep -Fxq -- '/project-manager/' "$parent/.gitignore"; then
         pass "parent .gitignore ignores /project-manager/"
     else
@@ -551,6 +554,35 @@ if [[ -f $owner_recovery ]]; then
     fi
 else
     pass "scripts/owner-recovery.sh checks skipped for fixture without scripts"
+fi
+
+# --- user-level governance (human-run) -------------------------------------
+# Live install/uninstall is never performed here. Static validation binds the
+# copied artifacts and the sandbox behavior is exercised by validate-agent.sh.
+
+governance_hook=$root/scripts/beryllium-governance-hook.sh
+governance_config=$root/scripts/beryllium-governance-hook.json.in
+governance_installer=$root/scripts/beryllium-governance.sh
+if [[ -f $governance_hook && -f $governance_config &&
+    -f $governance_installer ]]; then
+    if bash -n "$governance_hook" && bash -n "$governance_installer"; then
+        pass "Beryllium governance scripts pass bash -n"
+    else
+        fail "a Beryllium governance script fails bash -n"
+    fi
+    require_text "$governance_config" '"matcher": "task"'
+    require_text "$governance_installer" 'COPILOT_HOME'
+    require_text "$governance_installer" 'sha256sum'
+    require_text "$governance_installer" 'disableAllHooks'
+    require_text "$governance_installer" 'planEffortLevel'
+    if grep -Ev '^[[:space:]]*#' "$governance_hook" |
+        grep -Eq 'curl|wget|sqlite|telemetry'; then
+        fail "governance hook adds network, database, or telemetry behavior"
+    else
+        pass "governance hook adds no network, database, or telemetry behavior"
+    fi
+else
+    pass "Beryllium governance checks skipped for fixture without scripts"
 fi
 
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"

@@ -49,6 +49,16 @@ background agents, prior chat, or memory for a PMR fallback
 (`PMD-20260915-008`). Component-owner adoption is tracked by
 `PMR-063..PMR-072`.
 
+Project-wide Copilot CLI effort and scope control follows
+`PMD-20260930-001`: `max` is the default, and only the responsible human may
+override one named task to `high`, `xhigh`, or `max`; `high` is the absolute
+floor. The hidden read-only `beryllium-scope-review` specialist is the explicit
+`claude-opus-5.5` / `max` / `long_context` exception and is invoked only
+through `beryllium-scope-management` for one bounded
+`SCOPE_REVIEW_V1` result. User-level installation reaches new registered
+component Copilot CLI sessions without component-local copies; non-Copilot
+tooling is outside this enforcement unless separately integrated.
+
 For allow-listed orchestrators, this resolver is startup discovery outside an
 analysis, threat-model, provenance, or security-review package. It is not
 target execution, needs no package approval record, and does not use a target
@@ -133,7 +143,7 @@ verified successors. Owner results continue through
 
 | Component | Entry agents | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
-| `project-manager/` | `project-manager` (`gpt-5.6-sol`, `max`, `long_context` under project-wide matrix `PMD-20260916-001`) | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context` under `PMD-20260916-001`, extending `PMD-20260915-007`) | `beryllium-project-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-hypervisor/`) |
+| `project-manager/` | `project-manager` (`gpt-5.6-sol`, `max`, `long_context` under project-wide matrix `PMD-20260916-001` and effort floor `PMD-20260930-001`) | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context`); `beryllium-scope-review` (read, search; hidden, `claude-opus-5.5`, `max`, `long_context`, exact `SCOPE_REVIEW_V1`, steering only) | `beryllium-project-management`; `beryllium-scope-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-hypervisor/`) |
 | `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) introduced at `ea72522`; read-only probe `PMR-087` closed by `PMD-20260918-002`; bounded write-enabled requests PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and PMR-063 are closed through `8b5a301`; tasking startup is active; Project Manager queue carry `8da398d` is latest | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1`; carries `5a646df` / `8da398d` change only `outbox/pm-queue.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits. Closure-line commits are contained by synchronized `origin/main` `3c9d2a3`;
 PMR-085/088/089/095/097 remain open for review/authorization reconciliation,
 not for missing containment; exact earlier backups PMR-085/088/089 and dependent carry backups PMR-095/097 remain separate |
@@ -150,6 +160,8 @@ Run each block from the named component directory.
 ```sh
 cd project-manager
 # Copilot CLI: /agent project-manager
+# Human-only user-level install/check; new sessions load it:
+# bash ./scripts/beryllium-governance.sh install && bash ./scripts/beryllium-governance.sh check
 bash ./scripts/inspect-components.sh status
 bash ./scripts/pull-queues.sh check
 bash ./scripts/validate-pm.sh
