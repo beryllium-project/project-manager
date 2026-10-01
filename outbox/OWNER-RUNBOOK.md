@@ -36,53 +36,60 @@ transcript under ignored `scratch/owner-recoveries/` and prints both paths.
 The transcript may contain sensitive interactive output and is never copied
 wholesale into a durable record.
 
-## P1 user-level governance reinstall (no PMR)
+## Human-reported completed user-level governance reinstall (no PMR)
 
 On 2026-10-01 the responsible human stated exactly `"there is no other
-running session"`. This is point-in-time evidence only. After reviewing the
-current Project Manager and parent commits, immediately recheck that governed
-sessions remain idle, then run from the workspace root:
+running session"` and later reported the exact command below completed with
+the reply `"done above"`:
 
 ```sh
 bash ./project-manager/scripts/beryllium-governance.sh install &&
 bash ./project-manager/scripts/beryllium-governance.sh check
 ```
 
-The Project Manager never runs this command against real user configuration.
-It changes user-level Copilot configuration for new sessions, not any
-component, PMR, acceptance, review approval, risk acceptance, publication,
-release, or assurance gate. Agent/skill reread behavior in already-running
-sessions remains unknown; add no process scanner or acknowledgement flag.
+This is responsible-human evidence only. The Project Manager did not run the
+command against real user configuration, inspect its output, establish
+install-time session state, or independently verify the resulting files.
+The report changes no component, PMR, acceptance, review approval, risk
+acceptance, publication, release, or assurance gate. Agent/skill reread
+behavior in already-running sessions remains unknown.
 
-## P2 workspace worktree container (planning only)
+## No-PMR workspace housekeeping
+
+### Completed workspace worktree container
 
 The responsible human directed that the growing set of linked worktrees stop
-accumulating at the workspace top level. Record workspace-root `worktrees/`
-as the shared container for future linked worktrees across project
+accumulating at the workspace top level. Workspace-root `worktrees/` now
+exists as the ignored shared container for linked worktrees across project
 repositories, using:
 
 ```text
 worktrees/<repository>/<purpose-or-branch>
 ```
 
-This is a future workspace-layout action, not authority to execute it now.
-The Project Manager's parent-root write boundary does not include creating an
-arbitrary directory, so the responsible human creates it when this P2 item is
-selected. From `project-manager/`:
+The responsible human manually moved six Beryllium linked worktrees into
+temporary flat paths under the container and then ran `git worktree repair`.
+Human-supplied `git worktree list --porcelain` output records the repaired
+paths and tips; the exact root-relative inventory is in `../../COMPONENTS.md`.
+The Project Manager did not move or repair a worktree and infers no owner
+coordination, cleanliness, idleness, validation, acceptance, or publication
+gate from the relocation.
+Before repair, the move was accidentally staged in the parent as six
+mode-`160000` gitlinks. The responsible human ran `git reset --hard`; the
+parent remained at `7584292`, the staged entries were removed, and no gitlink
+is tracked. This records a boundary near-miss, not authority to repeat the
+operation.
 
-```sh
-cd ..
-mkdir -p worktrees
-```
+### P3 worktree namespacing follow-up
 
-After that human action, the Project Manager may update only its allowed
-parent-root artifacts, including adding `/worktrees/` to `../.gitignore` and
-documenting the topology in `../SOT.md`, `../README.md`, and
-`../COMPONENTS.md`. Existing linked worktrees are not moved, renamed,
-removed, or recreated by this item. Each existing worktree requires a
-separate clean/active-session check and coordination with its repository
-owner; use that repository's proper Git worktree workflow rather than a
-filesystem move. The shared directory does not relax the one-writer rule.
+The repaired Beryllium paths are flat under `worktrees/` and do not yet follow
+`worktrees/<repository>/<purpose-or-branch>`. They are usable temporary
+placements. Any later rename uses Beryllium-owner `git worktree move` after
+fresh tasking, worktree, and one-writer checks. The Project Manager never
+moves, removes, repairs, prunes, or judges these worktrees obsolete.
+Additional registered Beryllium worktrees still exist at the workspace top
+level. A later owner inventory decides whether to leave or move them; this
+turn does not list, classify, or touch them.
 
 ## P2 PMR-108: global startup status and quiescence gate
 
@@ -101,17 +108,19 @@ validation-policy commit `ee1feaf` and review packet `4141cf6`. No child
 repository is changed by this coordination item.
 
 Project-wide quiescence cannot be inferred from Git cleanliness alone.
-`PMR-108` first adds and validates a maintained read-only check that fails
+`PMR-108` first adds and validates a maintained
+`scripts/inspect-components.sh` read-only check that fails
 closed unless the parent, Project Manager, registry, queues, generated
 tasking, and every registered worktree are clean/current; no owner-session,
 owner-recovery, or global maintenance writer reservation is held; and no
 handoff, return, user statement, or current runtime reports an active
 session. The responsible human must again confirm in the same turn that no
 non-instrumented CLI, desktop, background, or external agent session is
-active. The current parent remains dirty with six preserved untracked
-`be-doc-repro-*` directories, and the maintained check/global reservation do
-not yet exist. Recheck immediately and hold a global maintenance reservation
-before the first rollout write.
+active. The parent now ignores the repaired `worktrees/` container, but that
+status cleanliness is not quiescence evidence: the future check must
+explicitly enumerate every registered worktree, including ignored paths.
+The maintained check/global reservation do not yet exist. Recheck immediately
+and hold a global maintenance reservation before the first rollout write.
 
 After that gate passes, the Project Manager may update only its own and
 allowed parent-root startup/status tooling, inventory every owner context,

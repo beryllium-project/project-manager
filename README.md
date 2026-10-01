@@ -155,6 +155,10 @@ scanner or acknowledgement flag is used. On 2026-10-01 the responsible human
 stated exactly `"there is no other running session"` as point-in-time
 evidence only. Recheck immediately before execution; PMR-108 actions still
 require fresh same-turn confirmation.
+The responsible human later reported the exact governance `install && check`
+command completed (`"done above"`). This is human evidence only; the Project
+Manager did not inspect real user configuration or establish install-time
+session state.
 
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,

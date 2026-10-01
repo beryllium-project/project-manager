@@ -36,6 +36,11 @@
   this factual update; any later writer requires fresh tasking and one-writer
   checks. Do not infer current-package readiness, import, execution, backup,
   publication, or either reconciliation request complete.
+  The responsible human also moved six Beryllium linked worktrees into
+  workspace-root `worktrees/` and ran `git worktree repair`; the repaired
+  root-relative inventory is in `../../COMPONENTS.md`. Their current flat
+  placement is temporary and does not satisfy the preferred namespaced
+  convention. Future move/remove work remains Beryllium-owner-only.
   Last-fetched refs previously contained active/default
   `80345e1` and renamed `origin/historical_he/*` refs; local candidate
   `6e93461` and local R8-C/H0 branch tip `0d53120` had no remote-tracking
