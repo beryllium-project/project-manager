@@ -13,25 +13,34 @@
   collaboration, research-source, and handoff documents, including
   `AGENT-INTERFACE.md`, `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing
   inside this component; nothing else
-- **Agents:** `security-reviewer` (user-invocable orchestrator,
-  `gpt-5.3-codex` at owner commit `2e8d205`), `security-evidence`,
-  `security-research`, and `security-finding-review` (write-disabled
-  specialists, also `gpt-5.3-codex`) under the deep-security-review row of
-  `PMD-20260916-001` (`PMR-074` closed). `PMD-20260930-005` keeps
-  `gpt-5.3-codex` but requires exact reasoning `xhigh` and context `default`
-  as the sole named capability exception. Current component files at
-  `2e8d205` still record `max` / `long_context`; owner-only `PMR-110` aligns
-  all four profiles, active instructions, skill, tests, README, interface,
-  and handoff. The task hook covers exactly the three model-invocable
-  specialists; direct orchestrator sessions remain outside it.
+- **Agents:** `security-reviewer` (user-invocable orchestrator),
+  `security-evidence`, `security-research`, and `security-finding-review`
+  (write-disabled specialists), all `gpt-5.3-codex` with exact reasoning
+  `xhigh` and context `default` at owner work `2bb4c98` / return `c2edac7`
+  under `PMD-20260930-005` as the sole named capability exception and closed
+  `PMR-109` / `PMR-110`. Explicit
+  non-Codex selections retain the project-wide `max` default and `high`
+  floor; unavailable or invalid values stop without silent fallback. The
+  task hook covers exactly the three model-invocable specialists; direct
+  orchestrator sessions remain outside it and must be started with the same
+  exact Codex pair.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at owner commit `2e8d205`, synchronized
-  with private `origin/main`; `PMR-062`, `PMR-065`, and `PMR-074` are
-  closed independently. The four profiles use `gpt-5.3-codex` / `max` /
-  `long_context`, the tasking startup resolver contract is active, owner
-  validation reported 321 passed, and no engagement has run.
+- **Observed state:** clean `main` at HANDOFF-only return
+  `c2edac70afdfe5b0bb90e237487cd168fb91e900`, behind 0 / ahead 2 of
+  last-fetched private `origin/main` `2e8d205`. Work
+  `2bb4c989bbe9b57f870e6f653ed3732e742b11f9` is owner-reported to change the
+  four profiles, active instructions, skill, tests, README, and interface;
+  return `c2edac7` is owner-reported to change only `HANDOFF.md`. The owner
+  reports 396 passed / 0 failed, a current index, and clean diff. The
+  responsible human manually created the work commit after the agent's Git
+  request was refused, then replied `"done"` after the requested
+  review-and-exit action. That human statement releases this component's
+  session/reservation; the durable handoff predates the exit and still records
+  its return-time held state. PMR-109/110 are closed as
+  acknowledgements; neither commit is remotely backed up, and separate
+  PMR-111 has no current push authority. No engagement has run.
   `PMD-20260914-003` keeps this independent review component separate; its
   placement remains under `beryllium-project` for now under
   `PMD-20260915-001`. `PMD-20260915-007` preserves non-Fable assignments
@@ -48,14 +57,11 @@
   that exact pair, denies explicit Codex for every other task type, and
   leaves explicit non-Codex selections under the global max/high-floor
   policy. Built-in `security-review` is not admitted by type, and there is no
-  silent fallback. Open `PMR-109` remains the component policy exception
-  found by the `PMD-20260930-001` discovery and conflict audit: the active
-  instructions, orchestrator profile, and skill still permit an unbounded
-  responsible-human effort override, which the recorded floor bounds to
-  `high`, `xhigh`, or `max`. `PMR-110` separately applies the named Codex
-  capability exception to all four profiles, including the direct
-  orchestrator. One human owner session may satisfy both requests. They grant
-  no engagement, acceptance, publication, push, or other gate.
+  silent fallback. PMR-109 closes the component policy exception found by the
+  `PMD-20260930-001` discovery and conflict audit; PMR-110 applies the named
+  Codex capability exception to all four profiles, including the direct
+  orchestrator. Their closure grants no engagement, acceptance, review
+  approval, risk acceptance, publication, push, or other gate.
 
 ## Role
 
@@ -156,13 +162,13 @@ git diff --check
 - Owner model migration and deterministic tasking startup are complete at
   `f2051a4` (`PMR-062`, `PMR-065`).
 - Model reassignment of all four profiles to `gpt-5.3-codex` under
-  `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`) and synchronized
-  with private `origin/main`.
-- Owner-only `PMR-109` and `PMR-110` align the active effort override and
-  exact `gpt-5.3-codex` / `xhigh` / `default` named capability exception;
-  they may be completed in one human owner session and require a durable
-  owner return.
-- Pushes (owner-only; the default human-run `../scripts/owner-actions.sh`
-  step `push_sr` is currently a no-op because `main` and `origin/main` are
-  synchronized; the remote was created and first pushed on 2026-09-06,
-  `PMR-021` closed).
+  `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`), which remains the
+  last-fetched private `origin/main` tip; local `main` is now two ahead at
+  `c2edac7`.
+- Owner work `2bb4c98` and durable return `c2edac7` close `PMR-109` and
+  `PMR-110`; the responsible human released the session/reservation with the
+  exact reply `"done"`.
+- Pushes remain owner-only. `main` is two commits ahead of private
+  `origin/main`; `PMR-111` separately tracks an exact private fast-forward
+  after a new same-turn human confirmation. The remote was created and first
+  pushed on 2026-09-06 (`PMR-021` closed).

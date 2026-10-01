@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-09-30
+**Last refreshed:** 2026-10-01
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -74,13 +74,15 @@ temporary Fedora `lx2` placement, the `~/src/l1/src` root convention, and the
 host or path.
 
 Do not begin `PMR-108` while any project session is active. The responsible
-human reports another session running. Maintained inspection first found
-`beryllium-hypervisor` dirty at synchronized `3467bc6` with 138 changed
-entries, then observed it advance to clean local `2b404ca`, behind zero /
-ahead one. Final ref inspection observed local and last-fetched `origin`
-synchronized 0/0 at `2b404ca`. That clean, remotely contained state does not
-release the user-reported session. No child repository is changed by this
-coordination item.
+human released only the security-reviewer owner session with the exact reply
+`"done"` after being directed to review its return and exit. The separately
+reported Beryllium session remains unreleased. Maintained inspection now
+observes clean active/default Beryllium `4141cf6`, synchronized 0/0 with
+last-fetched `origin`, after broad source-first validation-policy commit
+`ee1feaf` and review packet `4141cf6`. No canonical PMR-098/100 return
+accounts for that range or releases the session. Clean, remotely contained
+state does not release the human statement. No child repository is changed
+by this coordination item.
 
 Project-wide quiescence cannot be inferred from Git cleanliness alone.
 `PMR-108` first adds and validates a maintained read-only check that fails
@@ -102,36 +104,31 @@ blocked request from `project-manager/` with:
 bash ./scripts/project-tasking.sh resolve project-manager
 ```
 
-## P3 PMR-109 and PMR-110: security-reviewer policy alignment
+## P3 PMR-111: security-reviewer private backup
 
-Both requests are owner-only and may be completed in one responsible-human
-owner session. `PMR-109` still narrows the component's unbounded override
-wording to the global `high | xhigh | max` floor for non-Codex selections.
-`PMD-20260930-005` and `PMR-110` supersede only its prior instruction to keep
-the named Codex role at `max` / `long_context`: every
-`gpt-5.3-codex` run must instead use exact `xhigh` reasoning and context tier
-`default` as the sole named capability exception.
+PMR-109 and PMR-110 are closed as acknowledgements of owner work
+`2bb4c989bbe9b57f870e6f653ed3732e742b11f9` and HANDOFF-only return
+`c2edac70afdfe5b0bb90e237487cd168fb91e900`. The responsible human replied
+exactly `"done"` after being directed to review the return and exit the
+existing security-reviewer owner session, releasing only that component's
+session/reservation. The two commits remain local and unpushed; no engagement
+ran.
 
-The owner updates all four Codex profiles, including direct
-`.github/agents/security-reviewer.agent.md`, plus active instructions,
-`beryllium-security-review`, component tests, README, `AGENT-INTERFACE.md`,
-and `HANDOFF.md` only as directly required. Explicit non-Codex selections
-retain the project-wide `max` default and `high` floor. There is no silent
-model, effort, or context fallback. The direct orchestrator is outside the
-task hook and must be started and kept at exact Codex `xhigh` / `default`;
-the built-in `security-review` type is not admitted to the exception.
-
-From the workspace root, after confirming the component is still clean and
-idle at the expected owner state:
+PMR-111 is a separate backup-only request. Before any push, require a new
+exact same-turn responsible-human confirmation, clean idle `main` at
+`c2edac70`, and live private `origin/main` still at
+`2e8d2054840af35ba6d64a00546ee99806a88dfb`. Then the responsible human may
+run the maintained helper from the workspace root:
 
 ```sh
-bash ./project-manager/scripts/owner-session.sh launch security-reviewer PMR-109 PMR-110
+bash ./project-manager/scripts/owner-actions.sh --only push_sr
 ```
 
-The owner returns the exact commit, changed paths, validation totals,
-`SECURITY-REVIEWS.md` index result, `git diff --check`, branch/upstream
-state, backup state, and final active-session/reservation state. No
-engagement, push, publication, acceptance, or other gate is combined.
+The Project Manager never runs this command. The human retrieves the
+timestamped helper log from `project-manager/scratch/owner-actions/`; closure
+requires exact remote containment and final clean branch state. No force,
+tag, remote mutation, engagement, review approval, risk acceptance,
+publication, release, or other gate is combined.
 
 ## Owner-worker closure results
 
@@ -235,10 +232,10 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection on 2026-09-29 first observed active/default
-`beryllium/single-hart-runtime-r0` dirty at synchronized `3467bc6`, then
-observed the branch clean at local `2b404ca`, initially ahead one, and finally
-synchronized 0/0 with last-fetched `origin`.
+Maintained inspection now observes active/default
+`beryllium/single-hart-runtime-r0` clean and synchronized 0/0 with
+last-fetched `origin` at `4141cf6`, following broad source-first policy work
+`ee1feaf` and review packet `4141cf6`.
 Multiple local K0 topic branches are visible.
 The responsible human reports separate K0 work, and no canonical PMR-098/100
 return or session release exists. The component handoff includes K0-A
@@ -474,15 +471,16 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
 - **P3 PMR-090:** active/default Beryllium is now observed clean and
-  synchronized 0/0 at `2b404ca` with last-fetched
+  synchronized 0/0 at `4141cf6` with last-fetched
   `origin/beryllium/single-hart-runtime-r0`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
   `0d53120` have no remote-tracking containment. The reported active-session
   lock remains despite the clean, remotely contained primary, and this turn
   has no authorization evidence for the observed remote-tracking advance.
-  This partially changes the old backup facts but supplies no Project Manager
-  publication authorization and no canonical PMR-098/100 return for the
-  update. Keep PMR-090 open behind
+  Broad source-first policy work `ee1feaf` and review packet `4141cf6`
+  further change the old backup facts but supply no Project Manager
+  publication authorization and no canonical PMR-098/100 return. Keep
+  PMR-090 open behind
   PMR-098; review the exact refs and publication gate before any later
   decision. Never push inactive `msft-downstream`; no observed or future push
   accepts H0, authorizes H1-H4/K3, or grants publication approval.
@@ -594,11 +592,12 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is clean and synchronized 0/0 at `2b404ca`
+- `beryllium-hypervisor/` primary is clean and synchronized 0/0 at `4141cf6`
   with last-fetched `origin`, while active K0 topic work remains
-  owner-controlled. The earlier dirty `3467bc6` state advanced during this
-  turn; the responsible-human session lock remains and no authorization
-  evidence for the remote-tracking advance is recorded. No push path is
+  owner-controlled. Broad source-first policy work `ee1feaf` and review
+  packet `4141cf6` now contain the previously observed 354-entry dirty state;
+  the responsible-human session lock remains and no canonical authority or
+  return evidence is recorded. No push path is
   authorized and missing
   PMR-098/100 returns
   leave session release unknown. Local candidate
@@ -626,9 +625,10 @@ The relevant local component commits are:
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);
 - `threat-modeler` is already backed up through synchronized owner maintenance
   `c4126b6` (`PMR-028` closed; includes `5bf6a4b` and `f4eb272`);
-- `security-reviewer`: owner commit `2e8d205` (`PMR-074`, four profiles to
-  `gpt-5.3-codex`) is synchronized with private `origin/main`; no
-  `push_sr` action is due.
+- `security-reviewer`: work `2bb4c98` and return `c2edac7` close
+  PMR-109/110 locally and leave clean `main` two ahead of private
+  `origin/main` `2e8d205`; PMR-111 separately tracks the unapproved
+  `push_sr` fast-forward.
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push

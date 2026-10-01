@@ -140,8 +140,9 @@ or context fallback.
 
 The `project-manager` orchestrator remains `gpt-5.6-sol` and `pm-auditor`
 remains `claude-opus-5`. Historical artifacts are unchanged. Component-owned
-alignment is owner request `PMR-110`; the prior Codex migration is closed at
-owner commit `2e8d205`. No in-flight task is restarted.
+alignment is complete at security-reviewer work `2bb4c98` and durable return
+`c2edac7`; `PMR-109` and `PMR-110` are closed as acknowledgements, while
+backup-only `PMR-111` remains separate. No in-flight task is restarted.
 
 ## Human interaction
 
