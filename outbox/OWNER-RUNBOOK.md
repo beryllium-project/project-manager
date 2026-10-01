@@ -107,20 +107,36 @@ synchronized 0/0 with last-fetched `origin`, after broad source-first
 validation-policy commit `ee1feaf` and review packet `4141cf6`. No child
 repository is changed by this coordination item.
 
-Project-wide quiescence cannot be inferred from Git cleanliness alone.
-`PMR-108` first adds and validates a maintained
-`scripts/inspect-components.sh` read-only check that fails
-closed unless the parent, Project Manager, registry, queues, generated
-tasking, and every registered worktree are clean/current; no owner-session,
-owner-recovery, or global maintenance writer reservation is held; and no
-handoff, return, user statement, or current runtime reports an active
-session. The responsible human must again confirm in the same turn that no
+Project-wide quiescence cannot be inferred from Git cleanliness alone. It
+requires four separate gates: (a) the maintained read-only
+`scripts/inspect-components.sh quiescence` check passes (parent, Project
+Manager, registry, queues, generated tasking, and every registered worktree
+clean/current; no owner-session or owner-recovery writer lock held); (b) a
+held global maintenance reservation, not yet implemented; (c) Project
+Manager review finding no handoff, return, user statement, or runtime report
+of an active session, which the check marks `manual`; and (d) the human
+confirmation below. The responsible human must again confirm in the same turn that no
 non-instrumented CLI, desktop, background, or external agent session is
 active. The parent now ignores the repaired `worktrees/` container, but that
-status cleanliness is not quiescence evidence: the future check must
-explicitly enumerate every registered worktree, including ignored paths.
-The maintained check/global reservation do not yet exist. Recheck immediately
-and hold a global maintenance reservation before the first rollout write.
+status cleanliness is not quiescence evidence.
+
+Step 1 is complete: `bash ./scripts/inspect-components.sh quiescence`
+enumerates every linked worktree of the parent and each registered
+repository, including ignored and outside-workspace paths, and fails closed.
+Its exit 0 reports automated preconditions only. The 2026-10-01 live run
+failed on two dirty Beryllium linked worktrees:
+`worktrees/be-doc-repro-review-7cf4-20260930` (2 entries) and
+`implement-doc-source-check` under your Copilot session-state directory
+(6 entries). They are Beryllium-owner material: the owner decides whether to
+commit, keep, or remove them; the Project Manager never touches them. Rerun
+the check from `project-manager/` to see the current list:
+
+```sh
+bash ./scripts/inspect-components.sh quiescence
+```
+
+The global maintenance reservation is not yet implemented. Recheck
+immediately and hold that reservation before the first rollout write.
 
 After that gate passes, the Project Manager may update only its own and
 allowed parent-root startup/status tooling, inventory every owner context,

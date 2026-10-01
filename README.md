@@ -265,6 +265,7 @@ bash ./scripts/inspect-components.sh components
 bash ./scripts/inspect-components.sh fingerprint <component>
 bash ./scripts/inspect-components.sh status
 bash ./scripts/inspect-components.sh registry-check
+bash ./scripts/inspect-components.sh quiescence
 bash ./scripts/inspect-components.sh refs <component> [<ref>...]
 bash ./scripts/pull-queues.sh list
 bash ./scripts/pull-queues.sh check
@@ -285,7 +286,14 @@ git diff --check
 
 Every mode of `inspect-components.sh` and `pull-queues.sh` is read-only and
 runs Git in a sanitized environment without hooks, credentials, or network
-access. `new-record.sh` writes only under `records/decisions/`. Carried
+access. `inspect-components.sh quiescence` reports PMR-108 automated
+preconditions only: it enumerates every linked worktree of the parent and
+each registered repository, including ignored and outside-workspace paths,
+and fails closed on any absent, prunable, or dirty worktree, registry drift,
+queue or tasking failure, or held owner-session writer lock. Its exit 0
+never establishes quiescence: active-session reports, the not-yet-implemented
+global maintenance reservation, and same-turn human confirmation remain
+required. `new-record.sh` writes only under `records/decisions/`. Carried
 writes inside components are made by the agent itself, never by these
 scripts.
 

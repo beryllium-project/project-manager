@@ -16,6 +16,7 @@ Usage:
   inspect-components.sh symlinks
   inspect-components.sh status
   inspect-components.sh registry-check [components-file]
+  inspect-components.sh quiescence
 
 components      one TSV row per registered entry: name, integration, worktree,
                 branch, head
@@ -31,6 +32,14 @@ symlinks        readlink, resolution, and Git root for every tracked component s
 status          the restart snapshot: parent, symlinks, components, upstreams
 registry-check  compare each component row in ../COMPONENTS.md with the live
                 HEAD or an explicit leading **Absent** marker; exit 1 on drift
+quiescence      PMR-108 automated preconditions: parent and every registered
+                entry present and clean (untracked included), every linked
+                worktree of each listed repository present, not prunable,
+                and clean, registry-check exact, queue and tasking checks
+                passing, and no owner-session writer lock held; exit 1 on any
+                failure. Exit 0 does not establish quiescence: active-session
+                reports, the global maintenance reservation, and same-turn
+                human confirmation remain required.
 
 "workspace" is the parent coordination repository. Registered names are the
 component rows maintained in ../COMPONENTS.md.
@@ -533,6 +542,183 @@ registry_check() {
     return "$drift"
 }
 
+quiescence_failures=0
+
+quiescence_row() {
+    # check, subject, result, detail
+    printf '%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4"
+    [[ $3 == pass || $3 == manual || $3 == unimplemented ]] ||
+        quiescence_failures=$((quiescence_failures + 1))
+}
+
+quiescence_worktree_one() {
+    local name=$1 path=$2 prunable=$3 key porcelain
+    local -a wt_git
+    key=$path
+    if [[ -d $path ]]; then
+        key=$(CDPATH= cd -- "$path" 2>/dev/null && pwd -P) || key=$path
+    fi
+    [[ ${quiescence_seen[$key]:-} == 1 ]] && return 0
+    quiescence_seen[$key]=1
+    if ((prunable)); then
+        quiescence_row worktree "$name:$path" fail prunable
+    elif [[ ! -d $path ]]; then
+        quiescence_row worktree "$name:$path" fail absent
+    else
+        wt_git=("${clean_environment[@]}" "${safe_git_options[@]}" -C "$key")
+        if ! porcelain=$("${wt_git[@]}" status --porcelain --untracked-files=normal 2>/dev/null); then
+            quiescence_row worktree "$name:$path" fail "status failed"
+        elif [[ -n $porcelain ]]; then
+            quiescence_row worktree "$name:$path" fail \
+                "dirty ($(printf '%s\n' "$porcelain" | grep -c .) entries)"
+        else
+            quiescence_row worktree "$name:$path" pass clean
+        fi
+    fi
+}
+
+quiescence_worktrees() {
+    # Check every worktree listed by one repository; its own entry root was
+    # already checked and is skipped through quiescence_seen. The listing is
+    # captured once so the inspected enumeration is the one whose exit status
+    # was checked.
+    local name=$1 record path= prunable=0 listing_file
+    listing_file=$(mktemp "${TMPDIR:-/tmp}/pm-quiescence.XXXXXX") || {
+        quiescence_row worktree-list "$name" fail "cannot create temporary file"
+        return 0
+    }
+    if ! "${component_git[@]}" worktree list --porcelain -z >"$listing_file" 2>/dev/null; then
+        rm -f -- "$listing_file"
+        quiescence_row worktree-list "$name" fail "git worktree list failed"
+        return 0
+    fi
+    while IFS= read -r -d '' record; do
+        if [[ -n $record ]]; then
+            case $record in
+            "worktree "*) path=${record#worktree } ;;
+            prunable*) prunable=1 ;;
+            esac
+            continue
+        fi
+        [[ -n $path ]] && quiescence_worktree_one "$name" "$path" "$prunable"
+        path=
+        prunable=0
+    done <"$listing_file"
+    rm -f -- "$listing_file"
+    [[ -n $path ]] && quiescence_worktree_one "$name" "$path" "$prunable"
+    return 0
+}
+
+print_quiescence() {
+    local name path porcelain lock_root lock_file lock_fd held=0
+    local -A quiescence_seen=()
+    printf '# PMR-108 quiescence preconditions (check, subject, result, detail)\n'
+    printf '# workspace root: %s\n' "$workspace_root"
+    printf '# checked: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+    for name in workspace "${registered_direct[@]}" "${registered_symlinks[@]}"; do
+        path=$(entry_path "$name")
+        if [[ ! -e $path ]]; then
+            quiescence_row entry "$name" fail absent
+            continue
+        fi
+        if ! (open_entry "$name") >/dev/null 2>&1; then
+            quiescence_row entry "$name" fail unresolvable
+            continue
+        fi
+        open_entry "$name"
+        quiescence_seen[$component_root]=1
+        if ! porcelain=$("${component_git[@]}" status --porcelain --untracked-files=normal 2>/dev/null); then
+            quiescence_row entry "$name" fail "status failed"
+        elif [[ -n $porcelain ]]; then
+            quiescence_row entry "$name" fail \
+                "dirty ($(printf '%s\n' "$porcelain" | grep -c .) entries)"
+        else
+            quiescence_row entry "$name" pass clean
+        fi
+    done
+
+    for name in workspace "${registered_direct[@]}" "${registered_symlinks[@]}"; do
+        [[ -e $(entry_path "$name") ]] || continue
+        (open_entry "$name") >/dev/null 2>&1 || continue
+        open_entry "$name"
+        quiescence_worktrees "$name"
+    done
+
+    if (registry_check) >/dev/null 2>&1; then
+        quiescence_row registry-check COMPONENTS.md pass exact
+    else
+        quiescence_row registry-check COMPONENTS.md fail drift
+    fi
+    # Sibling checks run in the sanitized environment so inherited tasking
+    # or Git overrides cannot redirect them.
+    if "${clean_environment[@]}" bash "$script_dir/pull-queues.sh" check >/dev/null 2>&1; then
+        quiescence_row queues pull-queues.sh pass check
+    else
+        quiescence_row queues pull-queues.sh fail check
+    fi
+    if "${clean_environment[@]}" bash "$script_dir/project-tasking.sh" check >/dev/null 2>&1; then
+        quiescence_row tasking project-tasking.sh pass current
+    else
+        quiescence_row tasking project-tasking.sh fail "missing or stale"
+    fi
+
+    lock_root=${PM_OWNER_SESSION_SCRATCH:-$repository_root/scratch/owner-sessions}/locks
+    if ! command -v flock >/dev/null 2>&1; then
+        quiescence_row writer-locks owner-sessions fail "flock unavailable"
+    elif [[ -e $lock_root && ! -d $lock_root ]]; then
+        quiescence_row writer-locks owner-sessions fail "lock root is not a directory"
+    elif [[ -d $lock_root ]]; then
+        local lock_list
+        if ! lock_list=$(mktemp "${TMPDIR:-/tmp}/pm-quiescence.XXXXXX"); then
+            quiescence_row writer-locks owner-sessions fail "cannot create temporary file"
+        elif ! find "$lock_root" -mindepth 1 -maxdepth 1 -name '*.lock' -print0 \
+            >"$lock_list" 2>/dev/null; then
+            rm -f -- "$lock_list"
+            quiescence_row writer-locks owner-sessions fail "lock scan failed"
+        else
+            while IFS= read -r -d '' lock_file; do
+                if [[ -L $lock_file || ! -f $lock_file ]]; then
+                    quiescence_row writer-lock "$(basename -- "$lock_file")" fail unsupported
+                    held=1
+                    continue
+                fi
+                if ! exec {lock_fd}<"$lock_file"; then
+                    quiescence_row writer-lock "$(basename -- "$lock_file")" fail unreadable
+                    held=1
+                    continue
+                fi
+                if flock -n -s "$lock_fd"; then
+                    flock -u "$lock_fd"
+                else
+                    quiescence_row writer-lock "$(basename -- "$lock_file")" fail held
+                    held=1
+                fi
+                exec {lock_fd}<&-
+            done <"$lock_list"
+            rm -f -- "$lock_list"
+            ((held)) || quiescence_row writer-locks owner-sessions pass "none held"
+        fi
+    else
+        quiescence_row writer-locks owner-sessions pass "no lock directory"
+    fi
+
+    quiescence_row global-reservation maintenance unimplemented \
+        "global maintenance reservation not yet implemented (PMR-108 later step)"
+    quiescence_row active-session-reports handoffs-returns-runtime manual \
+        "not machine-checked: review handoffs, owner returns, runtime and hidden owner-worker reservations"
+    quiescence_row human-confirmation same-turn manual \
+        "required: responsible human confirms no non-instrumented session"
+
+    if ((quiescence_failures == 0)); then
+        printf 'automated-preconditions\tpass\n'
+    else
+        printf 'automated-preconditions\tfail\t%s failing checks\n' "$quiescence_failures"
+    fi
+    printf 'quiescence\tnot established by this check; manual items, the global reservation, and an immediate pre-write recheck remain required; no gate is granted\n'
+    ((quiescence_failures == 0))
+}
+
 (($# >= 1)) || {
     usage
     exit 2
@@ -569,6 +755,10 @@ status)
 registry-check)
     (($# <= 1)) || { usage; exit 2; }
     registry_check "$@"
+    ;;
+quiescence)
+    (($# == 0)) || { usage; exit 2; }
+    print_quiescence
     ;;
 *)
     usage

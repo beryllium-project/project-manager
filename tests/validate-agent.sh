@@ -1619,6 +1619,134 @@ expect_output "inspect-components components reports an absent entry" \
     "provenance-review	direct	absent" \
     env PM_WORKSPACE_ROOT="$synth" bash "$inspect" components
 
+# quiescence: a sandbox copy of the script with stub queue/tasking checks, so
+# no live check is stubbed through an environment override.
+qtool=$sandbox/qtool
+qws=$sandbox/qws
+qscratch=$sandbox/qscratch
+mkdir -p "$qtool/scripts" "$qws" "$sandbox/qlinks" "$qscratch/locks"
+cp "$inspect" "$qtool/scripts/inspect-components.sh"
+for stub in pull-queues project-tasking; do
+    printf '#!/usr/bin/env bash\n[[ ! -e "%s/fail-%s" ]]\n' "$qtool" "$stub" \
+        >"$qtool/scripts/$stub.sh"
+done
+qinspect=$qtool/scripts/inspect-components.sh
+qcommit() {
+    git -C "$1" -c user.name=fixture -c user.email=fixture@example.invalid \
+        -c commit.gpgsign=false commit -q "${@:2}"
+}
+init_repo "$qws" workspace
+for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
+    provenance-review analysis-workbook threat-modeler security-reviewer; do
+    init_repo "$qws/$name" "$name"
+    printf '/%s/\n' "$name" >>"$qws/.gitignore"
+done
+printf '/worktrees/\n' >>"$qws/.gitignore"
+init_repo "$sandbox/qlinks/cheri-riscv-notes" cheri
+init_repo "$sandbox/qlinks/cheri-hypervisor-research" xrv
+ln -s ../qlinks/cheri-riscv-notes "$qws/cheri-riscv-notes"
+ln -s ../qlinks/cheri-hypervisor-research "$qws/cheri-hypervisor-research"
+{
+    printf '| Workspace entry | Integration | Observed state | Role |\n| --- | --- | --- | --- |\n'
+    for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
+        provenance-review analysis-workbook threat-modeler security-reviewer \
+        cheri-riscv-notes cheri-hypervisor-research; do
+        printf '| `%s/` | Fixture | Clean `main` at `%s` | Fixture |\n' \
+            "$name" "$(git -C "$qws/$name" rev-parse --short HEAD)"
+    done
+} >"$qws/COMPONENTS.md"
+git -C "$qws" add .gitignore COMPONENTS.md cheri-riscv-notes cheri-hypervisor-research
+qcommit "$qws" -m "fixture registry"
+git -C "$qws/beryllium-hypervisor" worktree add -q -b in-container "$qws/worktrees/be-a"
+git -C "$qws/beryllium-hypervisor" worktree add -q -b outside "$sandbox/qoutside-wt"
+git -C "$qws" worktree add -q -b parent-linked "$sandbox/qparent-wt"
+qrun() {
+    env PM_WORKSPACE_ROOT="$qws" PM_OWNER_SESSION_SCRATCH="$qscratch" bash "$qinspect" quiescence
+}
+
+expect_exit "quiescence rejects extra arguments" 2 \
+    env PM_WORKSPACE_ROOT="$qws" bash "$qinspect" quiescence extra
+expect_exit "quiescence passes automated preconditions on a clean sandbox" 0 qrun
+expect_output "quiescence reports automated preconditions passing" \
+    "automated-preconditions	pass" qrun
+expect_output "quiescence never claims quiescence is established" \
+    "not established by this check" qrun
+expect_output "quiescence keeps human confirmation manual" \
+    "human-confirmation	same-turn	manual" qrun
+expect_output "quiescence keeps active-session reports manual" \
+    "active-session-reports	handoffs-returns-runtime	manual" qrun
+expect_output "quiescence reports the global reservation as unimplemented" \
+    "global-reservation	maintenance	unimplemented" qrun
+expect_output "quiescence enumerates an ignored worktrees/ linked worktree" \
+    "beryllium-hypervisor:$qws/worktrees/be-a	pass" qrun
+expect_output "quiescence enumerates an outside-workspace linked worktree" \
+    "beryllium-hypervisor:$sandbox/qoutside-wt	pass" qrun
+expect_output "quiescence enumerates parent-repository linked worktrees" \
+    "workspace:$sandbox/qparent-wt	pass" qrun
+
+printf 'x\n' >"$qws/worktrees/be-a/dirty.txt"
+expect_exit "quiescence fails on a dirty ignored worktrees/ linked worktree" 1 qrun
+expect_output "quiescence names the dirty ignored linked worktree" \
+    "beryllium-hypervisor:$qws/worktrees/be-a	fail	dirty" qrun
+rm -f -- "$qws/worktrees/be-a/dirty.txt"
+
+printf 'x\n' >"$sandbox/qoutside-wt/dirty.txt"
+expect_output "quiescence fails on a dirty outside-workspace linked worktree" \
+    "beryllium-hypervisor:$sandbox/qoutside-wt	fail	dirty" qrun
+rm -f -- "$sandbox/qoutside-wt/dirty.txt"
+
+printf 'x\n' >"$sandbox/qparent-wt/dirty.txt"
+expect_output "quiescence fails on a dirty parent linked worktree" \
+    "workspace:$sandbox/qparent-wt	fail	dirty" qrun
+rm -f -- "$sandbox/qparent-wt/dirty.txt"
+
+printf 'x\n' >"$qws/threat-modeler/untracked.txt"
+expect_exit "quiescence fails on an untracked path in a registered entry" 1 qrun
+expect_output "quiescence names the dirty registered entry" \
+    "entry	threat-modeler	fail	dirty" qrun
+rm -f -- "$qws/threat-modeler/untracked.txt"
+git -C "$qws/threat-modeler" config status.showUntrackedFiles no
+printf 'x\n' >"$qws/threat-modeler/hidden.txt"
+expect_output "quiescence sees untracked paths despite status.showUntrackedFiles=no" \
+    "entry	threat-modeler	fail	dirty" qrun
+rm -f -- "$qws/threat-modeler/hidden.txt"
+git -C "$qws/threat-modeler" config --unset status.showUntrackedFiles
+
+printf 'x\n' >"$qws/stray.txt"
+expect_output "quiescence fails on a parent untracked path" \
+    "entry	workspace	fail	dirty" qrun
+rm -f -- "$qws/stray.txt"
+
+: >"$qtool/fail-pull-queues"
+expect_output "quiescence fails when the queue check fails" \
+    "queues	pull-queues.sh	fail" qrun
+rm -f -- "$qtool/fail-pull-queues"
+: >"$qtool/fail-project-tasking"
+expect_output "quiescence fails when tasking is stale" \
+    "tasking	project-tasking.sh	fail" qrun
+rm -f -- "$qtool/fail-project-tasking"
+
+: >"$qscratch/locks/threat-modeler.lock"
+exec {qlock_fd}>"$qscratch/locks/threat-modeler.lock"
+flock -n "$qlock_fd"
+expect_exit "quiescence fails while an owner-session writer lock is held" 1 qrun
+expect_output "quiescence names the held writer lock" \
+    "writer-lock	threat-modeler.lock	fail	held" qrun
+exec {qlock_fd}>&-
+expect_exit "quiescence passes again once the writer lock is released" 0 qrun
+ln -s "$qscratch/locks/threat-modeler.lock" "$qscratch/locks/link.lock"
+expect_output "quiescence fails on a non-regular writer lock entry" \
+    "writer-lock	link.lock	fail	unsupported" qrun
+rm -f -- "$qscratch/locks/link.lock"
+
+rm -rf -- "$sandbox/qoutside-wt"
+expect_output "quiescence fails on a missing (prunable) linked worktree" \
+    "beryllium-hypervisor:$sandbox/qoutside-wt	fail	prunable" qrun
+
+qcommit "$qws/osr-claude" --allow-empty -m "fixture drift"
+expect_output "quiescence fails on registry drift" \
+    "registry-check	COMPONENTS.md	fail	drift" qrun
+
 # --- pull-queues.sh ------------------------------------------------------------------
 
 pull=$repository_root/scripts/pull-queues.sh
