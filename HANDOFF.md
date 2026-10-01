@@ -13,7 +13,8 @@ first live run failed closed on two dirty Beryllium linked worktrees
 (`worktrees/be-doc-repro-review-7cf4-20260930`, 2 entries;
 `implement-doc-source-check` under the responsible human's Copilot
 session-state directory, 6 entries). PMR-108 stays open for the global
-reservation, owner disposition of those worktrees, and rollout. No component
+reservation, the human's manual deletion of those worktrees observed by a
+passing check, and rollout. No component
 write, worktree change, component validation, push, publication, or
 human-gate action occurred.
 
@@ -32,7 +33,7 @@ in `../COMPONENTS.md`
 | Operational PM closure | **Complete, with independent evidence gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105, and formal-verification PMR-014/037/041/069 are closed. Beryllium's prior session is closed without PMR-098/100 returns; those requests remain open. Security backup PMR-111 is separate and unapproved. |
 | Workspace worktree layout | **Container and ignore complete; namespacing follow-up open.** Workspace-root `worktrees/` now holds six human-moved, repaired Beryllium linked worktrees at temporary flat paths recorded in `../COMPONENTS.md`. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; Project Manager never moves or removes them. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
-| Global startup-status rollout | **P2 `PMR-108`: step 1 check implemented; live check fails closed; reservation and rollout open.** `bash ./scripts/inspect-components.sh quiescence` now enumerates every registered linked worktree, including ignored and outside-workspace paths. Its first live run found two dirty Beryllium linked worktrees (`worktrees/be-doc-repro-review-7cf4-20260930`, `implement-doc-source-check` under session-state). Exit 0 would report automated preconditions only; the global reservation is unimplemented, and rollout still requires fresh same-turn confirmation and immediate recheck. |
+| Global startup-status rollout | **P2 `PMR-108`: step 1 check implemented; step 3 human-disposed pending manual deletion; reservation and rollout open.** `bash ./scripts/inspect-components.sh quiescence` enumerates every registered linked worktree, including ignored and outside-workspace paths. The first live run failed only on two dirty Beryllium linked worktrees that the responsible human chose to keep and delete manually (`"ok, keep and ignore the two worktrees, I will delete manually later."`). No exclusion was added; rollout stays blocked until a passing check observes deletion. The global reservation is unimplemented. |
 | Max-effort scope governance | **Tracked/component policy aligned; install/check human-reported complete.** The responsible human reported the exact governance `install && check` command completed (`"done above"`). The Project Manager did not run it against real user configuration, inspect output, or establish install-time session state. `PMD-20260930-001/002/005` policy remains unchanged. |
 | Component policy exceptions | **PMR-109 and PMR-110 closed; backup separate.** Current security-reviewer files at `2bb4c98` require exact Codex `xhigh` / `default`, retain ordinary max/high-floor handling for explicit non-Codex selections, and prohibit silent fallback. Return `c2edac7` reports 396 / 0 and no engagement; the human `"done"` response releases only that session. Unpushed commits are tracked by PMR-111, which has no push authority. |
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Human-started ordinary owner sessions are now separately automated by `scripts/owner-session.sh`: one private revision-bound packet and interactive `copilot --no-auto-update --yolo`, with no copied prompt. This launcher is not an owner worker and grants no Project Manager/component authority. |
@@ -86,7 +87,7 @@ backup/publication gates, and elective work remain visible.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P2 | `PMR-108` | **Check implemented; live check fails on two dirty Beryllium worktrees; reservation missing** | The new quiescence check works and blocks rollout. Beryllium owner/human must dispose of the dirty `worktrees/be-doc-repro-review-7cf4-20260930` and session-state `implement-doc-source-check` worktrees; the Project Manager then adds the global reservation. No child write follows. |
+| P2 | `PMR-108` | **Check implemented; reservation missing; rollout blocked until the human deletes two worktrees** | You chose to keep the two dirty Beryllium worktrees and delete them manually later; the check keeps failing on them until then, which blocks rollout only. Step 2 (global reservation, Project Manager-only) can proceed now after a fresh same-turn no-session confirmation. No child write follows. |
 | P2 | `PMR-098` | **Canonical return missing** | The owner must reconcile `416b2e9..80345e1`; the human no-session statement supplies only current session state, and no acceptance or publication authority follows. |
 | P2 | `PMR-100` | **Canonical KVM0-series return missing** | The closed-without-return session still lacks the post-`80345e1` KVM0 commits/scopes, validation, authority, changed paths, and backup/ref/publication evidence. Later non-KVM0 `ee1feaf` / `4141cf6` remains observation-only. |
 | P3 | `Worktree namespacing` (no PMR) | **Temporary flat placement works; owner follow-up deferred** | Six repaired Beryllium worktrees are under `worktrees/` but not yet under `worktrees/beryllium-hypervisor/...`; other top-level Beryllium worktrees need a later owner inventory. Any move is human/Beryllium-owner `git worktree move`. |
@@ -110,22 +111,19 @@ backup/publication gates, and elective work remain visible.
 
 ### One recommended next action
 
-The new PMR-108 check fails closed on two dirty Beryllium linked worktrees.
-They are Beryllium-owner material, so the responsible human (or a Beryllium
-owner session) must review them read-only and decide whether each change is
-committed, kept, or discarded; the Project Manager never touches them. From
-the workspace root:
+Implement PMR-108 step 2, the global maintenance reservation. It writes only
+Project Manager files and may proceed while the check still fails on exactly
+the two worktrees you chose to keep. It needs a fresh same-turn confirmation
+that no other session is running, then an immediate recheck. Start with:
 
 ```sh
-git -C worktrees/be-doc-repro-review-7cf4-20260930 status --short --branch
-git -C beryllium-hypervisor worktree list | grep implement-doc-source-check
-git -C "<path printed above>" status --short --branch
+bash ./scripts/project-tasking.sh resolve project-manager
 ```
 
-Then rerun `bash ./scripts/inspect-components.sh quiescence` from
-`project-manager/`. The next Project Manager step is the global maintenance
-reservation. The responsible human may have higher priorities outside
-Project Manager visibility.
+Rollout (step 4) stays blocked until you delete those two worktrees and
+`bash ./scripts/inspect-components.sh quiescence` passes. If "ignore" meant
+something else, redirect. The responsible human may have higher
+priorities outside Project Manager visibility.
 
 ### Minimal restart commands
 
@@ -145,6 +143,19 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### Eighty-ninth-turn follow-up: dirty-worktree disposition
+
+- The responsible human stated exactly `"ok, keep and ignore the two worktrees, I will delete manually later."`
+  This is recorded as the step-3 disposition of only the two Beryllium linked
+  worktrees observed dirty (2 and 6 entries). Their contents were not
+  reviewed or judged; later changes or other dirty worktrees are not covered.
+- A scope review (`adjust`) kept the check unchanged with no exclusion.
+  Rollout stays blocked until a passing check observes deletion; step 2 may
+  proceed earlier after fresh confirmation. The governance hook requires
+  `claude-opus-5.5` for `beryllium-scope-review`, so the session's
+  `gpt-6-sol` review preference does not apply to scope reviews.
+- No component, worktree, check, SOT, push, publication, or gate change.
 
 ### Eighty-ninth-turn PMR-108 step 1: maintained quiescence check
 
@@ -174,8 +185,8 @@ git -C .. status --short --branch
   `implement-doc-source-check` under the responsible human's Copilot
   session-state directory (6 entries). The Project Manager did not inspect
   their contents or change them.
-- PMR-108 remains open for the global reservation, owner disposition of the
-  dirty worktrees, and rollout. No component, worktree, SOT, push,
+- PMR-108 remains open for the global reservation, the human's manual
+  deletion of the dirty worktrees observed by a passing check, and rollout. No component, worktree, SOT, push,
   publication, or gate change occurred. For this session only, the
   responsible human asked that review/evaluation use `gpt-6-sol`; the audit
   used it. The `PMD-20260916-001` matrix is unchanged.

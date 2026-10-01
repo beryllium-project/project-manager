@@ -127,9 +127,15 @@ Its exit 0 reports automated preconditions only. The 2026-10-01 live run
 failed on two dirty Beryllium linked worktrees:
 `worktrees/be-doc-repro-review-7cf4-20260930` (2 entries) and
 `implement-doc-source-check` under your Copilot session-state directory
-(6 entries). They are Beryllium-owner material: the owner decides whether to
-commit, keep, or remove them; the Project Manager never touches them. Rerun
-the check from `project-manager/` to see the current list:
+(6 entries). You stated exactly `"ok, keep and ignore the two worktrees, I will delete manually later."`
+This decision covers only those two worktrees as observed; their contents
+were not reviewed by the Project Manager, which never touches them. Delete
+them yourself when convenient, using the workspace worktree workflow in
+`../SOT.md`. The check passes only when deletion leaves no absent or
+prunable Beryllium worktree registration; until then PMR-108 rollout stays
+blocked. Step 2 (the Project Manager-only global reservation) may proceed
+before deletion after a fresh same-turn no-session confirmation and immediate
+recheck. Rerun the check from `project-manager/` afterward:
 
 ```sh
 bash ./scripts/inspect-components.sh quiescence
