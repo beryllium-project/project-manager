@@ -111,8 +111,9 @@ Project-wide quiescence cannot be inferred from Git cleanliness alone. It
 requires four separate gates: (a) the maintained read-only
 `scripts/inspect-components.sh quiescence` check passes (parent, Project
 Manager, registry, queues, generated tasking, and every registered worktree
-clean/current; no owner-session or owner-recovery writer lock held); (b) a
-held global maintenance reservation, not yet implemented; (c) Project
+clean/current; no owner-session or owner-recovery writer lock held; no
+global reservation held by another holder); (b) a held global maintenance
+reservation; (c) Project
 Manager review finding no handoff, return, user statement, or runtime report
 of an active session, which the check marks `manual`; and (d) the human
 confirmation below. The responsible human must again confirm in the same turn that no
@@ -141,8 +142,19 @@ recheck. Rerun the check from `project-manager/` afterward:
 bash ./scripts/inspect-components.sh quiescence
 ```
 
-The global maintenance reservation is not yet implemented. Recheck
-immediately and hold that reservation before the first rollout write.
+The global maintenance reservation (step 2) is implemented. For the later
+rollout only, after you delete the two worktrees, start the Project Manager
+session inside it from `project-manager/`:
+
+```sh
+bash ./scripts/maintenance-reservation.sh hold -- copilot --agent project-manager
+```
+
+While that session runs, every `owner-session.sh` and `owner-recovery.sh`
+launch is refused (including PMR-098/100 return sessions), and the
+reservation is refused while any such launch is running. It does not block
+`owner-actions.sh`, hidden owner workers, or sessions started another way,
+so your same-turn confirmation is still required. It grants no gate.
 
 After that gate passes, the Project Manager may update only its own and
 allowed parent-root startup/status tooling, inventory every owner context,

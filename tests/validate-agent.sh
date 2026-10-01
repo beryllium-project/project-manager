@@ -250,7 +250,8 @@ for component in helium-te-poc formal-verification-research osr-claude \
     require_text "$repository_root/components/$component.md" '**Ownership:**'
 done
 
-for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh owner-actions.sh owner-session.sh; do
+for script in inspect-components.sh pull-queues.sh new-record.sh validate-pm.sh owner-actions.sh owner-session.sh \
+    maintenance-reservation.sh; do
     require_executable "$repository_root/scripts/$script"
     require_pattern "$repository_root/scripts/$script" '^set -(euo pipefail|u)$'
     require_text "$repository_root/scripts/$script" 'export LC_ALL=C'
@@ -1675,8 +1676,8 @@ expect_output "quiescence keeps human confirmation manual" \
     "human-confirmation	same-turn	manual" qrun
 expect_output "quiescence keeps active-session reports manual" \
     "active-session-reports	handoffs-returns-runtime	manual" qrun
-expect_output "quiescence reports the global reservation as unimplemented" \
-    "global-reservation	maintenance	unimplemented" qrun
+expect_output "quiescence reports a free global reservation without failing" \
+    "global-reservation	maintenance	free" qrun
 expect_output "quiescence enumerates an ignored worktrees/ linked worktree" \
     "beryllium-hypervisor:$qws/worktrees/be-a	pass" qrun
 expect_output "quiescence enumerates an outside-workspace linked worktree" \
@@ -1734,6 +1735,32 @@ expect_output "quiescence names the held writer lock" \
     "writer-lock	threat-modeler.lock	fail	held" qrun
 exec {qlock_fd}>&-
 expect_exit "quiescence passes again once the writer lock is released" 0 qrun
+maint=$repository_root/scripts/maintenance-reservation.sh
+expect_output "quiescence passes inside a held global reservation" \
+    "global-reservation	maintenance	pass	held" \
+    env PM_OWNER_SESSION_SCRATCH="$qscratch" bash "$maint" hold -- \
+    env PM_WORKSPACE_ROOT="$qws" bash "$qinspect" quiescence
+expect_exit "quiescence exits 0 inside a held global reservation" 0 \
+    env PM_OWNER_SESSION_SCRATCH="$qscratch" bash "$maint" hold -- \
+    env PM_WORKSPACE_ROOT="$qws" bash "$qinspect" quiescence
+exec {qglobal_fd}>>"$qscratch/global/maintenance.lock"
+flock -n -x "$qglobal_fd"
+expect_exit "quiescence fails while another holder has the global reservation" 1 qrun
+expect_output "quiescence names a foreign global reservation holder" \
+    "global-reservation	maintenance	fail	held by another holder" qrun
+exec {qglobal_fd}>&-
+mv "$qscratch/global/maintenance.lock" "$qscratch/global/maintenance.lock.real"
+ln -s "$sandbox/nonexistent-lock" "$qscratch/global/maintenance.lock"
+expect_output "quiescence fails on a dangling symlinked global lock" \
+    "global-reservation	maintenance	fail	unsupported" qrun
+rm -f -- "$qscratch/global/maintenance.lock"
+mv "$qscratch/global/maintenance.lock.real" "$qscratch/global/maintenance.lock"
+mv "$qscratch/locks" "$qscratch/locks.real"
+ln -s "$qscratch/locks.real" "$qscratch/locks"
+expect_output "quiescence fails on a symlinked writer-lock directory" \
+    "writer-locks	owner-sessions	fail	lock root is a symbolic link" qrun
+rm -f -- "$qscratch/locks"
+mv "$qscratch/locks.real" "$qscratch/locks"
 ln -s "$qscratch/locks/threat-modeler.lock" "$qscratch/locks/link.lock"
 expect_output "quiescence fails on a non-regular writer lock entry" \
     "writer-lock	link.lock	fail	unsupported" qrun
@@ -2120,6 +2147,94 @@ else
     fail "owner-session first writer failed"
 fi
 
+maint=$repository_root/scripts/maintenance-reservation.sh
+expect_combined() {
+    local description=$1 needle=$2 output
+    shift 2
+    output=$("$@" 2>&1)
+    if printf '%s\n' "$output" | grep -Fq -- "$needle"; then
+        pass "$description"
+    else
+        fail "$description (output lacks: $needle)"
+    fi
+}
+expect_holder_success() {
+    local description=$1 pid=$2
+    if wait "$pid"; then
+        pass "$description"
+    else
+        fail "$description (holder failed)"
+    fi
+}
+expect_exit "maintenance-reservation rejects a missing command" 2 \
+    env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold --
+expect_exit "maintenance-reservation rejects an unknown mode" 2 \
+    env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" status -- true
+expect_exit "maintenance-reservation exports its marker to the command" 0 \
+    env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- \
+    sh -c 'test "$PM_MAINTENANCE_RESERVATION" = held'
+expect_exit "maintenance-reservation returns the command status" 7 \
+    env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- sh -c 'exit 7'
+maint_ready=$sandbox/maintenance-ready
+env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- \
+    sh -c ': >"$1"; sleep 4' sh "$maint_ready" >/dev/null 2>&1 &
+maint_pid=$!
+for _ in $(seq 1 20); do
+    [[ -e $maint_ready ]] && break
+    sleep 0.1
+done
+if [[ -e $maint_ready ]]; then
+    pass "maintenance-reservation holds the global reservation"
+    rm -f -- "$copilot_capture"
+    expect_combined "owner-session launch is refused during the global reservation" \
+        "global maintenance reservation is held" \
+        env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+        PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+        COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+        bash "$owner_session" launch direct-component PMR-001
+    if [[ ! -e $copilot_capture ]]; then
+        pass "refused owner-session launch did not start Copilot"
+    else
+        fail "refused owner-session launch started Copilot"
+    fi
+    expect_combined "a second global reservation is refused" \
+        "global maintenance reservation is busy" \
+        env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- true
+else
+    fail "maintenance-reservation did not reach its command"
+fi
+expect_holder_success "maintenance-reservation holder completes" "$maint_pid"
+rm -f -- "$copilot_ready"
+env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_first_capture" \
+    COPILOT_READY="$copilot_ready" COPILOT_SLEEP=2 \
+    bash "$owner_session" launch direct-component PMR-001 >/dev/null 2>&1 &
+owner_session_pid=$!
+for _ in $(seq 1 20); do
+    [[ -e $copilot_ready ]] && break
+    sleep 0.1
+done
+if [[ -e $copilot_ready ]]; then
+    expect_combined "global reservation is refused during an owner-session launch" \
+        "global maintenance reservation is busy" \
+        env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- true
+else
+    fail "owner-session launch did not reach Copilot for the reservation test"
+fi
+expect_holder_success "owner-session holder completes" "$owner_session_pid"
+mkdir -p "$sandbox/maint-symlink-scratch/global"
+ln -s "$sandbox/nonexistent-lock" "$sandbox/maint-symlink-scratch/global/maintenance.lock"
+expect_combined "maintenance-reservation rejects a symlinked lock" "symbolic link" \
+    env PM_OWNER_SESSION_SCRATCH="$sandbox/maint-symlink-scratch" bash "$maint" hold -- true
+expect_combined "owner-session launch rejects a symlinked global lock" "symbolic link" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$sandbox/maint-symlink-scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+    bash "$owner_session" launch direct-component PMR-001
+expect_exit "global reservation succeeds after owner sessions exit" 0 \
+    env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- true
+
 printf 'dirty\n' >"$tasking_workspace/direct-component/untracked.txt"
 expect_exit "owner-session rejects a dirty component" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
@@ -2184,6 +2299,9 @@ for _ in $(seq 1 20); do
 done
 if [[ -e $copilot_ready ]]; then
     pass "owner-recovery first writer holds the shared launcher lock"
+    expect_combined "global reservation is refused during an owner-recovery launch" \
+        "global maintenance reservation is busy" \
+        env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- true
     expect_exit "owner-recovery rejects a concurrent recovery writer" 1 \
         env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
         PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
@@ -2199,6 +2317,26 @@ if (($? == 0)); then
 else
     fail "owner-recovery first writer failed"
 fi
+maint_ready=$sandbox/maintenance-recovery-ready
+env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- \
+    sh -c ': >"$1"; sleep 3' sh "$maint_ready" >/dev/null 2>&1 &
+maint_pid=$!
+for _ in $(seq 1 20); do
+    [[ -e $maint_ready ]] && break
+    sleep 0.1
+done
+if [[ -e $maint_ready ]]; then
+    expect_combined "owner-recovery launch is refused during the global reservation" \
+        "global maintenance reservation is held" \
+        env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+        PM_OWNER_RECOVERY_SCRATCH="$owner_recovery_scratch" \
+        PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+        COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$copilot_capture" \
+        bash "$owner_recovery" launch recovery-component PMR-008
+else
+    fail "maintenance-reservation did not reach its command for the recovery test"
+fi
+expect_holder_success "maintenance-reservation recovery-test holder completes" "$maint_pid"
 printf 'unexpected\n' >>"$recovery_component/work.txt"
 expect_exit "owner-recovery rejects changed dirty state" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \

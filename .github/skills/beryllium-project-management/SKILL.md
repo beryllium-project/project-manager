@@ -74,6 +74,13 @@ research, analysis, threat models, provenance findings, or human decisions.
   writes only ignored Project Manager packet,
   transcript, and state-log files around Copilot. It is not a general dirty
   bypass and grants no retroactive component authority or human gate.
+- `scripts/maintenance-reservation.sh hold -- <command>` is the human-run
+  PMR-108 global maintenance reservation; the Project Manager never runs it.
+  It takes an exclusive lock that `owner-session.sh` and `owner-recovery.sh`
+  launches share, so it is refused while either launch runs and those
+  launches are refused while it is held. It does not block
+  `owner-actions.sh`, hidden owner workers, or non-instrumented sessions, and
+  grants no gate or write authority.
 - `git push`, `git remote`, `gh repo create`, tags, and publication require an
   explicit user confirmation in the same turn, quoted in `HANDOFF.md`, for
   this repository, the parent, and any component. A carried commit leaves the

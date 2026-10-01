@@ -100,6 +100,13 @@ writes only ignored Project Manager packet, transcript, and state-log files
 before/after Copilot and grants no
 retroactive component authority, gate, push, remote change, or publication.
 
+`scripts/maintenance-reservation.sh hold -- <command>` is the human-run
+PMR-108 global maintenance reservation; this agent never runs it. It takes an
+exclusive lock that `owner-session.sh` and `owner-recovery.sh` launches
+share, so it is refused while either launch runs and those launches are
+refused while it is held. It does not block `owner-actions.sh`, hidden owner
+workers, or non-instrumented sessions, and grants no gate or write authority.
+
 `scripts/beryllium-governance.sh` is also human-run. The Project Manager
 never runs `install` or `uninstall` against the real user configuration;
 maintained tests use only a sandbox `COPILOT_HOME`. Its read-only `check`

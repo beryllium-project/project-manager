@@ -206,6 +206,16 @@ if [[ $mode == launch ]]; then
         die "util-linux script is required for the recovery transcript"
     script --help 2>&1 | grep -Fq -- '--command' ||
         die "the available script command is not the required util-linux implementation"
+    global_lock=${lock_root%/locks}/global/maintenance.lock
+    [[ ! -L ${global_lock%/maintenance.lock} ]] ||
+        die "the global maintenance lock directory is a symbolic link"
+    mkdir -p -- "${global_lock%/maintenance.lock}"
+    [[ ! -L $global_lock ]] || die "the global maintenance lock is a symbolic link"
+    [[ ! -e $global_lock || -f $global_lock ]] ||
+        die "the global maintenance lock is not a regular file"
+    exec {global_fd}>>"$global_lock"
+    flock -n -s "$global_fd" ||
+        die "the PMR-108 global maintenance reservation is held"
     mkdir -p -- "$lock_root"
     lock_file=$lock_root/$component.lock
     exec {lock_fd}>"$lock_file"

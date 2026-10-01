@@ -1,22 +1,18 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-10-01
-**Update scope:** eighty-ninth coordination turn. After a fresh same-turn
-responsible-human confirmation that no other session was running, implemented
-PMR-108 step 1: read-only fail-closed
-`bash ./scripts/inspect-components.sh quiescence`, which enumerates every
-linked worktree of the parent and each registered repository (including
-ignored and outside-workspace paths), checks registry, queues, tasking, and
-owner-session writer locks, and keeps active-session reports and human
-confirmation manual. Sandbox tests cover pass and each failure class. The
-first live run failed closed on two dirty Beryllium linked worktrees
-(`worktrees/be-doc-repro-review-7cf4-20260930`, 2 entries;
-`implement-doc-source-check` under the responsible human's Copilot
-session-state directory, 6 entries). PMR-108 stays open for the global
-reservation, the human's manual deletion of those worktrees observed by a
-passing check, and rollout. No component
-write, worktree change, component validation, push, publication, or
-human-gate action occurred.
+**Update scope:** eighty-ninth coordination turn, second follow-up. After
+the responsible human's same-turn reply `"confirmed"` (no other running
+session) and an immediate recheck, implemented PMR-108 step 2: human-run
+`scripts/maintenance-reservation.sh hold -- <command>` takes an exclusive
+global lock that `owner-session.sh` and `owner-recovery.sh` launches share,
+and the quiescence check now reports that reservation (free: reported, not
+failed; held by another: fail; held with this session's marker: pass).
+Earlier this turn: step 1 quiescence check, and the human's decision to keep
+two dirty Beryllium linked worktrees and delete them manually. PMR-108 stays
+open for that deletion (step 3) and rollout (step 4). No component write,
+worktree change, live reservation, push, publication, or human-gate action
+occurred.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -33,7 +29,7 @@ in `../COMPONENTS.md`
 | Operational PM closure | **Complete, with independent evidence gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105, and formal-verification PMR-014/037/041/069 are closed. Beryllium's prior session is closed without PMR-098/100 returns; those requests remain open. Security backup PMR-111 is separate and unapproved. |
 | Workspace worktree layout | **Container and ignore complete; namespacing follow-up open.** Workspace-root `worktrees/` now holds six human-moved, repaired Beryllium linked worktrees at temporary flat paths recorded in `../COMPONENTS.md`. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; Project Manager never moves or removes them. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
-| Global startup-status rollout | **P2 `PMR-108`: step 1 check implemented; step 3 human-disposed pending manual deletion; reservation and rollout open.** `bash ./scripts/inspect-components.sh quiescence` enumerates every registered linked worktree, including ignored and outside-workspace paths. The first live run failed only on two dirty Beryllium linked worktrees that the responsible human chose to keep and delete manually (`"ok, keep and ignore the two worktrees, I will delete manually later."`). No exclusion was added; rollout stays blocked until a passing check observes deletion. The global reservation is unimplemented. |
+| Global startup-status rollout | **P2 `PMR-108`: steps 1-2 implemented; step 3 awaits your manual deletion; rollout open.** The quiescence check enumerates every registered linked worktree; its last live run failed only on the two dirty Beryllium linked worktrees you chose to keep and delete manually (`"ok, keep and ignore the two worktrees, I will delete manually later."`). The global reservation `scripts/maintenance-reservation.sh hold -- <command>` is implemented and mutually exclusive with owner launches. Rollout needs a passing check inside the reservation, immediate recheck, and fresh same-turn confirmation. |
 | Max-effort scope governance | **Tracked/component policy aligned; install/check human-reported complete.** The responsible human reported the exact governance `install && check` command completed (`"done above"`). The Project Manager did not run it against real user configuration, inspect output, or establish install-time session state. `PMD-20260930-001/002/005` policy remains unchanged. |
 | Component policy exceptions | **PMR-109 and PMR-110 closed; backup separate.** Current security-reviewer files at `2bb4c98` require exact Codex `xhigh` / `default`, retain ordinary max/high-floor handling for explicit non-Codex selections, and prohibit silent fallback. Return `c2edac7` reports 396 / 0 and no engagement; the human `"done"` response releases only that session. Unpushed commits are tracked by PMR-111, which has no push authority. |
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Human-started ordinary owner sessions are now separately automated by `scripts/owner-session.sh`: one private revision-bound packet and interactive `copilot --no-auto-update --yolo`, with no copied prompt. This launcher is not an owner worker and grants no Project Manager/component authority. |
@@ -62,7 +58,7 @@ in `../COMPONENTS.md`
 | Human interaction | The responsible human selected the dedicated PMR-105 mechanism, completed preflight, stated exactly `"authorize PMR-105 exact private fast-forward"`, and ran the bound human-owned execution. Exact log and independent inspection close PMR-105; the single-use authorization is consumed. |
 | Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review. Ordinary roles remain `max` / `long_context`; `PMD-20260930-005` makes exact Codex `xhigh` / `default` the sole named capability exception. `PMD-20260930-001` retains `high` as the explicit floor for every non-Codex selection and `beryllium-scope-review` as the `claude-opus-5.5` / `max` / `long_context` scope-control model exception. No silent model, effort, or context fallback is permitted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this turn's commits, parent `1fc63c3432b59e627bd76fea0b340b2d49556801` is behind 0 / ahead 30 of `upstream/main`, and Project Manager base `d1bcf614ee10fed4700e156ef738cb6ff5291390` is behind 0 / ahead 20 of `origin/main`; committed request blob `613d5e6f805b521313e5f9cff49847104f37f261`. Tracked changes are limited to the exact Project Manager and parent paths listed for review; the repaired `worktrees/` container is ignored and remains component-owned. The parent registry update follows the Project Manager commit. |
+| Parent coordination | Before this follow-up's commits, parent `9188b1e76bbb0f73fdca8babef92ea28bd984334` is behind 0 / ahead 32 of `upstream/main`, and Project Manager base `820b29f7ca7857768c5ee1300bf1483d35167240` is behind 0 / ahead 22 of `origin/main`; committed request blob `3e79bdfd99fb9c9c89351f1bdd64f2b0b3be6d0f`. Tracked changes are limited to the exact Project Manager and parent paths listed for review; the repaired `worktrees/` container is ignored and remains component-owned. The parent registry update follows the Project Manager commit. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -87,7 +83,7 @@ backup/publication gates, and elective work remain visible.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P2 | `PMR-108` | **Check implemented; reservation missing; rollout blocked until the human deletes two worktrees** | You chose to keep the two dirty Beryllium worktrees and delete them manually later; the check keeps failing on them until then, which blocks rollout only. Step 2 (global reservation, Project Manager-only) can proceed now after a fresh same-turn no-session confirmation. No child write follows. |
+| P2 | `PMR-108` | **Steps 1-2 done; rollout blocked until you delete two worktrees** | Delete the two dirty Beryllium worktrees you kept, then start the rollout session inside the reservation. Holding it blocks owner launches (including PMR-098/100 sessions) for its duration. No child write follows until rollout PMRs are allocated. |
 | P2 | `PMR-098` | **Canonical return missing** | The owner must reconcile `416b2e9..80345e1`; the human no-session statement supplies only current session state, and no acceptance or publication authority follows. |
 | P2 | `PMR-100` | **Canonical KVM0-series return missing** | The closed-without-return session still lacks the post-`80345e1` KVM0 commits/scopes, validation, authority, changed paths, and backup/ref/publication evidence. Later non-KVM0 `ee1feaf` / `4141cf6` remains observation-only. |
 | P3 | `Worktree namespacing` (no PMR) | **Temporary flat placement works; owner follow-up deferred** | Six repaired Beryllium worktrees are under `worktrees/` but not yet under `worktrees/beryllium-hypervisor/...`; other top-level Beryllium worktrees need a later owner inventory. Any move is human/Beryllium-owner `git worktree move`. |
@@ -111,19 +107,21 @@ backup/publication gates, and elective work remain visible.
 
 ### One recommended next action
 
-Implement PMR-108 step 2, the global maintenance reservation. It writes only
-Project Manager files and may proceed while the check still fails on exactly
-the two worktrees you chose to keep. It needs a fresh same-turn confirmation
-that no other session is running, then an immediate recheck. Start with:
+When convenient, delete the two dirty Beryllium linked worktrees you kept
+(`worktrees/be-doc-repro-review-7cf4-20260930` and
+`implement-doc-source-check`), leaving no absent or prunable registration.
+Then, from `project-manager/`, start the PMR-108 rollout session inside the
+global reservation and confirm no other session is running:
 
 ```sh
-bash ./scripts/project-tasking.sh resolve project-manager
+bash ./scripts/maintenance-reservation.sh hold -- copilot --agent project-manager
 ```
 
-Rollout (step 4) stays blocked until you delete those two worktrees and
-`bash ./scripts/inspect-components.sh quiescence` passes. If "ignore" meant
-something else, redirect. The responsible human may have higher
-priorities outside Project Manager visibility.
+In that session, run `bash ./scripts/inspect-components.sh quiescence`; it
+must exit 0 before any rollout write. Until then, other work (for example
+PMR-098/100 Beryllium returns) can proceed normally outside the reservation.
+If "ignore" meant something else, redirect. The responsible human may have
+higher priorities outside Project Manager visibility.
 
 ### Minimal restart commands
 
@@ -143,6 +141,32 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### Eighty-ninth-turn second follow-up: PMR-108 step 2 reservation
+
+- The responsible human replied exactly `"confirmed"` (no other running
+  session); an immediate recheck matched the prior quiescence result.
+- A scope review (`adjust`) kept the design and required: a free
+  reservation is reported without failing; no `status` mode; launcher
+  exclusion tested in both directions; launcher documentation on every
+  surface; and recording that PMD-20260929-003 item 3 is applied as
+  "not held by another holder".
+- Added human-run `scripts/maintenance-reservation.sh hold -- <command>`
+  (exclusive lock at ignored `scratch/owner-sessions/global/maintenance.lock`,
+  exports `PM_MAINTENANCE_RESERVATION=held`, runs the command). The
+  `owner-session.sh` and `owner-recovery.sh` launch modes now also hold a
+  shared lock on it and are refused while it is held. The quiescence row
+  passes only with the reservation held and the marker present; the marker
+  does not verify the holder.
+- Sandbox tests cover marker export, exit status, double hold, both launchers
+  refused during the reservation (with the lock-specific diagnostic and no
+  Copilot start), the reservation refused during both launches, symlinked
+  lock paths, and the quiescence free/held/foreign rows. A `pm-auditor` pass
+  (`gpt-6-sol`) found two blocking lock-path gaps (symlinked lock directory
+  and dangling symlinked global lock), fixed before commit.
+- The Project Manager never ran `hold`, `owner-session.sh`, or
+  `owner-recovery.sh` against live scratch. No component, worktree, SOT,
+  push, publication, or gate change.
 
 ### Eighty-ninth-turn follow-up: dirty-worktree disposition
 

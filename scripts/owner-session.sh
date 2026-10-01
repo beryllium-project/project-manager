@@ -95,6 +95,17 @@ mkdir -p -- "$scratch_root"
 if [[ $mode == launch ]]; then
     command -v flock >/dev/null 2>&1 ||
         die "flock is required for one-writer owner sessions"
+    [[ ! -L $scratch_root/global ]] ||
+        die "the global maintenance lock directory is a symbolic link"
+    mkdir -p -- "$scratch_root/global"
+    [[ ! -L $scratch_root/global/maintenance.lock ]] ||
+        die "the global maintenance lock is a symbolic link"
+    [[ ! -e $scratch_root/global/maintenance.lock ||
+        -f $scratch_root/global/maintenance.lock ]] ||
+        die "the global maintenance lock is not a regular file"
+    exec {global_fd}>>"$scratch_root/global/maintenance.lock"
+    flock -n -s "$global_fd" ||
+        die "the PMR-108 global maintenance reservation is held"
     mkdir -p -- "$scratch_root/locks"
     lock_file=$scratch_root/locks/$component.lock
     exec {lock_fd}>"$lock_file"

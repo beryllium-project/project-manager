@@ -37,9 +37,11 @@ quiescence      PMR-108 automated preconditions: parent and every registered
                 worktree of each listed repository present, not prunable,
                 and clean, registry-check exact, queue and tasking checks
                 passing, and no owner-session writer lock held; exit 1 on any
-                failure. Exit 0 does not establish quiescence: active-session
-                reports, the global maintenance reservation, and same-turn
-                human confirmation remain required.
+                failure, including a global maintenance reservation held
+                without this session's PM_MAINTENANCE_RESERVATION marker; a
+                free reservation is reported but does not fail. Exit 0 does
+                not establish quiescence: active-session reports, a held
+                reservation, and same-turn human confirmation remain required.
 
 "workspace" is the parent coordination repository. Registered names are the
 component rows maintained in ../COMPONENTS.md.
@@ -547,7 +549,7 @@ quiescence_failures=0
 quiescence_row() {
     # check, subject, result, detail
     printf '%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4"
-    [[ $3 == pass || $3 == manual || $3 == unimplemented ]] ||
+    [[ $3 == pass || $3 == manual || $3 == free ]] ||
         quiescence_failures=$((quiescence_failures + 1))
 }
 
@@ -610,7 +612,7 @@ quiescence_worktrees() {
 }
 
 print_quiescence() {
-    local name path porcelain lock_root lock_file lock_fd held=0
+    local name path porcelain lock_root lock_file lock_fd held=0 global_lock global_fd
     local -A quiescence_seen=()
     printf '# PMR-108 quiescence preconditions (check, subject, result, detail)\n'
     printf '# workspace root: %s\n' "$workspace_root"
@@ -666,6 +668,8 @@ print_quiescence() {
     lock_root=${PM_OWNER_SESSION_SCRATCH:-$repository_root/scratch/owner-sessions}/locks
     if ! command -v flock >/dev/null 2>&1; then
         quiescence_row writer-locks owner-sessions fail "flock unavailable"
+    elif [[ -L $lock_root || -L ${lock_root%/locks} ]]; then
+        quiescence_row writer-locks owner-sessions fail "lock root is a symbolic link"
     elif [[ -e $lock_root && ! -d $lock_root ]]; then
         quiescence_row writer-locks owner-sessions fail "lock root is not a directory"
     elif [[ -d $lock_root ]]; then
@@ -703,8 +707,31 @@ print_quiescence() {
         quiescence_row writer-locks owner-sessions pass "no lock directory"
     fi
 
-    quiescence_row global-reservation maintenance unimplemented \
-        "global maintenance reservation not yet implemented (PMR-108 later step)"
+    global_lock=${PM_OWNER_SESSION_SCRATCH:-$repository_root/scratch/owner-sessions}/global/maintenance.lock
+    if [[ -L $global_lock || -L ${global_lock%/maintenance.lock} ]]; then
+        quiescence_row global-reservation maintenance fail unsupported
+    elif [[ ! -e $global_lock ]]; then
+        quiescence_row global-reservation maintenance free \
+            "not held; rollout requires maintenance-reservation.sh hold"
+    elif [[ ! -f $global_lock ]]; then
+        quiescence_row global-reservation maintenance fail unsupported
+    elif ! command -v flock >/dev/null 2>&1 || ! exec {global_fd}<"$global_lock"; then
+        quiescence_row global-reservation maintenance fail "cannot probe"
+    elif flock -n -s "$global_fd"; then
+        flock -u "$global_fd"
+        exec {global_fd}<&-
+        quiescence_row global-reservation maintenance free \
+            "not held; rollout requires maintenance-reservation.sh hold"
+    else
+        exec {global_fd}<&-
+        if [[ ${PM_MAINTENANCE_RESERVATION:-} == held ]]; then
+            quiescence_row global-reservation maintenance pass \
+                "held; environment marker present (holder not verified)"
+        else
+            quiescence_row global-reservation maintenance fail \
+                "held by another holder or an owner launch"
+        fi
+    fi
     quiescence_row active-session-reports handoffs-returns-runtime manual \
         "not machine-checked: review handoffs, owner returns, runtime and hidden owner-worker reservations"
     quiescence_row human-confirmation same-turn manual \
@@ -715,7 +742,7 @@ print_quiescence() {
     else
         printf 'automated-preconditions\tfail\t%s failing checks\n' "$quiescence_failures"
     fi
-    printf 'quiescence\tnot established by this check; manual items, the global reservation, and an immediate pre-write recheck remain required; no gate is granted\n'
+    printf 'quiescence\tnot established by this check; manual items, a held global reservation, and an immediate pre-write recheck remain required; no gate is granted\n'
     ((quiescence_failures == 0))
 }
 

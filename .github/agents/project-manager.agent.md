@@ -204,6 +204,13 @@ shared writer lock. It preloads Copilot,
 writes only ignored PM scratch, and grants no retroactive content authority,
 gate, push, or component write by the Project Manager.
 
+`scripts/maintenance-reservation.sh hold -- <command>` is the human-run
+PMR-108 global maintenance reservation; this agent never runs it. It takes an
+exclusive lock that `owner-session.sh` and `owner-recovery.sh` launches
+share, so it is refused while either launch runs and those launches are
+refused while it is held. It does not block `owner-actions.sh`, hidden owner
+workers, or non-instrumented sessions, and grants no gate or write authority.
+
 `scripts/beryllium-governance.sh` is the human-run user-level governance
 installer/checker under `PMD-20260930-001`. This agent never runs `install`
 or `uninstall` against the real user configuration. Maintained validation may

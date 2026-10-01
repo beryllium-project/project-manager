@@ -300,7 +300,12 @@ SHA-256-bound packet under ignored
 `scratch/owner-sessions/`, and launches interactive
 `copilot --no-auto-update --yolo -C <logical-entry> -i <packet-locator>`.
 Only `launch` holds a per-component `flock` writer reservation through the
-Copilot process; `prepare` reserves no writer.
+Copilot process; `prepare` reserves no writer. `owner-session.sh` and
+`owner-recovery.sh` launches also hold a shared lock on the human-run PMR-108
+global maintenance reservation (`scripts/maintenance-reservation.sh hold --
+<command>`) and are refused while it is held; the reservation is refused
+while either launch runs. It does not block `owner-actions.sh`, hidden owner
+workers, or non-instrumented sessions, and grants no gate or write authority.
 The packet contains exact separately validated PMR dispatch packets,
 component/PM fingerprints, local-instruction and one-writer checks,
 collaboration triggers, validation/local-commit/owner-return requirements,

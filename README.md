@@ -278,6 +278,7 @@ bash ./scripts/owner-session.sh prepare <component> <PMR-NNN>...
 bash ./scripts/owner-session.sh launch <component> <PMR-NNN>...
 bash ./scripts/owner-recovery.sh prepare <component> <PMR-NNN>
 bash ./scripts/owner-recovery.sh launch <component> <PMR-NNN>
+bash ./scripts/maintenance-reservation.sh hold -- <command>
 bash ./scripts/new-record.sh decision <slug>
 bash ./scripts/validate-pm.sh
 bash ./tests/validate-agent.sh
@@ -290,10 +291,11 @@ access. `inspect-components.sh quiescence` reports PMR-108 automated
 preconditions only: it enumerates every linked worktree of the parent and
 each registered repository, including ignored and outside-workspace paths,
 and fails closed on any absent, prunable, or dirty worktree, registry drift,
-queue or tasking failure, or held owner-session writer lock. Its exit 0
-never establishes quiescence: active-session reports, the not-yet-implemented
-global maintenance reservation, and same-turn human confirmation remain
-required. `new-record.sh` writes only under `records/decisions/`. Carried
+queue or tasking failure, held owner-session writer lock, or global
+maintenance reservation held without this session's marker (a free
+reservation is reported, not failed). Its exit 0 never establishes
+quiescence: active-session reports, a held reservation, and same-turn human
+confirmation remain required. `new-record.sh` writes only under `records/decisions/`. Carried
 writes inside components are made by the agent itself, never by these
 scripts.
 
@@ -335,7 +337,16 @@ private revision-bound packet under `project-manager/scratch/owner-sessions/`,
 and starts interactive `copilot --no-auto-update --yolo` with a short packet
 path/hash/HEAD prompt. `prepare` performs the same checks without launching.
 Only `launch` holds the per-component `flock` writer reservation through the
-Copilot process; `prepare` reserves no writer.
+Copilot process; `prepare` reserves no writer. Both `owner-session.sh` and
+`owner-recovery.sh` launches also hold a shared lock on the PMR-108 global
+maintenance reservation and are refused while it is held.
+
+`bash ./scripts/maintenance-reservation.sh hold -- <command>` is human-run
+only: it takes that reservation exclusively (refused while any owner launch
+runs), exports `PM_MAINTENANCE_RESERVATION=held`, and runs the command, normally
+the Project Manager PMR-108 rollout session. It does not block
+`owner-actions.sh`, hidden owner workers, or non-instrumented sessions, and
+grants no gate or write authority.
 The Project Manager agent never uses it for live owner work; maintained
 validation uses only sandbox state and a Copilot stub. The helper writes no
 component file before Copilot starts, invokes no hidden owner worker, grants
