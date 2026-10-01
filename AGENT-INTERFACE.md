@@ -43,6 +43,9 @@ turn it:
 
 - re-resolves canonical topology through `../SOT.md` and
   `scripts/inspect-components.sh`;
+- binds every generated tasking view and dispatch packet to the current
+  `workspace://SOT.md` SHA-256 so startup fails closed on missing or changed
+  global status;
 - inspects registered components read-only and records observed state;
 - pulls component queues and records dispositions ledger-first;
 - carries recorded requests inside carry-eligible components only within the
@@ -196,7 +199,7 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Decision records | `records/decisions/PMD-YYYYMMDD-NNN-*.md` | Allocated by `scripts/new-record.sh`; append-only, superseding corrections |
 | Queue ledger | `queue/LEDGER.md` | Ledger-first dispositions; see `queue/README.md` |
 | Component requests | `outbox/component-requests.md` | Requests to component owners; those inside the three classes of `PMD-20260904-003` are carried by this agent and closed with the component commit, every other request is carried by the human |
-| Generated tasking views | `outbox/tasking/<component>.md` | Ignored local projections generated from the committed request table after each PM commit; resolved only while the recorded PM commit and request blob are current |
+| Generated tasking views | `outbox/tasking/<component>.md` | Ignored local projections generated from the committed request table after each PM commit; resolved only while the recorded PM commit, request blob, and current regular `workspace://SOT.md` SHA-256 match |
 | Dirty owner recovery specifications | `outbox/owner-recovery/<PMR-NNN>.tsv` | Project Manager-owned exact branch/HEAD/status fingerprints for a responsible-human-confirmed closed owner session; consumed only by the human-run recovery launcher |
 | Exact dispatch packet | `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` | Read-only selection of one directly assigned open row, bound to the current PM commit and request blob; emitted by the Project Manager or embedded by the human-run owner launcher, never by a component agent; writes and launches nothing |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |

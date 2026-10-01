@@ -107,3 +107,6 @@ delivery request `PMR-028`; it is synchronized with private `origin/main`.
 coordination does not resume it or accept any risk. `PMR-064` asks both
 user-invocable entry points to map `check Project Manager tasking` to the
 exact fail-closed resolver without session-history fallback.
+`PMR-117` is the distinct owner-startup request to read current
+`workspace://SOT.md` before target/sibling resolution or tasking. It may be
+handled with PMR-064 but does not resume or modify the paused model.

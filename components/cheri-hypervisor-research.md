@@ -109,3 +109,7 @@ symlink to the verified active successor. PMR-072 is closed: the owner context
 maps `check Project Manager tasking` to the exact fail-closed resolver without
 session-history fallback and the handoff records current paths. No research,
 review-ID, collaboration, component push, or publication change was included.
+PMR-115 records the newly observed remaining gap: the active owner
+instructions and handoff still hard-code the former workstation paths rather
+than reading current `workspace://SOT.md`. Its correction is startup
+coordination only and changes no research, review ID, source, ref, or gate.

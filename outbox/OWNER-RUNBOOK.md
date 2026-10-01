@@ -91,79 +91,27 @@ Additional registered Beryllium worktrees still exist at the workspace top
 level. A later owner inventory decides whether to leave or move them; this
 turn does not list, classify, or touch them.
 
-## P2 PMR-108: global startup status and quiescence gate
+## Completed PMR-108: global startup status and quiescence gate
 
 `../SOT.md` is the existing global topology/status anchor. It now records the
 temporary Fedora `lx2` placement, the `~/src/l1/src` root convention, and the
 2026-10-09 review date. That date does not automatically switch the canonical
 host or path.
 
-Do not begin `PMR-108` while any project session is active. On 2026-10-01
-the responsible human stated exactly `"there is no other running session"`.
-This supersedes the prior Beryllium session report as point-in-time evidence
-only; it does not create PMR-098/100 returns or standing quiescence.
-Maintained inspection observes clean active/default Beryllium `4141cf6`,
-synchronized 0/0 with last-fetched `origin`, after broad source-first
-validation-policy commit `ee1feaf` and review packet `4141cf6`. No child
-repository is changed by this coordination item.
+Do not rerun the rollout. The responsible human stated exactly `"I confirm
+no other session is running."` inside the held reservation. Both the initial
+and immediate pre-write quiescence checks passed every automated row; manual
+handoff/runtime review found no current owner session. The tasking generator
+now binds `workspace://SOT.md` by SHA-256 and fails closed if the anchor is
+absent, symlinked, or changed.
 
-Project-wide quiescence cannot be inferred from Git cleanliness alone. It
-requires four separate gates: (a) the maintained read-only
-`scripts/inspect-components.sh quiescence` check passes (parent, Project
-Manager, registry, queues, generated tasking, and every registered worktree
-clean/current; no owner-session or owner-recovery writer lock held; no
-global reservation held by another holder); (b) a held global maintenance
-reservation; (c) Project
-Manager review finding no handoff, return, user statement, or runtime report
-of an active session, which the check marks `manual`; and (d) the human
-confirmation below. The responsible human must again confirm in the same turn that no
-non-instrumented CLI, desktop, background, or external agent session is
-active. The parent now ignores the repaired `worktrees/` container, but that
-status cleanliness is not quiescence evidence.
-
-Step 1 is complete: `bash ./scripts/inspect-components.sh quiescence`
-enumerates every linked worktree of the parent and each registered
-repository, including ignored and outside-workspace paths, and fails closed.
-Its exit 0 reports automated preconditions only. The 2026-10-01 live run
-failed on two dirty Beryllium linked worktrees:
-`worktrees/be-doc-repro-review-7cf4-20260930` (2 entries) and
-`implement-doc-source-check` under your Copilot session-state directory
-(6 entries). You stated exactly `"ok, keep and ignore the two worktrees, I will delete manually later."`
-This decision covers only those two worktrees as observed; their contents
-were not reviewed by the Project Manager, which never touches them. Delete
-them yourself when convenient, using the workspace worktree workflow in
-`../SOT.md`. The check passes only when deletion leaves no absent or
-prunable Beryllium worktree registration; until then PMR-108 rollout stays
-blocked. Step 2 (the Project Manager-only global reservation) may proceed
-before deletion after a fresh same-turn no-session confirmation and immediate
-recheck. Rerun the check from `project-manager/` afterward:
-
-```sh
-bash ./scripts/inspect-components.sh quiescence
-```
-
-The global maintenance reservation (step 2) is implemented. For the later
-rollout only, after you delete the two worktrees, start the Project Manager
-session inside it from `project-manager/`:
-
-```sh
-bash ./scripts/maintenance-reservation.sh hold -- copilot --agent project-manager
-```
-
-While that session runs, every `owner-session.sh` and `owner-recovery.sh`
-launch is refused (including PMR-098/100 return sessions), and the
-reservation is refused while any such launch is running. It does not block
-`owner-actions.sh`, hidden owner workers, or sessions started another way,
-so your same-turn confirmation is still required. It grants no gate.
-
-After that gate passes, the Project Manager may update only its own and
-allowed parent-root startup/status tooling, inventory every owner context,
-and allocate separate PMRs for child-owned startup changes. Resolve the
-blocked request from `project-manager/` with:
-
-```sh
-bash ./scripts/project-tasking.sh resolve project-manager
-```
+No child repository changed. Owner adoption remains separate:
+`PMR-112` Beryllium, `PMR-113` Helium, `PMR-114` CHERI notes, `PMR-115` XRV,
+`PMR-116` OS-security, `PMR-117` threat-modeler, and `PMR-118`
+security-reviewer. Project Manager, analysis-workbook,
+formal-verification-research, and provenance-review already read the SOT
+anchor. PMR-108 is closed; child request closure, PMR-098/100 returns, and
+every human gate remain independent.
 
 ## P3 PMR-111: security-reviewer private backup
 
@@ -422,7 +370,7 @@ record, or decline each pointer. It must not access
 `sources/restricted-microsoft/`, copy full text, decide redistribution,
 publish, or turn pointer triage into an architecture or assurance gate.
 
-## Project-wide tasking startup adoption
+## Project-wide tasking and SOT startup adoption
 
 `PMD-20260915-008` requires every registered owner context to map
 `check Project Manager tasking` to:
@@ -435,6 +383,11 @@ The command must be run from the registered logical workspace entry. If it
 cannot be found or fails validation, stop and ask the human to relaunch from
 that entry. Never search session history, task/todo databases, background
 agents, prior chat, or memory for a fallback PMR.
+
+PMR-108 additionally requires the owner context to read current
+`workspace://SOT.md` before resolving component paths or beginning work. The
+generated view and dispatch packet carry its SHA-256; missing, symlinked, or
+changed status fails closed until Project Manager regeneration.
 
 If a Project Manager turn is still changing `outbox/component-requests.md`,
 wait for its commit and regenerated views before starting an owner session.
@@ -449,10 +402,14 @@ prompt.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-064` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064` | Packet preloaded; do not resume the paused model. |
+| `PMR-112` | P3 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-112` | Startup policy only; no implementation, plan, acceptance, ref, or gate change. |
+| `PMR-114` | P2 | `bash ./project-manager/scripts/owner-session.sh launch cheri-riscv-notes PMR-114` | Replace stale paths only; no corpus, D4/D5, merge, Pages, or publication change. |
+| `PMR-115` | P2 | `bash ./project-manager/scripts/owner-session.sh launch cheri-hypervisor-research PMR-115` | Replace stale paths only; no research, review-ID, source, ref, or publication change. |
+| `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Packet preloaded; do not resume or modify the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
-| `PMR-068` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068` | Packet preloaded; preserve frozen refs and gates. |
-| `PMR-070` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
+| `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
+| `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
+| `PMR-118` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent security-reviewer launch security-reviewer PMR-118` | Startup policy only; no engagement, model change, push, or gate. |
 
 Do not paste a follow-up phrase. The generated packet already includes the
 exact resolver, PM/request fingerprints, selected PMR text, local instruction

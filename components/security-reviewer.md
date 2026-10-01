@@ -172,3 +172,7 @@ git diff --check
   `origin/main`; `PMR-111` separately tracks an exact private fast-forward
   after a new same-turn human confirmation. The remote was created and first
   pushed on 2026-09-06 (`PMR-021` closed).
+- `PMR-118` separately requests the SHA-bound `workspace://SOT.md`
+  startup/status anchor for the orchestrator and all three specialists. It
+  changes no engagement, package, model policy, target execution, push, or
+  human gate.

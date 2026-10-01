@@ -26,7 +26,8 @@ session, model, or review content.
 ## Position in the workspace
 
 The parent workspace root remains the thin coordination shell: `SOT.md`
-(canonical topology), `COMPONENTS.md` (component registry), `README.md`,
+(canonical topology and workstation-status anchor), `COMPONENTS.md`
+(component registry), `README.md`,
 `.gitignore`, `.github/copilot-instructions.md`, the compatibility redirect
 `HANDOFF.md`, and the tracked component symlink objects. This component owns
 the Project Manager handoff, component knowledge cards, the agent roster,
@@ -301,9 +302,11 @@ scripts.
 
 `project-tasking.sh generate` writes only ignored local projections under
 `outbox/tasking/`, after confirming the authoritative request table is
-committed. `check` and `resolve` fail closed unless the view records the
-current Project Manager commit and exact committed request blob. From either a
-direct checkout or tracked workspace symlink, run:
+committed and the parent `SOT.md` anchor is a readable regular file. Every
+view and dispatch packet records `workspace://SOT.md` and its SHA-256.
+`check`, `resolve`, and `dispatch` fail closed unless the view records the
+current Project Manager commit, exact committed request blob, and current
+anchor hash. From either a direct checkout or tracked workspace symlink, run:
 
 ```sh
 bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
@@ -314,7 +317,10 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 logical workspace entry. An agent must stop on failure; it must not search
 session history, task databases, background agents, prior chat, or memory as
 a fallback. Component-owned entry points are tracked by
-`PMR-063..PMR-072`.
+`PMR-063..PMR-072`. PMR-108's 2026-10-01 inventory found the SOT startup
+anchor already active for Project Manager, analysis-workbook,
+formal-verification-research, and provenance-review. Distinct owner requests
+`PMR-112..PMR-118` cover only the seven remaining component gaps.
 
 From the workspace root, use
 `bash ./project-manager/scripts/project-tasking.sh resolve <component>`.

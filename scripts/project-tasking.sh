@@ -23,8 +23,10 @@ dispatch  validate one directly assigned open request and print a deterministic
 
 Run generate after each Project Manager commit. Resolve stops rather than
 showing tasking when the Project Manager repository, view, source commit, or
-request-table snapshot is missing or stale. Dispatch has the same fail-closed
-checks and additionally requires an exact component name and request ID.
+request-table snapshot is missing or stale, or when the global
+workspace://SOT.md startup/status anchor is absent or SHA-drifted. Dispatch
+has the same fail-closed checks and additionally requires an exact component
+name and request ID.
 EOF
 }
 
@@ -41,9 +43,13 @@ pm_root=${PM_TASKING_ROOT:-$default_root}
 pm_root=$(CDPATH= cd -- "$pm_root" 2>/dev/null && pwd -P) ||
     die "Project Manager repository is unreachable"
 workspace_root=${PM_TASKING_WORKSPACE:-$(CDPATH= cd -- "$pm_root/.." && pwd -P)}
+workspace_root=$(CDPATH= cd -- "$workspace_root" 2>/dev/null && pwd -P) ||
+    die "workspace root is unreachable"
 requests_rel=outbox/component-requests.md
 requests_file=$pm_root/$requests_rel
 tasking_dir=$pm_root/outbox/tasking
+startup_anchor_locator=workspace://SOT.md
+startup_anchor_file=$workspace_root/SOT.md
 
 git_pm() {
     git -c core.hooksPath=/dev/null -c core.fsmonitor=false \
@@ -56,6 +62,46 @@ require_repository() {
     [[ $(git_pm rev-parse --show-toplevel 2>/dev/null || true) == "$pm_root" ]] ||
         die "Project Manager repository is invalid: $pm_root"
     [[ -f $requests_file ]] || die "authoritative request table is absent"
+    [[ -f $startup_anchor_file && ! -L $startup_anchor_file &&
+       -r $startup_anchor_file ]] ||
+        die "global startup/status anchor is absent or invalid: $startup_anchor_locator"
+}
+
+startup_anchor_sha() {
+    local anchor_fd descriptor_identity path_identity digest
+    [[ -f $startup_anchor_file && ! -L $startup_anchor_file &&
+       -r $startup_anchor_file ]] || return 1
+    exec {anchor_fd}<"$startup_anchor_file" || return 1
+    descriptor_identity=$(stat -Lc '%d:%i:%F' -- "/proc/self/fd/$anchor_fd") || {
+        exec {anchor_fd}<&-
+        return 1
+    }
+    [[ $descriptor_identity == *':regular file' ]] || {
+        exec {anchor_fd}<&-
+        return 1
+    }
+    [[ -f $startup_anchor_file && ! -L $startup_anchor_file ]] || {
+        exec {anchor_fd}<&-
+        return 1
+    }
+    path_identity=$(stat -Lc '%d:%i:%F' -- "$startup_anchor_file") || {
+        exec {anchor_fd}<&-
+        return 1
+    }
+    [[ $path_identity == "$descriptor_identity" ]] || {
+        exec {anchor_fd}<&-
+        return 1
+    }
+    digest=$(sha256sum <&"$anchor_fd" |
+        awk 'NR == 1 { print $1; found = 1 } END { if (!found) exit 1 }') || {
+        exec {anchor_fd}<&-
+        return 1
+    }
+    exec {anchor_fd}<&-
+    [[ -f $startup_anchor_file && ! -L $startup_anchor_file ]] || return 1
+    path_identity=$(stat -Lc '%d:%i:%F' -- "$startup_anchor_file") || return 1
+    [[ $path_identity == "$descriptor_identity" ]] || return 1
+    printf '%s\n' "$digest"
 }
 
 component_names() {
@@ -81,6 +127,7 @@ is_component() {
 
 render_view() {
     local component=$1 destination=$2 source_commit=$3 source_blob=$4 source_file=$5
+    local source_anchor_sha=$6
     local rows
     rows=$(mktemp "${TMPDIR:-/tmp}/project-tasking-rows.XXXXXX") ||
         die "cannot create row workspace"
@@ -107,7 +154,13 @@ render_view() {
         printf -- '- **Source Project Manager commit:** `%s`\n' "$source_commit"
         printf -- '- **Source request blob:** `%s`\n' "$source_blob"
         printf -- '- **Authoritative source:** `outbox/component-requests.md`\n'
-        printf -- '- **Component:** `%s`\n\n' "$component"
+        printf -- '- **Component:** `%s`\n' "$component"
+        printf -- '- **Global startup/status anchor:** `%s`\n' \
+            "$startup_anchor_locator"
+        printf -- '- **Global startup/status SHA-256:** `%s`\n\n' \
+            "$source_anchor_sha"
+        printf 'Read the current `%s` before resolving component paths or beginning owner work. If the anchor is absent or its SHA-256 changes, startup stops until the Project Manager regenerates these views.\n\n' \
+            "$startup_anchor_locator"
         if [[ -s $rows ]]; then
             printf '| Request | Priority | Assigned to | Action | Basis | Note |\n'
             printf '| --- | --- | --- | --- | --- | --- |\n'
@@ -125,7 +178,8 @@ render_view() {
 }
 
 generate_views() {
-    local source_commit source_blob temp_dir source_snapshot component file
+    local source_commit source_blob source_anchor_sha temp_dir source_snapshot
+    local component file
     require_repository
     git_pm diff --quiet -- "$requests_rel" ||
         die "request table has unstaged changes; commit it before generating"
@@ -135,6 +189,8 @@ generate_views() {
         die "cannot resolve Project Manager HEAD"
     source_blob=$(git_pm rev-parse --verify "HEAD:$requests_rel") ||
         die "request table is not committed"
+    source_anchor_sha=$(startup_anchor_sha) ||
+        die "cannot hash global startup/status anchor"
     temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/project-tasking.XXXXXX") ||
         die "cannot create generation workspace"
     trap 'rm -rf -- "$temp_dir"' EXIT HUP INT TERM
@@ -144,7 +200,8 @@ generate_views() {
 
     while IFS= read -r component; do
         render_view "$component" "$temp_dir/$component.md" \
-            "$source_commit" "$source_blob" "$source_snapshot"
+            "$source_commit" "$source_blob" "$source_snapshot" \
+            "$source_anchor_sha"
     done < <(component_names | sort -u)
     rm -f -- "$source_snapshot"
 
@@ -172,7 +229,8 @@ view_metadata() {
 
 validate_view() {
     local component=$1 file=$tasking_dir/$component.md
-    local recorded_component source_commit source_blob current_head current_blob
+    local recorded_component source_commit source_blob recorded_anchor
+    local recorded_anchor_sha current_anchor_sha current_head current_blob
     [[ -f $file ]] || die "tasking view is unreachable for $component; run generate"
     recorded_component=$(view_metadata "$file" '**Component:**') ||
         die "tasking view lacks component metadata: $component"
@@ -182,6 +240,16 @@ validate_view() {
         die "tasking view lacks source commit: $component"
     source_blob=$(view_metadata "$file" '**Source request blob:**') ||
         die "tasking view lacks request blob: $component"
+    recorded_anchor=$(view_metadata "$file" '**Global startup/status anchor:**') ||
+        die "tasking view lacks global startup/status anchor: $component"
+    [[ $recorded_anchor == "$startup_anchor_locator" ]] ||
+        die "tasking view names the wrong global startup/status anchor: $component"
+    recorded_anchor_sha=$(view_metadata "$file" '**Global startup/status SHA-256:**') ||
+        die "tasking view lacks global startup/status hash: $component"
+    current_anchor_sha=$(startup_anchor_sha) ||
+        die "cannot hash global startup/status anchor"
+    [[ $recorded_anchor_sha == "$current_anchor_sha" ]] ||
+        die "global startup/status anchor changed; regenerate tasking views"
     git_pm cat-file -e "$source_commit^{commit}" 2>/dev/null ||
         die "tasking source commit is unavailable: $source_commit"
     current_head=$(git_pm rev-parse --verify HEAD) ||
@@ -242,6 +310,7 @@ check_views() {
 dispatch_request() {
     local component=$1 request_id=$2
     local source_commit source_blob current_head current_blob temp_dir
+    local anchor_locator anchor_sha
     local selected id raised owner action basis status priority resolved note
 
     is_component "$component" ||
@@ -256,6 +325,12 @@ dispatch_request() {
         die "cannot resolve Project Manager HEAD"
     source_blob=$(git_pm rev-parse --verify "HEAD:$requests_rel") ||
         die "cannot resolve committed request table"
+    anchor_locator=$(view_metadata "$tasking_dir/$component.md" \
+        '**Global startup/status anchor:**') ||
+        die "cannot resolve global startup/status anchor"
+    anchor_sha=$(view_metadata "$tasking_dir/$component.md" \
+        '**Global startup/status SHA-256:**') ||
+        die "cannot resolve global startup/status hash"
 
     temp_dir=$(mktemp -d "${TMPDIR:-/tmp}/project-dispatch.XXXXXX") ||
         die "cannot create dispatch workspace"
@@ -326,6 +401,8 @@ dispatch_request() {
     printf -- '- **Source Project Manager commit:** `%s`\n' "$source_commit"
     printf -- '- **Source request blob:** `%s`\n' "$source_blob"
     printf -- '- **Authoritative source:** `%s`\n' "$requests_rel"
+    printf -- '- **Global startup/status anchor:** `%s`\n' "$anchor_locator"
+    printf -- '- **Global startup/status SHA-256:** `%s`\n' "$anchor_sha"
     printf -- '- **Dispatch key:** `%s/%s/%s/%s`\n\n' \
         "$component" "$request_id" "$source_commit" "$source_blob"
     printf '## Owner action\n\n%s\n\n' "$action"

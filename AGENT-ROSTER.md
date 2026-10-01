@@ -49,6 +49,27 @@ background agents, prior chat, or memory for a PMR fallback
 (`PMD-20260915-008`). Component-owner adoption is tracked by
 `PMR-063..PMR-072`.
 
+PMR-108 extends that startup path with the project-wide topology and
+workstation-status anchor. Generated tasking views and dispatch packets bind
+`workspace://SOT.md` by SHA-256 and fail closed if it is absent, symlinked, or
+changed. Each owner context must also read the current anchor from its
+registered logical workspace entry before resolving component paths or
+beginning work. The 2026-10-01 inventory is:
+
+| Component | Registered owner context(s) | SOT startup state |
+| --- | --- | --- |
+| `project-manager` | `project-manager` | Active in Project Manager and parent-root instructions |
+| `analysis-workbook` | `analysis-workbook`; hidden `analysis-workbook-owner` | Active in repository-wide instructions; hidden-owner packets also carry the bound anchor |
+| `formal-verification-research` | ordinary research owner | Active; instructions resolve topology through parent `SOT.md` |
+| `provenance-review` | orchestrator and write-disabled specialists | Active in repository-wide instructions |
+| `beryllium-hypervisor` | ordinary Beryllium owner context | Gap recorded as `PMR-112` |
+| `helium-te-poc` | ordinary Helium/skill owner context | Gap recorded as parked `PMR-113`, alongside `PMR-068` |
+| `cheri-riscv-notes` | ordinary notes owner context | Stale absolute-path gap recorded as `PMR-114` |
+| `cheri-hypervisor-research` | ordinary XRV owner context | Stale absolute-path gap recorded as `PMR-115` |
+| `osr-claude` | OS-security skill owner context | Ask-first gap recorded as `PMR-116`, alongside `PMR-070` |
+| `threat-modeler` | `threat-modeler`; `threat-model-maintainer` | Gap recorded as `PMR-117`, alongside `PMR-064` |
+| `security-reviewer` | orchestrator and three write-disabled specialists | Gap recorded as `PMR-118` |
+
 Project-wide Copilot CLI effort and scope control follows
 `PMD-20260930-001`: `max` is the default, and only the responsible human may
 override one named task to `high`, `xhigh`, or `max`; `high` is the absolute

@@ -84,4 +84,7 @@ The quarantine exists empty with clean history; no restricted file was copied
 during `PMR-044`. `PMR-070` asks the owner context to implement the exact tasking
 resolver mapping and no-fallback rule; ask the responsible human before that
 OS-security write. `PMR-052` is blocked while the responsible human waits for
-the cap-talk archive owners' response.
+the cap-talk archive owners' response. Ask-first `PMR-116` separately adds
+the SHA-bound `workspace://SOT.md` startup/status anchor and may be selected
+with PMR-070; neither request permits restricted access or research,
+quarantine, remote, visibility, publication, or PMR-052 changes.

@@ -153,4 +153,6 @@ publishes, or releases. P4 `PMR-068` asks the ordinary Copilot/skill owner
 context to map `check Project Manager tasking` to the exact fail-closed
 resolver without session-history fallback; the responsible human
 reprioritized it because the project is complete. It changes no frozen ref or
-gate.
+gate. Parked P4 `PMR-113` is the distinct SOT startup/status-anchor adoption
+for that same owner context; it may be handled with PMR-068 but changes no
+Helium scope, evidence, assurance wording, ref, or gate.

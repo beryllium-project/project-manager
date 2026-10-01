@@ -259,6 +259,9 @@ done
 require_file "$repository_root/scripts/project-tasking.sh"
 require_pattern "$repository_root/scripts/project-tasking.sh" '^set -euo pipefail$'
 require_text "$repository_root/scripts/project-tasking.sh" 'export LC_ALL=C'
+require_text "$repository_root/scripts/project-tasking.sh" 'workspace://SOT.md'
+require_text "$repository_root/scripts/project-tasking.sh" \
+    'global startup/status anchor changed; regenerate tasking views'
 expect_pass "project-tasking passes bash -n" \
     bash -n "$repository_root/scripts/project-tasking.sh"
 refute_pattern "$repository_root/scripts/project-tasking.sh" \
@@ -1662,7 +1665,9 @@ git -C "$qws/beryllium-hypervisor" worktree add -q -b in-container "$qws/worktre
 git -C "$qws/beryllium-hypervisor" worktree add -q -b outside "$sandbox/qoutside-wt"
 git -C "$qws" worktree add -q -b parent-linked "$sandbox/qparent-wt"
 qrun() {
-    env PM_WORKSPACE_ROOT="$qws" PM_OWNER_SESSION_SCRATCH="$qscratch" bash "$qinspect" quiescence
+    env -u PM_MAINTENANCE_RESERVATION \
+        PM_WORKSPACE_ROOT="$qws" PM_OWNER_SESSION_SCRATCH="$qscratch" \
+        bash "$qinspect" quiescence
 }
 
 expect_exit "quiescence rejects extra arguments" 2 \
@@ -1839,6 +1844,7 @@ printf '# direct-component\n' >"$tasking_pm/components/direct-component.md"
 printf '# symlink-component\n' >"$tasking_pm/components/symlink-component.md"
 printf '# other-component\n' >"$tasking_pm/components/other-component.md"
 printf '# recovery-component\n' >"$tasking_pm/components/recovery-component.md"
+printf '# Global startup status fixture\n' >"$tasking_workspace/SOT.md"
 cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 # Component requests
 
@@ -1908,6 +1914,11 @@ require_text "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-004'
 require_text "$tasking_pm/outbox/tasking/direct-component.md" '| Assigned to |'
 require_text "$tasking_pm/outbox/tasking/direct-component.md" \
     '| `PMR-004` | P1 | `other-component` |'
+tasking_anchor_sha=$(sha256sum "$tasking_workspace/SOT.md" | awk '{ print $1 }')
+require_text "$tasking_pm/outbox/tasking/direct-component.md" \
+    '**Global startup/status anchor:** `workspace://SOT.md`'
+require_text "$tasking_pm/outbox/tasking/direct-component.md" \
+    "**Global startup/status SHA-256:** \`$tasking_anchor_sha\`"
 refute_pattern "$tasking_pm/outbox/tasking/direct-component.md" 'PMR-00[23]'
 expect_output "project-tasking resolves a component name" "PMR-001" \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
@@ -1928,6 +1939,14 @@ expect_output "project-tasking dispatch packet includes the owner action" \
     bash "$tasking" dispatch direct-component PMR-001
 expect_output "project-tasking dispatch packet includes the request blob" \
     "**Source request blob:**" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+expect_output "project-tasking dispatch packet includes the startup anchor" \
+    "**Global startup/status anchor:** \`workspace://SOT.md\`" \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+expect_output "project-tasking dispatch packet includes the current anchor hash" \
+    "**Global startup/status SHA-256:** \`$tasking_anchor_sha\`" \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" dispatch direct-component PMR-001
 expect_output "project-tasking dispatch packet preserves the no-gate boundary" \
@@ -2011,6 +2030,35 @@ expect_output "explicit PM tasking roots resolve a physical symlink target" "PMR
 expect_exit "project-tasking check accepts current generated views" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" check
+printf 'changed\n' >>"$tasking_workspace/SOT.md"
+expect_exit "project-tasking rejects a changed startup anchor" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve direct-component
+expect_exit "project-tasking dispatch rejects a changed startup anchor" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" dispatch direct-component PMR-001
+printf '# Global startup status fixture\n' >"$tasking_workspace/SOT.md"
+expect_exit "project-tasking accepts a restored startup anchor" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" check
+mv -- "$tasking_workspace/SOT.md" "$tasking_workspace/SOT.md.saved"
+expect_exit "project-tasking rejects a missing startup anchor" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve direct-component
+expect_exit "project-tasking generate rejects a missing startup anchor" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+mv -- "$tasking_workspace/SOT.md.saved" "$tasking_workspace/SOT.md"
+mv -- "$tasking_workspace/SOT.md" "$tasking_workspace/SOT.md.real"
+ln -s SOT.md.real "$tasking_workspace/SOT.md"
+expect_exit "project-tasking rejects a symlinked startup anchor" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" resolve direct-component
+expect_exit "project-tasking generate rejects a symlinked startup anchor" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+rm -f -- "$tasking_workspace/SOT.md"
+mv -- "$tasking_workspace/SOT.md.real" "$tasking_workspace/SOT.md"
 
 expect_exit "owner-session prepares a multi-PMR ordinary owner packet" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \

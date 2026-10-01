@@ -170,6 +170,10 @@ acceptance, B0,
 development-kernel/BSP selection, B1, a retained H0 successor, H1-H4,
 publication, and release remain separate blocked gates. H1-H4 are
 unauthorized and K3 remains `NOT RUN`.
+`PMR-112` separately requests owner-startup adoption of the current
+`workspace://SOT.md` topology/status anchor. It changes no implementation,
+plan, acceptance record, ref, worktree, publication state, or PMR-098/100
+evidence requirement.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize

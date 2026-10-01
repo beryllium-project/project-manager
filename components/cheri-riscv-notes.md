@@ -127,4 +127,7 @@ close. The existing internal repository remains the inactive
 the workspace symlink to the verified active successor. `PMR-071` asks
 the owner-facing instructions to map `check Project Manager tasking` to the
 exact fail-closed resolver without session-history fallback; it changes no
-corpus or publication gate.
+corpus or publication gate. `PMR-114` now requests replacement of the
+remaining stale hard-coded workstation paths with current SOT-resolved
+logical topology and adoption of the SHA-bound startup/status anchor; it
+changes no corpus, citation, D4/D5, merge, Pages, or publication gate.

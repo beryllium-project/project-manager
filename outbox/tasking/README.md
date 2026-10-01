@@ -4,6 +4,14 @@
 surface. Files beside this README are ignored, local generated projections for
 component startup discovery; never edit or commit them.
 
+`../SOT.md` is the project-wide topology and workstation-status anchor. Each
+generated view records `workspace://SOT.md` and its SHA-256. `generate`
+requires the anchor to be a readable regular file; `check`, `resolve`, and
+`dispatch` fail closed if it is absent, replaced by a symlink, or changed
+since generation. This binding does not duplicate SOT content: every owner
+context reads the current anchor from its registered logical workspace entry
+before resolving component paths or beginning work.
+
 After each Project Manager commit:
 
 ```sh
@@ -70,8 +78,9 @@ The resolver identifies the physical repository behind either integration
 form. It prints open requests assigned to the component plus requests that
 explicitly cross-name it in the Request or Note field, only when the generated view
 names the current Project Manager commit, matches the committed
-`outbox/component-requests.md` blob, and that request table has no staged or
-unstaged change. Missing, unreachable, or stale tasking fails closed.
+`outbox/component-requests.md` blob, matches the current global
+`workspace://SOT.md` SHA-256, and that request table has no staged or unstaged
+change. Missing, unreachable, or stale tasking or startup status fails closed.
 Each row includes `Assigned to`, so a cross-named coordination row cannot be
 mistaken for work owned by the current component.
 
