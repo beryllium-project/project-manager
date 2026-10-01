@@ -108,8 +108,11 @@ research, analysis, threat models, provenance findings, or human decisions.
   gaining a new matcher. Agent and skill reread behavior in running sessions
   is unknown. Recommend install, reinstall, and uninstall only while governed
   sessions are idle; never add a process scanner or acknowledgement flag.
-  The reported active Beryllium session predates the initial install, was not
-  directly observed by this turn, and is never restarted or contacted.
+  On 2026-10-01 the responsible human stated exactly `"there is no other
+  running session"`, superseding the prior reported Beryllium session as
+  point-in-time evidence only. Recheck immediately before any install,
+  uninstall, or PMR-108 action; later work still requires fresh same-turn
+  confirmation.
   Direct custom-agent sessions, SDK-started workflows, out-of-scope
   worktrees, disabled hooks, hook timeout, and non-Copilot tooling remain
   outside or beyond this command-hook enforcement.

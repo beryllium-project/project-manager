@@ -115,9 +115,11 @@ originally loaded matcher; it retains that matcher/environment and does not
 gain new `run_dynamic_workflow` coverage merely from script replacement.
 Agent and skill reread behavior in running sessions is unknown. Recommend
 install, reinstall, and uninstall only while governed sessions are idle, but
-add no process scanner or acknowledgement flag. The reported active
-Beryllium session predates the initial governance install and was not
-directly observed by this turn; do not restart or interact with it. Under
+add no process scanner or acknowledgement flag. On 2026-10-01 the responsible
+human stated exactly `"there is no other running session"`, superseding the
+prior reported Beryllium session as point-in-time evidence only. Recheck
+immediately before any install, uninstall, or PMR-108 action; later work still
+requires fresh same-turn confirmation. Under
 `PMD-20260930-002`, omitted, null, or empty in-scope task effort is rewritten
 to `max` through `modifiedArgs` without a permission decision, explicit
 below-floor or unknown effort is denied, and in-scope

@@ -17,9 +17,10 @@
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
-- **Observed state:** see `../../COMPONENTS.md`. The responsible human reports
-  a separate K0 session running, so Beryllium remains coordination-locked and
-  read-only to this Project Manager turn. Maintained inspection now observes
+- **Observed state:** see `../../COMPONENTS.md`. On 2026-10-01 the responsible
+  human stated exactly `"there is no other running session"`, releasing the
+  prior Beryllium session report as point-in-time evidence. Beryllium remains
+  read-only to this Project Manager turn. Maintained inspection observes
   clean active/default `beryllium/single-hart-runtime-r0` at
   `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`, synchronized 0/0 with
   last-fetched `origin`. The previously observed dirty 354-entry state at
@@ -27,13 +28,13 @@
   (354 files, including policy/tooling/tests and removal of tracked generated
   HTML), followed by decision-neutral review packet `4141cf6`. No canonical
   `PMR-098` or `PMR-100` return names that work, supplies its authority and
-  validation boundary, accounts for remote containment, or releases the
-  reported Beryllium session. The responsible human's exact `"done"` reply
-  this turn releases only the separate security-reviewer session.
+  validation boundary, or accounts for remote containment. The human session
+  statement does not substitute for those returns or grant any gate.
   `PMD-20260926-002` records exact K0-A plan acceptance and closes plan-only
   PMR-099, satisfying K0-P only. The current package remains unaccepted and
-  not ready; K0-X and K0-R remain blocked. Do not launch another owner
-  session or infer current-package readiness, import, execution, backup,
+  not ready; K0-X and K0-R remain blocked. No owner session is selected by
+  this factual update; any later writer requires fresh tasking and one-writer
+  checks. Do not infer current-package readiness, import, execution, backup,
   publication, or either reconciliation request complete.
   Last-fetched refs previously contained active/default
   `80345e1` and renamed `origin/historical_he/*` refs; local candidate
@@ -133,6 +134,13 @@ work `ee1feaf` and review packet `4141cf6`;
 local `6e93461` and `0d53120` remain without remote-tracking containment and
 the Project Manager has no same-turn publication-authorization record for
 the observed active update.
+The component handoff also states that local branch
+`beryllium/doc-repro-option-a-20260929` is unpushed and not integrated, that
+`archive/generated-docs-2026-09-30` points to `d4c5ff0`, and that K0-S target
+`c6570558` was privately pushed with source target `c1c7e254`
+private-remote-contained. These are unverified owner-stated ref/backup facts,
+not Project Manager acceptance, authority, readiness, publication, or backup
+findings. They do not expand PMR-090's exact push scope or satisfy PMR-100.
 The request therefore remains open.
 
 `PMR-098` requests a canonical owner return for the exact thirteen-commit
@@ -146,7 +154,7 @@ remains R8-H0 committed but unaccepted. `PMR-099` is closed on exact
 human-accepted K0-A plan target `5227266` under `PMD-20260926-002`; that
 closes plan preparation only and satisfies only K0-P. New `PMR-100` requests
 the distinct canonical return for the post-`80345e1` committed KVM0 series
-and current active K0 session, whose primary checkout is now clean at
+from the now-closed-without-return K0 session, whose primary checkout is clean at
 `4141cf6`, synchronized 0/0 with last-fetched `origin`. The component
 handoff records bounded
 K0-S preparation/status documentation accepted only at exact target

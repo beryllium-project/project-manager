@@ -215,12 +215,14 @@ replaced hook script body at its next call matched by its originally loaded
 matcher; it retains that matcher/environment and gains no new
 `run_dynamic_workflow` coverage from script replacement alone. Agent and
 skill reread behavior in running sessions is unknown. Recommend install,
-reinstall, and uninstall only while governed sessions are idle. The reported
-active Beryllium session predates the initial install and was not directly
-observed by this turn; it is not restarted or contacted. Direct custom-agent
-sessions, SDK-started workflows, out-of-scope worktrees, disabled hooks, hook
-timeout, and non-Copilot tooling remain outside or beyond this command-hook
-enforcement.
+reinstall, and uninstall only while governed sessions are idle. On
+2026-10-01 the responsible human stated exactly `"there is no other running
+session"`, superseding the prior reported Beryllium session as point-in-time
+evidence only. Recheck immediately before any install, uninstall, or PMR-108
+action; later work still requires fresh same-turn confirmation. Direct
+custom-agent sessions, SDK-started workflows, out-of-scope worktrees,
+disabled hooks, hook timeout, and non-Copilot tooling remain outside or
+beyond this command-hook enforcement.
 
 Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 

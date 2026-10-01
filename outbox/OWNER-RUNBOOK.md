@@ -36,6 +36,24 @@ transcript under ignored `scratch/owner-recoveries/` and prints both paths.
 The transcript may contain sensitive interactive output and is never copied
 wholesale into a durable record.
 
+## P1 user-level governance reinstall (no PMR)
+
+On 2026-10-01 the responsible human stated exactly `"there is no other
+running session"`. This is point-in-time evidence only. After reviewing the
+current Project Manager and parent commits, immediately recheck that governed
+sessions remain idle, then run from the workspace root:
+
+```sh
+bash ./project-manager/scripts/beryllium-governance.sh install &&
+bash ./project-manager/scripts/beryllium-governance.sh check
+```
+
+The Project Manager never runs this command against real user configuration.
+It changes user-level Copilot configuration for new sessions, not any
+component, PMR, acceptance, review approval, risk acceptance, publication,
+release, or assurance gate. Agent/skill reread behavior in already-running
+sessions remains unknown; add no process scanner or acknowledgement flag.
+
 ## P2 workspace worktree container (planning only)
 
 The responsible human directed that the growing set of linked worktrees stop
@@ -73,16 +91,14 @@ temporary Fedora `lx2` placement, the `~/src/l1/src` root convention, and the
 2026-10-09 review date. That date does not automatically switch the canonical
 host or path.
 
-Do not begin `PMR-108` while any project session is active. The responsible
-human released only the security-reviewer owner session with the exact reply
-`"done"` after being directed to review its return and exit. The separately
-reported Beryllium session remains unreleased. Maintained inspection now
-observes clean active/default Beryllium `4141cf6`, synchronized 0/0 with
-last-fetched `origin`, after broad source-first validation-policy commit
-`ee1feaf` and review packet `4141cf6`. No canonical PMR-098/100 return
-accounts for that range or releases the session. Clean, remotely contained
-state does not release the human statement. No child repository is changed
-by this coordination item.
+Do not begin `PMR-108` while any project session is active. On 2026-10-01
+the responsible human stated exactly `"there is no other running session"`.
+This supersedes the prior Beryllium session report as point-in-time evidence
+only; it does not create PMR-098/100 returns or standing quiescence.
+Maintained inspection observes clean active/default Beryllium `4141cf6`,
+synchronized 0/0 with last-fetched `origin`, after broad source-first
+validation-policy commit `ee1feaf` and review packet `4141cf6`. No child
+repository is changed by this coordination item.
 
 Project-wide quiescence cannot be inferred from Git cleanliness alone.
 `PMR-108` first adds and validates a maintained read-only check that fails
@@ -90,10 +106,12 @@ closed unless the parent, Project Manager, registry, queues, generated
 tasking, and every registered worktree are clean/current; no owner-session,
 owner-recovery, or global maintenance writer reservation is held; and no
 handoff, return, user statement, or current runtime reports an active
-session. The responsible human must also confirm in the same turn that no
+session. The responsible human must again confirm in the same turn that no
 non-instrumented CLI, desktop, background, or external agent session is
-active. Recheck immediately and hold a global maintenance reservation before
-the first rollout write.
+active. The current parent remains dirty with six preserved untracked
+`be-doc-repro-*` directories, and the maintained check/global reservation do
+not yet exist. Recheck immediately and hold a global maintenance reservation
+before the first rollout write.
 
 After that gate passes, the Project Manager may update only its own and
 allowed parent-root startup/status tooling, inventory every owner context,
@@ -237,16 +255,17 @@ Maintained inspection now observes active/default
 last-fetched `origin` at `4141cf6`, following broad source-first policy work
 `ee1feaf` and review packet `4141cf6`.
 Multiple local K0 topic branches are visible.
-The responsible human reports separate K0 work, and no canonical PMR-098/100
-return or session release exists. The component handoff includes K0-A
+The responsible human stated exactly `"there is no other running session"`
+on 2026-10-01, closing the prior session without a canonical PMR-098/100
+return. The component handoff includes K0-A
 planning and acceptance material plus a bounded non-PMR K0-S
 preparation/status return. `PMD-20260926-002` records exact human-accepted K0-A
 target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
 canonical return names open earlier-series `PMR-098` or
-later-series `PMR-100`. The active-session lock remains regardless of primary
-worktree cleanliness: do not run a new Beryllium owner launcher or infer
-current-package readiness, import, execution, backup, publication, or any
-assurance gate.
+later-series `PMR-100`. No owner session is selected by this status update;
+any later writer requires fresh tasking, worktree, and one-writer checks.
+Do not infer current-package readiness, import, execution, backup,
+publication, or any assurance gate.
 
 The unreconciled range `416b2e9..80345e1` still records the component-side
 exact H0/R8-C acceptance claim for `1999ee7`, the
@@ -474,9 +493,10 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   synchronized 0/0 at `4141cf6` with last-fetched
   `origin/beryllium/single-hart-runtime-r0`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
-  `0d53120` have no remote-tracking containment. The reported active-session
-  lock remains despite the clean, remotely contained primary, and this turn
-  has no authorization evidence for the observed remote-tracking advance.
+  `0d53120` have no remote-tracking containment. The responsible human's
+  point-in-time no-session statement removes only the prior session blocker;
+  this turn still has no authorization evidence for the observed
+  remote-tracking advance.
   Broad source-first policy work `ee1feaf` and review packet `4141cf6`
   further change the old backup facts but supply no Project Manager
   publication authorization and no canonical PMR-098/100 return. Keep
@@ -484,6 +504,14 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   PMR-098; review the exact refs and publication gate before any later
   decision. Never push inactive `msft-downstream`; no observed or future push
   accepts H0, authorizes H1-H4/K3, or grants publication approval.
+  The component handoff additionally states that local branch
+  `beryllium/doc-repro-option-a-20260929` is unpushed and not integrated,
+  that `archive/generated-docs-2026-09-30` points to `d4c5ff0`, and that
+  K0-S target `c6570558` was privately pushed with source target `c1c7e254`
+  private-remote-contained. Treat these only as unverified owner-stated
+  ref/backup context. They do not expand PMR-090's exact push scope, satisfy
+  PMR-100, or establish authority, readiness, acceptance, publication, or
+  backup.
 - **Closed PMR-091:** human-run maintained `outbox/pmr091-push.sh`
   fast-forwarded only private `for-review` from `1ab289c` to `f928aac`.
   Script evidence reports `other-refs-preserved=yes`, 23 heads / zero tags,
@@ -593,17 +621,19 @@ The relevant local component commits are:
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
 - `beryllium-hypervisor/` primary is clean and synchronized 0/0 at `4141cf6`
-  with last-fetched `origin`, while active K0 topic work remains
-  owner-controlled. Broad source-first policy work `ee1feaf` and review
+  with last-fetched `origin`. Broad source-first policy work `ee1feaf` and review
   packet `4141cf6` now contain the previously observed 354-entry dirty state;
-  the responsible-human session lock remains and no canonical authority or
-  return evidence is recorded. No push path is
-  authorized and missing
-  PMR-098/100 returns
-  leave session release unknown. Local candidate
+  the responsible human stated exactly `"there is no other running session"`
+  on 2026-10-01, but no canonical authority or return evidence is recorded.
+  No push path is authorized and PMR-098/100 remain open. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
-  remote-tracking containment. PMR-098 and PMR-100 request distinct canonical
+  remote-tracking containment. The component handoff separately states local
+  doc-repro branch `beryllium/doc-repro-option-a-20260929` is unpushed and
+  not integrated, archive ref `archive/generated-docs-2026-09-30` points to
+  `d4c5ff0`, and K0-S target/source `c6570558` / `c1c7e254` are privately
+  pushed/contained; these facts are owner-stated and unverified. PMR-098 and
+  PMR-100 request distinct canonical
   returns; PMR-090 retains unresolved publication/ref review. PMR-099 is
   closed at exact K0-A plan acceptance only. Generic helper delivery remains
   excluded; PMR-105's single-use topic fast-forward is complete and consumed;

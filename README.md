@@ -151,7 +151,10 @@ running session can execute an atomically replaced hook script body on its
 next originally matched call without gaining new matcher coverage. Agent and
 skill reread behavior in running sessions is unknown. Install, reinstall, and
 uninstall are recommended only while governed sessions are idle; no process
-scanner or acknowledgement flag is used.
+scanner or acknowledgement flag is used. On 2026-10-01 the responsible human
+stated exactly `"there is no other running session"` as point-in-time
+evidence only. Recheck immediately before execution; PMR-108 actions still
+require fresh same-turn confirmation.
 
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,
