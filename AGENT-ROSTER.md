@@ -54,7 +54,8 @@ workstation-status anchor. Generated tasking views and dispatch packets bind
 `workspace://SOT.md` by SHA-256 and fail closed if it is absent, symlinked, or
 changed. Each owner context must also read the current anchor from its
 registered logical workspace entry before resolving component paths or
-beginning work. The 2026-10-01 inventory is:
+beginning work. The 2026-10-01 inventory, refreshed with owner returns on
+2026-10-02, is:
 
 | Component | Registered owner context(s) | SOT startup state |
 | --- | --- | --- |
@@ -65,7 +66,7 @@ beginning work. The 2026-10-01 inventory is:
 | `beryllium-hypervisor` | ordinary Beryllium owner context | Gap recorded as `PMR-112` |
 | `helium-te-poc` | ordinary Helium/skill owner context | Gap recorded as parked `PMR-113`, alongside `PMR-068` |
 | `cheri-riscv-notes` | ordinary notes owner context | SOT-bound startup and current checkout paths adopted by owner work `8d1bc9d` / return `7fb49f4`; PMR-114 closed as acknowledgement, with both commits local and unpushed |
-| `cheri-hypervisor-research` | ordinary XRV owner context | Stale absolute-path gap recorded as `PMR-115` |
+| `cheri-hypervisor-research` | ordinary XRV owner context | SOT-bound startup and dated checkout facts adopted in owner work/return `7361de4`; PMR-115 closed as acknowledgement, with the commit local and unpushed |
 | `osr-claude` | OS-security skill owner context | Ask-first gap recorded as `PMR-116`, alongside `PMR-070` |
 | `threat-modeler` | `threat-modeler`; `threat-model-maintainer` | Gap recorded as `PMR-117`, alongside `PMR-064` |
 | `security-reviewer` | orchestrator and three write-disabled specialists | Gap recorded as `PMR-118` |
@@ -308,7 +309,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; synchronized owner refresh `388690d` contains research `62cc207`, owner controls `9109345`, routed-pointer dispositions, current topology, and exact startup resolver. PMR-014/037/041/069 are closed from that durable evidence | none configured | Owner |
 | `osr-claude/` | Copilot skill `.github/skills/os-security-research/`; `.github/copilot-instructions.md`; `HANDOFF.md`; clean private successor synchronized at independent executable-backlog integration `86645d4`; PMR-044 baseline `49fbfd6` remains reachable; PMR-052 is unstarted; tasking startup adoption `PMR-070` | `tools/md-to-html.sh --check` | Owner |
 | `cheri-riscv-notes` | `meta/handoff.md`; `CONTRIBUTING.md`; PMR-071/114 `.github/copilot-instructions.md` and maintained tasking validator; clean local `docs/reconcile-project-status` at `7fb49f4`, 0/2 relative to last-fetched private `origin` tip `34a8b50`. PMR-114 work `8d1bc9d` changes only startup instructions and tasking-validator policy; handoff-only return `7fb49f4` records 35/35 negative mutations and other owner-reported validation. No push/fetch occurred; PMR-114 is closed as acknowledgement, and both commits are unbacked locally. P3 PMR-119 separately asks the owner to fix only the stale handoff opening/next-action text | `node --check automation/*.mjs`; `node automation/validate-project-tasking.mjs`; `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build [owner/repo]` | PMR-105 is complete at synchronized topic tip `34a8b50`; do not rerun. The PMR-114 commits remain unpushed. Merge, publication, D5, force, tags, and remote mutation remain separate or prohibited |
-| `cheri-hypervisor-research` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; clean synchronized private `main` at `5e7387a`; the owner incorporated the Bao-CHERI survey/review package and pushed it under a separate human authorization. Existing PMR-075/092/094 predecessor closures remain exact; the new research state is owner evidence, not a Project Manager disposition | none configured | Owner |
+| `cheri-hypervisor-research` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; clean local `main` at PMR-115 owner work/return `7361de4`, 0/1 against last-fetched private `origin/main` `5e7387a`. PMR-115 changes only startup instructions and dated handoff path facts; no fetch/push or research/review/source/collaboration change occurred. Existing PMR-075/092/094 predecessor closures remain exact; the Bao-CHERI state remains owner evidence, not a Project Manager disposition | none configured | Owner; PMR-115 is closed as acknowledgement, while the local commit remains unpushed |
 
 ## Orchestration rules
 

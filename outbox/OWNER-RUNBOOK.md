@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-01
+**Last refreshed:** 2026-10-02
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -105,11 +105,11 @@ handoff/runtime review found no current owner session. The tasking generator
 now binds `workspace://SOT.md` by SHA-256 and fails closed if the anchor is
 absent, symlinked, or changed.
 
-No child repository changed. Owner adoption remains separate:
-`PMR-112` Beryllium, `PMR-113` Helium, `PMR-115` XRV,
-`PMR-116` OS-security, `PMR-117` threat-modeler, and `PMR-118`
-security-reviewer remain owner-owned. CHERI notes PMR-114 has since been
-completed locally. Project Manager, analysis-workbook,
+No child repository changed in the Project Manager rollout. Owner adoption
+remains separate: `PMR-112` Beryllium, `PMR-113` Helium, `PMR-116`
+OS-security, `PMR-117` threat-modeler, and `PMR-118` security-reviewer remain
+owner-owned. CHERI notes PMR-114 and XRV PMR-115 have since completed
+locally. Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review already read the SOT
 anchor. PMR-108 is closed; child request closure, PMR-098/100 returns, and
 every human gate remain independent.
@@ -272,10 +272,11 @@ should confirm, reject, or defer the component acceptance claim.
 Beryllium is accepted through R7; R8-H0 is committed but not accepted;
 H1-H4 are unauthorized; K3 remains `NOT RUN`.
 
-**P2 `PMR-098` and `PMR-100` are both blocked by missing owner returns and
-unknown session state.** The existing owner must first return a durable checkpoint
-that names the two exact reconciliation scopes. Only after Project Manager
-verification may a new owner command be generated. K0-I is
+**P2 `PMR-098` and `PMR-100` are both blocked by missing owner returns.**
+The prior owner session is reported closed; the current Project Manager
+handoff supplies one return-only owner-session command covering both exact
+reconciliation scopes. That command grants no implementation, acceptance,
+execution, push, publication, or other gate. K0-I is
 component-recorded accepted at exact target `abd092a` and remains
 unreconciled in Project Manager state pending PMR-098/100. K0-S source
 preparation/evidence import, K0-X native execution, K0-R result acceptance,
@@ -403,8 +404,8 @@ prompt.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
+| `PMR-098`, `PMR-100` | P2 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-098 PMR-100` | Return-only reconciliation of two closed sessions; no new implementation, acceptance, execution, push, publication, H1-H4, or K3 authority. |
 | `PMR-112` | P3 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-112` | Startup policy only; no implementation, plan, acceptance, ref, or gate change. |
-| `PMR-115` | P2 | `bash ./project-manager/scripts/owner-session.sh launch cheri-hypervisor-research PMR-115` | Replace stale paths only; no research, review-ID, source, ref, or publication change. |
 | `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Packet preloaded; do not resume or modify the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
@@ -445,6 +446,17 @@ Maintained inspection confirms the return is the current clean local
 `origin` `34a8b50`, and the writer reservation is no longer held. Neither
 commit is backed up remotely; no fetch, push, merge, or publication occurred.
 D4/D5, Pages, and all corpus/release gates are unchanged.
+
+`PMR-115` is closed as acknowledgement of the single XRV owner work/return
+commit `7361de4138ad733be46e8a72608a779d24ae488a`. The owner reports only
+`.github/copilot-instructions.md` and `HANDOFF.md` changed, current SOT and
+PM/request fingerprints matched, exact changed paths and startup wording were
+reviewed, and `git diff --check` passed; no build, test, or lint toolchain is
+configured. Maintained inspection confirms clean local `main`, exact parent
+`5e7387a`, and 0 behind / 1 ahead of last-fetched private `origin/main`.
+No fetch, push, remote, research, review-ID, source-intake, collaboration,
+publication, or gate change occurred, and the owner writer lock is released.
+PMR-053 and every other request remain unchanged.
 
 `PMR-009` is now also closed at owner work `e95922f` / return `6cb15e3` after
 separate explicit D4 approvals. Analysis-workbook carry `8da398d` mirrors

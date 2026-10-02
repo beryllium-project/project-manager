@@ -11,9 +11,17 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
-- **Observed state:** the renamed tracked symlink resolves to clean `main` at
-  `5e7387a`, synchronized behind 0 / ahead 0 with private active
-  `origin/main`. The owner handoff records a separate responsible-human
+- **Observed state:** the renamed tracked symlink resolves to clean local
+  `main` at PMR-115 owner work/return
+  `7361de4138ad733be46e8a72608a779d24ae488a`, 0 behind / 1 ahead of
+  last-fetched private active `origin/main` `5e7387a`. PMR-115 changes only
+  `.github/copilot-instructions.md` and `HANDOFF.md`, binds startup path
+  resolution to current SOT/registry state, and records dated path facts. The
+  owner reports fingerprint/path review and `git diff --check` passed; this
+  repository has no configured build, test, or lint toolchain. No fetch,
+  push, remote, research, review-ID, source, collaboration, or publication
+  state changed, and the owner reservation is released.
+  The owner handoff also records a separate responsible-human
   authorization and push for the complete Bao-CHERI survey, reference,
   review-record, README, and handoff change set. The package pins public
   experimental code and an open-access thesis, labels it unreproduced,
@@ -110,6 +118,8 @@ maps `check Project Manager tasking` to the exact fail-closed resolver without
 session-history fallback and the handoff records current paths. No research,
 review-ID, collaboration, component push, or publication change was included.
 PMR-115 records the newly observed remaining gap: the active owner
-instructions and handoff still hard-code the former workstation paths rather
-than reading current `workspace://SOT.md`. Its correction is startup
-coordination only and changes no research, review ID, source, ref, or gate.
+instructions and handoff hard-coded former workstation paths rather than
+reading current `workspace://SOT.md`. It is closed as acknowledgement of
+owner work/return `7361de4`, which changes only startup instructions and
+dated path facts. The commit remains local and unpushed; no research, review
+ID, source, collaboration, ref, publication, or gate changed.
