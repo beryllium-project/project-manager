@@ -20,8 +20,17 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to this Project Manager turn. Maintained inspection observes clean
   active/default `beryllium/single-hart-runtime-r0` at local session
-  checkpoint `4c6acbed3b96f483216eacc7f9edb0c074f9e7bd`, behind 0 / ahead
-  2 of last-fetched private `origin` `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`.
+  checkpoint `93819fd9550e798bcdc19fb398d48c613ce110f0`, behind 0 / ahead
+  5 of last-fetched private `origin` `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`.
+  PMR-112 work `2313cbe023a1563289fd3e2aa9743f55465d3746`,
+  owner return `55b568b4ed37ca5ae3ac27ee0d4c58b1e764f63a`, and checkpoint
+  `93819fd9` adopt SOT-first owner startup, add bounded source-only tasking
+  contract validation, correct the directly related active-checkout path, and
+  release the owner session. The owner reports four work paths and one
+  return/checkpoint handoff path; maintained refs confirm all commits on the
+  active branch. All three commits are local-only and not remotely backed up.
+  PMR-112 is closed as acknowledgement only; no component command or
+  validator was run by the Project Manager.
   Canonical coordination-only return
   `1f38e6993bd325e639d8c2d6403e89f627ac6614` enumerates the distinct
   thirteen-commit PMR-098 and fourteen-commit PMR-100 ranges, bounded
@@ -67,7 +76,7 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
   or record responsible-human acceptance.
 - Project Manager acceptance remains bounded through R7 under
   `PMD-20260925-001`. R8-C plan target `f47ae60` is accepted as plan text.
-  The component's current handoff at `4c6acbed`, retaining the historical
+  The component's current handoff at `93819fd9`, retaining the historical
   `80345e1` reconciliation lineage, records exact H0/R8-C target `1999ee7`
   as accepted, but the responsible human deferred Project Manager
   reconciliation of that claim; Project Manager records therefore continue
@@ -134,12 +143,13 @@ commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
 than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
-decision. Read-only inspection now observes clean local checkpoint `4c6acbed`,
-behind 0 / ahead 2 of last-fetched private `origin` `4141cf6`; the active
+decision. Read-only inspection now observes clean local checkpoint `93819fd9`,
+behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`; the active
 history through `4141cf6` is contained, while local `6e93461` and `0d53120`
-remain without remote-tracking containment. Return `1f38e699` and checkpoint
-`4c6acbed` are local-only and outside PMR-090's fixed scope. The Project
-Manager has no same-turn push/publication authorization.
+remain without remote-tracking containment. Returns/checkpoints
+`1f38e699`, `4c6acbed`, `2313cbe0`, `55b568b4`, and `93819fd9` are
+local-only and outside PMR-090's fixed scope. The Project Manager has no
+same-turn push/publication authorization.
 The component handoff also states that local branch
 `beryllium/doc-repro-option-a-20260929` is unpushed and not integrated, that
 `archive/generated-docs-2026-09-30` points to `d4c5ff0`, and that K0-S target
@@ -163,10 +173,13 @@ current package remains mutable, unaccepted, and not ready. K0-X native
 execution, K0-R result acceptance, B0, development-kernel/BSP selection, B1,
 a retained H0 successor, H1-H4, publication, and release remain separate
 blocked gates. H1-H4 are unauthorized and K3 remains `NOT RUN`.
-`PMR-112` separately requests owner-startup adoption of the current
-`workspace://SOT.md` topology/status anchor. It changes no implementation,
-plan, acceptance record, ref, worktree, publication state, or closed
-PMR-098/100 evidence.
+`PMR-112` is closed from owner work `2313cbe0`, return `55b568b4`, and
+checkpoint `93819fd9`. The ordinary owner now reads current
+`workspace://SOT.md` before resolving any component, sibling, or Project
+Manager tasking; missing/unreadable or SHA-drifted anchors stop. The return
+also records the corrected current startup path and bounded source-only
+contract validation. It changes no implementation, plan, acceptance record,
+ref, worktree, publication state, or closed PMR-098/100 evidence.
 External K3 COM260 bring-up is in progress in a separate
 environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
 responsible-human readiness return, which does not accept H0, authorize

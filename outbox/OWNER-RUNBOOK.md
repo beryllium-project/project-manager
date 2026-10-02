@@ -105,11 +105,12 @@ handoff/runtime review found no current owner session. The tasking generator
 now binds `workspace://SOT.md` by SHA-256 and fails closed if the anchor is
 absent, symlinked, or changed.
 
-No child repository changed in the Project Manager rollout. Owner adoption
-remains separate: `PMR-112` Beryllium, `PMR-113` Helium, `PMR-116`
-OS-security, `PMR-117` threat-modeler, and `PMR-118` security-reviewer remain
-owner-owned. CHERI notes PMR-114 and XRV PMR-115 have since completed
-locally. Project Manager, analysis-workbook,
+No child repository changed in the Project Manager rollout. Beryllium
+PMR-112 has since completed locally at work `2313cbe0`, return `55b568b4`,
+and checkpoint `93819fd9`. Remaining owner adoption is separate: `PMR-113`
+Helium, `PMR-116` OS-security, `PMR-117` threat-modeler, and `PMR-118`
+security-reviewer remain owner-owned. CHERI notes PMR-114 and XRV PMR-115
+have also completed locally. Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review already read the SOT
 anchor. PMR-108 is closed; PMR-098/100 returns are now acknowledged, while
 the remaining child requests and every human gate remain independent.
@@ -244,8 +245,10 @@ second prompt.
 ## Beryllium drift reconciliation and new planning
 
 Maintained inspection now observes clean active/default
-`beryllium/single-hart-runtime-r0` at local session checkpoint `4c6acbed`,
-behind 0 / ahead 2 of last-fetched private `origin` `4141cf6`. Canonical
+`beryllium/single-hart-runtime-r0` at local PMR-112 checkpoint `93819fd9`,
+behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`. PMR-112
+work `2313cbe0`, return `55b568b4`, and checkpoint adopt SOT-first startup
+and are local-only. Canonical
 return `1f38e699` covers the distinct thirteen-commit PMR-098 range
 `416b2e9..80345e1` and fourteen-commit PMR-100 KVM0 range
 `80345e1..2b404ca`; checkpoint `4c6acbed` releases the owner session. Both
@@ -393,7 +396,6 @@ prompt.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-112` | P3 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-112` | Startup policy and directly related stale startup-path correction only; no implementation, plan, acceptance, ref, or gate change. |
 | `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Packet preloaded; do not resume or modify the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
@@ -407,6 +409,13 @@ checklist, one-writer rule, validation/commit/return contract, and no-gate /
 no-push boundary.
 
 ## Completed - do not rerun
+
+`PMR-112` is closed from exact owner work `2313cbe0`, owner return
+`55b568b4`, and released-session checkpoint `93819fd9`. The owner reports
+SOT-first startup, current-path correction, bounded tasking-contract
+validation, and no implementation or gate change. All three commits are
+local-only, untagged, unpushed, and not remotely backed up. Do not rerun its
+launcher.
 
 `PMR-098` and `PMR-100` are closed from exact canonical return `1f38e699`
 and local released-session checkpoint `4c6acbed`. The return keeps the
@@ -511,12 +520,14 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
 - **P3 PMR-090:** active/default Beryllium is now observed clean at local
-  checkpoint `4c6acbed`, behind 0 / ahead 2 of last-fetched private
+  checkpoint `93819fd9`, behind 0 / ahead 5 of last-fetched private
   `origin/beryllium/single-hart-runtime-r0` `4141cf6`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
   `0d53120` have no remote-tracking containment. Canonical PMR-098/100 return
-  `1f38e699` and checkpoint `4c6acbed` close the prior evidence dependency
-  but are themselves local-only and outside PMR-090's fixed scope. The owner
+  `1f38e699` / checkpoint `4c6acbed` and PMR-112 work/return/checkpoint
+  `2313cbe0` / `55b568b4` / `93819fd9` close the prior evidence and startup
+  dependencies but are themselves local-only and outside PMR-090's fixed
+  scope. The owner
   reports authenticated current GitHub visibility `PRIVATE`; the Project
   Manager performed no network check. Keep PMR-090 open for exact review of
   its fixed active/candidate scope and a new separate human push/publication
@@ -637,8 +648,10 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is clean at local checkpoint `4c6acbed`,
-  behind 0 / ahead 2 of last-fetched private `origin` `4141cf6`. Canonical
+- `beryllium-hypervisor/` primary is clean at local checkpoint `93819fd9`,
+  behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`. PMR-112
+  work `2313cbe0`, return `55b568b4`, and checkpoint `93819fd9` adopt
+  SOT-first startup and are local-only without remote backup. Canonical
   return `1f38e699` and checkpoint `4c6acbed` close PMR-098/100 as
   acknowledgements; both commits are local-only and change owner-stated
   `planning/HANDOFF.md`. No push path is authorized. Local candidate
