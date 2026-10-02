@@ -418,6 +418,22 @@ terminal result, and validated identifiers. It captures no command output or
 Copilot transcript. After the next retry, the Project Manager reads that log
 directly rather than asking the human to relay terminal output.
 
+The next retry reached Copilot successfully; its preflight log records
+`stage=complete`, `result=launching`, and `reason=none`. The owner then
+stopped because it could not invoke a scope-review task runner and did not
+find `cross-repo-collaboration`. The exact retry packet now carries
+scope-review steering `threat-owner-mechanism-boundary-20261002-05`, bound to
+the unchanged request blob/SOT/component HEAD. It states that unchanged
+execution of the exact reviewed maintenance envelope needs no second
+in-session reviewer and that missing review/collaboration mechanisms are not
+blockers for this packet. Implementation choices inside the envelope are
+execution detail. Any material reassessment/replan, new steering,
+requirements, priorities, constraints, acceptance criteria, other material
+direction change, envelope exit, or sibling research/analysis use stops. The
+coordination-only task does not substantively consume sibling
+research/analysis, so the collaboration skill is not triggered. The owner may
+create one validated local commit and must not push.
+
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
 | `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Exact one-time tasking bootstrap; packet/view fingerprint comparison replaces only the currently prohibited in-session resolver. Do not resume or modify the paused model. |

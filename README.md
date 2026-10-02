@@ -387,6 +387,23 @@ execution. The bootstrap grants no direct Project Manager launch, generic
 fallback, push, gate, or precedent for another component, and becomes
 unusable when either request closes.
 
+That exact packet also carries scope-review steering
+`threat-owner-mechanism-boundary-20261002-05`, bound to request blob
+`9c289ab88a4202efb20e5e88ae994f6572c59a75`, SOT SHA-256
+`5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`,
+threat-modeler HEAD `c4126b6`, and both open PMRs. Unchanged execution of
+that reviewed envelope needs no second in-session reviewer; implementation
+choices wholly inside the envelope are execution detail, not a new plan. An
+unavailable scope-review task runner or uninstalled collaboration skill is
+not itself a blocker for this packet. Any material reassessment/replan, new
+human steering, requirements, priorities, constraints, acceptance criteria,
+other material direction change, path/deliverable expansion, or sibling
+research/analysis use stops and returns blocked. The maintenance task does
+not substantively consume sibling research or analysis, so
+`cross-repo-collaboration` is not triggered under `PMD-20260917-001`. The
+selected PMRs require one validated local commit and prohibit push. None of
+this generalizes to another packet or later revision.
+
 `bash ./scripts/maintenance-reservation.sh hold -- <command>` is human-run
 only: it takes that reservation exclusively (refused while any owner launch
 runs), exports `PM_MAINTENANCE_RESERVATION=held`, and runs the command, normally

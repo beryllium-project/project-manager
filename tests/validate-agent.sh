@@ -357,6 +357,18 @@ require_text "$owner_session" 'scratch/owner-sessions'
 require_text "$owner_session" 'Project Manager HEAD changed while preparing the owner packet'
 require_text "$owner_session" 'another owner session holds the writer reservation'
 require_text "$owner_session" 'component HEAD changed before Copilot launch'
+require_text "$owner_session" \
+    'bootstrap_review_request_blob=9c289ab88a4202efb20e5e88ae994f6572c59a75'
+require_text "$owner_session" \
+    'bootstrap_review_sot_sha=5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68'
+require_text "$owner_session" \
+    'bootstrap_review_component_head=c4126b6d77f7cd14f7477795e3b8b971b6b58b37'
+require_text "$repository_root/outbox/tasking/threat-modeler.md" \
+    '**Source request blob:** `9c289ab88a4202efb20e5e88ae994f6572c59a75`'
+require_text "$repository_root/outbox/tasking/threat-modeler.md" \
+    '**Global startup/status SHA-256:** `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`'
+require_text "$repository_root/../COMPONENTS.md" \
+    'threat-modeler/` | Ignored canonical direct checkout | Clean synchronized `main` / `origin/main` at `c4126b6`'
 refute_pattern "$owner_session" '--(prompt|add-dir)([ =]|$)'
 refute_pattern "$owner_session" 'exec .* -p([ =]|$)'
 
@@ -1833,6 +1845,7 @@ owner_bootstrap_scratch=$sandbox/owner-bootstrap-scratch
 owner_bootstrap_error_scratch=$sandbox/owner-bootstrap-error-scratch
 owner_bootstrap_launch_scratch=$sandbox/owner-bootstrap-launch-scratch
 owner_bootstrap_postpacket_scratch=$sandbox/owner-bootstrap-postpacket-scratch
+owner_postpacket_error_scratch=$sandbox/owner-postpacket-error-scratch
 owner_recovery_scratch=$sandbox/owner-recovery-scratch
 mkdir -p "$tasking_pm/components" "$tasking_pm/outbox/tasking" "$tasking_pm/scripts" \
     "$tasking_pm/outbox/owner-recovery" \
@@ -1909,6 +1922,19 @@ git -C "$tasking_workspace/threat-modeler" add .github/agents
 git -C "$tasking_workspace/threat-modeler" \
     -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -q -m "threat-modeler fixture"
+fixture_request_blob=$(git -C "$tasking_pm" rev-parse \
+    HEAD:outbox/component-requests.md)
+fixture_sot_sha=$(sha256sum "$tasking_workspace/SOT.md" | awk '{ print $1 }')
+fixture_threat_head=$(git -C "$tasking_workspace/threat-modeler" rev-parse HEAD)
+sed -i \
+    -e "s|^bootstrap_review_request_blob=.*|bootstrap_review_request_blob=$fixture_request_blob|" \
+    -e "s|^bootstrap_review_sot_sha=.*|bootstrap_review_sot_sha=$fixture_sot_sha|" \
+    -e "s|^bootstrap_review_component_head=.*|bootstrap_review_component_head=$fixture_threat_head|" \
+    "$tasking_pm/scripts/owner-session.sh"
+git -C "$tasking_pm" add scripts/owner-session.sh
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q -m "bind bootstrap scope fixture"
+owner_session=$tasking_pm/scripts/owner-session.sh
 git -C "$tasking_target" init -q -b main
 git -C "$tasking_target" -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -q --allow-empty -m "symlink component fixture"
@@ -2094,7 +2120,11 @@ if ((${#owner_packets[@]} == 1)); then
     require_text "$owner_packet" 'Do not perform another PMR, push, fetch'
     require_text "$owner_packet" \
         "bash $tasking_pm/scripts/project-tasking.sh resolve direct-component"
+    require_text "$owner_packet" \
+        'Load `cross-repo-collaboration` before substantively consuming'
     refute_pattern "$owner_packet" 'Tasking bootstrap'
+    refute_pattern "$owner_packet" \
+        'Exact bootstrap scope steering|threat-owner-mechanism-boundary'
 else
     fail "owner-session did not write exactly one private packet"
 fi
@@ -2151,6 +2181,53 @@ if ((${#bootstrap_packets[@]} == 1)); then
         "$tasking_pm/outbox/tasking/threat-modeler.md"
     require_text "$bootstrap_packet" \
         'This exception is unusable after either request closes'
+    require_text "$bootstrap_packet" \
+        '## Exact bootstrap scope steering'
+    require_text "$bootstrap_packet" \
+        '**Review ID:** `threat-owner-mechanism-boundary-20261002-05`'
+    require_text "$bootstrap_packet" '**Verdict:** `adjust`'
+    require_text "$bootstrap_packet" \
+        '**Authority:** `steering_only_no_approval_or_human_gate`'
+    require_text "$bootstrap_packet" \
+        "**Reviewed request blob:** \`$fixture_request_blob\`"
+    require_text "$bootstrap_packet" \
+        "**Reviewed SOT SHA-256:** \`$fixture_sot_sha\`"
+    require_text "$bootstrap_packet" \
+        "**Reviewed threat-modeler HEAD:** \`$fixture_threat_head\`"
+    require_text "$bootstrap_packet" \
+        'the two user-facing entry points and their owner startup surfaces'
+    require_text "$bootstrap_packet" \
+        'the durable handoff return'
+    require_text "$bootstrap_packet" \
+        'cross-repo-collaboration` is not triggered and must not be loaded'
+    require_text "$bootstrap_packet" \
+        'If no scope-review task runner or'
+    require_text "$bootstrap_packet" \
+        'that absence is not'
+    require_text "$bootstrap_packet" \
+        'Implementation choices wholly inside'
+    require_text "$bootstrap_packet" \
+        'priorities, constraints, acceptance criteria, or any other material direction'
+    require_text "$bootstrap_packet" \
+        'The reviewer-required changes were applied by the Project Manager'
+    require_text "$bootstrap_packet" \
+        'the recorded scope risks'
+    require_text "$bootstrap_packet" \
+        'require one validated local commit and explicitly exclude'
+    require_text "$bootstrap_packet" \
+        'do not perform step 6 of the component'
+    require_text "$bootstrap_packet" \
+        'This packet does not trigger `cross-repo-collaboration`.'
+    require_text "$bootstrap_packet" \
+        'The collaboration skill'\''s absence is not a blocker'
+    refute_pattern "$bootstrap_packet" \
+        'Load `cross-repo-collaboration` before substantively consuming'
+    require_text "$bootstrap_packet" \
+        'material reassessment or replan'
+    require_text "$bootstrap_packet" \
+        'new human steering, requirements,'
+    require_text "$bootstrap_packet" \
+        'Stricter component-local instructions remain controlling.'
     refute_pattern "$bootstrap_packet" \
         "bash $tasking_pm/scripts/project-tasking.sh resolve threat-modeler"
 else
@@ -2177,6 +2254,35 @@ if ((${#bootstrap_logs[@]} == 1)); then
 else
     fail "owner-session did not write exactly one tasking-bootstrap prepare log"
 fi
+bootstrap_mismatch_script=$sandbox/owner-session-bootstrap-mismatch.sh
+cp "$owner_session" "$bootstrap_mismatch_script"
+chmod +x "$bootstrap_mismatch_script"
+sed -i \
+    's/^bootstrap_review_request_blob=.*/bootstrap_review_request_blob=0000000000000000000000000000000000000000/' \
+    "$bootstrap_mismatch_script"
+expect_exit "tasking bootstrap rejects scope-review request-blob drift" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$sandbox/bootstrap-request-mismatch-scratch" \
+    bash "$bootstrap_mismatch_script" --tasking-bootstrap \
+    --agent threat-model-maintainer prepare threat-modeler PMR-064 PMR-117
+cp "$owner_session" "$bootstrap_mismatch_script"
+sed -i \
+    's/^bootstrap_review_sot_sha=.*/bootstrap_review_sot_sha=0000000000000000000000000000000000000000000000000000000000000000/' \
+    "$bootstrap_mismatch_script"
+expect_exit "tasking bootstrap rejects scope-review SOT drift" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$sandbox/bootstrap-sot-mismatch-scratch" \
+    bash "$bootstrap_mismatch_script" --tasking-bootstrap \
+    --agent threat-model-maintainer prepare threat-modeler PMR-064 PMR-117
+cp "$owner_session" "$bootstrap_mismatch_script"
+sed -i \
+    's/^bootstrap_review_component_head=.*/bootstrap_review_component_head=0000000000000000000000000000000000000000/' \
+    "$bootstrap_mismatch_script"
+expect_exit "tasking bootstrap rejects scope-review component drift" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$sandbox/bootstrap-head-mismatch-scratch" \
+    bash "$bootstrap_mismatch_script" --tasking-bootstrap \
+    --agent threat-model-maintainer prepare threat-modeler PMR-064 PMR-117
 expect_exit "tasking bootstrap rejects the default owner context" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_error_scratch" \
@@ -2236,8 +2342,35 @@ expect_exit "tasking bootstrap rejects an extra PMR" 1 \
     prepare threat-modeler PMR-064 PMR-117 PMR-001
 expect_exit "owner-session rejects a wrong-component request" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
-    PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_postpacket_error_scratch" \
     bash "$owner_session" prepare direct-component PMR-002
+ordinary_postpacket_packets=("$owner_postpacket_error_scratch"/*.md)
+if [[ ! -e ${ordinary_postpacket_packets[0]} ]]; then
+    pass "ordinary post-packet failure removes the owner packet"
+else
+    fail "ordinary post-packet failure retained the owner packet"
+fi
+ordinary_postpacket_logs=("$owner_postpacket_error_scratch"/preflight/*.log)
+if ((${#ordinary_postpacket_logs[@]} == 1)); then
+    mapfile -t ordinary_postpacket_lines <"${ordinary_postpacket_logs[0]}"
+    if ((${#ordinary_postpacket_lines[@]} == 10)) &&
+        [[ ${ordinary_postpacket_lines[0]} == schema=OWNER_SESSION_PREFLIGHT_V1 &&
+           ${ordinary_postpacket_lines[1]} =~ ^timestamp=[0-9]{8}T[0-9]{6}Z$ &&
+           ${ordinary_postpacket_lines[2]} == mode=prepare &&
+           ${ordinary_postpacket_lines[3]} == component=direct-component &&
+           ${ordinary_postpacket_lines[4]} == agent=ordinary-default &&
+           ${ordinary_postpacket_lines[5]} == requests=PMR-002 &&
+           ${ordinary_postpacket_lines[6]} == tasking_bootstrap=no &&
+           ${ordinary_postpacket_lines[7]} == stage=dispatch-packets &&
+           ${ordinary_postpacket_lines[8]} == result=error &&
+           ${ordinary_postpacket_lines[9]} == reason=preflight-failed ]]; then
+        pass "ordinary post-packet failure log persists exact state"
+    else
+        fail "ordinary post-packet failure log differs"
+    fi
+else
+    fail "ordinary post-packet failure did not retain one preflight log"
+fi
 expect_exit "owner-session rejects a closed request" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
@@ -2560,9 +2693,9 @@ expect_exit "tasking bootstrap remains unavailable after selected request closur
     prepare threat-modeler PMR-064 PMR-117
 postpacket_packets=("$owner_bootstrap_postpacket_scratch"/*.md)
 if [[ ! -e ${postpacket_packets[0]} ]]; then
-    pass "post-packet bootstrap failure removes the owner packet"
+    pass "closed bootstrap binding creates no owner packet"
 else
-    fail "post-packet bootstrap failure retained the owner packet"
+    fail "closed bootstrap binding retained an owner packet"
 fi
 postpacket_logs=("$owner_bootstrap_postpacket_scratch"/preflight/*.log)
 if ((${#postpacket_logs[@]} == 1)); then
@@ -2575,15 +2708,15 @@ if ((${#postpacket_logs[@]} == 1)); then
            ${postpacket_lines[4]} == agent=threat-model-maintainer &&
            ${postpacket_lines[5]} == requests=PMR-064,PMR-117 &&
            ${postpacket_lines[6]} == tasking_bootstrap=yes &&
-           ${postpacket_lines[7]} == stage=dispatch-packets &&
+           ${postpacket_lines[7]} == stage=bootstrap-review-binding &&
            ${postpacket_lines[8]} == result=error &&
            ${postpacket_lines[9]} == reason=preflight-failed ]]; then
-        pass "post-packet bootstrap failure log persists exact state"
+        pass "closed bootstrap binding log persists exact state"
     else
-        fail "post-packet bootstrap failure log differs"
+        fail "closed bootstrap binding failure log differs"
     fi
 else
-    fail "post-packet bootstrap failure did not retain one preflight log"
+    fail "closed bootstrap binding did not retain one preflight log"
 fi
 
 expect_exit "owner-recovery rejects missing arguments" 2 \
