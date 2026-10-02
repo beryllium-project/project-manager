@@ -1,15 +1,17 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-10-01
-**Update scope:** ninetieth coordination turn. After the responsible human's
-exact same-turn statement `"I confirm no other session is running."`, two
-reserved quiescence checks passed, including the immediate pre-write check at
-2026-10-01T18:16:55Z. Completed PMR-108 step 4: generated tasking views and
-dispatch packets now bind regular `workspace://SOT.md` by SHA-256; the
-owner-context inventory found four contexts already anchored and allocated
-distinct `PMR-112..PMR-118` for seven child-owned gaps. PMR-108 is closed.
-No child repository, worktree, symlink, remote, push, publication, or human
-gate changed.
+**Last updated:** 2026-10-02
+**Update scope:** ninety-first coordination turn. The responsible human
+stated exactly `"commit and push"`. This is recorded as single-use
+confirmation for ordinary fast-forward pushes of only Project Manager
+`main` to existing `origin/main` and parent coordination `main` to existing
+`upstream/main`, after this intent record and its parent registry binding are
+committed. It excludes every component, including security-reviewer
+`PMR-111`, and excludes force, tags, remote mutation, visibility change,
+publication, release, or any human gate. Preflight found both repositories
+clean and non-divergent, live remote predecessors `2357d3f` and `560a921`,
+no remote tags in scope, and no component/gitlink or high-confidence
+credential pattern in either complete outgoing range.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -22,7 +24,7 @@ in `../COMPONENTS.md`
 
 | Area | Current state |
 | --- | --- |
-| Current coordination baseline | **No other project session reported running; reserved PM rollout only; no child write.** The responsible human's exact `"I confirm no other session is running."` is point-in-time evidence. This Project Manager session holds the global reservation until it exits; owner launches remain refused meanwhile. Beryllium remains observation-only clean synchronized at `4141cf6`; PMR-098/100 still lack canonical returns. Security-reviewer remains clean at `c2edac7`, two ahead, with unapproved backup PMR-111. Queue intake remains ledger-exact at 33 source rows plus one transfer row. |
+| Current coordination baseline | **Project Manager/parent commit-and-push turn; no child write.** Maintained inspection reports every registered worktree clean, exact registry/tasking/queues, no owner-session writer lock, and the current Project Manager reservation marker (holder not verified). The user authorized only the two coordination pushes quoted above. Beryllium remains observation-only clean synchronized at `4141cf6`; PMR-098/100 still lack canonical returns. Security-reviewer remains clean at `c2edac7`, two ahead, with unapproved component backup PMR-111. |
 | Operational PM closure | **Complete, with independent evidence gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105, and formal-verification PMR-014/037/041/069 are closed. Beryllium's prior session is closed without PMR-098/100 returns; those requests remain open. Security backup PMR-111 is separate and unapproved. |
 | Workspace worktree layout | **Container and ignore complete; namespacing follow-up open.** Workspace-root `worktrees/` now holds six human-moved, repaired Beryllium linked worktrees at temporary flat paths recorded in `../COMPONENTS.md`. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; Project Manager never moves or removes them. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
@@ -41,7 +43,7 @@ in `../COMPONENTS.md`
 | Formal verification | Clean `main` is synchronized 0/0 at handoff-only successor `388690d`. Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. |
 | Other drift | OS-security is clean and synchronized at active private successor `86645d4`. Its owner return records independent executable-backlog integration, maintained validation, no restricted access, and no publication; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | Security-reviewer is clean at HANDOFF-only return `c2edac7`, behind 0 / ahead 2 of last-fetched private `origin/main` `2e8d205`. All four profiles now record exact `gpt-5.3-codex` / `xhigh` / `default`; PMR-062/065/074/109/110 are closed, the tasking startup contract is active, no engagement ran, and the human released the owner session. Built-in `security-review` is not admitted to the named capability exception. |
-| Remote access | Earlier Project Manager/parent coordination-push authorization is consumed. Formal-verification `388690d`, analysis-workbook `3c9d2a3`, XRV `5e7387a`, CHERI topic `34a8b50`, and Beryllium primary `4141cf6` are observed synchronized with their last-fetched upstreams. Security-reviewer `c2edac7` is two local commits ahead without remote backup; PMR-111 has no current push authority. Beryllium remote containment does not supply PMR-098/100 returns or publication authority. PMR-105's exact private push is complete and consumed. No tag, force, remote mutation, publication, release, Project Manager/parent push, or other component push is authorized. |
+| Remote access | **Single-use Project Manager/parent push confirmation is active for this turn only.** Exact human text: `"commit and push"`. Live preflight records Project Manager `origin/main` at `2357d3f` and parent `upstream/main` at `560a921`; explicit `main` refspecs only, with tag following disabled. Security-reviewer `c2edac7` remains two local commits ahead without backup and PMR-111 remains unapproved. No component push, force, tag, remote mutation, visibility change, publication, release, or other gate is included. |
 | Queues | 33 analysis-workbook source rows / 33 ledger rows plus one transfer row are exact. New PMQ-031..033 are `routed` as PML-0032..0034 / PMR-107; routed maps to no source edit. The prior 30 source rows and transfer row retain their recorded dispositions. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. Independent OS-security integration `86645d4` does not execute PMR-052. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -55,7 +57,7 @@ in `../COMPONENTS.md`
 | Human interaction | The responsible human selected the dedicated PMR-105 mechanism, completed preflight, stated exactly `"authorize PMR-105 exact private fast-forward"`, and ran the bound human-owned execution. Exact log and independent inspection close PMR-105; the single-use authorization is consumed. |
 | Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review. Ordinary roles remain `max` / `long_context`; `PMD-20260930-005` makes exact Codex `xhigh` / `default` the sole named capability exception. `PMD-20260930-001` retains `high` as the explicit floor for every non-Codex selection and `beryllium-scope-review` as the `claude-opus-5.5` / `max` / `long_context` scope-control model exception. No silent model, effort, or context fallback is permitted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this turn's commits, parent `86bb9aea5dc8167e116b934efb92a8767fa24d1a` is behind 0 / ahead 33 of `upstream/main`, and Project Manager base `309f164b9a2ac34662d75430e953339775448e77` is behind 0 / ahead 23 of `origin/main`; committed request blob `c0985bae3178ac6c0220b94d0630c6b4994e1d25`. Tracked changes are limited to Project Manager and permitted parent-root rollout artifacts. No component path changed. The parent registry update follows the Project Manager commit. |
+| Parent coordination | Pre-record local tips are Project Manager `2c041c8` (0 behind / 24 ahead of live `origin/main` `2357d3f`) and parent `eedec00` (0 behind / 34 ahead of live `upstream/main` `560a921`). The complete outgoing ranges contain only Project Manager files and permitted parent-root artifacts; no component/gitlink, restricted-source path, remote tag, or high-confidence credential pattern was found. This turn adds one HANDOFF-only Project Manager intent commit and one parent `COMPONENTS.md` binding commit before the exact pushes. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -121,10 +123,11 @@ Do not run it until this turn reports that the Project Manager commit is
 complete and both
 `bash ./scripts/project-tasking.sh generate` and
 `bash ./scripts/project-tasking.sh check` passed against that commit and the
-current SOT SHA-256. This fixes a live stale-path startup risk without
-touching the CHERI corpus or any publication gate. PMR-115 is the equivalent
-next XRV correction. Other priorities outside Project Manager visibility may
-take precedence.
+current SOT SHA-256, and both single-use coordination pushes have either
+completed and been verified or stopped and been reported. This fixes a live
+stale-path startup risk without touching the CHERI corpus or any publication
+gate. PMR-115 is the equivalent next XRV correction. Other priorities
+outside Project Manager visibility may take precedence.
 
 ### Minimal restart commands
 
@@ -144,6 +147,48 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### Ninety-first-turn Project Manager/parent commit-and-push authorization
+
+- The responsible human stated exactly `"commit and push"`. This confirmation
+  is single-use for Project Manager `main -> origin/main` and parent
+  coordination `main -> upstream/main` only. It does not authorize any
+  component push, including PMR-111, or any force, tag, remote mutation,
+  visibility change, publication, release, or gate.
+- Fresh inspection at 2026-10-02T03:45:06Z found parent and Project Manager
+  clean, every registered component/worktree clean, registry and tasking
+  exact, queues 34 / 34, no owner-session writer lock, and the current
+  maintenance marker present. No new queue disposition or owner return was
+  processed.
+- Live read-only remote inspection found Project Manager `origin/main` at
+  `2357d3fe6ed9db6045460c8aa4baaad26b44e1b5` and parent
+  `upstream/main` at `560a921f0b0ad3bf80ac4181d7c833e173b14888`,
+  matching the local tracking refs. No tag ref was returned for either
+  remote.
+- Reviewed all 24 existing Project Manager and 34 existing parent outgoing
+  commits. The new HANDOFF-only intent record and parent registry-binding
+  record are additionally self-reviewed before their commits. Raw history
+  contains only normal Project Manager files and permitted parent-root
+  artifacts, with no gitlink or component content. Aggregate diff checks and
+  high-confidence credential-pattern scans passed.
+- Exact ordered plan: (1) validate Project Manager; (2) commit this
+  HANDOFF-only intent record; (3) regenerate and check tasking; (4) bind the
+  new PM HEAD in parent `COMPONENTS.md`; (5) validate and commit the parent;
+  (6) immediately recheck local and live remote tips; (7) push explicit
+  Project Manager `refs/heads/main:refs/heads/main` with tag following
+  disabled and verify live containment; (8) push the equivalent parent refspec
+  with tag following disabled and verify live containment; (9) require both
+  worktrees clean and synchronized. Any rejection, remote-tip change, or
+  one-sided result stops without force, fetch reconciliation, rebase, merge,
+  retry expansion, or component action.
+- Open documentation discrepancy: `outbox/OWNER-RUNBOOK.md` says the Project
+  Manager pushes no repository, and `../SOT.md` calls push a human action,
+  while the active Project Manager profile explicitly permits confirmed
+  direct Git pushes of this repository and the parent. The active profile
+  governs this exact turn; the stale absolute wording is recorded for a
+  separately scoped documentation correction and is not edited here. Human
+  helper commands remain human-only, and every component push remains
+  prohibited.
 
 ### Ninetieth-turn PMR-108 startup-status rollout
 
@@ -1586,10 +1631,13 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   PMR-067/083 owner lock.
 - Analysis-workbook closure-line commits through `62bd071` / `8b5a301` are
   remotely contained by synchronized `3c9d2a3`; PMR-085/088/089 remain open
-  for push-evidence reconciliation rather than missing containment. Before
-  this turn, Project Manager `b22cdece` is ahead 19 of `origin/main` and
-  parent `7584292` is ahead 29 of `upstream/main`; no coordination push is
-  authorized.
+  for push-evidence reconciliation rather than missing containment.
+  Pre-record Project Manager `2c041c8` is 0 behind / 24 ahead of live
+  `origin/main` `2357d3f`, and parent `eedec00` is 0 behind / 34 ahead of
+  live `upstream/main` `560a921`. The responsible human's single-use
+  `"commit and push"` confirmation authorizes only Project Manager
+  `main -> origin/main` and parent `main -> upstream/main` this turn;
+  PMR-085/088/089 push-evidence reconciliation is unaffected.
   Helium PMR-026 commits
   `e202c6e` / `f928aac` are now backed up by
   closed PMR-091. The prior
@@ -1623,6 +1671,20 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   decisions.
 
 ## What to review
+
+### Ninety-first-turn commit-and-push review
+
+- `HANDOFF.md`: exact single-use confirmation, preflight tips, outgoing-range
+  review, scope exclusions, and stop conditions.
+- parent `../COMPONENTS.md`: exact Project Manager intent checkpoint and
+  pre-push coordination state.
+- Project Manager outgoing range
+  `2357d3fe6ed9db6045460c8aa4baaad26b44e1b5..HEAD`.
+- Parent outgoing range
+  `560a921f0b0ad3bf80ac4181d7c833e173b14888..HEAD`.
+
+Review only the two coordination repositories. No component commit or push
+is part of this authorization.
 
 ### Ninetieth-turn PMR-108 rollout review
 
@@ -2028,6 +2090,31 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 `2f8d576:HANDOFF.md`.
 
 ## Validation and commit state
+
+### Ninety-first-turn validation
+
+- The bounded scope review returned `adjust`: verify live main/tag refs,
+  review complete outgoing ranges, use explicit no-tag-follow `main`
+  refspecs, record single-use scope, stop on any split result, and make no
+  component/request/queue/gate change.
+- The write-disabled `pm-auditor` found stale push-gate/tip wording in this
+  handoff and parent registry plus an absolute helper/SOT wording conflict.
+  Current gate/tip wording and the exact execution/verification sequence are
+  corrected. The helper/SOT wording conflict is explicitly recorded as open
+  and deferred; active Project Manager instructions govern this confirmed
+  PM/parent-only push. The auditor decided nothing.
+- `bash ./tests/validate-agent.sh`: 1082 passed / 0 failed.
+- `bash ./scripts/validate-pm.sh`: 693 passed / 0 failed.
+- `bash ./scripts/pull-queues.sh check`: 34 source rows / 34 ledger rows,
+  exact.
+- Project Manager and parent aggregate outgoing `git diff --check` passed.
+  Every outgoing commit path/mode was reviewed; no gitlink/component path,
+  remote tag, or high-confidence credential pattern was found.
+- Live remote predecessors match local tracking refs: Project Manager
+  `origin/main` `2357d3fe6ed9db6045460c8aa4baaad26b44e1b5`; parent
+  `upstream/main` `560a921f0b0ad3bf80ac4181d7c833e173b14888`.
+- No component commit, push, request disposition, queue edit, remote change,
+  publication, or gate action occurred during preflight.
 
 ### Ninetieth-turn validation
 
