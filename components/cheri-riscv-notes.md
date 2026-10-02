@@ -18,9 +18,10 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** clean `docs/reconcile-project-status` synchronized 0/0
-  with private active `origin/docs/reconcile-project-status` at class-3
-  coordination refresh `34a8b50`; `main` /
+- **Observed state:** clean `docs/reconcile-project-status` at
+  `7fb49f40a6399000199de96d97b84f98f378eace`, 0 behind / 2 ahead of the
+  last-fetched private `origin/docs/reconcile-project-status` `34a8b50`;
+  `main` /
   `origin/main` remain `6553092`. Owner work `41e4125` integrates exactly the
   thirteen D4-approved content paths; return `4deec95` changes only
   `meta/handoff.md`. Maintained validation passed, no remote operation
@@ -29,9 +30,14 @@
   handoff date and next action. `PMD-20260927-005` closes PMR-104 as
   acknowledgement only. PMR-105 is closed by exact private fast-forward
   `9a4c5ef -> 34a8b50`; other refs were preserved, final state is clean 0/0,
-  and the single-use authorization is consumed.
+  and the single-use authorization is consumed. PMR-114 owner work
+  `8d1bc9d` and handoff-only return `7fb49f4` add the SOT-bound startup
+  contract and refresh current checkout paths; they remain local and unpushed.
+  The Project Manager verified both commit objects and the return parent
+  through maintained inspection, and observed the branch clean with no owner
+  writer lock at the latest check.
   `PMR-009`, `PMR-051`, `PMR-071`,
-  `PMR-101`, `PMR-103`, `PMR-104`, and `PMR-106` remain closed; PMR-102 is
+  `PMR-101`, `PMR-103`, `PMR-104`, `PMR-106`, and `PMR-114` remain closed; PMR-102 is
   superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
@@ -127,7 +133,9 @@ close. The existing internal repository remains the inactive
 the workspace symlink to the verified active successor. `PMR-071` asks
 the owner-facing instructions to map `check Project Manager tasking` to the
 exact fail-closed resolver without session-history fallback; it changes no
-corpus or publication gate. `PMR-114` now requests replacement of the
-remaining stale hard-coded workstation paths with current SOT-resolved
-logical topology and adoption of the SHA-bound startup/status anchor; it
-changes no corpus, citation, D4/D5, merge, Pages, or publication gate.
+corpus or publication gate. `PMR-114` is closed as acknowledgement of owner
+work `8d1bc9db` and handoff-only return `7fb49f40`, which add the
+SOT-bound startup/status anchor and refresh only the current checkout path
+facts. The owner reports 35/35 negative tasking mutations and other listed
+validation passed. The two commits remain unpushed; no corpus, citation,
+D4/D5, merge, Pages, or publication gate changed.

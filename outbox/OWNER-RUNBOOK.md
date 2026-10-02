@@ -106,9 +106,10 @@ now binds `workspace://SOT.md` by SHA-256 and fails closed if the anchor is
 absent, symlinked, or changed.
 
 No child repository changed. Owner adoption remains separate:
-`PMR-112` Beryllium, `PMR-113` Helium, `PMR-114` CHERI notes, `PMR-115` XRV,
+`PMR-112` Beryllium, `PMR-113` Helium, `PMR-115` XRV,
 `PMR-116` OS-security, `PMR-117` threat-modeler, and `PMR-118`
-security-reviewer. Project Manager, analysis-workbook,
+security-reviewer remain owner-owned. CHERI notes PMR-114 has since been
+completed locally. Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review already read the SOT
 anchor. PMR-108 is closed; child request closure, PMR-098/100 returns, and
 every human gate remain independent.
@@ -403,7 +404,6 @@ prompt.
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
 | `PMR-112` | P3 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-112` | Startup policy only; no implementation, plan, acceptance, ref, or gate change. |
-| `PMR-114` | P2 | `bash ./project-manager/scripts/owner-session.sh launch cheri-riscv-notes PMR-114` | Replace stale paths only; no corpus, D4/D5, merge, Pages, or publication change. |
 | `PMR-115` | P2 | `bash ./project-manager/scripts/owner-session.sh launch cheri-hypervisor-research PMR-115` | Replace stale paths only; no research, review-ID, source, ref, or publication change. |
 | `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Packet preloaded; do not resume or modify the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
@@ -432,6 +432,18 @@ corrected XRV return `07e86ab`; analysis-workbook carry `5a646df` mirrors the
 three accepted pointer statuses. PMR-094 later closes from synchronized
 private `60d5ceb`; PMR-093 is withdrawn and PMR-095 retains the separate
 analysis-workbook backup range.
+
+`PMR-114` is closed as acknowledgement of owner work
+`8d1bc9db8ea1ab6a832c27dbec882f5a8b1ecefd` and handoff-only return
+`7fb49f40a6399000199de96d97b84f98f378eace`. The owner reports changes only
+to `.github/copilot-instructions.md`, `automation/validate-project-tasking.mjs`,
+and `meta/handoff.md`; maintained tasking and corpus validation, 35/35
+negative mutations, non-publishing wiki build, and diff checks passed.
+Maintained inspection confirms the return is the current clean local
+`docs/reconcile-project-status` tip, 0 behind / 2 ahead of last-fetched private
+`origin` `34a8b50`, and the writer reservation is no longer held. Neither
+commit is backed up remotely; no fetch, push, merge, or publication occurred.
+D4/D5, Pages, and all corpus/release gates are unchanged.
 
 `PMR-009` is now also closed at owner work `e95922f` / return `6cb15e3` after
 separate explicit D4 approvals. Analysis-workbook carry `8da398d` mirrors

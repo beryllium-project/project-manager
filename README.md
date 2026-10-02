@@ -320,7 +320,9 @@ a fallback. Component-owned entry points are tracked by
 `PMR-063..PMR-072`. PMR-108's 2026-10-01 inventory found the SOT startup
 anchor already active for Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review. Distinct owner requests
-`PMR-112..PMR-118` cover only the seven remaining component gaps.
+`PMR-112`, `PMR-113`, and `PMR-115..PMR-118` are the six remaining
+child-owned gaps. CHERI notes PMR-114 is complete at owner work `8d1bc9d` /
+return `7fb49f4`; both commits remain local and unpushed.
 
 From the workspace root, use
 `bash ./project-manager/scripts/project-tasking.sh resolve <component>`.
