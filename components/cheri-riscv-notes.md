@@ -138,4 +138,7 @@ work `8d1bc9db` and handoff-only return `7fb49f40`, which add the
 SOT-bound startup/status anchor and refresh only the current checkout path
 facts. The owner reports 35/35 negative tasking mutations and other listed
 validation passed. The two commits remain unpushed; no corpus, citation,
-D4/D5, merge, Pages, or publication gate changed.
+D4/D5, merge, Pages, or publication gate changed. P3 PMR-119 separately asks
+the owner to correct only the handoff opening and next action, which still
+name completed PMR-105; it does not expand PMR-114 or alter research, corpus,
+or gates.

@@ -410,6 +410,7 @@ prompt.
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
 | `PMR-118` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent security-reviewer launch security-reviewer PMR-118` | Startup policy only; no engagement, model change, push, or gate. |
+| `PMR-119` | P3 | `bash ./project-manager/scripts/owner-session.sh launch cheri-riscv-notes PMR-119` | Update only the stale handoff opening/next action; no corpus, research, D4/D5, merge, Pages, or publication change. |
 
 Do not paste a follow-up phrase. The generated packet already includes the
 exact resolver, PM/request fingerprints, selected PMR text, local instruction
