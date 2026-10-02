@@ -18,8 +18,8 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** clean `docs/reconcile-project-status` at
-  `7fb49f40a6399000199de96d97b84f98f378eace`, 0 behind / 2 ahead of the
+- **Observed state:** clean `docs/reconcile-project-status` at PMR-119 carry
+  `7f671548a18bc426133b5b2102fa83a70cb3f9bc`, 0 behind / 3 ahead of the
   last-fetched private `origin/docs/reconcile-project-status` `34a8b50`;
   `main` /
   `origin/main` remain `6553092`. Owner work `41e4125` integrates exactly the
@@ -33,11 +33,15 @@
   and the single-use authorization is consumed. PMR-114 owner work
   `8d1bc9d` and handoff-only return `7fb49f4` add the SOT-bound startup
   contract and refresh current checkout paths; they remain local and unpushed.
+  Project Manager class-3 carry `7f67154` then changes only
+  `meta/handoff.md`'s opening date and `Exact next action`, closing PMR-119;
+  it is also local and unpushed.
   The Project Manager verified both commit objects and the return parent
   through maintained inspection, and observed the branch clean with no owner
   writer lock at the latest check.
   `PMR-009`, `PMR-051`, `PMR-071`,
-  `PMR-101`, `PMR-103`, `PMR-104`, `PMR-106`, and `PMR-114` remain closed; PMR-102 is
+  `PMR-101`, `PMR-103`, `PMR-104`, `PMR-106`, `PMR-114`, and `PMR-119`
+  remain closed; PMR-102 is
   superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
   `gim-inactive` preserves the old internal home, and private
   `origin/archive/gim-wiki` preserves complete Wiki history through
@@ -138,7 +142,8 @@ work `8d1bc9db` and handoff-only return `7fb49f40`, which add the
 SOT-bound startup/status anchor and refresh only the current checkout path
 facts. The owner reports 35/35 negative tasking mutations and other listed
 validation passed. The two commits remain unpushed; no corpus, citation,
-D4/D5, merge, Pages, or publication gate changed. P3 PMR-119 separately asks
-the owner to correct only the handoff opening and next action, which still
-name completed PMR-105; it does not expand PMR-114 or alter research, corpus,
-or gates.
+D4/D5, merge, Pages, or publication gate changed. Project Manager class-3
+carry `7f671548` closes PMR-119 by changing only `meta/handoff.md`'s opening
+date and `Exact next action` to current PMR-114 state. The clean topic is
+0 behind / 3 ahead; the carry is local and unpushed and changes no research,
+corpus, source, gate, ref, remote, Pages, merge, or publication state.

@@ -434,7 +434,9 @@ The responsible human selected a resumed hidden-owner rollout instead.
 closed. Scope steering `resume-threat-owner-rollout-20261002-06` reviewed the
 plan against source request blob `9c289ab...`; the Project Manager applied its
 required changes and bound exact PMR-120 through applied request blob
-`78681ba...`, unchanged SOT SHA, and component HEAD `c4126b6`.
+`7508420...`, unchanged SOT SHA, and component HEAD `c4126b6`. The binding
+was mechanically refreshed after PMR-119 closure and exact P3 blocker notes;
+the PMR-120 row and component envelope did not change.
 
 PMR-120 changes only the six paths named in its row. It adds no
 `ask_user`, delegation, web, threat-modeling skill, package scaffold,
@@ -446,6 +448,13 @@ Manager must allocate a separate single-use no-write handshake in a later
 turn; only after that handshake closes may PMR-064 and PMR-117 be considered
 for separate direct dispatch.
 
+The one-hundredth-turn fleet triage changed no owner boundary. PMR-066 and
+PMR-118 still require human-started owner sessions because those components
+have no adopted hidden owner. PMR-070/116 additionally retain OS-security's
+specific ask-first convention; the broad fleet direction is not that consent.
+PMR-107 remains an ask-first owner source decision and is not a class-2
+Project Manager carry. Generic fleet agents cannot run any of these writes.
+
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
 | `PMR-120` | P2 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120` | One final human bootstrap for hidden maintenance-owner registration only. Validated local work/return commits are allowed; no push. |
@@ -454,7 +463,6 @@ for separate direct dispatch.
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
 | `PMR-118` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent security-reviewer launch security-reviewer PMR-118` | Startup policy only; no engagement, model change, push, or gate. |
-| `PMR-119` | P3 | `bash ./project-manager/scripts/owner-session.sh launch cheri-riscv-notes PMR-119` | Update only the stale handoff opening/next action; no corpus, research, D4/D5, merge, Pages, or publication change. |
 
 Do not paste a follow-up phrase. Every generated packet includes exact
 PM/request/SOT fingerprints, selected PMR text, local instruction checklist,
@@ -464,6 +472,13 @@ bootstrap instead requires read-only comparison with the generated tasking
 view and becomes unusable when PMR-120 closes.
 
 ## Completed - do not rerun
+
+`PMR-119` is closed at Project Manager class-3 carry
+`7f671548a18bc426133b5b2102fa83a70cb3f9bc`. It changes only
+`meta/handoff.md`'s opening date and `Exact next action`, following PMR-106
+precedent. No component command, owner session, push, corpus, D4/D5, merge,
+Pages, publication, or gate change occurred. Do not launch the former
+PMR-119 owner command.
 
 `PMR-112` is closed from exact owner work `2313cbe0`, owner return
 `55b568b4`, and released-session checkpoint `93819fd9`. The owner reports
@@ -500,10 +515,12 @@ analysis-workbook backup range.
 to `.github/copilot-instructions.md`, `automation/validate-project-tasking.mjs`,
 and `meta/handoff.md`; maintained tasking and corpus validation, 35/35
 negative mutations, non-publishing wiki build, and diff checks passed.
-Maintained inspection confirms the return is the current clean local
-`docs/reconcile-project-status` tip, 0 behind / 2 ahead of last-fetched private
-`origin` `34a8b50`, and the writer reservation is no longer held. Neither
-commit is backed up remotely; no fetch, push, merge, or publication occurred.
+At PMR-114 closure, maintained inspection confirmed the return as clean local
+`docs/reconcile-project-status`, 0 behind / 2 ahead of last-fetched private
+`origin` `34a8b50`, with no writer reservation. Later class-3 PMR-119 carry
+`7f67154` is now the clean tip at 0 behind / 3 ahead. The PMR-114 work/return
+and PMR-119 carry are not backed up remotely; no fetch, push, merge, or
+publication occurred.
 D4/D5, Pages, and all corpus/release gates are unchanged.
 
 `PMR-115` is closed as acknowledgement of the single XRV owner work/return
@@ -725,11 +742,14 @@ The relevant local component commits are:
   `f928aac` is synchronized 0/0 with `origin/for-review`; exact owner-only
   backup request `PMR-091` is closed from script and inspection evidence;
   `main`, `public`, tags, and every other branch were unchanged;
-- `cheri-riscv-notes` is clean and synchronized 0/0 at class-3 coordination
-  tip `34a8b50`. Owner work `41e4125`
-  integrates exactly the thirteen D4-approved paths; PMR-104 and PMR-106 are
-  closed. PMR-093/096 are withdrawn; PMR-105 private topic backup is complete
-  and its single-use authorization is consumed;
+- `cheri-riscv-notes` is clean local `docs/reconcile-project-status` at
+  PMR-119 class-3 carry `7f67154`, 0 behind / 3 ahead of last-fetched private
+  `origin` `34a8b50`. PMR-114 work `8d1bc9d` / return `7fb49f4` and the
+  PMR-119 carry are unpushed with no allocated backup request. Owner work
+  `41e4125` integrates exactly the thirteen D4-approved paths; PMR-104,
+  PMR-106, PMR-114, and PMR-119 are closed. PMR-093/096 are withdrawn;
+  PMR-105 private topic backup is complete and its single-use authorization
+  is consumed;
 - `cheri-hypervisor-research` is clean and synchronized 0/0 at private
   `origin/main` `5e7387a`. Exact PMR-075/092/094 predecessor ranges are
   remotely contained and those backup requests are closed. The later

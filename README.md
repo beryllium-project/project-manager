@@ -397,7 +397,7 @@ That exact packet carries scope-review steering
 blob `9c289ab88a4202efb20e5e88ae994f6572c59a75` before PMR-120 existed; the
 Project Manager applied its required changes and bound the exact resulting
 row through applied request blob
-`78681ba5f4645db4d0b717e250871a3f42fb816c`, SOT SHA-256
+`7508420cd5a91239eb77bdc2198d15c133dbf91f`, SOT SHA-256
 `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`,
 and threat-modeler HEAD `c4126b6`. The exact envelope adds only
 maintenance-only hidden-owner registration in six named component paths.

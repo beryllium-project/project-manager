@@ -360,7 +360,7 @@ require_text "$owner_session" 'component HEAD changed before Copilot launch'
 require_text "$owner_session" \
     'bootstrap_review_source_request_blob=9c289ab88a4202efb20e5e88ae994f6572c59a75'
 require_text "$owner_session" \
-    'bootstrap_applied_request_blob=78681ba5f4645db4d0b717e250871a3f42fb816c'
+    'bootstrap_applied_request_blob=7508420cd5a91239eb77bdc2198d15c133dbf91f'
 require_text "$owner_session" \
     'bootstrap_review_sot_sha=5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68'
 require_text "$owner_session" \
