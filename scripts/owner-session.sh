@@ -7,6 +7,44 @@ set -euo pipefail
 export LC_ALL=C
 umask 077
 
+preflight_log=
+preflight_log_finalized=0
+owner_stage=not-started
+owner_result=in-progress
+owner_reason=none
+packet=
+packet_cleanup=0
+
+write_preflight_log() {
+    [[ -n $preflight_log ]] || return 0
+    {
+        printf 'schema=OWNER_SESSION_PREFLIGHT_V1\n'
+        printf 'timestamp=%s\n' "$timestamp"
+        printf 'mode=%s\n' "$mode"
+        printf 'component=%s\n' "$component"
+        printf 'agent=%s\n' "$selected_agent"
+        printf 'requests=%s\n' "$requests_value"
+        printf 'tasking_bootstrap=%s\n' "$bootstrap_value"
+        printf 'stage=%s\n' "$owner_stage"
+        printf 'result=%s\n' "$owner_result"
+        printf 'reason=%s\n' "$owner_reason"
+    } >"$preflight_log"
+}
+
+owner_session_exit() {
+    local status=$?
+    if [[ -n $preflight_log && $preflight_log_finalized == 0 ]]; then
+        owner_result=error
+        owner_reason=unexpected-exit
+        write_preflight_log || true
+        preflight_log_finalized=1
+    fi
+    if ((packet_cleanup)) && [[ -n $packet ]]; then
+        rm -f -- "$packet"
+    fi
+    return "$status"
+}
+
 usage() {
     cat >&2 <<'EOF'
 Usage:
@@ -23,6 +61,12 @@ launch   perform the same fail-closed preparation, then start an interactive
 This is a human-run ordinary-owner path. It does not invoke a hidden owner
 worker, grant a human gate, push, or write inside the component before Copilot
 starts. Each selected PMR must be open and directly assigned to the component.
+After syntactically valid component/PMR parsing, each attempt maintains one
+private fixed-field state log under `scratch/owner-sessions/preflight/`.
+It records preflight stage/result only, never command output or a Copilot
+transcript. No log means the launcher did not reach validated preflight
+logging, for example because it stopped during usage/argument parsing or
+could not create the private scratch path.
 
 --tasking-bootstrap is a one-time repair admitted only for exact
 `--agent threat-model-maintainer ... threat-modeler PMR-064 PMR-117`. It
@@ -33,6 +77,12 @@ EOF
 }
 
 die() {
+    if [[ -n $preflight_log ]]; then
+        owner_result=error
+        owner_reason=preflight-failed
+        write_preflight_log || true
+        preflight_log_finalized=1
+    fi
     printf 'owner-session: ERROR: %s\n' "$*" >&2
     exit 1
 }
@@ -107,7 +157,29 @@ for pmr in "$@"; do
     pmrs+=("$pmr")
 done
 
+mkdir -p -- "$scratch_root/preflight"
+timestamp=$(date -u +%Y%m%dT%H%M%SZ)
+pmr_slug=$(IFS=-; printf '%s' "${pmrs[*]}")
+requests_value=$(IFS=,; printf '%s' "${pmrs[*]}")
+selected_agent=${owner_agent:-ordinary-default}
 if ((tasking_bootstrap)); then
+    bootstrap_value=yes
+else
+    bootstrap_value=no
+fi
+preflight_log=$(mktemp \
+    "$scratch_root/preflight/$timestamp-$component-$pmr_slug.XXXXXX.log") ||
+    die "cannot create owner preflight log"
+owner_stage=arguments-validated
+write_preflight_log
+trap owner_session_exit EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+if ((tasking_bootstrap)); then
+    owner_stage=bootstrap-admission
+    write_preflight_log
     [[ $owner_agent == threat-model-maintainer ]] ||
         die "--tasking-bootstrap requires --agent threat-model-maintainer"
     [[ $component == threat-modeler ]] ||
@@ -117,12 +189,15 @@ if ((tasking_bootstrap)); then
         die "--tasking-bootstrap requires exact ordered requests PMR-064 PMR-117"
 fi
 
+owner_stage=component-entry
+write_preflight_log
 component_entry=$workspace_root/$component
 [[ -e $component_entry ]] || die "component entry is unreachable: $component"
 component_root=$(CDPATH= cd -- "$component_entry" 2>/dev/null && pwd -P) ||
     die "component repository is unreachable: $component"
-mkdir -p -- "$scratch_root"
 if [[ $mode == launch ]]; then
+    owner_stage=acquire-locks
+    write_preflight_log
     command -v flock >/dev/null 2>&1 ||
         die "flock is required for one-writer owner sessions"
     [[ ! -L $scratch_root/global ]] ||
@@ -142,6 +217,8 @@ if [[ $mode == launch ]]; then
     flock -n "$lock_fd" ||
         die "another owner session holds the writer reservation: $component"
 fi
+owner_stage=component-state
+write_preflight_log
 [[ $(git_safe -C "$component_root" rev-parse --show-toplevel 2>/dev/null || true) == "$component_root" ]] ||
     die "component entry is not a repository root: $component"
 [[ -z $(git_safe -C "$component_root" status --porcelain 2>/dev/null) ]] ||
@@ -151,15 +228,21 @@ if [[ -n $owner_agent ]]; then
         die "selected component agent is unavailable: $owner_agent"
 fi
 
+owner_stage=project-manager-state
+write_preflight_log
 [[ $(git_safe -C "$pm_root" rev-parse --show-toplevel 2>/dev/null || true) == "$pm_root" ]] ||
     die "Project Manager repository is invalid"
 [[ -z $(git_safe -C "$pm_root" status --porcelain 2>/dev/null) ]] ||
     die "Project Manager worktree is dirty; wait for its commit and regenerated tasking"
 
+owner_stage=tasking-current
+write_preflight_log
 env PM_TASKING_ROOT="$pm_root" PM_TASKING_WORKSPACE="$workspace_root" \
     bash "$tasking" check >/dev/null ||
     die "generated Project Manager tasking is stale"
 
+owner_stage=capture-fingerprints
+write_preflight_log
 pm_head=$(git_safe -C "$pm_root" rev-parse --verify HEAD) ||
     die "cannot resolve Project Manager HEAD"
 request_blob=$(git_safe -C "$pm_root" rev-parse --verify \
@@ -181,12 +264,12 @@ component_upstream=$(git_safe -C "$component_root" rev-parse \
     --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || true)
 [[ -n $component_upstream ]] || component_upstream=none
 
-timestamp=$(date -u +%Y%m%dT%H%M%SZ)
-pmr_slug=$(IFS=-; printf '%s' "${pmrs[*]}")
+owner_stage=packet-create
+write_preflight_log
 packet=$(mktemp "$scratch_root/$timestamp-$component-$pmr_slug.XXXXXX.md") ||
     die "cannot create owner packet"
 temp=$packet
-trap 'rm -f -- "$packet"' EXIT HUP INT TERM
+packet_cleanup=1
 
 {
     printf '# Human-started component owner session packet v1\n\n'
@@ -298,6 +381,8 @@ EOF
     printf '\n## Exact Project Manager request packets\n\n'
 } >"$temp"
 
+owner_stage=dispatch-packets
+write_preflight_log
 for pmr in "${pmrs[@]}"; do
     env PM_TASKING_ROOT="$pm_root" PM_TASKING_WORKSPACE="$workspace_root" \
         bash "$tasking" dispatch "$component" "$pmr" >>"$temp" ||
@@ -305,6 +390,8 @@ for pmr in "${pmrs[@]}"; do
     printf '\n---\n\n' >>"$temp"
 done
 
+owner_stage=final-state
+write_preflight_log
 final_pm_head=$(git_safe -C "$pm_root" rev-parse --verify HEAD) ||
     die "cannot re-resolve Project Manager HEAD"
 final_request_blob=$(git_safe -C "$pm_root" rev-parse --verify \
@@ -323,7 +410,7 @@ final_component_head=$(git_safe -C "$component_root" rev-parse --verify HEAD) ||
 [[ -z $(git_safe -C "$component_root" status --porcelain 2>/dev/null) ]] ||
     die "component worktree changed while preparing the owner packet"
 
-trap - EXIT HUP INT TERM
+packet_cleanup=0
 packet_sha=$(sha256sum -- "$packet")
 packet_sha=${packet_sha%% *}
 
@@ -334,13 +421,24 @@ printf 'owner-session requests:'
 printf ' %s' "${pmrs[@]}"
 printf '\n'
 
-[[ $mode == prepare ]] && exit 0
+if [[ $mode == prepare ]]; then
+    owner_stage=complete
+    owner_result=prepared
+    owner_reason=none
+    write_preflight_log
+    preflight_log_finalized=1
+    exit 0
+fi
+owner_stage=copilot-availability
+write_preflight_log
 if [[ $pm_root != "$default_root" && -z $copilot_bin_explicit ]]; then
     die "non-default PM_TASKING_ROOT launch requires an explicit COPILOT_BIN"
 fi
 command -v "$copilot_bin" >/dev/null 2>&1 ||
     die "Copilot CLI is unavailable: $copilot_bin"
 
+owner_stage=prelaunch-state
+write_preflight_log
 [[ $(git_safe -C "$pm_root" rev-parse --verify HEAD) == "$pm_head" ]] ||
     die "Project Manager HEAD changed before Copilot launch"
 [[ $(git_safe -C "$component_root" rev-parse --verify HEAD) == "$component_head" ]] ||
@@ -361,4 +459,9 @@ printf 'owner-session launch: copilot --no-auto-update --yolo -C %s -i <packet l
 copilot_args=(--no-auto-update --yolo)
 [[ -n $owner_agent ]] && copilot_args+=(--agent "$owner_agent")
 copilot_args+=(-C "$component_entry" -i "$initial_prompt")
+owner_stage=complete
+owner_result=launching
+owner_reason=none
+write_preflight_log
+preflight_log_finalized=1
 exec "$copilot_bin" "${copilot_args[@]}"

@@ -35,6 +35,12 @@ The current recovery launcher writes its state log and private terminal
 transcript under ignored `scratch/owner-recoveries/` and prints both paths.
 The transcript may contain sensitive interactive output and is never copied
 wholesale into a durable record.
+The ordinary owner-session preflight log is the narrow exception to the
+print-path convention: its path is intentionally not printed so launcher
+stdout/stderr and Copilot arguments remain unchanged. The Project Manager
+retrieves the newest component/PMR-matched file directly from fixed ignored
+`scratch/owner-sessions/preflight/`; it contains only the documented
+fixed-field state, never command output or a transcript.
 
 ## Human-reported completed user-level governance reinstall (no PMR)
 
@@ -402,6 +408,15 @@ pre-PMR-064 maintainer may execute repository-local commands only. The exact
 one-time launcher mode below relies on the launcher's already validated,
 embedded tasking and does not execute that not-yet-authorized sibling command.
 It is not usable for another component or request.
+
+The first bootstrap retry also left threat-modeler unchanged and produced no
+new packet, proving another failure occurred before packet finalization but
+not identifying its exact check. The launcher now writes one sanitized
+fixed-field state log for every syntactically valid attempt under ignored
+`scratch/owner-sessions/preflight/`; it records only the current stage,
+terminal result, and validated identifiers. It captures no command output or
+Copilot transcript. After the next retry, the Project Manager reads that log
+directly rather than asking the human to relay terminal output.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |

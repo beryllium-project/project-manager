@@ -1830,6 +1830,9 @@ tasking_target=$sandbox/tasking-symlink-target
 recovery_component=$tasking_workspace/recovery-component
 owner_session_scratch=$sandbox/owner-session-scratch
 owner_bootstrap_scratch=$sandbox/owner-bootstrap-scratch
+owner_bootstrap_error_scratch=$sandbox/owner-bootstrap-error-scratch
+owner_bootstrap_launch_scratch=$sandbox/owner-bootstrap-launch-scratch
+owner_bootstrap_postpacket_scratch=$sandbox/owner-bootstrap-postpacket-scratch
 owner_recovery_scratch=$sandbox/owner-recovery-scratch
 mkdir -p "$tasking_pm/components" "$tasking_pm/outbox/tasking" "$tasking_pm/scripts" \
     "$tasking_pm/outbox/owner-recovery" \
@@ -2095,6 +2098,37 @@ if ((${#owner_packets[@]} == 1)); then
 else
     fail "owner-session did not write exactly one private packet"
 fi
+ordinary_logs=("$owner_session_scratch"/preflight/*.log)
+if ((${#ordinary_logs[@]} == 1)); then
+    mapfile -t ordinary_log_lines <"${ordinary_logs[0]}"
+    if ((${#ordinary_log_lines[@]} == 10)) &&
+        [[ ${ordinary_log_lines[0]} == schema=OWNER_SESSION_PREFLIGHT_V1 &&
+           ${ordinary_log_lines[1]} =~ ^timestamp=[0-9]{8}T[0-9]{6}Z$ &&
+           ${ordinary_log_lines[2]} == mode=prepare &&
+           ${ordinary_log_lines[3]} == component=direct-component &&
+           ${ordinary_log_lines[4]} == agent=ordinary-default &&
+           ${ordinary_log_lines[5]} == requests=PMR-001,PMR-007 &&
+           ${ordinary_log_lines[6]} == tasking_bootstrap=no &&
+           ${ordinary_log_lines[7]} == stage=complete &&
+           ${ordinary_log_lines[8]} == result=prepared &&
+           ${ordinary_log_lines[9]} == reason=none ]]; then
+        pass "ordinary owner prepare log has the exact field allowlist"
+    else
+        fail "ordinary owner prepare log field set or values differ"
+    fi
+    if [[ $(stat -c '%a' "${ordinary_logs[0]}") == 600 ]]; then
+        pass "ordinary owner preflight log is mode 0600"
+    else
+        fail "ordinary owner preflight log mode is not 0600"
+    fi
+    if [[ $(stat -c '%a' "$owner_session_scratch/preflight") == 700 ]]; then
+        pass "ordinary owner preflight directory is mode 0700"
+    else
+        fail "ordinary owner preflight directory mode is not 0700"
+    fi
+else
+    fail "owner-session did not write exactly one ordinary prepare log"
+fi
 expect_exit "owner-session prepares the exact threat tasking bootstrap" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
@@ -2122,11 +2156,59 @@ if ((${#bootstrap_packets[@]} == 1)); then
 else
     fail "owner-session did not write exactly one tasking-bootstrap packet"
 fi
+bootstrap_logs=("$owner_bootstrap_scratch"/preflight/*.log)
+if ((${#bootstrap_logs[@]} == 1)); then
+    mapfile -t bootstrap_log_lines <"${bootstrap_logs[0]}"
+    if ((${#bootstrap_log_lines[@]} == 10)) &&
+        [[ ${bootstrap_log_lines[0]} == schema=OWNER_SESSION_PREFLIGHT_V1 &&
+           ${bootstrap_log_lines[1]} =~ ^timestamp=[0-9]{8}T[0-9]{6}Z$ &&
+           ${bootstrap_log_lines[2]} == mode=prepare &&
+           ${bootstrap_log_lines[3]} == component=threat-modeler &&
+           ${bootstrap_log_lines[4]} == agent=threat-model-maintainer &&
+           ${bootstrap_log_lines[5]} == requests=PMR-064,PMR-117 &&
+           ${bootstrap_log_lines[6]} == tasking_bootstrap=yes &&
+           ${bootstrap_log_lines[7]} == stage=complete &&
+           ${bootstrap_log_lines[8]} == result=prepared &&
+           ${bootstrap_log_lines[9]} == reason=none ]]; then
+        pass "tasking-bootstrap prepare log has the exact field allowlist"
+    else
+        fail "tasking-bootstrap prepare log field set or values differ"
+    fi
+else
+    fail "owner-session did not write exactly one tasking-bootstrap prepare log"
+fi
 expect_exit "tasking bootstrap rejects the default owner context" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
-    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_error_scratch" \
     bash "$owner_session" --tasking-bootstrap \
     prepare threat-modeler PMR-064 PMR-117
+bootstrap_error_logs=("$owner_bootstrap_error_scratch"/preflight/*.log)
+if ((${#bootstrap_error_logs[@]} == 1)); then
+    mapfile -t bootstrap_error_lines <"${bootstrap_error_logs[0]}"
+    if ((${#bootstrap_error_lines[@]} == 10)) &&
+        [[ ${bootstrap_error_lines[0]} == schema=OWNER_SESSION_PREFLIGHT_V1 &&
+           ${bootstrap_error_lines[1]} =~ ^timestamp=[0-9]{8}T[0-9]{6}Z$ &&
+           ${bootstrap_error_lines[2]} == mode=prepare &&
+           ${bootstrap_error_lines[3]} == component=threat-modeler &&
+           ${bootstrap_error_lines[4]} == agent=ordinary-default &&
+           ${bootstrap_error_lines[5]} == requests=PMR-064,PMR-117 &&
+           ${bootstrap_error_lines[6]} == tasking_bootstrap=yes &&
+           ${bootstrap_error_lines[7]} == stage=bootstrap-admission &&
+           ${bootstrap_error_lines[8]} == result=error &&
+           ${bootstrap_error_lines[9]} == reason=preflight-failed ]]; then
+        pass "tasking-bootstrap failure log has the exact field allowlist"
+    else
+        fail "tasking-bootstrap failure log field set or values differ"
+    fi
+else
+    fail "owner-session did not write exactly one bootstrap failure log"
+fi
+error_packets=("$owner_bootstrap_error_scratch"/*.md)
+if [[ ! -e ${error_packets[0]} ]]; then
+    pass "pre-packet bootstrap failure writes no owner packet"
+else
+    fail "pre-packet bootstrap failure retained an owner packet"
+fi
 expect_exit "tasking bootstrap rejects the threat-modeler orchestrator" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
@@ -2203,7 +2285,7 @@ require_text "$copilot_capture" 'fixture-owner'
 bootstrap_capture=$sandbox/copilot-bootstrap-argv.txt
 expect_exit "owner-session launches the exact threat tasking bootstrap" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
-    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_launch_scratch" \
     COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$bootstrap_capture" \
     bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
     launch threat-modeler PMR-064 PMR-117
@@ -2217,6 +2299,27 @@ require_text "$bootstrap_capture" \
     'compare the packet'\''s PM commit, request blob, SOT SHA-256'
 refute_pattern "$bootstrap_capture" \
     'First verify its SHA-256 is'
+bootstrap_launch_logs=("$owner_bootstrap_launch_scratch"/preflight/*.log)
+if ((${#bootstrap_launch_logs[@]} == 1)); then
+    mapfile -t bootstrap_launch_lines <"${bootstrap_launch_logs[0]}"
+    if ((${#bootstrap_launch_lines[@]} == 10)) &&
+        [[ ${bootstrap_launch_lines[0]} == schema=OWNER_SESSION_PREFLIGHT_V1 &&
+           ${bootstrap_launch_lines[1]} =~ ^timestamp=[0-9]{8}T[0-9]{6}Z$ &&
+           ${bootstrap_launch_lines[2]} == mode=launch &&
+           ${bootstrap_launch_lines[3]} == component=threat-modeler &&
+           ${bootstrap_launch_lines[4]} == agent=threat-model-maintainer &&
+           ${bootstrap_launch_lines[5]} == requests=PMR-064,PMR-117 &&
+           ${bootstrap_launch_lines[6]} == tasking_bootstrap=yes &&
+           ${bootstrap_launch_lines[7]} == stage=complete &&
+           ${bootstrap_launch_lines[8]} == result=launching &&
+           ${bootstrap_launch_lines[9]} == reason=none ]]; then
+        pass "tasking-bootstrap launch log has the exact field allowlist"
+    else
+        fail "tasking-bootstrap launch log field set or values differ"
+    fi
+else
+    fail "owner-session did not write exactly one bootstrap launch log"
+fi
 expect_exit "owner-session rejects an unavailable component agent" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
@@ -2452,9 +2555,36 @@ expect_exit "tasking regenerates after bootstrap closure fixture" 0 \
     bash "$tasking" generate
 expect_exit "tasking bootstrap remains unavailable after selected request closure" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
-    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_postpacket_scratch" \
     bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
     prepare threat-modeler PMR-064 PMR-117
+postpacket_packets=("$owner_bootstrap_postpacket_scratch"/*.md)
+if [[ ! -e ${postpacket_packets[0]} ]]; then
+    pass "post-packet bootstrap failure removes the owner packet"
+else
+    fail "post-packet bootstrap failure retained the owner packet"
+fi
+postpacket_logs=("$owner_bootstrap_postpacket_scratch"/preflight/*.log)
+if ((${#postpacket_logs[@]} == 1)); then
+    mapfile -t postpacket_lines <"${postpacket_logs[0]}"
+    if ((${#postpacket_lines[@]} == 10)) &&
+        [[ ${postpacket_lines[0]} == schema=OWNER_SESSION_PREFLIGHT_V1 &&
+           ${postpacket_lines[1]} =~ ^timestamp=[0-9]{8}T[0-9]{6}Z$ &&
+           ${postpacket_lines[2]} == mode=prepare &&
+           ${postpacket_lines[3]} == component=threat-modeler &&
+           ${postpacket_lines[4]} == agent=threat-model-maintainer &&
+           ${postpacket_lines[5]} == requests=PMR-064,PMR-117 &&
+           ${postpacket_lines[6]} == tasking_bootstrap=yes &&
+           ${postpacket_lines[7]} == stage=dispatch-packets &&
+           ${postpacket_lines[8]} == result=error &&
+           ${postpacket_lines[9]} == reason=preflight-failed ]]; then
+        pass "post-packet bootstrap failure log persists exact state"
+    else
+        fail "post-packet bootstrap failure log differs"
+    fi
+else
+    fail "post-packet bootstrap failure did not retain one preflight log"
+fi
 
 expect_exit "owner-recovery rejects missing arguments" 2 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \

@@ -358,6 +358,18 @@ helper writes no component file before Copilot starts, invokes no hidden owner
 worker, grants no gate, and performs no push. The human starts the real
 command and answers only genuine unresolved gates.
 
+Every syntactically valid prepare/launch maintains one mode-`0600`,
+fixed-field preflight state file under ignored
+`project-manager/scratch/owner-sessions/preflight/`. Its exact fields are
+schema, UTC timestamp, mode, component, selected agent identifier, selected
+request IDs, bootstrap yes/no, current stage, result, and a fixed sanitized
+reason. It contains no environment values, command output, URLs, credentials,
+component content, user input, or Copilot transcript. An absent log means the
+launcher did not reach validated preflight logging, for example because it
+stopped during usage/argument parsing or could not create private scratch; a
+`launching` result means the launcher reached the Copilot `exec`, not that
+Copilot started or that owner work completed.
+
 One narrow bootstrap repairs the pre-adoption threat-modeler resolver
 deadlock:
 
