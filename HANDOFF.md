@@ -2596,10 +2596,12 @@ Previous-turn model-matrix artifacts remain listed in Git history at
   `78681ba5f4645db4d0b717e250871a3f42fb816c`; SOT SHA-256 remains
   `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`;
   threat-modeler remains `c4126b6`.
-- `project-tasking.sh check` correctly fails closed while the authoritative
-  request table is uncommitted. Commit Project Manager, regenerate from that
-  exact commit, then rerun tasking, registry, PM, agent, queue, and diff
-  validation before the parent commit.
+- Rollout checkpoint `9b8de7a61f6cda6fe0b3e326370d1717c0c0f63a`
+  committed the exact request blob above. Generated tasking and the PMR-120
+  dispatch packet then matched that commit, blob, SOT SHA, component, direct
+  assignment, and P2 priority. This handoff-only reconciliation changes no
+  request row; regenerate tasking once more from its containing commit before
+  binding the parent registry.
 
 ### Ninety-eighth-turn validation
 
