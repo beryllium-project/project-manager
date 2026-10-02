@@ -111,8 +111,8 @@ OS-security, `PMR-117` threat-modeler, and `PMR-118` security-reviewer remain
 owner-owned. CHERI notes PMR-114 and XRV PMR-115 have since completed
 locally. Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review already read the SOT
-anchor. PMR-108 is closed; child request closure, PMR-098/100 returns, and
-every human gate remain independent.
+anchor. PMR-108 is closed; PMR-098/100 returns are now acknowledged, while
+the remaining child requests and every human gate remain independent.
 
 ## P3 PMR-111: security-reviewer private backup
 
@@ -188,10 +188,11 @@ Repository reorganization and the analysis owner-worker pilot are complete.
 No project-wide owner rollout or Git-maintainer specialist is required.
 
 The ordinary Beryllium PMR-067/083 owner session completed and released its
-historical lock at `416b2e9`; both requests remain closed. A later
-thirteen-commit owner series now ends at synchronized `80345e1` and requires
-its own canonical return under `PMR-098`; this does not reopen the completed
-process-expansion workstream. All six exact analysis-workbook
+historical lock at `416b2e9`; both requests remain closed. The later
+thirteen-commit owner series and distinct fourteen-commit KVM0 series now
+have canonical PMR-098/100 return `1f38e699` and released-session checkpoint
+`4c6acbed`; this does not reopen the completed process-expansion workstream.
+All six exact analysis-workbook
 housekeeping requests are complete through PMR-063 return `8b5a301`. The
 repository/PM housekeeping workstream is operationally complete. Stop process
 expansion. Research, source admission, external dependencies, backup/push
@@ -242,29 +243,20 @@ second prompt.
 
 ## Beryllium drift reconciliation and new planning
 
-Maintained inspection now observes active/default
-`beryllium/single-hart-runtime-r0` clean and synchronized 0/0 with
-last-fetched `origin` at `4141cf6`, following broad source-first policy work
-`ee1feaf` and review packet `4141cf6`.
-Multiple local K0 topic branches are visible.
-The responsible human stated exactly `"there is no other running session"`
-on 2026-10-01, closing the prior session without a canonical PMR-098/100
-return. The component handoff includes K0-A
-planning and acceptance material plus a bounded non-PMR K0-S
-preparation/status return. `PMD-20260926-002` records exact human-accepted K0-A
-target `5227266` and closes plan-only PMR-099, satisfying K0-P only. No
-canonical return names open earlier-series `PMR-098` or
-later-series `PMR-100`. No owner session is selected by this status update;
-any later writer requires fresh tasking, worktree, and one-writer checks.
-Do not infer current-package readiness, import, execution, backup,
-publication, or any assurance gate.
-
-The unreconciled range `416b2e9..80345e1` still records the component-side
-exact H0/R8-C acceptance claim for `1999ee7`, the
-`helium/* -> historical_he/*` private-origin namespace rename, KVM0/B0/B1
-planning input, repository rehoming, and identity policy. `PMR-098` still
-requires one canonical account of that range, the observed origin advance,
-visibility, refs, validation, active-session state, and publication boundary.
+Maintained inspection now observes clean active/default
+`beryllium/single-hart-runtime-r0` at local session checkpoint `4c6acbed`,
+behind 0 / ahead 2 of last-fetched private `origin` `4141cf6`. Canonical
+return `1f38e699` covers the distinct thirteen-commit PMR-098 range
+`416b2e9..80345e1` and fourteen-commit PMR-100 KVM0 range
+`80345e1..2b404ca`; checkpoint `4c6acbed` releases the owner session. Both
+commits are local-only and change owner-stated `planning/HANDOFF.md`.
+Maintained refs resolve every named commit/subject. The K0-S source target
+`c1c7e254` is absent from Beryllium and remains owner-stated sibling
+containment evidence. `PMD-20260926-002` still limits plan-only PMR-099 to
+exact K0-A target `5227266` and K0-P. Any later writer requires fresh
+tasking, worktree, and one-writer checks. Do not infer current-package
+readiness, import, execution, backup approval, publication, or any assurance
+gate.
 
 The responsible human selected `defer` when asked whether the Project Manager
 should confirm, reject, or defer the component acceptance claim.
@@ -272,16 +264,13 @@ should confirm, reject, or defer the component acceptance claim.
 Beryllium is accepted through R7; R8-H0 is committed but not accepted;
 H1-H4 are unauthorized; K3 remains `NOT RUN`.
 
-**P2 `PMR-098` and `PMR-100` are both blocked by missing owner returns.**
-The prior owner session is reported closed; the current Project Manager
-handoff supplies one return-only owner-session command covering both exact
-reconciliation scopes. That command grants no implementation, acceptance,
-execution, push, publication, or other gate. K0-I is
-component-recorded accepted at exact target `abd092a` and remains
-unreconciled in Project Manager state pending PMR-098/100. K0-S source
-preparation/evidence import, K0-X native execution, K0-R result acceptance,
-B0, development-kernel/BSP selection, B1, an H0 successor, retained R8
-progression, publication, and release remain separate blocked gates.
+**PMR-098 and PMR-100 are closed as acknowledgements of the canonical
+return.** Do not rerun the combined owner session. The closures grant no
+implementation, acceptance, execution, push, publication, or other gate.
+K0-S source preparation/evidence import, K0-X native execution, K0-R result
+acceptance, B0, development-kernel/BSP selection, B1, an H0 successor,
+retained R8 progression, publication, and release remain separate blocked
+gates.
 
 ## Closed PMR-105: private CHERI topic backup
 
@@ -404,8 +393,7 @@ prompt.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-098`, `PMR-100` | P2 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-098 PMR-100` | Return-only reconciliation of two closed sessions; no new implementation, acceptance, execution, push, publication, H1-H4, or K3 authority. |
-| `PMR-112` | P3 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-112` | Startup policy only; no implementation, plan, acceptance, ref, or gate change. |
+| `PMR-112` | P3 | `bash ./project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-112` | Startup policy and directly related stale startup-path correction only; no implementation, plan, acceptance, ref, or gate change. |
 | `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Packet preloaded; do not resume or modify the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
@@ -419,6 +407,13 @@ checklist, one-writer rule, validation/commit/return contract, and no-gate /
 no-push boundary.
 
 ## Completed - do not rerun
+
+`PMR-098` and `PMR-100` are closed from exact canonical return `1f38e699`
+and local released-session checkpoint `4c6acbed`. The return keeps the
+thirteen-commit H0/current-line range separate from the fourteen-commit KVM0
+range, records bounded validation/ref/publication evidence, and performs no
+new implementation, fetch, push, tag, remote change, publication, or gate.
+Both return commits are local-only. Do not rerun their combined launcher.
 
 `PMR-040` is closed at qualified selective incorporation work `38a69bd` and
 HANDOFF-only return `d5d33a2`. The owner recorded source-aware
@@ -470,8 +465,9 @@ merge, and push gates remain open.
 hardening `364552c`. The responsible human's `"all ready"`, given in direct
 response to the Project Manager's Beryllium owner-session release request,
 releases that historical `active_session: self` lock. Do not treat this
-closed range as the return for later `416b2e9..80345e1`; PMR-098 owns that
-distinct reconciliation.
+closed range as the return for later `416b2e9..80345e1`; PMR-098 later
+closed that distinct reconciliation at return `1f38e699` / checkpoint
+`4c6acbed`.
 
 The exact resolver startup mapping, fence-aware validation, and explicit
 Chromium documentation gates passed. Full `make check` stops first on
@@ -514,29 +510,25 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** active/default Beryllium is now observed clean and
-  synchronized 0/0 at `4141cf6` with last-fetched
-  `origin/beryllium/single-hart-runtime-r0`, while local candidate
+- **P3 PMR-090:** active/default Beryllium is now observed clean at local
+  checkpoint `4c6acbed`, behind 0 / ahead 2 of last-fetched private
+  `origin/beryllium/single-hart-runtime-r0` `4141cf6`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
-  `0d53120` have no remote-tracking containment. The responsible human's
-  point-in-time no-session statement removes only the prior session blocker;
-  this turn still has no authorization evidence for the observed
-  remote-tracking advance.
-  Broad source-first policy work `ee1feaf` and review packet `4141cf6`
-  further change the old backup facts but supply no Project Manager
-  publication authorization and no canonical PMR-098/100 return. Keep
-  PMR-090 open behind
-  PMR-098; review the exact refs and publication gate before any later
+  `0d53120` have no remote-tracking containment. Canonical PMR-098/100 return
+  `1f38e699` and checkpoint `4c6acbed` close the prior evidence dependency
+  but are themselves local-only and outside PMR-090's fixed scope. The owner
+  reports authenticated current GitHub visibility `PRIVATE`; the Project
+  Manager performed no network check. Keep PMR-090 open for exact review of
+  its fixed active/candidate scope and a new separate human push/publication
   decision. Never push inactive `msft-downstream`; no observed or future push
   accepts H0, authorizes H1-H4/K3, or grants publication approval.
   The component handoff additionally states that local branch
   `beryllium/doc-repro-option-a-20260929` is unpushed and not integrated,
   that `archive/generated-docs-2026-09-30` points to `d4c5ff0`, and that
-  K0-S target `c6570558` was privately pushed with source target `c1c7e254`
-  private-remote-contained. Treat these only as unverified owner-stated
-  ref/backup context. They do not expand PMR-090's exact push scope, satisfy
-  PMR-100, or establish authority, readiness, acceptance, publication, or
-  backup.
+  K0-S target `c6570558` is contained by last-fetched Beryllium refs; source
+  target `c1c7e254` is absent from Beryllium and remains owner-stated sibling
+  evidence. These facts do not expand PMR-090's exact push scope or establish
+  authority, readiness, acceptance, publication, or backup approval.
 - **Closed PMR-091:** human-run maintained `outbox/pmr091-push.sh`
   fast-forwarded only private `for-review` from `1ab289c` to `f928aac`.
   Script evidence reports `other-refs-preserved=yes`, 23 heads / zero tags,
@@ -645,21 +637,20 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is clean and synchronized 0/0 at `4141cf6`
-  with last-fetched `origin`. Broad source-first policy work `ee1feaf` and review
-  packet `4141cf6` now contain the previously observed 354-entry dirty state;
-  the responsible human stated exactly `"there is no other running session"`
-  on 2026-10-01, but no canonical authority or return evidence is recorded.
-  No push path is authorized and PMR-098/100 remain open. Local candidate
+- `beryllium-hypervisor/` primary is clean at local checkpoint `4c6acbed`,
+  behind 0 / ahead 2 of last-fetched private `origin` `4141cf6`. Canonical
+  return `1f38e699` and checkpoint `4c6acbed` close PMR-098/100 as
+  acknowledgements; both commits are local-only and change owner-stated
+  `planning/HANDOFF.md`. No push path is authorized. Local candidate
   `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
   `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both without
   remote-tracking containment. The component handoff separately states local
   doc-repro branch `beryllium/doc-repro-option-a-20260929` is unpushed and
   not integrated, archive ref `archive/generated-docs-2026-09-30` points to
-  `d4c5ff0`, and K0-S target/source `c6570558` / `c1c7e254` are privately
-  pushed/contained; these facts are owner-stated and unverified. PMR-098 and
-  PMR-100 request distinct canonical
-  returns; PMR-090 retains unresolved publication/ref review. PMR-099 is
+  `d4c5ff0`, and K0-S target `c6570558` is Beryllium-ref-contained. Source
+  target `c1c7e254` is absent from Beryllium and remains owner-stated sibling
+  containment evidence. PMR-090 retains unresolved publication/ref review.
+  PMR-099 is
   closed at exact K0-A plan acceptance only. Generic helper delivery remains
   excluded; PMR-105's single-use topic fast-forward is complete and consumed;
 - `helium-te-poc` clean attached `for-review` at PMR-026 durable return
@@ -706,10 +697,10 @@ plan text. The component records exact target `1999ee7` as accepted, but the
 responsible human selected `defer` for Project Manager reconciliation;
 `PMD-20260925-001` therefore keeps Project Manager R8-H0 state committed but
 unaccepted. Exact KVM0 K0-A plan target `5227266` is responsible-human
-accepted under `PMD-20260926-002`, satisfying K0-P only. K0-I is
-component-recorded accepted at exact target `abd092a` and remains
-unreconciled in Project Manager state pending PMR-098/100. K0-S
-preparation/status documentation is accepted only at exact target
+accepted under `PMD-20260926-002`, satisfying K0-P only. PMR-100's canonical
+return records the distinct K0-I exact-target and K0-S boundaries without
+expanding their authority. K0-S preparation/status documentation is accepted
+only at exact target
 `c65705582c243dd908ff47d3189df07601167400`; current-package readiness,
 K0-X, and K0-R remain blocked. KVM0 and K3 are `NOT RUN`; development kernel/BSP is
 `UNDECIDED`. H1-H4 are not authorized. Helium is a review-and-test proof of
