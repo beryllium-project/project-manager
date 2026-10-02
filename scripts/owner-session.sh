@@ -10,8 +10,8 @@ umask 077
 usage() {
     cat >&2 <<'EOF'
 Usage:
-  owner-session.sh [--agent <component-agent>] prepare <component> <PMR-NNN>...
-  owner-session.sh [--agent <component-agent>] launch  <component> <PMR-NNN>...
+  owner-session.sh [--tasking-bootstrap] [--agent <component-agent>] prepare <component> <PMR-NNN>...
+  owner-session.sh [--tasking-bootstrap] [--agent <component-agent>] launch  <component> <PMR-NNN>...
 
 prepare  validate tasking and component state, write the ignored owner packet,
          and print its path and hash without launching Copilot or reserving a
@@ -23,6 +23,12 @@ launch   perform the same fail-closed preparation, then start an interactive
 This is a human-run ordinary-owner path. It does not invoke a hidden owner
 worker, grant a human gate, push, or write inside the component before Copilot
 starts. Each selected PMR must be open and directly assigned to the component.
+
+--tasking-bootstrap is a one-time repair admitted only for exact
+`--agent threat-model-maintainer ... threat-modeler PMR-064 PMR-117`. It
+uses the launcher's already validated, embedded tasking because the current
+component policy does not yet permit the resolver command that those requests
+adopt. It grants no general resolver bypass or authority for another request.
 EOF
 }
 
@@ -54,12 +60,26 @@ git_safe() {
 }
 
 owner_agent=
-if (($# >= 2)) && [[ $1 == --agent ]]; then
-    owner_agent=$2
-    shift 2
-    [[ $owner_agent =~ ^[a-z0-9][a-z0-9-]*$ ]] ||
-        die "invalid component agent name: $owner_agent"
-fi
+tasking_bootstrap=0
+while (($# >= 1)); do
+    case $1 in
+    --agent)
+        (($# >= 2)) || die "--agent requires a component agent name"
+        [[ -z $owner_agent ]] || die "--agent was specified more than once"
+        owner_agent=$2
+        shift 2
+        [[ $owner_agent =~ ^[a-z0-9][a-z0-9-]*$ ]] ||
+            die "invalid component agent name: $owner_agent"
+        ;;
+    --tasking-bootstrap)
+        ((tasking_bootstrap == 0)) ||
+            die "--tasking-bootstrap was specified more than once"
+        tasking_bootstrap=1
+        shift
+        ;;
+    *) break ;;
+    esac
+done
 
 (($# >= 3)) || { usage; exit 2; }
 mode=$1
@@ -86,6 +106,16 @@ for pmr in "$@"; do
     seen[$pmr]=1
     pmrs+=("$pmr")
 done
+
+if ((tasking_bootstrap)); then
+    [[ $owner_agent == threat-model-maintainer ]] ||
+        die "--tasking-bootstrap requires --agent threat-model-maintainer"
+    [[ $component == threat-modeler ]] ||
+        die "--tasking-bootstrap is admitted only for threat-modeler"
+    ((${#pmrs[@]} == 2)) &&
+        [[ ${pmrs[0]} == PMR-064 && ${pmrs[1]} == PMR-117 ]] ||
+        die "--tasking-bootstrap requires exact ordered requests PMR-064 PMR-117"
+fi
 
 component_entry=$workspace_root/$component
 [[ -e $component_entry ]] || die "component entry is unreachable: $component"
@@ -135,6 +165,14 @@ pm_head=$(git_safe -C "$pm_root" rev-parse --verify HEAD) ||
 request_blob=$(git_safe -C "$pm_root" rev-parse --verify \
     HEAD:outbox/component-requests.md) ||
     die "cannot resolve committed request table"
+tasking_view=$pm_root/outbox/tasking/$component.md
+[[ -f $tasking_view && -r $tasking_view ]] ||
+    die "generated component tasking view is unavailable"
+tasking_sot_sha=$(awk -F'`' \
+    '/^\- \*\*Global startup\/status SHA-256:\*\*/ { print $2; exit }' \
+    "$tasking_view")
+[[ $tasking_sot_sha =~ ^[0-9a-f]{64}$ ]] ||
+    die "generated component tasking lacks a valid SOT SHA-256"
 component_head=$(git_safe -C "$component_root" rev-parse --verify HEAD) ||
     die "cannot resolve component HEAD"
 component_branch=$(git_safe -C "$component_root" symbolic-ref --quiet --short HEAD 2>/dev/null || true)
@@ -168,6 +206,10 @@ trap 'rm -f -- "$packet"' EXIT HUP INT TERM
     printf -- '- **Selected requests:**'
     printf ' `%s`' "${pmrs[@]}"
     printf '\n\n'
+    if ((tasking_bootstrap)); then
+        printf -- '- **Tasking bootstrap:** `threat-modeler/PMR-064/PMR-117`\n'
+        printf -- '- **Bound SOT SHA-256:** `%s`\n\n' "$tasking_sot_sha"
+    fi
     cat <<EOF
 ## Project Manager coordination inputs
 
@@ -189,6 +231,22 @@ validation, a push, or a remote change.
 2. Before editing, report \`pwd\` and \`pwd -P\`; verify the branch and exact
    HEAD above, a clean worktree, local owner instructions, the component
    handoff, and absence of another writer. Stop on any mismatch.
+EOF
+    if ((tasking_bootstrap)); then
+        cat <<EOF
+3. This is the exact one-time tasking bootstrap for
+   \`threat-modeler PMR-064 PMR-117\`. The human-run launcher already
+   validated current generated tasking and embedded both exact dispatch
+   packets. Do not execute a parent or sibling script or Git command. Using
+   read-only file tools, compare \`$tasking_view\` with this packet and stop
+   unless its Project Manager commit is \`$pm_head\`, request blob is
+   \`$request_blob\`, SOT SHA-256 is \`$tasking_sot_sha\`, component is
+   \`threat-modeler\`, and its current rows are exactly PMR-064 and PMR-117.
+   This exception is unusable after either request closes and is not a
+   resolver fallback or precedent for another component or request.
+EOF
+    else
+        cat <<EOF
 3. Run the exact fail-closed resolver below. Its PM commit and request blob
    must match this packet. Never fall back to session history, task databases,
    background agents, prior chat, or memory.
@@ -198,7 +256,9 @@ validation, a push, or a remote change.
    PM_TASKING_WORKSPACE=$workspace_root \\
    bash $tasking resolve $component
    \`\`\`
-
+EOF
+    fi
+    cat <<EOF
 4. Complete only the selected PMRs. Keep their scopes and evidence distinct,
    even if one human-started owner session handles them sequentially.
 5. If a selected PMR needs a responsible-human decision, ask one short stable
@@ -290,7 +350,11 @@ command -v "$copilot_bin" >/dev/null 2>&1 ||
 [[ -z $(git_safe -C "$component_root" status --porcelain 2>/dev/null) ]] ||
     die "component worktree changed before Copilot launch"
 
-initial_prompt="Read the complete owner-session packet at $packet. First verify its SHA-256 is $packet_sha and this repository HEAD is $component_head. If either check fails, stop. Then follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
+if ((tasking_bootstrap)); then
+    initial_prompt="Read the complete owner-session packet at $packet using read-only file tools. This human-run launcher already verified its SHA-256 is $packet_sha; do not execute a parent or sibling command to rehash or resolve tasking. Verify this repository HEAD is $component_head using repository-local read-only Git, then compare the packet's PM commit, request blob, SOT SHA-256, component, and selected rows with its read-only generated tasking view. Stop on any mismatch. Follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
+else
+    initial_prompt="Read the complete owner-session packet at $packet. First verify its SHA-256 is $packet_sha and this repository HEAD is $component_head. If either check fails, stop. Then follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
+fi
 
 printf 'owner-session launch: copilot --no-auto-update --yolo -C %s -i <packet locator>\n' \
     "$component_entry"

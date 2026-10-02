@@ -394,19 +394,30 @@ verified; do not rerun them. Future ordinary owner work uses the same
 one-command launcher and preloaded packet; never ask the human to paste a
 prompt.
 
+The first PMR-064/117 launch exited with threat-modeler clean and unchanged at
+`c4126b6`, no durable return, and a released writer lock. No transcript was
+persisted. Current policy exposes a deterministic bootstrap conflict: the
+ordinary packet requires the parent resolver before editing, while the
+pre-PMR-064 maintainer may execute repository-local commands only. The exact
+one-time launcher mode below relies on the launcher's already validated,
+embedded tasking and does not execute that not-yet-authorized sibling command.
+It is not usable for another component or request.
+
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Packet preloaded; do not resume or modify the paused model. |
+| `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Exact one-time tasking bootstrap; packet/view fingerprint comparison replaces only the currently prohibited in-session resolver. Do not resume or modify the paused model. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
 | `PMR-118` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent security-reviewer launch security-reviewer PMR-118` | Startup policy only; no engagement, model change, push, or gate. |
 | `PMR-119` | P3 | `bash ./project-manager/scripts/owner-session.sh launch cheri-riscv-notes PMR-119` | Update only the stale handoff opening/next action; no corpus, research, D4/D5, merge, Pages, or publication change. |
 
-Do not paste a follow-up phrase. The generated packet already includes the
-exact resolver, PM/request fingerprints, selected PMR text, local instruction
-checklist, one-writer rule, validation/commit/return contract, and no-gate /
-no-push boundary.
+Do not paste a follow-up phrase. Every generated packet includes exact
+PM/request/SOT fingerprints, selected PMR text, local instruction checklist,
+one-writer rule, validation/commit/return contract, and no-gate/no-push
+boundary. Ordinary packets also require the exact resolver; the one admitted
+bootstrap instead requires read-only comparison with the generated tasking
+view and becomes unusable when either selected request closes.
 
 ## Completed - do not rerun
 

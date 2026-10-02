@@ -1,20 +1,21 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-10-02
-**Update scope:** ninety-fifth coordination turn. After the responsible human
-reported exactly `"done above"` for PMR-112, verified released writer state
-and the durable Beryllium return. Owner work
-`2313cbe023a1563289fd3e2aa9743f55465d3746`, return
-`55b568b4ed37ca5ae3ac27ee0d4c58b1e764f63a`, and local checkpoint
-`93819fd9550e798bcdc19fb398d48c613ce110f0` adopt SOT-first owner startup,
-bounded source-only contract validation, and the directly related current
-checkout path. The clean active branch is 0 behind / 5 ahead of last-fetched
-private `origin` `4141cf6`. Maintained refs resolve the launch base and all
-three PMR-112 commits/subjects; other branches, tags, and registered
-worktrees remain unchanged. PMR-112 closes as acknowledgement only. The
-owner reports exact launch SOT/PM/request fingerprints, bounded validation,
-no remote or implementation action, and released session state; the Project
-Manager ran no component validator.
+**Update scope:** ninety-sixth coordination turn. The responsible human
+reported that the PMR-064/117 threat-model-maintainer session returned
+`task complete` but blocked and directed review of its logs. Maintained
+inspection finds threat-modeler clean and unchanged at synchronized
+`c4126b6`, no writer lock, and no durable return; both requests remain open.
+The ordinary launcher persisted only packet
+`scratch/owner-sessions/20261002T150620Z-threat-modeler-PMR-064-PMR-117.nslA4Q.md`,
+not a transcript or state log. Current policy exposes a deterministic
+bootstrap conflict: packet step 3 requires the parent resolver before edits,
+while the pre-PMR-064 maintainer may execute repository-local commands only.
+The actual on-screen stop point remains unverified. A fail-closed
+`--tasking-bootstrap` repair is admitted only for exact
+`threat-model-maintainer` / `threat-modeler` / ordered PMR-064 PMR-117; it
+uses launcher-validated embedded tasking and grants no direct Project Manager
+launch, generic fallback, component change, push, or gate.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -27,7 +28,7 @@ in `../COMPONENTS.md`
 
 | Area | Current state |
 | --- | --- |
-| Current coordination baseline | **PMR-112 return verified and acknowledged; no child write by the Project Manager.** The human reported exactly `"done above"` after the owner session. Beryllium work `2313cbe0`, return `55b568b4`, and released-session checkpoint `93819fd9` are local-only; clean active/default is 0 behind / 5 ahead of last-fetched private `origin` `4141cf6`. The maintained lock scan reports no owner-session writer lock and no global reservation, but does not check non-instrumented sessions. PMR-064/117 are the recommended next startup-maintenance batch; PMR-090 remains a separate ref/push/publication decision. |
+| Current coordination baseline | **PMR-064/117 first launch blocked cleanly; exact bootstrap repair ready.** Threat-modeler remains clean and synchronized at `c4126b6`; no component commit or durable return exists, the writer lock is released, and both requests remain open. The packet/policy conflict is deterministic, but the absent transcript leaves the actual stop point unknown. The exact human-run bootstrap retry is the recommended next action; PMR-090 remains a separate ref/push/publication decision. |
 | Operational PM closure | **PMR-112 complete, with independent backup and gate gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105/114, XRV PMR-115, formal-verification PMR-014/037/041/069, and Beryllium PMR-098/100/112 are closed. Security backup PMR-111 and Beryllium PMR-090 remain separate and unapproved. |
 | Workspace worktree layout | **Container and ignore complete; namespacing follow-up open.** Workspace-root `worktrees/` now holds six human-moved, repaired Beryllium linked worktrees at temporary flat paths recorded in `../COMPONENTS.md`. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; Project Manager never moves or removes them. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
@@ -39,7 +40,7 @@ in `../COMPONENTS.md`
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references. The responsible human now renamed and retargeted the CHERI notes and XRV workspace links to those verified successors. |
 | Beryllium runtime | Active/default `beryllium/single-hart-runtime-r0` is clean at PMR-112 checkpoint `93819fd9`, 0 behind / 5 ahead of last-fetched private `origin` `4141cf6`. Work `2313cbe0`, return `55b568b4`, and checkpoint are local-only and not remotely backed up; SOT-first owner startup is active and the owner lock is released. Canonical return `1f38e699` keeps PMR-098/100 closed. Maintained refs confirm all named commits/subjects, active-range containment, and local-only candidates `6e93461` / `0d53120`; source target `c1c7e254` is absent from Beryllium and remains owner-stated sibling evidence. The current package remains unaccepted and not ready; K0-X/K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is `UNDECIDED`; Project Manager R8-H0 remains unaccepted. |
 | Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. PMR-091 is closed: only private `for-review` fast-forwarded `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved; independent inspection confirms clean synchronized 0/0 state. `main`, other branches, tags, `public`, remotes, and helpers were excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
-| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. `PMR-028` is closed. The model's risks are conditional analysis, not observed compromise or risk acceptance. |
+| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Owner maintenance commit `c4126b6` follows owner package `5bf6a4b` and Project Manager carry `f4eb272`; clean `main` is synchronized with private `origin/main`. The first PMR-064/117 owner launch changed nothing and returned no durable evidence. The exact bootstrap retry changes only owner startup/configuration and must not resume the model. |
 | XRV | Clean local private `main` at PMR-115 owner work/return `7361de4`, 0 behind / 1 ahead of last-fetched `origin/main` `5e7387a`. PMR-115 adopts current SOT/registry startup resolution and changes only `.github/copilot-instructions.md` and `HANDOFF.md`; no fetch or push occurred. The earlier Bao-CHERI state remains bounded public experimental evidence that is unreproduced, non-upstream, unreleased, and not a complete decomposed hypervisor. PMR-075/092/094 and PMR-040/058/072 closures remain exact; no research or publication gate changed. |
 | Analysis-workbook | Clean `main` is synchronized 0/0 at `3c9d2a3`. Complete private session `AWB-20260928-001` contains one inquiry, 40 evidence records, and 414 / 0 validation. Its three new public-source pointers are ledgered/routed as PML-0032..0034 / PMR-107; routed rows produce no source queue edit. Earlier backup PMRs remain open pending reconciliation of observed containment with their review/authorization requirements. |
 | CHERI-RISC-V notes | Clean `docs/reconcile-project-status` at PMR-114 return `7fb49f4`, 0 behind / 2 ahead of last-fetched private `origin/docs/reconcile-project-status` `34a8b50`. PMR-114 work `8d1bc9d` and return `7fb49f4` complete SOT-bound owner startup and path refresh; owner reports 35/35 maintained negative mutations and other validation passed. PMR-119 asks for a separate handoff-opening/next-action correction only. No fetch or push occurred. PMR-105's prior exact private fast-forward remains complete and consumed. D4/D5, licensing, redistribution, publication, Pages, and merge to `main` remain open. |
@@ -60,7 +61,7 @@ in `../COMPONENTS.md`
 | Human interaction | `PMD-20261002-001` records the exact direction `"also remember to use a full pathname when giving me an initial cd command"`. User-facing command sequences now render an initial `cd` with the current absolute path re-resolved from `SOT.md` / `COMPONENTS.md`; later commands may be relative to that established directory. The prior PMR-105 single-use authorization remains consumed. |
 | Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review. Ordinary roles remain `max` / `long_context`; `PMD-20260930-005` makes exact Codex `xhigh` / `default` the sole named capability exception. `PMD-20260930-001` retains `high` as the explicit floor for every non-Codex selection and `beryllium-scope-review` as the `claude-opus-5.5` / `max` / `long_context` scope-control model exception. No silent model, effort, or context fallback is permitted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this turn, Project Manager `acafbc4` was 0 behind / 4 ahead of `origin/main` `43e7e82`, and parent `5849cf3` was 0 behind / 3 ahead of `upstream/main` `36e6c89`; both worktrees were clean. This turn adds only Project Manager coordination records and parent-root `SOT.md`, `README.md`, and `COMPONENTS.md`; no component path or component repository is changed by the Project Manager. |
+| Parent coordination | Before this turn, Project Manager `16e7f99` was 0 behind / 5 ahead of `origin/main` `43e7e82`, and parent `33f1d77` was 0 behind / 4 ahead of `upstream/main` `36e6c89`; both worktrees were clean. This turn changes only Project Manager launcher/tests/usage/coordination records and parent-root `COMPONENTS.md`; no component path or component repository is changed by the Project Manager. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -90,7 +91,7 @@ backup/publication gates, and elective work remain visible.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P3 | `PMR-064`, `PMR-117` | **Recommended next after current PM tasking refresh** | Threat owner maintenance adds the exact tasking resolver and SOT startup anchor to both entry points without resuming or modifying the paused model. |
+| P3 | `PMR-064`, `PMR-117` | **Blocked first launch; exact bootstrap retry ready after PM tasking refresh** | Threat owner maintenance adds the exact tasking resolver and SOT startup anchor to both entry points without resuming the paused model. The human acts through one narrowly admitted launcher retry. |
 | P3 | `Worktree namespacing` (no PMR) | **Temporary flat placement works; owner follow-up deferred** | Six repaired Beryllium worktrees are under `worktrees/` but not yet under `worktrees/beryllium-hypervisor/...`; other top-level Beryllium worktrees need a later owner inventory. Any move is human/Beryllium-owner `git worktree move`. |
 | P3 | `PMR-085` | **Containment observed — push review/authorization evidence unresolved** | Synchronized `origin/main` at `3c9d2a3` contains the range through `ea72522`; reconcile who reviewed/authorized the encompassing push before closure. No handshake, analysis disposition, or gate follows. |
 | P3 | `PMR-088` | **Containment observed — depends on `PMR-085` disposition** | Synchronized `3c9d2a3` contains PMR-086 commits `efbfdb8` and `858a73b`; close only after independently reconciling the predecessor push evidence. |
@@ -115,21 +116,22 @@ backup/publication gates, and elective work remain visible.
 ### One recommended next action
 
 After this Project Manager and parent reconciliation is committed and tasking
-views are regenerated, start one threat-model owner-maintenance session for
-PMR-064 and PMR-117:
+views are regenerated, retry the exact threat-model owner-maintenance session:
 
 ```sh
 cd /home/jmorris/src/l1/src/beryllium-project
-bash ./project-manager/scripts/owner-session.sh --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117
+bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117
 ```
 
-PMR-064/117 changes only deterministic tasking and SOT startup policy in the
-threat owner contexts. It does not resume or modify the paused model, create
-a package, execute a target, change risk disposition, publish, or grant a
-gate. This Project Manager session may remain open read-only while that owner
-runs, but any PM/root write waits for the owner lock to release. The initial
-`cd` uses the full current pathname under `PMD-20261002-001`. Other
-priorities outside Project Manager visibility may take precedence.
+The option is admitted only for exact threat-modeler PMR-064/117 and becomes
+unusable when either request closes. It substitutes read-only comparison of
+the launcher-validated tasking view only for the currently prohibited
+in-session resolver; ordinary owner sessions remain unchanged. The work does
+not resume or modify the paused model, create a package, execute a target,
+change risk disposition, push, publish, or grant a gate. This Project Manager
+session may remain open read-only while that owner runs. The initial `cd`
+uses the full current pathname under `PMD-20261002-001`. Other priorities
+outside Project Manager visibility may take precedence.
 
 ### Minimal restart commands
 
@@ -149,6 +151,48 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### Ninety-sixth-turn threat-modeler bootstrap repair
+
+- The responsible human reported the PMR-064/117
+  `threat-model-maintainer` session returned `task complete` but blocked and
+  directed the Project Manager to its logs.
+- Maintained inspection found threat-modeler clean, unchanged, and
+  synchronized at `c4126b6`; no commit, dirty path, ref change, durable
+  return, writer lock, or global reservation remained. PMR-064 and PMR-117
+  stay open.
+- Ordinary `owner-session.sh` persists only a private launch packet, not a
+  transcript or state log. The exact packet is
+  `scratch/owner-sessions/20261002T150620Z-threat-modeler-PMR-064-PMR-117.nslA4Q.md`.
+  No unrelated Copilot session-state or history was searched.
+- Read-only policy comparison located a deterministic bootstrap conflict.
+  Packet step 3 requires the parent tasking resolver before edits, while the
+  current `threat-model-maintainer` may execute repository-local commands
+  only; PMR-064 is the request that adopts exactly that exception. With no
+  transcript, this is a structural blocker rather than a verified claim
+  about the owner's final on-screen stop point.
+- Added `owner-session.sh --tasking-bootstrap`, admitted only for exact
+  `--agent threat-model-maintainer`, component `threat-modeler`, and ordered
+  requests `PMR-064 PMR-117`. Every other component, agent, subset, order,
+  duplicate, extra, dirty/stale/locked state, and closed selected request
+  fails closed.
+- The one-time packet relies on the launcher's existing clean-state,
+  current-tasking, SOT, PM commit/blob, assignment, dispatch, and one-writer
+  checks. The owner reads the generated view and compares exact fingerprints
+  without executing a not-yet-authorized parent/sibling command. Ordinary
+  packets retain their resolver step unchanged.
+- Focused sandbox coverage verifies exact admission, packet fields, ordinary
+  packet preservation, initial prompt boundaries, stale tasking, dirty state,
+  writer/global locks, and automatic refusal after either request closes.
+- The read-only `pm-auditor` found no blocker. Direct README command coverage
+  and ambiguous helper antecedents are corrected. Its suggestions for a new
+  PMD and edits to standing interfaces, instructions, skills, and roster are
+  explicitly deferred by the bounded scope review: this is one exact launcher
+  defect repair, not a new general control-plane policy.
+- This is a repair to the existing human-run launcher, not direct Project
+  Manager owner invocation, a hidden-owner rollout, a general resolver
+  fallback, a component write, a push, or a human gate. No threat package,
+  paused-run state, risk disposition, queue, or component changed.
 
 ### Ninety-fifth-turn PMR-112 owner-return reconciliation
 
@@ -1727,7 +1771,7 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P3 | `PMR-064`, `PMR-117` | **Recommended next:** add the exact tasking resolver and SOT startup anchor to threat-modeler and its maintainer without resuming or modifying the paused model. |
+| P3 | `PMR-064`, `PMR-117` | **Recommended exact bootstrap retry:** use the one-time launcher repair to add the resolver and SOT startup anchor without resuming or modifying the paused model. Both requests remain open until a durable component return. |
 | P3 | `PMR-119` | CHERI notes owner refreshes only the stale handoff opening/next action that still directs to completed PMR-105; no corpus or gate changes. |
 | P3 | Worktree namespacing (no PMR) | Six repaired Beryllium worktrees remain at temporary flat `worktrees/` paths, and other top-level Beryllium worktrees need later owner inventory. A human/Beryllium-owner `git worktree move` may apply namespacing; Project Manager never performs it. |
 | P3 | `PMR-111` | PMR-109/110 are closed at local work `2bb4c98` / return `c2edac7`. After a new exact same-turn responsible-human confirmation and unchanged expected tips, privately fast-forward only security-reviewer `origin/main`; no engagement or gate follows. |
@@ -1857,6 +1901,25 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   decisions.
 
 ## What to review
+
+### Ninety-sixth-turn threat bootstrap repair review
+
+- `scripts/owner-session.sh`
+- `tests/validate-agent.sh`
+- `README.md`
+- `outbox/OWNER-RUNBOOK.md`
+- `HANDOFF.md`
+- parent `../COMPONENTS.md`
+- Launch packet
+  `scratch/owner-sessions/20261002T150620Z-threat-modeler-PMR-064-PMR-117.nslA4Q.md`
+- Read-only threat-modeler policy at `c4126b6`:
+  `.github/agents/threat-model-maintainer.agent.md`,
+  `.github/copilot-instructions.md`, `AGENT-INTERFACE.md`, and `HANDOFF.md`
+
+Review the exact admission boundary, ordinary-packet preservation, absence of
+component changes, and the explicit uncertainty caused by the missing
+transcript. PMR-064/117 remain open until a committed component handoff
+return.
 
 ### Ninety-fifth-turn PMR-112 closure review
 
@@ -2359,6 +2422,34 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 `2f8d576:HANDOFF.md`.
 
 ## Validation and commit state
+
+### Ninety-sixth-turn validation
+
+- Launch-bound PM/tasking remains
+  `16e7f99121e407935c0c2c0b64345c79f4930373` /
+  `9c289ab88a4202efb20e5e88ae994f6572c59a75` / SOT SHA-256
+  `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`;
+  PMR-064 and PMR-117 remain open and the request blob is unchanged.
+- Maintained state reports threat-modeler clean and synchronized at
+  `c4126b6`, no durable PMR-064/117 return, no writer lock, and no global
+  reservation. The first launch produced no component change.
+- Scope review adjusted the repair to exact maintainer/component/ordered-PMR
+  admission, read-only view comparison without sibling Git/scripts, and
+  exhaustive failure tests. Direct PM launch, generic bootstrap, hidden-owner
+  rollout, PMD creation, standing-policy edits, and other components remain
+  deferred.
+- The read-only `pm-auditor` found no blocker. README command/antecedent gaps
+  are fixed; other minor standing-interface suggestions remain deferred under
+  the reviewed boundary. The missing transcript keeps the actual first stop
+  point unknown.
+- `bash ./scripts/validate-pm.sh`: 704 passed / 0 failed;
+  `bash ./tests/validate-agent.sh`: 1119 passed / 0 failed;
+  `bash ./scripts/pull-queues.sh check`: 34 source rows / 34 ledger rows;
+  generated tasking current; registry exact; Project Manager and parent
+  `git diff --check`: passed.
+- Project Manager commit, tasking regeneration/check, exact parent PM
+  binding, final validation/registry checks, and clean-state checks remain
+  pending this turn's commit sequence.
 
 ### Ninety-fifth-turn validation
 

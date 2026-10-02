@@ -1829,11 +1829,12 @@ tasking_pm=$tasking_workspace/project-manager
 tasking_target=$sandbox/tasking-symlink-target
 recovery_component=$tasking_workspace/recovery-component
 owner_session_scratch=$sandbox/owner-session-scratch
+owner_bootstrap_scratch=$sandbox/owner-bootstrap-scratch
 owner_recovery_scratch=$sandbox/owner-recovery-scratch
 mkdir -p "$tasking_pm/components" "$tasking_pm/outbox/tasking" "$tasking_pm/scripts" \
     "$tasking_pm/outbox/owner-recovery" \
     "$tasking_workspace/direct-component/.github/agents" "$tasking_target" \
-    "$recovery_component"
+    "$recovery_component" "$tasking_workspace/threat-modeler/.github/agents"
 cp "$tasking" "$tasking_pm/scripts/project-tasking.sh"
 cp "$owner_session" "$tasking_pm/scripts/owner-session.sh"
 cp "$owner_recovery" "$tasking_pm/scripts/owner-recovery.sh"
@@ -1844,6 +1845,7 @@ printf '# direct-component\n' >"$tasking_pm/components/direct-component.md"
 printf '# symlink-component\n' >"$tasking_pm/components/symlink-component.md"
 printf '# other-component\n' >"$tasking_pm/components/other-component.md"
 printf '# recovery-component\n' >"$tasking_pm/components/recovery-component.md"
+printf '# threat-modeler\n' >"$tasking_pm/components/threat-modeler.md"
 printf '# Global startup status fixture\n' >"$tasking_workspace/SOT.md"
 cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 # Component requests
@@ -1857,6 +1859,8 @@ cat >"$tasking_pm/outbox/component-requests.md" <<'EOF'
 | PMR-006 | 2000-01-01 | project-manager | Keep this task self-managed. | Fixture basis. | open | P2 | Not applicable | Self-managed note. |
 | PMR-007 | 2000-01-01 | direct-component | Do the second direct task. | Second fixture basis. | open | P3 | Not applicable | Second direct note. |
 | PMR-008 | 2000-01-01 | recovery-component | Recover the exact dirty work. | Recovery fixture basis. | open | P1 | Not applicable | Sole recovery task. |
+| PMR-064 | 2000-01-01 | threat-modeler | Adopt the exact Project Manager resolver. | Tasking bootstrap fixture basis. | open | P3 | Not applicable | Exact threat bootstrap request. |
+| PMR-117 | 2000-01-01 | threat-modeler | Adopt the SOT-first startup contract. | SOT bootstrap fixture basis. | open | P3 | Not applicable | Exact threat SOT bootstrap request. |
 EOF
 git -C "$recovery_component" init -q -b main
 printf 'base\n' >"$recovery_component/work.txt"
@@ -1893,6 +1897,15 @@ git -C "$tasking_workspace/direct-component" add .github/agents/fixture-owner.ag
 git -C "$tasking_workspace/direct-component" \
     -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -q -m "direct component fixture"
+git -C "$tasking_workspace/threat-modeler" init -q -b main
+printf '%s\n' '---' 'name: threat-model-maintainer' '---' \
+    >"$tasking_workspace/threat-modeler/.github/agents/threat-model-maintainer.agent.md"
+printf '%s\n' '---' 'name: threat-modeler' '---' \
+    >"$tasking_workspace/threat-modeler/.github/agents/threat-modeler.agent.md"
+git -C "$tasking_workspace/threat-modeler" add .github/agents
+git -C "$tasking_workspace/threat-modeler" \
+    -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q -m "threat-modeler fixture"
 git -C "$tasking_target" init -q -b main
 git -C "$tasking_target" -c user.name=fixture -c user.email=fixture@example.invalid \
     -c commit.gpgsign=false commit -q --allow-empty -m "symlink component fixture"
@@ -2076,9 +2089,69 @@ if ((${#owner_packets[@]} == 1)); then
     refute_pattern "$owner_packet" 'PMR-00[2346]'
     require_text "$owner_packet" 'Never infer an unanswered gate.'
     require_text "$owner_packet" 'Do not perform another PMR, push, fetch'
+    require_text "$owner_packet" \
+        "bash $tasking_pm/scripts/project-tasking.sh resolve direct-component"
+    refute_pattern "$owner_packet" 'Tasking bootstrap'
 else
     fail "owner-session did not write exactly one private packet"
 fi
+expect_exit "owner-session prepares the exact threat tasking bootstrap" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064 PMR-117
+bootstrap_packets=("$owner_bootstrap_scratch"/*.md)
+if ((${#bootstrap_packets[@]} == 1)); then
+    pass "owner-session writes one exact tasking-bootstrap packet"
+    bootstrap_packet=${bootstrap_packets[0]}
+    require_text "$bootstrap_packet" \
+        '**Tasking bootstrap:** `threat-modeler/PMR-064/PMR-117`'
+    require_text "$bootstrap_packet" '**Selected component agent:** `threat-model-maintainer`'
+    require_text "$bootstrap_packet" '**Selected requests:** `PMR-064` `PMR-117`'
+    require_text "$bootstrap_packet" "**Source Project Manager commit:**"
+    require_text "$bootstrap_packet" "**Source request blob:**"
+    require_text "$bootstrap_packet" "**Bound SOT SHA-256:** \`$tasking_anchor_sha\`"
+    require_text "$bootstrap_packet" \
+        'Do not execute a parent or sibling script or Git command.'
+    require_text "$bootstrap_packet" \
+        "$tasking_pm/outbox/tasking/threat-modeler.md"
+    require_text "$bootstrap_packet" \
+        'This exception is unusable after either request closes'
+    refute_pattern "$bootstrap_packet" \
+        "bash $tasking_pm/scripts/project-tasking.sh resolve threat-modeler"
+else
+    fail "owner-session did not write exactly one tasking-bootstrap packet"
+fi
+expect_exit "tasking bootstrap rejects the default owner context" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap \
+    prepare threat-modeler PMR-064 PMR-117
+expect_exit "tasking bootstrap rejects the threat-modeler orchestrator" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-modeler \
+    prepare threat-modeler PMR-064 PMR-117
+expect_exit "tasking bootstrap rejects another component" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare direct-component PMR-001 PMR-007
+expect_exit "tasking bootstrap rejects a PMR subset" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064
+expect_exit "tasking bootstrap rejects reversed PMR order" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-117 PMR-064
+expect_exit "tasking bootstrap rejects an extra PMR" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064 PMR-117 PMR-001
 expect_exit "owner-session rejects a wrong-component request" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
@@ -2127,6 +2200,23 @@ expect_exit "owner-session selects an explicit component agent" 0 \
     bash "$owner_session" --agent fixture-owner launch direct-component PMR-001
 require_text "$copilot_capture" '--agent'
 require_text "$copilot_capture" 'fixture-owner'
+bootstrap_capture=$sandbox/copilot-bootstrap-argv.txt
+expect_exit "owner-session launches the exact threat tasking bootstrap" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$bootstrap_capture" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    launch threat-modeler PMR-064 PMR-117
+require_text "$bootstrap_capture" '--agent'
+require_text "$bootstrap_capture" 'threat-model-maintainer'
+require_text "$bootstrap_capture" \
+    'This human-run launcher already verified its SHA-256'
+require_text "$bootstrap_capture" \
+    'do not execute a parent or sibling command to rehash or resolve tasking'
+require_text "$bootstrap_capture" \
+    'compare the packet'\''s PM commit, request blob, SOT SHA-256'
+refute_pattern "$bootstrap_capture" \
+    'First verify its SHA-256 is'
 expect_exit "owner-session rejects an unavailable component agent" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
@@ -2162,6 +2252,11 @@ expect_exit "owner-session rejects stale generated tasking" 1 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
     bash "$owner_session" prepare direct-component PMR-001
+expect_exit "tasking bootstrap rejects stale generated tasking" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064 PMR-117
 expect_exit "owner-session accepts regenerated tasking" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     bash "$tasking" generate
@@ -2193,6 +2288,37 @@ if (($? == 0)); then
     pass "owner-session releases the writer reservation on exit"
 else
     fail "owner-session first writer failed"
+fi
+
+rm -f -- "$copilot_ready"
+bootstrap_first_capture=$sandbox/copilot-bootstrap-first-argv.txt
+env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$bootstrap_first_capture" \
+    COPILOT_READY="$copilot_ready" COPILOT_SLEEP=2 \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    launch threat-modeler PMR-064 PMR-117 >/dev/null 2>&1 &
+owner_session_pid=$!
+for _ in $(seq 1 20); do
+    [[ -e $copilot_ready ]] && break
+    sleep 0.1
+done
+if [[ -e $copilot_ready ]]; then
+    pass "tasking-bootstrap first writer holds the launcher"
+    expect_exit "tasking bootstrap rejects a concurrent writer" 1 \
+        env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+        PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+        COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$bootstrap_capture" \
+        bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+        launch threat-modeler PMR-064 PMR-117
+else
+    fail "tasking-bootstrap first writer did not reach Copilot"
+fi
+wait "$owner_session_pid"
+if (($? == 0)); then
+    pass "tasking-bootstrap writer reservation releases on exit"
+else
+    fail "tasking-bootstrap first writer failed"
 fi
 
 maint=$repository_root/scripts/maintenance-reservation.sh
@@ -2245,6 +2371,19 @@ if [[ -e $maint_ready ]]; then
     else
         fail "refused owner-session launch started Copilot"
     fi
+    rm -f -- "$bootstrap_capture"
+    expect_combined "tasking-bootstrap launch is refused during the global reservation" \
+        "global maintenance reservation is held" \
+        env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+        PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
+        COPILOT_BIN="$copilot_stub" COPILOT_CAPTURE="$bootstrap_capture" \
+        bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+        launch threat-modeler PMR-064 PMR-117
+    if [[ ! -e $bootstrap_capture ]]; then
+        pass "refused tasking-bootstrap launch did not start Copilot"
+    else
+        fail "refused tasking-bootstrap launch started Copilot"
+    fi
     expect_combined "a second global reservation is refused" \
         "global maintenance reservation is busy" \
         env PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" bash "$maint" hold -- true
@@ -2289,6 +2428,33 @@ expect_exit "owner-session rejects a dirty component" 1 \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
     bash "$owner_session" prepare direct-component PMR-001
 rm -f -- "$tasking_workspace/direct-component/untracked.txt"
+
+printf 'dirty\n' >"$tasking_workspace/threat-modeler/untracked.txt"
+expect_exit "tasking bootstrap rejects a dirty component" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064 PMR-117
+rm -f -- "$tasking_workspace/threat-modeler/untracked.txt"
+
+sed -i '/^| PMR-117 |/ s/| open | P3 | Not applicable |/| closed | - | 2000-01-02 |/' \
+    "$tasking_pm/outbox/component-requests.md"
+git -C "$tasking_pm" add outbox/component-requests.md
+git -C "$tasking_pm" -c user.name=fixture -c user.email=fixture@example.invalid \
+    -c commit.gpgsign=false commit -q -m "close bootstrap fixture request"
+expect_exit "tasking bootstrap rejects stale tasking after closure commit" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064 PMR-117
+expect_exit "tasking regenerates after bootstrap closure fixture" 0 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    bash "$tasking" generate
+expect_exit "tasking bootstrap remains unavailable after selected request closure" 1 \
+    env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
+    PM_OWNER_SESSION_SCRATCH="$owner_bootstrap_scratch" \
+    bash "$owner_session" --tasking-bootstrap --agent threat-model-maintainer \
+    prepare threat-modeler PMR-064 PMR-117
 
 expect_exit "owner-recovery rejects missing arguments" 2 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \

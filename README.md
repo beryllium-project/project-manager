@@ -253,7 +253,7 @@ templates/owner-return.md                    component HANDOFF return shape for 
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
-scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet and interactive copilot --yolo launch
+scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, exact PMR-064/117 bootstrap, and interactive copilot --yolo launch
 scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and copilot --yolo launch
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
@@ -277,6 +277,7 @@ bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
 bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
 bash ./scripts/owner-session.sh prepare <component> <PMR-NNN>...
 bash ./scripts/owner-session.sh launch <component> <PMR-NNN>...
+bash ./scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117
 bash ./scripts/owner-recovery.sh prepare <component> <PMR-NNN>
 bash ./scripts/owner-recovery.sh launch <component> <PMR-NNN>
 bash ./scripts/maintenance-reservation.sh hold -- <command>
@@ -351,6 +352,28 @@ Only `launch` holds the per-component `flock` writer reservation through the
 Copilot process; `prepare` reserves no writer. Both `owner-session.sh` and
 `owner-recovery.sh` launches also hold a shared lock on the PMR-108 global
 maintenance reservation and are refused while it is held.
+The Project Manager agent never executes `owner-session.sh` for live owner
+work; maintained validation uses only sandbox state and a Copilot stub. The
+helper writes no component file before Copilot starts, invokes no hidden owner
+worker, grants no gate, and performs no push. The human starts the real
+command and answers only genuine unresolved gates.
+
+One narrow bootstrap repairs the pre-adoption threat-modeler resolver
+deadlock:
+
+```sh
+bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap \
+  --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117
+```
+
+It is admitted only for that exact component, maintainer profile, ordered
+request pair, clean/current state, and open requests. The launcher validates
+and embeds the current PM commit, request blob, SOT SHA, and request rows; the
+owner compares them with the read-only generated view without executing the
+not-yet-authorized parent resolver. Ordinary packets retain mandatory resolver
+execution. The bootstrap grants no direct Project Manager launch, generic
+fallback, push, gate, or precedent for another component, and becomes
+unusable when either request closes.
 
 `bash ./scripts/maintenance-reservation.sh hold -- <command>` is human-run
 only: it takes that reservation exclusively (refused while any owner launch
@@ -358,11 +381,9 @@ runs), exports `PM_MAINTENANCE_RESERVATION=held`, and runs the command, normally
 the Project Manager PMR-108 rollout session. It does not block
 `owner-actions.sh`, hidden owner workers, or non-instrumented sessions, and
 grants no gate or write authority.
-The Project Manager agent never uses it for live owner work; maintained
-validation uses only sandbox state and a Copilot stub. The helper writes no
-component file before Copilot starts, invokes no hidden owner worker, grants
-no gate, and performs no push. The human starts the real command and answers
-only genuine unresolved gates.
+The Project Manager agent also never executes
+`maintenance-reservation.sh` for live work; maintained validation exercises
+it only in sandbox state.
 
 ## Closed dirty owner recovery (human-run)
 
