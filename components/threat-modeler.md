@@ -12,7 +12,9 @@
   `threat-model-maintainer` (repository maintenance, validation, and
   explicitly authorized Git delivery), `threat-evidence`,
   `threat-research`, and `threat-model-review` (write-disabled specialists);
-  skill `beryllium-threat-modeling`
+  skill `beryllium-threat-modeling`. P2 `PMR-120` requests a hidden
+  maintenance-only `threat-modeler-owner`; it is not adopted or PM-invocable
+  yet.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean synchronized `main` / `origin/main` at `c4126b6`.
@@ -23,6 +25,12 @@
   `security-reviewer` as exact-snapshot targets. It is synchronized with
   private `origin/main` together with `5bf6a4b` and `f4eb272`. `PMR-028` is
   closed. The run remains paused.
+  `PMD-20261002-002` stages a threat-modeler-only hidden-owner rollout after
+  repeated human owner lifecycle cost. PMR-120 requires one final
+  human-started bootstrap; a later separately allocated native read-only
+  handshake must still prove discovery, exact task identity, repository
+  rooting, and isolation before direct write-enabled dispatch. PMR-064 and
+  PMR-117 remain open and blocked on both steps.
   `PMD-20260915-001` keeps this independent personal-project repository under
   `beryllium-project`
 
@@ -109,4 +117,8 @@ user-invocable entry points to map `check Project Manager tasking` to the
 exact fail-closed resolver without session-history fallback.
 `PMR-117` is the distinct owner-startup request to read current
 `workspace://SOT.md` before target/sibling resolution or tasking. It may be
-handled with PMR-064 but does not resume or modify the paused model.
+handled with PMR-064 but does not resume or modify the paused model. The
+former human PMR-064/117 bootstrap is retired. PMR-120 now asks only for
+hidden maintenance-owner registration in six exact paths; it does not perform
+either startup request, change the paused model, or establish native
+invocation capability.

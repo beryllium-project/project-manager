@@ -4,7 +4,8 @@
 - **Created:** 2026-09-18
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261002-002` for the threat-modeler-only exception
+  to Disposition 2 and 8; every other component remains deferred
 
 ## Scope
 

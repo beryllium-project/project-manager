@@ -158,6 +158,17 @@ and agent tests; return `8b5a301` changes only `HANDOFF.md`; the expanded
 suite passes 410 / 0; and clean `main` is twenty-two ahead. The operational
 analysis housekeeping line is complete.
 
+Threat-modeler rollout is staged, not adopted. `PMD-20261002-002` allocates
+P2 `PMR-120` for one human-started, maintenance-only hidden-owner bootstrap.
+The requested profile is `gpt-5.6-sol` / `max` / `long_context`,
+model-invocable, not user-invocable, has no `ask_user`, delegation, web, or
+threat-modeling skill, and may write only its own repository for one exact
+PMR. Static registration and tests will not make it PM-invocable: after a
+verified durable return and explicit session release, a later turn must
+allocate and verify a distinct no-write native discovery/root/fingerprint/
+isolation handshake. PMR-064/117 remain open and blocked. Every other hidden
+owner rollout remains deferred.
+
 Withdrawn: `PMR-073` no longer requests a `git-maintainer` specialist.
 `PMD-20260918-003` records that the proven owner-worker path supplies the
 bounded need; no component agent may infer a generic Git-service authority.
@@ -188,7 +199,7 @@ verified successors. Owner results continue through
 | `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) introduced at `ea72522`; read-only probe `PMR-087` closed by `PMD-20260918-002`; bounded write-enabled requests PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and PMR-063 are closed through `8b5a301`; tasking startup is active; Project Manager queue carry `8da398d` is latest | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1`; carries `5a646df` / `8da398d` change only `outbox/pm-queue.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits. Closure-line commits are contained by synchronized `origin/main` `3c9d2a3`;
 PMR-085/088/089/095/097 remain open for review/authorization reconciliation,
 not for missing containment; exact earlier backups PMR-085/088/089 and dependent carry backups PMR-095/097 remain separate |
-| `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking startup adoption `PMR-064` | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
+| `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; tasking/SOT startup adoption remains open as PMR-064/117; P2 PMR-120 requests hidden maintenance-only `threat-modeler-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`), which is not adopted or PM-invocable | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only |
 | `security-reviewer/` | `security-reviewer` (`gpt-5.3-codex` / exact `xhigh` / `default` at work `2bb4c98` and return `c2edac7`; direct sessions remain outside the task hook; PMR-109/110 closed) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; same exact Codex pair; explicit non-Codex selections retain ordinary max/high-floor policy) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md`; none created yet | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, the PM resolver is separate startup discovery, and unpushed return tip `c2edac7` is distinct backup-only PMR-111 |
 | `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
 

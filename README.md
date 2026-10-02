@@ -80,8 +80,13 @@ One owner profile exists: hidden `analysis-workbook-owner`, introduced at
 `ea72522`, proven read-only under closed `PMR-087`, and used for bounded
 write-enabled PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and
 PMR-063 requests through latest return `8b5a301`. Those bounded results
-grant no broader owner or Project Manager authority. No Beryllium owner profile exists; its
-bootstrap remains planned. V1 adds no dispatch/return queue, historical
+grant no broader owner or Project Manager authority. `PMD-20261002-002`
+stages P2 `PMR-120` as a threat-modeler-only repeated-cost exception to the
+deferred rollout. The hidden `threat-modeler-owner` does not exist yet and is
+not PM-invocable; one human bootstrap and a later distinct native read-only
+handshake must both succeed before any write-enabled dispatch. Every other
+component remains deferred. No Beryllium owner profile exists. V1 adds no
+dispatch/return queue, historical
 request migration, execution ledger, daemon, lease database, or general Git
 automation.
 
@@ -253,7 +258,7 @@ templates/owner-return.md                    component HANDOFF return shape for 
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
-scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, exact PMR-064/117 bootstrap, and interactive copilot --yolo launch
+scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, exact PMR-120 bootstrap, and interactive copilot --yolo launch
 scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and copilot --yolo launch
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
@@ -277,7 +282,7 @@ bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
 bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
 bash ./scripts/owner-session.sh prepare <component> <PMR-NNN>...
 bash ./scripts/owner-session.sh launch <component> <PMR-NNN>...
-bash ./scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117
+bash ./scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120
 bash ./scripts/owner-recovery.sh prepare <component> <PMR-NNN>
 bash ./scripts/owner-recovery.sh launch <component> <PMR-NNN>
 bash ./scripts/maintenance-reservation.sh hold -- <command>
@@ -370,39 +375,41 @@ stopped during usage/argument parsing or could not create private scratch; a
 `launching` result means the launcher reached the Copilot `exec`, not that
 Copilot started or that owner work completed.
 
-One narrow bootstrap repairs the pre-adoption threat-modeler resolver
-deadlock:
+One narrow bootstrap installs the pre-adoption threat-modeler hidden owner:
 
 ```sh
 bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap \
-  --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117
+  --agent threat-model-maintainer launch threat-modeler PMR-120
 ```
 
-It is admitted only for that exact component, maintainer profile, ordered
-request pair, clean/current state, and open requests. The launcher validates
-and embeds the current PM commit, request blob, SOT SHA, and request rows; the
-owner compares them with the read-only generated view without executing the
-not-yet-authorized parent resolver. Ordinary packets retain mandatory resolver
-execution. The bootstrap grants no direct Project Manager launch, generic
+It is admitted only for that exact component, maintainer profile, sole
+request, clean/current state, and open request. The launcher validates and
+embeds the current PM commit, applied request blob, SOT SHA, and exact
+dispatch row; the owner compares them with the read-only generated view
+without executing the not-yet-authorized parent resolver. Ordinary packets
+retain mandatory resolver execution. The former PMR-064/117 tuple now fails
+closed. The bootstrap grants no direct Project Manager launch, generic
 fallback, push, gate, or precedent for another component, and becomes
-unusable when either request closes.
+unusable when PMR-120 closes.
 
-That exact packet also carries scope-review steering
-`threat-owner-mechanism-boundary-20261002-05`, bound to request blob
-`9c289ab88a4202efb20e5e88ae994f6572c59a75`, SOT SHA-256
+That exact packet carries scope-review steering
+`resume-threat-owner-rollout-20261002-06`. The reviewer saw source request
+blob `9c289ab88a4202efb20e5e88ae994f6572c59a75` before PMR-120 existed; the
+Project Manager applied its required changes and bound the exact resulting
+row through applied request blob
+`78681ba5f4645db4d0b717e250871a3f42fb816c`, SOT SHA-256
 `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`,
-threat-modeler HEAD `c4126b6`, and both open PMRs. Unchanged execution of
-that reviewed envelope needs no second in-session reviewer; implementation
-choices wholly inside the envelope are execution detail, not a new plan. An
-unavailable scope-review task runner or uninstalled collaboration skill is
-not itself a blocker for this packet. Any material reassessment/replan, new
-human steering, requirements, priorities, constraints, acceptance criteria,
-other material direction change, path/deliverable expansion, or sibling
-research/analysis use stops and returns blocked. The maintenance task does
-not substantively consume sibling research or analysis, so
-`cross-repo-collaboration` is not triggered under `PMD-20260917-001`. The
-selected PMRs require one validated local commit and prohibit push. None of
-this generalizes to another packet or later revision.
+and threat-modeler HEAD `c4126b6`. The exact envelope adds only
+maintenance-only hidden-owner registration in six named component paths.
+It does not change either existing user-facing profile beyond registration,
+run package scaffolding or threat discovery, use delegation or web, perform
+PMR-064/117, or change a model, queue, outbox, remote, risk decision, or gate.
+Unavailable scope-review/collaboration mechanisms are not blockers for
+unchanged execution; any replan, new direction, envelope exit, or substantive
+sibling research/analysis use stops. The task permits validated local
+work/return commits and prohibits push. Static profile/tests do not prove
+native discovery or isolation: a later separately allocated read-only
+handshake remains mandatory.
 
 `bash ./scripts/maintenance-reservation.sh hold -- <command>` is human-run
 only: it takes that reservation exclusively (refused while any owner launch

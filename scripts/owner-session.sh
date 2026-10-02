@@ -14,10 +14,11 @@ owner_result=in-progress
 owner_reason=none
 packet=
 packet_cleanup=0
-bootstrap_review_id=threat-owner-mechanism-boundary-20261002-05
+bootstrap_review_id=resume-threat-owner-rollout-20261002-06
 bootstrap_review_verdict=adjust
 bootstrap_review_authority=steering_only_no_approval_or_human_gate
-bootstrap_review_request_blob=9c289ab88a4202efb20e5e88ae994f6572c59a75
+bootstrap_review_source_request_blob=9c289ab88a4202efb20e5e88ae994f6572c59a75
+bootstrap_applied_request_blob=78681ba5f4645db4d0b717e250871a3f42fb816c
 bootstrap_review_sot_sha=5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68
 bootstrap_review_component_head=c4126b6d77f7cd14f7477795e3b8b971b6b58b37
 
@@ -75,10 +76,11 @@ logging, for example because it stopped during usage/argument parsing or
 could not create the private scratch path.
 
 --tasking-bootstrap is a one-time repair admitted only for exact
-`--agent threat-model-maintainer ... threat-modeler PMR-064 PMR-117`. It
+`--agent threat-model-maintainer ... threat-modeler PMR-120`. It
 uses the launcher's already validated, embedded tasking because the current
-component policy does not yet permit the resolver command that those requests
-adopt. It grants no general resolver bypass or authority for another request.
+component policy does not yet permit the resolver command during hidden-owner
+adoption. It grants no general resolver bypass or authority for another
+request.
 EOF
 }
 
@@ -190,9 +192,8 @@ if ((tasking_bootstrap)); then
         die "--tasking-bootstrap requires --agent threat-model-maintainer"
     [[ $component == threat-modeler ]] ||
         die "--tasking-bootstrap is admitted only for threat-modeler"
-    ((${#pmrs[@]} == 2)) &&
-        [[ ${pmrs[0]} == PMR-064 && ${pmrs[1]} == PMR-117 ]] ||
-        die "--tasking-bootstrap requires exact ordered requests PMR-064 PMR-117"
+    ((${#pmrs[@]} == 1)) && [[ ${pmrs[0]} == PMR-120 ]] ||
+        die "--tasking-bootstrap requires exact request PMR-120"
 fi
 
 owner_stage=component-entry
@@ -273,8 +274,8 @@ component_upstream=$(git_safe -C "$component_root" rev-parse \
 if ((tasking_bootstrap)); then
     owner_stage=bootstrap-review-binding
     write_preflight_log
-    [[ $request_blob == "$bootstrap_review_request_blob" ]] ||
-        die "tasking-bootstrap scope review request blob no longer matches"
+    [[ $request_blob == "$bootstrap_applied_request_blob" ]] ||
+        die "tasking-bootstrap applied request blob no longer matches"
     [[ $tasking_sot_sha == "$bootstrap_review_sot_sha" ]] ||
         die "tasking-bootstrap scope review SOT SHA-256 no longer matches"
     [[ $component_head == "$bootstrap_review_component_head" ]] ||
@@ -307,7 +308,7 @@ packet_cleanup=1
     printf ' `%s`' "${pmrs[@]}"
     printf '\n\n'
     if ((tasking_bootstrap)); then
-        printf -- '- **Tasking bootstrap:** `threat-modeler/PMR-064/PMR-117`\n'
+        printf -- '- **Tasking bootstrap:** `threat-modeler/PMR-120`\n'
         printf -- '- **Bound SOT SHA-256:** `%s`\n\n' "$tasking_sot_sha"
     fi
     cat <<EOF
@@ -330,21 +331,39 @@ or another human gate.
 - **Review ID:** \`$bootstrap_review_id\`
 - **Verdict:** \`$bootstrap_review_verdict\`
 - **Authority:** \`$bootstrap_review_authority\`
-- **Reviewed request blob:** \`$bootstrap_review_request_blob\`
+- **Reviewed source request blob:** \`$bootstrap_review_source_request_blob\`
+- **Applied request blob:** \`$bootstrap_applied_request_blob\`
 - **Reviewed SOT SHA-256:** \`$bootstrap_review_sot_sha\`
 - **Reviewed threat-modeler HEAD:** \`$bootstrap_review_component_head\`
-- **Reviewed open requests:** \`PMR-064\` \`PMR-117\`
+- **Applied open request:** \`PMR-120\`
 
-The exact scope envelope is only the PMR-064/117 deliverables in this packet:
-the two user-facing entry points and their owner startup surfaces, directly
-coupled tasking/SOT contract tests, Project Manager interface wording, and
-the durable handoff return. The review covers this envelope, not proposed
-file bytes or an implementation diff.
-The reviewer-required changes were applied by the Project Manager before
-packet generation and are expressed by this envelope and stop list; the stop
-conditions are the recorded scope risks. Implementation choices wholly inside
-this envelope are execution detail under the already-applied review, not a new
-non-trivial plan.
+The review assessed the threat-modeler-only hidden-owner adoption plan against
+the source request blob above before PMR-120 existed. It did not review or
+approve exact row bytes, component edit bytes, implementation, or a human
+gate. The Project Manager applied the required changes, allocated PMR-120,
+and bound the resulting exact request table with the applied blob above.
+
+The exact scope envelope is only maintenance registration through these
+paths: \`.github/agents/threat-modeler-owner.agent.md\`,
+\`.github/copilot-instructions.md\`, \`AGENT-INTERFACE.md\`, \`README.md\`,
+\`tests/validate-agent.sh\`, and \`HANDOFF.md\`. Add a hidden
+\`threat-modeler-owner\` that is \`gpt-5.6-sol\` with \`max\` /
+\`long_context\`, model-invocable, not user-invocable, has no \`ask_user\`,
+delegation, web, or threat-modeling skill, and handles one exact PMR under a
+repository-only write boundary. Its only maintained executable is
+\`tests/validate-agent.sh\`; narrow local Git inspection, exact-path staging,
+and validated local work/return commits are separate. It verifies packet-bound
+tasking and SOT identity and returns \`OWNER_AGENT_RESPONSE_V1\` plus a
+durable handoff. Preserve both existing user-facing profiles unchanged beyond
+registering the hidden owner.
+
+Do not scaffold or inspect threat packages, discover threat material, invoke a
+specialist, use web, change resolver/SOT entry-point behavior, perform
+PMR-064/117, or modify a model, package, queue, outbox, target, sibling,
+remote, risk disposition, or human gate. The stop conditions below are the
+recorded scope risks. Implementation choices wholly inside this envelope are
+execution detail under the applied review steering, not a new non-trivial
+plan.
 
 Allowed owner inputs are this packet, its Project Manager coordination and
 tasking files, the workspace SOT, and this threat-modeler repository. Under
@@ -359,11 +378,11 @@ a blocker for this packet. Stop and return a blocked result before editing if
 there is a material reassessment or replan; new human steering, requirements,
 priorities, constraints, acceptance criteria, or any other material direction
 change; any path or deliverable outside the envelope; any substantive sibling
-research or analysis use; or any mismatch in the reviewed request blob, SOT
-SHA-256, component HEAD, or open PMR set.
-The selected PMRs require one validated local commit and explicitly exclude
-push; do not perform step 6 of the component's bundled commit-and-push
-contract.
+research or analysis use; or any mismatch in the applied request blob,
+reviewed SOT SHA-256, reviewed component HEAD, or open PMR set.
+PMR-120 permits only validated local work/return commits and explicitly
+excludes push; do not perform step 6 of the component's bundled
+commit-and-push contract.
 Stricter component-local instructions remain controlling.
 
 EOF
@@ -387,14 +406,15 @@ EOF
     if ((tasking_bootstrap)); then
         cat <<EOF
 3. This is the exact one-time tasking bootstrap for
-   \`threat-modeler PMR-064 PMR-117\`. The human-run launcher already
-   validated current generated tasking and embedded both exact dispatch
-   packets. Do not execute a parent or sibling script or Git command. Using
+   \`threat-modeler PMR-120\`. The human-run launcher already validated
+   current generated tasking and embedded the exact dispatch packet. Do not
+   execute a parent or sibling script or Git command. Using
    read-only file tools, compare \`$tasking_view\` with this packet and stop
    unless its Project Manager commit is \`$pm_head\`, request blob is
    \`$request_blob\`, SOT SHA-256 is \`$tasking_sot_sha\`, component is
-   \`threat-modeler\`, and its current rows are exactly PMR-064 and PMR-117.
-   This exception is unusable after either request closes and is not a
+   \`threat-modeler\`, and PMR-120 is open and directly assigned while
+   PMR-064 and PMR-117 remain separate and unselected. This exception is
+   unusable after PMR-120 closes and is not a
    resolver fallback or precedent for another component or request.
 EOF
     else
@@ -531,7 +551,7 @@ write_preflight_log
     die "component worktree changed before Copilot launch"
 
 if ((tasking_bootstrap)); then
-    initial_prompt="Read the complete owner-session packet at $packet using read-only file tools. This human-run launcher already verified its SHA-256 is $packet_sha; do not execute a parent or sibling command to rehash or resolve tasking. Verify this repository HEAD is $component_head using repository-local read-only Git, then compare the packet's PM commit, request blob, SOT SHA-256, component, and selected rows with its read-only generated tasking view. Stop on any mismatch. Follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
+    initial_prompt="Read the complete owner-session packet at $packet using read-only file tools. This human-run launcher already verified its SHA-256 is $packet_sha; do not execute a parent or sibling command to rehash or resolve tasking. Verify this repository HEAD is $component_head using repository-local read-only Git, then compare the packet's PM commit, request blob, SOT SHA-256, component, and selected request row with its read-only generated tasking view. Stop on any mismatch. Follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
 else
     initial_prompt="Read the complete owner-session packet at $packet. First verify its SHA-256 is $packet_sha and this repository HEAD is $component_head. If either check fails, stop. Then follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
 fi

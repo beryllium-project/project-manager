@@ -193,6 +193,10 @@ other PMR, or gate was combined.
 `PMD-20260918-003` stops further process expansion before development resumes.
 Repository reorganization and the analysis owner-worker pilot are complete.
 No project-wide owner rollout or Git-maintainer specialist is required.
+`PMD-20261002-002` now makes one threat-modeler-only exception after repeated
+human owner lifecycle cost and the responsible human's
+`"resume_hidden_owner_rollout"` selection. Every other component remains
+deferred.
 
 The ordinary Beryllium PMR-067/083 owner session completed and released its
 historical lock at `416b2e9`; both requests remain closed. The later
@@ -421,22 +425,31 @@ directly rather than asking the human to relay terminal output.
 The next retry reached Copilot successfully; its preflight log records
 `stage=complete`, `result=launching`, and `reason=none`. The owner then
 stopped because it could not invoke a scope-review task runner and did not
-find `cross-repo-collaboration`. The exact retry packet now carries
-scope-review steering `threat-owner-mechanism-boundary-20261002-05`, bound to
-the unchanged request blob/SOT/component HEAD. It states that unchanged
-execution of the exact reviewed maintenance envelope needs no second
-in-session reviewer and that missing review/collaboration mechanisms are not
-blockers for this packet. Implementation choices inside the envelope are
-execution detail. Any material reassessment/replan, new steering,
-requirements, priorities, constraints, acceptance criteria, other material
-direction change, envelope exit, or sibling research/analysis use stops. The
-coordination-only task does not substantively consume sibling
-research/analysis, so the collaboration skill is not triggered. The owner may
-create one validated local commit and must not push.
+find `cross-repo-collaboration`. The corrected `-05` packet was prepared but
+not launched; do not count it as another failure or run it now.
+
+The responsible human selected a resumed hidden-owner rollout instead.
+`PMD-20261002-002` and P2 `PMR-120` stage only a maintenance-only
+`threat-modeler-owner`. The former PMR-064/117 bootstrap is retired and fails
+closed. Scope steering `resume-threat-owner-rollout-20261002-06` reviewed the
+plan against source request blob `9c289ab...`; the Project Manager applied its
+required changes and bound exact PMR-120 through applied request blob
+`78681ba...`, unchanged SOT SHA, and component HEAD `c4126b6`.
+
+PMR-120 changes only the six paths named in its row. It adds no
+`ask_user`, delegation, web, threat-modeling skill, package scaffold,
+threat-material discovery, PMR-064/117 work, model/queue/outbox change, push,
+or gate. The existing user-facing profiles stay unchanged beyond hidden-owner
+registration. Static registration is not native discovery proof. After the
+owner returns and its human session is explicitly released, the Project
+Manager must allocate a separate single-use no-write handshake in a later
+turn; only after that handshake closes may PMR-064 and PMR-117 be considered
+for separate direct dispatch.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-064`, `PMR-117` | P3 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-064 PMR-117` | Exact one-time tasking bootstrap; packet/view fingerprint comparison replaces only the currently prohibited in-session resolver. Do not resume or modify the paused model. |
+| `PMR-120` | P2 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120` | One final human bootstrap for hidden maintenance-owner registration only. Validated local work/return commits are allowed; no push. |
+| `PMR-064`, `PMR-117` | P3 | **Blocked — do not launch.** | Wait for verified PMR-120 adoption, explicit human-session release, and a separately allocated and closed native no-write handshake. Later direct dispatch is one PMR per invocation. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
@@ -448,7 +461,7 @@ PM/request/SOT fingerprints, selected PMR text, local instruction checklist,
 one-writer rule, validation/commit/return contract, and no-gate/no-push
 boundary. Ordinary packets also require the exact resolver; the one admitted
 bootstrap instead requires read-only comparison with the generated tasking
-view and becomes unusable when either selected request closes.
+view and becomes unusable when PMR-120 closes.
 
 ## Completed - do not rerun
 
