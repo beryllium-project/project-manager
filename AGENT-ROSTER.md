@@ -165,9 +165,11 @@ profile is `gpt-5.6-sol` / `max` / `long_context`, model-invocable, not
 user-invocable, and has no `ask_user`, delegation, web, or threat-modeling
 skill. `PMD-20261003-001` records that its live response shape diverges from
 the established `OWNER_AGENT_RESPONSE_V1` state and field set, so PMR-120
-remains open and the profile is not PM-invocable. No native handshake is
-allocated. PMR-064/117 remain blocked, and every other hidden-owner rollout
-remains deferred.
+remains open and the profile is not PM-invocable. `PMD-20261003-002` selects
+the recommended standard-V1 correction under delegated autonomy and prepares
+one exact human-run correction binding at baseline `bbbc534`. No native
+handshake is allocated. PMR-064/117 remain blocked, and every other
+hidden-owner rollout remains deferred.
 
 Withdrawn: `PMR-073` no longer requests a `git-maintainer` specialist.
 `PMD-20260918-003` records that the proven owner-worker path supplies the

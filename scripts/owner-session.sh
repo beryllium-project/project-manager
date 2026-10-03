@@ -14,13 +14,13 @@ owner_result=in-progress
 owner_reason=none
 packet=
 packet_cleanup=0
-bootstrap_review_id=resume-threat-owner-rollout-20261002-06
+bootstrap_review_id=threat-owner-standard-v1-correction-20261003-09
 bootstrap_review_verdict=adjust
 bootstrap_review_authority=steering_only_no_approval_or_human_gate
-bootstrap_review_source_request_blob=9c289ab88a4202efb20e5e88ae994f6572c59a75
-bootstrap_applied_request_blob=7508420cd5a91239eb77bdc2198d15c133dbf91f
+bootstrap_review_source_request_blob=0d7e84201e160c94080055fec121ff2dbf5540a8
+bootstrap_applied_request_blob=b6160d3130163ede106141c8cb9494222e16186d
 bootstrap_review_sot_sha=5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68
-bootstrap_review_component_head=c4126b6d77f7cd14f7477795e3b8b971b6b58b37
+bootstrap_review_component_head=bbbc5349943c3a7d64ced24f19f90d6e0c50ea06
 
 write_preflight_log() {
     [[ -n $preflight_log ]] || return 0
@@ -75,12 +75,13 @@ transcript. No log means the launcher did not reach validated preflight
 logging, for example because it stopped during usage/argument parsing or
 could not create the private scratch path.
 
---tasking-bootstrap is a one-time repair admitted only for exact
+--tasking-bootstrap is one additional single-use correction admitted only for
+exact
 `--agent threat-model-maintainer ... threat-modeler PMR-120`. It
 uses the launcher's already validated, embedded tasking because the current
-component policy does not yet permit the resolver command during hidden-owner
-adoption. It grants no general resolver bypass or authority for another
-request.
+component policy does not yet permit the resolver command during PMR-120
+correction. The original PMR-120 binding is consumed. This binding grants no
+general resolver bypass or authority for another request.
 EOF
 }
 
@@ -317,6 +318,8 @@ packet_cleanup=1
 - Component card: \`$pm_root/components/$component.md\`
 - Generated current tasking: \`$pm_root/outbox/tasking/$component.md\`
 - Authoritative request table: \`$pm_root/outbox/component-requests.md\`
+- Live response schema: \`$pm_root/templates/owner-agent-response.md\`
+- Durable return vocabulary: \`$pm_root/templates/owner-return.md\`
 
 EOF
     if ((tasking_bootstrap)); then
@@ -337,33 +340,51 @@ or another human gate.
 - **Reviewed threat-modeler HEAD:** \`$bootstrap_review_component_head\`
 - **Applied open request:** \`PMR-120\`
 
-The review assessed the threat-modeler-only hidden-owner adoption plan against
-the source request blob above before PMR-120 existed. It did not review or
-approve exact row bytes, component edit bytes, implementation, or a human
-gate. The Project Manager applied the required changes, allocated PMR-120,
-and bound the resulting exact request table with the applied blob above.
+The review assessed one correction to the existing PMR-120 candidate against
+the source request blob and component HEAD above. The responsible human did
+not name \`correct_standard_v1\` explicitly; the Project Manager selected the
+already-presented recommended default under the exact autonomous-completion
+direction recorded in PMD-20261003-002. That selection grants no push,
+publication, risk, acceptance, or other human gate.
 
-The exact scope envelope is only maintenance registration through these
-paths: \`.github/agents/threat-modeler-owner.agent.md\`,
+The six existing PMR-120 paths are a ceiling:
+\`.github/agents/threat-modeler-owner.agent.md\`,
 \`.github/copilot-instructions.md\`, \`AGENT-INTERFACE.md\`, \`README.md\`,
-\`tests/validate-agent.sh\`, and \`HANDOFF.md\`. Add a hidden
-\`threat-modeler-owner\` that is \`gpt-5.6-sol\` with \`max\` /
-\`long_context\`, model-invocable, not user-invocable, has no \`ask_user\`,
-delegation, web, or threat-modeling skill, and handles one exact PMR under a
-repository-only write boundary. Its only maintained executable is
-\`tests/validate-agent.sh\`; narrow local Git inspection, exact-path staging,
-and validated local work/return commits are separate. It verifies packet-bound
-tasking and SOT identity and returns \`OWNER_AGENT_RESPONSE_V1\` plus a
-durable handoff. Preserve both existing user-facing profiles unchanged beyond
-registering the hidden owner.
+\`tests/validate-agent.sh\`, and \`HANDOFF.md\`. Change only paths directly
+needed to align the response contract and its new durable return.
 
-Do not scaffold or inspect threat packages, discover threat material, invoke a
-specialist, use web, change resolver/SOT entry-point behavior, perform
-PMR-064/117, or modify a model, package, queue, outbox, target, sibling,
-remote, risk disposition, or human gate. The stop conditions below are the
-recorded scope risks. Implementation choices wholly inside this envelope are
-execution detail under the applied review steering, not a new non-trivial
-plan.
+The sole live schema source is
+\`$pm_root/templates/owner-agent-response.md\` at source Project Manager
+commit \`$pm_head\`. Required fields are exactly \`protocol\`, \`component\`,
+\`owner_profile\`, \`request_id\`, structured \`source\` with \`pm_commit\`,
+\`request_blob\`, and \`expected_component_head\`; \`state\`; \`summary\`;
+structured \`work\` with \`commits\` and \`paths\`; structured \`handoff\`
+with \`path\` and \`checkpoint_commit\`; \`validation\`; structured
+\`repository\` with \`branch\`, \`head\`, \`clean\`, \`upstream\`, \`ahead\`,
+\`behind\`, and \`active_session\`; \`requested_pm_action\`; \`question\`;
+and \`push\`. The profile must use all six exact states: \`progress\`,
+\`needs_human\`, \`completed\`, \`partial\`, \`blocked\`, and \`refused\`.
+Preserve standard \`progress\` as a live-only no-write result with empty work
+and null checkpoint/question/push. Preserve the standard needs-human question
+structure and completed checkpoint/clean/verify-return invariants.
+
+The sole durable result-vocabulary source is
+\`$pm_root/templates/owner-return.md\` at the same PM commit. Use exactly
+\`completed\`, \`partial\`, \`blocked\`, \`needs_human\`, \`refused\`, and
+\`information\`. Append a new PMR-120 correction return; do not rewrite the
+historical \`bbbc534\` return.
+
+Component contract tests must assert every required live field, all six live
+states, all six durable values, progress empty/null invariants, completed
+checkpoint invariants, the needs-human question structure, and null push.
+Protocol-string presence alone is insufficient.
+
+Do not change the project-wide PM templates, scaffold or inspect threat
+packages, discover threat material, invoke a specialist, use web, change
+resolver/SOT entry-point behavior, perform PMR-064/117, or modify a model,
+package, queue, outbox, target, sibling, remote, risk disposition, or human
+gate. Preserve the candidate's model, tool, repository, execution, commit,
+no-push, no-delegation, and no-skill boundaries.
 
 Allowed owner inputs are this packet, its Project Manager coordination and
 tasking files, the workspace SOT, and this threat-modeler repository. Under
@@ -380,9 +401,9 @@ priorities, constraints, acceptance criteria, or any other material direction
 change; any path or deliverable outside the envelope; any substantive sibling
 research or analysis use; or any mismatch in the applied request blob,
 reviewed SOT SHA-256, reviewed component HEAD, or open PMR set.
-PMR-120 permits only validated local work/return commits and explicitly
-excludes push; do not perform step 6 of the component's bundled
-commit-and-push contract.
+PMR-120 permits one additional validated correction work commit and one new
+durable return commit and explicitly excludes push; do not perform step 6 of
+the component's bundled commit-and-push contract.
 Stricter component-local instructions remain controlling.
 
 EOF
@@ -405,8 +426,9 @@ validation, a push, or a remote change.
 EOF
     if ((tasking_bootstrap)); then
         cat <<EOF
-3. This is the exact one-time tasking bootstrap for
-   \`threat-modeler PMR-120\`. The human-run launcher already validated
+3. This is one additional exact single-use correction binding for
+   \`threat-modeler PMR-120\`. The original PMR-120 binding is consumed. The
+   human-run launcher already validated
    current generated tasking and embedded the exact dispatch packet. Do not
    execute a parent or sibling script or Git command. Using
    read-only file tools, compare \`$tasking_view\` with this packet and stop
@@ -414,7 +436,8 @@ EOF
    \`$request_blob\`, SOT SHA-256 is \`$tasking_sot_sha\`, component is
    \`threat-modeler\`, and PMR-120 is open and directly assigned while
    PMR-064 and PMR-117 remain separate and unselected. This exception is
-   unusable after PMR-120 closes and is not a
+   unusable after PMR-120 closes, after this component HEAD moves, or after
+   any request/SOT/tasking drift, and is not a
    resolver fallback or precedent for another component or request.
 EOF
     else

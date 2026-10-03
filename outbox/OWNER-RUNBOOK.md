@@ -446,8 +446,17 @@ registration. Static registration is not native discovery proof. Work `ca8fa3c` 
 `bbbc534` now install the candidate and the responsible human released the
 session, but `PMD-20261003-001` records a blocking response-contract gap:
 the delivered profile uses `COMPLETE/PARTIAL/BLOCKED` rather than the
-established V1 state and field set. PMR-120 remains open. Do not rerun its
-stale bootstrap, allocate the handshake, or dispatch PMR-064/117.
+established V1 state and field set. PMR-120 remains open.
+`PMD-20261003-002` selects standard V1 and re-arms one exact correction
+binding. Do not rerun the original packet, allocate the handshake, or
+dispatch PMR-064/117 before the corrected return and release.
+The re-armed correction binds review
+`threat-owner-standard-v1-correction-20261003-09`, reviewed source request
+blob `0d7e84201e160c94080055fec121ff2dbf5540a8`, applied request blob
+`b6160d3130163ede106141c8cb9494222e16186d`, unchanged SOT SHA-256
+`5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`,
+and threat-modeler baseline
+`bbbc5349943c3a7d64ced24f19f90d6e0c50ea06`.
 
 The one-hundredth-turn fleet triage changed no owner boundary. PMR-066 and
 PMR-118 still require human-started owner sessions because those components
@@ -458,7 +467,7 @@ Project Manager carry. Generic fleet agents cannot run any of these writes.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-120` | P2 | **Blocked — no command pending human choice.** | Candidate installed at `bbbc534`; choose `correct_standard_v1` (recommended), `adopt_threat_variant`, or `defer_rollout`. The original bootstrap is consumed/stale and must not be rerun. |
+| `PMR-120` | P2 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120` | One additional single-use standard-V1 correction bound to baseline `bbbc534`. Original binding consumed. Correct profile/tests/directly coupled docs only; no PMR-064/117, push, model, package, or gate. |
 | `PMR-064`, `PMR-117` | P3 | **Blocked — do not launch.** | Wait for PMR-120 contract resolution, release of any later correction session, and a separately allocated and closed native no-write handshake. Later direct dispatch is one PMR per invocation. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |

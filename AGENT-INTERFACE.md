@@ -71,7 +71,9 @@ maintained policy. Existing user-invocable orchestrators remain unchanged.
 `ca8fa3c` / return `bbbc534` installs a candidate, but
 `PMD-20261003-001` records that its live response schema diverges from the
 established V1 contract. The candidate is not adopted or PM-invocable; no
-native handshake or write dispatch is authorized. Every other component
+native handshake or write dispatch is authorized. `PMD-20261003-002` selects
+the standard-V1 correction and prepares one exact human-run PMR-120
+correction; it does not change that adoption state. Every other component
 remains deferred.
 
 The Project Manager may invoke an adopted owner only for one exact directly
@@ -323,6 +325,15 @@ collaboration triggers, validation/local-commit/owner-return requirements,
 and explicit no-gate/no-push boundaries. It creates no component file before
 Copilot starts, invokes no hidden owner worker, and does not alter the
 Project Manager's authority.
+
+One single-use `--tasking-bootstrap` admission exists for exact
+`threat-model-maintainer` / `threat-modeler` / sole `PMR-120`. The original
+binding is consumed; `PMD-20261003-002` re-arms one standard-V1 correction
+binding at baseline `bbbc534`. This packet embeds validated tasking instead
+of running the not-yet-authorized resolver and explicitly does not trigger
+`cross-repo-collaboration`. Every blob, SOT, HEAD, component, agent, request,
+cleanliness, and lock mismatch fails closed. The Project Manager never runs
+the launcher.
 
 `scripts/owner-recovery.sh` is a separate **human-run** launcher for the
 bounded case recorded by `PMD-20260926-004`: the responsible human confirms

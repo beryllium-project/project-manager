@@ -15,7 +15,10 @@
   skill `beryllium-threat-modeling`. PMR-120 work `ca8fa3c` / return
   `bbbc534` installs a hidden maintenance-only `threat-modeler-owner`
   candidate, but its live response shape diverges from the established
-  `OWNER_AGENT_RESPONSE_V1`; it is not recorded as adopted or PM-invocable.
+  `OWNER_AGENT_RESPONSE_V1`, and durable `Result: Complete` is outside
+  `templates/owner-return.md` values `completed`, `partial`, `blocked`,
+  `needs_human`, `refused`, and `information`; it is not recorded as adopted
+  or PM-invocable.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean local `main` at PMR-120 return
@@ -33,7 +36,11 @@
   released, and the six exact paths plus 140/0 static validation are recorded.
   `PMD-20261003-001` keeps PMR-120 open because the delivered profile uses
   `COMPLETE/PARTIAL/BLOCKED` rather than the established V1 state and field
-  set. No native handshake is allocated; PMR-064/117 remain blocked.
+  set. Under the responsible human's delegated autonomous-completion
+  direction, `PMD-20261003-002` selects the recommended standard-V1
+  correction and re-arms one exact human PMR-120 correction packet at
+  baseline `bbbc534`. No native handshake is allocated; PMR-064/117 remain
+  blocked.
   `PMD-20260915-001` keeps this independent personal-project repository under
   `beryllium-project`
 
@@ -123,6 +130,7 @@ exact fail-closed resolver without session-history fallback.
 handled with PMR-064 but does not resume or modify the paused model. The
 former human PMR-064/117 bootstrap is retired. PMR-120's two local commits
 install the six-path owner candidate but do not satisfy the Project Manager's
-standard live-response contract. The next unresolved human choice is
-`correct_standard_v1` (recommended), `adopt_threat_variant`, or
-`defer_rollout`; no handshake or direct dispatch proceeds before that choice.
+standard live-response contract. `PMD-20261003-002` selects
+`correct_standard_v1` as the recommended default under delegated autonomy.
+The exact correction is prepared but remains a human-run owner action; no
+handshake or direct dispatch proceeds before its verified return and release.

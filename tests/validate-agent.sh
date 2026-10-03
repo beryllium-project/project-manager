@@ -358,13 +358,17 @@ require_text "$owner_session" 'Project Manager HEAD changed while preparing the 
 require_text "$owner_session" 'another owner session holds the writer reservation'
 require_text "$owner_session" 'component HEAD changed before Copilot launch'
 require_text "$owner_session" \
-    'bootstrap_review_source_request_blob=9c289ab88a4202efb20e5e88ae994f6572c59a75'
+    'bootstrap_review_id=threat-owner-standard-v1-correction-20261003-09'
 require_text "$owner_session" \
-    'bootstrap_applied_request_blob=7508420cd5a91239eb77bdc2198d15c133dbf91f'
+    'bootstrap_review_source_request_blob=0d7e84201e160c94080055fec121ff2dbf5540a8'
+current_working_request_blob=$(git hash-object \
+    "$repository_root/outbox/component-requests.md")
+require_text "$owner_session" \
+    "bootstrap_applied_request_blob=$current_working_request_blob"
 require_text "$owner_session" \
     'bootstrap_review_sot_sha=5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68'
 require_text "$owner_session" \
-    'bootstrap_review_component_head=c4126b6d77f7cd14f7477795e3b8b971b6b58b37'
+    'bootstrap_review_component_head=bbbc5349943c3a7d64ced24f19f90d6e0c50ea06'
 current_committed_request_blob=$(git rev-parse \
     HEAD:outbox/component-requests.md)
 require_text "$repository_root/outbox/tasking/threat-modeler.md" \
@@ -2129,7 +2133,7 @@ if ((${#owner_packets[@]} == 1)); then
         'Load `cross-repo-collaboration` before substantively consuming'
     refute_pattern "$owner_packet" 'Tasking bootstrap'
     refute_pattern "$owner_packet" \
-        'Exact bootstrap scope steering|resume-threat-owner-rollout'
+        'Exact bootstrap scope steering|resume-threat-owner-rollout|threat-owner-standard-v1-correction'
 else
     fail "owner-session did not write exactly one private packet"
 fi
@@ -2185,16 +2189,20 @@ if ((${#bootstrap_packets[@]} == 1)); then
     require_text "$bootstrap_packet" \
         "$tasking_pm/outbox/tasking/threat-modeler.md"
     require_text "$bootstrap_packet" \
+        "$tasking_pm/templates/owner-agent-response.md"
+    require_text "$bootstrap_packet" \
+        "$tasking_pm/templates/owner-return.md"
+    require_text "$bootstrap_packet" \
         'This exception is unusable after PMR-120 closes'
     require_text "$bootstrap_packet" \
         '## Exact bootstrap scope steering'
     require_text "$bootstrap_packet" \
-        '**Review ID:** `resume-threat-owner-rollout-20261002-06`'
+        '**Review ID:** `threat-owner-standard-v1-correction-20261003-09`'
     require_text "$bootstrap_packet" '**Verdict:** `adjust`'
     require_text "$bootstrap_packet" \
         '**Authority:** `steering_only_no_approval_or_human_gate`'
     require_text "$bootstrap_packet" \
-        '**Reviewed source request blob:** `9c289ab88a4202efb20e5e88ae994f6572c59a75`'
+        '**Reviewed source request blob:** `0d7e84201e160c94080055fec121ff2dbf5540a8`'
     require_text "$bootstrap_packet" \
         "**Applied request blob:** \`$fixture_request_blob\`"
     require_text "$bootstrap_packet" \
@@ -2204,19 +2212,33 @@ if ((${#bootstrap_packets[@]} == 1)); then
     require_text "$bootstrap_packet" \
         '**Applied open request:** `PMR-120`'
     require_text "$bootstrap_packet" \
-        'before PMR-120 existed'
-    require_text "$bootstrap_packet" \
         '.github/agents/threat-modeler-owner.agent.md'
     require_text "$bootstrap_packet" \
-        'has no `ask_user`,'
+        'six existing PMR-120 paths are a ceiling'
     require_text "$bootstrap_packet" \
-        'Its only maintained executable is'
+        'templates/owner-agent-response.md'
     require_text "$bootstrap_packet" \
-        'returns `OWNER_AGENT_RESPONSE_V1` plus a'
+        'Required fields are exactly `protocol`, `component`,'
     require_text "$bootstrap_packet" \
-        'Preserve both existing user-facing profiles unchanged'
+        '`owner_profile`, `request_id`, structured `source`'
     require_text "$bootstrap_packet" \
-        'Do not scaffold or inspect threat packages'
+        '`requested_pm_action`; `question`;'
+    require_text "$bootstrap_packet" \
+        'all six exact states'
+    require_text "$bootstrap_packet" \
+        '`progress`, `needs_human`, `completed`, `partial`,'
+    require_text "$bootstrap_packet" \
+        'live-only'
+    require_text "$bootstrap_packet" \
+        'templates/owner-return.md'
+    require_text "$bootstrap_packet" \
+        '`completed`, `partial`, `blocked`, `needs_human`, `refused`, and'
+    require_text "$bootstrap_packet" \
+        'Protocol-string presence alone is insufficient.'
+    require_text "$bootstrap_packet" \
+        'do not rewrite the'
+    require_text "$bootstrap_packet" \
+        'project-wide PM templates'
     require_text "$bootstrap_packet" \
         'perform PMR-064/117'
     require_text "$bootstrap_packet" \
@@ -2226,15 +2248,7 @@ if ((${#bootstrap_packets[@]} == 1)); then
     require_text "$bootstrap_packet" \
         'that absence is not'
     require_text "$bootstrap_packet" \
-        'Implementation choices wholly inside'
-    require_text "$bootstrap_packet" \
-        'priorities, constraints, acceptance criteria, or any other material direction'
-    require_text "$bootstrap_packet" \
-        'The Project Manager applied the required changes'
-    require_text "$bootstrap_packet" \
-        'the recorded scope risks'
-    require_text "$bootstrap_packet" \
-        'PMR-120 permits only validated local work/return commits'
+        'one additional validated correction work commit'
     require_text "$bootstrap_packet" \
         'do not perform step 6 of the component'
     require_text "$bootstrap_packet" \
@@ -2249,6 +2263,10 @@ if ((${#bootstrap_packets[@]} == 1)); then
         'new human steering, requirements,'
     require_text "$bootstrap_packet" \
         'Stricter component-local instructions remain controlling.'
+    require_text "$bootstrap_packet" \
+        'original PMR-120 binding is consumed'
+    require_text "$bootstrap_packet" \
+        'after this component HEAD moves'
     refute_pattern "$bootstrap_packet" \
         "bash $tasking_pm/scripts/project-tasking.sh resolve threat-modeler"
 else
