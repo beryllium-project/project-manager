@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-02
+**Last refreshed:** 2026-10-03
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -442,11 +442,12 @@ PMR-120 changes only the six paths named in its row. It adds no
 `ask_user`, delegation, web, threat-modeling skill, package scaffold,
 threat-material discovery, PMR-064/117 work, model/queue/outbox change, push,
 or gate. The existing user-facing profiles stay unchanged beyond hidden-owner
-registration. Static registration is not native discovery proof. After the
-owner returns and its human session is explicitly released, the Project
-Manager must allocate a separate single-use no-write handshake in a later
-turn; only after that handshake closes may PMR-064 and PMR-117 be considered
-for separate direct dispatch.
+registration. Static registration is not native discovery proof. Work `ca8fa3c` and return
+`bbbc534` now install the candidate and the responsible human released the
+session, but `PMD-20261003-001` records a blocking response-contract gap:
+the delivered profile uses `COMPLETE/PARTIAL/BLOCKED` rather than the
+established V1 state and field set. PMR-120 remains open. Do not rerun its
+stale bootstrap, allocate the handshake, or dispatch PMR-064/117.
 
 The one-hundredth-turn fleet triage changed no owner boundary. PMR-066 and
 PMR-118 still require human-started owner sessions because those components
@@ -457,19 +458,20 @@ Project Manager carry. Generic fleet agents cannot run any of these writes.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-120` | P2 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120` | One final human bootstrap for hidden maintenance-owner registration only. Validated local work/return commits are allowed; no push. |
-| `PMR-064`, `PMR-117` | P3 | **Blocked — do not launch.** | Wait for verified PMR-120 adoption, explicit human-session release, and a separately allocated and closed native no-write handshake. Later direct dispatch is one PMR per invocation. |
+| `PMR-120` | P2 | **Blocked — no command pending human choice.** | Candidate installed at `bbbc534`; choose `correct_standard_v1` (recommended), `adopt_threat_variant`, or `defer_rollout`. The original bootstrap is consumed/stale and must not be rerun. |
+| `PMR-064`, `PMR-117` | P3 | **Blocked — do not launch.** | Wait for PMR-120 contract resolution, release of any later correction session, and a separately allocated and closed native no-write handshake. Later direct dispatch is one PMR per invocation. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
+| `PMR-107` | P3 | **Blocked — ask-first owner decision; no command selected.** | OS-security owner must decide the three public pointers under its own source/redistribution rules. Do not combine with PMR-070/116 or treat this as class-2 carry. |
 | `PMR-118` | P3 | `bash ./project-manager/scripts/owner-session.sh --agent security-reviewer launch security-reviewer PMR-118` | Startup policy only; no engagement, model change, push, or gate. |
 
-Do not paste a follow-up phrase. Every generated packet includes exact
+Do not paste a follow-up phrase. Every ordinary generated packet includes exact
 PM/request/SOT fingerprints, selected PMR text, local instruction checklist,
 one-writer rule, validation/commit/return contract, and no-gate/no-push
-boundary. Ordinary packets also require the exact resolver; the one admitted
-bootstrap instead requires read-only comparison with the generated tasking
-view and becomes unusable when PMR-120 closes.
+boundary. Ordinary packets require the exact resolver. The consumed PMR-120
+bootstrap compared the generated view read-only; request-note drift now makes
+that old packet binding fail closed.
 
 ## Completed - do not rerun
 
@@ -750,10 +752,11 @@ The relevant local component commits are:
   PMR-106, PMR-114, and PMR-119 are closed. PMR-093/096 are withdrawn;
   PMR-105 private topic backup is complete and its single-use authorization
   is consumed;
-- `cheri-hypervisor-research` is clean and synchronized 0/0 at private
-  `origin/main` `5e7387a`. Exact PMR-075/092/094 predecessor ranges are
-  remotely contained and those backup requests are closed. The later
-  research-review change set is separate owner evidence; inactive
+- `cheri-hypervisor-research` is clean local `main` at PMR-115 return
+  `7361de4`, 0 behind / 1 ahead of last-fetched private `origin/main`
+  `5e7387a`. Exact PMR-075/092/094 predecessor ranges are remotely contained
+  and those backup requests are closed. The later startup-path change remains
+  local and unpushed; inactive
   `legacy-backup/main` remains `706e708`;
 - `formal-verification-research` `c55065c`, `784be93`
   (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`);

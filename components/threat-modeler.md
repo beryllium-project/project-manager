@@ -12,25 +12,28 @@
   `threat-model-maintainer` (repository maintenance, validation, and
   explicitly authorized Git delivery), `threat-evidence`,
   `threat-research`, and `threat-model-review` (write-disabled specialists);
-  skill `beryllium-threat-modeling`. P2 `PMR-120` requests a hidden
-  maintenance-only `threat-modeler-owner`; it is not adopted or PM-invocable
-  yet.
+  skill `beryllium-threat-modeling`. PMR-120 work `ca8fa3c` / return
+  `bbbc534` installs a hidden maintenance-only `threat-modeler-owner`
+  candidate, but its live response shape diverges from the established
+  `OWNER_AGENT_RESPONSE_V1`; it is not recorded as adopted or PM-invocable.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean synchronized `main` / `origin/main` at `c4126b6`.
+- **Observed state:** clean local `main` at PMR-120 return
+  `bbbc5349943c3a7d64ced24f19f90d6e0c50ea06`, 0 behind / 2 ahead of
+  last-fetched private `origin/main` `c4126b6`.
   Owner commit `5bf6a4b` added the complete private, paused
   `TM-20260911-001-helium-te-poc-astra` package; Project Manager carry
   `f4eb272` followed it; owner maintenance `c4126b6` reconciles delivery
   wording, records maintained validation, and registers `project-manager` and
-  `security-reviewer` as exact-snapshot targets. It is synchronized with
-  private `origin/main` together with `5bf6a4b` and `f4eb272`. `PMR-028` is
+  `security-reviewer` as exact-snapshot targets. Those predecessor commits are
+  synchronized; PMR-120 work/return are local and unpushed. `PMR-028` is
   closed. The run remains paused.
   `PMD-20261002-002` stages a threat-modeler-only hidden-owner rollout after
-  repeated human owner lifecycle cost. PMR-120 requires one final
-  human-started bootstrap; a later separately allocated native read-only
-  handshake must still prove discovery, exact task identity, repository
-  rooting, and isolation before direct write-enabled dispatch. PMR-064 and
-  PMR-117 remain open and blocked on both steps.
+  repeated human owner lifecycle cost. The human-started PMR-120 bootstrap is
+  released, and the six exact paths plus 140/0 static validation are recorded.
+  `PMD-20261003-001` keeps PMR-120 open because the delivered profile uses
+  `COMPLETE/PARTIAL/BLOCKED` rather than the established V1 state and field
+  set. No native handshake is allocated; PMR-064/117 remain blocked.
   `PMD-20260915-001` keeps this independent personal-project repository under
   `beryllium-project`
 
@@ -118,7 +121,8 @@ exact fail-closed resolver without session-history fallback.
 `PMR-117` is the distinct owner-startup request to read current
 `workspace://SOT.md` before target/sibling resolution or tasking. It may be
 handled with PMR-064 but does not resume or modify the paused model. The
-former human PMR-064/117 bootstrap is retired. PMR-120 now asks only for
-hidden maintenance-owner registration in six exact paths; it does not perform
-either startup request, change the paused model, or establish native
-invocation capability.
+former human PMR-064/117 bootstrap is retired. PMR-120's two local commits
+install the six-path owner candidate but do not satisfy the Project Manager's
+standard live-response contract. The next unresolved human choice is
+`correct_standard_v1` (recommended), `adopt_threat_variant`, or
+`defer_rollout`; no handshake or direct dispatch proceeds before that choice.

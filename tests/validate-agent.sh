@@ -372,7 +372,7 @@ require_text "$repository_root/outbox/tasking/threat-modeler.md" \
 require_text "$repository_root/outbox/tasking/threat-modeler.md" \
     '**Global startup/status SHA-256:** `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`'
 require_text "$repository_root/../COMPONENTS.md" \
-    'threat-modeler/` | Ignored canonical direct checkout | Clean synchronized `main` / `origin/main` at `c4126b6`'
+    'threat-modeler/` | Ignored canonical direct checkout | Clean local `main` at PMR-120 return `bbbc5349943c3a7d64ced24f19f90d6e0c50ea06`'
 refute_pattern "$owner_session" '--(prompt|add-dir)([ =]|$)'
 refute_pattern "$owner_session" 'exec .* -p([ =]|$)'
 

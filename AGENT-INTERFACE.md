@@ -67,6 +67,12 @@ adopted component. Analysis-workbook has hidden
 `<component>-owner` profile that is model-invocable, not user-invocable, has
 no `ask_user`, and writes only its own repository under that component's
 maintained policy. Existing user-invocable orchestrators remain unchanged.
+`PMD-20261002-002` stages a threat-modeler-only second pilot. PMR-120 work
+`ca8fa3c` / return `bbbc534` installs a candidate, but
+`PMD-20261003-001` records that its live response schema diverges from the
+established V1 contract. The candidate is not adopted or PM-invocable; no
+native handshake or write dispatch is authorized. Every other component
+remains deferred.
 
 The Project Manager may invoke an adopted owner only for one exact directly
 assigned open PMR after independently verifying recorded authority and
@@ -91,7 +97,9 @@ tasking fingerprints, and write boundaries read-only under `PMR-087`, and
 bounded write-enabled runs completed under PMR-086, PMR-038, PMR-004,
 PMR-050, PMR-055, PMR-059, and PMR-063 through latest return `8b5a301`.
 Those results do not establish another component's owner. Beryllium still
-requires its own adoption and read-only proof before any write-enabled use.
+has no owner rollout authorization; another adoption requires new
+responsible-human direction and its own read-only proof before write-enabled
+use.
 
 ## Specialist boundary
 
