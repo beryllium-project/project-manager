@@ -2776,10 +2776,12 @@ Previous-turn model-matrix artifacts remain listed in Git history at
   blob/review assertions, card wording, PMD discharge/follow-up, and PMR-107
   visibility reconcile its stale/minor findings. Parent current-turn scope
   and final PM HEAD remain for post-commit binding.
-- Generated tasking correctly remains bound to the previous committed request
-  table until the correction PMR-120 Note is committed. Commit PM, regenerate
-  and check tasking, bind the exact final PM HEAD/blob in
-  `../COMPONENTS.md`, then commit parent.
+- Correction checkpoint `8f8dac5b88b442f50a553e006a9681ecb1a207e4`
+  commits request blob `b6160d3130163ede106141c8cb9494222e16186d`.
+  Generated tasking and the post-commit 1182/0 contract suite match that
+  exact commit/blob and unchanged SOT SHA. This handoff-only finalization
+  changes no request row; regenerate once more from its containing commit
+  before binding parent `../COMPONENTS.md`.
 
 ### One-hundred-first-turn validation
 
