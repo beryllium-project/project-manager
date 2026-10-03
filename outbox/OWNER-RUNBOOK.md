@@ -458,6 +458,12 @@ blob `0d7e84201e160c94080055fec121ff2dbf5540a8`, applied request blob
 and threat-modeler baseline
 `bbbc5349943c3a7d64ced24f19f90d6e0c50ea06`.
 
+Corrected work `71bca3f` / return `e6aed9f` now completes PMR-120 and the
+responsible human stated exactly `"above done"`. `PMD-20261003-003` records
+the profile adopted but not native-handshaken or PM-invocable. Both
+tasking-bootstrap bindings are consumed. No handshake is allocated, and
+PMR-064/117 are parked P4 under the exact return-to-hypervisor priority.
+
 The one-hundredth-turn fleet triage changed no owner boundary. PMR-066 and
 PMR-118 still require human-started owner sessions because those components
 have no adopted hidden owner. PMR-070/116 additionally retain OS-security's
@@ -467,8 +473,7 @@ Project Manager carry. Generic fleet agents cannot run any of these writes.
 
 | Request | Priority | One-command owner invocation | Packet boundary |
 | --- | --- | --- | --- |
-| `PMR-120` | P2 | `bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120` | One additional single-use standard-V1 correction bound to baseline `bbbc534`. Original binding consumed. Correct profile/tests/directly coupled docs only; no PMR-064/117, push, model, package, or gate. |
-| `PMR-064`, `PMR-117` | P3 | **Blocked — do not launch.** | Wait for PMR-120 contract resolution, release of any later correction session, and a separately allocated and closed native no-write handshake. Later direct dispatch is one PMR per invocation. |
+| `PMR-064`, `PMR-117` | P4 | **Parked — do not launch.** | PMR-120 adoption is closed. Resume only after explicit later direction and a separately allocated/closed native no-write handshake. |
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
@@ -483,6 +488,13 @@ bootstrap compared the generated view read-only; request-note drift now makes
 that old packet binding fail closed.
 
 ## Completed - do not rerun
+
+`PMR-120` is closed at initial work/return `ca8fa3c` / `bbbc534` and
+standard-V1 correction work/return `71bca3f` / `e6aed9f`. The focused owner
+suite reports 148/0 and diff check passed; full package-reading suite and
+index check are unknown. Clean local `main` is 0 behind / 4 ahead, all four
+commits are local-only, and no push, model/package action, or gate occurred.
+Both human bootstrap bindings are consumed; do not rerun either.
 
 `PMR-119` is closed at Project Manager class-3 carry
 `7f671548a18bc426133b5b2102fa83a70cb3f9bc`. It changes only

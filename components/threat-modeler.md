@@ -17,30 +17,28 @@
   candidate, but its live response shape diverges from the established
   `OWNER_AGENT_RESPONSE_V1`, and durable `Result: Complete` is outside
   `templates/owner-return.md` values `completed`, `partial`, `blocked`,
-  `needs_human`, `refused`, and `information`; it is not recorded as adopted
-  or PM-invocable.
+  `needs_human`, `refused`, and `information`. Correction work `71bca3f` /
+  return `e6aed9f` aligns both contracts. The profile is adopted but not
+  native-handshaken or PM-invocable.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean local `main` at PMR-120 return
-  `bbbc5349943c3a7d64ced24f19f90d6e0c50ea06`, 0 behind / 2 ahead of
+- **Observed state:** clean local `main` at corrected PMR-120 return
+  `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`, 0 behind / 4 ahead of
   last-fetched private `origin/main` `c4126b6`.
   Owner commit `5bf6a4b` added the complete private, paused
   `TM-20260911-001-helium-te-poc-astra` package; Project Manager carry
   `f4eb272` followed it; owner maintenance `c4126b6` reconciles delivery
   wording, records maintained validation, and registers `project-manager` and
   `security-reviewer` as exact-snapshot targets. Those predecessor commits are
-  synchronized; PMR-120 work/return are local and unpushed. `PMR-028` is
-  closed. The run remains paused.
+  synchronized; all four PMR-120 commits are local and unpushed. `PMR-028`
+  and `PMR-120` are closed. The run remains paused.
   `PMD-20261002-002` stages a threat-modeler-only hidden-owner rollout after
   repeated human owner lifecycle cost. The human-started PMR-120 bootstrap is
   released, and the six exact paths plus 140/0 static validation are recorded.
-  `PMD-20261003-001` keeps PMR-120 open because the delivered profile uses
-  `COMPLETE/PARTIAL/BLOCKED` rather than the established V1 state and field
-  set. Under the responsible human's delegated autonomous-completion
-  direction, `PMD-20261003-002` selects the recommended standard-V1
-  correction and re-arms one exact human PMR-120 correction packet at
-  baseline `bbbc534`. No native handshake is allocated; PMR-064/117 remain
-  blocked.
+  `PMD-20261003-001` records the initial response-contract gap;
+  `PMD-20261003-002` selects the standard-V1 correction; and
+  `PMD-20261003-003` closes corrected adoption while deferring the native
+  handshake. PMR-064/117 remain open and parked P4.
   `PMD-20260915-001` keeps this independent personal-project repository under
   `beryllium-project`
 
@@ -128,9 +126,7 @@ exact fail-closed resolver without session-history fallback.
 `PMR-117` is the distinct owner-startup request to read current
 `workspace://SOT.md` before target/sibling resolution or tasking. It may be
 handled with PMR-064 but does not resume or modify the paused model. The
-former human PMR-064/117 bootstrap is retired. PMR-120's two local commits
-install the six-path owner candidate but do not satisfy the Project Manager's
-standard live-response contract. `PMD-20261003-002` selects
-`correct_standard_v1` as the recommended default under delegated autonomy.
-The exact correction is prepared but remains a human-run owner action; no
-handshake or direct dispatch proceeds before its verified return and release.
+former human PMR-064/117 bootstrap is retired. Corrected PMR-120 work
+`71bca3f` and return `e6aed9f` complete the component-owned standard-V1
+profile. Both PMR-120 bootstrap bindings are consumed. No handshake request
+exists and no direct dispatch proceeds until explicit later resumption.

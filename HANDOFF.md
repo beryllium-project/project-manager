@@ -1,17 +1,15 @@
 # Beryllium Project Manager handoff
 
 **Last updated:** 2026-10-03
-**Update scope:** one-hundred-second coordination turn. The responsible human
-directed autonomous completion and instructed the Project Manager to make a
-good decision rather than stop on ambiguity. `PMD-20261003-002` therefore
-selects the previously recommended `correct_standard_v1` default; the human
-did not name that option explicitly, and no gate follows. One additional
-single-use PMR-120 correction packet is prepared against clean threat
-baseline `bbbc534`, the final correction request blob, unchanged SOT SHA, and
-exact maintainer profile. It requires full live/durable schema tests within
-the existing six-path ceiling. The initial binding remains consumed. The
-Project Manager cannot execute the human-only launcher; no handshake,
-PMR-064/117 work, push, model/package change, or gate occurs.
+**Update scope:** one-hundred-third coordination turn. The responsible human
+reported the PMR-120 correction complete with exact `"above done"`.
+Maintained evidence verifies correction work `71bca3f`, return `e6aed9f`,
+the six-path ceiling, standard live/durable schema alignment, focused 148/0
+validation, clean 0/4 state, no push, and no owner-session lock.
+`PMD-20261003-003` closes PMR-120 as acknowledgement and records the hidden
+owner adopted but not native-handshaken or PM-invocable. Under the exact
+priority `"wrap all of this up and get back to the hypervisor work, ASAP"`,
+no handshake is allocated and PMR-064/117 are parked P4.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -24,26 +22,26 @@ in `../COMPONENTS.md`
 
 | Area | Current state |
 | --- | --- |
-| Current coordination baseline | **PMR-120 standard-V1 correction packet ready.** Candidate `bbbc534` remains clean/released but unadopted. The re-armed human-only correction is exact and single-use; no handshake is allocated and PMR-064/117 stay blocked. |
+| Current coordination baseline | **Threat-owner adoption complete; Project Management rollout parked.** PMR-120 closes at work `71bca3f` / return `e6aed9f`. The owner is adopted but not handshaken or PM-invocable. PMR-064/117 are P4; no handshake request exists. |
 | Operational PM closure | **PMR-112 complete, with independent backup and gate gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105/114, XRV PMR-115, formal-verification PMR-014/037/041/069, and Beryllium PMR-098/100/112 are closed. Security backup PMR-111 and Beryllium PMR-090 remain separate and unapproved. |
 | Workspace worktree layout | **Container and ignore complete; namespacing follow-up open.** Workspace-root `worktrees/` now holds six human-moved, repaired Beryllium linked worktrees at temporary flat paths recorded in `../COMPONENTS.md`. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; Project Manager never moves or removes them. |
 | Temporary workstation | **Recorded, no child rollout.** The canonical workspace is temporarily on Fedora laptop `lx2`, with repositories under `~/src/l1/src` rather than `~/src`, while the responsible human is in Europe. Expected return is 2026-10-09, but the current root remains canonical until an explicit later confirmation and reconciliation. `../SOT.md` is the global status anchor. |
 | Global startup-status rollout | **PMR-108 complete; PMR-112, PMR-114, and PMR-115 owner adoptions are complete.** Tasking binds every view/dispatch packet to regular `workspace://SOT.md` by SHA-256. Project Manager, analysis-workbook, formal-verification, provenance, Beryllium, CHERI notes, and XRV read the anchor. Four child gaps remain: PMR-113 Helium, PMR-116 OS-security, PMR-117 threat-modeler, and PMR-118 security-reviewer. |
 | Max-effort scope governance | **Tracked/component policy aligned; install/check human-reported complete.** The responsible human reported the exact governance `install && check` command completed (`"done above"`). The Project Manager did not run it against real user configuration, inspect output, or establish install-time session state. `PMD-20260930-001/002/005` policy remains unchanged. |
 | Component policy exceptions | **PMR-109 and PMR-110 closed; backup separate.** Current security-reviewer files at `2bb4c98` require exact Codex `xhigh` / `default`, retain ordinary max/high-floor handling for explicit non-Codex selections, and prohibit silent fallback. Return `c2edac7` reports 396 / 0 and no engagement; the human `"done"` response releases only that session. Unpushed commits are tracked by PMR-111, which has no push authority. |
-| Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only adopted PM-invocable owner. Threat candidate `threat-modeler-owner` exists at `bbbc534` but remains unadopted. PMD-20261003-002 selects standard V1 and prepares one exact human correction; no PM/custom/generic writer substitute, handshake, or write dispatch is authorized. |
+| Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only PM-invocable owner. `threat-modeler-owner` is adopted at `e6aed9f` but has no native discovery/isolation handshake and therefore is not PM-invocable or write-dispatchable. Further rollout is parked. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references. The responsible human now renamed and retargeted the CHERI notes and XRV workspace links to those verified successors. |
 | Beryllium runtime | Active/default `beryllium/single-hart-runtime-r0` is clean at PMR-112 checkpoint `93819fd9`, 0 behind / 5 ahead of last-fetched private `origin` `4141cf6`. Work `2313cbe0`, return `55b568b4`, and checkpoint are local-only and not remotely backed up; SOT-first owner startup is active and the owner lock is released. Canonical return `1f38e699` keeps PMR-098/100 closed. Maintained refs confirm all named commits/subjects, active-range containment, and local-only candidates `6e93461` / `0d53120`; source target `c1c7e254` is absent from Beryllium and remains owner-stated sibling evidence. The current package remains unaccepted and not ready; K0-X/K0-R remain blocked; KVM0 and K3 are `NOT RUN`; development kernel/BSP is `UNDECIDED`; Project Manager R8-H0 remains unaccepted. |
 | Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. PMR-091 is closed: only private `for-review` fast-forwarded `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved; independent inspection confirms clean synchronized 0/0 state. `main`, other branches, tags, `public`, remotes, and helpers were excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
-| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Clean local `main` is at PMR-120 return `bbbc534`, 0/2 relative to last-fetched private `origin/main` `c4126b6`. The six-path owner-candidate work did not inspect, resume, or modify the model; both commits are local and unpushed. |
+| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, private, backed up, and paused by explicit user request. Clean local `main` is at corrected PMR-120 return `e6aed9f`, 0/4 relative to last-fetched private `origin/main` `c4126b6`. All four owner-adoption commits are local/unpushed and did not inspect, resume, or modify the model. |
 | XRV | Clean local private `main` at PMR-115 owner work/return `7361de4`, 0 behind / 1 ahead of last-fetched `origin/main` `5e7387a`. PMR-115 adopts current SOT/registry startup resolution and changes only `.github/copilot-instructions.md` and `HANDOFF.md`; no fetch or push occurred. The earlier Bao-CHERI state remains bounded public experimental evidence that is unreproduced, non-upstream, unreleased, and not a complete decomposed hypervisor. PMR-075/092/094 and PMR-040/058/072 closures remain exact; no research or publication gate changed. |
 | Analysis-workbook | Clean `main` is synchronized 0/0 at `3c9d2a3`. Complete private session `AWB-20260928-001` contains one inquiry, 40 evidence records, and 414 / 0 validation. Its three new public-source pointers are ledgered/routed as PML-0032..0034 / PMR-107; routed rows produce no source queue edit. Earlier backup PMRs remain open pending reconciliation of observed containment with their review/authorization requirements. |
 | CHERI-RISC-V notes | Clean `docs/reconcile-project-status` at PMR-119 class-3 carry `7f67154`, 0 behind / 3 ahead of last-fetched private `origin/docs/reconcile-project-status` `34a8b50`. PMR-114 work `8d1bc9d` and return `7fb49f4` complete SOT-bound owner startup; PMR-119 changes only the handoff opening date and next action. No component command, fetch, or push occurred. PMR-105's prior exact private fast-forward remains complete and consumed. D4/D5, licensing, redistribution, publication, Pages, and merge to `main` remain open. |
 | Formal verification | Clean `main` is synchronized 0/0 at handoff-only successor `388690d`. Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. |
 | Other drift | OS-security is clean and synchronized at active private successor `86645d4`. Its owner return records independent executable-backlog integration, maintained validation, no restricted access, and no publication; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | Security-reviewer is clean at HANDOFF-only return `c2edac7`, behind 0 / ahead 2 of last-fetched private `origin/main` `2e8d205`. All four profiles now record exact `gpt-5.3-codex` / `xhigh` / `default`; PMR-062/065/074/109/110 are closed, the tasking startup contract is active, no engagement ran, and the human released the owner session. Built-in `security-review` is not admitted to the named capability exception. |
-| Remote access | The prior exact `"commit and push"` confirmation was consumed at last-pushed Project Manager `43e7e82` and parent `36e6c89`. Project Manager and parent coordination commits after those tips remain local and unpushed. Threat PMR-120 work/return `ca8fa3c` / `bbbc534`, Beryllium PMR-112 work/return/checkpoint `2313cbe0` / `55b568b4` / `93819fd9`, PMR-098/100 return `1f38e699` / checkpoint `4c6acbed`, XRV PMR-115 `7361de4`, CHERI notes PMR-114 `8d1bc9d` / `7fb49f4` plus carry `7f67154`, and security-reviewer `c2edac7` are local without new backup authority. No new push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
+| Remote access | The prior exact `"commit and push"` confirmation was consumed at last-pushed Project Manager `43e7e82` and parent `36e6c89`. Project Manager and parent coordination commits after those tips remain local and unpushed. Threat PMR-120 initial/correction work/returns `ca8fa3c` / `bbbc534` / `71bca3f` / `e6aed9f`, Beryllium PMR-112 work/return/checkpoint `2313cbe0` / `55b568b4` / `93819fd9`, PMR-098/100 return `1f38e699` / checkpoint `4c6acbed`, XRV PMR-115 `7361de4`, CHERI notes PMR-114 `8d1bc9d` / `7fb49f4` plus carry `7f67154`, and security-reviewer `c2edac7` are local without new backup authority. No new push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
 | Queues | 33 analysis-workbook source rows / 33 ledger rows plus one transfer row are exact. New PMQ-031..033 are `routed` as PML-0032..0034 / PMR-107; routed maps to no source edit. The prior 30 source rows and transfer row retain their recorded dispositions. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. Independent OS-security integration `86645d4` does not execute PMR-052. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -57,22 +55,23 @@ in `../COMPONENTS.md`
 | Human interaction | `PMD-20261002-001` records the exact direction `"also remember to use a full pathname when giving me an initial cd command"`. User-facing command sequences now render an initial `cd` with the current absolute path re-resolved from `SOT.md` / `COMPONENTS.md`; later commands may be relative to that established directory. The prior PMR-105 single-use authorization remains consumed. |
 | Role-to-model matrix | `PMD-20260916-001` still assigns `gpt-5.6-sol` to planning/coding/coordination/orchestration, `claude-opus-5` to review/evaluation/audit, and `gpt-5.3-codex` to deep/adversarial security review. Ordinary roles remain `max` / `long_context`; `PMD-20260930-005` makes exact Codex `xhigh` / `default` the sole named capability exception. `PMD-20260930-001` retains `high` as the explicit floor for every non-Codex selection and `beryllium-scope-review` as the `claude-opus-5.5` / `max` / `long_context` scope-control model exception. No silent model, effort, or context fallback is permitted. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this turn, Project Manager `dbb76c7` was 0 behind / 13 ahead of `origin/main` `43e7e82`, and parent `ec485e7` was 0 behind / 10 ahead of `upstream/main` `36e6c89`; both were clean. This turn records the standard-V1 selection, re-arms one exact correction packet, and updates parent `COMPONENTS.md`; no component write occurs. |
+| Parent coordination | Before this turn, Project Manager `8fb5d52` was 0 behind / 15 ahead of `origin/main` `43e7e82`, and parent `335b3a4` was 0 behind / 11 ahead of `upstream/main` `36e6c89`; both were clean. This turn acknowledges threat return `e6aed9f`, closes PMR-120, parks further rollout, and updates parent `COMPONENTS.md`; no component write occurs. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
 
 `PMD-20261003-001` records the PMR-120 response-contract gap. The bootstrap
-session is released, the six-path candidate is installed at `bbbc534`, and
-PMR-120 remains open. `PMD-20261003-002` selects the recommended
-standard-V1 correction under delegated autonomy and prepares one exact
-human-run correction binding; no handshake is allocated.
+session was released and the six-path candidate installed at `bbbc534`.
+`PMD-20261003-002` selected the recommended standard-V1 correction under
+delegated autonomy. Corrected work `71bca3f` / return `e6aed9f`
+and exact `"above done"` now close PMR-120 under `PMD-20261003-003`.
+The owner is adopted but not handshaken or PM-invocable; no handshake is
+allocated.
 `PMD-20261002-003` records the autonomous P3 fleet disposition. PMR-119 is
 closed at class-3 carry `7f67154`; every other P3 stays open only where an
-owner, dependency, ask-first convention, or exact human gate remains. P2
-`PMR-120` still stages only the threat-modeler hidden maintenance-owner
-bootstrap; the profile is not adopted, and later native discovery remains
-unallocated. The previous housekeeping finish lines remain complete.
+owner, dependency, ask-first convention, or exact human gate remains. Native
+threat-owner discovery and PMR-064/117 are parked P4. The previous
+housekeeping finish lines remain complete.
 PMR-112 is closed
 from owner work `2313cbe0`, return `55b568b4`, and released-session
 checkpoint `93819fd9`; its three local commits are unpushed. PMR-098 and PMR-100
@@ -98,8 +97,7 @@ backup/publication gates, and elective work remain visible.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P2 | `PMR-120` | **Standard-V1 correction packet ready after commit/tasking refresh** | Candidate `bbbc534` is released. One exact human-run correction aligns live/durable schemas and schema-level tests; no handshake or direct dispatch yet. |
-| P3 | `PMR-064`, `PMR-117` | **Blocked on corrected PMR-120 plus a later no-write handshake** | Do not rerun either old bootstrap. Direct dispatch remains unavailable until the contract gap is resolved and native discovery/isolation is proved. |
+| P4 | `PMR-064`, `PMR-117` | **Parked after completed PMR-120 adoption** | Resume only after explicit later direction and a separately allocated/closed native no-write handshake. Both human bootstrap bindings are consumed. |
 | P3 | `Worktree namespacing` (no PMR) | **Temporary flat placement works; owner follow-up deferred** | Six repaired Beryllium worktrees are under `worktrees/` but not yet under `worktrees/beryllium-hypervisor/...`; other top-level Beryllium worktrees need a later owner inventory. Any move is human/Beryllium-owner `git worktree move`. |
 | P3 | `PMR-085` | **Containment observed — push review/authorization evidence unresolved** | Synchronized `origin/main` at `3c9d2a3` contains the range through `ea72522`; reconcile who reviewed/authorized the encompassing push before closure. No handshake, analysis disposition, or gate follows. |
 | P3 | `PMR-088` | **Containment observed — depends on `PMR-085` disposition** | Synchronized `3c9d2a3` contains PMR-086 commits `efbfdb8` and `858a73b`; close only after independently reconciling the predecessor push evidence. |
@@ -121,23 +119,21 @@ backup/publication gates, and elective work remain visible.
 
 ### One recommended next action
 
-The Project Manager selected the recommended standard-V1 correction under the
-responsible human's delegated autonomy. After this PM/parent commit and exact
-tasking regeneration, run the one re-armed PMR-120 correction:
+Project Manager wrap-up is complete enough to return focus to the hypervisor.
+Start a fresh ordinary Beryllium owner session from the canonical checkout:
 
 ```sh
-cd /home/jmorris/src/l1/src/beryllium-project
-bash ./project-manager/scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120
+cd /home/jmorris/src/l1/src/beryllium-project/beryllium-hypervisor
+copilot --no-auto-update --yolo
 ```
 
-The packet is bound to baseline `bbbc534`, the final correction request blob,
-the unchanged SOT SHA, exact maintainer profile, sole PMR-120, and scope
-review `threat-owner-standard-v1-correction-20261003-09`. It aligns the
-candidate to standard live/durable response templates and adds schema-level
-tests within the existing six-path ceiling. It does not allocate the
-handshake, perform PMR-064/117, touch a package/model, push, or grant a gate.
-The initial PMR-120 binding remains consumed. Other priorities outside
-Project Manager visibility may take precedence.
+The component owner reads current `workspace://SOT.md`,
+`.github/copilot-instructions.md`, and `planning/HANDOFF.md` before selecting
+work. This Project Manager handoff grants no new implementation stage,
+target acceptance, H1-H4 authority, K3 result, push, publication, or release.
+Current Project Manager state remains accepted through R7; R8-H0 is committed
+but unaccepted; H1-H4 are unauthorized; K3 is `NOT RUN`. Other priorities
+outside Project Manager visibility may take precedence.
 
 ### Minimal restart commands
 
@@ -157,6 +153,35 @@ git -C .. status --short --branch
 ```
 
 ## What changed in this turn
+
+### One-hundred-third-turn owner adoption closure and PM parking
+
+- The responsible human reported exactly `"above done"` after the PMR-120
+  standard-V1 correction session.
+- Maintained state verifies clean threat-modeler `main` at return
+  `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`, 0 behind / 4 ahead of
+  last-fetched private `origin/main` `c4126b6`; no owner-session lock remains.
+- Correction work `71bca3fe100737ab60e367b22d997d874f938b3d`
+  has parent `bbbc534` and changes exactly five authorized contract paths.
+  Return `e6aed9f` has parent `71bca3f` and changes only `HANDOFF.md`.
+- Direct comparison against `templates/owner-agent-response.md`,
+  `templates/owner-return.md`, and `PMD-20261003-002` verifies every live
+  field/state, progress/needs-human/completed/null-push invariant, all six
+  durable values, and schema-level tests. The owner reports the focused suite
+  at 148/0 and diff check passed; full package-reading suite/index check are
+  `unknown`.
+- `PMD-20261003-003` closes PMR-120 as acknowledgement. The hidden owner is
+  adopted but has no native discovery/rooting/fingerprint/isolation proof and
+  is not PM-invocable or write-dispatchable.
+- Both PMR-120 tasking-bootstrap bindings are consumed. No handshake request
+  or decision is allocated.
+- The responsible human stated exactly
+  `"ok, we will not make any changes to project management now. I do need to wrap all of this up and get back to the hypervisor work, ASAP."`
+  PMR-064/117 are therefore parked P4; further owner-worker rollout waits for
+  explicit later direction.
+- No component write/command, hidden-owner invocation, push, model/package
+  action, acceptance, risk, publication, release, formal-verification, or
+  hardware-validation gate is performed by the Project Manager.
 
 ### One-hundred-second-turn standard-V1 correction selection
 
@@ -2004,8 +2029,7 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P2 | `PMR-120` | Standard-V1 correction selected and one exact human-run packet is ready after PM commit/tasking refresh. Original binding consumed; baseline `bbbc534`; no handshake or push. |
-| P3 | `PMR-064`, `PMR-117` | **Blocked:** wait for corrected PMR-120 return/release and a later separately allocated and closed native no-write handshake. Do not run either retired startup bootstrap. |
+| P4 | `PMR-064`, `PMR-117` | PMR-120 adoption is complete at `e6aed9f`. Parked under the exact return-to-hypervisor priority; resume only after explicit later direction and a separately allocated/closed native no-write handshake. |
 | P3 | Worktree namespacing (no PMR) | Six repaired Beryllium worktrees remain at temporary flat `worktrees/` paths, and other top-level Beryllium worktrees need later owner inventory. A human/Beryllium-owner `git worktree move` may apply namespacing; Project Manager never performs it. |
 | P3 | `PMR-111` | PMR-109/110 are closed at local work `2bb4c98` / return `c2edac7`. After a new exact same-turn responsible-human confirmation and unchanged expected tips, privately fast-forward only security-reviewer `origin/main`; no engagement or gate follows. |
 | P3 | `PMR-107` | After the responsible human satisfies OS-security's ask-first convention, triage public pointers PMQ-031..033 without restricted access or a publication/licensing decision. |
@@ -2134,6 +2158,27 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   decisions.
 
 ## What to review
+
+### One-hundred-third-turn adoption closure and PM parking review
+
+- `records/decisions/PMD-20261003-003-close-threat-owner-adoption-and-park-rollout.md`
+- `outbox/component-requests.md` PMR-120 closure and PMR-064/117 P4 rows
+- `HANDOFF.md`
+- `AGENT-INTERFACE.md`
+- `AGENT-ROSTER.md`
+- `components/threat-modeler.md`
+- `README.md`
+- `outbox/OWNER-RUNBOOK.md`
+- `scripts/owner-session.sh` and `tests/validate-agent.sh` consumed-binding
+  behavior
+- parent `../COMPONENTS.md`
+- read-only threat evidence at `e6aed9f`: `HANDOFF.md`,
+  `.github/agents/threat-modeler-owner.agent.md`, `AGENT-INTERFACE.md`, and
+  `tests/validate-agent.sh`
+
+Review the distinction between adoption and PM invocation, the absence of any
+handshake PMR, both consumed bootstrap bindings, exact P4 parking, and the
+unchanged Beryllium assurance/implementation boundaries.
 
 ### One-hundred-second-turn standard-V1 correction review
 
@@ -2755,6 +2800,28 @@ Previous-turn model-matrix artifacts remain listed in Git history at
 `2f8d576:HANDOFF.md`.
 
 ## Validation and commit state
+
+### One-hundred-third-turn validation
+
+- `bash ./scripts/validate-pm.sh`: 759 passed / 0 failed.
+- `bash ./tests/validate-agent.sh`: 1185 passed / 0 failed, including PMR-120
+  closure, consumed live bootstrap drift, and the current `e6aed9f` registry
+  assertion.
+- `bash ./scripts/pull-queues.sh check`: 34 source rows / 34 ledger rows; no
+  source edit is due.
+- `scripts/inspect-components.sh registry-check`: exact, including threat
+  return `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`.
+- Project Manager and parent `git diff --check`: passed. Working request-table
+  blob is `47e20a736814ba3ad9317a814fb26c47a21d2967`; SOT SHA remains
+  `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`.
+- The write-disabled `pm-auditor` found no adoption/priority/consumed-binding
+  blocker. Parent pre-turn/current PM rows and review scope remain for the
+  post-commit bind; README and AGENT-INTERFACE now distinguish PM-invocable
+  from adopted-only owners.
+- Generated tasking correctly remains bound to the previous committed request
+  table until PMR-120 closure and PMR-064/117 priority changes are committed.
+  Commit PM, regenerate/check tasking, bind the final PM HEAD/blob in parent
+  `COMPONENTS.md`, then commit parent.
 
 ### One-hundred-second-turn validation
 

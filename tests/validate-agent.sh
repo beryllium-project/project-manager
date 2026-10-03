@@ -361,10 +361,20 @@ require_text "$owner_session" \
     'bootstrap_review_id=threat-owner-standard-v1-correction-20261003-09'
 require_text "$owner_session" \
     'bootstrap_review_source_request_blob=0d7e84201e160c94080055fec121ff2dbf5540a8'
+require_text "$owner_session" \
+    'bootstrap_applied_request_blob=b6160d3130163ede106141c8cb9494222e16186d'
 current_working_request_blob=$(git hash-object \
     "$repository_root/outbox/component-requests.md")
-require_text "$owner_session" \
-    "bootstrap_applied_request_blob=$current_working_request_blob"
+if [[ $current_working_request_blob != \
+      b6160d3130163ede106141c8cb9494222e16186d ]]; then
+    pass "live request table retires the consumed PMR-120 bootstrap binding"
+else
+    fail "live request table still matches the consumed PMR-120 bootstrap binding"
+fi
+require_text "$repository_root/outbox/component-requests.md" \
+    '| PMR-120 | 2026-10-02 | threat-modeler |'
+require_text "$repository_root/outbox/component-requests.md" \
+    '| closed | - | 2026-10-03 | Closed by `PMD-20261003-003`'
 require_text "$owner_session" \
     'bootstrap_review_sot_sha=5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68'
 require_text "$owner_session" \
@@ -376,7 +386,7 @@ require_text "$repository_root/outbox/tasking/threat-modeler.md" \
 require_text "$repository_root/outbox/tasking/threat-modeler.md" \
     '**Global startup/status SHA-256:** `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`'
 require_text "$repository_root/../COMPONENTS.md" \
-    'threat-modeler/` | Ignored canonical direct checkout | Clean local `main` at PMR-120 return `bbbc5349943c3a7d64ced24f19f90d6e0c50ea06`'
+    'threat-modeler/` | Ignored canonical direct checkout | Clean local `main` at PMR-120 correction return `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`'
 refute_pattern "$owner_session" '--(prompt|add-dir)([ =]|$)'
 refute_pattern "$owner_session" 'exec .* -p([ =]|$)'
 

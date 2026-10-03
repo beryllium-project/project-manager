@@ -76,21 +76,22 @@ handoff remains authoritative. Owner workers return blocking human questions
 to the PM instead of calling `ask_user`. At most four repositories run
 concurrently and never more than one writer/reservation per repository.
 
-One owner profile exists: hidden `analysis-workbook-owner`, introduced at
+One PM-invocable owner profile exists: hidden `analysis-workbook-owner`, introduced at
 `ea72522`, proven read-only under closed `PMR-087`, and used for bounded
 write-enabled PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and
 PMR-063 requests through latest return `8b5a301`. Those bounded results
-grant no broader owner or Project Manager authority. `PMD-20261002-002`
-stages P2 `PMR-120` as a threat-modeler-only repeated-cost exception to the
-deferred rollout. PMR-120 work `ca8fa3c` / return `bbbc534` installs the
+grant no broader owner or Project Manager authority. Historically,
+`PMD-20261002-002` staged P2 `PMR-120` as a threat-modeler-only repeated-cost
+exception to the deferred rollout. PMR-120 work `ca8fa3c` / return `bbbc534` installs the
 hidden `threat-modeler-owner` candidate and the responsible human released
 the bootstrap session. `PMD-20261003-001` keeps the request open: the
 candidate's `COMPLETE/PARTIAL/BLOCKED` live result omits the established V1
 state, checkpoint, question, and push fields. `PMD-20261003-002` selects the
-recommended standard-V1 correction under the human's delegated autonomy and
-prepares one additional exact human-run PMR-120 correction binding. It is not
-PM-invocable and no native handshake is allocated before corrected return and
-release. Every other component remains deferred. No Beryllium owner profile exists. V1 adds no
+standard-V1 correction; work `71bca3f` / return `e6aed9f` completes it.
+`PMD-20261003-003` closes PMR-120 and records the owner adopted but not
+native-handshaken or PM-invocable. Both bootstrap bindings are consumed, no
+handshake is allocated, and PMR-064/117 are parked P4. Every other component
+remains deferred. No Beryllium owner profile exists. V1 adds no
 dispatch/return queue, historical
 request migration, execution ledger, daemon, lease database, or general Git
 automation.
@@ -263,7 +264,7 @@ templates/owner-return.md                    component HANDOFF return shape for 
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
-scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, consumed initial and re-armed single-use PMR-120 correction bindings, and interactive copilot --yolo launch
+scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, consumed PMR-120 bootstrap bindings, and interactive copilot --yolo launch
 scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and copilot --yolo launch
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
@@ -287,7 +288,6 @@ bash ./scripts/project-tasking.sh resolve <component-or-workspace-path>
 bash ./scripts/project-tasking.sh dispatch <component> <PMR-NNN>
 bash ./scripts/owner-session.sh prepare <component> <PMR-NNN>...
 bash ./scripts/owner-session.sh launch <component> <PMR-NNN>...
-bash ./scripts/owner-session.sh --tasking-bootstrap --agent threat-model-maintainer launch threat-modeler PMR-120
 bash ./scripts/owner-recovery.sh prepare <component> <PMR-NNN>
 bash ./scripts/owner-recovery.sh launch <component> <PMR-NNN>
 bash ./scripts/maintenance-reservation.sh hold -- <command>
@@ -381,13 +381,12 @@ stopped during usage/argument parsing or could not create private scratch; a
 Copilot started or that owner work completed.
 
 One narrow bootstrap installed the pre-adoption threat-modeler hidden-owner
-candidate. Its original binding is consumed and remains unusable.
-`PMD-20261003-002` re-arms exactly one PMR-120 standard-V1 correction against
-component baseline `bbbc534`, the final correction request blob, unchanged
-SOT SHA, exact maintainer profile, and sole selected request. Ordinary packets
-retain mandatory resolver execution, and the former PMR-064/117 tuple still
-fails closed. Neither binding grants direct Project Manager launch, generic
-fallback, push, gate, or precedent for another component.
+candidate, and one exact correction binding aligned standard V1. Both PMR-120
+bindings are consumed and remain unusable; request closure and component-HEAD
+drift fail closed. Ordinary packets retain mandatory resolver execution, and
+the former PMR-064/117 tuple still fails closed. Neither binding granted
+direct Project Manager launch, generic fallback, push, gate, or precedent for
+another component.
 
 The consumed original bootstrap packet carried scope-review steering
 `resume-threat-owner-rollout-20261002-06`. The reviewer saw source request
@@ -407,9 +406,9 @@ sibling research/analysis use stops. The task permits validated local
 work/return commits and prohibits push. Static profile/tests do not prove
 native discovery or isolation. They also did not detect that the delivered
 live response format diverges from `templates/owner-agent-response.md`.
-`PMD-20261003-001` blocks handshake allocation and direct dispatch.
-`PMD-20261003-002` resolves the coordination choice in favor of standard V1
-but preserves the human-only component launch boundary.
+`PMD-20261003-001` recorded the gap and `PMD-20261003-002` selected standard
+V1. `PMD-20261003-003` closes adoption while deferring the native handshake
+and direct dispatch under the return-to-hypervisor priority.
 
 The re-armed correction packet carries review
 `threat-owner-standard-v1-correction-20261003-09`, verdict `adjust`,

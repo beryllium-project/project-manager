@@ -81,7 +81,10 @@ exact
 uses the launcher's already validated, embedded tasking because the current
 component policy does not yet permit the resolver command during PMR-120
 correction. The original PMR-120 binding is consumed. This binding grants no
-general resolver bypass or authority for another request.
+general resolver bypass or authority for another request. In the live
+Project Manager table the correction binding is also consumed by PMR-120
+closure, so any attempted reuse fails closed; sandbox validation retains the
+mechanism for regression coverage.
 EOF
 }
 

@@ -62,7 +62,7 @@ It must use `/beryllium-project-management` for every coordination turn.
 ## Component owner-worker boundary
 
 `PMD-20260917-002` defines the owner-worker control plane, active for one
-adopted component. Analysis-workbook has hidden
+PM-invocable component owner. Analysis-workbook has hidden
 `analysis-workbook-owner`; another component may later adopt one hidden
 `<component>-owner` profile that is model-invocable, not user-invocable, has
 no `ask_user`, and writes only its own repository under that component's
@@ -70,11 +70,12 @@ maintained policy. Existing user-invocable orchestrators remain unchanged.
 `PMD-20261002-002` stages a threat-modeler-only second pilot. PMR-120 work
 `ca8fa3c` / return `bbbc534` installs a candidate, but
 `PMD-20261003-001` records that its live response schema diverges from the
-established V1 contract. The candidate is not adopted or PM-invocable; no
-native handshake or write dispatch is authorized. `PMD-20261003-002` selects
-the standard-V1 correction and prepares one exact human-run PMR-120
-correction; it does not change that adoption state. Every other component
-remains deferred.
+established V1 contract. `PMD-20261003-002` selects the standard-V1
+correction; correction work `71bca3f` / return `e6aed9f` completes the
+component-owned profile contract. `PMD-20261003-003` records the profile as
+adopted but not PM-invocable: native discovery/rooting/fingerprint/isolation
+still require a later separately allocated read-only handshake. Every other
+component remains deferred.
 
 The Project Manager may invoke an adopted owner only for one exact directly
 assigned open PMR after independently verifying recorded authority and
@@ -328,12 +329,11 @@ Project Manager's authority.
 
 One single-use `--tasking-bootstrap` admission exists for exact
 `threat-model-maintainer` / `threat-modeler` / sole `PMR-120`. The original
-binding is consumed; `PMD-20261003-002` re-arms one standard-V1 correction
-binding at baseline `bbbc534`. This packet embeds validated tasking instead
-of running the not-yet-authorized resolver and explicitly does not trigger
-`cross-repo-collaboration`. Every blob, SOT, HEAD, component, agent, request,
-cleanliness, and lock mismatch fails closed. The Project Manager never runs
-the launcher.
+binding and the `PMD-20261003-002` standard-V1 correction binding are both
+consumed. No live tasking-bootstrap admission remains. Those packets embedded
+validated tasking instead of running the not-yet-authorized resolver and
+explicitly did not trigger `cross-repo-collaboration`. The Project Manager
+never ran the launcher.
 
 `scripts/owner-recovery.sh` is a separate **human-run** launcher for the
 bounded case recorded by `PMD-20260926-004`: the responsible human confirms
