@@ -2818,10 +2818,13 @@ Previous-turn model-matrix artifacts remain listed in Git history at
   blocker. Parent pre-turn/current PM rows and review scope remain for the
   post-commit bind; README and AGENT-INTERFACE now distinguish PM-invocable
   from adopted-only owners.
-- Generated tasking correctly remains bound to the previous committed request
-  table until PMR-120 closure and PMR-064/117 priority changes are committed.
-  Commit PM, regenerate/check tasking, bind the final PM HEAD/blob in parent
-  `COMPONENTS.md`, then commit parent.
+- Adoption-closure checkpoint
+  `caff48bfd29f34fc5790bd4915cc282635fc7164` commits request blob
+  `47e20a736814ba3ad9317a814fb26c47a21d2967`. Generated tasking and the
+  post-commit 1185/0 contract suite match that exact commit/blob and unchanged
+  SOT SHA. This handoff-only finalization changes no request row; regenerate
+  once more from its containing commit before binding parent
+  `../COMPONENTS.md`.
 
 ### One-hundred-second-turn validation
 
