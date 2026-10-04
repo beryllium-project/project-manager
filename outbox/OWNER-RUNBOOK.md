@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-03
+**Last refreshed:** 2026-10-04
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -255,10 +255,12 @@ second prompt.
 ## Beryllium drift reconciliation and new planning
 
 Maintained inspection now observes clean active/default
-`beryllium/single-hart-runtime-r0` at local PMR-112 checkpoint `93819fd9`,
-behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`. PMR-112
-work `2313cbe0`, return `55b568b4`, and checkpoint adopt SOT-first startup
-and are local-only. Canonical
+`beryllium/single-hart-runtime-r0` at documentation-only PMR-077 return
+`a8e137e`, behind 0 / ahead 6 of last-fetched private `origin` `4141cf6`.
+PMR-077 is closed as acknowledgement by `PMD-20261004-001`; the return is
+local-only, selects no H0 input, and grants no successor or hardware
+authority. PMR-112 work `2313cbe0`, return `55b568b4`, and checkpoint
+`93819fd9` adopt SOT-first startup and are local-only. Canonical
 return `1f38e699` covers the distinct thirteen-commit PMR-098 range
 `416b2e9..80345e1` and fourteen-commit PMR-100 KVM0 range
 `80345e1..2b404ca`; checkpoint `4c6acbed` releases the owner session. Both
@@ -614,15 +616,15 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** active/default Beryllium is now observed clean at local
-  checkpoint `93819fd9`, behind 0 / ahead 5 of last-fetched private
+- **P3 PMR-090:** active/default Beryllium is now observed clean at
+  documentation-only return `a8e137e`, behind 0 / ahead 6 of last-fetched private
   `origin/beryllium/single-hart-runtime-r0` `4141cf6`, while local candidate
   `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0 branch tip
   `0d53120` have no remote-tracking containment. Canonical PMR-098/100 return
   `1f38e699` / checkpoint `4c6acbed` and PMR-112 work/return/checkpoint
-  `2313cbe0` / `55b568b4` / `93819fd9` close the prior evidence and startup
-  dependencies but are themselves local-only and outside PMR-090's fixed
-  scope. The owner
+  `2313cbe0` / `55b568b4` / `93819fd9`, plus later PMR-077 return `a8e137e`,
+  close the prior evidence, startup, and readiness dependencies but are
+  themselves local-only and outside PMR-090's fixed scope. The owner
   reports authenticated current GitHub visibility `PRIVATE`; the Project
   Manager performed no network check. Keep PMR-090 open for exact review of
   its fixed active/candidate scope and a new separate human push/publication
@@ -683,19 +685,6 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   ask-first convention, triage only PMQ-031..033 under the public-source
   rules; never access restricted material.
 
-## External Beryllium dependency
-
-**P4 `PMR-077`:** K3 COM260 (normalized from the responsible human's
-externally unverified `Com260` term) bring-up is in progress in a separate
-environment/project. The component now states that a board is available and
-that read-only inventory/troubleshooting occurred on 2026-09-24. Those
-statements are not the requested readiness return, retained Beryllium
-evidence, K3 execution, or hardware validation. Wait for the responsible
-human's minimal readiness return before any Beryllium hardware bring-up. Do
-not access or import that project through this request, and return no serial
-numbers, credentials, keys, tokens, private URLs, or restricted content. Its
-completion does not accept H0 or authorize H1-H4.
-
 ## Push the completed coordination carries
 
 The responsible human selected exact scope `"both"` for Project Manager
@@ -743,10 +732,12 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` primary is clean at local checkpoint `93819fd9`,
-  behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`. PMR-112
-  work `2313cbe0`, return `55b568b4`, and checkpoint `93819fd9` adopt
-  SOT-first startup and are local-only without remote backup. Canonical
+- `beryllium-hypervisor/` primary is clean at documentation-only PMR-077
+  return `a8e137e`, behind 0 / ahead 6 of last-fetched private `origin`
+  `4141cf6`. PMR-112 work `2313cbe0`, return `55b568b4`, and checkpoint
+  `93819fd9` adopt SOT-first startup and are local-only without remote backup.
+  PMR-077 is closed as acknowledgement at `a8e137e`, which is also local-only
+  and grants no successor or hardware authority. Canonical
   return `1f38e699` and checkpoint `4c6acbed` close PMR-098/100 as
   acknowledgements; both commits are local-only and change owner-stated
   `planning/HANDOFF.md`. No push path is authorized. Local candidate

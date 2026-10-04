@@ -19,9 +19,17 @@
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to this Project Manager turn. Maintained inspection observes clean
-  active/default `beryllium/single-hart-runtime-r0` at local session
-  checkpoint `93819fd9550e798bcdc19fb398d48c613ce110f0`, behind 0 / ahead
-  5 of last-fetched private `origin` `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`.
+  active/default `beryllium/single-hart-runtime-r0` at documentation-only
+  PMR-077 return `a8e137ebbbeeff2a5475050b047a8ec6109d22e0`, behind 0 /
+  ahead 6 of last-fetched private `origin`
+  `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`.
+  PMR-077 return `a8e137e` is the direct child of checkpoint `93819fd9`,
+  changes only `planning/HANDOFF.md`, reports the bounded external readiness
+  statement and owner validation, and releases the sole observed owner-session
+  claim. It is local-only and unpushed. `PMD-20261004-001` closes PMR-077 as
+  acknowledgement only: the statement is human-supplied candidate planning
+  input, no external project or artifact was inspected or imported, and no
+  H0/H1-H4/K3, KVM0, push, publication, or release gate changes.
   PMR-112 work `2313cbe023a1563289fd3e2aa9743f55465d3746`,
   owner return `55b568b4ed37ca5ae3ac27ee0d4c58b1e764f63a`, and checkpoint
   `93819fd9` adopt SOT-first owner startup, add bounded source-only tasking
@@ -143,13 +151,13 @@ commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
 than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
-decision. Read-only inspection now observes clean local checkpoint `93819fd9`,
-behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`; the active
+decision. Read-only inspection now observes clean documentation-only return
+`a8e137e`, behind 0 / ahead 6 of last-fetched private `origin` `4141cf6`; the active
 history through `4141cf6` is contained, while local `6e93461` and `0d53120`
 remain without remote-tracking containment. Returns/checkpoints
-`1f38e699`, `4c6acbed`, `2313cbe0`, `55b568b4`, and `93819fd9` are
-local-only and outside PMR-090's fixed scope. The Project Manager has no
-same-turn push/publication authorization.
+`1f38e699`, `4c6acbed`, `2313cbe0`, `55b568b4`, `93819fd9`, and
+`a8e137e` are local-only and outside PMR-090's fixed scope. The Project
+Manager has no same-turn push/publication authorization.
 The component handoff also states that local branch
 `beryllium/doc-repro-option-a-20260929` is unpushed and not integrated, that
 `archive/generated-docs-2026-09-30` points to `d4c5ff0`, and that K0-S target
@@ -180,13 +188,14 @@ Manager tasking; missing/unreadable or SHA-drifted anchors stop. The return
 also records the corrected current startup path and bounded source-only
 contract validation. It changes no implementation, plan, acceptance record,
 ref, worktree, publication state, or closed PMR-098/100 evidence.
-External K3 COM260 bring-up is in progress in a separate
-environment/project under `PMR-077`; Beryllium hardware bring-up waits for a
-responsible-human readiness return, which does not accept H0, authorize
-H1-H4, or count as Beryllium hardware validation. `PMR-061` is closed by
-synchronized private backup. The ordinary Copilot owner context now
-implements the exact tasking resolver mapping whose absence caused the
-observed session-history fallback.
+`PMR-077` is closed from exact documentation-only owner return `a8e137e`.
+The human-supplied external readiness statement is candidate planning input
+only. Any COM260-informed H0 successor still requires a separately reviewed
+plan, exact base and relation, and explicit responsible-human authorization;
+it does not accept H0, authorize H1-H4, or count as Beryllium K3 execution or
+hardware validation. `PMR-061` is closed by synchronized private backup. The
+ordinary Copilot owner context now implements the exact tasking resolver
+mapping whose absence caused the observed session-history fallback.
 
 ## Helium-to-Beryllium transfer input
 
