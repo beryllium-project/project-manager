@@ -18,15 +18,44 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
-  to this Project Manager turn. Maintained inspection observes clean
-  active/default `beryllium/single-hart-runtime-r0` at documentation-only
+  to this Project Manager turn. Maintained inspection at
+  2026-10-06T16:03Z observed clean `beryllium/k3-b3-bringup` at
+  `afa4336dc584642a7ef862535153116a75b44e5b`, 0 behind / 1 ahead of
+  `origin/beryllium/k3-b3-bringup`. The responsible human reports an active
+  human session there; it is a coordination lock, and the Project Manager
+  infers nothing from the branch name. Its committed
+  `.github/copilot-instructions.md` adopts an equivalent 2026-10-06 SOP (it
+  cites neither CRQ-004 nor `PMD-20261006-001`) and pins `claude-opus-5.5`
+  at `max` with `long_context` for all work, sub-agents, and tasks, so no
+  Project Manager request is allocated. Residual wording is left to the
+  owner, for example the `LLM_POLICY_ALIGNMENT.md` line 63 example
+  `Assisted-by` trailer that still names `gpt-5.6-sol` and its line 194
+  model-provider recheck trigger. No Project Manager gate changes:
+  Beryllium is accepted through R7; R8-H0 is a committed candidate and is
+  not accepted; H1-H4 are not authorized; K3 hardware is `NOT RUN` in
+  Project Manager records. The component's committed instructions at
+  `afa4336` report owner-local B0, B1, and B2 acceptance dated 2026-10-06,
+  with markers reproduced on COM260, and B3 not accepted; Project Manager
+  records hold no named responsible-human record for them, they are not
+  reconciled, and their reconciliation is an open responsible-human
+  question. The last recorded (104th-turn) maintained inspection observed
+  clean active/default `beryllium/single-hart-runtime-r0` at documentation-only
   PMR-077 return `a8e137ebbbeeff2a5475050b047a8ec6109d22e0`, behind 0 /
   ahead 6 of last-fetched private `origin`
-  `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`.
+  `4141cf6a83e2395cf9d1b036b2c19d3e3407182b`. Maintained refs inspection at
+  2026-10-06T18:16Z shows that local branch at `f213555`, behind 0 / ahead
+  22 of `origin/beryllium/single-hart-runtime-r0` `4141cf6`, and `afa4336`
+  1 ahead of `origin/beryllium/k3-b3-bringup` `6358ed2` and on no
+  remote-tracking branch. As of the last fetch, which is not a live remote
+  check, `f213555` and the six return/work/checkpoint commits `a8e137e`,
+  `2313cbe0`, `55b568b4`, `93819fd9`, `1f38e699`, and `4c6acbed` are
+  contained in remote-tracking `origin/beryllium/k3-b0-bringup`,
+  `k3-b1-bringup`, `k3-b2-bringup`, and `k3-b3-bringup`. That containment
+  grants no push, publication, or gate.
   PMR-077 return `a8e137e` is the direct child of checkpoint `93819fd9`,
   changes only `planning/HANDOFF.md`, reports the bounded external readiness
   statement and owner validation, and releases the sole observed owner-session
-  claim. It is local-only and unpushed. `PMD-20261004-001` closes PMR-077 as
+  claim. `PMD-20261004-001` closes PMR-077 as
   acknowledgement only: the statement is human-supplied candidate planning
   input, no external project or artifact was inspected or imported, and no
   H0/H1-H4/K3, KVM0, push, publication, or release gate changes.
@@ -36,17 +65,19 @@
   contract validation, correct the directly related active-checkout path, and
   release the owner session. The owner reports four work paths and one
   return/checkpoint handoff path; maintained refs confirm all commits on the
-  active branch. All three commits are local-only and not remotely backed up.
+  active branch. As of the last fetch all three commits are contained in
+  those remote-tracking k3 branches.
   PMR-112 is closed as acknowledgement only; no component command or
   validator was run by the Project Manager.
   Canonical coordination-only return
   `1f38e6993bd325e639d8c2d6403e89f627ac6614` enumerates the distinct
   thirteen-commit PMR-098 and fourteen-commit PMR-100 ranges, bounded
   validation, exact ref/backup/publication limits, and owner-session release;
-  the checkpoint and return change only owner-stated `planning/HANDOFF.md`
-  and are local-only. Maintained refs resolve every named commit/subject and
-  confirm the two-commit local state. PMR-098 and PMR-100 are closed as
-  acknowledgements of those returns. `PMD-20260926-002` still limits PMR-099
+  the checkpoint and return change only owner-stated `planning/HANDOFF.md`;
+  as of the last fetch both are contained in those remote-tracking k3
+  branches. Maintained refs resolve every named commit/subject. PMR-098 and
+  PMR-100 are closed as acknowledgements of those returns.
+  `PMD-20260926-002` still limits PMR-099
   to exact K0-A plan acceptance/K0-P. The current package remains unaccepted
   and not ready; K0-X and K0-R remain blocked. Any later writer requires
   fresh tasking and one-writer checks. No backup approval, push, publication,
@@ -84,13 +115,14 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
   or record responsible-human acceptance.
 - Project Manager acceptance remains bounded through R7 under
   `PMD-20260925-001`. R8-C plan target `f47ae60` is accepted as plan text.
-  The component's current handoff at `93819fd9`, retaining the historical
-  `80345e1` reconciliation lineage, records exact H0/R8-C target `1999ee7`
-  as accepted, but the responsible human deferred Project Manager
-  reconciliation of that claim; Project Manager records therefore continue
-  to treat R8-H0 as a committed candidate that is not accepted. Older blocked
-  candidate `6e93461` remains local. Privileged H1-H4 work is not authorized
-  and K3 hardware remains `NOT RUN`.
+  The component's last recorded handoff at `93819fd9`, retaining the
+  historical `80345e1` reconciliation lineage, records exact H0/R8-C target
+  `1999ee7` as accepted, but the responsible human deferred Project Manager
+  reconciliation of that claim. Project Manager records therefore keep the
+  exact boundary: Beryllium is accepted through R7; R8-H0 is a committed
+  candidate and is not accepted; H1-H4 are not authorized; K3 hardware is
+  `NOT RUN` in Project Manager records. Older blocked candidate `6e93461`
+  remains local.
 - Prefer `./be` for maintained workflows. Do not bypass the checked launchers
   or exact accepted-revision controls with ad hoc build inputs. Authorized
   R8-H0 work uses `./tests/r8/run-make.sh r8-check` with the component's
@@ -114,8 +146,9 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 
 ## Commands
 
-Run these from the restored active branch
-`beryllium/single-hart-runtime-r0`.
+Run these from the last recorded active branch
+`beryllium/single-hart-runtime-r0` (on 2026-10-06 the checkout was observed
+on `beryllium/k3-b3-bringup`; see **Observed state** above).
 
 ```sh
 npm ci
@@ -151,12 +184,20 @@ commits. `PMR-067` is also closed: exact resolver startup, fence-aware
 contract checks, generated documentation, and explicit-Chromium docs checks
 pass; full `make check` stops first on unchanged R3 Node digest drift rather
 than a PMR-067 semantic failure. `PMR-090` tracks exact ref review and a separate responsible-human publication
-decision. Read-only inspection now observes clean documentation-only return
-`a8e137e`, behind 0 / ahead 6 of last-fetched private `origin` `4141cf6`; the active
-history through `4141cf6` is contained, while local `6e93461` and `0d53120`
-remain without remote-tracking containment. Returns/checkpoints
+decision. The last recorded (104th-turn) read-only inspection observed clean
+documentation-only return `a8e137e`, behind 0 / ahead 6 of last-fetched
+private `origin` `4141cf6`; the active history through `4141cf6` was
+contained, while local `6e93461` and `0d53120` remained without
+remote-tracking containment. In that record, returns/checkpoints
 `1f38e699`, `4c6acbed`, `2313cbe0`, `55b568b4`, `93819fd9`, and
-`a8e137e` are local-only and outside PMR-090's fixed scope. The Project
+`a8e137e` were local-only. Maintained refs inspection at
+2026-10-06T18:16Z shows those six commits remotely contained, as of the last
+fetch, via remote-tracking `origin/beryllium/k3-b0-bringup` through
+`k3-b3-bringup`, while candidates `6e93461` and `0d53120` are still on no
+remote-tracking branch and remain unbacked. The six commits are outside
+PMR-090's fixed scope; PMR-090 stays open, and its candidate, ref, push, and
+publication decision is unchanged. The
+2026-10-06 observation is under **Observed state** above. The Project
 Manager has no same-turn push/publication authorization.
 The component handoff also states that local branch
 `beryllium/doc-repro-option-a-20260929` is unpushed and not integrated, that
@@ -180,7 +221,8 @@ only K0-P. The PMR-100 return records bounded K0-I and K0-S history; the
 current package remains mutable, unaccepted, and not ready. K0-X native
 execution, K0-R result acceptance, B0, development-kernel/BSP selection, B1,
 a retained H0 successor, H1-H4, publication, and release remain separate
-blocked gates. H1-H4 are unauthorized and K3 remains `NOT RUN`.
+blocked gates. H1-H4 are not authorized; K3 hardware is `NOT RUN` in Project
+Manager records.
 `PMR-112` is closed from owner work `2313cbe0`, return `55b568b4`, and
 checkpoint `93819fd9`. The ordinary owner now reads current
 `workspace://SOT.md` before resolving any component, sibling, or Project

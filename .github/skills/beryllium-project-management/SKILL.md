@@ -9,16 +9,6 @@ user-invocable: false
 Use this skill for every coordination turn performed by the `project-manager`
 agent.
 
-Before adopting a non-trivial plan, at every material reassessment or
-re-plan, and after new human steering, requirements, priorities, constraints,
-acceptance criteria, or material direction changes, invoke
-`beryllium-scope-management` under `PMD-20260930-001`. Each invocation is a
-fresh synchronous read-only `beryllium-scope-review` task using
-`claude-opus-5.5` / `max` / `long_context` and the exact
-`SCOPE_REVIEW_V1` contract. Apply its bounded steering without review
-recursion; one failed retry stops scope-expanding work. The reviewer grants
-no approval or human gate.
-
 A coordination turn keeps the parent workspace registry, the Project Manager
 handoff, the component knowledge cards, the agent roster, the queue ledger,
 and the component-request outbox consistent with the observed state of the
@@ -102,13 +92,31 @@ research, analysis, threat models, provenance findings, or human decisions.
   invocation never grants this Project Manager profile general component
   write or execution authority. No component is dispatchable merely because
   the control plane exists.
-- User-level governance follows `PMD-20260930-001`.
+- Work follows the single-model, low-overhead SOP of `PMD-20261006-001`,
+  recorded from the responsible human's CRQ-004 instruction. Every
+  orchestrator, agent, sub-agent, and task uses `claude-opus-5.5` with
+  reasoning effort `max` and context tier `long_context`; never switch to
+  another model, lower the effort, change the context tier, or downgrade
+  because work looks routine. There is no silent fallback: if that setting
+  is unavailable, stop and report. Different-model iterative evaluation
+  reviews, separate scope reviews, and deep security reviews are not
+  standard practice; a security review runs only on explicit
+  responsible-human request, on the same model. Complete deliverables
+  efficiently and avoid scope creep and added complexity; no human gate is
+  granted or inferred.
+- User-level governance follows `PMD-20261006-001`.
   `scripts/beryllium-governance.sh` is human-run; the Project Manager never
   runs `install` or `uninstall` against the real user configuration.
-  Maintained validation may use it only with a sandbox `COPILOT_HOME`.
-  `PMD-20260930-002` makes the hook inject `max` through `modifiedArgs` when
-  in-scope task effort is absent, null, or empty, deny explicit below-floor
-  or unknown effort, and deny in-scope `run_dynamic_workflow`.
+  Maintained validation may use it only with a sandbox `COPILOT_HOME`. It
+  manages only the hook script and hook configuration; `install` and
+  `uninstall` remove exact-match copies of the retired user-level scope
+  reviewer and skill, and `check` flags any still present. The hook matches
+  `task|run_dynamic_workflow` inside the Beryllium workspace. It injects
+  `claude-opus-5.5` / `max` / `long_context` through `modifiedArgs`, without
+  a permission decision, when `model`, `reasoning_effort`, or
+  `context_tier` is absent, null, or empty (the mechanism kept from
+  `PMD-20260930-002`); it denies any explicit other value and denies
+  in-scope `run_dynamic_workflow`.
   `PMD-20260930-003` records that new sessions load hook configuration,
   matcher, and environment, while a registered running session can execute a
   replaced fixed-path hook script at its next originally matched call without
@@ -119,10 +127,15 @@ research, analysis, threat models, provenance findings, or human decisions.
   running session"`, superseding the prior reported Beryllium session as
   point-in-time evidence only. Recheck immediately before any install,
   uninstall, or PMR-108 action; later work still requires fresh same-turn
-  confirmation.
+  confirmation. As of 2026-10-06 the aligned install is deferred because a
+  `beryllium-hypervisor` human session is active; the previously installed
+  hook keeps its older rules but still admits explicit `claude-opus-5.5` /
+  `max` / `long_context` tasks, so pass those values explicitly.
   Direct custom-agent sessions, SDK-started workflows, out-of-scope
   worktrees, disabled hooks, hook timeout, and non-Copilot tooling remain
-  outside or beyond this command-hook enforcement.
+  outside or beyond this command-hook enforcement. The main session model
+  comes from the human's launch and settings; the responsible human keeps it
+  at `claude-opus-5.5` / `max` / `long_context`.
 
 ## Phase 1: restart
 
@@ -156,9 +169,6 @@ read that table directly; otherwise report resolver failure as a blocker
 
 ## Phase 2: ownership and scope
 
-0. Run the mandatory `beryllium-scope-management` review for the current
-   trigger. Apply `keep` or `adjust` steering once. On `stop`, or after one
-   failed retry, do not adopt or expand the plan.
 1. Treat every component as agent-owned. Reading for coordination is allowed;
    writing is not, except for carried requests in the three classes of
    `PMD-20260904-003` (Phase 4b).
@@ -323,46 +333,24 @@ Everything outside the three classes, and everything in `helium-te-poc/` or
 
 ## Phase 6: audit
 
-Delegate to `pm-auditor` with the observed state from Phase 3, the list of
-artifacts changed in Phase 5, every component commit made in Phase 4b, and
-the sibling documents consulted. Reconcile each returned discrepancy: fix
-`stale` and `minor` items in Project Manager artifacts, and treat `blocking`
-items as stop conditions until resolved or explicitly recorded as open. The
-auditor decides nothing.
+Delegate one `pm-auditor` pass with the observed state from Phase 3, the
+list of artifacts changed in Phase 5, every component commit made in
+Phase 4b, and the sibling documents consulted. Reconcile each returned
+discrepancy: fix `stale` and `minor` items in Project Manager artifacts, and
+treat `blocking` items as stop conditions until resolved or explicitly
+recorded as open. The auditor decides nothing.
 
-Project-wide, active agent roles follow the role-to-model matrix of
-`PMD-20260916-001`, which extends `PMD-20260915-007`: planning, coding,
-coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, audit,
-and finding iteration use `claude-opus-5`; those ordinary roles use
-reasoning effort `max` and context tier `long_context`.
-`PMD-20260930-005` keeps deep or adversarial security review on
-`gpt-5.3-codex` but requires exact `xhigh` reasoning and context tier
-`default` as the sole named capability exception. `PMD-20260930-001` keeps
-`max` as the default and `high` as the absolute floor for every other role
-and explicit non-Codex selection.
-
-Under `PMD-20260930-002` as narrowed by `PMD-20260930-005`, absent, null, or
-empty ordinary in-scope task effort is rewritten to `max` through
-`modifiedArgs` without a permission decision; explicit lower or unknown
-effort is denied. For exactly `security-evidence`, `security-research`, and
-`security-finding-review`, an absent, null, or empty model selects
-`gpt-5.3-codex` and missing Codex fields become `xhigh` / `default`; explicit
-Codex is accepted only with that exact pair. Explicit Codex on every other
-task agent type is denied, while explicit non-Codex selections on the three
-confirmed types retain ordinary max/high-floor handling and their context.
-There is no silent model, effort, or context fallback. In-scope
-`run_dynamic_workflow` remains denied because nested agents are not
-command-hook enforceable.
-
-Direct `security-reviewer` orchestrator sessions are outside the task hook
-and must be started and kept at `gpt-5.3-codex` / `xhigh` / `default`; the
-built-in `security-review` type is not admitted to the named capability
-exception. The `project-manager` orchestrator is `gpt-5.6-sol`; `pm-auditor`
-remains `claude-opus-5`; read-only `beryllium-scope-review` is the explicit
-`claude-opus-5.5` / `max` / `long_context` scope-control model exception.
-Claude Fable 5.1 is no longer a default in any active role. Preserve
+Under `PMD-20261006-001`, the audit is a single same-model consistency pass
+on `claude-opus-5.5` / `max` / `long_context`, with no iteration loop; no
+different-model, scope, or deep security review is added as standard
+practice. That record supersedes the role-to-model matrix of
+`PMD-20260916-001` and any remaining `PMD-20260915-007` preference; the
+scope-review requirement and effort overrides of `PMD-20260930-001`, whose
+`max` default stays; the model and effort rules of `PMD-20260930-002`; and
+the Codex capability exception of `PMD-20260930-005`. The former
+scope-review agent and scope-management skill are retired. Preserve
 historical artifacts and do not restart an already launched task merely to
-apply the matrix or user-level governance.
+apply the SOP.
 
 ## Phase 7: validate
 

@@ -6,7 +6,8 @@
 - **Supersedes:** `PMD-20260916-001` in part (narrows only its named-task
   effort exception; preserves its role-to-model assignments and
   `long_context` defaults)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261006-001` in part (floor allowance and
+  scope-review assets; the `max` default remains)
 
 ## Scope
 

@@ -63,7 +63,7 @@ beginning work. The 2026-10-01 inventory, refreshed with owner returns on
 | `analysis-workbook` | `analysis-workbook`; hidden `analysis-workbook-owner` | Active in repository-wide instructions; hidden-owner packets also carry the bound anchor |
 | `formal-verification-research` | ordinary research owner | Active; instructions resolve topology through parent `SOT.md` |
 | `provenance-review` | orchestrator and write-disabled specialists | Active in repository-wide instructions |
-| `beryllium-hypervisor` | ordinary Beryllium owner context | SOT-first startup, fail-closed digest checks, bounded contract validation, and current checkout path adopted by work `2313cbe0` / return `55b568b4` / checkpoint `93819fd9`; PMR-112 closed as acknowledgement, with all three commits local and unpushed |
+| `beryllium-hypervisor` | ordinary Beryllium owner context | SOT-first startup, fail-closed digest checks, bounded contract validation, and current checkout path adopted by work `2313cbe0` / return `55b568b4` / checkpoint `93819fd9`; PMR-112 closed as acknowledgement; as of the last fetch all three commits are contained in remote-tracking `origin/beryllium/k3-b0-bringup` through `k3-b3-bringup` |
 | `helium-te-poc` | ordinary Helium/skill owner context | Gap recorded as parked `PMR-113`, alongside `PMR-068` |
 | `cheri-riscv-notes` | ordinary notes owner context | SOT-bound startup and current checkout paths adopted by owner work `8d1bc9d` / return `7fb49f4`; PMR-114 closed as acknowledgement, with both commits local and unpushed |
 | `cheri-hypervisor-research` | ordinary XRV owner context | SOT-bound startup and dated checkout facts adopted in owner work/return `7361de4`; PMR-115 closed as acknowledgement, with the commit local and unpushed |
@@ -71,34 +71,47 @@ beginning work. The 2026-10-01 inventory, refreshed with owner returns on
 | `threat-modeler` | `threat-modeler`; `threat-model-maintainer`; adopted hidden `threat-modeler-owner` (not native-handshaken or PM-invocable) | User-facing startup gap remains parked PMR-117 alongside PMR-064; adopted owner packets bind SOT, but native discovery/isolation remains deferred after PMR-120 closure at `e6aed9f` |
 | `security-reviewer` | orchestrator and three write-disabled specialists | Gap recorded as `PMR-118` |
 
-Project-wide Copilot CLI effort and scope control follows
-`PMD-20260930-001`: `max` is the default, and only the responsible human may
-override one named task to `high`, `xhigh`, or `max`; `high` is the absolute
-floor. `PMD-20260930-005` keeps deep/adversarial security review on
-`gpt-5.3-codex` but requires exact `xhigh` reasoning and context tier
-`default` as the sole named capability exception; every other role and every
-explicit non-Codex selection retains the global max/high-floor policy.
-`PMD-20260930-002` as narrowed by that exception makes the hook inject `max`
-through `modifiedArgs` for absent, null, or empty ordinary task effort, deny
-explicit below-floor or unknown effort, and deny in-scope
-`run_dynamic_workflow`. Exactly `security-evidence`, `security-research`, and
-`security-finding-review` receive missing Codex `xhigh` / `default` fields;
-explicit Codex outside those three task types is denied, and there is no
-silent model, effort, or context fallback.
+Project-wide model and review practice follows the single-model,
+low-overhead SOP `PMD-20261006-001`, recorded from the responsible human's
+CRQ-004 instruction. Every orchestrator, agent, sub-agent, and task uses
+`claude-opus-5.5` with reasoning effort `max` and context tier
+`long_context`; none switches model, lowers effort, changes context tier, or
+falls back silently, and an unavailable setting stops work for a report.
+Different-model iterative evaluation reviews, separate scope reviews, and
+deep security reviews are not standard practice; a security review runs only
+on explicit responsible-human request, on the same model. The record
+supersedes the model, review, and effort rules of `PMD-20260916-001`,
+`PMD-20260930-001`, `PMD-20260930-002`, and `PMD-20260930-005`; the former
+scope-review agent and scope-management skill are retired.
 
-The hidden read-only `beryllium-scope-review` specialist remains the explicit
-`claude-opus-5.5` / `max` / `long_context` model exception and is invoked
-only through `beryllium-scope-management` for one bounded `SCOPE_REVIEW_V1`
-result. Direct `security-reviewer` sessions are outside the task hook and
-must be started and kept at `gpt-5.3-codex` / `xhigh` / `default`; built-in
-`security-review` is not admitted to the named capability exception by type.
-Under `PMD-20260930-003`, new sessions load user-level hook configuration,
-matcher, and environment; a registered running session may execute a
-replaced hook script body at its next originally matched call but gains no
-new matcher from replacement alone. Agent/skill reread behavior is unknown.
-Direct custom-agent sessions, SDK-started workflows, out-of-scope worktrees,
-disabled hooks, hook timeout, and non-Copilot tooling remain outside or
-beyond this command-hook enforcement.
+The human-installed user-level hook matches `task|run_dynamic_workflow`
+inside the Beryllium workspace. It injects `claude-opus-5.5` / `max` /
+`long_context` through `modifiedArgs` when `model`, `reasoning_effort`, or
+`context_tier` is absent, null, or empty, denies any explicit other value,
+and still denies in-scope `run_dynamic_workflow`. Under `PMD-20260930-003`,
+new sessions load user-level hook configuration, matcher, and environment; a
+registered running session may execute a replaced hook script body at its
+next originally matched call but gains no new matcher from replacement
+alone. Agent/skill reread behavior is unknown. As of 2026-10-06 the aligned
+reinstall is deferred because a `beryllium-hypervisor` human session is
+active; the previously installed hook still admits explicit
+`claude-opus-5.5` / `max` / `long_context` tasks. Direct custom-agent
+sessions, SDK-started workflows, out-of-scope worktrees, disabled hooks,
+hook timeout, and non-Copilot tooling remain outside or beyond this
+command-hook enforcement.
+
+Observed profile alignment on 2026-10-06: analysis-workbook `4cf44d0` pins
+`claude-opus-5.5` in `analysis-workbook`, `analysis-workbook-owner`, and
+`analysis-evidence`, and `PMR-124` requests its CRQ-004 status mirror.
+Beryllium's committed `.github/copilot-instructions.md` at `afa4336` adopts
+an equivalent 2026-10-06 SOP (no CRQ-004 / `PMD-20261006-001` citation) and
+pins `claude-opus-5.5` / `max` / `long_context`; it receives no request
+because it is aligned and its human session is active. Superseded
+pins remain in threat-modeler (six profiles at `gpt-5.6-sol`, `PMR-121`),
+provenance-review (three profiles at `gpt-5.6-sol`, `PMR-122`), and
+security-reviewer (four profiles at `gpt-5.3-codex` with `xhigh` /
+`default`, `PMR-123`). Formal-verification, OS-security, the CHERI notes,
+XRV, and Helium carry no model pin.
 
 For allow-listed orchestrators, this resolver is startup discovery outside an
 analysis, threat-model, provenance, or security-review package. It is not
@@ -161,9 +174,11 @@ analysis housekeeping line is complete.
 Threat-modeler rollout is adopted but not native-handshaken. Initial PMR-120
 work `ca8fa3c` / return `bbbc534` installed the six-path candidate; correction
 work `71bca3f` / return `e6aed9f` aligns standard live/durable V1 contracts
-and reports focused 148/0 validation. The profile is `gpt-5.6-sol` / `max` /
-`long_context`, model-invocable, not user-invocable, and has no `ask_user`,
-delegation, web, or threat-modeling skill. PMR-120 is closed by
+and reports focused 148/0 validation. The profile was adopted at
+`gpt-5.6-sol` / `max` / `long_context`, now superseded by
+`PMD-20261006-001` and tracked by `PMR-121`; it is model-invocable, not
+user-invocable, and has no `ask_user`, delegation, web, or threat-modeling
+skill. PMR-120 is closed by
 `PMD-20261003-003`; both human bootstrap bindings are consumed. No native
 handshake is allocated, so the owner is not PM-invocable and PMR-064/117 are
 parked P4. Every other hidden-owner rollout remains deferred.
@@ -194,13 +209,13 @@ verified successors. Owner results continue through
 
 | Component | Entry agents | Write-disabled specialists | Skill | Durable output | Outbound queue | Write boundary |
 | --- | --- | --- | --- | --- | --- | --- |
-| `project-manager/` | `project-manager` (`gpt-5.6-sol`, `max`, `long_context` under project-wide matrix `PMD-20260916-001` and effort floor `PMD-20260930-001`) | `pm-auditor` (read, search; `claude-opus-5`, `max`, `long_context`); `beryllium-scope-review` (read, search; hidden, `claude-opus-5.5`, `max`, `long_context`, exact `SCOPE_REVIEW_V1`, steering only) | `beryllium-project-management`; `beryllium-scope-management` | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-hypervisor/`) |
-| `analysis-workbook/` | User-invocable `analysis-workbook`; hidden PM-invocable `analysis-workbook-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) introduced at `ea72522`; read-only probe `PMR-087` closed by `PMD-20260918-002`; bounded write-enabled requests PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and PMR-063 are closed through `8b5a301`; tasking startup is active; Project Manager queue carry `8da398d` is latest | `analysis-evidence` (read, search); `analysis-research` (read, search, web) | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1`; carries `5a646df` / `8da398d` change only `outbox/pm-queue.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits. Closure-line commits are contained by synchronized `origin/main` `3c9d2a3`;
+| `project-manager/` | `project-manager` (`claude-opus-5.5`, `max`, `long_context` under single-model SOP `PMD-20261006-001`) | `pm-auditor` (read, search; `claude-opus-5.5`, `max`, `long_context`; one same-model pass); the former scope-review specialist is retired | `beryllium-project-management`; the former scope-management skill is retired | `HANDOFF.md`, `components/`, `records/`, `queue/LEDGER.md`, `outbox/component-requests.md` | `outbox/component-requests.md` (to component owners) | Own repository, Project Manager-owned parent-root artifacts, and carried requests in the three classes of `PMD-20260904-003` inside carry-eligible components (never `helium-te-poc/` or `beryllium-hypervisor/`) |
+| `analysis-workbook/` | User-invocable `analysis-workbook` (`claude-opus-5.5` at `4cf44d0`); hidden PM-invocable `analysis-workbook-owner` (`claude-opus-5.5`, `max`, `long_context` at `4cf44d0`, no `ask_user`) introduced at `ea72522`; `PMR-124` requests the CRQ-004 status mirror; read-only probe `PMR-087` closed by `PMD-20260918-002`; bounded write-enabled requests PMR-086, PMR-038, PMR-004, PMR-050, PMR-055, PMR-059, and PMR-063 are closed through `8b5a301`; tasking startup is active; Project Manager queue carry `8da398d` is latest | `analysis-evidence` (read, search; `claude-opus-5.5` at `4cf44d0`); `analysis-research` is absent at `4cf44d0` | `beryllium-analysis` with direct-human and PM-mediated owner modes | `sessions/AWB-YYYYMMDD-NNN-*/`; generated `WORKBOOK.md`; owner results in `HANDOFF.md` and `OWNER_AGENT_RESPONSE_V1`; carries `5a646df` / `8da398d` change only `outbox/pm-queue.md` | `outbox/pm-queue.md` (`PMQ-NNN`), read-only-tracked `outbox/helium-transfer-queue.md` (`HET-NNN`), and maintainer-mirrored `outbox/collaboration-requests.md` (`CRQ-NNN`) | Own repository only; ordinary owner local Git remains limited to identity/diff inspection, exact-path staging, and validated local work/return commits. Closure-line commits are contained by synchronized `origin/main` `3c9d2a3`;
 PMR-085/088/089/095/097 remain open for review/authorization reconciliation,
 not for missing containment; exact earlier backups PMR-085/088/089 and dependent carry backups PMR-095/097 remain separate |
-| `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; adopted hidden `threat-modeler-owner` (`gpt-5.6-sol`, `max`, `long_context`, no `ask_user`) at work `71bca3f` / return `e6aed9f`; tasking/SOT startup PMR-064/117 parked P4; owner is not native-handshaken or PM-invocable | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md`; owner returns in `HANDOFF.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only; all four PMR-120 commits are local and unpushed; no handshake or write dispatch is authorized |
-| `security-reviewer/` | `security-reviewer` (`gpt-5.3-codex` / exact `xhigh` / `default` at work `2bb4c98` and return `c2edac7`; direct sessions remain outside the task hook; PMR-109/110 closed) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; same exact Codex pair; explicit non-Codex selections retain ordinary max/high-floor policy) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md`; none created yet | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, the PM resolver is separate startup discovery, and unpushed return tip `c2edac7` is distinct backup-only PMR-111 |
-| `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066` | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
+| `threat-modeler/` | `threat-modeler`; `threat-model-maintainer` for repository maintenance and explicitly authorized Git delivery; adopted hidden `threat-modeler-owner` (no `ask_user`) at work `71bca3f` / return `e6aed9f`; all six profiles still pin superseded `gpt-5.6-sol` (`PMR-121`); tasking/SOT startup PMR-064/117 parked P4; owner is not native-handshaken or PM-invocable | `threat-evidence` (read, search); `threat-research` (read, search, web); `threat-model-review` (read, search) | `beryllium-threat-modeling` | `models/TM-YYYYMMDD-NNN-*/`; generated `THREAT-MODELS.md`; owner returns in `HANDOFF.md` | `outbox/pm-queue.md` (`DISC-NNN`) | Own repository only; all four PMR-120 commits are local and unpushed; no handshake or write dispatch is authorized |
+| `security-reviewer/` | `security-reviewer` (all four profiles still pin superseded `gpt-5.3-codex` / `xhigh` / `default` from work `2bb4c98` and return `c2edac7`; `PMR-123` requests alignment; direct sessions remain outside the task hook) | `security-evidence`, `security-research`, `security-finding-review` (write-disabled; same superseded pin, `PMR-123`) | `beryllium-security-review` | `reviews/SR-YYYYMMDD-NNN-*/` (each with `review-manifest.json`), `syntheses/SRS-YYYYMMDD-NNN-*/`; generated `SECURITY-REVIEWS.md`; none created yet | `outbox/pm-queue.md` (`SRQ-NNN`, kinds `source` and `owner-action`) | Own repository only; target execution remains approval-gated, the PM resolver is separate startup discovery, and unpushed return tip `c2edac7` is distinct backup-only PMR-111 |
+| `provenance-review/` | `provenance-review`; tasking startup adoption `PMR-066`; all three profiles still pin superseded `gpt-5.6-sol` (`PMR-122`) | `provenance-code-lineage` (read, search); `provenance-research` (read, search, web) | `provenance-analysis` | `reviews/PRV-YYYYMMDD-NNN-*/` with generated `html/` | none | Own repository only |
 
 ## Invocation and validation
 
@@ -211,7 +226,8 @@ Run each block from the named component directory.
 ```sh
 cd project-manager
 # Copilot CLI: /agent project-manager
-# Human-only user-level install/check; run while governed sessions are idle:
+# Human-only user-level install/check; run only while governed sessions are
+# idle (the PMD-20261006-001 reinstall is deferred while Beryllium is active):
 # bash ./scripts/beryllium-governance.sh install && bash ./scripts/beryllium-governance.sh check
 bash ./scripts/inspect-components.sh status
 bash ./scripts/pull-queues.sh check
@@ -315,7 +331,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | Component | Local agent material | Maintained check surface | Who runs it |
 | --- | --- | --- | --- |
 | `helium-te-poc/` | skill `helium-documentation`; `.github/copilot-instructions.md`; `HANDOFF.md`; tasking startup adoption `PMR-068` | `./he check`, `./he test`, `./he docs-check`, `./he evaluate` | Human or the Helium line's own agent session |
-| `beryllium-hypervisor/` | On active/default branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`; current primary tip is clean local PMR-112 checkpoint `93819fd9`, behind 0 / ahead 5 of last-fetched private `origin` `4141cf6`. Work `2313cbe0`, owner return `55b568b4`, and checkpoint `93819fd9` adopt SOT-first startup and directly related current-path/contract validation; all three commits are local-only and not remotely backed up. Canonical return `1f38e699` / checkpoint `4c6acbed` keep PMR-098/100 closed. Maintained refs confirm every named commit and subject. Human-supplied output reports six moved linked worktrees repaired at temporary flat `worktrees/` paths; the exact root-relative inventory is in `../COMPONENTS.md` and future namespacing remains owner-only. K0-I acceptance is recorded at earlier target `abd092a`; the handoff records bounded K0-S preparation/status target acceptance but a mutable, unaccepted, not-ready current package; `PMD-20260925-001` keeps Project Manager R8-H0 state committed but unaccepted | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate`, `./tests/r8/run-make.sh r8-check`; PMR-112 owner validation additionally reports `node docs/check-links.mjs --tasking-fence-regression`, `node docs/check-links.mjs --tasking-contract`, and `umask 0022 && npm run docs:source-check` passed | The PMR-112 owner session is released; any later writer requires fresh tasking, worktree, and one-writer checks. Project Manager remains read-only |
+| `beryllium-hypervisor/` | Observed 2026-10-06 on clean `beryllium/k3-b3-bringup` at `afa4336`, whose committed `.github/copilot-instructions.md` adopts an equivalent 2026-10-06 SOP (no CRQ-004 / `PMD-20261006-001` citation) pinning `claude-opus-5.5` / `max` / `long_context`; no request is raised while its human session is active. On the recorded active/default branch `beryllium/single-hart-runtime-r0`: skills `helium-documentation`, `human-review-summary`, `reviewable-turn-summary`; `.github/copilot-instructions.md`; `planning/HANDOFF.md`; the last recorded (104th-turn) tip is clean documentation-only PMR-077 return `a8e137e`, behind 0 / ahead 6 of last-fetched private `origin` `4141cf6`; maintained refs inspection at 2026-10-06T18:16Z shows it at `f213555`, behind 0 / ahead 22. Work `2313cbe0`, owner return `55b568b4`, and checkpoint `93819fd9` adopt SOT-first startup and directly related current-path/contract validation. Canonical return `1f38e699` / checkpoint `4c6acbed` keep PMR-098/100 closed. As of the last fetch, which is not a live remote check, those five commits, `a8e137e`, and `f213555` are contained in remote-tracking `origin/beryllium/k3-b0-bringup` through `k3-b3-bringup`, while `afa4336`, `6e93461`, and `0d53120` are on no remote-tracking branch; that containment grants no push, publication, or gate. Maintained refs confirm every named commit and subject. Human-supplied output reports six moved linked worktrees repaired at temporary flat `worktrees/` paths; the exact root-relative inventory is in `../COMPONENTS.md` and future namespacing remains owner-only. K0-I acceptance is recorded at earlier target `abd092a`; the handoff records bounded K0-S preparation/status target acceptance but a mutable, unaccepted, not-ready current package; `PMD-20260925-001` keeps Project Manager R8-H0 state committed but unaccepted | `./be status`, `./be model-check`, `./be check`, `./be docs-check`, `./be evaluate`, `./tests/r8/run-make.sh r8-check`; PMR-112 owner validation additionally reports `node docs/check-links.mjs --tasking-fence-regression`, `node docs/check-links.mjs --tasking-contract`, and `umask 0022 && npm run docs:source-check` passed | The PMR-112 owner session is released; any later writer requires fresh tasking, worktree, and one-writer checks. Project Manager remains read-only |
 | `formal-verification-research/` | `COLLAB.md` guest protocol, `.github/copilot-instructions.md`, `HANDOFF.md`; synchronized owner refresh `388690d` contains research `62cc207`, owner controls `9109345`, routed-pointer dispositions, current topology, and exact startup resolver. PMR-014/037/041/069 are closed from that durable evidence | none configured | Owner |
 | `osr-claude/` | Copilot skill `.github/skills/os-security-research/`; `.github/copilot-instructions.md`; `HANDOFF.md`; clean private successor synchronized at independent executable-backlog integration `86645d4`; PMR-044 baseline `49fbfd6` remains reachable; PMR-052 is unstarted; tasking startup adoption `PMR-070` | `tools/md-to-html.sh --check` | Owner |
 | `cheri-riscv-notes` | `meta/handoff.md`; `CONTRIBUTING.md`; PMR-071/114 `.github/copilot-instructions.md` and maintained tasking validator; clean local `docs/reconcile-project-status` at PMR-119 class-3 carry `7f67154`, 0/3 relative to last-fetched private `origin` tip `34a8b50`. PMR-114 work `8d1bc9d` changes only startup instructions and tasking-validator policy; handoff-only return `7fb49f4` records 35/35 negative mutations and other owner-reported validation; PMR-119 changes only the handoff opening date and next action. No push/fetch occurred, and all three commits are unbacked locally | `node --check automation/*.mjs`; `node automation/validate-project-tasking.mjs`; `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build [owner/repo]` | PMR-105 is complete at synchronized topic tip `34a8b50`; PMR-114 and PMR-119 are closed and must not be rerun. Merge, publication, D5, force, tags, and remote mutation remain separate or prohibited |
@@ -367,9 +383,11 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
   records the result in the next coordination turn.
 - Every sibling orchestrator is declared `disable-model-invocation: true`, so
   no agent can invoke another agent's orchestrator; the human starts each
-  direct engagement. Hidden `analysis-workbook-owner` is currently the only
-  narrow `<component>-owner` exception and remains separately named, tested,
-  and `user-invocable: false`.
+  direct engagement. The narrow `<component>-owner` exceptions are hidden
+  `analysis-workbook-owner` (PM-invocable) and `threat-modeler-owner`
+  (adopted at `e6aed9f` with `disable-model-invocation: false` /
+  `user-invocable: false`, but not native-handshaken or PM-invocable); each
+  remains separately named, tested, and `user-invocable: false`.
 - Under `PMD-20260917-002`, dispatch is limited to one exact PMR packet,
   four concurrent repositories, and one writer/reservation per repository.
   Owner workers return human questions to the Project Manager and preserve

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# HUMAN-RUN installer/checker for Beryllium user-level Copilot CLI governance.
-# The Project Manager agent never runs install or uninstall against the real
-# user configuration. Maintained tests use only a sandbox COPILOT_HOME.
+# HUMAN-RUN installer/checker for Beryllium user-level Copilot CLI governance
+# under the single-model SOP PMD-20261006-001. The Project Manager agent never
+# runs install or uninstall against the real user configuration. Maintained
+# tests use only a sandbox COPILOT_HOME.
 
 set -euo pipefail
 export LC_ALL=C
@@ -13,9 +14,18 @@ Usage:
   beryllium-governance.sh check
   beryllium-governance.sh uninstall
 
-install copies the Beryllium scope reviewer, scope-management skill, task
-hook, and rendered hook configuration into ${COPILOT_HOME:-$HOME/.copilot}.
-check is read-only. uninstall removes only exact matching managed files.
+install copies the Beryllium task hook and its rendered hook configuration
+into ${COPILOT_HOME:-$HOME/.copilot}, then removes retired copies of the
+Beryllium scope-review agent and scope-management skill whose content exactly
+matches a known retired version. If a retired path holds anything else,
+install changes nothing; inspect and remove that path manually. check is
+read-only and fails while a retired copy remains. uninstall removes only
+exact matching managed and retired files.
+
+Under PMD-20261006-001 the hook requires every in-scope task to use model
+claude-opus-5.5, reasoning_effort max, and context_tier long_context: absent,
+null, or empty values are filled through modifiedArgs, other values are
+denied, and in-scope run_dynamic_workflow is denied.
 
 Configuration, matcher, and environment changes require a new Copilot CLI
 session. A registered command hook executes the installed script path for each
@@ -26,11 +36,13 @@ is unknown. Install, reinstall, and uninstall while governed sessions are
 idle. Uninstall can leave an already-running registered session pointing at
 removed hook or configuration paths.
 
-The script never edits settings.json. User settings must provide a session
-default of max reasoning effort and long_context, with plan-specific values
-either unset (inherit the session defaults) or explicitly max/long_context.
-User hooks must not be disabled. Repository, local, command-line, and live
-session overrides are checked by later per-workspace verification.
+The script never edits settings.json. User settings must provide session
+defaults of model claude-opus-5.5, effortLevel max, and contextTier
+long_context. Plan-mode values (planModel, planEffortLevel, planContextTier)
+must be unset or explicitly claude-opus-5.5, max, and long_context; check
+reads an unset plan value as its session default. User hooks must not be
+disabled. Repository, local, command-line, and live session overrides are
+checked by later per-workspace verification.
 EOF
 }
 
@@ -55,20 +67,28 @@ pm_root=$(CDPATH= cd -- "$script_dir/.." && pwd -P) ||
 parent_root=$(CDPATH= cd -- "$pm_root/.." && pwd -P) ||
     die "cannot resolve canonical parent root"
 
-agent_source=$pm_root/.github/agents/beryllium-scope-review.agent.md
-skill_source=$pm_root/.github/skills/beryllium-scope-management/SKILL.md
 hook_source=$pm_root/scripts/beryllium-governance-hook.sh
 hook_config_source=$pm_root/scripts/beryllium-governance-hook.json.in
 
 copilot_home=${COPILOT_HOME:-${HOME:?HOME is not set}/.copilot}
 [[ $copilot_home == /* ]] || die "COPILOT_HOME must be an absolute path"
 
-agent_dest=$copilot_home/agents/beryllium-scope-review.agent.md
-skill_dir=$copilot_home/skills/beryllium-scope-management
-skill_dest=$skill_dir/SKILL.md
 hook_dest=$copilot_home/hooks/beryllium-governance-hook.sh
 hook_config_dest=$copilot_home/hooks/beryllium-governance.json
 settings=$copilot_home/settings.json
+
+# Retired by PMD-20261006-001. The known contents are the SHA-256 values of
+# every committed version of the former sources; Project Manager commit
+# b82e17ac5a765705e739f69538766d73a03f2fe6 holds the only version of each.
+retired_agent_dest=$copilot_home/agents/beryllium-scope-review.agent.md
+retired_agent_hashes=(
+    77b699b3384e4e110315fb4a2bbb027d601bbe4033e8509548bc4717d75887ff
+)
+retired_skill_dir=$copilot_home/skills/beryllium-scope-management
+retired_skill_dest=$retired_skill_dir/SKILL.md
+retired_skill_hashes=(
+    013d97c8f0ba456f0aea503ea89a5df2e169b5fa44322b8f75371cd194c5eb11
+)
 
 git_parent() {
     env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE \
@@ -86,8 +106,7 @@ require_tools() {
 
 require_sources() {
     local source
-    for source in "$agent_source" "$skill_source" "$hook_source" \
-        "$hook_config_source"; do
+    for source in "$hook_source" "$hook_config_source"; do
         [[ -f $source && ! -L $source ]] ||
             die "managed source is absent or not a regular file: $source"
     done
@@ -176,6 +195,11 @@ check_settings() {
         fi
     fi
 
+    if jq -e '.model == "claude-opus-5.5"' "$settings" >/dev/null; then
+        ok "user session model default is claude-opus-5.5"
+    else
+        bad "user model must be claude-opus-5.5"
+    fi
     if jq -e '.effortLevel == "max"' "$settings" >/dev/null; then
         ok "user session reasoning default is max"
     else
@@ -185,6 +209,12 @@ check_settings() {
         ok "user session context default is long_context"
     else
         bad "user contextTier must be long_context"
+    fi
+    if jq -e '(.planModel // .model) == "claude-opus-5.5"' \
+        "$settings" >/dev/null; then
+        ok "user plan model default or fallback is claude-opus-5.5"
+    else
+        bad "user plan model default or fallback must be claude-opus-5.5"
     fi
     if jq -e '(.planEffortLevel // .effortLevel) == "max"' \
         "$settings" >/dev/null; then
@@ -220,23 +250,72 @@ check_regular_copy() {
     fi
 }
 
+retired_state() {
+    local destination=$1 actual known
+    shift
+    if [[ ! -e $destination && ! -L $destination ]]; then
+        printf 'absent\n'
+        return
+    fi
+    if [[ -f $destination && ! -L $destination ]]; then
+        actual=$(sha_file "$destination")
+        for known in "$@"; do
+            if [[ $actual == "$known" ]]; then
+                printf 'known\n'
+                return
+            fi
+        done
+    fi
+    printf 'unknown\n'
+}
+
+check_retired() {
+    local label=$1 destination=$2
+    shift 2
+    case $(retired_state "$destination" "$@") in
+    absent)
+        ok "$label is absent"
+        ;;
+    known)
+        bad "$label is still installed: $destination; run install or uninstall to remove this exact retired copy"
+        ;;
+    *)
+        bad "$label path holds unknown content or is not a regular file: $destination; inspect and remove it manually"
+        ;;
+    esac
+}
+
+require_retired_removable() {
+    local label=$1 destination=$2
+    shift 2
+    [[ $(retired_state "$destination" "$@") != unknown ]] ||
+        die "$label path holds unknown content or is not a regular file: $destination; nothing was changed; inspect and remove it manually"
+}
+
+verify_retired_removable() {
+    require_retired_removable "retired scope reviewer" \
+        "$retired_agent_dest" "${retired_agent_hashes[@]}"
+    require_retired_removable "retired scope-management skill" \
+        "$retired_skill_dest" "${retired_skill_hashes[@]}"
+}
+
 check_installation() {
-    local rendered_config agent_hash skill_hash hook_hash config_hash
+    local rendered_config hook_hash config_hash
     check_failures=0
     require_tools
     require_sources
 
     rendered_config=$(render_hook_config)
-    agent_hash=$(sha_file "$agent_source")
-    skill_hash=$(sha_file "$skill_source")
     hook_hash=$(sha_file "$hook_source")
     config_hash=$(printf '%s\n' "$rendered_config" | sha_text)
 
     check_settings
-    check_regular_copy "scope reviewer" "$agent_hash" "$agent_dest"
-    check_regular_copy "scope-management skill" "$skill_hash" "$skill_dest"
     check_regular_copy "governance hook" "$hook_hash" "$hook_dest" 1
     check_regular_copy "hook configuration" "$config_hash" "$hook_config_dest"
+    check_retired "retired scope reviewer" "$retired_agent_dest" \
+        "${retired_agent_hashes[@]}"
+    check_retired "retired scope-management skill" "$retired_skill_dest" \
+        "${retired_skill_hashes[@]}"
 
     if ((check_failures > 0)); then
         printf 'beryllium-governance: %d check(s) failed\n' \
@@ -316,11 +395,11 @@ install_governance() {
     check_settings
     ((check_failures == 0)) ||
         die "settings preflight failed; no managed file was installed"
+    verify_retired_removable
 
-    mkdir -p -- "$copilot_home/agents" "$skill_dir" "$copilot_home/hooks"
-    destinations=("$agent_dest" "$skill_dest" "$hook_dest" "$hook_config_dest")
-    labels=("scope reviewer" "scope-management skill" "governance hook" \
-        "hook configuration")
+    mkdir -p -- "$copilot_home/hooks"
+    destinations=("$hook_dest" "$hook_config_dest")
+    labels=("governance hook" "hook configuration")
     for i in "${!destinations[@]}"; do
         if [[ -e ${destinations[$i]} || -L ${destinations[$i]} ]]; then
             [[ -f ${destinations[$i]} && ! -L ${destinations[$i]} ]] ||
@@ -330,15 +409,12 @@ install_governance() {
 
     stage=$(mktemp -d "$copilot_home/.beryllium-governance.XXXXXX") ||
         die "cannot create installation staging directory"
-    staged=("$stage/new.0" "$stage/new.1" "$stage/new.2" "$stage/new.3")
-    backups=("$stage/backup.0" "$stage/backup.1" "$stage/backup.2" \
-        "$stage/backup.3")
-    had_backup=(0 0 0 0)
-    committed=(0 0 0 0)
+    staged=("$stage/new.0" "$stage/new.1")
+    backups=("$stage/backup.0" "$stage/backup.1")
+    had_backup=(0 0)
+    committed=(0 0)
 
-    if ! install -m 0644 "$agent_source" "${staged[0]}" ||
-        ! install -m 0644 "$skill_source" "${staged[1]}" ||
-        ! install -m 0755 "$hook_source" "${staged[2]}"; then
+    if ! install -m 0755 "$hook_source" "${staged[0]}"; then
         rm -rf -- "$stage"
         die "cannot stage managed governance files"
     fi
@@ -346,19 +422,17 @@ install_governance() {
         rm -rf -- "$stage"
         die "cannot render hook configuration"
     fi
-    if ! printf '%s\n' "$rendered_config" >"${staged[3]}" ||
-        ! chmod 0644 "${staged[3]}"; then
+    if ! printf '%s\n' "$rendered_config" >"${staged[1]}" ||
+        ! chmod 0644 "${staged[1]}"; then
         rm -rf -- "$stage"
         die "cannot stage rendered hook configuration"
     fi
 
     expected_hashes=(
-        "$(sha_file "$agent_source")"
-        "$(sha_file "$skill_source")"
         "$(sha_file "$hook_source")"
         "$(printf '%s\n' "$rendered_config" | sha_text)"
     )
-    expected_modes=(644 644 755 644)
+    expected_modes=(755 644)
     for i in "${!staged[@]}"; do
         if [[ ! -f ${staged[$i]} || -L ${staged[$i]} ]] ||
             [[ $(sha_file "${staged[$i]}") != "${expected_hashes[$i]}" ]] ||
@@ -418,6 +492,7 @@ install_governance() {
     fi
 
     rm -rf -- "$stage"
+    remove_retired_files
     printf '%s\n' \
         "Installed user-level governance. Configuration, matcher, and environment changes require a new Copilot CLI session. A registered hook may execute this replaced script body at its next matching call while retaining its loaded matcher and environment. Agent and skill reread behavior in running sessions is unknown; reinstall while governed sessions are idle."
 }
@@ -436,35 +511,36 @@ verify_removable() {
 remove_managed() {
     local label=$1 destination=$2
     if [[ -e $destination || -L $destination ]]; then
-        rm -f -- "$destination"
+        rm -f -- "$destination" || die "cannot remove $label: $destination"
         ok "removed $label"
     else
         ok "$label is already absent"
     fi
 }
 
+remove_retired_files() {
+    remove_managed "retired scope reviewer" "$retired_agent_dest"
+    remove_managed "retired scope-management skill" "$retired_skill_dest"
+    rmdir -- "$retired_skill_dir" 2>/dev/null || true
+}
+
 uninstall_governance() {
-    local rendered_config agent_hash skill_hash hook_hash config_hash
+    local rendered_config hook_hash config_hash
     require_tools
     require_sources
     rendered_config=$(render_hook_config)
-    agent_hash=$(sha_file "$agent_source")
-    skill_hash=$(sha_file "$skill_source")
     hook_hash=$(sha_file "$hook_source")
     config_hash=$(printf '%s\n' "$rendered_config" | sha_text)
 
-    verify_removable "scope reviewer" "$agent_hash" "$agent_dest"
-    verify_removable "scope-management skill" "$skill_hash" "$skill_dest"
     verify_removable "governance hook" "$hook_hash" "$hook_dest"
     verify_removable "hook configuration" "$config_hash" "$hook_config_dest"
+    verify_retired_removable
 
-    remove_managed "scope reviewer" "$agent_dest"
-    remove_managed "scope-management skill" "$skill_dest"
     remove_managed "governance hook" "$hook_dest"
     remove_managed "hook configuration" "$hook_config_dest"
-    rmdir -- "$skill_dir" 2>/dev/null || true
+    remove_retired_files
     printf '%s\n' \
-        "Removed exact managed governance files. Already-running registered sessions may still point at removed hook or configuration paths; uninstall while governed sessions are idle."
+        "Removed exact managed and retired governance files. Already-running registered sessions may still point at removed hook or configuration paths; uninstall while governed sessions are idle."
 }
 
 (($# == 1)) || {

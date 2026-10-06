@@ -128,35 +128,38 @@ public collection is limited to generic public-safe coordination facts, with
 no credentialed peer access, peer writes, or automatic licensing, governance,
 adoption, or release decisions.
 
-Project-wide, active agent roles follow the role-to-model matrix of
-`PMD-20260916-001`, extending `PMD-20260915-007`: planning, coding,
-coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
-audit use `claude-opus-5`; those ordinary roles use reasoning effort `max`
-and context tier `long_context`. `PMD-20260930-005` keeps deep or adversarial
-security review on `gpt-5.3-codex` but requires exact `xhigh` reasoning and
-context tier `default` as the sole named capability exception.
-`PMD-20260930-001` keeps the global `max` default and `high` floor for every
-other role and explicit non-Codex selection.
+Project-wide work follows the single-model, low-overhead SOP of
+`PMD-20261006-001`, recorded from the responsible human's CRQ-004
+instruction. Every orchestrator, agent, sub-agent, and task uses
+`claude-opus-5.5` with reasoning effort `max` and context tier
+`long_context`. None switches to another model, lowers the effort, changes
+the context tier, or downgrades because work looks routine, and there is no
+silent fallback: an unavailable setting stops work for a report.
+Different-model iterative evaluation reviews, separate scope reviews, and
+deep security reviews are not standard practice; a security review runs only
+on explicit responsible-human request, on the same model. Deliverables are
+completed efficiently without scope creep or added complexity, and every
+human gate is unchanged. The record supersedes the model, review, and effort
+rules of `PMD-20260916-001`, `PMD-20260915-007`, `PMD-20260930-001`,
+`PMD-20260930-002`, and `PMD-20260930-005`; the former scope-review agent
+and scope-management skill are retired.
 
-Under `PMD-20260930-002` as narrowed by `PMD-20260930-005`, ordinary omitted
-effort is rewritten to `max` through permission-neutral `modifiedArgs`, lower
-or unknown effort is denied, and in-scope `run_dynamic_workflow` remains
-denied. Exactly `security-evidence`, `security-research`, and
-`security-finding-review` receive the named Codex `xhigh` / `default`
-injection when model or required fields are absent, null, or empty. Explicit
-Codex is denied for every other task agent type and accepted for those three
-only with the exact exception settings. Explicit non-Codex selections retain
-ordinary max/high-floor handling without forced context. Direct
-`security-reviewer` sessions are outside the task hook and must be started
-and kept at `gpt-5.3-codex` / `xhigh` / `default`; built-in
-`security-review` is not admitted by type. There is no silent model, effort,
-or context fallback.
+The human-installed user-level hook matches `task|run_dynamic_workflow`
+inside the Beryllium workspace. When `model`, `reasoning_effort`, or
+`context_tier` is absent, null, or empty, it injects `claude-opus-5.5` /
+`max` / `long_context` through permission-neutral `modifiedArgs`; it denies
+any explicit other model, effort, or context tier and still denies in-scope
+`run_dynamic_workflow`. Direct custom-agent sessions are outside the task
+hook; the responsible human keeps the main session at `claude-opus-5.5` /
+`max` / `long_context`. As of 2026-10-06 the aligned reinstall is deferred
+because a `beryllium-hypervisor` human session is active.
 
-The `project-manager` orchestrator remains `gpt-5.6-sol` and `pm-auditor`
-remains `claude-opus-5`. Historical artifacts are unchanged. Component-owned
-alignment is complete at security-reviewer work `2bb4c98` and durable return
-`c2edac7`; `PMR-109` and `PMR-110` are closed as acknowledgements, while
-backup-only `PMR-111` remains separate. No in-flight task is restarted.
+The `project-manager` orchestrator and `pm-auditor` pin `claude-opus-5.5`;
+the auditor runs one same-model consistency pass with no iteration loop.
+Historical artifacts are unchanged and no in-flight task is restarted.
+`PMR-121`..`PMR-123` request component profile alignment and `PMR-124` the
+analysis-workbook CRQ-004 status mirror; `AGENT-ROSTER.md` records the
+observed per-component model state.
 
 ## Human interaction
 

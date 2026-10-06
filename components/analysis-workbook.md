@@ -10,10 +10,12 @@
   `RESEARCH-SOURCES.md`, and `HANDOFF.md`), committing inside this component;
   nothing else
 - **Agents:** `analysis-workbook` (user-invocable orchestrator),
-  `analysis-workbook-owner` (hidden PM-invocable owner),
-  `analysis-evidence` and `analysis-research` (write-disabled specialists);
-  skill `beryllium-analysis`. `PMR-084` is closed from local checkpoint
-  `ea72522`; the responsible human explicitly released the bootstrap session
+  `analysis-workbook-owner` (hidden PM-invocable owner), and
+  `analysis-evidence` (write-disabled specialist; the former
+  `analysis-research` profile is absent at `4cf44d0` and refuted by the
+  component's tests); skill `beryllium-analysis`. `PMR-084` is closed from
+  local checkpoint `ea72522`; the responsible human explicitly released the
+  bootstrap session
   on 2026-09-17. The selected Project Manager runtime registers the profile.
   Dedicated `PMR-087` passed the read-only native
   discovery/root/task-fingerprint/isolation handshake and is closed by
@@ -30,8 +32,18 @@
   from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean `main` at `3c9d2a3`, synchronized 0/0 with
-  `origin/main`. Complete private session
+- **Observed state:** on 2026-10-06 maintained inspection observes clean
+  `main` at `4cf44d0bfec3b725dbcef1ca5938d619e867d932`, 0 behind / 2 ahead
+  of last-fetched `origin/main`; both local commits are unpushed. At
+  `4cf44d0` the component has already applied `CRQ-004` local alignment:
+  `analysis-workbook`, `analysis-workbook-owner`, and `analysis-evidence`
+  pin `claude-opus-5.5`, the hidden owner records `max` / `long_context`
+  invocation defaults, and `tests/validate-agent.sh` lines 785 and 799-800
+  assert the owner's pin and defaults. `PMD-20261006-001` therefore routes
+  only the `CRQ-004` `routed` mirror, as open P3 `PMR-124`. `CRQ-003` (an
+  RVV investigation todo request) is `new` and was not processed in the
+  2026-10-06 coordination turn. Earlier, clean `main` at `3c9d2a3` was
+  synchronized 0/0 with `origin/main`. Complete private session
   `AWB-20260928-001-microguards-cheri-fallback` records one medium-confidence
   architecture inquiry, 40 evidence records, 414 / 0 agent tests, and queue
   rows `PMQ-031..033`; the Project Manager routes those new pointers to the
@@ -167,8 +179,11 @@ topic and chronology in the generated `WORKBOOK.md`.
   work `70bea16` / return `6d5d03d` historically made eighteen ahead.
   PMR-059 work `9d76048` / return `e6c8aad` made twenty ahead, and PMR-063
   work `62bd071` / return `8b5a301` plus carries `5a646df` / `8da398d`
-  historically made twenty-four ahead. Current `main` is synchronized 0/0
-  with `origin/main` at `3c9d2a3`. PMR-089 freezes the exact
+  historically made twenty-four ahead. `main` was later synchronized 0/0
+  with `origin/main` at `3c9d2a3`. On 2026-10-06 maintained inspection
+  observes clean `main` at `4cf44d0`, 0 behind / 2 ahead of that
+  last-fetched tip: local `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004) are
+  unpushed. PMR-089 freezes the exact
   post-`858a73b` closure range at `8b5a301`; PMR-095 and PMR-097 separately
   track the two carries
   without expanding either earlier backup request.
@@ -238,7 +253,12 @@ A new analysis session on a named aspect and, only after `PMR-052` and
 `PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
 Analysis content and the collaboration queue remain request-only outside
 Project Manager carry authority. Nothing treats a session as review or
-acceptance. The operational housekeeping requests PMR-038, PMR-004, PMR-050,
+acceptance. `PMR-124` asks the maintainer to mirror `CRQ-004` as `routed`
+from `PMD-20261006-001` and `PMR-121..PMR-123`, append one activity row, and
+change nothing else; it is dispatchable later to the hidden
+`analysis-workbook-owner` under `PMD-20260917-002` or performable in one
+human-started owner session, never both. `CRQ-003` remains `new`. The
+operational housekeeping requests PMR-038, PMR-004, PMR-050,
 PMR-055, PMR-059, and PMR-063 are complete; their evidence is retained below,
 not presented as new work.
 `PMR-063` is closed at work `62bd071` / return `8b5a301`: the user-facing

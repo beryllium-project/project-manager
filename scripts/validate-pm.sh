@@ -409,9 +409,9 @@ if ((check_parent)); then
     require_text "$parent/SOT.md" 'project-manager/'
     require_text "$parent/README.md" 'project-manager/'
     require_text "$parent/.github/copilot-instructions.md" '/agent project-manager'
-    require_text "$parent/README.md" 'PMD-20260930-001'
-    require_text "$parent/COMPONENTS.md" 'PMD-20260930-001'
-    require_text "$parent/.github/copilot-instructions.md" 'PMD-20260930-001'
+    require_text "$parent/README.md" 'PMD-20261006-001'
+    require_text "$parent/COMPONENTS.md" 'PMD-20261006-001'
+    require_text "$parent/.github/copilot-instructions.md" 'PMD-20261006-001'
     if [[ -f $parent/.gitignore ]] && grep -Fxq -- '/project-manager/' "$parent/.gitignore"; then
         pass "parent .gitignore ignores /project-manager/"
     else

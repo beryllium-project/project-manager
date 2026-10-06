@@ -126,36 +126,45 @@ responsible human renamed and retargeted the CHERI notes and XRV links to the
 verified successors. Publication, licensing, redistribution, release, and
 assurance gates remain unchanged.
 
-Project-wide model assignment follows the role-to-model matrix of
-`PMD-20260916-001` (extending `PMD-20260915-007`): planning, coding,
-coordination, and orchestration use `gpt-5.6-sol`; review, evaluation, and
-audit use `claude-opus-5`; those ordinary roles use reasoning effort `max`
-and context tier `long_context`. `PMD-20260930-005` keeps deep or adversarial
-security review on `gpt-5.3-codex` but requires exact `xhigh` reasoning and
-context tier `default` as the sole named capability exception.
-`PMD-20260930-001` keeps the global `max` default and `high` floor for every
-other role and explicit non-Codex selection.
+Project-wide work follows the single-model, low-overhead SOP of
+`PMD-20261006-001`, recorded from the responsible human's CRQ-004
+instruction. Every orchestrator, agent, sub-agent, and task uses
+`claude-opus-5.5` with reasoning effort `max` and context tier
+`long_context`. None switches model, lowers effort, changes context tier, or
+downgrades because work looks routine, and there is no silent fallback: if
+that setting is unavailable, work stops and is reported. Different-model
+iterative evaluation reviews, separate scope reviews, and deep security
+reviews are not standard practice; a security review runs only on explicit
+responsible-human request, on the same model. The `pm-auditor` audit is one
+same-model consistency pass with no iteration loop. Work focuses on
+completing deliverables efficiently without scope creep or added complexity,
+and every human gate is unchanged.
 
-Under `PMD-20260930-002` as narrowed by `PMD-20260930-005`, ordinary omitted
-effort is rewritten to `max` through permission-neutral `modifiedArgs`, lower
-or unknown effort is denied, and in-scope `run_dynamic_workflow` remains
-denied. Exactly `security-evidence`, `security-research`, and
-`security-finding-review` receive the named Codex `xhigh` / `default`
-injection when model or required fields are absent, null, or empty. Explicit
-Codex is denied for every other task agent type and accepted for those three
-only with the exact exception settings. Explicit non-Codex selections retain
-ordinary max/high-floor handling without forced context. Direct
-`security-reviewer` sessions are outside the task hook and must be started
-and kept at `gpt-5.3-codex` / `xhigh` / `default`; built-in
-`security-review` is not admitted by type. There is no silent model, effort,
-or context fallback.
+The record supersedes the role-to-model matrix of `PMD-20260916-001` and any
+remaining `PMD-20260915-007` preference, the scope-review requirement and
+effort overrides of `PMD-20260930-001` (its `max` default stays), the model
+and effort rules of `PMD-20260930-002`, and the Codex capability exception
+of `PMD-20260930-005`. The `project-manager` orchestrator and `pm-auditor`
+pin `claude-opus-5.5`; the former scope-review agent and scope-management
+skill are retired. Historical artifacts are unchanged. Analysis-workbook
+`4cf44d0` and Beryllium `afa4336` are already aligned; `PMR-121`..`PMR-123`
+request threat-modeler, provenance-review, and security-reviewer profile
+alignment, and `PMR-124` the analysis-workbook CRQ-004 status mirror.
 
-The `project-manager` orchestrator remains `gpt-5.6-sol` and `pm-auditor`
-remains `claude-opus-5`. Historical artifacts are unchanged. Component-owned
-alignment is complete at security-reviewer work `2bb4c98` and durable return
-`c2edac7`; `PMR-109` and `PMR-110` are closed as acknowledgements. The prior
-move to Codex was `PMR-074`, closed at owner commit `2e8d205`; backup-only
-`PMR-111` remains separate.
+The human-installed user-level hook matches `task|run_dynamic_workflow`
+inside the Beryllium workspace. When `model`, `reasoning_effort`, or
+`context_tier` is absent, null, or empty, it injects `claude-opus-5.5` /
+`max` / `long_context` through permission-neutral `modifiedArgs`; it denies
+any explicit other model, effort, or context tier and still denies in-scope
+`run_dynamic_workflow`. The human-run `scripts/beryllium-governance.sh`
+manages only the hook script and hook configuration: `install` and
+`uninstall` remove exact-match copies of the retired user-level scope
+reviewer and skill, and `check` verifies copied-file SHA-256 values, `jq`,
+hook-disable settings, the user session and plan defaults, and the absence
+of retired scope assets. Direct custom-agent sessions, SDK-started
+workflows, out-of-scope worktrees, disabled hooks, hook timeout, and
+non-Copilot tooling remain outside or beyond this enforcement; the main
+session model comes from the human's launch and settings.
 
 `PMD-20260930-003` records the user-level reinstall boundary: new sessions
 load hook configuration, matcher, and environment, while a registered
@@ -170,7 +179,12 @@ require fresh same-turn confirmation.
 The responsible human later reported the exact governance `install && check`
 command completed (`"done above"`). This is human evidence only; the Project
 Manager did not inspect real user configuration or establish install-time
-session state.
+session state. As of 2026-10-06, installing the `PMD-20261006-001`-aligned
+hook is deferred because a `beryllium-hypervisor` human session is active.
+Until then the previously installed hook keeps its older rules for new
+sessions but still admits explicit `claude-opus-5.5` / `max` /
+`long_context` tasks, so the SOP is followed by passing those values
+explicitly.
 
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,

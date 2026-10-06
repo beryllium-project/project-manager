@@ -144,9 +144,7 @@ expect_output() {
 
 agent=$repository_root/.github/agents/project-manager.agent.md
 auditor=$repository_root/.github/agents/pm-auditor.agent.md
-scope_reviewer=$repository_root/.github/agents/beryllium-scope-review.agent.md
 skill=$repository_root/.github/skills/beryllium-project-management/SKILL.md
-scope_skill=$repository_root/.github/skills/beryllium-scope-management/SKILL.md
 instructions=$repository_root/.github/copilot-instructions.md
 interface=$repository_root/AGENT-INTERFACE.md
 roster=$repository_root/AGENT-ROSTER.md
@@ -156,7 +154,7 @@ governance_hook=$repository_root/scripts/beryllium-governance-hook.sh
 governance_hook_config=$repository_root/scripts/beryllium-governance-hook.json.in
 governance_installer=$repository_root/scripts/beryllium-governance.sh
 
-for f in "$agent" "$auditor" "$scope_reviewer" "$skill" "$scope_skill" \
+for f in "$agent" "$auditor" "$skill" \
     "$instructions" "$interface" "$roster" "$readme" "$handoff" \
     "$governance_hook" "$governance_hook_config" "$governance_installer" \
     "$repository_root/.gitignore" \
@@ -172,6 +170,16 @@ for f in "$agent" "$auditor" "$scope_reviewer" "$skill" "$scope_skill" \
     "$repository_root/templates/ledger-row.md" \
     "$repository_root/templates/request-row.md"; do
     require_file "$f"
+done
+
+# PMD-20261006-001 retired the scope reviewer and its skill (C2).
+for retired in "$repository_root/.github/agents/beryllium-scope-review.agent.md" \
+    "$repository_root/.github/skills/beryllium-scope-management"; do
+    if [[ -e $retired || -L $retired ]]; then
+        fail "retired path still exists: ${retired#"$repository_root/"}"
+    else
+        pass "retired path is absent: ${retired#"$repository_root/"}"
+    fi
 done
 
 owner_recovery=$repository_root/scripts/owner-recovery.sh
@@ -204,27 +212,58 @@ require_text "$governance_hook_config" 'BERYLLIUM_TRACKED_TARGETS'
 require_text "$governance_hook" 'permissionDecision:"deny"'
 require_text "$governance_hook" 'modifiedArgs'
 require_text "$governance_hook" 'reasoning_effort'
-require_text "$governance_hook" 'high | xhigh | max'
+require_text "$governance_hook" 'context_tier'
 require_text "$governance_hook" 'claude-opus-5.5'
 require_text "$governance_hook" 'long_context'
-require_text "$governance_hook" 'gpt-5.3-codex'
+require_text "$governance_hook" 'PMD-20261006-001'
 require_text "$governance_hook" \
-    'security-evidence | security-research | security-finding-review'
+    'Beryllium SOP PMD-20261006-001 requires model claude-opus-5.5 for every task; other models are denied.'
 require_text "$governance_hook" \
-    'capability exception requires exact reasoning_effort xhigh'
+    'Beryllium SOP PMD-20261006-001 requires reasoning_effort max for every task; lower or other values are denied.'
 require_text "$governance_hook" \
-    'capability exception requires exact context_tier default'
+    'Beryllium SOP PMD-20261006-001 requires context_tier long_context for every task; other values are denied.'
 require_text "$governance_hook" 'git_parent ls-files -s --'
 refute_pattern "$governance_hook" \
     'curl[[:space:]]|wget[[:space:]]|sqlite3|>>[^#]*\.log'
+refute_pattern "$governance_hook" \
+    'gpt-5\.3-codex|xhigh|security-(evidence|research|finding-review)|beryllium-scope-review|capability exception'
 require_text "$governance_installer" 'HUMAN-RUN'
+require_text "$governance_installer" 'PMD-20261006-001'
 require_text "$governance_installer" 'COPILOT_HOME'
 require_text "$governance_installer" 'settings.json'
 require_text "$governance_installer" 'disableAllHooks'
 require_text "$governance_installer" 'disabledHooks'
 require_text "$governance_installer" 'sha256sum'
+require_text "$governance_installer" '.model == "claude-opus-5.5"'
+require_text "$governance_installer" '(.planModel // .model) == "claude-opus-5.5"'
 require_text "$governance_installer" 'planEffortLevel'
 require_text "$governance_installer" 'planContextTier'
+require_text "$governance_installer" \
+    'retired_agent_dest=$copilot_home/agents/beryllium-scope-review.agent.md'
+require_text "$governance_installer" \
+    'retired_skill_dir=$copilot_home/skills/beryllium-scope-management'
+refute_pattern "$governance_installer" \
+    '(agent|skill)_source=|\.github/(agents|skills)/'
+# Every committed version of each retired source must be a known retired
+# content hash, so install and uninstall can remove any copy ever installed.
+for retired_source in .github/agents/beryllium-scope-review.agent.md \
+    .github/skills/beryllium-scope-management/SKILL.md; do
+    retired_source_hashes=$(
+        git log --format=%H --all -- "$retired_source" |
+            while IFS= read -r retired_commit; do
+                git cat-file -e "$retired_commit:$retired_source" \
+                    2>/dev/null || continue
+                git show "$retired_commit:$retired_source" |
+                    sha256sum | awk '{ print $1 }'
+            done | sort -u
+    )
+    if [[ -z $retired_source_hashes ]]; then
+        fail "no committed version of retired $retired_source was found"
+    fi
+    for retired_hash in $retired_source_hashes; do
+        require_text "$governance_installer" "$retired_hash"
+    done
+done
 require_text "$governance_installer" \
     'Configuration, matcher, and environment changes require a new Copilot CLI session'
 require_text "$governance_installer" \
@@ -400,7 +439,6 @@ done
 # --- agent front matter --------------------------------------------------------
 
 require_pattern "$agent" '^name: project-manager$'
-require_pattern "$agent" '^model: gpt-5.6-sol$'
 refute_pattern "$agent" '^model: claude-fable-5.1$'
 require_pattern "$agent" '^user-invocable: true$'
 require_pattern "$agent" '^disable-model-invocation: true$'
@@ -408,49 +446,39 @@ require_pattern "$agent" '^tools: \["read", "search", "execute", "edit", "agent"
 require_text "$agent" '/beryllium-project-management'
 
 require_pattern "$auditor" '^name: pm-auditor$'
-require_pattern "$auditor" '^model: claude-opus-5$'
 require_pattern "$auditor" '^user-invocable: false$'
 require_pattern "$auditor" '^tools: \["read", "search"\]$'
 refute_pattern "$auditor" '"(execute|edit|web|agent)"'
-require_pattern "$scope_reviewer" '^name: beryllium-scope-review$'
-require_pattern "$scope_reviewer" '^model: claude-opus-5\.5$'
-require_pattern "$scope_reviewer" '^reasoning-effort: max$'
-require_pattern "$scope_reviewer" '^user-invocable: false$'
-require_pattern "$scope_reviewer" '^disable-model-invocation: false$'
-require_pattern "$scope_reviewer" '^tools: \["read", "search"\]$'
-refute_pattern "$scope_reviewer" '"(execute|edit|web|agent|ask_user)"'
-require_text "$scope_reviewer" 'SCOPE_REVIEW_REQUEST_V1'
-require_text "$scope_reviewer" 'protocol: SCOPE_REVIEW_V1'
-require_text "$scope_reviewer" 'steering_only_no_approval_or_human_gate'
-require_text "$scope_reviewer" 'No review recursion is permitted'
-require_text "$scope_reviewer" '`keep`: at most 5 items'
-require_text "$scope_reviewer" '`scope_risks`: at most 3 items'
-require_pattern "$scope_skill" '^name: beryllium-scope-management$'
-require_pattern "$scope_skill" '^user-invocable: false$'
-require_pattern "$scope_skill" '^disable-model-invocation: false$'
-require_text "$scope_skill" 'before adopting any non-trivial'
-require_text "$scope_skill" 'material reassessment or re-plan'
-require_text "$scope_skill" 'new human steering'
-require_text "$scope_skill" 'agent_type: beryllium-scope-review'
-require_text "$scope_skill" 'model: claude-opus-5.5'
-require_text "$scope_skill" 'reasoning_effort: max'
-require_text "$scope_skill" 'context_tier: long_context'
-require_text "$scope_skill" 'Invocation mode is synchronous'
-require_text "$scope_skill" 'retry once'
-require_text "$scope_skill" 'At most three scope-review tasks'
-require_text "$scope_skill" 'There is no review recursion'
-require_text "$scope_skill" 'SCOPE_REVIEW_REQUEST_V1'
-require_text "$scope_skill" 'SCOPE_REVIEW_V1'
-for f in "$agent" "$skill" "$instructions" "$interface"; do
-    require_text "$f" 'gpt-5.6-sol'
-    require_text "$f" 'gpt-5.3-codex'
+for f in "$agent" "$auditor"; do
+    refute_pattern "$f" '^model: gpt-5.6-sol$'
+    refute_pattern "$f" '^model: claude-opus-5$'
 done
-for f in "$agent" "$auditor" "$skill" "$instructions" "$interface"; do
-    require_text "$f" 'claude-opus-5'
+# Single-model SOP PMD-20261006-001 doc contract (C3-C6).
+for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
+    "$roster" "$readme" "$handoff" "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md" \
+    "$repository_root/../COMPONENTS.md" \
+    "$repository_root/components/security-reviewer.md"; do
+    require_text "$f" 'PMD-20261006-001'
+done
+for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
+    "$roster" "$readme" "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md"; do
+    require_text "$f" 'claude-opus-5.5'
     require_text "$f" 'max'
     require_text "$f" 'long_context'
-    require_text "$f" 'PMD-20260915-007'
-    require_text "$f" 'PMD-20260916-001'
+    require_prose "$f" 'responsible(-| )human'
+done
+for f in "$agent" "$skill" "$instructions" "$interface" "$roster" \
+    "$readme" "$handoff" "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md"; do
+    require_text "$f" 'modifiedArgs'
+    require_text "$f" 'run_dynamic_workflow'
+done
+for f in "$agent" "$skill" "$instructions" \
+    "$repository_root/../README.md" \
+    "$repository_root/../.github/copilot-instructions.md"; do
+    require_prose "$f" '[Nn]on-Copilot tooling'
 done
 for f in "$agent" "$skill" "$instructions" "$interface" "$readme" \
     "$repository_root/outbox/tasking/README.md"; do
@@ -489,7 +517,7 @@ require_pattern "$skill" '^user-invocable: false$'
 frontmatter_lines() {
     awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } { print }' "$1"
 }
-for f in "$agent" "$auditor" "$scope_reviewer" "$skill" "$scope_skill"; do
+for f in "$agent" "$auditor" "$skill"; do
     if [[ $(sed -n '1p' "$f") != '---' ]]; then
         fail "${f#"$repository_root/"} does not open with a YAML front-matter block"
     elif frontmatter_lines "$f" | grep -Eq '^[A-Za-z-]+: [^"'"'"'].*: '; then
@@ -500,47 +528,28 @@ for f in "$agent" "$auditor" "$scope_reviewer" "$skill" "$scope_skill"; do
         pass "${f#"$repository_root/"} front matter parses as a flat YAML mapping"
     fi
 done
+# PMD-20261006-001 pins one model in each Project Manager profile (C1).
+for f in "$agent" "$auditor"; do
+    if frontmatter_lines "$f" | grep -Fxq 'model: claude-opus-5.5'; then
+        pass "${f#"$repository_root/"} front matter pins model: claude-opus-5.5"
+    else
+        fail "${f#"$repository_root/"} front matter does not pin model: claude-opus-5.5"
+    fi
+done
 
+sop_record=$repository_root/records/decisions/PMD-20261006-001-single-model-low-overhead-sop.md
+require_file "$sop_record"
+require_text "$sop_record" '**Status:** recorded'
+
+# Superseded governance records stay present and recorded; active documents
+# follow PMD-20261006-001 instead of their model, effort, and scope rules.
 governance_record=$repository_root/records/decisions/PMD-20260930-001-max-effort-scope-governance.md
 require_file "$governance_record"
 require_text "$governance_record" '**Status:** recorded'
-for f in "$agent" "$auditor" "$scope_reviewer" "$skill" "$scope_skill" \
-    "$instructions" "$roster" "$handoff" "$repository_root/../README.md" \
-    "$repository_root/../.github/copilot-instructions.md" \
-    "$repository_root/../COMPONENTS.md"; do
-    require_text "$f" 'PMD-20260930-001'
-done
-for f in "$agent" "$auditor" "$skill" "$instructions" \
-    "$repository_root/../README.md" \
-    "$repository_root/../.github/copilot-instructions.md"; do
-    require_text "$f" 'xhigh'
-    require_text "$f" 'absolute floor'
-    require_text "$f" 'claude-opus-5.5'
-    require_prose "$f" 'responsible(-| )human'
-done
-for f in "$agent" "$skill" "$instructions" \
-    "$repository_root/../README.md" \
-    "$repository_root/../.github/copilot-instructions.md"; do
-    require_text "$f" 'beryllium-scope-management'
-    require_prose "$f" '[Nn]on-Copilot tooling'
-done
 
 governance_remediation_record=$repository_root/records/decisions/PMD-20260930-002-governance-findings-remediation.md
 require_file "$governance_remediation_record"
 require_text "$governance_remediation_record" '**Status:** recorded'
-for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
-    "$roster" "$readme" "$handoff" \
-    "$repository_root/components/security-reviewer.md" \
-    "$repository_root/../README.md" \
-    "$repository_root/../.github/copilot-instructions.md"; do
-    require_text "$f" 'PMD-20260930-002'
-done
-for f in "$agent" "$skill" "$instructions" "$interface" "$roster" \
-    "$readme" "$handoff" "$repository_root/../README.md" \
-    "$repository_root/../.github/copilot-instructions.md"; do
-    require_text "$f" 'modifiedArgs'
-    require_text "$f" 'run_dynamic_workflow'
-done
 
 governance_exception_record=$repository_root/records/decisions/PMD-20260930-005-codex-capability-exception.md
 require_file "$governance_exception_record"
@@ -549,16 +558,6 @@ require_text "$governance_exception_record" \
     'security_review_policy=codex_exception'
 require_text "$governance_exception_record" \
     'sole named capability exception'
-for f in "$agent" "$auditor" "$skill" "$instructions" "$interface" \
-    "$roster" "$readme" "$handoff" \
-    "$repository_root/components/security-reviewer.md" \
-    "$repository_root/../README.md" \
-    "$repository_root/../.github/copilot-instructions.md" \
-    "$repository_root/../COMPONENTS.md"; do
-    require_text "$f" 'PMD-20260930-005'
-    require_prose "$f" 'gpt-5\.3-codex.*xhigh.*default'
-    require_prose "$f" 'named capability exception'
-done
 refute_pattern "$handoff" \
     '^\| P1 \| Deep/adversarial security model choice \(no PMR\) \| The recorded `gpt-5\.3-codex` row remains unchanged, but CLI 1\.0\.90-5 does not advertise required `max` / `long_context`\. A responsible human selects a supported model or revises the requirement; no agent substitutes one\. \|$'
 refute_pattern "$handoff" \
@@ -740,7 +739,7 @@ require_text "$handoff" 'project-manager'
 require_text "$repository_root/records/assurance/helium-te-fv-pathfinder.md" '## Provenance'
 require_text "$repository_root/records/assurance/helium-te-fv-pathfinder.md" 'SPDX-License-Identifier: GPL-3.0-only'
 
-# --- max-effort and scope-governance hook -----------------------------------
+# --- single-model governance hook (PMD-20261006-001) -------------------------
 
 governance_workspace=$sandbox/governance-workspace
 governance_external=$sandbox/governance-external
@@ -811,23 +810,6 @@ expect_hook_pass() {
     fi
 }
 
-expect_hook_modified_max() {
-    local description=$1 payload=$2 expected=$3
-    local root=${4:-$governance_workspace}
-    local targets=${5:-[]}
-    local output
-    output=$(invoke_hook "$payload" "$root" "$targets")
-    if jq -e --argjson expected "$expected" '
-        type == "object" and
-        (has("permissionDecision") | not) and
-        .modifiedArgs == ($expected + {reasoning_effort:"max"})
-    ' >/dev/null 2>&1 <<<"$output"; then
-        pass "$description"
-    else
-        fail "$description (expected max-effort modifiedArgs; got: $output)"
-    fi
-}
-
 expect_hook_modified_exact() {
     local description=$1 payload=$2 expected=$3
     local root=${4:-$governance_workspace}
@@ -862,265 +844,157 @@ expect_hook_exact_deny() {
     fi
 }
 
-original_args=$(jq -cn '{
+sop_model_reason='Beryllium SOP PMD-20261006-001 requires model claude-opus-5.5 for every task; other models are denied.'
+sop_effort_reason='Beryllium SOP PMD-20261006-001 requires reasoning_effort max for every task; lower or other values are denied.'
+sop_context_reason='Beryllium SOP PMD-20261006-001 requires context_tier long_context for every task; other values are denied.'
+sop_triple='{"model":"claude-opus-5.5","reasoning_effort":"max","context_tier":"long_context"}'
+
+base_task_args=$(jq -cn '{
     agent_type:"explore",
     name:"fixture",
     description:"preserve description",
     prompt:"preserve prompt",
-    model:"gpt-5.6-sol",
-    context_tier:"long_context",
     background:false,
     metadata:{nested:["all", "fields"], flag:true}
 }')
-payload=$(make_hook_payload "$governance_workspace" task "$original_args")
-expect_hook_modified_max \
-    "governance hook injects max without changing permissions or fields" \
-    "$payload" "$original_args"
+sop_expected=$(jq -c --argjson triple "$sop_triple" '. + $triple' \
+    <<<"$base_task_args")
 
-payload=$(make_hook_payload "$governance_workspace" task "$original_args" string)
-expect_hook_modified_max \
-    "governance hook injects max into JSON-string task arguments" \
-    "$payload" "$original_args"
+payload=$(make_hook_payload "$governance_workspace" task "$base_task_args")
+expect_hook_modified_exact \
+    "governance hook injects the SOP triple without a permission decision" \
+    "$payload" "$sop_expected"
+payload=$(make_hook_payload "$governance_workspace" task "$base_task_args" \
+    string)
+expect_hook_modified_exact \
+    "governance hook injects the SOP triple into JSON-string task arguments" \
+    "$payload" "$sop_expected"
 
-for effort in medium low minimal; do
-    task_args=$(jq -cn --arg effort "$effort" \
-        '{agent_type:"explore",name:"fixture",reasoning_effort:$effort}')
+for empty_value in null '""'; do
+    task_args=$(jq -c --argjson empty "$empty_value" \
+        '. + {model:$empty,reasoning_effort:$empty,context_tier:$empty}' \
+        <<<"$base_task_args")
     payload=$(make_hook_payload "$governance_workspace" task "$task_args")
-    expect_hook_deny "governance hook rejects explicit $effort effort" \
-        "$payload" "below the required high floor"
+    expect_hook_modified_exact \
+        "governance hook fills every SOP field given as $empty_value" \
+        "$payload" "$sop_expected"
 done
 
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture","reasoning_effort":"turbo"}')
-expect_hook_deny "governance hook rejects unknown effort" "$payload" \
-    "or is unknown"
-
-for effort in high xhigh max; do
-    task_args=$(jq -cn --arg effort "$effort" \
-        '{agent_type:"explore",name:"fixture",reasoning_effort:$effort}')
-    format=object
-    [[ $effort == xhigh ]] && format=string
-    payload=$(make_hook_payload "$governance_workspace" task "$task_args" \
-        "$format")
-    expect_hook_pass \
-        "governance hook preserves valid $effort-effort permissions" \
-        "$payload"
-done
-
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"beryllium-scope-review","name":"beryllium-scope-review","model":"claude-opus-5","reasoning_effort":"max","context_tier":"long_context"}')
-expect_hook_deny "governance hook rejects wrong reviewer settings" "$payload" \
-    "requires model claude-opus-5.5"
-
-reviewer_args='{"agent_type":"beryllium-scope-review","name":"beryllium-scope-review","model":"claude-opus-5.5","context_tier":"long_context"}'
-payload=$(make_hook_payload "$governance_workspace" task "$reviewer_args")
-expect_hook_modified_max \
-    "governance hook injects max before exact reviewer enforcement" \
-    "$payload" "$reviewer_args"
-
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"beryllium-scope-review","name":"beryllium-scope-review","model":"claude-opus-5.5","reasoning_effort":"max","context_tier":"long_context"}')
-expect_hook_pass "governance hook accepts exact reviewer settings" "$payload"
-
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"general-purpose","name":"beryllium-scope-review","model":"claude-opus-5.5","reasoning_effort":"max","context_tier":"long_context"}')
-expect_hook_deny "governance hook rejects spoofed reviewer display names" \
-    "$payload" "must use agent_type beryllium-scope-review"
-
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"explore","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"xhigh","context_tier":"default"}')
-codex_outside_reason='Beryllium gpt-5.3-codex is allowed only for agent_type security-evidence, security-research, or security-finding-review under the named capability exception.'
-expect_hook_exact_deny \
-    "governance hook denies explicit Codex outside the named exception" \
-    "$payload" "$codex_outside_reason"
-
-codex_effort_reason='Beryllium gpt-5.3-codex capability exception requires exact reasoning_effort xhigh; high, max, lower, and unknown values are denied.'
-codex_context_reason='Beryllium gpt-5.3-codex capability exception requires exact context_tier default; long_context and other values are denied.'
-
-for agent_type in security-evidence security-research security-finding-review; do
-    base_security_args=$(jq -cn --arg agent_type "$agent_type" '{
-        agent_type:$agent_type,
-        name:"fixture",
-        description:"preserve description",
-        prompt:"preserve prompt",
-        background:false,
-        metadata:{nested:["all", "fields"], flag:true}
-    }')
-    expected=$(jq -c \
-        '. + {
-            model:"gpt-5.3-codex",
-            reasoning_effort:"xhigh",
-            context_tier:"default"
-        }' <<<"$base_security_args")
-    payload=$(make_hook_payload "$governance_workspace" task \
-        "$base_security_args")
-    expect_hook_modified_exact \
-        "governance hook defaults omitted $agent_type Codex fields" \
-        "$payload" "$expected"
-
-    null_security_args=$(jq -c \
-        '. + {model:null,reasoning_effort:null,context_tier:null}' \
-        <<<"$base_security_args")
-    payload=$(make_hook_payload "$governance_workspace" task \
-        "$null_security_args")
-    expect_hook_modified_exact \
-        "governance hook defaults null $agent_type Codex fields" \
-        "$payload" "$expected"
-
-    empty_security_args=$(jq -c \
-        '. + {model:"",reasoning_effort:"",context_tier:""}' \
-        <<<"$base_security_args")
-    payload=$(make_hook_payload "$governance_workspace" task \
-        "$empty_security_args")
-    expect_hook_modified_exact \
-        "governance hook defaults empty $agent_type Codex fields" \
-        "$payload" "$expected"
-
-    exact_codex_args=$(jq -c \
-        '. + {
-            model:"gpt-5.3-codex",
-            reasoning_effort:"xhigh",
-            context_tier:"default"
-        }' <<<"$base_security_args")
-    payload=$(make_hook_payload "$governance_workspace" task \
-        "$exact_codex_args")
-    expect_hook_pass \
-        "governance hook accepts exact $agent_type Codex exception" \
-        "$payload"
-
-    alternate_args=$(jq -c \
-        '. + {model:"claude-opus-5",context_tier:"long_context"}' \
-        <<<"$base_security_args")
-    alternate_expected=$(jq -c \
-        '. + {reasoning_effort:"max"}' <<<"$alternate_args")
-    payload=$(make_hook_payload "$governance_workspace" task \
-        "$alternate_args")
-    expect_hook_modified_exact \
-        "governance hook gives explicit non-Codex $agent_type the general max default" \
-        "$payload" "$alternate_expected"
-
-    for effort in high xhigh max; do
-        alternate_explicit=$(jq -c --arg effort "$effort" \
-            '. + {
-                model:"claude-opus-5",
-                reasoning_effort:$effort,
-                context_tier:"long_context"
-            }' <<<"$base_security_args")
-        payload=$(make_hook_payload "$governance_workspace" task \
-            "$alternate_explicit")
-        expect_hook_pass \
-            "governance hook accepts explicit non-Codex $agent_type $effort effort" \
-            "$payload"
+for field in model reasoning_effort context_tier; do
+    for empty_form in omitted null empty; do
+        task_args=$(jq -c --argjson triple "$sop_triple" \
+            --arg field "$field" --arg form "$empty_form" '
+            . + $triple |
+            if $form == "omitted" then del(.[$field])
+            elif $form == "null" then .[$field] = null
+            else .[$field] = "" end
+        ' <<<"$base_task_args")
+        payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+        expect_hook_modified_exact \
+            "governance hook fills $empty_form $field and preserves metadata" \
+            "$payload" "$sop_expected"
     done
 done
 
-for empty_form in omitted null empty; do
-    case $empty_form in
-    omitted)
-        codex_args='{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex","metadata":{"preserved":true}}'
-        ;;
-    null)
-        codex_args='{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":null,"context_tier":null,"metadata":{"preserved":true}}'
-        ;;
-    empty)
-        codex_args='{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"","context_tier":"","metadata":{"preserved":true}}'
-        ;;
-    esac
-    expected=$(jq -c \
-        '. + {reasoning_effort:"xhigh",context_tier:"default"}' \
-        <<<"$codex_args")
-    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
-    expect_hook_modified_exact \
-        "governance hook fills $empty_form effort/context for explicit Codex" \
-        "$payload" "$expected"
+for agent_type in explore general-purpose task code-review security-review \
+    security-evidence security-research security-finding-review \
+    beryllium-scope-review custom-owner; do
+    task_args=$(jq -c --arg agent_type "$agent_type" \
+        --argjson triple "$sop_triple" \
+        '. + {agent_type:$agent_type} + $triple' <<<"$base_task_args")
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+    expect_hook_pass \
+        "governance hook passes the exact SOP triple for $agent_type" \
+        "$payload"
 done
-
-for effort in high max turbo; do
-    codex_args=$(jq -cn --arg effort "$effort" '{
-        agent_type:"security-evidence",
-        name:"fixture",
-        model:"gpt-5.3-codex",
-        reasoning_effort:$effort,
-        context_tier:"default"
-    }')
-    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
-    expect_hook_exact_deny \
-        "governance hook rejects Codex effort mismatch $effort" \
-        "$payload" "$codex_effort_reason"
-done
-
-for context in long_context unknown; do
-    codex_args=$(jq -cn --arg context "$context" '{
-        agent_type:"security-research",
-        name:"fixture",
-        model:"gpt-5.3-codex",
-        reasoning_effort:"xhigh",
-        context_tier:$context
-    }')
-    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
-    expect_hook_exact_deny \
-        "governance hook rejects Codex context mismatch $context" \
-        "$payload" "$codex_context_reason"
-done
-
-alternate_below='{"agent_type":"security-finding-review","name":"fixture","model":"claude-opus-5","reasoning_effort":"medium","context_tier":"long_context"}'
-payload=$(make_hook_payload "$governance_workspace" task "$alternate_below")
-expect_hook_deny \
-    "governance hook applies the general floor to explicit non-Codex security type" \
-    "$payload" "below the required high floor"
-
-for agent_type in security-review security-reviewer general-purpose; do
-    codex_args=$(jq -cn --arg agent_type "$agent_type" '{
-        agent_type:$agent_type,
-        name:"fixture",
-        model:"gpt-5.3-codex",
-        reasoning_effort:"xhigh",
-        context_tier:"default"
-    }')
-    payload=$(make_hook_payload "$governance_workspace" task "$codex_args")
-    expect_hook_exact_deny \
-        "governance hook denies explicit Codex for $agent_type" \
-        "$payload" "$codex_outside_reason"
-done
-
 payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"security-review","name":"fixture","reasoning_effort":"max"}')
-expect_hook_pass "governance hook does not block built-in security-review" \
-    "$payload"
-
-security_review_args='{"agent_type":"security-review","name":"fixture","model":"claude-opus-5","metadata":{"preserved":true}}'
-security_review_expected=$(jq -c \
-    '. + {reasoning_effort:"max"}' <<<"$security_review_args")
-payload=$(make_hook_payload "$governance_workspace" task \
-    "$security_review_args")
-expect_hook_modified_exact \
-    "governance hook gives built-in security-review the ordinary max default" \
-    "$payload" "$security_review_expected"
-
-payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"security-reviewer","name":"fixture","reasoning_effort":"max"}')
+    "$(jq -c --argjson triple "$sop_triple" '. + $triple' \
+        <<<"$base_task_args")" string)
 expect_hook_pass \
-    "governance hook does not block non-model-invocable orchestrator type" \
+    "governance hook passes the exact SOP triple in JSON-string arguments" \
     "$payload"
 
+for agent_type in security-evidence explore general-purpose \
+    beryllium-scope-review; do
+    for model in gpt-5.6-sol gpt-5.3-codex claude-opus-5 auto; do
+        task_args=$(jq -c --arg agent_type "$agent_type" \
+            --arg model "$model" --argjson triple "$sop_triple" \
+            '. + $triple + {agent_type:$agent_type,model:$model}' \
+            <<<"$base_task_args")
+        payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+        expect_hook_exact_deny \
+            "governance hook denies model $model for $agent_type" \
+            "$payload" "$sop_model_reason"
+    done
+done
+
 payload=$(make_hook_payload "$governance_workspace" task \
-    '{"agent_type":"security-audit","name":"fixture","reasoning_effort":"max"}')
-expect_hook_pass "governance hook does not block unconfirmed security names" \
-    "$payload"
+    '{"agent_type":"security-evidence","name":"fixture","model":"gpt-5.3-codex"}')
+expect_hook_exact_deny \
+    "governance hook denies an explicit model instead of filling other fields" \
+    "$payload" "$sop_model_reason"
+
+for model_json in 5 true '{"id":"claude-opus-5.5"}' '["claude-opus-5.5"]'; do
+    task_args=$(jq -c --argjson model "$model_json" \
+        --argjson triple "$sop_triple" '. + $triple + {model:$model}' \
+        <<<"$base_task_args")
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+    expect_hook_exact_deny \
+        "governance hook denies non-string model $model_json" \
+        "$payload" "$sop_model_reason"
+done
+
+for effort_json in '"high"' '"xhigh"' '"medium"' '"low"' '"unknown"' \
+    5 false '["max"]'; do
+    task_args=$(jq -c --argjson effort "$effort_json" \
+        --argjson triple "$sop_triple" \
+        '. + $triple + {reasoning_effort:$effort}' <<<"$base_task_args")
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+    expect_hook_exact_deny \
+        "governance hook denies reasoning_effort $effort_json" \
+        "$payload" "$sop_effort_reason"
+done
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"security-research","name":"fixture","reasoning_effort":"xhigh","context_tier":"default"}')
+expect_hook_exact_deny \
+    "governance hook denies an explicit effort although the model is filled" \
+    "$payload" "$sop_effort_reason"
+
+for context_json in '"default"' '"unknown"' 1; do
+    task_args=$(jq -c --argjson context "$context_json" \
+        --argjson triple "$sop_triple" \
+        '. + $triple + {context_tier:$context}' <<<"$base_task_args")
+    payload=$(make_hook_payload "$governance_workspace" task "$task_args")
+    expect_hook_exact_deny \
+        "governance hook denies context_tier $context_json" \
+        "$payload" "$sop_context_reason"
+done
+
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"explore","name":"fixture","model":"gpt-5.6-sol","reasoning_effort":"low","context_tier":"default"}')
+expect_hook_exact_deny \
+    "governance hook checks the model before effort and context" \
+    "$payload" "$sop_model_reason"
+payload=$(make_hook_payload "$governance_workspace" task \
+    '{"agent_type":"explore","name":"fixture","model":"claude-opus-5.5","reasoning_effort":"low","context_tier":"default"}')
+expect_hook_exact_deny \
+    "governance hook checks effort before context" \
+    "$payload" "$sop_effort_reason"
 
 payload=$(make_hook_payload "$governance_external" task \
     '{"agent_type":"explore","name":"fixture","reasoning_effort":"low"}')
 scoped_payload=$payload
-expect_hook_deny "governance hook covers resolved tracked symlink targets" \
-    "$payload" "below the required high floor"
+expect_hook_exact_deny "governance hook covers resolved tracked symlink targets" \
+    "$payload" "$sop_effort_reason"
 
 targets_json=$(jq -cn --arg target "$governance_external" '[$target]')
-expect_hook_deny "governance hook retains installed symlink scope when root is absent" \
-    "$payload" "below the required high floor" "$sandbox/missing-root" \
+expect_hook_exact_deny "governance hook retains installed symlink scope when root is absent" \
+    "$payload" "$sop_effort_reason" "$sandbox/missing-root" \
     "$targets_json"
 
 payload=$(make_hook_payload "$governance_outside" task \
-    '{"agent_type":"explore","name":"fixture","reasoning_effort":"low"}')
+    '{"agent_type":"explore","name":"fixture","model":"gpt-5.3-codex","reasoning_effort":"low","context_tier":"default"}')
 expect_hook_pass "governance hook leaves outside-root tasks unchanged" "$payload"
 expect_hook_pass "governance hook leaves unrelated tasks unchanged when root is absent" \
     "$payload" "$sandbox/missing-root" '[]'
@@ -1174,12 +1048,23 @@ payload=$(make_hook_payload "$governance_outside" task 'not-json' string)
 expect_hook_pass "governance hook ignores malformed task args outside scope" \
     "$payload"
 
+no_jq_path=$sandbox/governance-no-jq-path
+mkdir -p "$no_jq_path"
+output=$(printf '%s\n' "$scoped_payload" |
+    env PATH="$no_jq_path" "$BASH" "$governance_hook" 2>/dev/null)
+if [[ $output == '{"permissionDecision":"deny","permissionDecisionReason":"Beryllium governance hook requires jq and cannot validate this task launch."}' ]]; then
+    pass "governance hook denies statically when jq is unavailable"
+else
+    fail "governance hook did not deny statically without jq (got: $output)"
+fi
+
 # --- sandbox user-level install/check ---------------------------------------
 
 governance_home=$sandbox/copilot-home
 mkdir -p "$governance_home"
 cat >"$governance_home/settings.json" <<'EOF'
 {
+  "model": "claude-opus-5.5",
   "effortLevel": "max",
   "contextTier": "long_context",
   "disableAllHooks": false,
@@ -1189,16 +1074,50 @@ EOF
 settings_baseline=$sandbox/governance-settings.json
 cp "$governance_home/settings.json" "$settings_baseline"
 settings_hash=$(sha256sum "$governance_home/settings.json" | awk '{ print $1 }')
-installed_agent=$governance_home/agents/beryllium-scope-review.agent.md
-installed_skill=$governance_home/skills/beryllium-scope-management/SKILL.md
 installed_hook=$governance_home/hooks/beryllium-governance-hook.sh
 installed_config=$governance_home/hooks/beryllium-governance.json
 installed_governance_files=(
-    "$installed_agent"
-    "$installed_skill"
     "$installed_hook"
     "$installed_config"
 )
+
+# Retired managed copies (PMD-20261006-001), seeded from the only committed
+# version of each former source.
+retired_agent=$governance_home/agents/beryllium-scope-review.agent.md
+retired_skill_dir=$governance_home/skills/beryllium-scope-management
+retired_skill=$retired_skill_dir/SKILL.md
+retired_source_commit=b82e17ac5a765705e739f69538766d73a03f2fe6
+retired_agent_known=$sandbox/retired-scope-review.agent.md
+retired_skill_known=$sandbox/retired-scope-management-SKILL.md
+git show "$retired_source_commit:.github/agents/beryllium-scope-review.agent.md" \
+    >"$retired_agent_known" 2>/dev/null ||
+    fail "cannot read the retired scope reviewer from $retired_source_commit"
+git show "$retired_source_commit:.github/skills/beryllium-scope-management/SKILL.md" \
+    >"$retired_skill_known" 2>/dev/null ||
+    fail "cannot read the retired scope skill from $retired_source_commit"
+
+seed_known_retired() {
+    mkdir -p "$governance_home/agents" "$retired_skill_dir"
+    cp "$retired_agent_known" "$retired_agent"
+    cp "$retired_skill_known" "$retired_skill"
+}
+
+# One line per path: type, SHA-256, and mode, for no-change comparisons.
+governance_file_state() {
+    local f
+    for f in "$@"; do
+        if [[ -L $f ]]; then
+            printf '%s symlink %s\n' "$f" "$(readlink -- "$f")"
+        elif [[ -f $f ]]; then
+            printf '%s %s %s\n' "$f" \
+                "$(sha256sum "$f" | awk '{ print $1 }')" "$(stat -c '%a' "$f")"
+        elif [[ -e $f ]]; then
+            printf '%s non-regular\n' "$f"
+        else
+            printf '%s absent\n' "$f"
+        fi
+    done
+}
 
 governance_help_output=$(bash "$governance_installer" --help 2>&1)
 governance_help_status=$?
@@ -1213,7 +1132,9 @@ for expected_help in \
     'Configuration, matcher, and environment changes require a new Copilot CLI session.' \
     'replacing that script body can affect an already-running governed session at its next matching call' \
     'Agent and skill reread behavior in running sessions is unknown.' \
-    'Uninstall can leave an already-running registered session pointing at removed hook or configuration paths.'; do
+    'Uninstall can leave an already-running registered session pointing at removed hook or configuration paths.' \
+    'If a retired path holds anything else, install changes nothing; inspect and remove that path manually.' \
+    'User settings must provide session defaults of model claude-opus-5.5, effortLevel max, and contextTier long_context.'; do
     if grep -Fq -- "$expected_help" <<<"$governance_help_normalized"; then
         pass "governance help states: $expected_help"
     else
@@ -1226,8 +1147,7 @@ expect_exit "governance check fails before sandbox install" 1 \
 mkdir -p "$installed_config"
 expect_exit "governance install rejects a non-regular destination atomically" 1 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" install
-if [[ ! -e $installed_agent && ! -e $installed_skill &&
-    ! -e $installed_hook ]]; then
+if [[ ! -e $installed_hook ]]; then
     pass "governance failed install leaves no mixed policy files"
 else
     fail "governance failed install left mixed policy files"
@@ -1235,6 +1155,13 @@ fi
 rmdir -- "$installed_config"
 expect_exit "governance installs into sandbox COPILOT_HOME" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" install
+if [[ ! -e $governance_home/agents && ! -e $governance_home/skills &&
+    $(ls -A -- "$governance_home/hooks" | sort | tr '\n' ' ') == \
+        'beryllium-governance-hook.sh beryllium-governance.json ' ]]; then
+    pass "governance install manages only the hook and its configuration"
+else
+    fail "governance install wrote a path other than the hook and its configuration"
+fi
 expect_exit "governance sandbox check passes after install" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
 ordinary_reinstall_output=$(env COPILOT_HOME="$governance_home" \
@@ -1314,15 +1241,21 @@ if [[ -z $cross_device_root ]]; then
 else
     cross_device_home=$sandbox/cross-device-copilot-home
     cross_device_hooks=$cross_device_root/hooks
+    cross_device_retired_files=(
+        "$cross_device_home/agents/beryllium-scope-review.agent.md"
+        "$cross_device_home/skills/beryllium-scope-management/SKILL.md"
+    )
     mkdir -p -- "$cross_device_home/agents" \
         "$cross_device_home/skills/beryllium-scope-management" \
         "$cross_device_hooks"
     ln -s -- "$cross_device_hooks" "$cross_device_home/hooks"
     cp "$settings_baseline" "$cross_device_home/settings.json"
+    cp "$retired_agent_known" "${cross_device_retired_files[0]}"
+    cp "$retired_skill_known" "${cross_device_retired_files[1]}"
+    cross_device_retired_state=$(governance_file_state \
+        "${cross_device_retired_files[@]}")
 
     cross_device_files=(
-        "$cross_device_home/agents/beryllium-scope-review.agent.md"
-        "$cross_device_home/skills/beryllium-scope-management/SKILL.md"
         "$cross_device_hooks/beryllium-governance-hook.sh"
         "$cross_device_hooks/beryllium-governance.json"
     )
@@ -1330,10 +1263,8 @@ else
         printf 'cross-device managed fixture %s\n' "$i" \
             >"${cross_device_files[$i]}"
     done
-    chmod 0600 "${cross_device_files[0]}"
-    chmod 0640 "${cross_device_files[1]}"
-    chmod 0700 "${cross_device_files[2]}"
-    chmod 0660 "${cross_device_files[3]}"
+    chmod 0700 "${cross_device_files[0]}"
+    chmod 0660 "${cross_device_files[1]}"
 
     cross_device_unrelated_files=(
         "$cross_device_home/unrelated.keep"
@@ -1393,7 +1324,7 @@ else
     fi
 
     cross_device_symlink_intact=1
-    for i in 2 3; do
+    for i in "${!cross_device_files[@]}"; do
         f=${cross_device_files[$i]}
         if [[ $(sha256sum "$f" | awk '{ print $1 }') != \
             "${cross_device_hashes[$i]}" ]] ||
@@ -1405,6 +1336,13 @@ else
         pass "governance cross-device refusal writes no managed file through the destination symlink"
     else
         fail "governance cross-device refusal wrote a managed file through the destination symlink"
+    fi
+
+    if [[ $(governance_file_state "${cross_device_retired_files[@]}") == \
+        "$cross_device_retired_state" ]]; then
+        pass "governance cross-device refusal removes no retired copy"
+    else
+        fail "governance cross-device refusal removed or changed a retired copy"
     fi
 
     cross_device_unrelated_intact=1
@@ -1428,14 +1366,9 @@ for i in "${!installed_governance_files[@]}"; do
     printf '\nrollback fixture %s\n' "$i" \
         >>"${installed_governance_files[$i]}"
 done
-chmod 0600 "$installed_agent" "$installed_skill" "$installed_config"
+chmod 0600 "$installed_config"
 chmod 0700 "$installed_hook"
-rollback_hashes=()
-rollback_modes=()
-for f in "${installed_governance_files[@]}"; do
-    rollback_hashes+=("$(sha256sum "$f" | awk '{ print $1 }')")
-    rollback_modes+=("$(stat -c '%a' "$f")")
-done
+rollback_state=$(governance_file_state "${installed_governance_files[@]}")
 hooks_dir=$governance_home/hooks
 hooks_dir_mode=$(stat -c '%a' "$hooks_dir")
 commit_failure_log=$sandbox/governance-commit-failure.log
@@ -1454,30 +1387,51 @@ else
     fail "governance commit-failure test could not restrict hook-directory permissions"
 fi
 if ((commit_failure_status != 0)); then
-    pass "governance reinstall reports a real later-destination commit failure"
+    pass "governance reinstall reports a real destination commit failure"
 else
     fail "governance reinstall unexpectedly succeeded with a non-writable hooks directory"
 fi
 if grep -Fq -- \
     'cannot install governance hook; previous files were restored' \
     "$commit_failure_log"; then
-    pass "governance commit failure occurs after earlier destinations can be replaced"
+    pass "governance commit failure is reported at the governance-hook replacement"
 else
     fail "governance commit failure did not reach the governance-hook replacement"
 fi
-rollback_intact=1
-for i in "${!installed_governance_files[@]}"; do
-    f=${installed_governance_files[$i]}
-    if [[ ! -f $f || -L $f ]] ||
-        [[ $(sha256sum "$f" | awk '{ print $1 }') != \
-            "${rollback_hashes[$i]}" ]] ||
-        [[ $(stat -c '%a' "$f") != "${rollback_modes[$i]}" ]]; then
-        rollback_intact=0
-        fail "governance rollback did not restore original hash and mode: $f"
-    fi
-done
-if ((rollback_intact)); then
+if [[ $(governance_file_state "${installed_governance_files[@]}") == \
+    "$rollback_state" ]]; then
+    pass "governance commit failure keeps every original file/hash/mode"
+else
+    fail "governance commit failure changed an original file, hash, or mode"
+fi
+
+# Fail only the second staged commit, so the replaced hook must be restored.
+mv_shim_dir=$sandbox/governance-mv-shim
+mkdir -p "$mv_shim_dir"
+{
+    printf '#!%s\n' "$BASH"
+    printf '%s\n' 'for arg in "$@"; do [[ $arg == */new.1 ]] && exit 1; done'
+    printf 'exec %q "$@"\n' "$(command -v mv)"
+} >"$mv_shim_dir/mv"
+chmod 0755 "$mv_shim_dir/mv"
+later_failure_log=$sandbox/governance-later-commit-failure.log
+env PATH="$mv_shim_dir:$PATH" COPILOT_HOME="$governance_home" \
+    bash "$governance_installer" install >"$later_failure_log" 2>&1
+later_failure_status=$?
+if ((later_failure_status != 0)) &&
+    grep -Fq -- 'rollback restored governance hook' "$later_failure_log" &&
+    grep -Fq -- \
+        'cannot install hook configuration; previous files were restored' \
+        "$later_failure_log"; then
+    pass "governance later-destination commit failure rolls back the replaced hook"
+else
+    fail "governance later-destination commit failure did not roll back the replaced hook"
+fi
+if [[ $(governance_file_state "${installed_governance_files[@]}") == \
+    "$rollback_state" ]]; then
     pass "governance rollback restores every original file/hash/mode with no missing destination"
+else
+    fail "governance rollback did not restore every original file, hash, and mode"
 fi
 expect_exit "governance reinstall repairs rollback-fixture drift" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" install
@@ -1489,8 +1443,7 @@ expect_exit "governance check detects SHA-256 tampering" 1 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
 expect_exit "governance uninstall preserves a drifted file" 1 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" uninstall
-if [[ -f $installed_agent && -f $installed_skill && -f $installed_hook &&
-    -f $installed_config ]]; then
+if [[ -f $installed_hook && -f $installed_config ]]; then
     pass "governance failed uninstall is atomic"
 else
     fail "governance failed uninstall removed a managed file"
@@ -1510,12 +1463,128 @@ expect_exit "governance check rejects unresolved disabledHooks" 1 \
 
 jq '.planEffortLevel = "medium"' "$settings_baseline" \
     >"$governance_home/settings.json"
-expect_exit "governance check rejects below-floor plan defaults" 1 \
+expect_exit "governance check rejects a non-max plan effort" 1 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+
+for settings_model in gpt-5.6-sol claude-opus-5 opus auto; do
+    jq --arg model "$settings_model" '.model = $model' "$settings_baseline" \
+        >"$governance_home/settings.json"
+    expect_exit "governance check rejects user model $settings_model" 1 \
+        env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+done
+jq 'del(.model)' "$settings_baseline" >"$governance_home/settings.json"
+expect_exit "governance check rejects an unset user model" 1 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+jq 'del(.model) | .planModel = "claude-opus-5.5"' "$settings_baseline" \
+    >"$governance_home/settings.json"
+expect_exit "governance check requires the session model despite a plan model" 1 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+jq '.planModel = "claude-opus-5"' "$settings_baseline" \
+    >"$governance_home/settings.json"
+expect_exit "governance check rejects a different plan model" 1 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+jq '.planModel = "claude-opus-5.5" | .planEffortLevel = "max" |
+    .planContextTier = "long_context"' "$settings_baseline" \
+    >"$governance_home/settings.json"
+expect_exit "governance check accepts explicit SOP plan settings" 0 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+
+jq '.model = "claude-opus-5"' "$settings_baseline" \
+    >"$governance_home/settings.json"
+preflight_state=$(governance_file_state "${installed_governance_files[@]}")
+expect_exit "governance install preflight refuses a non-SOP user model" 1 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" install
+if [[ $(governance_file_state "${installed_governance_files[@]}") == \
+    "$preflight_state" ]]; then
+    pass "governance refused preflight changes no managed file"
+else
+    fail "governance refused preflight changed a managed file"
+fi
 
 cp "$settings_baseline" "$governance_home/settings.json"
 expect_exit "governance check recovers after settings restoration" 0 \
     env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+
+# Retired scope-review agent and skill copies (PMD-20261006-001).
+seed_known_retired
+retired_check_output=$(env COPILOT_HOME="$governance_home" \
+    bash "$governance_installer" check 2>&1)
+retired_check_status=$?
+if ((retired_check_status == 1)) &&
+    grep -Fq -- "retired scope reviewer is still installed: $retired_agent" \
+        <<<"$retired_check_output" &&
+    grep -Fq -- \
+        "retired scope-management skill is still installed: $retired_skill" \
+        <<<"$retired_check_output"; then
+    pass "governance check flags present retired copies"
+else
+    fail "governance check did not flag present retired copies (exit $retired_check_status)"
+fi
+expect_exit "governance install removes exact retired copies" 0 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" install
+if [[ ! -e $retired_agent && ! -L $retired_agent &&
+    ! -e $retired_skill_dir && -d $governance_home/agents &&
+    -d $governance_home/skills ]]; then
+    pass "governance install removed the retired files and empty skill directory only"
+else
+    fail "governance install left a retired path or removed a user directory"
+fi
+expect_exit "governance check passes once retired copies are removed" 0 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" check
+
+seed_known_retired
+printf '\nlocal edit\n' >>"$retired_skill"
+retired_state=$(governance_file_state "${installed_governance_files[@]}" \
+    "$retired_agent" "$retired_skill")
+retired_install_output=$(env COPILOT_HOME="$governance_home" \
+    bash "$governance_installer" install 2>&1)
+retired_install_status=$?
+if ((retired_install_status == 1)) &&
+    grep -Fq -- 'nothing was changed; inspect and remove it manually' \
+        <<<"$retired_install_output"; then
+    pass "governance install refuses unknown retired content"
+else
+    fail "governance install did not refuse unknown retired content (exit $retired_install_status)"
+fi
+if [[ $(governance_file_state "${installed_governance_files[@]}" \
+    "$retired_agent" "$retired_skill") == "$retired_state" ]]; then
+    pass "governance refused install changes no managed or retired file"
+else
+    fail "governance refused install changed a managed or retired file"
+fi
+retired_check_output=$(env COPILOT_HOME="$governance_home" \
+    bash "$governance_installer" check 2>&1)
+if grep -Fq -- \
+    "retired scope-management skill path holds unknown content or is not a regular file: $retired_skill; inspect and remove it manually" \
+    <<<"$retired_check_output"; then
+    pass "governance check flags unknown retired content"
+else
+    fail "governance check did not flag unknown retired content"
+fi
+expect_exit "governance uninstall refuses unknown retired content" 1 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" uninstall
+if [[ $(governance_file_state "${installed_governance_files[@]}" \
+    "$retired_agent" "$retired_skill") == "$retired_state" ]]; then
+    pass "governance refused uninstall changes no managed or retired file"
+else
+    fail "governance refused uninstall changed a managed or retired file"
+fi
+
+rm -f -- "$retired_skill"
+ln -s -- "$retired_skill_known" "$retired_skill"
+retired_state=$(governance_file_state "${installed_governance_files[@]}" \
+    "$retired_agent" "$retired_skill")
+expect_exit "governance install refuses a non-regular retired path" 1 \
+    env COPILOT_HOME="$governance_home" bash "$governance_installer" install
+if [[ $(governance_file_state "${installed_governance_files[@]}" \
+    "$retired_agent" "$retired_skill") == "$retired_state" ]]; then
+    pass "governance non-regular retired refusal changes nothing"
+else
+    fail "governance non-regular retired refusal changed a path"
+fi
+rm -f -- "$retired_skill"
+cp "$retired_skill_known" "$retired_skill"
+
 governance_uninstall_output=$(env COPILOT_HOME="$governance_home" \
     bash "$governance_installer" uninstall 2>&1)
 governance_uninstall_status=$?
@@ -1523,6 +1592,12 @@ if ((governance_uninstall_status == 0)); then
     pass "governance sandbox uninstall succeeds"
 else
     fail "governance sandbox uninstall failed with exit $governance_uninstall_status"
+fi
+if [[ ! -e $installed_hook && ! -e $installed_config &&
+    ! -e $retired_agent && ! -L $retired_agent && ! -e $retired_skill_dir ]]; then
+    pass "governance uninstall removes managed files and exact retired copies"
+else
+    fail "governance uninstall left a managed file or retired copy"
 fi
 if grep -Fq -- \
     'Already-running registered sessions may still point at removed hook or configuration paths; uninstall while governed sessions are idle.' \

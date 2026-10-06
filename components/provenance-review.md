@@ -8,7 +8,12 @@
   this component; it has no queue and no source index for routed pointers
 - **Agents:** `provenance-review` (user-invocable orchestrator),
   `provenance-code-lineage` and `provenance-research` (write-disabled
-  specialists); skill `provenance-analysis`
+  specialists); skill `provenance-analysis`. At `9bfbab3` all three profiles
+  pin superseded `gpt-5.6-sol` in front matter only; no instruction, README,
+  handoff, or test text names a model, effort, or context tier, and no
+  standing different-model, scope-review, or deep-security-review
+  requirement was found. `PMD-20261006-001` routes the `claude-opus-5.5` /
+  `max` / `long_context` repin as open P3 `PMR-122`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean `main` at `9bfbab3`, synchronized with
@@ -56,4 +61,7 @@ A new aspect review, an iteration of an existing review, or registration of
 `project-manager/` in its `RESEARCH-SOURCES.md` if that component chooses to
 cite Project Manager records. `PMR-066` asks the orchestrator to map
 `check Project Manager tasking` to the exact fail-closed resolver without
-session-history fallback.
+session-history fallback. `PMR-122` is the owner-only single-model profile
+repin under `PMD-20261006-001`; it changes no review package. `PMR-066`
+stays separate. The direct PMR-122 session neither performs it nor runs the
+parent tasking resolver.

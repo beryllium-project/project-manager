@@ -19,7 +19,15 @@
   `templates/owner-return.md` values `completed`, `partial`, `blocked`,
   `needs_human`, `refused`, and `information`. Correction work `71bca3f` /
   return `e6aed9f` aligns both contracts. The profile is adopted but not
-  native-handshaken or PM-invocable.
+  native-handshaken or PM-invocable. At `e6aed9f` all six profiles,
+  including the hidden owner, pin superseded `gpt-5.6-sol`; the owner's
+  invocation defaults, the dispatch pin in `.github/copilot-instructions.md`,
+  `AGENT-INTERFACE.md`, `README.md`, and the owner contract test
+  (`tests/validate-agent.sh` line 257) repeat it. No standing
+  different-model, scope-review, or deep-security-review requirement was
+  found; the skill's Phase 8 `threat-model-review` step becomes same-model
+  after the repin. `PMD-20261006-001` routes the `claude-opus-5.5` / `max` /
+  `long_context` repin as open P3 `PMR-121`.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean local `main` at corrected PMR-120 return
@@ -130,3 +138,8 @@ former human PMR-064/117 bootstrap is retired. Corrected PMR-120 work
 `71bca3f` and return `e6aed9f` complete the component-owned standard-V1
 profile. Both PMR-120 bootstrap bindings are consumed. No handshake request
 exists and no direct dispatch proceeds until explicit later resumption.
+`PMR-121` is the owner-only single-model repin under `PMD-20261006-001`.
+It is independent of parked `PMR-064` / `PMR-117`, changes no model package
+or paused run, and needs a human-started owner session. Its ordinary packet
+may stop at the parent-resolver step because `PMR-064` has not yet admitted
+that sibling command locally.

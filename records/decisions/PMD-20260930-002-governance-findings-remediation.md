@@ -6,7 +6,8 @@
 - **Supersedes:** `PMD-20260930-001` in part (corrects only the active
   command-hook enforcement and availability statements; preserves its
   role-to-model matrix, scope-review contract, and human gates)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261006-001` in part (hook effort-floor and
+  model rules)
 
 ## Scope
 

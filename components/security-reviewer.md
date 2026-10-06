@@ -17,13 +17,28 @@
   `security-evidence`, `security-research`, and `security-finding-review`
   (write-disabled specialists), all `gpt-5.3-codex` with exact reasoning
   `xhigh` and context `default` at owner work `2bb4c98` / return `c2edac7`
-  under `PMD-20260930-005` as the sole named capability exception and closed
-  `PMR-109` / `PMR-110`. Explicit
-  non-Codex selections retain the project-wide `max` default and `high`
-  floor; unavailable or invalid values stop without silent fallback. The
-  task hook covers exactly the three model-invocable specialists; direct
-  orchestrator sessions remain outside it and must be started with the same
-  exact Codex pair.
+  under `PMD-20260930-005` as the former sole named capability exception
+  and closed `PMR-109` / `PMR-110`. The following rules describe only the
+  component's current pre-PMR-123 files and the previously installed
+  user-level hook, not active project policy: explicit non-Codex selections
+  retain the `max` default and the former `high` floor; unavailable or
+  invalid values stop without silent fallback; the task hook covers exactly
+  the three model-invocable specialists; and direct orchestrator sessions
+  remain outside that hook, while those files require starting them with
+  the same exact Codex pair.
+  `PMD-20261006-001` (the responsible human's `CRQ-004`
+  single-model SOP) supersedes that Codex pairing as project policy: the
+  aligned hook source fills `claude-opus-5.5` / `max` / `long_context` for
+  every agent type, and until the deferred user-level reinstall, task
+  launches should pass that triple explicitly. Open P3
+  `PMR-123` asks the owner to repin all four profiles to `claude-opus-5.5` /
+  `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`
+  floor, and `claude-fable-5.1` allowance wording, and record that a
+  security review runs only on explicit responsible-human request, on that
+  same model, and is not standard practice. Until the owner returns, the
+  observed files at `c2edac7` still carry the Codex pair; once the owner
+  returns PMR-123, it supersedes the component-side Codex-exception
+  description recorded on this card.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
@@ -49,15 +64,20 @@
   `PMD-20260916-001` (responsible-human `all_codex` choice) assigns
   deep/adversarial security review to `gpt-5.3-codex`; owner commit
   `2e8d205` completes `PMR-074` and no engagement is authorized by it.
-  `PMD-20260930-002` supplies the general hook scope and fail-closed
-  behavior; `PMD-20260930-005` narrows its Codex denial and resolves the
-  model choice without changing the model:
-  the hook defaults the three confirmed model-invocable specialist task
+  `PMD-20260930-002` supplied the general hook scope and fail-closed
+  behavior; `PMD-20260930-005` narrowed its Codex denial and resolved the
+  model choice without changing the model. The following describes only the
+  component's current pre-PMR-123 files and the previously installed
+  user-level hook, not active project policy:
+  that hook defaults the three confirmed model-invocable specialist task
   types to `gpt-5.3-codex` / `xhigh` / `default`, accepts Codex only with
   that exact pair, denies explicit Codex for every other task type, and
-  leaves explicit non-Codex selections under the global max/high-floor
+  leaves explicit non-Codex selections under the former max/high-floor
   policy. Built-in `security-review` is not admitted by type, and there is no
-  silent fallback. PMR-109 closes the component policy exception found by the
+  silent fallback. Under `PMD-20261006-001` the aligned hook source instead
+  fills `claude-opus-5.5` / `max` / `long_context` for every agent type;
+  until the deferred user-level reinstall, task launches should pass that
+  triple explicitly. PMR-109 closes the component policy exception found by the
   `PMD-20260930-001` discovery and conflict audit; PMR-110 applies the named
   Codex capability exception to all four profiles, including the direct
   orchestrator. Their closure grants no engagement, acceptance, review
@@ -176,3 +196,13 @@ git diff --check
   startup/status anchor for the orchestrator and all three specialists. It
   changes no engagement, package, model policy, target execution, push, or
   human gate.
+- `PMR-123` is the owner-only single-model repin under
+  `PMD-20261006-001`: all four profiles move to `claude-opus-5.5` / `max` /
+  `long_context`, the Codex-exception, floor, and `claude-fable-5.1`
+  allowance wording is removed, and security reviews run only on explicit
+  responsible-human request. It starts no engagement and rewrites no
+  historical package or model provenance. Under `PMD-20261006-001`,
+  `PMR-118`'s clause preserving the Codex pair no longer applies; both
+  requests may share one human-started owner session launched without the
+  still Codex-pinned `security-reviewer` profile. `PMR-111` backup stays
+  separate.

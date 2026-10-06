@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
-# User-level Copilot CLI preToolUse hook. It emits pass-through, deny, or
-# argument-rewrite JSON and writes no telemetry, state, or database.
+# User-level Copilot CLI preToolUse hook for the Beryllium single-model SOP
+# (PMD-20261006-001). Every in-scope task launch, whatever its agent_type,
+# must use model claude-opus-5.5, reasoning_effort max, and context_tier
+# long_context: absent, null, or empty fields are filled through modifiedArgs
+# without a permission decision, and any other explicit value is denied.
+# In-scope run_dynamic_workflow is denied; out-of-scope calls pass through.
+# It emits pass-through, deny, or argument-rewrite JSON and writes no
+# telemetry, state, or database.
 
 set -euo pipefail
 export LC_ALL=C
@@ -159,116 +165,32 @@ string)
     ;;
 esac
 
-agent_type=$(jq -r \
-    'if (.agent_type? | type) == "string" then .agent_type else "" end' \
-    <<<"$tool_args")
-task_name=$(jq -r \
-    'if (.name? | type) == "string" then .name else "" end' \
-    <<<"$tool_args")
-model=$(jq -r \
-    'if (.model? | type) == "string" then .model else "" end' \
-    <<<"$tool_args")
-
-confirmed_security_type=0
-case $agent_type in
-security-evidence | security-research | security-finding-review)
-    confirmed_security_type=1
-    ;;
-esac
-
-model_missing=0
-if jq -e '
-    (has("model") | not) or
-    (.model == null) or
-    (.model == "")
-' >/dev/null <<<"$tool_args"; then
-    model_missing=1
-fi
-
-codex_exception=0
-if ((confirmed_security_type == 1)); then
-    if ((model_missing == 1)) || [[ $model == gpt-5.3-codex ]]; then
-        codex_exception=1
-    fi
-elif [[ $model == gpt-5.3-codex ]]; then
-    deny "Beryllium gpt-5.3-codex is allowed only for agent_type security-evidence, security-research, or security-finding-review under the named capability exception."
-fi
-
 effective_args=$tool_args
 args_modified=0
-if ((codex_exception == 1)); then
-    effective_args=$(jq -c '
-        if ((has("model") | not) or (.model == null) or (.model == ""))
-        then . + {model:"gpt-5.3-codex"} else . end |
-        if ((has("reasoning_effort") | not) or
-            (.reasoning_effort == null) or
-            (.reasoning_effort == ""))
-        then . + {reasoning_effort:"xhigh"} else . end |
-        if ((has("context_tier") | not) or
-            (.context_tier == null) or
-            (.context_tier == ""))
-        then . + {context_tier:"default"} else . end
-    ' <<<"$tool_args")
-    [[ $effective_args == "$tool_args" ]] || args_modified=1
 
-    effort=$(jq -r \
-        'if (.reasoning_effort? | type) == "string" then .reasoning_effort else "" end' \
-        <<<"$effective_args")
-    [[ $effort == xhigh ]] ||
-        deny "Beryllium gpt-5.3-codex capability exception requires exact reasoning_effort xhigh; high, max, lower, and unknown values are denied."
-
-    context_tier=$(jq -r \
-        'if (.context_tier? | type) == "string" then .context_tier else "" end' \
-        <<<"$effective_args")
-    [[ $context_tier == default ]] ||
-        deny "Beryllium gpt-5.3-codex capability exception requires exact context_tier default; long_context and other values are denied."
-else
-    if jq -e '
-        (has("reasoning_effort") | not) or
-        (.reasoning_effort == null) or
-        (.reasoning_effort == "")
-    ' >/dev/null <<<"$tool_args"; then
-        effective_args=$(jq -c \
-            '. + {reasoning_effort:"max"}' <<<"$tool_args")
-        effort=max
-        args_modified=1
-    elif ! effort=$(jq -er \
-        '.reasoning_effort | select(type == "string" and length > 0)' \
-        <<<"$tool_args" 2>/dev/null); then
-        deny "Beryllium task launch reasoning_effort must be high, xhigh, or max; lower or unknown values are denied."
-    fi
-
-    case $effort in
-    high | xhigh | max) ;;
-    *)
-        deny "Beryllium task launch reasoning_effort is below the required high floor or is unknown; allowed values are high, xhigh, or max."
-        ;;
-    esac
-fi
-
-if [[ $task_name == beryllium-scope-review &&
-    $agent_type != beryllium-scope-review ]]; then
-    deny "beryllium-scope-review must use agent_type beryllium-scope-review."
-fi
-
-if [[ $agent_type == beryllium-scope-review ]]; then
-    context_tier=$(jq -r \
-        'if (.context_tier? | type) == "string" then .context_tier else "" end' \
-        <<<"$effective_args")
-    [[ $model == claude-opus-5.5 ]] ||
-        deny "beryllium-scope-review requires model claude-opus-5.5."
-    [[ $effort == max ]] ||
-        deny "beryllium-scope-review requires reasoning_effort max."
-    [[ $context_tier == long_context ]] ||
-        deny "beryllium-scope-review requires context_tier long_context."
-    if jq -e '
-        (.background? == true) or
-        (.run_in_background? == true) or
-        ((.mode? != null) and (.mode != "sync"))
+# One rule for every agent_type: fill an absent, null, or empty field with the
+# required value; deny any other explicit value, including non-strings.
+require_task_field() {
+    local field=$1 required=$2 reason=$3
+    if jq -e --arg field "$field" '
+        (has($field) | not) or (.[$field] == null) or (.[$field] == "")
     ' >/dev/null <<<"$effective_args"; then
-        deny "beryllium-scope-review must run synchronously."
+        effective_args=$(jq -c --arg field "$field" --arg value "$required" \
+            '.[$field] = $value' <<<"$effective_args") ||
+            deny "Beryllium governance hook could not rewrite task arguments."
+        args_modified=1
+    elif ! jq -e --arg field "$field" --arg value "$required" \
+        '.[$field] == $value' >/dev/null <<<"$effective_args"; then
+        deny "$reason"
     fi
-fi
+}
+
+require_task_field model claude-opus-5.5 \
+    "Beryllium SOP PMD-20261006-001 requires model claude-opus-5.5 for every task; other models are denied."
+require_task_field reasoning_effort max \
+    "Beryllium SOP PMD-20261006-001 requires reasoning_effort max for every task; lower or other values are denied."
+require_task_field context_tier long_context \
+    "Beryllium SOP PMD-20261006-001 requires context_tier long_context for every task; other values are denied."
 
 ((args_modified == 0)) || rewrite_args "$effective_args"
 

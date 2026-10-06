@@ -6,7 +6,7 @@
 - **Supersedes:** `PMD-20260915-007` in part (extends it; supersedes only
   its statement that the orchestrator model was unchanged; its Fable-to-Opus
   review substitution is retained as row 2 of the matrix below)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261006-001` (single-model SOP)
 
 ## Scope
 

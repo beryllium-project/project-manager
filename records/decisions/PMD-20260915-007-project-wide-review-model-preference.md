@@ -5,7 +5,8 @@
 - **Status:** recorded
 - **Supersedes:** `PMD-20260915-006`
 - **Superseded by:** `PMD-20260916-001` (in part: the orchestrator-model
-  statement only; the review/evaluation substitution is retained)
+  statement only; the review/evaluation substitution is retained);
+  `PMD-20261006-001` (remainder: single-model SOP)
 
 ## Scope
 

@@ -9,7 +9,7 @@
   only); and `PMD-20260930-002` disposition items 4 and 5 plus directly
   related follow-up wording in part (only the Codex denial and pending-model
   portions)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261006-001` (single-model SOP)
 
 ## Scope
 
