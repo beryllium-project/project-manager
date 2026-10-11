@@ -46,8 +46,8 @@
   `PMQ-034..036` (suggested owner XRV), ledgered pending as
   `PML-0035..0037` until the human decides the branch disposition; if the
   checked-out tree loses those rows, `pull-queues.sh check` fails. `CRQ-003`
-  is now Project Manager todo `PMR-125` (P4, parked while Beryllium is left
-  alone) with `routed` mirror `PMR-126` beside `PMR-124`. On 2026-10-06
+  is now Project Manager todo `PMR-125` (P4, parked until the responsible
+  human schedules it) with `routed` mirror `PMR-126` beside `PMR-124`. On 2026-10-06
   maintained inspection observed clean
   `main` at `4cf44d0bfec3b725dbcef1ca5938d619e867d932`, 0 behind / 2 ahead
   of last-fetched `origin/main`; both local commits are unpushed. At

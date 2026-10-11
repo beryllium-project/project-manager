@@ -18,15 +18,24 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
-  to the Project Manager. On 2026-10-10, after the transfer from `lx2` to the
-  usual `l1` workstation, the responsible human directed exactly `"leave
-  beryllium-hypervisor repo alone for now"`; the Project Manager ran no
-  state inspection, Git command, or write against it or its linked
-  worktrees (one inadvertent recursive Markdown text search read files there;
-  nothing from it was used), so the
-  following 2026-10-06 `lx2` observation is unverified after the transfer,
-  and the linked worktrees may need owner-run `git worktree repair`
-  (`PMD-20261010-001`). Maintained inspection at
+  to the Project Manager. The 2026-10-10 leave-alone hold ended when the
+  responsible human reported on 2026-10-11 that the Beryllium session is
+  done. Maintained inspection at 2026-10-11T12:58Z observes clean
+  `beryllium/k3-b7-bringup` at `563cca143fe4c1362eeb799b07e1b45bcd09ee97`
+  ("docs: record the B7 re-check on l1"), contained in last-fetched
+  `origin/beryllium/k3-b7-bringup`. It is the owner's record of its
+  2026-10-10 session on `l1`; the owner states that its off-board B7
+  re-check there is host-test and QEMU emulation only, is not hardware
+  validation, and changes no acceptance. Development branch
+  `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched
+  `origin`. All 12 linked-worktree registrations are prunable after the
+  transfer, and the owner handoff's Repository state and New-session restart
+  sections still name the `lx2` path; `PMR-127` routes both. The committed
+  instructions record component-side responsible-human acceptance of B0-B7;
+  Project Manager gate records are not reconciled to them. On 2026-10-10 the
+  Project Manager had run no state inspection, Git command, or write against
+  it or its linked worktrees (one inadvertent recursive Markdown text search
+  read files there; nothing from it was used). Earlier, maintained inspection at
   2026-10-06T16:03Z observed clean `beryllium/k3-b3-bringup` at
   `afa4336dc584642a7ef862535153116a75b44e5b`, 0 behind / 1 ahead of
   `origin/beryllium/k3-b3-bringup`. The responsible human reports an active
@@ -92,8 +101,9 @@
   acceptance, execution, or other gate follows.
   The responsible human also moved six Beryllium linked worktrees into
   workspace-root `worktrees/` and ran `git worktree repair` on `lx2`; the
-  root-relative inventory is in `../../COMPONENTS.md`, and those placements
-  are unverified after the 2026-10-10 transfer. Their current flat
+  root-relative inventory is in `../../COMPONENTS.md`, and after the
+  2026-10-10 transfer those registrations are prunable (owner repair under
+  `PMR-127`). Their current flat
   placement is temporary and does not satisfy the preferred namespaced
   convention. Future move/remove work remains Beryllium-owner-only.
   Last-fetched refs contain the PMR-098/100 active ranges through
