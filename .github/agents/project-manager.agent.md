@@ -222,11 +222,10 @@ empty, it injects `claude-opus-5.5` / `max` / `long_context` through
 `modifiedArgs` without a permission decision, the mechanism kept from
 `PMD-20260930-002`. It denies any explicit other model, effort, or context
 tier and still denies in-scope `run_dynamic_workflow`, whose nested agents
-are not command-hook enforceable. As of 2026-10-10 (`PMD-20261010-001`),
-user-level configuration on the `l1` workstation was not part of the stated
-`~/src` transfer, so the installed hook state there is unknown; the
-responsible human runs the read-only `check` first and installs only while
-governed sessions are idle. Until then, pass `claude-opus-5.5` / `max` /
+are not command-hook enforceable. User-level hook state is per workstation
+(`PMD-20261011-001`): the human-run `check` reports it, `install` renders it
+from this repository, and `HANDOFF.md` records the current status. Until
+`check` passes on the current workstation, pass `claude-opus-5.5` / `max` /
 `long_context` explicitly. Direct custom-agent sessions, SDK-started workflows,
 out-of-scope worktrees, disabled hooks, hook timeout, and non-Copilot
 tooling remain outside or beyond this command-hook enforcement. The main

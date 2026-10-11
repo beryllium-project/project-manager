@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-10
+**Last refreshed:** 2026-10-11
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -44,64 +44,85 @@ fixed-field state, never command output or a transcript.
 
 ## P2 User-level governance on `l1` (no PMR)
 
-User-level Copilot configuration is machine-local and was not part of the
-`~/src/l1/src` transfer, and the installed hook configuration binds the
-absolute workspace root current at install time (`PMD-20261010-001`). The
-earlier human-reported install (`"done above"`, below) configured `lx2`, so
-the hook state on `l1` is unknown: absent, older, or bound to another root.
-First run the read-only check. It edits nothing and is safe while other
-sessions run:
+Your 2026-10-11 `check` on `l1` reported four failures: user `model` is not
+`claude-opus-5.5`, so the plan-model fallback fails too, and the governance
+hook and its configuration are absent. Hook-disable settings, effort `max`,
+context `long_context`, and the retired-asset checks passed. Do not copy
+`lx2`'s hook files: `install` renders them for this root, and copies fail
+`check` (`PMD-20261011-001`). `REHYDRATE.md` section 4 is the full
+per-workstation procedure.
 
-```sh
-cd /home/jmorris/src/beryllium-project
-bash ./project-manager/scripts/beryllium-governance.sh check
-```
+1. In Copilot, run `/config model claude-opus-5.5`. If `planModel` is set to
+   another model, run `/settings unset planModel`. In `/subagents`, set the
+   default and every per-agent model to `claude-opus-5.5`; this session
+   reports a required `research` default of `gpt-5.6-terra`, which `check`
+   does not inspect but `PMD-20261006-001` forbids.
+2. Rerun the read-only check; only the two hook lines should still fail:
 
-Then, only after every governed Copilot session is idle
-(`PMD-20260930-003`) and after rechecking immediately beforehand that no
-other session is running, install from the same root:
+   ```sh
+   cd /home/jmorris/src/beryllium-project
+   bash ./project-manager/scripts/beryllium-governance.sh check
+   ```
 
-```sh
-cd /home/jmorris/src/beryllium-project
-bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check
-```
+3. With no other governed Copilot session running (`PMD-20260930-003`) and
+   after rechecking that immediately beforehand, install from the same root:
 
-`check` and install preflight verify the user-level defaults: `model`
-`claude-opus-5.5`, `effortLevel` `max`, and `contextTier` `long_context`, with
-`planModel`, `planEffortLevel`, and `planContextTier` unset or equal to those
-values. If `install` or `check` reports a mismatch, change only the reported
-user setting (for example `/config model claude-opus-5.5`) and rerun the
-command. `check` does not inspect `/subagents` defaults; this Project Manager
-session on `l1` reports a required `research` default of `gpt-5.6-terra`,
-which conflicts with `PMD-20261006-001`, so set that default to
-`claude-opus-5.5` as well. The Project Manager never runs this script
-against real user configuration. Until the install, pass `claude-opus-5.5` /
-`max` / `long_context` explicitly on every task launch.
+   ```sh
+   cd /home/jmorris/src/beryllium-project
+   bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check
+   ```
 
-## P2 Analysis-workbook origin visibility and private branch (no PMR)
+`install` writes nothing until the settings preflight passes. The Project
+Manager never runs this script against real user configuration. Until
+`check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
+on every task launch.
 
-The workbook handoff at `353c431` (2026-10-07) states that you directed the
-K3 A100 design to a local branch that is not pushed "after the configured
-origin was observed public". Project Manager records describe that origin as
-private, and the Project Manager performs no network check. Two decisions
-are yours:
+## P2 Analysis-workbook private branch (no PMR)
 
-1. **Visibility.** Confirm the workbook origin's visibility on GitHub. If it
-   is public, everything already pushed through `3c9d2a3` may be visible,
-   and any later workbook push is a publication step. This bears on the
-   push-evidence reconciliation of PMR-085/088/089/095/097.
-2. **Branch disposition.** `analysis/k3-a100-service-design-private`
-   (`353c431`) is checked out with no upstream; local `main` stays at
-   `4cf44d0`. Keep it checked out (recommended until you decide; nothing
-   moves), merge it into local `main` without pushing, or switch back to
-   `main` with the branch kept aside. Switching away without merging hides
-   PMQ-034..036, so `pull-queues.sh check` fails for PML-0035..0037 until
-   those rows are back in the checked-out tree.
+The workbook handoff at `353c431` (2026-10-07) says you kept the K3 A100
+design on a local branch "after the configured origin was observed public".
+Your 2026-10-11 `lx2` output shows `beryllium-project/analysis-workbook`
+with `analysis/k3-a100-service-design-private` and `main` both on `origin`
+and up to date from `lx2`. You then reported exactly `"fyi, I just made it
+private as it has a private branch, need to resolve that"`. The Project
+Manager performs no network check and records that statement as the
+current visibility. On `l1` the branch is checked out with no upstream, and
+its remote-tracking refs predate the `lx2` push.
 
-Tell the next Project Manager turn both answers. It then routes PMQ-034..036
+To resolve:
+
+1. **Long-term home of the private branch.** Keep the workbook private, or
+   move the branch to a separate private repository and remove it from
+   `origin` before any return to public visibility. Decide whether its time
+   on the then-public repository needs follow-up. This also settles how the
+   push-evidence reconciliation of PMR-085/088/089/095/097 treats earlier
+   pushes.
+2. **`l1` checkout.** Keep the branch checked out (recommended until you
+   decide), merge it into local `main`, or switch back to `main`. Switching
+   away without merging hides PMQ-034..036, so `pull-queues.sh check` fails
+   for PML-0035..0037. A `git fetch` in the workbook on `l1` (owner or you;
+   never the Project Manager) refreshes the stale remote-tracking refs.
+
+Tell the next Project Manager turn the outcome. It then routes PMQ-034..036
 (public metadata pointers; none is a duplicate in the XRV index at
 `7361de4`) to the XRV owner, and PMR-124/126 can run on the branch you chose.
-No push, publication, or gate follows from either answer.
+No push, publication, or gate follows from this runbook.
+
+## P2 Back up the coordination repositories (no PMR)
+
+A fresh checkout carries only pushed commits (`PMD-20261011-001`). The
+Project Manager is ahead of `origin/main` and the parent ahead of
+`upstream/main` by the local coordination commits listed in
+`../COMPONENTS.md`, including this rehydration record. When you choose, run
+the human-run helper, which prompts before each push, never forces, and
+logs under ignored `scratch/`:
+
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/owner-actions.sh --only push_pm
+```
+
+Component backups stay under their own requests and owners' rules.
 
 ## P3 PMR-127: Beryllium post-transfer housekeeping
 
@@ -236,16 +257,16 @@ Codex-exception, `high` / `xhigh` floor, and `claude-fable-5.1` allowance
 wording, records that security reviews run only on explicit
 responsible-human request, preserves the tasking resolver and every
 historical record, starts no engagement, commits locally, returns in
-`HANDOFF.md`, and does not push. `PMR-111` stays separate. The hook state on
-`l1` is unknown until the P2 governance `check` above, so any
+`HANDOFF.md`, and does not push. `PMR-111` stays separate. Your 2026-10-11
+`check` found the hook not yet installed on `l1`, so until it is, any
 `security-evidence`, `security-research`, or `security-finding-review` task
 launch in this session must pass `claude-opus-5.5` / `max` /
 `long_context` explicitly.
 
 ### P3 PMR-124 and PMR-126: analysis-workbook CRQ-004 and CRQ-003 mirrors
 
-First settle the branch decision in "P2 Analysis-workbook origin visibility
-and private branch" above: the launcher binds whatever branch is checked out
+First settle the branch decision in "P2 Analysis-workbook private branch"
+above: the launcher binds whatever branch is checked out
 as the expected branch, so the owner would otherwise commit on the private
 design branch. Then use exactly one of two paths for each request, never
 both. A later Project Manager coordination turn may dispatch the hidden
@@ -973,7 +994,9 @@ opt-in helper step and no parent, Project Manager, component, branch, tag, or
 remote mutation is authorized.
 
 **No further push is authorized; do not run again without a new exact
-responsible-human confirmation:**
+responsible-human confirmation.** The P2 "Back up the coordination
+repositories" step above is the current human-run backup path for the
+Project Manager and parent; running it is your decision.
 
 From `project-manager/`:
 
@@ -984,11 +1007,13 @@ bash ./scripts/owner-actions.sh
 
 The relevant local component commits are:
 
-- `analysis-workbook` has local-only private branch
-  `analysis/k3-a100-service-design-private` at `353c431` checked out
-  (2026-10-10; no upstream; origin visibility is an open question); its
+- `analysis-workbook` has private branch
+  `analysis/k3-a100-service-design-private` at `353c431` checked out on
+  `l1` (no upstream there); the human's 2026-10-11 `lx2` output shows that
+  branch and `main` on `origin`, and the human reported making the
+  repository private the same day. Its
   local `main` is at `4cf44d0`, 0 behind / 2 ahead of
-  last-fetched `origin/main` `3c9d2a3` (2026-10-06): local
+  `l1`'s stale last-fetched `origin/main` `3c9d2a3` (2026-10-06): local
   `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004) are unpushed. The historical
   range contained by `origin/main` `3c9d2a3` includes Project Manager carry
   `c7cc0fa`, seven PMR-084

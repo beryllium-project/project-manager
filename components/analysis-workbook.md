@@ -32,6 +32,15 @@
   from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
+- **Repository:** `beryllium-project/analysis-workbook` (responsible-human
+  supplied 2026-10-11). The responsible human's `lx2` output that day showed
+  `analysis/k3-a100-service-design-private` and `main` on `origin`, up to
+  date from `lx2`, and the human then reported exactly `"fyi, I just made it
+  private as it has a private branch, need to resolve that"`. The Project
+  Manager performed no network check. Where the private branch lives
+  long-term, and any follow-up on its time on a then-public repository, is
+  an open responsible-human decision; `l1`'s copy has no upstream for that
+  branch and stale remote-tracking refs until an owner or human fetch.
 - **Observed state:** on 2026-10-10, after the transfer to `l1`, maintained
   inspection observes clean local branch
   `analysis/k3-a100-service-design-private` at
@@ -41,8 +50,8 @@
   `AWB-20261007-001` (two inquiries, 32 evidence records; owner-reported)
   "after the configured origin was observed public", and leaves its later
   disposition to the human. Project Manager records described that origin as
-  private; the Project Manager performed no network check, so the visibility
-  question is open for the responsible human. The branch adds
+  private; the Project Manager performed no network check (see
+  **Repository** above for the 2026-10-11 visibility report). The branch adds
   `PMQ-034..036` (suggested owner XRV), ledgered pending as
   `PML-0035..0037` until the human decides the branch disposition; if the
   checked-out tree loses those rows, `pull-queues.sh check` fails. `CRQ-003`

@@ -179,11 +179,11 @@ require fresh same-turn confirmation.
 The responsible human later reported the exact governance `install && check`
 command completed on `lx2` (`"done above"`). This is human evidence only; the
 Project Manager did not inspect real user configuration or establish
-install-time session state. As of 2026-10-10 (`PMD-20261010-001`),
-user-level configuration on the `l1` workstation was not part of the stated
-`~/src` transfer, so the hook state there is unknown; the responsible human
-runs the read-only `check` first and installs only while governed sessions
-are idle. Until then, the SOP is followed by passing `claude-opus-5.5` /
+install-time session state. User-level hook state is per workstation
+(`PMD-20261011-001`): the human-run `check` reports it, `install` renders it
+from this repository, and `HANDOFF.md` records the current status;
+`REHYDRATE.md` is the full workstation procedure. Until `check` passes on
+the current workstation, the SOP is followed by passing `claude-opus-5.5` /
 `max` / `long_context` explicitly.
 
 Every repository write also requires a fresh coordination check. The acting
@@ -264,6 +264,8 @@ implicitly.
 AGENT-INTERFACE.md                           boundaries, inputs, outputs, gates
 AGENT-ROSTER.md                              how every project agent is invoked and validated
 HANDOFF.md                                   restartable Project Manager handoff
+REHYDRATE.md                                 rebuild a workstation from Git: identities, clone layout, per-workstation Copilot setup, non-Git state
+user-assets/skills/                          byte-identical copies of user-level skills the project requires (restored by hand per REHYDRATE.md)
 components/<component>.md                    one knowledge card per registered component
 records/assurance/                           assurance-transfer records
 records/decisions/PMD-YYYYMMDD-NNN-*.md      decision records
