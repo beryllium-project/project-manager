@@ -36,11 +36,23 @@
   supplied 2026-10-11). The responsible human's `lx2` output that day showed
   `analysis/k3-a100-service-design-private` and `main` on `origin`, up to
   date from `lx2`, and the human then reported exactly `"fyi, I just made it
-  private as it has a private branch, need to resolve that"`. The Project
-  Manager performed no network check. Where the private branch lives
-  long-term, and any follow-up on its time on a then-public repository, is
-  an open responsible-human decision; `l1`'s copy has no upstream for that
-  branch and stale remote-tracking refs until an owner or human fetch.
+  private as it has a private branch, need to resolve that"`. The repository
+  had been public without the decision `PMD-20260915-001` requires. The
+  Project Manager performed no network check. `PMD-20261011-002` records the
+  human's chosen split: human-run `PMR-129` creates private
+  `beryllium-project/analysis-workbook-private` as the new `origin` with
+  every branch, deletes the private branch from the existing repository,
+  and keeps that repository as push-disabled remote `public` holding `main`
+  only. Owner request `PMR-130` then records the two-repository rule and
+  inventories `main` for a later publication decision; reopening the
+  existing repository publicly is that separate responsible-human decision.
+  Every session package records `Distribution: private`; on `main`,
+  `AWB-20260913-001`, `AWB-20260914-001`, and `AWB-20260914-002` intend
+  `private`, and `AWB-20260829-001`, `AWB-20260915-001`, and
+  `AWB-20260928-001` intend `public-candidate`, which is not publication
+  approval. After the split, `owner-actions.sh --only push_awb` pushes
+  `main` to the private `origin`. `l1`'s copy has no upstream for the
+  private branch and stale remote-tracking refs until the split fetches.
 - **Observed state:** on 2026-10-10, after the transfer to `l1`, maintained
   inspection observes clean local branch
   `analysis/k3-a100-service-design-private` at
@@ -53,7 +65,8 @@
   private; the Project Manager performed no network check (see
   **Repository** above for the 2026-10-11 visibility report). The branch adds
   `PMQ-034..036` (suggested owner XRV), ledgered pending as
-  `PML-0035..0037` until the human decides the branch disposition; if the
+  `PML-0035..0037` until `PMR-130` places them after the `PMR-129` split
+  (`PMD-20261011-002`); if the
   checked-out tree loses those rows, `pull-queues.sh check` fails. `CRQ-003`
   is now Project Manager todo `PMR-125` (P4, parked until the responsible
   human schedules it) with `routed` mirror `PMR-126` beside `PMR-124`. On 2026-10-06
@@ -280,11 +293,16 @@ Analysis content and the collaboration queue remain request-only outside
 Project Manager carry authority. Nothing treats a session as review or
 acceptance. `PMR-124` asks the maintainer to mirror `CRQ-004` as `routed`
 from `PMD-20261006-001` and `PMR-121..PMR-123`, append one activity row, and
-change nothing else; it is dispatchable later to the hidden
-`analysis-workbook-owner` under `PMD-20260917-002` or performable in one
-human-started owner session, never both. `PMR-126` likewise asks for the
-`CRQ-003` `routed` mirror from Project Manager todo `PMR-125` and may share
-that owner session; both wait for the responsible human's choice of branch.
+change nothing else. `PMR-126` likewise asks for the `CRQ-003` `routed`
+mirror from Project Manager todo `PMR-125`. Under `PMD-20261011-002` both
+run in the human-started `PMR-130` owner session after the `PMR-129` split,
+with the private branch checked out; the hidden `analysis-workbook-owner`
+is not dispatched for them separately. `PMR-130` asks the owner to record
+the two-repository rule (private `origin`, push-disabled `public` for
+human-approved commits only), note the new hosting in `AWB-20261007-001`,
+keep `PMQ-034..036` visible, and inventory `main` at one exact commit for a
+later responsible-human publication decision, without promoting,
+publishing, or merging the private branch into `main`.
 As of 2026-10-06, `CRQ-003` remained `new`. The
 operational housekeeping requests PMR-038, PMR-004, PMR-050,
 PMR-055, PMR-059, and PMR-063 are complete; their evidence is retained below,

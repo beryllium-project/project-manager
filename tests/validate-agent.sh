@@ -376,6 +376,71 @@ expect_exit "pmr105-push rejects an unknown mode" 2 \
 refute_pattern "$pmr105_push" \
     'gh auth switch|--force|--force-with-lease|--mirror|--follow-tags|push .*--tags|gh repo create|git remote (add|set-url|remove)|refs/heads/main'
 refute_pattern "$pmr105_push" '-x[[:space:]]+"?\$tasking'
+pmr128_audit="$repository_root/outbox/pmr128-visibility-audit.sh"
+require_file "$pmr128_audit"
+expect_pass "pmr128-visibility-audit passes bash -n" \
+    bash -n "$pmr128_audit"
+require_pattern "$pmr128_audit" '^set -euo pipefail$'
+require_text "$pmr128_audit" 'export LC_ALL=C'
+require_text "$pmr128_audit" 'export GIT_TERMINAL_PROMPT=0'
+require_text "$pmr128_audit" 'umask 077'
+require_text "$pmr128_audit" 'ERROR: run this script with bash; do not source it'
+require_text "$pmr128_audit" 'scratch/owner-actions'
+require_text "$pmr128_audit" 'protocol.allow=never'
+require_text "$pmr128_audit" 'rehydrate=$pm_root/REHYDRATE.md'
+require_text "$pmr128_audit" 'expected_visibility=PRIVATE'
+require_text "$pmr128_audit" 'workbook_slug=beryllium-project/analysis-workbook'
+require_text "$pmr128_audit" 'skipped=documented-inactive'
+require_text "$pmr128_audit" 'traffic/$kind'
+require_text "$pmr128_audit" 'action:repo.access'
+require_text "$pmr128_audit" 'no-write=yes'
+expect_exit "pmr128-visibility-audit help is read-only" 0 \
+    bash "$pmr128_audit" --help
+expect_exit "pmr128-visibility-audit rejects a missing mode" 2 \
+    bash "$pmr128_audit"
+expect_exit "pmr128-visibility-audit rejects an unknown mode" 2 \
+    bash "$pmr128_audit" --unknown
+refute_pattern "$pmr128_audit" \
+    'git (push|fetch|clone|pull)( |$)|git_safe[^|]* (push|fetch|clone|pull|remote (add|set-url|rename|remove|rm))( |$)|gh repo (create|edit|delete|rename|archive|clone|fork|sync)|gh auth switch|gh (pr|issue) (create|close|merge|edit|comment|reopen)|--method|--field|--raw-field|--input|gh api[^|]* -[fFX]( |$)'
+pmr129_split="$repository_root/outbox/pmr129-workbook-split.sh"
+require_file "$pmr129_split"
+expect_pass "pmr129-workbook-split passes bash -n" \
+    bash -n "$pmr129_split"
+require_pattern "$pmr129_split" '^set -euo pipefail$'
+require_text "$pmr129_split" 'export LC_ALL=C'
+require_text "$pmr129_split" 'export GIT_TERMINAL_PROMPT=0'
+require_text "$pmr129_split" 'umask 077'
+require_text "$pmr129_split" 'ERROR: run this script with bash; do not source it'
+require_text "$pmr129_split" 'scratch/owner-actions'
+require_text "$pmr129_split" 'PM_OWNER_SESSION_SCRATCH'
+require_text "$pmr129_split" 'another owner session holds the writer reservation'
+require_text "$pmr129_split" '[[ -f $tasking && -r $tasking ]]'
+require_text "$pmr129_split" 'bash "$tasking" check'
+require_text "$pmr129_split" 'PMR-129 is not visibly open at P2'
+require_text "$pmr129_split" 'expected_account=xjamesmorris'
+require_text "$pmr129_split" 'source_slug=beryllium-project/analysis-workbook'
+require_text "$pmr129_split" 'dest_slug=beryllium-project/analysis-workbook-private'
+require_text "$pmr129_split" 'private_branch=analysis/k3-a100-service-design-private'
+require_text "$pmr129_split" 'push_disabled=DISABLED-PMR-129-publication-gate'
+require_text "$pmr129_split" 'source repository is not private'
+require_text "$pmr129_split" 'destination repository exists and is not private'
+require_text "$pmr129_split" 'the source repository has open pull requests'
+require_text "$pmr129_split" 'Git URL rewriting changes the exact target'
+require_text "$pmr129_split" 'gh repo create "$dest_slug" --private'
+require_text "$pmr129_split" 'push --atomic --porcelain "$dest_url"'
+require_text "$pmr129_split" '--force-with-lease="refs/heads/$private_branch:$source_private"'
+require_text "$pmr129_split" '"$source_url" ":refs/heads/$private_branch"'
+require_text "$pmr129_split" 'remote set-url --push public "$push_disabled"'
+require_text "$pmr129_split" 'Type PMR-129'
+require_text "$pmr129_split" 'the checked-out branch changed'
+expect_exit "pmr129-workbook-split help is read-only" 0 \
+    bash "$pmr129_split" --help
+expect_exit "pmr129-workbook-split rejects a missing mode" 2 \
+    bash "$pmr129_split"
+expect_exit "pmr129-workbook-split rejects an unknown mode" 2 \
+    bash "$pmr129_split" --unknown
+refute_pattern "$pmr129_split" \
+    'gh auth switch|gh repo (edit|delete|rename|archive)|--visibility|--public|--internal|filter-repo|filter-branch|--mirror|--force([^-]|$)|--force-if-includes|\+refs/|--follow-tags|push[^|]*--tags|git_(safe|github)[^|]* (checkout|switch|reset|rebase|stash|clean|tag|gc|prune|update-ref)( |$)|git_github[^|]* push( --[a-z-]+(=[^ ]+)?)* (public|origin)( |$)'
 require_executable "$repository_root/tests/validate-agent.sh"
 expect_pass "owner-actions passes bash -n" \
     bash -n "$repository_root/scripts/owner-actions.sh"

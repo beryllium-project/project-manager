@@ -276,6 +276,8 @@ outbox/tasking/README.md                     contract for ignored generated per-
 outbox/OWNER-RUNBOOK.md                      open items by priority with exact human steps (refreshed each turn)
 outbox/owner-edits/                          exact text of the recorded owner-side edits applied by the human-run helper
 outbox/pmr105-push.sh                        HUMAN-RUN exact CHERI PMR-105 preflight/push; never executed by the agent
+outbox/pmr128-visibility-audit.sh            HUMAN-RUN read-only PMR-128 visibility audit and workbook exposure facts; never executed by the agent
+outbox/pmr129-workbook-split.sh              HUMAN-RUN PMR-129 workbook split preflight/execute; never executed by the agent
 templates/owner-return.md                    component HANDOFF return shape for PMR/PML owner results
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)

@@ -57,7 +57,7 @@ responsible human (analysis-workbook, 2026-10-11).
 | `formal-verification-research/` | `beryllium-project/formal-verification-research` | |
 | `osr-claude/` | `agentic-os-research/os-security-research` | Ask-first owner; restricted sources are never cloned here |
 | `provenance-review/` | `beryllium-project/provenance-review` | |
-| `analysis-workbook/` | `beryllium-project/analysis-workbook` | Made private on 2026-10-11 (responsible-human report) |
+| `analysis-workbook/` | `beryllium-project/analysis-workbook` | Made private on 2026-10-11 (responsible-human report); split pending under `PMR-129`, see below |
 | `threat-modeler/` | `beryllium-project/threat-modeler` | |
 | `security-reviewer/` | `beryllium-project/security-reviewer` | |
 | `../agentic-os-research/cheri-riscv-notes` | `agentic-os-research/cheri-riscv-notes` | Target of tracked symlink `cheri-riscv-notes` |
@@ -89,6 +89,14 @@ it with `git -C <entry> switch <branch>`. On 2026-10-11 these were
 `scripts/owner-actions.sh` push steps name specific remotes in its target
 table; recreate a remote it expects only on the responsible human's
 direction.
+
+Pending analysis-workbook split (`PMD-20261011-002`): until `PMR-129` is
+verified, the identity in the table above holds. After it, the workbook's
+`origin` is the private `beryllium-project/analysis-workbook-private`,
+holding every branch, and remote `public` is
+`beryllium-project/analysis-workbook`, holding `main` only, with its push
+URL set to `DISABLED-PMR-129-publication-gate`. The Project Manager updates
+the table and clone loop when it verifies the split.
 
 ## 4. Per-workstation Copilot setup
 

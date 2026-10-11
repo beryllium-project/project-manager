@@ -77,36 +77,132 @@ Manager never runs this script against real user configuration. Until
 `check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
 on every task launch.
 
-## P2 Analysis-workbook private branch (no PMR)
+## P2 PMR-128: visibility audit and workbook exposure facts
 
-The workbook handoff at `353c431` (2026-10-07) says you kept the K3 A100
-design on a local branch "after the configured origin was observed public".
-Your 2026-10-11 `lx2` output shows `beryllium-project/analysis-workbook`
-with `analysis/k3-a100-service-design-private` and `main` both on `origin`
-and up to date from `lx2`. You then reported exactly `"fyi, I just made it
-private as it has a private branch, need to resolve that"`. The Project
-Manager performs no network check and records that statement as the
-current visibility. On `l1` the branch is checked out with no upstream, and
-its remote-tracking refs predate the `lx2` push.
+`PMD-20261011-002` records your `visibility_audit` and `exposure_review`
+choices. The audit is read-only and can run at any time:
 
-To resolve:
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./outbox/pmr128-visibility-audit.sh --run
+```
 
-1. **Long-term home of the private branch.** Keep the workbook private, or
-   move the branch to a separate private repository and remove it from
-   `origin` before any return to public visibility. Decide whether its time
-   on the then-public repository needs follow-up. This also settles how the
-   push-evidence reconciliation of PMR-085/088/089/095/097 treats earlier
-   pushes.
-2. **`l1` checkout.** Keep the branch checked out (recommended until you
-   decide), merge it into local `main`, or switch back to `main`. Switching
-   away without merging hides PMQ-034..036, so `pull-queues.sh check` fails
-   for PML-0035..0037. A `git fetch` in the workbook on `l1` (owner or you;
-   never the Project Manager) refreshes the stale remote-tracking refs.
+It reads the repository identities in `REHYDRATE.md` and every registered
+checkout's remotes, skipping the documented inactive remotes and any
+non-github.com URL. It queries each identity with `gh repo view` and reports
+`match`, `MISMATCH`, or `unresolved` against the private visibility that
+Project Manager records expect (`PMD-20260915-001`). For
+`beryllium-project/analysis-workbook` it also records branches, tags, pull
+requests (fork head names withheld), fork visibility counts, and 14-day
+clone and view traffic. Run it as `xjamesmorris`; another account prints a
+warning and may leave repositories unresolved. It writes only its log under
+ignored `scratch/owner-actions/` and prints the path; report that path.
 
-Tell the next Project Manager turn the outcome. It then routes PMQ-034..036
-(public metadata pointers; none is a duplicate in the XRV index at
-`7361de4`) to the XRV owner, and PMR-124/126 can run on the branch you chose.
-No push, publication, or gate follows from this runbook.
+Optional: in the `beryllium-project` organization settings, open Audit log,
+filter `action:repo.access repo:beryllium-project/analysis-workbook`, and
+report only the dates and actions. You said exposure is not critical, so
+these facts are informational. The Project Manager records the results, and
+any mismatch becomes a question for you, not a Project Manager disposition.
+
+## P2 PMR-129: workbook split
+
+GitHub has no private branch in a public repository, so you chose two
+repositories (`PMD-20261011-002`, `helium_style`). Preconditions: the
+Project Manager commit and regenerated tasking from this turn, a clean
+workbook checkout with no owner session, and `gh` logged in as
+`xjamesmorris`.
+
+1. Run the read-only preflight:
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project/project-manager
+   bash ./outbox/pmr129-workbook-split.sh --plan
+   ```
+
+   It checks that the existing repository is private, has default branch
+   `main`, holds only `main` and `analysis/k3-a100-service-design-private`,
+   and has no tags or open pull requests; that the private branch is not
+   protected; that `beryllium-project/analysis-workbook-private` is absent or
+   private and empty; and the `l1` remote layout. It ends with
+   `eligible=yes` and the exact action list. Report the log path.
+2. On `lx2`, run the command `--plan` prints, which disables pushes from the
+   noncanonical copy so it cannot push the private branch back:
+
+   ```sh
+   git -C ~/src/l1/src/beryllium-project/analysis-workbook remote set-url --push origin DISABLED-PMR-129-publication-gate
+   ```
+
+3. Confirm the split in a Project Manager turn. The Project Manager records
+   your exact words in `HANDOFF.md`.
+4. Execute, typing `PMR-129` at the prompt:
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project/project-manager
+   bash ./outbox/pmr129-workbook-split.sh --execute
+   ```
+
+   It creates the private repository; copies `main` and the private branch
+   from a temporary bare clone in one atomic push; verifies both
+   repositories; deletes the private branch from the existing repository
+   only while its tip equals the copy; renames `origin` to `public` with a
+   disabled push URL; adds the private repository as `origin`; fetches both;
+   and sets the upstreams of `main` and the private branch to `origin`. It
+   never changes visibility, rewrites history, or switches branches. If it
+   stops, fix the reported cause and rerun it; it resumes from the first
+   incomplete step.
+5. Read the two `branch name=... behind=... ahead=...` lines at the end of
+   the log. If a branch shows `behind` above 0 with `ahead=0`, fast-forward
+   it before the owner session (the private branch is checked out; `main`
+   is not):
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project/analysis-workbook
+   git merge --ff-only origin/analysis/k3-a100-service-design-private
+   git fetch origin main:main
+   ```
+
+   Run only the line for a branch that is behind. If a branch shows both
+   `behind` and `ahead` above 0, stop and report it instead.
+6. Report the log path. The Project Manager verifies the result with
+   `inspect-components.sh` and updates `REHYDRATE.md`, `../COMPONENTS.md`,
+   and the workbook card.
+
+If `--plan` reports pull requests from the private branch, their pull-request
+refs keep that branch's commits reachable in the existing repository; the
+publication decision must account for them. Branch protection cannot
+replace this split, because it never limits reads.
+
+## P2 PMR-130: workbook two-repository rule and publication inventory
+
+Blocked by `PMR-129`. Keep `analysis/k3-a100-service-design-private`
+checked out (recommended): the launcher binds the checked-out branch, and
+that branch keeps PMQ-034..036 visible for the ledger check. Never merge it
+into `main`, which is the publication candidate. Then launch one owner
+session for all three requests, instead of a hidden-owner dispatch:
+
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/owner-session.sh launch analysis-workbook PMR-124 PMR-126 PMR-130
+```
+
+The owner records the two-repository rule (all work and private material go
+to `origin`; `public` receives only commits named in your recorded
+publication decision), notes the new hosting in `AWB-20261007-001`, and
+inventories `main` at one exact commit: each package's `Distribution` and
+`Intended distribution`, source redistribution metadata, and anything else
+that should not be public. It also mirrors CRQ-004 and CRQ-003 as in "P3
+PMR-124 and PMR-126" below, commits locally, returns in `HANDOFF.md`, and
+does not push; backing up its commits to the private `origin` is a later,
+separate push decision. It promotes and publishes nothing.
+
+Your publication decision follows the inventory. Choose one: publish `main`
+at an exact commit, naming any private-intended package you accept; have the
+owner prepare a clean publication line that excludes private packages; or
+keep both repositories private. Publishing through the existing repository
+leaves the moved branch's commits, and any history you exclude, reachable by
+SHA; a new clean public repository avoids that. The Project Manager records
+the decision and allocates a separate request for the push to `public` and
+the visibility change.
 
 ## P2 Back up the coordination repositories (no PMR)
 
@@ -265,20 +361,10 @@ launch in this session must pass `claude-opus-5.5` / `max` /
 
 ### P3 PMR-124 and PMR-126: analysis-workbook CRQ-004 and CRQ-003 mirrors
 
-First settle the branch decision in "P2 Analysis-workbook private branch"
-above: the launcher binds whatever branch is checked out
-as the expected branch, so the owner would otherwise commit on the private
-design branch. Then use exactly one of two paths for each request, never
-both. A later Project Manager coordination turn may dispatch the hidden
-`analysis-workbook-owner`, already pinned to `claude-opus-5.5` / `max` /
-`long_context`, under `PMD-20260917-002` after its readiness,
-current-tasking, clean-state, and one-writer checks; that path needs no
-human command. Otherwise run:
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-session.sh launch analysis-workbook PMR-124 PMR-126
-```
+Run both inside the `PMR-130` owner session ("P2 PMR-130: workbook
+two-repository rule and publication inventory" above), after the `PMR-129`
+split; do not dispatch the hidden `analysis-workbook-owner` for them
+separately. The launch command there binds the checked-out private branch.
 
 The owner mirrors `CRQ-004` to `routed`, citing `PMD-20261006-001` and
 `PMR-121..PMR-123`, and `CRQ-003` to `routed`, citing `PMR-125`; appends one
