@@ -222,12 +222,12 @@ empty, it injects `claude-opus-5.5` / `max` / `long_context` through
 `modifiedArgs` without a permission decision, the mechanism kept from
 `PMD-20260930-002`. It denies any explicit other model, effort, or context
 tier and still denies in-scope `run_dynamic_workflow`, whose nested agents
-are not command-hook enforceable. As of 2026-10-06, installing the aligned
-hook into the real user configuration is deferred because a
-`beryllium-hypervisor` human session is active. Until then the previously
-installed hook keeps its older rules for new sessions but still admits
-explicit `claude-opus-5.5` / `max` / `long_context` tasks, so pass those
-values explicitly. Direct custom-agent sessions, SDK-started workflows,
+are not command-hook enforceable. As of 2026-10-10 (`PMD-20261010-001`),
+user-level configuration on the `l1` workstation was not part of the stated
+`~/src` transfer, so the installed hook state there is unknown; the
+responsible human runs the read-only `check` first and installs only while
+governed sessions are idle. Until then, pass `claude-opus-5.5` / `max` /
+`long_context` explicitly. Direct custom-agent sessions, SDK-started workflows,
 out-of-scope worktrees, disabled hooks, hook timeout, and non-Copilot
 tooling remain outside or beyond this command-hook enforcement. The main
 session model comes from the human's launch and settings; the responsible

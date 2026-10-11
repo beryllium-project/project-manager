@@ -32,7 +32,23 @@
   from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** on 2026-10-06 maintained inspection observes clean
+- **Observed state:** on 2026-10-10, after the transfer to `l1`, maintained
+  inspection observes clean local branch
+  `analysis/k3-a100-service-design-private` at
+  `353c431969d2dcf616c7c3c56e5337f27d9fc141` checked out with no upstream;
+  local `main` is unchanged at `4cf44d0`. The component handoff records that
+  the responsible human directed this local-only branch for private session
+  `AWB-20261007-001` (two inquiries, 32 evidence records; owner-reported)
+  "after the configured origin was observed public", and leaves its later
+  disposition to the human. Project Manager records described that origin as
+  private; the Project Manager performed no network check, so the visibility
+  question is open for the responsible human. The branch adds
+  `PMQ-034..036` (suggested owner XRV), ledgered pending as
+  `PML-0035..0037` until the human decides the branch disposition; if the
+  checked-out tree loses those rows, `pull-queues.sh check` fails. `CRQ-003`
+  is now Project Manager todo `PMR-125` (P4, parked while Beryllium is left
+  alone) with `routed` mirror `PMR-126` beside `PMR-124`. On 2026-10-06
+  maintained inspection observed clean
   `main` at `4cf44d0bfec3b725dbcef1ca5938d619e867d932`, 0 behind / 2 ahead
   of last-fetched `origin/main`; both local commits are unpushed. At
   `4cf44d0` the component has already applied `CRQ-004` local alignment:
@@ -41,7 +57,7 @@
   invocation defaults, and `tests/validate-agent.sh` lines 785 and 799-800
   assert the owner's pin and defaults. `PMD-20261006-001` therefore routes
   only the `CRQ-004` `routed` mirror, as open P3 `PMR-124`. `CRQ-003` (an
-  RVV investigation todo request) is `new` and was not processed in the
+  RVV investigation todo request) was `new` and not processed in the
   2026-10-06 coordination turn. Earlier, clean `main` at `3c9d2a3` was
   synchronized 0/0 with `origin/main`. Complete private session
   `AWB-20260928-001-microguards-cheri-fallback` records one medium-confidence
@@ -257,7 +273,10 @@ acceptance. `PMR-124` asks the maintainer to mirror `CRQ-004` as `routed`
 from `PMD-20261006-001` and `PMR-121..PMR-123`, append one activity row, and
 change nothing else; it is dispatchable later to the hidden
 `analysis-workbook-owner` under `PMD-20260917-002` or performable in one
-human-started owner session, never both. `CRQ-003` remains `new`. The
+human-started owner session, never both. `PMR-126` likewise asks for the
+`CRQ-003` `routed` mirror from Project Manager todo `PMR-125` and may share
+that owner session; both wait for the responsible human's choice of branch.
+As of 2026-10-06, `CRQ-003` remained `new`. The
 operational housekeeping requests PMR-038, PMR-004, PMR-050,
 PMR-055, PMR-059, and PMR-063 are complete; their evidence is retained below,
 not presented as new work.

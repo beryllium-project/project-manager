@@ -127,10 +127,12 @@ research, analysis, threat models, provenance findings, or human decisions.
   running session"`, superseding the prior reported Beryllium session as
   point-in-time evidence only. Recheck immediately before any install,
   uninstall, or PMR-108 action; later work still requires fresh same-turn
-  confirmation. As of 2026-10-06 the aligned install is deferred because a
-  `beryllium-hypervisor` human session is active; the previously installed
-  hook keeps its older rules but still admits explicit `claude-opus-5.5` /
-  `max` / `long_context` tasks, so pass those values explicitly.
+  confirmation. As of 2026-10-10 (`PMD-20261010-001`), user-level
+  configuration on the `l1` workstation was not part of the stated `~/src`
+  transfer, so the installed hook state there is unknown; the responsible
+  human runs the read-only `check` first and installs only while governed
+  sessions are idle. Until then, pass `claude-opus-5.5` / `max` /
+  `long_context` explicitly.
   Direct custom-agent sessions, SDK-started workflows, out-of-scope
   worktrees, disabled hooks, hook timeout, and non-Copilot tooling remain
   outside or beyond this command-hook enforcement. The main session model

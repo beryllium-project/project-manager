@@ -11,8 +11,9 @@
 - **Agent:** none
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
-- **Observed state:** the renamed tracked symlink resolves to clean local
-  `main` at PMR-115 owner work/return
+- **Observed state:** the renamed tracked symlink resolves to local `main`
+  (re-observed 2026-10-10 on `l1`), dirty only with two untracked
+  `review-inbox/*.pdf` files, at PMR-115 owner work/return
   `7361de4138ad733be46e8a72608a779d24ae488a`, 0 behind / 1 ahead of
   last-fetched private active `origin/main` `5e7387a`. PMR-115 changes only
   `.github/copilot-instructions.md` and `HANDOFF.md`, binds startup path

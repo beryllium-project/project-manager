@@ -168,10 +168,10 @@ active Beryllium session, perform `PMR-121`..`PMR-124`, or process
 ## Follow-up
 
 - After `beryllium-hypervisor` and every other governed session are idle,
-  the responsible human runs:
+  the responsible human runs, from the current workspace root recorded in
+  `../COMPONENTS.md`:
 
   ```sh
-  cd /home/jmorris/src/l1/src/beryllium-project
   bash ./project-manager/scripts/beryllium-governance.sh install &&
   bash ./project-manager/scripts/beryllium-governance.sh check
   ```
@@ -186,3 +186,5 @@ active Beryllium session, perform `PMR-121`..`PMR-124`, or process
   inputs above and the read-only snapshot of
   `scripts/inspect-components.sh`. No component repository or user-level
   Copilot configuration was modified.
+- Locator wording updated on 2026-10-10 under `PMD-20261010-001` after the
+  return to `l1`; the disposition is unchanged.

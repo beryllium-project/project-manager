@@ -151,8 +151,9 @@ inside the Beryllium workspace. When `model`, `reasoning_effort`, or
 any explicit other model, effort, or context tier and still denies in-scope
 `run_dynamic_workflow`. Direct custom-agent sessions are outside the task
 hook; the responsible human keeps the main session at `claude-opus-5.5` /
-`max` / `long_context`. As of 2026-10-06 the aligned reinstall is deferred
-because a `beryllium-hypervisor` human session is active.
+`max` / `long_context`. As of 2026-10-10 (`PMD-20261010-001`) the hook state
+on the `l1` workstation is unknown; the responsible human runs the read-only
+`check` first and installs only while governed sessions are idle.
 
 The `project-manager` orchestrator and `pm-auditor` pin `claude-opus-5.5`;
 the auditor runs one same-model consistency pass with no iteration loop.

@@ -86,10 +86,11 @@ responsible human.
 
 - Regenerate Beryllium tasking after the Project Manager commit. Any later use
   of the readiness statement begins in a fresh Beryllium owner session under
-  the component's current handoff and separate human gates:
+  the component's current handoff and separate human gates, started from
+  the `beryllium-hypervisor/` entry under the current workspace root
+  recorded in `../COMPONENTS.md`:
 
   ```sh
-  cd /home/jmorris/src/l1/src/beryllium-project/beryllium-hypervisor
   copilot --no-auto-update --yolo
   ```
 
@@ -98,3 +99,5 @@ responsible human.
 - Written by the `project-manager` agent from the exact inputs and bounded
   scope steering above. No component was modified or invoked by the Project
   Manager.
+- Locator wording updated on 2026-10-10 under `PMD-20261010-001` after the
+  return to `l1`; the disposition is unchanged.

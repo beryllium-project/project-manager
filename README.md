@@ -177,14 +177,14 @@ stated exactly `"there is no other running session"` as point-in-time
 evidence only. Recheck immediately before execution; PMR-108 actions still
 require fresh same-turn confirmation.
 The responsible human later reported the exact governance `install && check`
-command completed (`"done above"`). This is human evidence only; the Project
-Manager did not inspect real user configuration or establish install-time
-session state. As of 2026-10-06, installing the `PMD-20261006-001`-aligned
-hook is deferred because a `beryllium-hypervisor` human session is active.
-Until then the previously installed hook keeps its older rules for new
-sessions but still admits explicit `claude-opus-5.5` / `max` /
-`long_context` tasks, so the SOP is followed by passing those values
-explicitly.
+command completed on `lx2` (`"done above"`). This is human evidence only; the
+Project Manager did not inspect real user configuration or establish
+install-time session state. As of 2026-10-10 (`PMD-20261010-001`),
+user-level configuration on the `l1` workstation was not part of the stated
+`~/src` transfer, so the hook state there is unknown; the responsible human
+runs the read-only `check` first and installs only while governed sessions
+are idle. Until then, the SOP is followed by passing `claude-opus-5.5` /
+`max` / `long_context` explicitly.
 
 Every repository write also requires a fresh coordination check. The acting
 agent checks worktree state and active-session evidence first; user reports,

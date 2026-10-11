@@ -18,7 +18,15 @@
   `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
   branch, which is not checked out, carries only generic instructions
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
-  to this Project Manager turn. Maintained inspection at
+  to the Project Manager. On 2026-10-10, after the transfer from `lx2` to the
+  usual `l1` workstation, the responsible human directed exactly `"leave
+  beryllium-hypervisor repo alone for now"`; the Project Manager ran no
+  state inspection, Git command, or write against it or its linked
+  worktrees (one inadvertent recursive Markdown text search read files there;
+  nothing from it was used), so the
+  following 2026-10-06 `lx2` observation is unverified after the transfer,
+  and the linked worktrees may need owner-run `git worktree repair`
+  (`PMD-20261010-001`). Maintained inspection at
   2026-10-06T16:03Z observed clean `beryllium/k3-b3-bringup` at
   `afa4336dc584642a7ef862535153116a75b44e5b`, 0 behind / 1 ahead of
   `origin/beryllium/k3-b3-bringup`. The responsible human reports an active
@@ -83,8 +91,9 @@
   fresh tasking and one-writer checks. No backup approval, push, publication,
   acceptance, execution, or other gate follows.
   The responsible human also moved six Beryllium linked worktrees into
-  workspace-root `worktrees/` and ran `git worktree repair`; the repaired
-  root-relative inventory is in `../../COMPONENTS.md`. Their current flat
+  workspace-root `worktrees/` and ran `git worktree repair` on `lx2`; the
+  root-relative inventory is in `../../COMPONENTS.md`, and those placements
+  are unverified after the 2026-10-10 transfer. Their current flat
   placement is temporary and does not satisfy the preferred namespaced
   convention. Future move/remove work remains Beryllium-owner-only.
   Last-fetched refs contain the PMR-098/100 active ranges through

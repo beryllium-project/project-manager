@@ -422,8 +422,12 @@ current_committed_request_blob=$(git rev-parse \
     HEAD:outbox/component-requests.md)
 require_text "$repository_root/outbox/tasking/threat-modeler.md" \
     "**Source request blob:** \`$current_committed_request_blob\`"
+# The consumed PMR-120 bootstrap keeps its reviewed SOT constant above, and
+# owner-session.sh refuses it once the anchor differs; the live view must
+# carry the live anchor hash (PMD-20261010-001 changed SOT.md).
+current_sot_sha=$(sha256sum "$repository_root/../SOT.md" | awk '{ print $1 }')
 require_text "$repository_root/outbox/tasking/threat-modeler.md" \
-    '**Global startup/status SHA-256:** `5ccaf1d8a7f4a11a5169595a7744d36b99d6641c6d99cc24f1215aeefe4c1a68`'
+    "**Global startup/status SHA-256:** \`$current_sot_sha\`"
 require_text "$repository_root/../COMPONENTS.md" \
     'threat-modeler/` | Ignored canonical direct checkout | Clean local `main` at PMR-120 correction return `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`'
 refute_pattern "$owner_session" '--(prompt|add-dir)([ =]|$)'
