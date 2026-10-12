@@ -20,17 +20,23 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
-  done. Maintained inspection at 2026-10-11T12:58Z observes clean
-  `beryllium/k3-b7-bringup` at `563cca143fe4c1362eeb799b07e1b45bcd09ee97`
-  ("docs: record the B7 re-check on l1"), contained in last-fetched
-  `origin/beryllium/k3-b7-bringup`. It is the owner's record of its
-  2026-10-10 session on `l1`; the owner states that its off-board B7
-  re-check there is host-test and QEMU emulation only, is not hardware
-  validation, and changes no acceptance. Development branch
+  done. Maintained inspection at 2026-10-12T22:16Z observes clean
+  `beryllium/k3-b7-bringup` at `PMR-127` owner return
+  `69bf8f8aede0c55ce0eda540d7bd95d8b2466d11` ("docs: record the PMR-127
+  owner return"), over work `da65b80e` and the owner's record of its
+  2026-10-10 session on `l1`, `563cca143fe4c1362eeb799b07e1b45bcd09ee97`
+  ("docs: record the B7 re-check on l1"). The two `PMR-127` commits are
+  local-only, 0 behind / 2 ahead of last-fetched
+  `origin/beryllium/k3-b7-bringup` `563cca14`, with no upstream configured.
+  The owner states that its off-board B7 re-check on `l1` is host-test and
+  QEMU emulation only, is not hardware validation, and changes no
+  acceptance. Development branch
   `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched
-  `origin`. All 12 linked-worktree registrations are prunable after the
-  transfer, and the owner handoff's Repository state and New-session restart
-  sections still name the `lx2` path; `PMR-127` routes both. The committed
+  `origin`. `PMR-127` is closed: the owner handoff names the `l1` checkout,
+  seven linked-worktree registrations are repaired, and five under a former
+  Copilot session-state directory are retained unrepaired and still
+  prunable. `PMR-133` routes the owner-reported pre-existing
+  `--tasking-contract` failure. The committed
   instructions record component-side responsible-human acceptance of B0-B7;
   Project Manager gate records are not reconciled to them. On 2026-10-10 the
   Project Manager had run no state inspection, Git command, or write against
@@ -38,9 +44,9 @@
   read files there; nothing from it was used). Earlier, maintained inspection at
   2026-10-06T16:03Z observed clean `beryllium/k3-b3-bringup` at
   `afa4336dc584642a7ef862535153116a75b44e5b`, 0 behind / 1 ahead of
-  `origin/beryllium/k3-b3-bringup`. The responsible human reports an active
-  human session there; it is a coordination lock, and the Project Manager
-  infers nothing from the branch name. Its committed
+  `origin/beryllium/k3-b3-bringup`. The responsible human then reported an
+  active human session there, a coordination lock at that time; the Project
+  Manager inferred nothing from the branch name. Its committed
   `.github/copilot-instructions.md` adopts an equivalent 2026-10-06 SOP (it
   cites neither CRQ-004 nor `PMD-20261006-001`) and pins `claude-opus-5.5`
   at `max` with `long_context` for all work, sub-agents, and tasks, so no
@@ -101,11 +107,14 @@
   acceptance, execution, or other gate follows.
   The responsible human also moved six Beryllium linked worktrees into
   workspace-root `worktrees/` and ran `git worktree repair` on `lx2`; the
-  root-relative inventory is in `../../COMPONENTS.md`, and after the
-  2026-10-10 transfer those registrations are prunable (owner repair under
-  `PMR-127`). Their current flat
+  root-relative inventory is in `../../COMPONENTS.md`. After the 2026-10-10
+  transfer, `PMR-127` repaired five of them at the `l1` root on 2026-10-12;
+  the sixth, `be-doc-repro-review-7cf4-20260930`, is absent. Their current flat
   placement is temporary and does not satisfy the preferred namespaced
-  convention. Future move/remove work remains Beryllium-owner-only.
+  convention. The owner also observed six unregistered
+  `worktrees/beryllium-hypervisor-*` directories whose Git admin
+  directories no longer exist, and an empty `worktrees/beryllium-hypervisor/`.
+  Future move/remove work remains Beryllium-owner-only.
   Last-fetched refs contain the PMR-098/100 active ranges through
   `4141cf6`; local candidate `6e93461` and local R8-C/H0 branch tip
   `0d53120` still have no remote-tracking containment. The PMR-098 return
@@ -159,15 +168,19 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
   return records the distinct K0-I exact-target and K0-S
   preparation/status boundaries without expanding their authority. K0-X and
   K0-R remain blocked; KVM0 and K3 remain `NOT RUN`; the development
-  kernel/BSP remains `UNDECIDED`.
+  kernel/BSP remains `UNDECIDED`. The component's instructions, read at
+  `69bf8f8a`, record that the responsible human dropped the KVM0 workstream
+  and R8 stages H1-H4 on 2026-10-08 (a new accepted plan may recreate
+  either). Project Manager records are not reconciled to that drop (open
+  responsible-human question), and no gate changes.
 - The root Makefile is an inspectable lower-level graph without a `help`
   target.
 
 ## Commands
 
-Run these from the last recorded active branch
-`beryllium/single-hart-runtime-r0` (on 2026-10-06 the checkout was observed
-on `beryllium/k3-b3-bringup`; see **Observed state** above).
+Run these from development branch `beryllium/single-hart-runtime-r0` (on
+2026-10-12 the checkout was observed on `beryllium/k3-b7-bringup`; see
+**Observed state** above).
 
 ```sh
 npm ci
@@ -177,8 +190,13 @@ npm ci
 ./be check
 ./be docs-check
 ./be evaluate
-./tests/r8/run-make.sh r8-check   # authorized R8-H0 targeted launcher only
+./tests/r8/run-make.sh r8-check   # R8 history: the component records R8 H1-H4 dropped (2026-10-08)
 ```
+
+The component's current direction also documents per-milestone bring-up
+checks on each milestone branch, for example `make -C bringup/k3-b7 check`
+and `make -C bringup/k3-b7 kexec-rehearsal` on `beryllium/k3-b7-bringup`
+(owner-documented; the Project Manager runs none of them).
 
 ## What the Project Manager may request
 
@@ -241,7 +259,10 @@ current package remains mutable, unaccepted, and not ready. K0-X native
 execution, K0-R result acceptance, B0, development-kernel/BSP selection, B1,
 a retained H0 successor, H1-H4, publication, and release remain separate
 blocked gates. H1-H4 are not authorized; K3 hardware is `NOT RUN` in Project
-Manager records.
+Manager records. The component's instructions now record component-side
+B0-B7 acceptance and the responsible human's 2026-10-08 drop of KVM0 and R8
+H1-H4; Project Manager records are not reconciled to them (open
+responsible-human question).
 `PMR-112` is closed from owner work `2313cbe0`, return `55b568b4`, and
 checkpoint `93819fd9`. The ordinary owner now reads current
 `workspace://SOT.md` before resolving any component, sibling, or Project
@@ -249,6 +270,20 @@ Manager tasking; missing/unreadable or SHA-drifted anchors stop. The return
 also records the corrected current startup path and bounded source-only
 contract validation. It changes no implementation, plan, acceptance record,
 ref, worktree, publication state, or closed PMR-098/100 evidence.
+`PMR-127` is closed from owner work `da65b80e` and return `69bf8f8a`
+(2026-10-12). The handoff's Repository state, Return-to-`l1` note, and
+New-session restart launch path name the registered `l1` checkout, with
+directly related validator path changes. Seven linked-worktree
+registrations are repaired. Five under a former Copilot session-state
+directory are retained unrepaired, unpruned, and unlocked; that directory
+is absent on `l1`, and whether it still exists on `lx2` is uninspected. The
+owner's worktree list puts one of them, `source-first-corrected-validation`,
+at `66eaa7f7`, which no branch contains. The owner reports that default
+`git gc` may prune them from about 2026-12-28. The responsible human chooses
+whether to have the owner lock them or let them go; copying the directory
+from `lx2` to `l1` would first need a new named responsible-human decision,
+because `PMD-20261011-001` and `PMD-20261010-001` forbid it.
+`PMR-133` asks the owner to restore the failing `--tasking-contract` check.
 `PMR-077` is closed from exact documentation-only owner return `a8e137e`.
 The human-supplied external readiness statement is candidate planning input
 only. Any COM260-informed H0 successor still requires a separately reviewed

@@ -56,9 +56,11 @@ per-workstation procedure.
 
 1. In Copilot, run `/config model claude-opus-5.5`. If `planModel` is set to
    another model, run `/settings unset planModel`. In `/subagents`, set the
-   default and every per-agent model to `claude-opus-5.5`; this session
-   reports a required `research` default of `gpt-5.6-terra`, which `check`
-   does not inspect but `PMD-20261006-001` forbids.
+   default and every per-agent model to `claude-opus-5.5`. On 2026-10-11 a
+   session reported a required `research` default of `gpt-5.6-terra`; on
+   2026-10-12 this Project Manager session's runtime lists `claude-opus-5.5`
+   for `research`, `code-review`, and `security-review`. `check` does not
+   inspect these defaults, but `PMD-20261006-001` forbids any other model.
 2. Rerun the read-only check; only the two hook lines should still fail:
 
    ```sh
@@ -79,47 +81,64 @@ Manager never runs this script against real user configuration. Until
 `check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
 on every task launch.
 
-## P3 PMR-127: Beryllium post-transfer housekeeping
+## P3 PMR-133: restore Beryllium's tasking-contract check
 
-Run this first when you return to Beryllium development: it repairs the
-linked worktrees and handoff paths your development session relies on.
-
-On 2026-10-11 the responsible human reported that the Beryllium session is
-done and relayed the owner's request to cite `563cca14`. The Project
-Manager then ran the full read-only inspection. `563cca14` ("docs: record the
-B7 re-check on l1") is the owner's record of its 2026-10-10 session on `l1`,
-and the canonical root was already re-registered by `PMD-20261010-001`. Two
-owner-side follow-ups remain, both in `PMR-127`:
-
-1. The Beryllium `planning/HANDOFF.md` Repository state and New-session
-   restart sections still name the `lx2` checkout path.
-2. Maintained `quiescence` reports all 12 Beryllium linked-worktree
-   registrations prunable: five under the old root's `worktrees/be-*`, two
-   under the old root's `beryllium-hypervisor/build/.../scratch-diagnosis/`,
-   and five under a former `~/.copilot/session-state/` directory that
-   likely lives only on `lx2`.
-
-Keep the `lx2` copy, including that `~/.copilot/session-state/` directory,
-until the owner reports. Copying that one directory to the same path on
-`l1` is optional; it still needs owner repair. Then start one owner session:
+`PMR-127` is closed (2026-10-12; work `da65b80e`, return `69bf8f8a`). Its
+owner reported a pre-existing failure:
+`node docs/check-links.mjs --tasking-contract` exits 1 because
+`.github/copilot-instructions.md` has put `## Current direction` ahead of
+`## Project Manager tasking` since `2e9b5b1a` (owner-dated 2026-10-06). The
+check passed when `PMR-112` adopted SOT-first startup. When you next work
+in Beryllium, start one owner session:
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-session.sh launch beryllium-hypervisor PMR-127
+bash ./scripts/owner-session.sh launch beryllium-hypervisor PMR-133
 ```
 
-The launcher binds the checked-out `beryllium/k3-b7-bringup`. The owner
-updates only those handoff paths, lists the worktrees, runs
-`git worktree repair <new-path>...` from the primary checkout only where a
-directory exists at its new location, preserves uncommitted content, never
-prunes as a fix, commits locally, returns in `planning/HANDOFF.md`, and does
-not push. The Project Manager never runs these commands.
+The launcher binds the checked-out branch. The owner either restores
+`## Project Manager tasking` as the first level-two section or, if you want
+the current order kept, records that choice and adjusts the check so that
+reading `workspace://SOT.md` and the exact resolver still come first. It
+validates, commits locally, returns in `planning/HANDOFF.md`, and does not
+push. The Project Manager never runs these commands.
 
 The open P3 no-PMR Beryllium B-stage reconciliation is separate: the
 component's committed instructions now record responsible-human acceptance
 of B0-B7 on the component side, while K3 hardware is `NOT RUN` in Project
 Manager records. It is reconciled only from a named responsible-human record;
 no gate follows from this runbook.
+
+## P3 Beryllium session-state worktrees (no PMR)
+
+`PMR-127` repaired the seven Beryllium linked-worktree registrations whose
+directories exist on `l1`. The owner retained five more, unrepaired,
+unpruned, and unlocked. They are registered under a former Copilot
+session-state directory under `~/.copilot/session-state/` that is absent on
+`l1`; whether it still exists on `lx2` is uninspected. The exact directory
+and the five admin ids are in the Beryllium `planning/HANDOFF.md` section
+"PMR-127 owner-session checkpoint". Any unstaged or untracked content they
+had could only be on `lx2`. The owner's worktree list puts one of them,
+`source-first-corrected-validation`, at `66eaa7f7`, which no branch
+contains. `quiescence` keeps failing on them.
+
+Default: do nothing now. Keep `lx2`'s `~/.copilot/session-state/`
+directory along with the `lx2` workspace copy. The owner reports that
+default `git gc` may prune these registrations from about 2026-12-28, so
+choose before then:
+
+1. have a Beryllium owner session lock the five (`git worktree lock`), so
+   that pruning cannot remove them, and keep `66eaa7f7` on a branch if you
+   want it; or
+2. let them go once you no longer need anything from `lx2`.
+
+Copying that session-state directory from `lx2` to `l1`, which the owner
+mentioned, is outside current policy: `PMD-20261011-001` never copies
+machine-local Copilot state between hosts, and `PMD-20261010-001` never
+recovers work from the `lx2` copy. It would need a new named
+responsible-human decision first. Tell the Project Manager your choice; it
+allocates an owner request if one is needed. The Project Manager never
+repairs, locks, or prunes worktrees.
 
 ## P3 PMR-132: back up the workbook's new commits (private)
 
@@ -151,8 +170,8 @@ review runs only on explicit responsible-human request, on the same model.
 Component agent profiles lie outside the Project Manager's carry classes, so
 each alignment below is an owner request performed in an owner session.
 The analysis-workbook profiles and the Beryllium instructions are already
-aligned, so no Beryllium SOP request is allocated; `PMR-127` is separate
-post-transfer housekeeping.
+aligned, so no Beryllium SOP request is allocated; Beryllium's `PMR-133` is
+separate tasking-contract housekeeping.
 
 Start an owner session only after the Project Manager commits this turn and
 regenerates tasking; the launcher refuses a dirty Project Manager worktree or
@@ -285,18 +304,23 @@ parent remained at `7584292`, the staged entries were removed, and no gitlink
 is tracked. This records a boundary near-miss, not authority to repeat the
 operation.
 
-### P3 worktree namespacing follow-up
+### P3 worktree inventory and namespacing follow-up
 
-The Beryllium paths repaired on `lx2` are flat under `worktrees/` and do not
-yet follow `worktrees/<repository>/<purpose-or-branch>`. They were usable
-temporary placements on `lx2`; after the 2026-10-10 transfer their
-registrations are prunable, and repair is owner request `PMR-127`. Any later rename uses Beryllium-owner `git worktree move` after
-fresh tasking, worktree, and one-writer checks. The Project Manager never
-moves, removes, repairs, prunes, or judges these worktrees obsolete.
-Additional registered Beryllium worktrees still exist at the workspace top
-level. A later owner inventory decides whether to leave or move them; this
-turn does not list, classify, or touch them. Any namespacing follows the
-post-transfer repair in "P3 PMR-127" above.
+On 2026-10-12 `PMR-127` repaired, at the `l1` root, the five registered flat
+`worktrees/be-*` placements and the two registrations under the checkout's
+`build/restore-pinned-validation-environment/scratch-diagnosis/`;
+`be-doc-repro-review-7cf4-20260930` is absent. The flat placements do not
+yet follow `worktrees/<repository>/<purpose-or-branch>`. The owner also
+observed, untouched, six unregistered `worktrees/beryllium-hypervisor-*`
+directories whose `.git` files name Git admin directories that no longer
+exist, so `git worktree repair` cannot reattach them, and an empty
+`worktrees/beryllium-hypervisor/`. A later Beryllium owner inventory
+decides any `git worktree move` and the unregistered directories'
+disposition, after fresh tasking, worktree, and one-writer checks; nothing
+is deleted before the owner confirms that no unique content remains. The
+Project Manager never moves, removes, repairs, prunes, or judges these
+worktrees obsolete. The five retained session-state registrations are the
+separate choice in "P3 Beryllium session-state worktrees (no PMR)" above.
 
 ## Completed PMR-108: global startup status and quiescence gate
 
@@ -502,7 +526,10 @@ implementation, acceptance, execution, push, publication, or other gate.
 K0-S source preparation/evidence import, K0-X native execution, K0-R result
 acceptance, B0, development-kernel/BSP selection, B1, an H0 successor,
 retained R8 progression, publication, and release remain separate blocked
-gates.
+gates in Project Manager records. The component's 2026-10-08 instructions,
+read at `69bf8f8a`, record component-side B0-B7 acceptance and the
+responsible human's drop of KVM0 and R8 H1-H4; Project Manager records are
+not reconciled to them (open responsible-human question).
 
 ## Closed PMR-105: private CHERI topic backup
 
@@ -742,7 +769,13 @@ and no views from 2026-09-27 to 2026-10-10; 2026-10-11 is outside that
 window. Re-run the audit at any time; its `MISMATCH` lines for those five
 repositories are expected.
 
-The coordination backup is complete. The 111th turn pushed Project Manager
+The coordination backup is complete through Project Manager `918efe7` and
+parent `b7ba4a4`; later Project Manager and parent commits stay local until
+a new same-turn confirmation. Under your exact `push_both`, the
+114th turn pushed Project Manager `98a916c..918efe7` and parent
+`b4cb8e4..b7ba4a4` as fast-forwards; on 2026-10-12 the 115th turn verified
+with live `ls-remote` that each remote holds only `main` at those tips,
+0 behind / 0 ahead, and that confirmation is consumed. The 111th turn pushed Project Manager
 `43e7e82..98a916c` and parent `ff4f598..b4cb8e4`, and the 112th turn
 verified both 0 behind / 0 ahead. The 110th turn found
 `beryllium-project/project-manager` publicly readable, held its push
@@ -1022,7 +1055,9 @@ remote mutation is authorized.
 
 **No further push is authorized; do not run again without a new exact
 responsible-human confirmation.** The coordination backup is complete and
-verified under `PMD-20261012-001`. `beryllium-project/project-manager` stays public by your
+verified through Project Manager `918efe7` and parent `b7ba4a4` (the
+114th-turn `push_both` push, verified 2026-10-12); later commits are local
+until a new same-turn confirmation. `beryllium-project/project-manager` stays public by your
 decision, so any later `push_pm` publishes the Project Manager commits it
 pushes. `threat-modeler` and `security-reviewer` also stay public
 (`PMD-20261012-002`), so `push_tm` and `push_sr` publish too.
@@ -1055,11 +1090,17 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` was observed on 2026-10-06T16:03Z clean on
+- `beryllium-hypervisor/` is clean on `beryllium/k3-b7-bringup` at
+  `PMR-127` return `69bf8f8` over work `da65b80` (2026-10-12); both are
+  local-only, 0 behind / 2 ahead of last-fetched
+  `origin/beryllium/k3-b7-bringup` `563cca1`, and no backup request is
+  allocated (pushing them is the owner's decision). Development branch
+  `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched
+  `origin`. History: on 2026-10-06T16:03Z it was observed clean on
   `beryllium/k3-b3-bringup` at `afa4336`, behind 0 / ahead 1 of last-fetched
   `origin/beryllium/k3-b3-bringup` `6358ed2`, with a human session the
-  responsible human reports active; `afa4336` is on no remote-tracking
-  branch. Its last recorded (104th-turn) primary state was clean at
+  responsible human then reported active; `afa4336` was then on no
+  remote-tracking branch and is now contained. Its last recorded (104th-turn) primary state was clean at
   documentation-only PMR-077 return `a8e137e`, behind 0 / ahead 6 of
   last-fetched private `origin` `4141cf6`; maintained refs inspection at
   2026-10-06T18:16Z shows local `beryllium/single-hart-runtime-r0` at

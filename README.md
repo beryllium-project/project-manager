@@ -351,10 +351,10 @@ anchor already active for Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review. Distinct owner requests
 `PMR-113` and `PMR-116..PMR-118` are the four remaining child-owned gaps.
 Beryllium PMR-112 is complete at owner work `2313cbe0`, return `55b568b4`,
-and checkpoint `93819fd9`; all three commits remain local and unpushed.
-CHERI notes PMR-114 is complete at owner work `8d1bc9d` / return `7fb49f4`,
-and XRV PMR-115 is complete at owner work/return `7361de4`; those three
-commits also remain local and unpushed.
+and checkpoint `93819fd9`; as of the 2026-10-11 refs inspection all three
+are contained in last-fetched `origin`. CHERI notes PMR-114 is complete at
+owner work `8d1bc9d` / return `7fb49f4`, and XRV PMR-115 is complete at
+owner work/return `7361de4`; those three commits remain local and unpushed.
 
 From the workspace root, use
 `bash ./project-manager/scripts/project-tasking.sh resolve <component>`.
