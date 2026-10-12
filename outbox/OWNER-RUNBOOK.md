@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-11
+**Last refreshed:** 2026-10-12
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -43,37 +43,6 @@ stdout/stderr and Copilot arguments remain unchanged. The Project Manager
 retrieves the newest component/PMR-matched file directly from fixed ignored
 `scratch/owner-sessions/preflight/`; it contains only the documented
 fixed-field state, never command output or a transcript.
-
-## P1 Project Manager repository visibility and held backup (no PMR)
-
-You directed exactly `"proceed with coordination backup"`. Before pushing,
-the Project Manager checked both coordination remotes (`PMD-20261011-003`).
-They matched their recorded tips, but an anonymous `git ls-remote`, with no
-credentials, read `beryllium-project/project-manager`: it is public, and no
-record approves that. The parent, `beryllium-project/beryllium-project`,
-refused anonymous access, so it is not public. Pushing the Project Manager
-would publish its local commits, so that push is held; the parent is pushed
-in this turn under your confirmation, after these records are committed,
-and the next turn verifies it.
-
-To finish the backup:
-
-1. Make `beryllium-project/project-manager` private: repository Settings,
-   General, Danger Zone, Change visibility. This erases its stars and
-   watchers, and any public forks stay public in their own network.
-2. In a new Project Manager turn, say that it is private and confirm the
-   push. The Project Manager re-runs the anonymous probe, pushes
-   `refs/heads/main:refs/heads/main` to `origin` only if anonymous access is
-   refused, and verifies the live tip.
-
-If you intend the repository to be public, record that as a publication
-decision naming the exact commits instead, then confirm the push in that
-turn; the Project Manager infers neither. While the repository is public,
-run `bash ./scripts/owner-actions.sh` only with `--skip push_pm`: its
-default and `--yes` runs include `push_pm`, and the helper checks tips but
-not visibility. Until the push, a clone of the Project Manager repository
-stops at `43e7e82` and lacks `REHYDRATE.md`. Component backups stay under
-their own requests and owners' rules.
 
 ## P2 User-level governance on `l1` (no PMR)
 
@@ -124,7 +93,10 @@ It reads the repository identities in `REHYDRATE.md` and every registered
 checkout's remotes, skipping the documented inactive remotes and any
 non-github.com URL. It queries each identity with `gh repo view` and reports
 `match`, `MISMATCH`, or `unresolved` against the private visibility that
-Project Manager records expect (`PMD-20260915-001`). For
+Project Manager records expect (`PMD-20260915-001`). Its
+`beryllium-project/project-manager` line reports `MISMATCH` as expected,
+because that repository stays public by your decision (`PMD-20261012-001`).
+For
 `beryllium-project/analysis-workbook` it also records branches, tags, pull
 requests (fork head names withheld), fork visibility counts, and 14-day
 clone and view traffic. Run it as `xjamesmorris`; another account prints a
@@ -135,7 +107,8 @@ Optional: in the `beryllium-project` organization settings, open Audit log,
 filter `action:repo.access repo:beryllium-project/analysis-workbook`, and
 report only the dates and actions. You said exposure is not critical, so
 these facts are informational. The Project Manager records the results, and
-any mismatch becomes a question for you, not a Project Manager disposition.
+any other mismatch becomes a question for you, not a Project Manager
+disposition.
 
 ## P2 PMR-129: workbook split
 
@@ -855,6 +828,18 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+The coordination backup finishes in the 111th turn, and the next turn
+verifies both pushes. The 110th turn found
+`beryllium-project/project-manager` publicly readable, held its push
+(`PMD-20261011-003`), and pushed the non-public parent `4f96358..ff4f598`,
+verified 0 behind / 0 ahead. You then directed exactly `"just finish the
+backup publicly"`. `PMD-20261012-001` records that as your decision to
+publish the Project Manager commits after `43e7e82` through `2b39df0`, plus
+its record commit, and as the push
+confirmation for this turn's Project Manager and parent fast-forwards, which
+it consumes. The repository stays public; every later push to it publishes
+and needs a new confirmation.
+
 `PMR-120` is closed at initial work/return `ca8fa3c` / `bbbc534` and
 standard-V1 correction work/return `71bca3f` / `e6aed9f`. The focused owner
 suite reports 148/0 and diff check passed; full package-reading suite and
@@ -1097,13 +1082,13 @@ opt-in helper step and no parent, Project Manager, component, branch, tag, or
 remote mutation is authorized.
 
 **No further push is authorized; do not run again without a new exact
-responsible-human confirmation.** The P1 "Project Manager repository
-visibility and held backup" section above replaces the earlier human-run
-coordination backup step while `beryllium-project/project-manager` is
-public.
+responsible-human confirmation.** The coordination backup finishes in this turn under
+`PMD-20261012-001`. `beryllium-project/project-manager` stays public by your
+decision, so any later `push_pm` publishes the Project Manager commits it
+pushes.
 
-From `project-manager/`, adding `--skip push_pm` while
-`beryllium-project/project-manager` is public (`PMD-20261011-003`):
+From `project-manager/`, adding `--skip push_pm` unless you intend to
+publish new Project Manager commits:
 
 ```sh
 bash ./scripts/owner-actions.sh --plan --skip push_pm
@@ -1208,8 +1193,10 @@ confirmation.
 The helper prompts before every push, warns on a dirty worktree and skips it
 automatically only under `--yes`, never forces, and changes no visibility.
 It does not check visibility, though, so a push to a public repository
-publishes: keep `--skip push_pm` while `beryllium-project/project-manager`
-is public. Report its log path and result to the next Project Manager turn.
+publishes. `beryllium-project/project-manager` stays public by your decision
+(`PMD-20261012-001`), so keep `--skip push_pm` unless you intend to publish
+new Project Manager commits. Report its log path and result to the next
+Project Manager turn.
 
 ## Human gates unchanged
 

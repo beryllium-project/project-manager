@@ -491,9 +491,10 @@ bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
 ```
 
 The helper checks remote tips but not visibility, and a push to a public
-repository publishes. While `beryllium-project/project-manager` is public
-(`PMD-20261011-003`), add `--skip push_pm` to every run: the default and
-`--yes` runs include `push_pm`.
+repository publishes. `beryllium-project/project-manager` stays public by the
+responsible human's decision (`PMD-20261012-001`), so `push_pm`, which the
+default and `--yes` runs include, publishes the Project Manager commits it
+pushes; add `--skip push_pm` unless you intend that.
 
 Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
 `push_tm` (threat-modeler), `push_xrv` (cheri-hypervisor-research to its current

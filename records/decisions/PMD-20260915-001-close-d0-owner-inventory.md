@@ -5,7 +5,8 @@
 - **Status:** recorded
 - **Supersedes:** None
 - **Superseded by:** `PMD-20260915-005` for disposition 9's Beryllium target
-  identity only
+  identity only; `PMD-20261012-001` for disposition 8 as it applies to
+  `beryllium-project/project-manager` only
 
 ## Scope
 

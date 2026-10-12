@@ -6,7 +6,8 @@
 - **Supersedes:** `PMD-20261011-001` follow-up backup step
   (`owner-actions.sh --only push_pm`) only, while
   `beryllium-project/project-manager` is public
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261012-001` for disposition 2's hold only,
+  released by the responsible human's publication decision
 
 ## Scope
 

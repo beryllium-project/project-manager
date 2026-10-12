@@ -16,8 +16,9 @@
 # component are outside its execution boundary (AGENT-INTERFACE.md
 # "Execution boundary"). The agent may push only this repository and the
 # parent, directly with git, on an exact same-turn confirmation. This helper
-# checks remote tips but not visibility; while a target repository is
-# public, skip its push step (for example --skip push_pm).
+# checks remote tips but not visibility, so a push to a public repository
+# publishes; skip that push step (for example --skip push_pm) unless you
+# intend to publish.
 # You run it, as component owner and responsible human; every commit it makes
 # is yours, made after you have seen the diff and answered y. It never forces
 # a push, never rewrites history, and never edits a component file except in
