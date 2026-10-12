@@ -4,7 +4,9 @@
 - **Created:** 2026-10-11
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261011-003` for the follow-up backup step
+  (`owner-actions.sh --only push_pm`) only, while
+  `beryllium-project/project-manager` is public
 
 ## Scope
 

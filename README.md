@@ -490,6 +490,11 @@ bash ./scripts/owner-actions.sh --helium-branches --helium-only helium-te-fv,hel
 bash ./scripts/owner-actions.sh --help            # steps, flags, exit status
 ```
 
+The helper checks remote tips but not visibility, and a push to a public
+repository publishes. While `beryllium-project/project-manager` is public
+(`PMD-20261011-003`), add `--skip push_pm` to every run: the default and
+`--yes` runs include `push_pm`.
+
 Default steps: `preflight`, `review`, `push_awb` (analysis-workbook),
 `push_tm` (threat-modeler), `push_xrv` (cheri-hypervisor-research to its current
 tracked active `origin`), `push_osr`

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # owner-actions.sh -- HUMAN-RUN helper for the owner-side actions that the
 # Beryllium Project Manager records (outbox/component-requests.md, HANDOFF.md)
-# but never performs: reviewing the commits a push would publish, fast-forward
-# pushing component branches to their private remotes, backing up this
-# repository and the parent, opt-in creation of one backup remote, opt-in
+# but never performs through this script: reviewing the commits a push would
+# publish, fast-forward pushing component branches to their private remotes,
+# backing up this repository and the parent, opt-in creation of one backup
+# remote, opt-in
 # application of the exact owner-side text edits recorded as PMR requests,
 # an opt-in search for retained PM artifact candidates, and the fetch that
 # lets the next coordination turn observe the result. It ends with the open
@@ -11,8 +12,12 @@
 # outbox/OWNER-RUNBOOK.md).
 #
 # This script is never executed by the Project Manager agent, in any mode:
-# fetch, push, remote creation, gh, and every write inside a component are
-# outside its execution boundary (AGENT-INTERFACE.md "Execution boundary").
+# fetch, remote creation, gh, component pushes, and every write inside a
+# component are outside its execution boundary (AGENT-INTERFACE.md
+# "Execution boundary"). The agent may push only this repository and the
+# parent, directly with git, on an exact same-turn confirmation. This helper
+# checks remote tips but not visibility; while a target repository is
+# public, skip its push step (for example --skip push_pm).
 # You run it, as component owner and responsible human; every commit it makes
 # is yours, made after you have seen the diff and answered y. It never forces
 # a push, never rewrites history, and never edits a component file except in

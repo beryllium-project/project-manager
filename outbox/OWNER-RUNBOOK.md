@@ -6,7 +6,9 @@
 recorded in `../COMPONENTS.md`
 
 The Project Manager does not execute this file's commands, run component
-validation, modify carry-ineligible components, or push any repository.
+validation, or modify carry-ineligible components. It pushes only the
+Project Manager and parent coordination repositories, and only on an exact
+same-turn responsible-human confirmation; it pushes no component.
 In addition to open `PMR-NNN` rows, this runbook may list Project
 Manager-owned non-request coordination items explicitly marked `no PMR`.
 Review each component's own handoff and diff before acting.
@@ -41,6 +43,37 @@ stdout/stderr and Copilot arguments remain unchanged. The Project Manager
 retrieves the newest component/PMR-matched file directly from fixed ignored
 `scratch/owner-sessions/preflight/`; it contains only the documented
 fixed-field state, never command output or a transcript.
+
+## P1 Project Manager repository visibility and held backup (no PMR)
+
+You directed exactly `"proceed with coordination backup"`. Before pushing,
+the Project Manager checked both coordination remotes (`PMD-20261011-003`).
+They matched their recorded tips, but an anonymous `git ls-remote`, with no
+credentials, read `beryllium-project/project-manager`: it is public, and no
+record approves that. The parent, `beryllium-project/beryllium-project`,
+refused anonymous access, so it is not public. Pushing the Project Manager
+would publish its local commits, so that push is held; the parent is pushed
+in this turn under your confirmation, after these records are committed,
+and the next turn verifies it.
+
+To finish the backup:
+
+1. Make `beryllium-project/project-manager` private: repository Settings,
+   General, Danger Zone, Change visibility. This erases its stars and
+   watchers, and any public forks stay public in their own network.
+2. In a new Project Manager turn, say that it is private and confirm the
+   push. The Project Manager re-runs the anonymous probe, pushes
+   `refs/heads/main:refs/heads/main` to `origin` only if anonymous access is
+   refused, and verifies the live tip.
+
+If you intend the repository to be public, record that as a publication
+decision naming the exact commits instead, then confirm the push in that
+turn; the Project Manager infers neither. While the repository is public,
+run `bash ./scripts/owner-actions.sh` only with `--skip push_pm`: its
+default and `--yes` runs include `push_pm`, and the helper checks tips but
+not visibility. Until the push, a clone of the Project Manager repository
+stops at `43e7e82` and lacks `REHYDRATE.md`. Component backups stay under
+their own requests and owners' rules.
 
 ## P2 User-level governance on `l1` (no PMR)
 
@@ -203,22 +236,6 @@ leaves the moved branch's commits, and any history you exclude, reachable by
 SHA; a new clean public repository avoids that. The Project Manager records
 the decision and allocates a separate request for the push to `public` and
 the visibility change.
-
-## P2 Back up the coordination repositories (no PMR)
-
-A fresh checkout carries only pushed commits (`PMD-20261011-001`). The
-Project Manager is ahead of `origin/main` and the parent ahead of
-`upstream/main` by the local coordination commits listed in
-`../COMPONENTS.md`, including this rehydration record. When you choose, run
-the human-run helper, which prompts before each push, never forces, and
-logs under ignored `scratch/`:
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-actions.sh --only push_pm
-```
-
-Component backups stay under their own requests and owners' rules.
 
 ## P3 PMR-127: Beryllium post-transfer housekeeping
 
@@ -1080,15 +1097,17 @@ opt-in helper step and no parent, Project Manager, component, branch, tag, or
 remote mutation is authorized.
 
 **No further push is authorized; do not run again without a new exact
-responsible-human confirmation.** The P2 "Back up the coordination
-repositories" step above is the current human-run backup path for the
-Project Manager and parent; running it is your decision.
+responsible-human confirmation.** The P1 "Project Manager repository
+visibility and held backup" section above replaces the earlier human-run
+coordination backup step while `beryllium-project/project-manager` is
+public.
 
-From `project-manager/`:
+From `project-manager/`, adding `--skip push_pm` while
+`beryllium-project/project-manager` is public (`PMD-20261011-003`):
 
 ```sh
-bash ./scripts/owner-actions.sh --plan
-bash ./scripts/owner-actions.sh
+bash ./scripts/owner-actions.sh --plan --skip push_pm
+bash ./scripts/owner-actions.sh --skip push_pm
 ```
 
 The relevant local component commits are:
@@ -1187,8 +1206,10 @@ The XRV encompassing private fast-forward is complete and consumed.
 confirmation.
 
 The helper prompts before every push, warns on a dirty worktree and skips it
-automatically only under `--yes`, never forces, and does not publish. Report
-its log path and result to the next Project Manager turn.
+automatically only under `--yes`, never forces, and changes no visibility.
+It does not check visibility, though, so a push to a public repository
+publishes: keep `--skip push_pm` while `beryllium-project/project-manager`
+is public. Report its log path and result to the next Project Manager turn.
 
 ## Human gates unchanged
 

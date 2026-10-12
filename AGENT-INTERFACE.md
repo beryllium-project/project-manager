@@ -288,7 +288,9 @@ check is needed, the agent hands the user the exact command from
 `scripts/owner-actions.sh` is a **human-run** helper for the owner-side
 actions this agent records but never performs: reviewing the commits a push
 would publish, fast-forward pushing component branches to their private
-remotes, backing up this repository and the parent, opt-in creation of one
+remotes, backing up this repository and the parent (which this agent may
+instead push directly with Git, only on an exact same-turn confirmation
+under the boundary above), opt-in creation of one
 backup remote (`--fvr-backup`, `PMR-001`), opt-in pushes of the Helium
 local-only branches (`--helium-branches`, `PMR-018`), opt-in application of
 the exact owner-side edits recorded in `outbox/owner-edits/` (`--apply-edits`:

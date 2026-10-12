@@ -119,8 +119,10 @@ the table and clone loop when it verifies the split.
 
    The expected SHA-256 is
    `da583f99b0685afce6fdd641f26aca79839bf15ee6a94e138b87e8d701dc79f9`.
-3. Install the governance hook only while no other governed Copilot session
-   is running (`PMD-20260930-003`):
+3. Install the governance hook after section 3, because `install` and
+   `check` resolve every tracked parent symlink and stop if a CHERI clone is
+   missing, and only while no other governed Copilot session is running
+   (`PMD-20260930-003`):
 
    ```sh
    cd /home/jmorris/src/beryllium-project
@@ -148,7 +150,7 @@ Then start Copilot in `project-manager/` and select `/agent project-manager`.
 
 | State | Location | How it is restored |
 | --- | --- | --- |
-| Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, and components under their owners' rules and a human push decision. |
+| Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips but not visibility (while `beryllium-project/project-manager` is public, never run `push_pm`, which default runs include; add `--skip push_pm` and see `PMD-20261011-003`), and components under their owners' rules and a human push decision. |
 | Retained Project Manager artifacts | `../files/` (ignored by the parent) | Restore from a backup if the responsible human keeps one (none is recorded in Project Manager records), and locate candidates with the human-run `bash ./scripts/owner-actions.sh --only files_search --files-search --files-root <dir>`. `PMD-20260906-002` and `PMD-20260912-002` hold the inventory; `PMD-20260916-004` records the selection. |
 | Linked worktrees | `../worktrees/` and owner-chosen paths | Component-owned; the owner recreates them with `git worktree add`. Beryllium's current registrations are `PMR-127`. |
 | Component-ignored data | For example analysis-workbook quarantine copies and XRV `review-inbox/` PDFs | Owner-managed under each component's rules. |
