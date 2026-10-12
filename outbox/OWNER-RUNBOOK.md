@@ -79,42 +79,10 @@ Manager never runs this script against real user configuration. Until
 `check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
 on every task launch.
 
-## P2 PMR-130: workbook two-repository rule and publication inventory
-
-Ready: the `PMR-129` split is complete and verified, with private `origin`
-`beryllium-project/analysis-workbook-private` and push-disabled `public`
-`beryllium-project/analysis-workbook`. Confirm that no other session is
-active in `analysis-workbook/`. Keep `analysis/k3-a100-service-design-private`
-checked out (recommended): the launcher binds the checked-out branch, and
-that branch keeps PMQ-034..036 visible for the ledger check. Never merge it
-into `main`, which is the publication candidate. Then launch one owner
-session for all three requests, instead of a hidden-owner dispatch:
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-session.sh launch analysis-workbook PMR-124 PMR-126 PMR-130
-```
-
-The owner records the two-repository rule (all work and private material go
-to `origin`; `public` receives only commits named in your recorded
-publication decision), notes the new hosting in `AWB-20261007-001`, and
-inventories `main` at one exact commit: each package's `Distribution` and
-`Intended distribution`, source redistribution metadata, and anything else
-that should not be public. It also mirrors CRQ-004 and CRQ-003 as in "P3
-PMR-124 and PMR-126" below, commits locally, returns in `HANDOFF.md`, and
-does not push; backing up its commits to the private `origin` is a later,
-separate push decision. It promotes and publishes nothing.
-
-Your publication decision follows the inventory. Choose one: publish `main`
-at an exact commit, naming any private-intended package you accept; have the
-owner prepare a clean publication line that excludes private packages; or
-keep both repositories private. Publishing through the existing repository
-leaves the moved branch's commits, and any history you exclude, reachable by
-SHA; a new clean public repository avoids that. The Project Manager records
-the decision and allocates a separate request for the push to `public` and
-the visibility change.
-
 ## P3 PMR-127: Beryllium post-transfer housekeeping
+
+Run this first when you return to Beryllium development: it repairs the
+linked worktrees and handoff paths your development session relies on.
 
 On 2026-10-11 the responsible human reported that the Beryllium session is
 done and relayed the owner's request to cite `563cca14`. The Project
@@ -152,6 +120,24 @@ component's committed instructions now record responsible-human acceptance
 of B0-B7 on the component side, while K3 hardware is `NOT RUN` in Project
 Manager records. It is reconciled only from a named responsible-human record;
 no gate follows from this runbook.
+
+## P3 PMR-132: back up the workbook's new commits (private)
+
+The `PMR-130` owner session left four commits local and unpushed on
+`analysis/k3-a100-service-design-private`: PMR-124 work `a301348`, PMR-126
+work `f0b8b35`, PMR-130 work `c9d1971`, and return checkpoint `5db4f2c`.
+Back them up to the private `origin`. The first command must print a
+`beryllium-project/analysis-workbook-private` URL; stop if it prints
+anything else:
+
+```sh
+git -C /home/jmorris/src/beryllium-project/analysis-workbook remote get-url --push origin
+git -C /home/jmorris/src/beryllium-project/analysis-workbook push origin analysis/k3-a100-service-design-private
+```
+
+This is a private backup, not publication. Never push to `public`. Then tell
+the Project Manager, which verifies containment with `inspect-components.sh
+refs` and closes `PMR-132`.
 
 ## P3 CRQ-004 single-model SOP alignment (`PMD-20261006-001`)
 
@@ -252,18 +238,6 @@ historical record, starts no engagement, commits locally, returns in
 `security-evidence`, `security-research`, or `security-finding-review` task
 launch in this session must pass `claude-opus-5.5` / `max` /
 `long_context` explicitly.
-
-### P3 PMR-124 and PMR-126: analysis-workbook CRQ-004 and CRQ-003 mirrors
-
-Run both inside the `PMR-130` owner session ("P2 PMR-130: workbook
-two-repository rule and publication inventory" above), after the `PMR-129`
-split; do not dispatch the hidden `analysis-workbook-owner` for them
-separately. The launch command there binds the checked-out private branch.
-
-The owner mirrors `CRQ-004` to `routed`, citing `PMD-20261006-001` and
-`PMR-121..PMR-123`, and `CRQ-003` to `routed`, citing `PMR-125`; appends one
-activity-log row per mirror; changes no other row; commits locally; returns
-in `HANDOFF.md`; and does not push.
 
 ## Human-reported completed user-level governance reinstall (no PMR)
 
@@ -734,6 +708,18 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+`PMR-130`, `PMR-124`, and `PMR-126` are closed. The workbook owner session
+committed PMR-124 work `a301348` (CRQ-004 `routed`), PMR-126 work `f0b8b35`
+(CRQ-003 `routed`), and PMR-130 work `c9d1971`, and returned at `5db4f2c`.
+PMR-130 adds the two-repository rule to the workbook's instructions,
+interface, README, and handoff; a hosting-only note in `AWB-20261007-001`;
+and inventory `publication-readiness/main-4cf44d0.md`. The inventory finds
+`main` at `4cf44d0` not publication-ready as-is. The Project Manager
+verified the commits with maintained `refs` and read the changed rows. The
+owner reports 414 / 0 agent tests and passing session, queue, and workbook
+checks. Routing PMQ-034..036 to XRV became `PMR-131`, and backing up the four
+local commits became `PMR-132`.
+
 `PMR-129` is closed. `--execute`
 (`scratch/owner-actions/pmr129-workbook-split-20261012T074846Z.log`)
 created private `beryllium-project/analysis-workbook-private` and pushed
@@ -875,6 +861,30 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 
 ## Deferred and non-blocking work
 
+- **Workbook publication decision (no PMR):** both workbook repositories
+  are private, so nothing is exposed and nothing is urgent. The `PMR-130`
+  inventory (`../analysis-workbook/publication-readiness/main-4cf44d0.md`
+  at `c9d1971`) finds `main` at `4cf44d0` not publication-ready as-is: all
+  six packages are `private`, three only `public-candidate` without
+  promotion, and generated navigation and coordination records expose
+  private-session state. When you want to decide, choose one of three:
+  keep both repositories private (the recommended default, which needs no
+  action); have the owner prepare a clean publication line; or publish an
+  exact commit, naming what you accept. The Project Manager then records
+  the decision.
+- **P4 PMR-131:** in a human-started XRV owner session, the owner decides
+  under its review-log rules whether to record PMQ-034..036 as pointer-only
+  entries, and reports each as recorded, already represented, or declined.
+  This is research intake, not needed for development:
+
+  ```sh
+  cd /home/jmorris/src/beryllium-project/project-manager
+  bash ./scripts/owner-session.sh launch cheri-hypervisor-research PMR-131
+  ```
+
+  The launcher refuses while XRV has its two untracked `review-inbox/`
+  PDFs, because it counts untracked files as dirty. Have the XRV owner
+  handle them under its own rules first.
 - **P3 PMR-085:** analysis-workbook `main` (synchronized at `3c9d2a3`,
   now `4cf44d0` on both the private `origin` and `public`) contains the exact predecessor range through `ea72522`. Reconcile who
   reviewed and authorized the encompassing push before closure. No force,
@@ -1028,13 +1038,12 @@ bash ./scripts/owner-actions.sh --skip push_pm,push_tm,push_sr
 The relevant local component commits are:
 
 - `analysis-workbook` has private branch
-  `analysis/k3-a100-service-design-private` at `353c431` checked out on
-  `l1` (no upstream there); the human's 2026-10-11 `lx2` output shows that
-  branch and `main` on `origin`, and the human reported making the
-  repository private the same day. Its
-  local `main` is at `4cf44d0`, 0 behind / 2 ahead of
-  `l1`'s stale last-fetched `origin/main` `3c9d2a3` (2026-10-06): local
-  `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004) are unpushed. The historical
+  `analysis/k3-a100-service-design-private` checked out on `l1` at owner
+  return `5db4f2c`. That is 0 behind / 4 ahead of private `origin`
+  `beryllium-project/analysis-workbook-private` at `353c431`, and the human
+  backs it up under `PMR-132`. Local `main` at `4cf44d0`, including
+  `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004), is synchronized with the
+  private `origin/main` since the 2026-10-12 `PMR-129` split. The historical
   range contained by `origin/main` `3c9d2a3` includes Project Manager carry
   `c7cc0fa`, seven PMR-084
   owner commits through `ea72522`, and PMR-086 commits `efbfdb8` and

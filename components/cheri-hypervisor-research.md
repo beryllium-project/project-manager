@@ -15,7 +15,9 @@
   (re-observed 2026-10-10 on `l1`), dirty only with two untracked
   `review-inbox/*.pdf` files, at PMR-115 owner work/return
   `7361de4138ad733be46e8a72608a779d24ae488a`, 0 behind / 1 ahead of
-  last-fetched private active `origin/main` `5e7387a`. PMR-115 changes only
+  last-fetched private active `origin/main` `5e7387a`. Open P4 `PMR-131`
+  (2026-10-12) asks the owner to triage workbook pointers PMQ-034..036 under
+  its review-log rules. PMR-115 changes only
   `.github/copilot-instructions.md` and `HANDOFF.md`, binds startup path
   resolution to current SOT/registry state, and records dated path facts. The
   owner reports fingerprint/path review and `git diff --check` passed; this

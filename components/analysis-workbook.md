@@ -53,9 +53,11 @@
 
   The `PMR-128` audit found the existing repository private, with 17 clones
   by 12 unique cloners and no views from 2026-09-27 to 2026-10-10. Owner
-  request `PMR-130` now records the two-repository rule and inventories
-  `main` for a later publication decision. Reopening the existing
-  repository publicly is that separate responsible-human decision.
+  request `PMR-130`, closed 2026-10-12 at work `c9d1971` and return
+  `5db4f2c`, recorded the two-repository rule. It also inventoried `main`
+  in `publication-readiness/main-4cf44d0.md`, which finds `main` at
+  `4cf44d0` not publication-ready as-is. Reopening the existing repository
+  publicly remains a separate responsible-human decision.
   Every session package records `Distribution: private`; on `main`,
   `AWB-20260913-001`, `AWB-20260914-001`, and `AWB-20260914-002` intend
   `private`, and `AWB-20260829-001`, `AWB-20260915-001`, and
@@ -63,12 +65,16 @@
   approval. `owner-actions.sh --only push_awb` now pushes `main` to the
   private `origin`. The noncanonical `lx2` copy's `origin` still names the
   existing repository; the human reported its push URL disabled.
-- **Observed state:** on 2026-10-12, after the `PMR-129` split, maintained
-  inspection observes clean `analysis/k3-a100-service-design-private` at
-  `353c431969d2dcf616c7c3c56e5337f27d9fc141` tracking
-  `origin/analysis/k3-a100-service-design-private`, and `main` at `4cf44d0`
-  tracking `origin/main`, both 0 behind / 0 ahead. `public/main` is at
-  `4cf44d0`, and there are no tags. On 2026-10-10, before the split, the
+- **Observed state:** on 2026-10-12, after the `PMR-130` owner session,
+  maintained inspection observes clean `analysis/k3-a100-service-design-private`
+  at return checkpoint `5db4f2c0d353ea74cc5ea5f84e033a46178f1770`, 0 behind /
+  4 ahead of `origin/analysis/k3-a100-service-design-private` `353c431`.
+  The four local commits are PMR-124 work `a301348`, PMR-126 work `f0b8b35`,
+  PMR-130 work `c9d1971`, and the return; backing them up is `PMR-132`.
+  `main` at `4cf44d0` tracks `origin/main` at 0 behind / 0 ahead,
+  `public/main` is at `4cf44d0`, and there are no tags. After the `PMR-129`
+  split and before that session, the private branch was at `353c431`, 0
+  behind / 0 ahead. On 2026-10-10, before the split, the
   branch was checked out with no upstream. The component handoff records that
   the responsible human directed this local-only branch for private session
   `AWB-20261007-001` (two inquiries, 32 evidence records; owner-reported)
@@ -76,9 +82,9 @@
   disposition to the human. Project Manager records described that origin as
   private; the Project Manager performed no network check (see
   **Repository** above for the 2026-10-11 visibility report). The branch adds
-  `PMQ-034..036` (suggested owner XRV), ledgered pending as
-  `PML-0035..0037` until `PMR-130` places them after the `PMR-129` split
-  (`PMD-20261011-002`); if the
+  `PMQ-034..036` (suggested owner XRV), ledgered as `PML-0035..0037`. Those
+  rows were pending until `PMR-130` kept them visible after the `PMR-129`
+  split (`PMD-20261011-002`); `PMR-131` routed them to XRV on 2026-10-12. If the
   checked-out tree loses those rows, `pull-queues.sh check` fails. `CRQ-003`
   is now Project Manager todo `PMR-125` (P4, parked until the responsible
   human schedules it) with `routed` mirror `PMR-126` beside `PMR-124`. On 2026-10-06
@@ -91,7 +97,8 @@
   pin `claude-opus-5.5`, the hidden owner records `max` / `long_context`
   invocation defaults, and `tests/validate-agent.sh` lines 785 and 799-800
   assert the owner's pin and defaults. `PMD-20261006-001` therefore routes
-  only the `CRQ-004` `routed` mirror, as open P3 `PMR-124`. `CRQ-003` (an
+  only the `CRQ-004` `routed` mirror, as P3 `PMR-124` (closed 2026-10-12 at
+  `a301348`). `CRQ-003` (an
   RVV investigation todo request) was `new` and not processed in the
   2026-10-06 coordination turn. Earlier, clean `main` at `3c9d2a3` was
   synchronized 0/0 with `origin/main`. Complete private session
@@ -304,18 +311,16 @@ A new analysis session on a named aspect and, only after `PMR-052` and
 `PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
 Analysis content and the collaboration queue remain request-only outside
 Project Manager carry authority. Nothing treats a session as review or
-acceptance. `PMR-124` asks the maintainer to mirror `CRQ-004` as `routed`
-from `PMD-20261006-001` and `PMR-121..PMR-123`, append one activity row, and
-change nothing else. `PMR-126` likewise asks for the `CRQ-003` `routed`
-mirror from Project Manager todo `PMR-125`. Under `PMD-20261011-002` both
-run in the human-started `PMR-130` owner session after the `PMR-129` split,
-with the private branch checked out; the hidden `analysis-workbook-owner`
-is not dispatched for them separately. `PMR-130` asks the owner to record
-the two-repository rule (private `origin`, push-disabled `public` for
-human-approved commits only), note the new hosting in `AWB-20261007-001`,
-keep `PMQ-034..036` visible, and inventory `main` at one exact commit for a
-later responsible-human publication decision, without promoting,
-publishing, or merging the private branch into `main`.
+acceptance. `PMR-124` (CRQ-004 `routed` mirror), `PMR-126` (CRQ-003
+`routed` mirror), and `PMR-130` (two-repository rule, hosting note, and
+publication-readiness inventory of `main`) closed on 2026-10-12. They closed
+from work `a301348`, `f0b8b35`, and `c9d1971`, and return `5db4f2c`, all
+produced in one human-started owner session. Mirroring CRQ-004 as
+`completed` after verified `PMR-121..PMR-123` returns is a later, separate
+request. `PMR-132` asks the responsible human to back up the four local
+commits to the private `origin`. The publication decision for `main` stays
+with the responsible human; the hidden `analysis-workbook-owner` was not
+dispatched.
 As of 2026-10-06, `CRQ-003` remained `new`. The
 operational housekeeping requests PMR-038, PMR-004, PMR-050,
 PMR-055, PMR-059, and PMR-063 are complete; their evidence is retained below,
