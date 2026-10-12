@@ -20,7 +20,11 @@
   independent read-only inspection: only private `for-review` fast-forwarded
   `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved;
   the prior active account was restored. `main`, other branches, tags, and
-  the `public` remote were excluded.
+  the `public` remote were excluded. The `public` remote,
+  `beryllium-project/helium-te-poc`, is public, and on 2026-10-12 the
+  responsible human chose to keep it public (`PMD-20261012-002`). That
+  approves no release and leaves the `publication-gate.conf` gate as
+  recorded.
 
 ## Role
 

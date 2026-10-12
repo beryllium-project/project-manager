@@ -29,7 +29,8 @@ branches, ahead/behind counts, and the exact workspace root are in
 The parent's `main` tracks the canonical repository as remote `upstream`,
 which `scripts/owner-actions.sh --only push_pm` expects. The personal fork
 `jamorris_microsoft/beryllium-project`, kept as `origin` on `l1`, is not
-needed.
+needed. The parent repository is not public; `beryllium-project/project-manager`
+is public by the responsible human's decision (`PMD-20261012-001`).
 
 ```sh
 mkdir -p /home/jmorris/src/beryllium-project
@@ -56,10 +57,10 @@ responsible human (analysis-workbook, 2026-10-11).
 | `helium-te-poc/` | `beryllium-project/helium-te-poc-historical` | Carry-ineligible; identity as named in `outbox/pmr091-push.sh` |
 | `formal-verification-research/` | `beryllium-project/formal-verification-research` | |
 | `osr-claude/` | `agentic-os-research/os-security-research` | Ask-first owner; restricted sources are never cloned here |
-| `provenance-review/` | `beryllium-project/provenance-review` | |
+| `provenance-review/` | `beryllium-project/provenance-review` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `analysis-workbook/` | `beryllium-project/analysis-workbook` | Made private on 2026-10-11 (responsible-human report); split pending under `PMR-129`, see below |
-| `threat-modeler/` | `beryllium-project/threat-modeler` | |
-| `security-reviewer/` | `beryllium-project/security-reviewer` | |
+| `threat-modeler/` | `beryllium-project/threat-modeler` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
+| `security-reviewer/` | `beryllium-project/security-reviewer` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `../agentic-os-research/cheri-riscv-notes` | `agentic-os-research/cheri-riscv-notes` | Target of tracked symlink `cheri-riscv-notes` |
 | `../agentic-os-research/cheri-hypervisor-research` | `agentic-os-research/cheri-hypervisor-research` | Target of tracked symlink `cheri-hypervisor-research` |
 
@@ -150,7 +151,7 @@ Then start Copilot in `project-manager/` and select `/agent project-manager`.
 
 | State | Location | How it is restored |
 | --- | --- | --- |
-| Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips but not visibility (`beryllium-project/project-manager` stays public by the responsible human's decision, `PMD-20261012-001`, so that step publishes; default runs include it, and `--skip push_pm` omits it), and components under their owners' rules and a human push decision. |
+| Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips but not visibility (`beryllium-project/project-manager` stays public by the responsible human's decision, `PMD-20261012-001`, so that step publishes; default runs include it and the public `push_tm` and `push_sr`, and `--skip push_pm,push_tm,push_sr` omits all three), and components under their owners' rules and a human push decision (pushes to the public `threat-modeler`, `security-reviewer`, and `provenance-review` publish; `PMD-20261012-002`). |
 | Retained Project Manager artifacts | `../files/` (ignored by the parent) | Restore from a backup if the responsible human keeps one (none is recorded in Project Manager records), and locate candidates with the human-run `bash ./scripts/owner-actions.sh --only files_search --files-search --files-root <dir>`. `PMD-20260906-002` and `PMD-20260912-002` hold the inventory; `PMD-20260916-004` records the selection. |
 | Linked worktrees | `../worktrees/` and owner-chosen paths | Component-owned; the owner recreates them with `git worktree add`. Beryllium's current registrations are `PMR-127`. |
 | Component-ignored data | For example analysis-workbook quarantine copies and XRV `review-inbox/` PDFs | Owner-managed under each component's rules. |

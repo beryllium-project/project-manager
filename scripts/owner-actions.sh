@@ -2,7 +2,8 @@
 # owner-actions.sh -- HUMAN-RUN helper for the owner-side actions that the
 # Beryllium Project Manager records (outbox/component-requests.md, HANDOFF.md)
 # but never performs through this script: reviewing the commits a push would
-# publish, fast-forward pushing component branches to their private remotes,
+# publish, fast-forward pushing component branches to their remotes (public
+# threat-modeler and security-reviewer, so push_tm and push_sr publish),
 # backing up this repository and the parent, opt-in creation of one backup
 # remote, opt-in
 # application of the exact owner-side text edits recorded as PMR requests,

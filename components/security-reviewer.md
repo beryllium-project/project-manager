@@ -1,9 +1,10 @@
 # security-reviewer
 
 - **Workspace entry:** `../security-reviewer/` (ignored canonical direct
-  checkout; created 2026-09-06; `origin` -> private
-  `beryllium-project/security-reviewer` since the owner's 19:38Z push that
-  day)
+  checkout; created 2026-09-06; `origin` -> public
+  `beryllium-project/security-reviewer` since the owner's 19:38Z push on
+  2026-09-06; the responsible human chose on 2026-10-12 to keep it public,
+  `PMD-20261012-002`)
 - **Ownership:** agent-owned; its agents write only inside that component; the
   Project Manager writes here only to carry requests under the standing carry
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`
@@ -44,7 +45,7 @@
   `contracts/REVIEW-PROVENANCE.md`
 - **Observed state:** clean `main` at HANDOFF-only return
   `c2edac70afdfe5b0bb90e237487cd168fb91e900`, behind 0 / ahead 2 of
-  last-fetched private `origin/main` `2e8d205`. Work
+  last-fetched public `origin/main` `2e8d205`. Work
   `2bb4c989bbe9b57f870e6f653ed3732e742b11f9` is owner-reported to change the
   four profiles, active instructions, skill, tests, README, and interface;
   return `c2edac7` is owner-reported to change only `HANDOFF.md`. The owner
@@ -183,14 +184,14 @@ git diff --check
   `f2051a4` (`PMR-062`, `PMR-065`).
 - Model reassignment of all four profiles to `gpt-5.3-codex` under
   `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`), which remains the
-  last-fetched private `origin/main` tip; local `main` is now two ahead at
+  last-fetched public `origin/main` tip; local `main` is now two ahead at
   `c2edac7`.
 - Owner work `2bb4c98` and durable return `c2edac7` close `PMR-109` and
   `PMR-110`; the responsible human released the session/reservation with the
   exact reply `"done"`.
-- Pushes remain owner-only. `main` is two commits ahead of private
-  `origin/main`; `PMR-111` separately tracks an exact private fast-forward
-  after a new same-turn human confirmation. The remote was created and first
+- Pushes remain owner-only. `main` is two commits ahead of public
+  `origin/main`; `PMR-111` separately tracks an exact fast-forward, which
+  publishes, after a new same-turn human confirmation. The remote was created and first
   pushed on 2026-09-06 (`PMR-021` closed).
 - `PMR-118` separately requests the SHA-bound `workspace://SOT.md`
   startup/status anchor for the orchestrator and all three specialists. It

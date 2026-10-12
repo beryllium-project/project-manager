@@ -6,7 +6,10 @@
 - **Supersedes:** None
 - **Superseded by:** `PMD-20260915-005` for disposition 9's Beryllium target
   identity only; `PMD-20261012-001` for disposition 8 as it applies to
-  `beryllium-project/project-manager` only
+  `beryllium-project/project-manager` only; `PMD-20261012-002` for
+  disposition 8 as it applies to `beryllium-project/threat-modeler`,
+  `beryllium-project/security-reviewer`, `beryllium-project/provenance-review`,
+  and `beryllium-project/helium-te-poc` only
 
 ## Scope
 

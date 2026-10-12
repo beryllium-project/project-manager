@@ -17,7 +17,10 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean `main` at `9bfbab3`, synchronized with
-  `origin/main` as of the last fetch; the owner added a stack-type FAQ note
+  `origin/main` as of the last fetch. The repository
+  `beryllium-project/provenance-review` is public, and on 2026-10-12 the
+  responsible human chose to keep it public (`PMD-20261012-002`). The owner
+  added a stack-type FAQ note
   in `DOCUMENTATION-NOTES.md`. `PMD-20260914-003` keeps this independent
   provenance component separate; its future organization placement is not
   yet decided

@@ -32,7 +32,10 @@
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
 - **Observed state:** clean local `main` at corrected PMR-120 return
   `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`, 0 behind / 4 ahead of
-  last-fetched private `origin/main` `c4126b6`.
+  last-fetched `origin/main` `c4126b6`. The repository
+  `beryllium-project/threat-modeler` is public, and on 2026-10-12 the
+  responsible human chose to keep it public (`PMD-20261012-002`), so its
+  pushed history, including the threat model, is publicly readable.
   Owner commit `5bf6a4b` added the complete private, paused
   `TM-20260911-001-helium-te-poc-astra` package; Project Manager carry
   `f4eb272` followed it; owner maintenance `c4126b6` reconciles delivery
@@ -126,7 +129,8 @@ the local commits) closed 2026-09-05: the owner pushed `main` to private
 (`affe17b..226d367`, four commits, verified with `ls-remote` in its log);
 observed synchronized (0 behind, 0 ahead) at 19:10Z. Owner commit `c4126b6`
 completes the threat-modeler halves of `PMR-004` and `PMR-022` and closes
-delivery request `PMR-028`; it is synchronized with private `origin/main`.
+delivery request `PMR-028`; it is synchronized with `origin/main`, which the
+2026-10-12 audit found public (`PMD-20261012-002`).
 `PMR-031` was carried at `f4eb272` on 2026-09-12. The run remains paused;
 coordination does not resume it or accept any risk. `PMR-064` asks both
 user-invocable entry points to map `check Project Manager tasking` to the
