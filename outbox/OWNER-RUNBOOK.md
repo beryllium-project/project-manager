@@ -79,60 +79,12 @@ Manager never runs this script against real user configuration. Until
 `check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
 on every task launch.
 
-## P2 PMR-129: workbook split (confirmed; run `--execute` next)
-
-GitHub has no private branch in a public repository, so you chose two
-repositories (`PMD-20261011-002`, `helium_style`). Done so far
-(`PMD-20261012-002`):
-
-1. `--plan` ended `eligible=yes`
-   (`scratch/owner-actions/pmr129-workbook-split-20261012T052534Z.log`). The
-   existing repository is private and holds only `main` `4cf44d0` and
-   `analysis/k3-a100-service-design-private` `353c431`, with no tags or pull
-   requests. `beryllium-project/analysis-workbook-private` is absent.
-2. You reported the `lx2` push-disable done.
-3. You confirmed the split, and that confirmation is recorded.
-
-Next, with the workbook checkout still clean and no owner session running,
-execute it, typing `PMR-129` at the prompt:
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./outbox/pmr129-workbook-split.sh --execute
-```
-
-The script creates the private repository, then copies `main` and the
-private branch from a temporary bare clone in one atomic push, and verifies
-both repositories. It deletes the private branch from the existing
-repository, but only while that branch's tip equals the copy. It then
-renames `origin` to `public` with a disabled push URL, adds the private
-repository as `origin`, fetches both, and sets the upstreams of `main` and
-the private branch to `origin`. It never changes visibility, rewrites
-history, or switches branches. If it stops, fix the reported cause and
-rerun it; it resumes from the first incomplete step.
-
-Afterward, read the two `branch name=... behind=... ahead=...` lines at the
-end of the log. The audit showed the remote tips equal to the local ones,
-so both should report 0 behind / 0 ahead. If a branch shows `behind` above
-0 with `ahead=0`, fast-forward it before the owner session. The private
-branch is checked out; `main` is not:
-
-```sh
-cd /home/jmorris/src/beryllium-project/analysis-workbook
-git merge --ff-only origin/analysis/k3-a100-service-design-private
-git fetch origin main:main
-```
-
-Run only the line for a branch that is behind. If a branch shows both
-`behind` and `ahead` above 0, stop and report it instead. Report the log
-path; the Project Manager then verifies the result with
-`inspect-components.sh` and updates `REHYDRATE.md`, `../COMPONENTS.md`, and
-the workbook card. Branch protection cannot replace this split, because it
-never limits reads.
-
 ## P2 PMR-130: workbook two-repository rule and publication inventory
 
-Blocked by `PMR-129`. Keep `analysis/k3-a100-service-design-private`
+Ready: the `PMR-129` split is complete and verified, with private `origin`
+`beryllium-project/analysis-workbook-private` and push-disabled `public`
+`beryllium-project/analysis-workbook`. Confirm that no other session is
+active in `analysis-workbook/`. Keep `analysis/k3-a100-service-design-private`
 checked out (recommended): the launcher binds the checked-out branch, and
 that branch keeps PMQ-034..036 visible for the ledger check. Never merge it
 into `main`, which is the publication candidate. Then launch one owner
@@ -782,6 +734,16 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+`PMR-129` is closed. `--execute`
+(`scratch/owner-actions/pmr129-workbook-split-20261012T074846Z.log`)
+created private `beryllium-project/analysis-workbook-private` and pushed
+`main` `4cf44d0` and the private branch `353c431` to it. It deleted the
+private branch from `beryllium-project/analysis-workbook` and made that
+repository remote `public`, with its push URL disabled. Maintained
+inspection confirms both branches track `origin` at 0 behind / 0 ahead.
+You reported disabling pushes from the noncanonical `lx2` copy first. Do
+not rerun it; with `PMR-129` closed, its preflight now fails closed.
+
 `PMR-128` is closed (`PMD-20261012-002`). The audit
 (`scratch/owner-actions/pmr128-visibility-audit-20261012T052523Z.log`) found
 8 repositories private as expected and 5 public: the Project Manager
@@ -913,18 +875,18 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 
 ## Deferred and non-blocking work
 
-- **P3 PMR-085:** synchronized analysis-workbook `origin/main` at `3c9d2a3`
-  contains the exact predecessor range through `ea72522`. Reconcile who
+- **P3 PMR-085:** analysis-workbook `main` (synchronized at `3c9d2a3`,
+  now `4cf44d0` on both the private `origin` and `public`) contains the exact predecessor range through `ea72522`. Reconcile who
   reviewed and authorized the encompassing push before closure. No force,
   publication, analysis disposition, or handshake authority follows.
-- **P3 PMR-088:** synchronized `3c9d2a3` contains PMR-086 work `efbfdb8` and
+- **P3 PMR-088:** `main` (`3c9d2a3`, now `4cf44d0` on both the private `origin` and `public`) contains PMR-086 work `efbfdb8` and
   durable return `858a73b`. After `PMR-085`'s push evidence is independently
   reconciled, review the exact range with
   `git -C ../analysis-workbook diff ea72522..858a73b -- tests/validate-agent.sh HANDOFF.md`
   from `project-manager/`.
   This request was not dispatched or combined with PMR-086; no queue change,
   analysis disposition, publication, or gate follows.
-- **P4 PMR-089:** synchronized `3c9d2a3` contains the frozen twelve-commit
+- **P4 PMR-089:** `main` (`3c9d2a3`, now `4cf44d0` on both the private `origin` and `public`) contains the frozen twelve-commit
   closure range `858a73b..8b5a301`. Do not close it until `PMR-085` plus
   `PMR-088` push evidence is independently reconciled. The request covers only that
   exact six-request housekeeping range,
@@ -998,10 +960,10 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   exact historical ranges remain evidence. PMR-101 returned blocked and
   PMR-102 is superseded. That later backup allocation is now complete:
   PMR-105 covers clean topic range `9a4c5ef..34a8b50`.
-- **P4 PMR-095:** synchronized `3c9d2a3` contains analysis-workbook carry
+- **P4 PMR-095:** `main` (`3c9d2a3`, now `4cf44d0` on both the private `origin` and `public`) contains analysis-workbook carry
   `5a646df` (`8b5a301..5a646df`); close only after predecessor push
   dispositions are reconciled.
-- **P4 PMR-097:** synchronized `3c9d2a3` contains analysis-workbook carry
+- **P4 PMR-097:** `main` (`3c9d2a3`, now `4cf44d0` on both the private `origin` and `public`) contains analysis-workbook carry
   `8da398d` (`5a646df..8da398d`); close only after PMR-095's disposition is
   reconciled.
 - **Withdrawn PMR-073:** `PMD-20260918-003` records that the proven owner-worker path

@@ -2,7 +2,7 @@
 
 **Maintained by:** `project-manager`
 **Contract:** `records/decisions/PMD-20261011-001-workspace-rehydration-contract.md`
-**Last reviewed:** 2026-10-11 on the usual `l1` workstation (inventory and
+**Last reviewed:** 2026-10-12 on the usual `l1` workstation (inventory and
 commands reviewed; no clone or install was run to test them)
 
 Git is the only transfer mechanism for Beryllium coordination state. Rebuild
@@ -49,7 +49,8 @@ parent's tracked symlinks `cheri-riscv-notes` and
 `cheri-hypervisor-research` already point to `../agentic-os-research/`.
 Identities come from Project Manager records (component cards and the D0
 inventory `PMD-20260914-004`), read-only Git configuration, and the
-responsible human (analysis-workbook, 2026-10-11).
+responsible human (analysis-workbook, 2026-10-11), and the verified
+`PMR-129` split log (`analysis-workbook-private`, 2026-10-12).
 
 | Workspace entry | GitHub repository | Notes |
 | --- | --- | --- |
@@ -58,7 +59,7 @@ responsible human (analysis-workbook, 2026-10-11).
 | `formal-verification-research/` | `beryllium-project/formal-verification-research` | |
 | `osr-claude/` | `agentic-os-research/os-security-research` | Ask-first owner; restricted sources are never cloned here |
 | `provenance-review/` | `beryllium-project/provenance-review` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
-| `analysis-workbook/` | `beryllium-project/analysis-workbook` | Made private on 2026-10-11 (responsible-human report); split pending under `PMR-129`, see below |
+| `analysis-workbook/` | `beryllium-project/analysis-workbook-private` | Private `origin` with every branch since the verified `PMR-129` split (2026-10-12); add remote `public`, see below |
 | `threat-modeler/` | `beryllium-project/threat-modeler` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `security-reviewer/` | `beryllium-project/security-reviewer` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `../agentic-os-research/cheri-riscv-notes` | `agentic-os-research/cheri-riscv-notes` | Target of tracked symlink `cheri-riscv-notes` |
@@ -72,7 +73,7 @@ for spec in \
     formal-verification-research=beryllium-project/formal-verification-research \
     osr-claude=agentic-os-research/os-security-research \
     provenance-review=beryllium-project/provenance-review \
-    analysis-workbook=beryllium-project/analysis-workbook \
+    analysis-workbook=beryllium-project/analysis-workbook-private \
     threat-modeler=beryllium-project/threat-modeler \
     security-reviewer=beryllium-project/security-reviewer \
     ../agentic-os-research/cheri-riscv-notes=agentic-os-research/cheri-riscv-notes \
@@ -91,13 +92,18 @@ it with `git -C <entry> switch <branch>`. On 2026-10-11 these were
 table; recreate a remote it expects only on the responsible human's
 direction.
 
-Pending analysis-workbook split (`PMD-20261011-002`): until `PMR-129` is
-verified, the identity in the table above holds. After it, the workbook's
+Analysis-workbook layout (`PMD-20261011-002`, split verified 2026-10-12):
 `origin` is the private `beryllium-project/analysis-workbook-private`,
-holding every branch, and remote `public` is
-`beryllium-project/analysis-workbook`, holding `main` only, with its push
-URL set to `DISABLED-PMR-129-publication-gate`. The Project Manager updates
-the table and clone loop when it verifies the split.
+holding every branch. Remote `public` is `beryllium-project/analysis-workbook`.
+It holds `main` only and receives only commits named in a recorded
+publication decision, so its push URL stays disabled. After the clone loop:
+
+```sh
+cd /home/jmorris/src/beryllium-project
+git -C analysis-workbook remote add public "$(gh repo view beryllium-project/analysis-workbook --json url --jq .url)"
+git -C analysis-workbook remote set-url --push public DISABLED-PMR-129-publication-gate
+git -C analysis-workbook fetch public
+```
 
 ## 4. Per-workstation Copilot setup
 

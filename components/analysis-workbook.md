@@ -32,32 +32,44 @@
   from work `62bd071` and return `8b5a301`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Repository:** `beryllium-project/analysis-workbook` (responsible-human
-  supplied 2026-10-11). The responsible human's `lx2` output that day showed
+- **Repository:** private `beryllium-project/analysis-workbook-private` is
+  `origin` since the verified 2026-10-12 `PMR-129` split. The responsible
+  human supplied `beryllium-project/analysis-workbook` on 2026-10-11; it is
+  now push-disabled remote `public`, holding `main` only. Before the split,
+  the responsible human's `lx2` output on 2026-10-11 showed
   `analysis/k3-a100-service-design-private` and `main` on `origin`, up to
   date from `lx2`, and the human then reported exactly `"fyi, I just made it
   private as it has a private branch, need to resolve that"`. The repository
-  had been public without the decision `PMD-20260915-001` requires. The
-  Project Manager performed no network check. `PMD-20261011-002` records the
-  human's chosen split: human-run `PMR-129` creates private
-  `beryllium-project/analysis-workbook-private` as the new `origin` with
-  every branch, deletes the private branch from the existing repository,
-  and keeps that repository as push-disabled remote `public` holding `main`
-  only. Owner request `PMR-130` then records the two-repository rule and
-  inventories `main` for a later publication decision; reopening the
-  existing repository publicly is that separate responsible-human decision.
+  had been public without the decision `PMD-20260915-001` requires.
+  `PMD-20261011-002` records the human's chosen split, which human-run
+  `PMR-129` executed on 2026-10-12. The log is
+  `scratch/owner-actions/pmr129-workbook-split-20261012T074846Z.log`, and
+  maintained inspection verified the result:
+  - `origin` is now the private `beryllium-project/analysis-workbook-private`,
+    holding `main` `4cf44d0` and the private branch `353c431`.
+  - The existing `beryllium-project/analysis-workbook` holds `main` only. It
+    is remote `public`, with its push URL disabled.
+  - Both local branches track `origin` at 0 behind / 0 ahead.
+
+  The `PMR-128` audit found the existing repository private, with 17 clones
+  by 12 unique cloners and no views from 2026-09-27 to 2026-10-10. Owner
+  request `PMR-130` now records the two-repository rule and inventories
+  `main` for a later publication decision. Reopening the existing
+  repository publicly is that separate responsible-human decision.
   Every session package records `Distribution: private`; on `main`,
   `AWB-20260913-001`, `AWB-20260914-001`, and `AWB-20260914-002` intend
   `private`, and `AWB-20260829-001`, `AWB-20260915-001`, and
   `AWB-20260928-001` intend `public-candidate`, which is not publication
-  approval. After the split, `owner-actions.sh --only push_awb` pushes
-  `main` to the private `origin`. `l1`'s copy has no upstream for the
-  private branch and stale remote-tracking refs until the split fetches.
-- **Observed state:** on 2026-10-10, after the transfer to `l1`, maintained
-  inspection observes clean local branch
-  `analysis/k3-a100-service-design-private` at
-  `353c431969d2dcf616c7c3c56e5337f27d9fc141` checked out with no upstream;
-  local `main` is unchanged at `4cf44d0`. The component handoff records that
+  approval. `owner-actions.sh --only push_awb` now pushes `main` to the
+  private `origin`. The noncanonical `lx2` copy's `origin` still names the
+  existing repository; the human reported its push URL disabled.
+- **Observed state:** on 2026-10-12, after the `PMR-129` split, maintained
+  inspection observes clean `analysis/k3-a100-service-design-private` at
+  `353c431969d2dcf616c7c3c56e5337f27d9fc141` tracking
+  `origin/analysis/k3-a100-service-design-private`, and `main` at `4cf44d0`
+  tracking `origin/main`, both 0 behind / 0 ahead. `public/main` is at
+  `4cf44d0`, and there are no tags. On 2026-10-10, before the split, the
+  branch was checked out with no upstream. The component handoff records that
   the responsible human directed this local-only branch for private session
   `AWB-20261007-001` (two inquiries, 32 evidence records; owner-reported)
   "after the configured origin was observed public", and leaves its later
@@ -72,7 +84,8 @@
   human schedules it) with `routed` mirror `PMR-126` beside `PMR-124`. On 2026-10-06
   maintained inspection observed clean
   `main` at `4cf44d0bfec3b725dbcef1ca5938d619e867d932`, 0 behind / 2 ahead
-  of last-fetched `origin/main`; both local commits are unpushed. At
+  of last-fetched `origin/main`; both local commits were then unpushed, and
+  since the 2026-10-12 split both are on the private `origin`. At
   `4cf44d0` the component has already applied `CRQ-004` local alignment:
   `analysis-workbook`, `analysis-workbook-owner`, and `analysis-evidence`
   pin `claude-opus-5.5`, the hidden owner records `max` / `long_context`
@@ -220,8 +233,8 @@ topic and chronology in the generated `WORKBOOK.md`.
   historically made twenty-four ahead. `main` was later synchronized 0/0
   with `origin/main` at `3c9d2a3`. On 2026-10-06 maintained inspection
   observes clean `main` at `4cf44d0`, 0 behind / 2 ahead of that
-  last-fetched tip: local `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004) are
-  unpushed. PMR-089 freezes the exact
+  last-fetched tip: local `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004) were
+  then unpushed; both are on the private `origin` since the 2026-10-12 split. PMR-089 freezes the exact
   post-`858a73b` closure range at `8b5a301`; PMR-095 and PMR-097 separately
   track the two carries
   without expanding either earlier backup request.
