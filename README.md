@@ -147,9 +147,10 @@ and effort rules of `PMD-20260930-002`, and the Codex capability exception
 of `PMD-20260930-005`. The `project-manager` orchestrator and `pm-auditor`
 pin `claude-opus-5.5`; the former scope-review agent and scope-management
 skill are retired. Historical artifacts are unchanged. Analysis-workbook
-`4cf44d0` and Beryllium `afa4336` are already aligned; `PMR-121`..`PMR-123`
-request threat-modeler, provenance-review, and security-reviewer profile
-alignment, and `PMR-124` the analysis-workbook CRQ-004 status mirror.
+`4cf44d0` and Beryllium `afa4336` are already aligned, and threat-modeler
+is aligned since closed `PMR-121` (2026-10-13); `PMR-122` and `PMR-123`
+request provenance-review and security-reviewer profile
+alignment, and `PMR-124` (closed 2026-10-12) the analysis-workbook CRQ-004 status mirror.
 
 The human-installed user-level hook matches `task|run_dynamic_workflow`
 inside the Beryllium workspace. When `model`, `reasoning_effort`, or

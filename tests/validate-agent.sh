@@ -494,7 +494,7 @@ current_sot_sha=$(sha256sum "$repository_root/../SOT.md" | awk '{ print $1 }')
 require_text "$repository_root/outbox/tasking/threat-modeler.md" \
     "**Global startup/status SHA-256:** \`$current_sot_sha\`"
 require_text "$repository_root/../COMPONENTS.md" \
-    'threat-modeler/` | Ignored canonical direct checkout | Clean local `main` at PMR-120 correction return `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`'
+    'threat-modeler/` | Ignored canonical direct checkout | Clean local `main` at `PMR-121` return `aba335079e437a9a9b1643a0d9d5d8e20fce59f5`'
 refute_pattern "$owner_session" '--(prompt|add-dir)([ =]|$)'
 refute_pattern "$owner_session" 'exec .* -p([ =]|$)'
 

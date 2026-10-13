@@ -104,7 +104,9 @@ Component agent profiles lie outside the Project Manager's carry classes, so
 each alignment below is an owner request performed in an owner session.
 The analysis-workbook profiles and the Beryllium instructions are already
 aligned, so no Beryllium SOP request is allocated; Beryllium's closed
-`PMR-133` was separate tasking-contract housekeeping.
+`PMR-133` was separate tasking-contract housekeeping. Threat-modeler is
+aligned too: `PMR-121` closed on 2026-10-13 (work `c156c0a0`, return
+`aba33507`, both local).
 
 Start an owner session only after the Project Manager commits this turn and
 regenerates tasking; the launcher refuses a dirty Project Manager worktree or
@@ -121,40 +123,25 @@ another model, effort, or context tier, switch to `claude-opus-5.5` with
 defaults were customized, and then let the owner continue. Do not let the
 owner edit on any other model.
 
-**Direct carry for PMR-121 and PMR-122.** The ordinary `owner-session.sh`
+**Direct carry for PMR-122** (formerly "Direct carry for PMR-121 and
+PMR-122"). The ordinary `owner-session.sh`
 packet requires the owner to run the parent tasking resolver before editing.
-Threat-modeler forbids running sibling content until parked P4 `PMR-064`
-admits that resolver (the conflict that stopped the first PMR-064/117
-launch), and provenance-review limits trusted execution to its own scripts
-and read-only inspection until `PMR-066` lands. The Project Manager therefore
-uses the existing human-carry path for these two requests: start an ordinary
-session directly in the component with the one-line request below. The owner
-reads its request row with read-only file tools and runs no parent or
-sibling command. This neither adopts tasking startup nor un-parks `PMR-064`.
-These two direct ordinary sessions are a recorded exception, under
+Provenance-review limits trusted execution to its own scripts and read-only
+inspection until `PMR-066` lands. The Project Manager therefore uses the
+existing human-carry path for this request, as closed `PMR-121` did for the
+threat-modeler while parked `PMR-064` keeps its resolver unadmitted: start
+an ordinary session directly in the component with the one-line request
+below. The owner reads its request row with read-only file tools and runs no
+parent or sibling command. This neither adopts tasking startup nor un-parks
+`PMR-064` or `PMR-066`.
+This direct ordinary session is a recorded exception, under
 `PMD-20261006-001`, to the rule that the human receives one exact launcher
-command instead of prompt text. They take neither the per-component writer
-lock nor the PMR-108 global reservation, and they write no preflight log.
-Before starting either session, confirm that the component is clean and that
+command instead of prompt text. It takes neither the per-component writer
+lock nor the PMR-108 global reservation, and it writes no preflight log.
+Before starting it, confirm that the component is clean and that
 no other Copilot session, `owner-session.sh`, `owner-recovery.sh`, or
 `maintenance-reservation.sh` run is active for that component. If the owner
 reports any mismatch, it stops.
-
-### P3 PMR-121: threat-modeler repin
-
-```sh
-cd /home/jmorris/src/beryllium-project/threat-modeler
-copilot --no-auto-update --yolo -i "Carry Project Manager request PMR-121 under this repository's own rules. Read its row in /home/jmorris/src/beryllium-project/project-manager/outbox/component-requests.md with read-only file tools and run no parent or sibling command. Do only that request, validate with this repository's own tests, commit locally, append the owner return to HANDOFF.md using /home/jmorris/src/beryllium-project/project-manager/templates/owner-return.md, and do not push."
-```
-
-The owner repins all six profiles (`threat-modeler`, `threat-modeler-owner`,
-`threat-research`, `threat-evidence`, `threat-model-maintainer`, and
-`threat-model-review`) to `claude-opus-5.5`. It updates the dispatch pin,
-interface, README, owner contract test, and handoff only as directly
-required, commits locally, and appends a durable `HANDOFF.md` return. It
-does not touch `models/TM-*`, resume paused `TM-20260911-001`, perform parked
-`PMR-064` / `PMR-117`, or push. `threat-model-maintainer` also pins
-`gpt-5.6-sol`; if you switch to it in the session, repeat the `/model` check.
 
 ### P3 PMR-122: provenance-review repin
 
@@ -695,6 +682,12 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+`PMR-121` is closed (2026-10-13). The direct threat-modeler session
+repinned all six profiles to `claude-opus-5.5` in work `c156c0a0` and
+returned at `aba33507`. Both commits are local; `threat-modeler` is public,
+so pushing them would publish and needs your separate confirmation. Do not
+rerun its command.
+
 The Beryllium backup push (no PMR) is complete (2026-10-13). Under your
 exact `"push the beryllium backup"`, you pushed `beryllium/k3-b7-bringup`
 (`563cca1..f6fc6c7`) and `beryllium/single-hart-runtime-r0`
@@ -786,8 +779,9 @@ and needs a new confirmation.
 `PMR-120` is closed at initial work/return `ca8fa3c` / `bbbc534` and
 standard-V1 correction work/return `71bca3f` / `e6aed9f`. The focused owner
 suite reports 148/0 and diff check passed; full package-reading suite and
-index check are unknown. Clean local `main` is 0 behind / 4 ahead, all four
-commits are local-only, and no push, model/package action, or gate occurred.
+index check are unknown. At closure, clean local `main` was 0 behind / 4
+ahead, all four commits were local-only, and no push, model/package action,
+or gate occurred; closed `PMR-121` later added two more local commits.
 Both human bootstrap bindings are consumed; do not rerun either.
 
 `PMR-119` is closed at Project Manager class-3 carry
@@ -1147,11 +1141,12 @@ The relevant local component commits are:
   last-fetched `origin/main` at `388690d`, which contains `c55065c` and
   `784be93` (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`); no
   formal-verification commit is pending;
-- `threat-modeler` clean `main` is at `e6aed9f`, 0 behind / 4 ahead of
-  last-fetched `origin/main` `c4126b6`. Remote backup reaches only
-  predecessor owner maintenance `c4126b6` (`PMR-028` closed; includes
-  `5bf6a4b` and `f4eb272`); the four PMR-120 commits `ca8fa3c`, `bbbc534`,
-  `71bca3f`, and `e6aed9f` are local-only and unpushed;
+- `threat-modeler` clean `main` is at `PMR-121` return `aba3350`, 0 behind
+  / 6 ahead of last-fetched public `origin/main` `c4126b6`. Remote backup
+  reaches only predecessor owner maintenance `c4126b6` (`PMR-028` closed;
+  includes `5bf6a4b` and `f4eb272`); the four PMR-120 commits `ca8fa3c`,
+  `bbbc534`, `71bca3f`, and `e6aed9f` and the two PMR-121 commits `c156c0a`
+  and `aba3350` are local-only and unpushed;
 - `security-reviewer`: work `2bb4c98` and return `c2edac7` close
   PMR-109/110 locally and leave clean `main` two ahead of public
   `origin/main` `2e8d205`; PMR-111 separately tracks the unapproved

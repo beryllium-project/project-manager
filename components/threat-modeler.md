@@ -20,18 +20,20 @@
   `needs_human`, `refused`, and `information`. Correction work `71bca3f` /
   return `e6aed9f` aligns both contracts. The profile is adopted but not
   native-handshaken or PM-invocable. At `e6aed9f` all six profiles,
-  including the hidden owner, pin superseded `gpt-5.6-sol`; the owner's
-  invocation defaults, the dispatch pin in `.github/copilot-instructions.md`,
-  `AGENT-INTERFACE.md`, `README.md`, and the owner contract test
-  (`tests/validate-agent.sh` line 257) repeat it. No standing
-  different-model, scope-review, or deep-security-review requirement was
-  found; the skill's Phase 8 `threat-model-review` step becomes same-model
-  after the repin. `PMD-20261006-001` routes the `claude-opus-5.5` / `max` /
-  `long_context` repin as open P3 `PMR-121`.
+  including the hidden owner, pinned superseded `gpt-5.6-sol`. Closed
+  `PMR-121` (work `c156c0a0`, return `aba33507`, 2026-10-13) repinned all six
+  to `claude-opus-5.5`, and the Project Manager read every profile at
+  `aba33507`. The owner keeps invocation defaults `claude-opus-5.5` / `max` /
+  `long_context`, and the dispatch pin in `.github/copilot-instructions.md`,
+  `AGENT-INTERFACE.md`, `README.md`, and the owner contract test match
+  (owner-reported). No standing different-model, scope-review, or
+  deep-security-review requirement existed; the skill's Phase 8
+  `threat-model-review` step is now same-model.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`
-- **Observed state:** clean local `main` at corrected PMR-120 return
-  `e6aed9fa9ec08ce2455c578b1dc219266ee44cb8`, 0 behind / 4 ahead of
+- **Observed state:** clean local `main` at `PMR-121` return
+  `aba335079e437a9a9b1643a0d9d5d8e20fce59f5`, over work `c156c0a0` and
+  corrected PMR-120 return `e6aed9fa`, 0 behind / 6 ahead of
   last-fetched `origin/main` `c4126b6`. The repository
   `beryllium-project/threat-modeler` is public, and on 2026-10-12 the
   responsible human chose to keep it public (`PMD-20261012-002`), so its
@@ -41,8 +43,9 @@
   `f4eb272` followed it; owner maintenance `c4126b6` reconciles delivery
   wording, records maintained validation, and registers `project-manager` and
   `security-reviewer` as exact-snapshot targets. Those predecessor commits are
-  synchronized; all four PMR-120 commits are local and unpushed. `PMR-028`
-  and `PMR-120` are closed. The run remains paused.
+  synchronized; all four PMR-120 commits and both PMR-121 commits are local
+  and unpushed, and pushing them would publish them. `PMR-028`, `PMR-120`,
+  and `PMR-121` are closed. The run remains paused.
   `PMD-20261002-002` stages a threat-modeler-only hidden-owner rollout after
   repeated human owner lifecycle cost. The human-started PMR-120 bootstrap is
   released, and the six exact paths plus 140/0 static validation are recorded.
@@ -142,8 +145,10 @@ former human PMR-064/117 bootstrap is retired. Corrected PMR-120 work
 `71bca3f` and return `e6aed9f` complete the component-owned standard-V1
 profile. Both PMR-120 bootstrap bindings are consumed. No handshake request
 exists and no direct dispatch proceeds until explicit later resumption.
-`PMR-121` is the owner-only single-model repin under `PMD-20261006-001`.
-It is independent of parked `PMR-064` / `PMR-117`, changes no model package
-or paused run, and needs a human-started owner session. Its ordinary packet
-may stop at the parent-resolver step because `PMR-064` has not yet admitted
-that sibling command locally.
+`PMR-121`, the owner-only single-model repin under `PMD-20261006-001`, is
+closed (2026-10-13) from work `c156c0a0` and return `aba33507`. It was
+carried in a direct human-started session that read its row with
+read-only file tools and ran no parent or sibling command, because
+`PMR-064` has not yet admitted the parent resolver locally. It stayed
+independent of parked `PMR-064` / `PMR-117` and changed no model package
+or paused run (owner-reported).
