@@ -34,7 +34,8 @@
   QEMU emulation only, is not hardware validation, and changes no
   acceptance. Development branch
   `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched
-  `origin`. `PMR-127` is closed: the owner handoff names the `l1` checkout,
+  `origin`; open P3 `PMR-134` asks a human-started owner session to
+  fast-forward it to `80ef261e`, without pushing. `PMR-127` is closed: the owner handoff names the `l1` checkout,
   seven linked-worktree registrations are repaired, and five under a former
   Copilot session-state directory are retained unrepaired and still
   prunable. `PMR-133` is closed: on this branch `## Project Manager
@@ -302,6 +303,15 @@ carries the fix: the other 22 local branches that contain `2e9b5b1a`,
 including development branch `beryllium/single-hart-runtime-r0`, keep the
 earlier order (owner-reported), and carrying the fix to them, including any
 merge, needs separate responsible-human direction.
+On 2026-10-13 the responsible human gave that direction for the
+development branch only: `"proceed with these in fleet mode. fast-foward."`
+Open P3 `PMR-134` asks one human-started owner session to fast-forward
+`beryllium/single-hart-runtime-r0` from exactly `3bc3ef04` to exactly
+`80ef261e`, the `beryllium/k3-b7-bringup` tip that also carries B6, B7,
+the 2026-10-08 step-3 roadmap re-baseline (`ecad45d8` / `915370aa`), and
+`PMR-127`. It is fast-forward only, with no checkout, merge, rebase,
+other worktree, or push, and it changes no Project Manager gate record;
+nothing is proposed for the other 21 branches.
 `PMR-077` is closed from exact documentation-only owner return `a8e137e`.
 The human-supplied external readiness statement is candidate planning input
 only. Any COM260-informed H0 successor still requires a separately reviewed

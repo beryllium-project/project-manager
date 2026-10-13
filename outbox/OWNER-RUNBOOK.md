@@ -48,29 +48,39 @@ writes no log, so its `check` and `install` results reach the Project
 Manager only through your report, which the Project Manager records as
 unverified responsible-human evidence.
 
-## P3 Beryllium branches without the PMR-133 fix (no PMR)
+## P3 PMR-134: fast-forward Beryllium's development branch
 
-`PMR-133` is closed (2026-10-12; work `f0e24f1f`, return `80ef261e`). On
-`beryllium/k3-b7-bringup`, `## Project Manager tasking` is again the first
-level-two section of `.github/copilot-instructions.md`, and the owner
-reports `node docs/check-links.mjs --tasking-contract` passing. Maintained
-refs show `f0e24f1f`, and `PMR-127` work `da65b80e` (the `l1` handoff-path
-refresh), on that branch only. The owner reports that the other 22 local
-branches containing `2e9b5b1a`, including development branch
-`beryllium/single-hart-runtime-r0`, still put `## Current direction`, which
-"supersedes any conflicting guidance below", above the SOT-first tasking
-section, so the check is expected to fail there (inferred from the owner's
-reports; not run on those branches). The component's current direction
-starts later milestones from the development branch, which has neither
-change, and merging into it needs your direction.
+You directed exactly `"proceed with these in fleet mode. fast-foward."` on
+2026-10-13. The component's current direction starts later milestones from
+development branch `beryllium/single-hart-runtime-r0`, which is at
+`3bc3ef04` and lacks `PMR-127` work `da65b80e` (the `l1` handoff-path
+refresh) and `PMR-133` work `f0e24f1f` (the tasking-section order fix).
+Maintained refs show `3bc3ef04` contained in the clean checked-out
+`beryllium/k3-b7-bringup` tip `80ef261e`, so the development branch can
+move there as a pure fast-forward. That also brings B6, B7, and the
+2026-10-08 step-3 roadmap re-baseline (`ecad45d8`, acceptance record
+`915370aa`) onto it; if you do not want the re-baseline there, do not
+launch and tell the Project Manager. The owner's 2026-10-12 worktree list
+shows the branch checked out in no worktree.
+Start one owner session, in parallel with `PMR-132` if you like (it uses
+a different repository):
 
-Default: do nothing now, but decide before starting a milestone from the
-development branch. A branch created from `beryllium/k3-b7-bringup` at or
-after `f0e24f1f` has both changes. If you want them carried to the
-development branch or another branch, tell the Project Manager which
-branches; one owner request can cover both, and any merge into the
-development branch stays your direction. The owner acts; the Project
-Manager writes nothing in Beryllium, and no gate follows.
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/owner-session.sh launch beryllium-hypervisor PMR-134
+```
+
+As soon as Copilot opens (press `esc esc` if the first turn has already
+started), run `/model` and confirm `claude-opus-5.5` / `max` /
+`long_context`. The owner fast-forwards only that branch, from exactly
+`3bc3ef04` to exactly `80ef261e`, without checking it out, merging,
+rebasing, touching another worktree, or pushing, and stops if anything
+differs. It records the result in its `planning/HANDOFF.md` return,
+commits locally, and releases the session; then tell the Project Manager,
+which verifies and closes `PMR-134`. Pushing the development branch
+afterward is a separate decision, and no Project Manager gate changes. The
+other 21 local branches that contain `2e9b5b1a` are earlier milestone and
+worker branches; nothing is proposed for them.
 
 ## P3 Beryllium B-stage reconciliation (no PMR)
 
@@ -129,7 +139,9 @@ git -C /home/jmorris/src/beryllium-project/analysis-workbook remote get-url --pu
 git -C /home/jmorris/src/beryllium-project/analysis-workbook push origin analysis/k3-a100-service-design-private
 ```
 
-This is a private backup, not publication. Never push to `public`. Then tell
+This is a private backup, not publication. Never push to `public`. You can
+run it while the `PMR-134` owner session runs; they use different
+repositories. Then tell
 the Project Manager, which verifies containment with `inspect-components.sh
 refs` and closes `PMR-132`.
 
@@ -780,13 +792,13 @@ and no views from 2026-09-27 to 2026-10-10; 2026-10-11 is outside that
 window. Re-run the audit at any time; its `MISMATCH` lines for those five
 repositories are expected.
 
-The coordination backup is complete through Project Manager `918efe7` and
-parent `b7ba4a4`. Under your exact `"push"` (2026-10-13), the 118th turn
-pushes Project Manager `main` from `918efe7` through its record commit
-(publishing it) and parent `main` from `b7ba4a4` through its registry
-commit to `upstream`, as fast-forwards; the
-next turn verifies them, and later commits stay local until a new
-same-turn confirmation. Under your exact `push_both`, the
+The coordination backup is complete through Project Manager `3873777` and
+parent `29dcf66`. Under your exact `"push"` (2026-10-13), the 118th turn
+pushed Project Manager `918efe7..3873777` (publishing it) and parent
+`b7ba4a4..29dcf66` as fast-forwards; on 2026-10-13 the 119th turn verified
+with live `ls-remote` that each remote holds only `main` at those tips,
+0 behind / 0 ahead, and that confirmation is consumed. Later commits stay
+local until a new same-turn confirmation. Under your exact `push_both`, the
 114th turn pushed Project Manager `98a916c..918efe7` and parent
 `b4cb8e4..b7ba4a4` as fast-forwards; on 2026-10-12 the 115th turn verified
 with live `ls-remote` that each remote holds only `main` at those tips,
@@ -1070,11 +1082,9 @@ component, branch, tag, or remote mutation.
 
 **No further helper push is authorized; do not run again without a new exact
 responsible-human confirmation.** The coordination backup is complete and
-verified through Project Manager `918efe7` and parent `b7ba4a4` (the
-114th-turn `push_both` push, verified 2026-10-12). The 118th turn pushes
-the later Project Manager and parent commits under your exact `"push"`,
-and the next turn verifies them; any commit after that stays local until a
-new same-turn confirmation. `beryllium-project/project-manager` stays public by your
+verified through Project Manager `3873777` and parent `29dcf66` (the
+118th-turn `"push"`, verified 2026-10-13); any later commit stays local
+until a new same-turn confirmation. `beryllium-project/project-manager` stays public by your
 decision, so any later `push_pm` publishes the Project Manager commits it
 pushes. `threat-modeler` and `security-reviewer` also stay public
 (`PMD-20261012-002`), so `push_tm` and `push_sr` publish too.
