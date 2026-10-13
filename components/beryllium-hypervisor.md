@@ -20,29 +20,30 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
-  done. Maintained inspection at 2026-10-12T23:42Z observes clean
-  `beryllium/k3-b7-bringup` at `PMR-133` owner return
-  `80ef261ea77b26d1e4e2570157e44f6fcec731fb` ("docs: record the PMR-133
-  owner return"), over work `f0e24f1f` ("docs: restore Project Manager
-  tasking as first section (PMR-133)"), `PMR-127` return `69bf8f8a` and
-  work `da65b80e`, and the owner's record of its 2026-10-10 session on
-  `l1`, `563cca143fe4c1362eeb799b07e1b45bcd09ee97` ("docs: record the B7
-  re-check on l1"). The four commits after `563cca14` are local-only, 0
-  behind / 4 ahead of last-fetched `origin/beryllium/k3-b7-bringup`
+  done. Maintained inspection at 2026-10-13T18:27Z observes clean
+  `beryllium/k3-b7-bringup` at `PMR-134` owner return
+  `f6fc6c7ecd8309b7e361455b8373c287decceca5` ("docs: record the PMR-134
+  owner return"), over work `e42c6c6a` ("docs: record the
+  development-branch fast-forward (PMR-134)"), `PMR-133` return
+  `80ef261e` and work `f0e24f1f`, `PMR-127` return `69bf8f8a` and work
+  `da65b80e`, and the owner's record of its 2026-10-10 session on `l1`,
+  `563cca143fe4c1362eeb799b07e1b45bcd09ee97` ("docs: record the B7
+  re-check on l1"). The six commits after `563cca14` are local-only, 0
+  behind / 6 ahead of last-fetched `origin/beryllium/k3-b7-bringup`
   `563cca14`, with no upstream configured.
   The owner states that its off-board B7 re-check on `l1` is host-test and
   QEMU emulation only, is not hardware validation, and changes no
   acceptance. Development branch
-  `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched
-  `origin`; open P3 `PMR-134` asks a human-started owner session to
-  fast-forward it to `80ef261e`, without pushing. `PMR-127` is closed: the owner handoff names the `l1` checkout,
+  `beryllium/single-hart-runtime-r0` was fast-forwarded by closed
+  `PMR-134` from `3bc3ef0` to `80ef261e`; it is 0 behind / 65 ahead of
+  last-fetched `origin` `3bc3ef0` and unpushed. `PMR-127` is closed: the owner handoff names the `l1` checkout,
   seven linked-worktree registrations are repaired, and five under a former
   Copilot session-state directory are retained unrepaired and still
-  prunable. `PMR-133` is closed: on this branch `## Project Manager
-  tasking` is again the first level-two section and the owner reports
-  `--tasking-contract` passing, while the owner reports that the other 22
-  local branches that contain `2e9b5b1a`, including the development branch,
-  keep the earlier order. The committed
+  prunable. `PMR-133` is closed: on this branch and, since `PMR-134`, on
+  the development branch, `## Project Manager tasking` is again the first
+  level-two section, and the owner reports `--tasking-contract` passing;
+  the owner reports that the other 21 local branches that contain
+  `2e9b5b1a` keep the earlier order. The committed
   instructions record component-side responsible-human acceptance of B0-B7;
   Project Manager gate records are not reconciled to them. On 2026-10-10 the
   Project Manager had run no state inspection, Git command, or write against
@@ -185,7 +186,7 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 ## Commands
 
 Run these from development branch `beryllium/single-hart-runtime-r0` (on
-2026-10-12 the checkout was observed on `beryllium/k3-b7-bringup`; see
+2026-10-13 the checkout was observed on `beryllium/k3-b7-bringup`; see
 **Observed state** above).
 
 ```sh
@@ -305,13 +306,16 @@ earlier order (owner-reported), and carrying the fix to them, including any
 merge, needs separate responsible-human direction.
 On 2026-10-13 the responsible human gave that direction for the
 development branch only: `"proceed with these in fleet mode. fast-foward."`
-Open P3 `PMR-134` asks one human-started owner session to fast-forward
-`beryllium/single-hart-runtime-r0` from exactly `3bc3ef04` to exactly
-`80ef261e`, the `beryllium/k3-b7-bringup` tip that also carries B6, B7,
-the 2026-10-08 step-3 roadmap re-baseline (`ecad45d8` / `915370aa`), and
-`PMR-127`. It is fast-forward only, with no checkout, merge, rebase,
-other worktree, or push, and it changes no Project Manager gate record;
-nothing is proposed for the other 21 branches.
+`PMR-134` is closed (2026-10-13) from owner work `e42c6c6a` and return
+`f6fc6c7e`. One guarded compare-and-swap ref update, owner-reported,
+fast-forwarded `beryllium/single-hart-runtime-r0` from exactly `3bc3ef04`
+to exactly `80ef261e`, the `beryllium/k3-b7-bringup` tip that also carries
+B6, B7, the 2026-10-08 step-3 roadmap re-baseline (`ecad45d8` /
+`915370aa`), and `PMR-127`. It made no checkout, merge, rebase, worktree
+change, or push. Maintained refs show the branch at `80ef261e`, 0 behind /
+65 ahead of last-fetched `origin`. The work commit updates only
+current-status statements that the move made stale, and no Project Manager
+gate record changes; nothing is proposed for the other 21 branches.
 `PMR-077` is closed from exact documentation-only owner return `a8e137e`.
 The human-supplied external readiness statement is candidate planning input
 only. Any COM260-informed H0 successor still requires a separately reviewed

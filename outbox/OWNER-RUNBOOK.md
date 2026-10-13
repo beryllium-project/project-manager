@@ -48,40 +48,6 @@ writes no log, so its `check` and `install` results reach the Project
 Manager only through your report, which the Project Manager records as
 unverified responsible-human evidence.
 
-## P3 PMR-134: fast-forward Beryllium's development branch
-
-You directed exactly `"proceed with these in fleet mode. fast-foward."` on
-2026-10-13. The component's current direction starts later milestones from
-development branch `beryllium/single-hart-runtime-r0`, which is at
-`3bc3ef04` and lacks `PMR-127` work `da65b80e` (the `l1` handoff-path
-refresh) and `PMR-133` work `f0e24f1f` (the tasking-section order fix).
-Maintained refs show `3bc3ef04` contained in the clean checked-out
-`beryllium/k3-b7-bringup` tip `80ef261e`, so the development branch can
-move there as a pure fast-forward. That also brings B6, B7, and the
-2026-10-08 step-3 roadmap re-baseline (`ecad45d8`, acceptance record
-`915370aa`) onto it; if you do not want the re-baseline there, do not
-launch and tell the Project Manager. The owner's 2026-10-12 worktree list
-shows the branch checked out in no worktree.
-Start one owner session, in parallel with `PMR-132` if you like (it uses
-a different repository):
-
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-session.sh launch beryllium-hypervisor PMR-134
-```
-
-As soon as Copilot opens (press `esc esc` if the first turn has already
-started), run `/model` and confirm `claude-opus-5.5` / `max` /
-`long_context`. The owner fast-forwards only that branch, from exactly
-`3bc3ef04` to exactly `80ef261e`, without checking it out, merging,
-rebasing, touching another worktree, or pushing, and stops if anything
-differs. It records the result in its `planning/HANDOFF.md` return,
-commits locally, and releases the session; then tell the Project Manager,
-which verifies and closes `PMR-134`. Pushing the development branch
-afterward is a separate decision, and no Project Manager gate changes. The
-other 21 local branches that contain `2e9b5b1a` are earlier milestone and
-worker branches; nothing is proposed for them.
-
 ## P3 Beryllium B-stage reconciliation (no PMR)
 
 The component's committed instructions now record responsible-human
@@ -124,26 +90,6 @@ recovers work from the `lx2` copy. It would need a new named
 responsible-human decision first. Tell the Project Manager your choice; it
 allocates an owner request if one is needed. The Project Manager never
 repairs, locks, or prunes worktrees.
-
-## P3 PMR-132: back up the workbook's new commits (private)
-
-The `PMR-130` owner session left four commits local and unpushed on
-`analysis/k3-a100-service-design-private`: PMR-124 work `a301348`, PMR-126
-work `f0b8b35`, PMR-130 work `c9d1971`, and return checkpoint `5db4f2c`.
-Back them up to the private `origin`. The first command must print a
-`beryllium-project/analysis-workbook-private` URL; stop if it prints
-anything else:
-
-```sh
-git -C /home/jmorris/src/beryllium-project/analysis-workbook remote get-url --push origin
-git -C /home/jmorris/src/beryllium-project/analysis-workbook push origin analysis/k3-a100-service-design-private
-```
-
-This is a private backup, not publication. Never push to `public`. You can
-run it while the `PMR-134` owner session runs; they use different
-repositories. Then tell
-the Project Manager, which verifies containment with `inspect-components.sh
-refs` and closes `PMR-132`.
 
 ## P3 CRQ-004 single-model SOP alignment (`PMD-20261006-001`)
 
@@ -749,6 +695,19 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+`PMR-134` and `PMR-132` are closed (2026-10-13), run in parallel as fleet
+lanes under your exact `"proceed with these in fleet mode. fast-foward."`.
+The Beryllium owner session fast-forwarded development branch
+`beryllium/single-hart-runtime-r0` from `3bc3ef04` to `80ef261e` with one
+guarded compare-and-swap ref update, owner-reported. It made no checkout,
+merge, rebase, worktree change, or push. It recorded the move in work
+`e42c6c6a` and returned at `f6fc6c7e` on `beryllium/k3-b7-bringup`. The
+development branch now holds B6, the step-3 re-baseline, B7, `PMR-127`,
+and `PMR-133`, and is 65 ahead of last-fetched `origin`, unpushed. The
+workbook branch is backed up: `5db4f2c` is 0/0 with its private `origin`.
+The Project Manager verified both with maintained `refs`. Do not rerun
+either.
+
 `PMR-133` is closed (2026-10-12). The Beryllium owner session committed
 work `f0e24f1f`, which makes `## Project Manager tasking` the first
 level-two section of `.github/copilot-instructions.md` again on
@@ -971,7 +930,9 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `beryllium/single-hart-runtime-r0` is 0/0 at `3bc3ef0` with last-fetched
   `origin`, and the return/checkpoint commits named below are remotely
   contained; candidates `6e93461` / `0d53120` still have no remote-tracking
-  containment. Earlier, in the last recorded (104th-turn) state, active/default
+  containment. On 2026-10-13 closed `PMR-134` fast-forwarded the development
+  branch to `80ef261`, 0 behind / 65 ahead of last-fetched `origin` and
+  unpushed; PMR-090's fixed scope is unchanged. Earlier, in the last recorded (104th-turn) state, active/default
   Beryllium was clean at documentation-only return `a8e137e`, behind 0 /
   ahead 6 of last-fetched private `origin/beryllium/single-hart-runtime-r0`
   `4141cf6`. Maintained refs inspection at 2026-10-06T18:16Z shows that
@@ -1101,9 +1062,9 @@ The relevant local component commits are:
 
 - `analysis-workbook` has private branch
   `analysis/k3-a100-service-design-private` checked out on `l1` at owner
-  return `5db4f2c`. That is 0 behind / 4 ahead of private `origin`
-  `beryllium-project/analysis-workbook-private` at `353c431`, and the human
-  backs it up under `PMR-132`. Local `main` at `4cf44d0`, including
+  return `5db4f2c`, 0 behind / 0 ahead of private `origin`
+  `beryllium-project/analysis-workbook-private` since the human-run
+  `PMR-132` backup (closed 2026-10-13). Local `main` at `4cf44d0`, including
   `d1f2caf` (CRQ-003) and `4cf44d0` (CRQ-004), is synchronized with the
   private `origin/main` since the 2026-10-12 `PMR-129` split. The historical
   range contained by `origin/main` `3c9d2a3` includes Project Manager carry
@@ -1118,13 +1079,14 @@ The relevant local component commits are:
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
 - `beryllium-hypervisor/` is clean on `beryllium/k3-b7-bringup` at
-  `PMR-133` return `80ef261` over work `f0e24f1` and `PMR-127` return
-  `69bf8f8` / work `da65b80` (2026-10-12); all four are local-only, 0
-  behind / 4 ahead of last-fetched
+  `PMR-134` return `f6fc6c7` over work `e42c6c6` (2026-10-13), `PMR-133`
+  return `80ef261` / work `f0e24f1`, and `PMR-127` return `69bf8f8` / work
+  `da65b80`; all six are local-only, 0 behind / 6 ahead of last-fetched
   `origin/beryllium/k3-b7-bringup` `563cca1`, and no backup request is
-  allocated (pushing them is the owner's decision). Development branch
-  `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched
-  `origin`. History: on 2026-10-06T16:03Z it was observed clean on
+  allocated (pushing them needs separate responsible-human direction). Development branch
+  `beryllium/single-hart-runtime-r0` was fast-forwarded by `PMR-134` to
+  `80ef261`, 0 behind / 65 ahead of last-fetched `origin` `3bc3ef0` and
+  unpushed. History: on 2026-10-06T16:03Z it was observed clean on
   `beryllium/k3-b3-bringup` at `afa4336`, behind 0 / ahead 1 of last-fetched
   `origin/beryllium/k3-b3-bringup` `6358ed2`, with a human session the
   responsible human then reported active; `afa4336` was then on no

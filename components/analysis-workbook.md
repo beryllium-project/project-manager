@@ -65,12 +65,13 @@
   approval. `owner-actions.sh --only push_awb` now pushes `main` to the
   private `origin`. The noncanonical `lx2` copy's `origin` still names the
   existing repository; the human reported its push URL disabled.
-- **Observed state:** on 2026-10-12, after the `PMR-130` owner session,
+- **Observed state:** on 2026-10-13, after the human-run `PMR-132` backup,
   maintained inspection observes clean `analysis/k3-a100-service-design-private`
   at return checkpoint `5db4f2c0d353ea74cc5ea5f84e033a46178f1770`, 0 behind /
-  4 ahead of `origin/analysis/k3-a100-service-design-private` `353c431`.
-  The four local commits are PMR-124 work `a301348`, PMR-126 work `f0b8b35`,
-  PMR-130 work `c9d1971`, and the return; backing them up is `PMR-132`.
+  0 ahead of `origin/analysis/k3-a100-service-design-private`.
+  The four commits that backup pushed are PMR-124 work `a301348`, PMR-126
+  work `f0b8b35`, PMR-130 work `c9d1971`, and the return; `PMR-132` is
+  closed (2026-10-13).
   `main` at `4cf44d0` tracks `origin/main` at 0 behind / 0 ahead,
   `public/main` is at `4cf44d0`, and there are no tags. After the `PMR-129`
   split and before that session, the private branch was at `353c431`, 0
@@ -317,8 +318,9 @@ publication-readiness inventory of `main`) closed on 2026-10-12. They closed
 from work `a301348`, `f0b8b35`, and `c9d1971`, and return `5db4f2c`, all
 produced in one human-started owner session. Mirroring CRQ-004 as
 `completed` after verified `PMR-121..PMR-123` returns is a later, separate
-request. `PMR-132` asks the responsible human to back up the four local
-commits to the private `origin`. The publication decision for `main` stays
+request. `PMR-132`, closed on 2026-10-13, had the responsible human back up
+the four local commits to the private `origin`; maintained refs verify
+them there. The publication decision for `main` stays
 with the responsible human; the hidden `analysis-workbook-owner` was not
 dispatched.
 As of 2026-10-06, `CRQ-003` remained `new`. The
