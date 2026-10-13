@@ -781,8 +781,12 @@ window. Re-run the audit at any time; its `MISMATCH` lines for those five
 repositories are expected.
 
 The coordination backup is complete through Project Manager `918efe7` and
-parent `b7ba4a4`; later Project Manager and parent commits stay local until
-a new same-turn confirmation. Under your exact `push_both`, the
+parent `b7ba4a4`. Under your exact `"push"` (2026-10-13), the 118th turn
+pushes Project Manager `main` from `918efe7` through its record commit
+(publishing it) and parent `main` from `b7ba4a4` through its registry
+commit to `upstream`, as fast-forwards; the
+next turn verifies them, and later commits stay local until a new
+same-turn confirmation. Under your exact `push_both`, the
 114th turn pushed Project Manager `98a916c..918efe7` and parent
 `b4cb8e4..b7ba4a4` as fast-forwards; on 2026-10-12 the 115th turn verified
 with live `ls-remote` that each remote holds only `main` at those tips,
@@ -1060,15 +1064,17 @@ remote mutation, publication, or release.
 
 PMR-091 is complete; its one authorized push has been consumed and grants no
 later push authority. The opt-in `owner-actions.sh --helium-branches` path
-belongs to historical PMR-018 and remains outside PMR-091. No default or
-opt-in helper step and no parent, Project Manager, component, branch, tag, or
-remote mutation is authorized.
+belongs to historical PMR-018 and remains outside PMR-091. PMR-091
+authorizes no default or opt-in helper step and no parent, Project Manager,
+component, branch, tag, or remote mutation.
 
-**No further push is authorized; do not run again without a new exact
+**No further helper push is authorized; do not run again without a new exact
 responsible-human confirmation.** The coordination backup is complete and
 verified through Project Manager `918efe7` and parent `b7ba4a4` (the
-114th-turn `push_both` push, verified 2026-10-12); later commits are local
-until a new same-turn confirmation. `beryllium-project/project-manager` stays public by your
+114th-turn `push_both` push, verified 2026-10-12). The 118th turn pushes
+the later Project Manager and parent commits under your exact `"push"`,
+and the next turn verifies them; any commit after that stays local until a
+new same-turn confirmation. `beryllium-project/project-manager` stays public by your
 decision, so any later `push_pm` publishes the Project Manager commits it
 pushes. `threat-modeler` and `security-reviewer` also stay public
 (`PMD-20261012-002`), so `push_tm` and `push_sr` publish too.
