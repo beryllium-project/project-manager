@@ -695,6 +695,15 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+The Beryllium backup push (no PMR) is complete (2026-10-13). Under your
+exact `"push the beryllium backup"`, you pushed `beryllium/k3-b7-bringup`
+(`563cca1..f6fc6c7`) and `beryllium/single-hart-runtime-r0`
+(`3bc3ef0..80ef261`) to Beryllium's private `origin` as fast-forwards.
+Maintained remote-tracking refs reflect both; no separate live check ran.
+Candidates `6e93461` / `0d53120` and the B4-B7 worker branches stayed
+local, and no tag was pushed (`--no-follow-tags`). Do not rerun it; any later push
+needs a new confirmation.
+
 `PMR-134` and `PMR-132` are closed (2026-10-13), run in parallel as fleet
 lanes under your exact `"proceed with these in fleet mode. fast-foward."`.
 The Beryllium owner session fast-forwarded development branch
@@ -703,7 +712,7 @@ guarded compare-and-swap ref update, owner-reported. It made no checkout,
 merge, rebase, worktree change, or push. It recorded the move in work
 `e42c6c6a` and returned at `f6fc6c7e` on `beryllium/k3-b7-bringup`. The
 development branch now holds B6, the step-3 re-baseline, B7, `PMR-127`,
-and `PMR-133`, and is 65 ahead of last-fetched `origin`, unpushed. The
+and `PMR-133`; your same-day backup push put it on `origin`. The
 workbook branch is backed up: `5db4f2c` is 0/0 with its private `origin`.
 The Project Manager verified both with maintained `refs`. Do not rerun
 either.
@@ -715,7 +724,7 @@ level-two section of `.github/copilot-instructions.md` again on
 `## Current direction` section after it, and returned at `80ef261e`. The
 Project Manager verified both commits with maintained `refs` and read the
 changed layout and validator; the owner reports `--tasking-contract`
-passing. Both commits are local-only. Do not rerun its launcher.
+passing. Both commits are in `origin` since your 2026-10-13 backup push. Do not rerun its launcher.
 
 `PMR-130`, `PMR-124`, and `PMR-126` are closed. The workbook owner session
 committed PMR-124 work `a301348` (CRQ-004 `routed`), PMR-126 work `f0b8b35`
@@ -931,8 +940,8 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `origin`, and the return/checkpoint commits named below are remotely
   contained; candidates `6e93461` / `0d53120` still have no remote-tracking
   containment. On 2026-10-13 closed `PMR-134` fast-forwarded the development
-  branch to `80ef261`, 0 behind / 65 ahead of last-fetched `origin` and
-  unpushed; PMR-090's fixed scope is unchanged. Earlier, in the last recorded (104th-turn) state, active/default
+  branch to `80ef261`, and your same-day backup push put it on `origin`
+  (0/0); candidates `6e93461` / `0d53120` stay unpushed, and PMR-090's fixed scope is unchanged. Earlier, in the last recorded (104th-turn) state, active/default
   Beryllium was clean at documentation-only return `a8e137e`, behind 0 /
   ahead 6 of last-fetched private `origin/beryllium/single-hart-runtime-r0`
   `4141cf6`. Maintained refs inspection at 2026-10-06T18:16Z shows that
@@ -1081,12 +1090,11 @@ The relevant local component commits are:
 - `beryllium-hypervisor/` is clean on `beryllium/k3-b7-bringup` at
   `PMR-134` return `f6fc6c7` over work `e42c6c6` (2026-10-13), `PMR-133`
   return `80ef261` / work `f0e24f1`, and `PMR-127` return `69bf8f8` / work
-  `da65b80`; all six are local-only, 0 behind / 6 ahead of last-fetched
-  `origin/beryllium/k3-b7-bringup` `563cca1`, and no backup request is
-  allocated (pushing them needs separate responsible-human direction). Development branch
-  `beryllium/single-hart-runtime-r0` was fast-forwarded by `PMR-134` to
-  `80ef261`, 0 behind / 65 ahead of last-fetched `origin` `3bc3ef0` and
-  unpushed. History: on 2026-10-06T16:03Z it was observed clean on
+  `da65b80`. Under your exact `"push the beryllium backup"` (2026-10-13)
+  you pushed all six to private `origin`, so
+  `origin/beryllium/k3-b7-bringup` is at `f6fc6c7`. Development branch
+  `beryllium/single-hart-runtime-r0`, fast-forwarded by `PMR-134` to
+  `80ef261`, is 0 behind / 0 ahead of `origin` after the same push. History: on 2026-10-06T16:03Z it was observed clean on
   `beryllium/k3-b3-bringup` at `afa4336`, behind 0 / ahead 1 of last-fetched
   `origin/beryllium/k3-b3-bringup` `6358ed2`, with a human session the
   responsible human then reported active; `afa4336` was then on no
