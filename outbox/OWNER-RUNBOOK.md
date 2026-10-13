@@ -81,33 +81,41 @@ Manager never runs this script against real user configuration. Until
 `check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
 on every task launch.
 
-## P3 PMR-133: restore Beryllium's tasking-contract check
+## P3 Beryllium branches without the PMR-133 fix (no PMR)
 
-`PMR-127` is closed (2026-10-12; work `da65b80e`, return `69bf8f8a`). Its
-owner reported a pre-existing failure:
-`node docs/check-links.mjs --tasking-contract` exits 1 because
-`.github/copilot-instructions.md` has put `## Current direction` ahead of
-`## Project Manager tasking` since `2e9b5b1a` (owner-dated 2026-10-06). The
-check passed when `PMR-112` adopted SOT-first startup. When you next work
-in Beryllium, start one owner session:
+`PMR-133` is closed (2026-10-12; work `f0e24f1f`, return `80ef261e`). On
+`beryllium/k3-b7-bringup`, `## Project Manager tasking` is again the first
+level-two section of `.github/copilot-instructions.md`, and the owner
+reports `node docs/check-links.mjs --tasking-contract` passing. Maintained
+refs show `f0e24f1f`, and `PMR-127` work `da65b80e` (the `l1` handoff-path
+refresh), on that branch only. The owner reports that the other 22 local
+branches containing `2e9b5b1a`, including development branch
+`beryllium/single-hart-runtime-r0`, still put `## Current direction`, which
+"supersedes any conflicting guidance below", above the SOT-first tasking
+section, so the check is expected to fail there (inferred from the owner's
+reports; not run on those branches). The component's current direction
+starts later milestones from the development branch, which has neither
+change, and merging into it needs your direction.
 
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-session.sh launch beryllium-hypervisor PMR-133
-```
+Default: do nothing now, but decide before starting a milestone from the
+development branch. A branch created from `beryllium/k3-b7-bringup` at or
+after `f0e24f1f` has both changes. If you want them carried to the
+development branch or another branch, tell the Project Manager which
+branches; one owner request can cover both, and any merge into the
+development branch stays your direction. The owner acts; the Project
+Manager writes nothing in Beryllium, and no gate follows.
 
-The launcher binds the checked-out branch. The owner either restores
-`## Project Manager tasking` as the first level-two section or, if you want
-the current order kept, records that choice and adjusts the check so that
-reading `workspace://SOT.md` and the exact resolver still come first. It
-validates, commits locally, returns in `planning/HANDOFF.md`, and does not
-push. The Project Manager never runs these commands.
+## P3 Beryllium B-stage reconciliation (no PMR)
 
-The open P3 no-PMR Beryllium B-stage reconciliation is separate: the
-component's committed instructions now record responsible-human acceptance
-of B0-B7 on the component side, while K3 hardware is `NOT RUN` in Project
-Manager records. It is reconciled only from a named responsible-human record;
-no gate follows from this runbook.
+The component's committed instructions now record responsible-human
+acceptance of B0-B7 on the component side, while K3 hardware is `NOT RUN`
+in Project Manager records. The same instructions record that you dropped
+the KVM0 workstream and R8 stages H1-H4 on 2026-10-08 (owner-recorded
+`r8=drop`; a new accepted plan may recreate either), while Project Manager
+records keep K0-X/K0-R blocked and H1-H4 not authorized. It is reconciled
+only from a named responsible-human record: tell the Project Manager which
+component-side acceptances and drops its records should carry. No gate
+follows from this runbook.
 
 ## P3 Beryllium session-state worktrees (no PMR)
 
@@ -170,8 +178,8 @@ review runs only on explicit responsible-human request, on the same model.
 Component agent profiles lie outside the Project Manager's carry classes, so
 each alignment below is an owner request performed in an owner session.
 The analysis-workbook profiles and the Beryllium instructions are already
-aligned, so no Beryllium SOP request is allocated; Beryllium's `PMR-133` is
-separate tasking-contract housekeeping.
+aligned, so no Beryllium SOP request is allocated; Beryllium's closed
+`PMR-133` was separate tasking-contract housekeeping.
 
 Start an owner session only after the Project Manager commits this turn and
 regenerates tasking; the launcher refuses a dirty Project Manager worktree or
@@ -735,6 +743,15 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+`PMR-133` is closed (2026-10-12). The Beryllium owner session committed
+work `f0e24f1f`, which makes `## Project Manager tasking` the first
+level-two section of `.github/copilot-instructions.md` again on
+`beryllium/k3-b7-bringup` and lets `docs/check-links.mjs` accept one dated
+`## Current direction` section after it, and returned at `80ef261e`. The
+Project Manager verified both commits with maintained `refs` and read the
+changed layout and validator; the owner reports `--tasking-contract`
+passing. Both commits are local-only. Do not rerun its launcher.
+
 `PMR-130`, `PMR-124`, and `PMR-126` are closed. The workbook owner session
 committed PMR-124 work `a301348` (CRQ-004 `routed`), PMR-126 work `f0b8b35`
 (CRQ-003 `routed`), and PMR-130 work `c9d1971`, and returned at `5db4f2c`.
@@ -940,7 +957,7 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** 2026-10-11 maintained inspection: active/default
+- **P3 PMR-090:** 2026-10-11 maintained inspection: development branch
   `beryllium/single-hart-runtime-r0` is 0/0 at `3bc3ef0` with last-fetched
   `origin`, and the return/checkpoint commits named below are remotely
   contained; candidates `6e93461` / `0d53120` still have no remote-tracking
@@ -1091,8 +1108,9 @@ The relevant local component commits are:
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
 - `beryllium-hypervisor/` is clean on `beryllium/k3-b7-bringup` at
-  `PMR-127` return `69bf8f8` over work `da65b80` (2026-10-12); both are
-  local-only, 0 behind / 2 ahead of last-fetched
+  `PMR-133` return `80ef261` over work `f0e24f1` and `PMR-127` return
+  `69bf8f8` / work `da65b80` (2026-10-12); all four are local-only, 0
+  behind / 4 ahead of last-fetched
   `origin/beryllium/k3-b7-bringup` `563cca1`, and no backup request is
   allocated (pushing them is the owner's decision). Development branch
   `beryllium/single-hart-runtime-r0` is at `3bc3ef0`, 0/0 with last-fetched

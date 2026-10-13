@@ -20,14 +20,16 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
-  done. Maintained inspection at 2026-10-12T22:16Z observes clean
-  `beryllium/k3-b7-bringup` at `PMR-127` owner return
-  `69bf8f8aede0c55ce0eda540d7bd95d8b2466d11` ("docs: record the PMR-127
-  owner return"), over work `da65b80e` and the owner's record of its
-  2026-10-10 session on `l1`, `563cca143fe4c1362eeb799b07e1b45bcd09ee97`
-  ("docs: record the B7 re-check on l1"). The two `PMR-127` commits are
-  local-only, 0 behind / 2 ahead of last-fetched
-  `origin/beryllium/k3-b7-bringup` `563cca14`, with no upstream configured.
+  done. Maintained inspection at 2026-10-12T23:42Z observes clean
+  `beryllium/k3-b7-bringup` at `PMR-133` owner return
+  `80ef261ea77b26d1e4e2570157e44f6fcec731fb` ("docs: record the PMR-133
+  owner return"), over work `f0e24f1f` ("docs: restore Project Manager
+  tasking as first section (PMR-133)"), `PMR-127` return `69bf8f8a` and
+  work `da65b80e`, and the owner's record of its 2026-10-10 session on
+  `l1`, `563cca143fe4c1362eeb799b07e1b45bcd09ee97` ("docs: record the B7
+  re-check on l1"). The four commits after `563cca14` are local-only, 0
+  behind / 4 ahead of last-fetched `origin/beryllium/k3-b7-bringup`
+  `563cca14`, with no upstream configured.
   The owner states that its off-board B7 re-check on `l1` is host-test and
   QEMU emulation only, is not hardware validation, and changes no
   acceptance. Development branch
@@ -35,8 +37,11 @@
   `origin`. `PMR-127` is closed: the owner handoff names the `l1` checkout,
   seven linked-worktree registrations are repaired, and five under a former
   Copilot session-state directory are retained unrepaired and still
-  prunable. `PMR-133` routes the owner-reported pre-existing
-  `--tasking-contract` failure. The committed
+  prunable. `PMR-133` is closed: on this branch `## Project Manager
+  tasking` is again the first level-two section and the owner reports
+  `--tasking-contract` passing, while the owner reports that the other 22
+  local branches that contain `2e9b5b1a`, including the development branch,
+  keep the earlier order. The committed
   instructions record component-side responsible-human acceptance of B0-B7;
   Project Manager gate records are not reconciled to them. On 2026-10-10 the
   Project Manager had run no state inspection, Git command, or write against
@@ -283,7 +288,20 @@ at `66eaa7f7`, which no branch contains. The owner reports that default
 whether to have the owner lock them or let them go; copying the directory
 from `lx2` to `l1` would first need a new named responsible-human decision,
 because `PMD-20261011-001` and `PMD-20261010-001` forbid it.
-`PMR-133` asks the owner to restore the failing `--tasking-contract` check.
+`PMR-133` is closed from owner work `f0e24f1f` and return `80ef261e`
+(2026-10-12). On `beryllium/k3-b7-bringup`, `## Project Manager tasking`
+is again the first level-two section of `.github/copilot-instructions.md`,
+above `## Current direction: 2026-10-08 re-baseline`, so that section's
+"supersedes any conflicting guidance below" no longer reaches the
+SOT-first startup. The owner moved the tasking section unchanged and
+changed `docs/check-links.mjs` to allow exactly one dated
+`## Current direction` section between the tasking section and
+`## Repository instructions`, never before it; the owner reports
+`--tasking-contract` and an 8-case regression passing. Only that branch
+carries the fix: the other 22 local branches that contain `2e9b5b1a`,
+including development branch `beryllium/single-hart-runtime-r0`, keep the
+earlier order (owner-reported), and carrying the fix to them, including any
+merge, needs separate responsible-human direction.
 `PMR-077` is closed from exact documentation-only owner return `a8e137e`.
 The human-supplied external readiness statement is candidate planning input
 only. Any COM260-informed H0 successor still requires a separately reviewed
