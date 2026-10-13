@@ -30,8 +30,9 @@
   `PMD-20261006-001` (the responsible human's `CRQ-004`
   single-model SOP) supersedes that Codex pairing as project policy: the
   aligned hook source fills `claude-opus-5.5` / `max` / `long_context` for
-  every agent type, and until the user-level install on `l1`, task
-  launches should pass that triple explicitly. Open P3
+  every agent type. The responsible human reported the user-level install
+  on `l1` done on 2026-10-13 (not independently verified); sessions started
+  before it still pass that triple explicitly, which is harmless anywhere. Open P3
   `PMR-123` asks the owner to repin all four profiles to `claude-opus-5.5` /
   `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`
   floor, and `claude-fable-5.1` allowance wording, and record that a
@@ -77,8 +78,9 @@
   policy. Built-in `security-review` is not admitted by type, and there is no
   silent fallback. Under `PMD-20261006-001` the aligned hook source instead
   fills `claude-opus-5.5` / `max` / `long_context` for every agent type;
-  until the user-level install on `l1`, task launches should pass that
-  triple explicitly. PMR-109 closes the component policy exception found by the
+  the responsible human reported the user-level install on `l1` done on
+  2026-10-13 (not independently verified), and sessions started before it
+  still pass that triple explicitly. PMR-109 closes the component policy exception found by the
   `PMD-20260930-001` discovery and conflict audit; PMR-110 applies the named
   Codex capability exception to all four profiles, including the direct
   orchestrator. Their closure grants no engagement, acceptance, review

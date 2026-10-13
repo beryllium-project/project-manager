@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-12
+**Last refreshed:** 2026-10-13
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -43,43 +43,10 @@ stdout/stderr and Copilot arguments remain unchanged. The Project Manager
 retrieves the newest component/PMR-matched file directly from fixed ignored
 `scratch/owner-sessions/preflight/`; it contains only the documented
 fixed-field state, never command output or a transcript.
-
-## P2 User-level governance on `l1` (no PMR)
-
-Your 2026-10-11 `check` on `l1` reported four failures: user `model` is not
-`claude-opus-5.5`, so the plan-model fallback fails too, and the governance
-hook and its configuration are absent. Hook-disable settings, effort `max`,
-context `long_context`, and the retired-asset checks passed. Do not copy
-`lx2`'s hook files: `install` renders them for this root, and copies fail
-`check` (`PMD-20261011-001`). `REHYDRATE.md` section 4 is the full
-per-workstation procedure.
-
-1. In Copilot, run `/config model claude-opus-5.5`. If `planModel` is set to
-   another model, run `/settings unset planModel`. In `/subagents`, set the
-   default and every per-agent model to `claude-opus-5.5`. On 2026-10-11 a
-   session reported a required `research` default of `gpt-5.6-terra`; on
-   2026-10-12 this Project Manager session's runtime lists `claude-opus-5.5`
-   for `research`, `code-review`, and `security-review`. `check` does not
-   inspect these defaults, but `PMD-20261006-001` forbids any other model.
-2. Rerun the read-only check; only the two hook lines should still fail:
-
-   ```sh
-   cd /home/jmorris/src/beryllium-project
-   bash ./project-manager/scripts/beryllium-governance.sh check
-   ```
-
-3. With no other governed Copilot session running (`PMD-20260930-003`) and
-   after rechecking that immediately beforehand, install from the same root:
-
-   ```sh
-   cd /home/jmorris/src/beryllium-project
-   bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check
-   ```
-
-`install` writes nothing until the settings preflight passes. The Project
-Manager never runs this script against real user configuration. Until
-`check` passes, pass `claude-opus-5.5` / `max` / `long_context` explicitly
-on every task launch.
+`scripts/beryllium-governance.sh` does not yet follow this preference: it
+writes no log, so its `check` and `install` results reach the Project
+Manager only through your report, which the Project Manager records as
+unverified responsible-human evidence.
 
 ## P3 Beryllium branches without the PMR-133 fix (no PMR)
 
@@ -260,15 +227,42 @@ Codex-exception, `high` / `xhigh` floor, and `claude-fable-5.1` allowance
 wording, records that security reviews run only on explicit
 responsible-human request, preserves the tasking resolver and every
 historical record, starts no engagement, commits locally, returns in
-`HANDOFF.md`, and does not push. `PMR-111` stays separate. Your 2026-10-11
-`check` found the hook not yet installed on `l1`, so until it is, any
-`security-evidence`, `security-research`, or `security-finding-review` task
-launch in this session must pass `claude-opus-5.5` / `max` /
-`long_context` explicitly.
+`HANDOFF.md`, and does not push. `PMR-111` stays separate. You reported the
+`l1` governance install done on 2026-10-13 (see "Human-reported completed
+user-level governance installs (no PMR)" below); in any session started before that
+install, a `security-evidence`, `security-research`, or
+`security-finding-review` task launch must still pass `claude-opus-5.5` /
+`max` / `long_context` explicitly, and passing them is harmless anywhere.
 
-## Human-reported completed user-level governance reinstall (no PMR)
+## Human-reported completed user-level governance installs (no PMR)
 
-On 2026-10-01 the responsible human stated exactly `"there is no other
+On `l1`, the 116th turn recommended this sequence: run
+`/config model claude-opus-5.5`, confirm the `/subagents` defaults are
+`claude-opus-5.5`, then, with no other Copilot session working, run:
+
+```sh
+cd /home/jmorris/src/beryllium-project
+bash ./project-manager/scripts/beryllium-governance.sh check
+bash ./project-manager/scripts/beryllium-governance.sh install && bash ./project-manager/scripts/beryllium-governance.sh check
+```
+
+At 2026-10-13T00:30Z (2026-10-12 local) the responsible human replied
+exactly `"done above"`. This is responsible-human evidence only. The
+Project Manager did not run these commands against real user
+configuration, see their output, or independently verify the installed
+files. The Project Manager session that recommended them was idle, awaiting
+that reply, and had started before the install, so it has no hook loaded;
+its task launches keep passing `claude-opus-5.5` / `max` / `long_context`
+explicitly. New Copilot sessions started after the install load the hook
+configuration, matcher, and environment (`PMD-20260930-003`). Agent and
+skill reread behavior in already-running sessions remains unknown. If the
+final `check` did not pass every line, tell the Project Manager; rerunning
+the read-only `check` above is always safe. `REHYDRATE.md` section 4 stays
+the full per-workstation procedure. The report changes no component, PMR,
+acceptance, review approval, risk acceptance, publication, release, or
+assurance gate.
+
+Earlier, on 2026-10-01, the responsible human stated exactly `"there is no other
 running session"` and later reported the exact command below completed with
 the reply `"done above"`:
 
