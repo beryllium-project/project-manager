@@ -164,7 +164,7 @@ Then start Copilot in `project-manager/` and select `/agent project-manager`.
 | OS-security restricted sources | Private `os-security-restricted-sources` | Manual responsible-human handling only; agents never access or copy them. |
 | User-level Copilot state | `~/.copilot` (settings, hooks, sub-agent defaults, session state) | Section 4; never copied between hosts. |
 | Generated and transient Project Manager files | `outbox/tasking/`, `scratch/`, `inbox/` | Tasking is regenerated in section 5; scratch logs and inbox drops are transient. |
-| Credentials | `gh` and Git credential stores | Re-authenticate; never stored in a repository. |
+| Credentials | `gh` and Git credential stores; repo-local Git configuration | Re-authenticate; never stored in a repository. On `l1` the parent and Project Manager checkouts also carry an optional repo-local `credential.https://github.com.helper`: an empty entry that resets the inherited helpers, then a shell helper that answers `get` with the required account's `gh auth token`, selected by account name, and stores no token. It keeps their pushes on that account whichever `gh` account another session made active. A fresh clone lacks it; re-create it by hand when needed, and remove it with `git config --local --unset-all credential.https://github.com.helper` (`HANDOFF.md`, "Remote access"). |
 
 ## Keep current
 

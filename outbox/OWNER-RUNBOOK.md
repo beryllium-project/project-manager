@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-13
+**Last refreshed:** 2026-10-14
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -758,12 +758,15 @@ parent `29dcf66`. Under your exact `"push"` (2026-10-13), the 118th turn
 pushed Project Manager `918efe7..3873777` (publishing it) and parent
 `b7ba4a4..29dcf66` as fast-forwards; on 2026-10-13 the 119th turn verified
 with live `ls-remote` that each remote holds only `main` at those tips,
-0 behind / 0 ahead, and that confirmation is consumed. Under your exact
-`"push all"` (2026-10-13), the 123rd turn pushes Project Manager `main` from
+0 behind / 0 ahead, and that confirmation is consumed. Your 123rd-turn
+`"push all"` (2026-10-13) lapsed unused: the parent remote refused the
+then-active `gh` account, so nothing was pushed. Under your exact
+`"push all"` (2026-10-14), the 124th turn pushes Project Manager `main` from
 `3873777` through its record commit (publishing it) and parent `main` from
-`29dcf66` through its registry commit as fast-forwards; the next turn
-records verification, and later commits stay local until a new same-turn
-confirmation. Under your exact `push_both`, the
+`29dcf66` through its registry commit as fast-forwards, through the
+repo-local credential helper you added on `l1` (`HANDOFF.md`, "Remote
+access"); the next turn records verification, and later commits stay
+local until a new same-turn confirmation. Under your exact `push_both`, the
 114th turn pushed Project Manager `98a916c..918efe7` and parent
 `b4cb8e4..b7ba4a4` as fast-forwards; on 2026-10-12 the 115th turn verified
 with live `ls-remote` that each remote holds only `main` at those tips,
@@ -1051,9 +1054,10 @@ component, branch, tag, or remote mutation.
 **No further helper push is authorized; do not run again without a new exact
 responsible-human confirmation.** The coordination backup is complete and
 verified through Project Manager `3873777` and parent `29dcf66` (the
-118th-turn `"push"`, verified 2026-10-13). The 123rd turn pushes the later
-Project Manager and parent commits under your exact `"push all"`, and the
-next turn records verification; any commit after that stays local
+118th-turn `"push"`, verified 2026-10-13). The 123rd-turn push stopped with
+nothing pushed; the 124th turn pushes the later Project Manager and parent
+commits under your exact `"push all"` (2026-10-14), and the next turn
+records verification; any commit after that stays local
 until a new same-turn confirmation. `beryllium-project/project-manager` stays public by your
 decision, so any later `push_pm` publishes the Project Manager commits it
 pushes. `threat-modeler` and `security-reviewer` also stay public

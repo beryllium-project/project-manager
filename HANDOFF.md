@@ -1,28 +1,33 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-10-13
-**Update scope:** one-hundred-twenty-third coordination turn. After the
-Project Manager said the Project Manager and parent were 4 commits ahead
-and that the Project Manager push publishes, you confirmed exactly `"push
-all"` at 2026-10-13T23:13Z. The Project Manager reads that as this turn's
-same-turn push confirmation for the Project Manager and the parent; it
-pushes no component.
+**Last updated:** 2026-10-14
+**Update scope:** one-hundred-twenty-fourth coordination turn. The
+123rd-turn push stopped at its live-tip recheck with nothing pushed: the
+private parent `upstream` answered "Repository not found" because, as you
+reported, another session had made your Microsoft account the active `gh`
+account, and Git here authenticates through `gh`. You then added a
+repo-local credential helper to the parent and Project Manager checkouts
+on `l1` that selects your personal account's `gh` token by account name,
+and confirmed exactly `"push all"` at 2026-10-14T00:00Z. The Project
+Manager reads that as this turn's same-turn push confirmation for the
+Project Manager and the parent; it pushes no component.
 
 Preflight: both worktrees are clean, and each remote holds only `main`, at
 `3873777` and `29dcf66`, with no tag, URL rewriting, or active hook. The
-outgoing ranges contain no binary, credential pattern, URL, session id,
-or absolute path outside the canonical root. After committing this record, the
+outgoing file changes contain no binary, credential pattern, private URL,
+session id, or absolute path outside the canonical root, and the commit
+messages carry only the standard `Copilot-Session` trailers. After committing this record, the
 Project Manager pushes Project Manager `main` from `3873777` through this
 record's commit to public `origin`, which publishes it, and parent `main`
-from `29dcf66` through the 123rd-turn registry commit to private
+from `29dcf66` through the 124th-turn registry commit to private
 `upstream`. Both are plain fast-forwards with no force or tag; the next
-turn records verification. No component write, `gh` call, or gate change
-by the Project Manager.
+turn records verification. No component write, direct `gh` call, or gate
+change by the Project Manager.
 
-Prior update scope (2026-10-13): one-hundred-twenty-second coordination turn.
-Your `"pmr-121 done"` closed `PMR-121`: threat-modeler work `c156c0a0` and
-return `aba33507` repin all six profiles to `claude-opus-5.5`. Earlier
-turns are under "What changed in this turn" below.
+Prior update scope (2026-10-13): one-hundred-twenty-third coordination turn.
+Your exact `"push all"` (2026-10-13T23:13Z) produced Project Manager
+`034c55a` and parent `9553563`, but that push stopped with nothing pushed.
+Earlier turns are under "What changed in this turn" below.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -54,7 +59,7 @@ in `../COMPONENTS.md`
 | Formal verification | Clean `main` is synchronized 0/0 at handoff-only successor `388690d`. Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. |
 | Other drift | OS-security is clean and synchronized at active private successor `86645d4`. Its owner return records independent executable-backlog integration, maintained validation, no restricted access, and no publication; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | Security-reviewer is clean at HANDOFF-only return `c2edac7`, behind 0 / ahead 2 of last-fetched public `origin/main` `2e8d205`; its repository, like `provenance-review`, stays public by your choice (`PMD-20261012-002`). Its four profiles still record exact `gpt-5.3-codex` / `xhigh` / `default`, now superseded by `PMD-20261006-001` pending owner repin `PMR-123`; PMR-062/065/074/109/110 are closed, the tasking startup contract is active, and no engagement ran. |
-| Remote access | **118th-turn `"push"` verified; your exact `"push all"` pushes the 119th- to 123rd-turn commits this turn.** Live `ls-remote` on 2026-10-13 showed, before this turn's push, Project Manager `origin` and parent `upstream` each holding only `main`, at `3873777` and `29dcf66`, with no tag: the 118th turn's plain fast-forwards `918efe7..3873777` (published) and `b7ba4a4..29dcf66` under your exact `"push"` (2026-10-13T07:53Z), which is consumed. The parent refused anonymous access just before its push. Both repositories were 0 behind / 0 ahead before the 119th turn. Under your exact `"push all"` (2026-10-13T23:13Z), this turn pushes Project Manager `main` from `3873777` through the 123rd-turn record commit to public `origin`, which publishes it, and parent `main` from `29dcf66` through the 123rd-turn registry commit to private `upstream`, as plain fast-forwards after a clean preflight; the next turn records verification, and this push consumes the confirmation. Earlier: the 114th turn's fast-forwards `98a916c..918efe7` and `b4cb8e4..b7ba4a4` under your exact `push_both` were verified by the 115th turn. Earlier: Under your exact `"just finish the backup publicly"`, the 111th turn pushed Project Manager `origin/main` `43e7e82..98a916c` (anonymously readable at `98a916c`) and parent `upstream/main` `ff4f598..b4cb8e4`. Live `ls-remote` showed only `main` at each new tip, both 0 behind / 0 ahead, and the confirmation is consumed. Every later push to the public Project Manager, `threat-modeler`, `security-reviewer`, or `provenance-review` repositories publishes (`PMD-20261012-001`, `PMD-20261012-002`) and needs a new same-turn confirmation. The 110th turn found that repository publicly readable (`PMD-20261011-003`) and pushed only the non-public parent, `upstream/main` `4f96358..ff4f598`, which live `ls-remote` verified (only `main`, 0 behind / 0 ahead). The earlier `"commit and push"` confirmation was consumed at Project Manager `43e7e82` and parent `36e6c89`; the parent's 2026-10-09 push of `4f96358` was not performed by the Project Manager. Maintained `refs` inspection at 2026-10-11T12:58Z shows Beryllium PMR-077 return `a8e137e`, PMR-112 work/return/checkpoint `2313cbe0` / `55b568b4` / `93819fd9`, PMR-098/100 return `1f38e699` / checkpoint `4c6acbed`, `afa4336`, and `563cca1` remotely contained, with `beryllium/single-hart-runtime-r0` 0/0 at `3bc3ef0`; the owner records those pushes as responsible-human instructed, and the Project Manager neither performed nor independently verified them. Threat PMR-120 initial/correction work/returns `ca8fa3c` / `bbbc534` / `71bca3f` / `e6aed9f` and PMR-121 work/return `c156c0a` / `aba3350`, XRV PMR-115 `7361de4`, CHERI notes PMR-114 `8d1bc9d` / `7fb49f4` plus carry `7f67154`, security-reviewer `c2edac7`, the Beryllium B4-B7 worker branches and Beryllium candidates `6e93461` / `0d53120` are local without new backup authority; Beryllium PMR-127 work `da65b80` / return `69bf8f8` and PMR-133 work `f0e24f1` / return `80ef261` are in `origin` since your 2026-10-13 backup push. Analysis-workbook `d1f2caf` / `4cf44d0` / `353c431` are contained in the private `origin` (`beryllium-project/analysis-workbook-private`) by the verified 2026-10-12 `PMR-129` split. The owner's newer `a301348` / `f0b8b35` / `c9d1971` / `5db4f2c` are in the private `origin` since your `PMR-132` backup (closed 2026-10-13). Under your exact `"push the beryllium backup"` (2026-10-13), you ran two plain fast-forward pushes to Beryllium's private `origin`: `origin/beryllium/k3-b7-bringup` `563cca1..f6fc6c7`, including `PMR-134` work `e42c6c6` / return `f6fc6c7`, and `origin/beryllium/single-hart-runtime-r0` `3bc3ef0..80ef261`; maintained refs verify both. No other push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
+| Remote access | **118th-turn `"push"` verified; the 123rd-turn push stopped with nothing pushed; your exact 124th-turn `"push all"` pushes the 119th- to 124th-turn commits this turn.** Live `ls-remote` on 2026-10-14 showed, before this turn's push, Project Manager `origin` and parent `upstream` each holding only `main`, at `3873777` and `29dcf66`, with no tag: the 118th turn's plain fast-forwards `918efe7..3873777` (published) and `b7ba4a4..29dcf66` under your exact `"push"` (2026-10-13T07:53Z), which is consumed. The parent refused anonymous access just before its push. Both repositories were 0 behind / 0 ahead before the 119th turn. Your 123rd-turn `"push all"` (2026-10-13T23:13Z) lapsed unused: its live-tip recheck found parent `upstream` answering "Repository not found" while, by your report, another session held your Microsoft account active in `gh`, so the plan stopped before any push. Git here authenticates github.com through `gh auth git-credential`, which serves only `gh`'s active account, and that account belongs to your user login, shared by every session. On `l1` you added a repo-local `credential.https://github.com.helper` (untracked local Git configuration that stores no token) to the parent and Project Manager checkouts; it answers `get` with your personal account's `gh auth token`, selected by account name, so another session's `gh auth switch` no longer changes which account these two checkouts use. In the parent it also applies to the `origin` remote. Remove it with `git config --local --unset-all credential.https://github.com.helper` in each checkout. Under your exact `"push all"` (2026-10-14T00:00Z), this turn pushes Project Manager `main` from `3873777` through the 124th-turn record commit to public `origin`, which publishes it, and parent `main` from `29dcf66` through the 124th-turn registry commit to private `upstream`, as plain fast-forwards after a clean preflight; the next turn records verification, and this push consumes the confirmation. Earlier: the 114th turn's fast-forwards `98a916c..918efe7` and `b4cb8e4..b7ba4a4` under your exact `push_both` were verified by the 115th turn. Earlier: Under your exact `"just finish the backup publicly"`, the 111th turn pushed Project Manager `origin/main` `43e7e82..98a916c` (anonymously readable at `98a916c`) and parent `upstream/main` `ff4f598..b4cb8e4`. Live `ls-remote` showed only `main` at each new tip, both 0 behind / 0 ahead, and the confirmation is consumed. Every later push to the public Project Manager, `threat-modeler`, `security-reviewer`, or `provenance-review` repositories publishes (`PMD-20261012-001`, `PMD-20261012-002`) and needs a new same-turn confirmation. The 110th turn found that repository publicly readable (`PMD-20261011-003`) and pushed only the non-public parent, `upstream/main` `4f96358..ff4f598`, which live `ls-remote` verified (only `main`, 0 behind / 0 ahead). The earlier `"commit and push"` confirmation was consumed at Project Manager `43e7e82` and parent `36e6c89`; the parent's 2026-10-09 push of `4f96358` was not performed by the Project Manager. Maintained `refs` inspection at 2026-10-11T12:58Z shows Beryllium PMR-077 return `a8e137e`, PMR-112 work/return/checkpoint `2313cbe0` / `55b568b4` / `93819fd9`, PMR-098/100 return `1f38e699` / checkpoint `4c6acbed`, `afa4336`, and `563cca1` remotely contained, with `beryllium/single-hart-runtime-r0` 0/0 at `3bc3ef0`; the owner records those pushes as responsible-human instructed, and the Project Manager neither performed nor independently verified them. Threat PMR-120 initial/correction work/returns `ca8fa3c` / `bbbc534` / `71bca3f` / `e6aed9f` and PMR-121 work/return `c156c0a` / `aba3350`, XRV PMR-115 `7361de4`, CHERI notes PMR-114 `8d1bc9d` / `7fb49f4` plus carry `7f67154`, security-reviewer `c2edac7`, the Beryllium B4-B7 worker branches and Beryllium candidates `6e93461` / `0d53120` are local without new backup authority; Beryllium PMR-127 work `da65b80` / return `69bf8f8` and PMR-133 work `f0e24f1` / return `80ef261` are in `origin` since your 2026-10-13 backup push. Analysis-workbook `d1f2caf` / `4cf44d0` / `353c431` are contained in the private `origin` (`beryllium-project/analysis-workbook-private`) by the verified 2026-10-12 `PMR-129` split. The owner's newer `a301348` / `f0b8b35` / `c9d1971` / `5db4f2c` are in the private `origin` since your `PMR-132` backup (closed 2026-10-13). Under your exact `"push the beryllium backup"` (2026-10-13), you ran two plain fast-forward pushes to Beryllium's private `origin`: `origin/beryllium/k3-b7-bringup` `563cca1..f6fc6c7`, including `PMR-134` work `e42c6c6` / return `f6fc6c7`, and `origin/beryllium/single-hart-runtime-r0` `3bc3ef0..80ef261`; maintained refs verify both. No other push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
 | Queues | 36 analysis-workbook source rows / 36 ledger rows plus one transfer row are exact (37 / 37). PMQ-034..036 are `routed` as PML-0035..0037 / P4 `PMR-131` (2026-10-12): none is a duplicate in the XRV index at `7361de4`, and `PMR-130` kept the source rows visible on the private branch. Routed rows map to no source edit. PMQ-031..033 remain `routed` as PML-0032..0034 / PMR-107. The prior 30 source rows and transfer row retain their recorded dispositions. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. Independent OS-security integration `86645d4` does not execute PMR-052. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -68,7 +73,7 @@ in `../COMPONENTS.md`
 | Human interaction | `PMD-20261002-001` records the exact direction `"also remember to use a full pathname when giving me an initial cd command"`. User-facing command sequences now render an initial `cd` with the current absolute path re-resolved from `SOT.md` / `COMPONENTS.md`; later commands may be relative to that established directory. The prior PMR-105 single-use authorization remains consumed. |
 | Model policy | `PMD-20261006-001` supersedes the `PMD-20260916-001` role-to-model matrix and the remainder of `PMD-20260915-007`, the `PMD-20260930-001` floor and scope-review assets, the `PMD-20260930-002` hook rules, and the `PMD-20260930-005` Codex exception: one model, `claude-opus-5.5` at `max` with `long_context`, for every orchestrator, agent, sub-agent, and task, with no silent model, effort, or context fallback. `PMD-20260930-003` reinstall safety remains in force. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this turn, Project Manager `6327c5c` and parent `cda113e` were clean, each 0 behind / 4 ahead of its remote with the 119th- to 122nd-turn local commits. This turn updates parent `COMPONENTS.md` only, commits both repositories, and then pushes both under your exact `"push all"`; the next turn records verification. No component write by the Project Manager occurs. |
+| Parent coordination | Before this turn, Project Manager `034c55a` and parent `9553563` were clean, each 0 behind / 5 ahead of its remote with the 119th- to 123rd-turn local commits, because the 123rd-turn push stopped with nothing pushed. This turn updates parent `COMPONENTS.md` only, commits both repositories, and then pushes both under your exact 124th-turn `"push all"`; the next turn records verification. No component write by the Project Manager occurs. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
@@ -188,8 +193,10 @@ Further actions, in priority order:
 Nothing else blocks development. The workbook publication decision,
 `PMR-131`, the remaining CRQ-004 repins (`PMR-122`, and `PMR-123` with `PMR-118`), and the
 earlier workbook backup-provenance requests can wait. The 118th-turn push
-is verified; this turn pushes the 119th- to 123rd-turn Project Manager and
-parent commits under your exact `"push all"`, and any later commit needs a new same-turn confirmation. Every later push to
+is verified, and the 123rd-turn push stopped with nothing pushed; this turn
+pushes the 119th- to 124th-turn Project Manager and parent commits under
+your exact 124th-turn `"push all"`, and any later commit needs a new
+same-turn confirmation. Every later push to
 the public Project Manager, `threat-modeler`, `security-reviewer`, or
 `provenance-review` repositories publishes (`PMD-20261012-001`,
 `PMD-20261012-002`); add `--skip push_pm,push_tm,push_sr` to
@@ -228,6 +235,80 @@ responsible-human hold excludes a component again, replace `status`,
 for every other entry.
 
 ## What changed in this turn
+
+### One-hundred-twenty-fourth-turn coordination push (`"push all"`)
+
+- The 123rd turn committed Project Manager `034c55a` and parent `9553563`,
+  then stopped at step 4 of its plan. Project Manager `origin` still showed
+  `3873777`, but `ls-remote upstream` for the private parent failed with
+  "Repository not found" (exit 128), although it had answered in that
+  turn's preflight. As the plan required, nothing was pushed or retried.
+  The "pushed this turn" wording recorded at those commits is corrected
+  here.
+- Cause and fix:
+  - You reported another session running against your Microsoft account.
+    Git here authenticates github.com through `gh auth git-credential`,
+    which serves only `gh`'s active account. That account belongs to your
+    user login, so `gh auth switch`, `login`, and `logout` change it for
+    every session.
+  - The Project Manager advised against starting Copilot from a shell with
+    a per-shell `GH_TOKEN`, because Copilot CLI reads `GH_TOKEN` before its
+    stored sign-in, and against a separate `GH_CONFIG_DIR`, because `gh`
+    keeps the active token in one keyring slot that all configuration
+    directories share.
+  - On `l1` you added, in the parent and Project Manager checkouts only, a
+    repo-local `credential.https://github.com.helper` that resets the
+    inherited helpers and answers `get` with your personal account's
+    `gh auth token`, selected by account name. It is untracked local Git
+    configuration and stores no token. In the parent it also applies to
+    the `origin` remote. Remove it with
+    `git config --local --unset-all credential.https://github.com.helper`
+    in each checkout.
+- You replied exactly `"push all"` at 2026-10-14T00:00Z. The Project Manager
+  treats it as this turn's same-turn push confirmation for the Project
+  Manager and the parent only; it pushes no component, and component
+  backups are not part of it.
+- Read-only preflight:
+  - Both worktrees are clean. Project Manager `main` is at `034c55a`, 0
+    behind / 5 ahead of `origin/main` `3873777`; parent `main` is at
+    `9553563`, 0 behind / 5 ahead of `upstream/main` `29dcf66`. The
+    registry check is exact, and no component drifted.
+  - Authenticated `ls-remote`, now through the repo-local helper, shows
+    only `refs/heads/main` on each remote, at exactly `3873777` and
+    `29dcf66`, with no tag.
+  - Each remote has one fetch URL and one push URL. There is no URL
+    rewriting, `pushurl` setting, or `core.hooksPath`, and only sample
+    hooks.
+  - The outgoing file changes, rescanned just before the push, contain no
+    binary, credential pattern, private URL, session id, or absolute path
+    outside the canonical root; the commit messages carry only the
+    standard `Copilot-Session` trailers.
+- The ordered plan is the 123rd turn's, unchanged: commit this record;
+  regenerate and check tasking; bind the new Project Manager HEAD in parent
+  `COMPONENTS.md` and commit the parent; recheck both live tips; push
+  Project Manager `refs/heads/main:refs/heads/main` to `origin` with tag
+  following disabled and no force, which publishes it, and verify; recheck
+  that the parent still refuses anonymous access, push it the same way to
+  `upstream`, and verify; then require both repositories clean and 0
+  behind / 0 ahead. Any rejection, remote change, or one-sided result stops
+  without retry, fetch reconciliation, rebase, or merge.
+- `REHYDRATE.md`'s "Credentials" row now notes the optional repo-local
+  helper, which a fresh clone lacks, under that file's keep-current rule.
+- One same-model `pm-auditor` pass returned 2 stale and 5 minor findings
+  and one unverified item, all reconciled:
+  - The runbook's "Last refreshed" date and the `REHYDRATE.md`
+    "Credentials" row are updated.
+  - The preflight wording says no `pushurl` setting and no private URL.
+  - `gh`'s active account is described as belonging to your user login,
+    not to the machine.
+  - The registry's 123rd-turn paragraph quotes "Repository not found" and
+    keeps its review paths.
+  - The login the auditor could not check is the required account already
+    named in earlier records; this turn's text names no login.
+- No component write, direct `gh` call by the Project Manager (Git's
+  credential helper runs `gh auth token`), visibility change, release,
+  licensing, redistribution, component publication, acceptance,
+  formal-verification, or hardware-validation gate.
 
 ### One-hundred-twenty-third-turn coordination push (`"push all"`)
 
@@ -273,6 +354,10 @@ for every other entry.
 - No component write, `gh` call, visibility change, release, licensing,
   redistribution, component publication, acceptance, formal-verification,
   or hardware-validation gate.
+- Outcome: after Project Manager `034c55a` and parent `9553563` were
+  committed, step 4 found parent `upstream` answering "Repository not
+  found", so nothing was pushed. The 124th turn above records the cause,
+  the fix, and the push under a new confirmation.
 
 ### One-hundred-twenty-second-turn `PMR-121` verification and closure
 
