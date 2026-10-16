@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-14
+**Last refreshed:** 2026-10-16
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -682,6 +682,20 @@ that old packet binding fail closed.
 
 ## Completed - do not rerun
 
+`PMR-090` is closed (2026-10-16). In a Beryllium owner session you
+directed `"for pmr-090, retire those commits"` and answered
+`candidate_6e93461=retire-keep`, so candidate `6e93461` was never pushed
+and its local branch `beryllium/r8-h0-pmr-080` stays; the request's active
+history through `416b2e9` was already in `origin`. The session also, on
+your form answers `accepted_r8_branch=backup` and `fast_forward=ff-push`,
+which lie outside `PMR-090`, fast-forwarded the development branch to
+return `56e36ae1` and pushed it, `beryllium/k3-b7-bringup`, and
+`beryllium/r8-c-h0-pmr-081-v3` (tip `0d53120`, which the owner identifies
+as the component-side H0/R8-C acceptance record) to the private `origin`.
+The Project Manager verified the work `65df753a`, the return, and those
+remote-tracking refs with maintained `refs`; no separate live check ran.
+Do not rerun it; any later Beryllium push needs new direction.
+
 `PMR-121` is closed (2026-10-13). The direct threat-modeler session
 repinned all six profiles to `claude-opus-5.5` in work `c156c0a0` and
 returned at `aba33507`. Both commits are local; `threat-modeler` is public,
@@ -753,20 +767,21 @@ and no views from 2026-09-27 to 2026-10-10; 2026-10-11 is outside that
 window. Re-run the audit at any time; its `MISMATCH` lines for those five
 repositories are expected.
 
-The coordination backup is complete through Project Manager `3873777` and
-parent `29dcf66`. Under your exact `"push"` (2026-10-13), the 118th turn
+The coordination backup is complete through Project Manager `e5b18ae` and
+parent `1ca8869`. Under your exact `"push"` (2026-10-13), the 118th turn
 pushed Project Manager `918efe7..3873777` (publishing it) and parent
 `b7ba4a4..29dcf66` as fast-forwards; on 2026-10-13 the 119th turn verified
 with live `ls-remote` that each remote holds only `main` at those tips,
 0 behind / 0 ahead, and that confirmation is consumed. Your 123rd-turn
 `"push all"` (2026-10-13) lapsed unused: the parent remote refused the
 then-active `gh` account, so nothing was pushed. Under your exact
-`"push all"` (2026-10-14), the 124th turn pushes Project Manager `main` from
-`3873777` through its record commit (publishing it) and parent `main` from
-`29dcf66` through its registry commit as fast-forwards, through the
-repo-local credential helper you added on `l1` (`HANDOFF.md`, "Remote
-access"); the next turn records verification, and later commits stay
-local until a new same-turn confirmation. Under your exact `push_both`, the
+`"push all"` (2026-10-14), the 124th turn pushed Project Manager
+`3873777..e5b18ae` (publishing it) and parent `29dcf66..1ca8869` as
+fast-forwards, through the repo-local credential helper you added on `l1`
+(`HANDOFF.md`, "Remote access"); on 2026-10-16 the 125th turn verified with
+live `ls-remote` that each remote holds only `main` at those tips, with no
+tag, 0 behind / 0 ahead, and that confirmation is consumed. Later commits
+stay local until a new same-turn confirmation. Under your exact `push_both`, the
 114th turn pushed Project Manager `98a916c..918efe7` and parent
 `b4cb8e4..b7ba4a4` as fast-forwards; on 2026-10-12 the 115th turn verified
 with live `ls-remote` that each remote holds only `main` at those tips,
@@ -936,43 +951,6 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   `8b5a301`. The range is frozen; the request remains undispatched and blocked
   by PMR-085/088 plus private access. No force, tag, analysis/source change,
   publication, or gate is included.
-- **P3 PMR-090:** 2026-10-11 maintained inspection: development branch
-  `beryllium/single-hart-runtime-r0` is 0/0 at `3bc3ef0` with last-fetched
-  `origin`, and the return/checkpoint commits named below are remotely
-  contained; candidates `6e93461` / `0d53120` still have no remote-tracking
-  containment. On 2026-10-13 closed `PMR-134` fast-forwarded the development
-  branch to `80ef261`, and your same-day backup push put it on `origin`
-  (0/0); candidates `6e93461` / `0d53120` stay unpushed, and PMR-090's fixed scope is unchanged. Earlier, in the last recorded (104th-turn) state, active/default
-  Beryllium was clean at documentation-only return `a8e137e`, behind 0 /
-  ahead 6 of last-fetched private `origin/beryllium/single-hart-runtime-r0`
-  `4141cf6`. Maintained refs inspection at 2026-10-06T18:16Z shows that
-  local branch at `f213555`, behind 0 / ahead 22. As of the last fetch,
-  local candidate `beryllium/r8-h0-pmr-080` at `6e93461` and local R8-C/H0
-  branch tip `0d53120` are still on no remote-tracking branch and remain
-  unbacked.
-  The 2026-10-06 observation (clean `beryllium/k3-b3-bringup` at `afa4336`,
-  0 / 1, with a responsible-human-reported active session) is under
-  "Beryllium drift reconciliation and new planning" above. Canonical
-  PMR-098/100 return `1f38e699` / checkpoint `4c6acbed` and PMR-112
-  work/return/checkpoint `2313cbe0` / `55b568b4` / `93819fd9`, plus later
-  PMR-077 return `a8e137e`, close the prior evidence, startup, and readiness
-  dependencies. As of the last fetch, these six commits are remotely
-  contained via remote-tracking `origin/beryllium/k3-b0-bringup` through
-  `k3-b3-bringup`. They remain outside PMR-090's fixed scope, and that
-  containment changes no PMR-090 candidate, ref, push, or publication
-  decision. The owner
-  reports authenticated current GitHub visibility `PRIVATE`; the Project
-  Manager performed no network check. Keep PMR-090 open for exact review of
-  its fixed active/candidate scope and a new separate human push/publication
-  decision. Never push inactive `msft-downstream`; no observed or future push
-  accepts H0, authorizes H1-H4/K3, or grants publication approval.
-  The component handoff additionally states that local branch
-  `beryllium/doc-repro-option-a-20260929` is unpushed and not integrated,
-  that `archive/generated-docs-2026-09-30` points to `d4c5ff0`, and that
-  K0-S target `c6570558` is contained by last-fetched Beryllium refs; source
-  target `c1c7e254` is absent from Beryllium and remains owner-stated sibling
-  evidence. These facts do not expand PMR-090's exact push scope or establish
-  authority, readiness, acceptance, publication, or backup approval.
 - **Closed PMR-091:** human-run maintained `outbox/pmr091-push.sh`
   fast-forwarded only private `for-review` from `1ab289c` to `f928aac`.
   Script evidence reports `other-refs-preserved=yes`, 23 heads / zero tags,
@@ -1053,12 +1031,11 @@ component, branch, tag, or remote mutation.
 
 **No further helper push is authorized; do not run again without a new exact
 responsible-human confirmation.** The coordination backup is complete and
-verified through Project Manager `3873777` and parent `29dcf66` (the
-118th-turn `"push"`, verified 2026-10-13). The 123rd-turn push stopped with
-nothing pushed; the 124th turn pushes the later Project Manager and parent
-commits under your exact `"push all"` (2026-10-14), and the next turn
-records verification; any commit after that stays local
-until a new same-turn confirmation. `beryllium-project/project-manager` stays public by your
+verified through Project Manager `e5b18ae` and parent `1ca8869`: the 124th
+turn pushed them under your exact `"push all"` (2026-10-14), and live
+`ls-remote` on 2026-10-16 shows each remote holding only `main` at those
+commits, with no tag. Later commits stay local until a new same-turn
+confirmation. `beryllium-project/project-manager` stays public by your
 decision, so any later `push_pm` publishes the Project Manager commits it
 pushes. `threat-modeler` and `security-reviewer` also stay public
 (`PMD-20261012-002`), so `push_tm` and `push_sr` publish too.
@@ -1092,13 +1069,14 @@ The relevant local component commits are:
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
 - `beryllium-hypervisor/` is clean on `beryllium/k3-b7-bringup` at
-  `PMR-134` return `f6fc6c7` over work `e42c6c6` (2026-10-13), `PMR-133`
-  return `80ef261` / work `f0e24f1`, and `PMR-127` return `69bf8f8` / work
-  `da65b80`. Under your exact `"push the beryllium backup"` (2026-10-13)
-  you pushed all six to private `origin`, so
-  `origin/beryllium/k3-b7-bringup` is at `f6fc6c7`. Development branch
-  `beryllium/single-hart-runtime-r0`, fast-forwarded by `PMR-134` to
-  `80ef261`, is 0 behind / 0 ahead of `origin` after the same push. History: on 2026-10-06T16:03Z it was observed clean on
+  `PMR-090` return `56e36ae` over work `65df753` (2026-10-16). The
+  `PMR-090` owner session pushed both to private `origin`, with the
+  development branch now at the same commit and 0 behind / 0 ahead, on
+  your form answer `fast_forward=ff-push`. Before that, `PMR-134` return
+  `f6fc6c7` over work `e42c6c6` (2026-10-13), `PMR-133` return `80ef261` /
+  work `f0e24f1`, and `PMR-127` return `69bf8f8` / work `da65b80` reached
+  private `origin` under your exact `"push the beryllium backup"`
+  (2026-10-13). History: on 2026-10-06T16:03Z it was observed clean on
   `beryllium/k3-b3-bringup` at `afa4336`, behind 0 / ahead 1 of last-fetched
   `origin/beryllium/k3-b3-bringup` `6358ed2`, with a human session the
   responsible human then reported active; `afa4336` was then on no
@@ -1115,16 +1093,17 @@ The relevant local component commits are:
   last fetch, which is not a live remote check, those six commits and
   `f213555` are contained in remote-tracking
   `origin/beryllium/k3-b0-bringup` through `k3-b3-bringup`; that grants no
-  push, publication, or gate. No push path is authorized. Local candidate
-  `beryllium/r8-h0-pmr-080` is `6e93461` and local branch
-  `beryllium/r8-c-h0-pmr-081-v3` ends at `0d53120`, both on no
-  remote-tracking branch and unbacked. The component handoff separately
+  push, publication, or gate. No push path is authorized. Retired candidate
+  `beryllium/r8-h0-pmr-080` at `6e93461` stays local and unpushed by your
+  decision (closed `PMR-090`), and `beryllium/r8-c-h0-pmr-081-v3` at
+  `0d53120` is in private `origin` since the 2026-10-16 backup. The
+  component handoff separately
   states local
   doc-repro branch `beryllium/doc-repro-option-a-20260929` is unpushed and
   not integrated, archive ref `archive/generated-docs-2026-09-30` points to
   `d4c5ff0`, and K0-S target `c6570558` is Beryllium-ref-contained. Source
   target `c1c7e254` is absent from Beryllium and remains owner-stated sibling
-  containment evidence. PMR-090 retains unresolved publication/ref review.
+  containment evidence. PMR-090 is closed (2026-10-16).
   PMR-099 is
   closed at exact K0-A plan acceptance only. Generic helper delivery remains
   excluded; PMR-105's single-use topic fast-forward is complete and consumed;
