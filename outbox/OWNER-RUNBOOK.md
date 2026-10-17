@@ -48,6 +48,26 @@ writes no log, so its `check` and `install` results reach the Project
 Manager only through your report, which the Project Manager records as
 unverified responsible-human evidence.
 
+## P2 Beryllium S1 synthesis review (no PMR)
+
+Beryllium's instructions at `2256101c` propose the S1 Helium-to-Beryllium
+synthesis, `planning/he-to-be-synthesis.md`, for your review at exact
+commit `0fbca0fd` on local branch `beryllium/s1-synthesis`, with the review
+summary `planning/he-to-be-synthesis-review-summary.md`; it is not
+accepted. Continue in your Beryllium session if it is still open;
+otherwise start one, then run `/model` and confirm `claude-opus-5.5` /
+`max` / `long_context`:
+
+```sh
+cd /home/jmorris/src/beryllium-project/beryllium-hypervisor
+copilot
+```
+
+Decide under Beryllium's own review rules, as its review summary sets out.
+The branch is local-only, so backing it up needs your direction in that
+session. The Project Manager writes nothing in Beryllium, and no Project
+Manager gate follows from your component-side decision.
+
 ## P3 Beryllium B-stage reconciliation (no PMR)
 
 The component's committed instructions now record responsible-human
@@ -55,10 +75,14 @@ acceptance of B0-B7 on the component side, while K3 hardware is `NOT RUN`
 in Project Manager records. The same instructions record that you dropped
 the KVM0 workstream and R8 stages H1-H4 on 2026-10-08 (owner-recorded
 `r8=drop`; a new accepted plan may recreate either), while Project Manager
-records keep K0-X/K0-R blocked and H1-H4 not authorized. It is reconciled
+records keep K0-X/K0-R blocked and H1-H4 not authorized. On 2026-10-16
+the instructions (at `2256101c`) also record a component-side S1
+authorization (owner-recorded instruction `authorize S1, proceed`) and
+propose the S1 synthesis for your review at `0fbca0fd`, not accepted. This
+question is reconciled
 only from a named responsible-human record: tell the Project Manager which
-component-side acceptances and drops its records should carry. No gate
-follows from this runbook.
+component-side acceptances, authorizations, and drops its records should
+carry. No gate follows from this runbook.
 
 ## P3 Beryllium session-state worktrees (no PMR)
 
@@ -780,7 +804,11 @@ then-active `gh` account, so nothing was pushed. Under your exact
 fast-forwards, through the repo-local credential helper you added on `l1`
 (`HANDOFF.md`, "Remote access"); on 2026-10-16 the 125th turn verified with
 live `ls-remote` that each remote holds only `main` at those tips, with no
-tag, 0 behind / 0 ahead, and that confirmation is consumed. Later commits
+tag, 0 behind / 0 ahead, and that confirmation is consumed. Under your
+exact `"push all"` (2026-10-16T23:37Z), the 126th turn pushes Project
+Manager `main` from `e5b18ae` through its record commit (publishing it)
+and parent `main` from `1ca8869` through its registry commit as
+fast-forwards; the next turn records verification, and later commits
 stay local until a new same-turn confirmation. Under your exact `push_both`, the
 114th turn pushed Project Manager `98a916c..918efe7` and parent
 `b4cb8e4..b7ba4a4` as fast-forwards; on 2026-10-12 the 115th turn verified
@@ -1034,7 +1062,9 @@ responsible-human confirmation.** The coordination backup is complete and
 verified through Project Manager `e5b18ae` and parent `1ca8869`: the 124th
 turn pushed them under your exact `"push all"` (2026-10-14), and live
 `ls-remote` on 2026-10-16 shows each remote holding only `main` at those
-commits, with no tag. Later commits stay local until a new same-turn
+commits, with no tag. The 126th turn pushes the 125th- and 126th-turn
+commits under your exact `"push all"` (2026-10-16T23:37Z), and the next
+turn records verification; later commits stay local until a new same-turn
 confirmation. `beryllium-project/project-manager` stays public by your
 decision, so any later `push_pm` publishes the Project Manager commits it
 pushes. `threat-modeler` and `security-reviewer` also stay public
@@ -1068,7 +1098,11 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` is clean on `beryllium/k3-b7-bringup` at
+- `beryllium-hypervisor/` is clean on new local branch
+  `beryllium/s1-synthesis` at `2256101` (2026-10-16T23:38Z), over S1
+  proposal `0fbca0f`; both are local-only with no upstream, and backing
+  them up needs your direction in a Beryllium session. Earlier that day it
+  was clean on `beryllium/k3-b7-bringup` at
   `PMR-090` return `56e36ae` over work `65df753` (2026-10-16). The
   `PMR-090` owner session pushed both to private `origin`, with the
   development branch now at the same commit and 0 behind / 0 ahead, on

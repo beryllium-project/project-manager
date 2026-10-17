@@ -20,7 +20,13 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
-  done. Maintained inspection at 2026-10-16T22:46Z observes clean
+  done. Maintained inspection at 2026-10-16T23:38Z observes clean new
+  local branch `beryllium/s1-synthesis` checked out at `2256101c`
+  ("docs: present the S1 synthesis for review"), with no upstream, over S1
+  proposal `0fbca0fd` ("planning: propose the S1 Helium-to-Beryllium
+  synthesis"); both commits are on that branch only, on no remote-tracking
+  ref, and the branch contains `56e36ae1`. No owner-session writer lock is
+  held, but a Beryllium S1 session may still be active. Earlier that day, maintained inspection at 22:46Z observed clean
   `beryllium/k3-b7-bringup` at `PMR-090` owner return
   `56e36ae11e47bb08416a44c5647aecd304fd4902` ("docs: record the PMR-090
   owner return"), over work `65df753a` ("docs: refresh status after the
@@ -29,11 +35,14 @@
   commit, 0 behind / 0 ahead of `origin`, and remote-tracking
   `origin/beryllium/k3-b7-bringup` is at `56e36ae1` too, after the owner
   session's 2026-10-16 fast-forward and push on owner-recorded
-  responsible-human form answers. The owner records that S1
-  (Helium-to-Beryllium synthesis) has not started and that the responsible
-  human will start it in a separate session (stated 2026-10-16); its
-  instructions list S1 as not authorized, needing its own accepted plan or
-  decision. Earlier, maintained inspection at
+  responsible-human form answers. The instructions at `2256101c` record
+  that the owner-recorded instruction `authorize S1, proceed` (2026-10-16)
+  authorized S1 (Helium-to-Beryllium synthesis), and that
+  `planning/he-to-be-synthesis.md` is proposed for review at exact commit
+  `0fbca0fd`, with review summary
+  `planning/he-to-be-synthesis-review-summary.md`, and is not accepted; S2
+  and S3 are not authorized. These are component-side records, not Project
+  Manager gates. Earlier, maintained inspection at
   2026-10-13T18:27Z, rechecked after the backup push at 21:09Z, observed clean
   `beryllium/k3-b7-bringup` at `PMR-134` owner return
   `f6fc6c7ecd8309b7e361455b8373c287decceca5` ("docs: record the PMR-134
@@ -54,7 +63,7 @@
   session moved and pushed it to `56e36ae1`. `PMR-127` is closed: the owner handoff names the `l1` checkout,
   seven linked-worktree registrations are repaired, and five under a former
   Copilot session-state directory are retained unrepaired and still
-  prunable. `PMR-133` is closed: on this branch and, since `PMR-134`, on
+  prunable. `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
   the development branch, `## Project Manager tasking` is again the first
   level-two section, and the owner reports `--tasking-contract` passing;
   the owner reports that the other 21 local branches that contain
@@ -210,9 +219,9 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 
 ## Commands
 
-Run these from development branch `beryllium/single-hart-runtime-r0` (on
-2026-10-16 the checkout was observed on `beryllium/k3-b7-bringup` at the
-same commit; see **Observed state** above).
+Run these from development branch `beryllium/single-hart-runtime-r0` (at
+2026-10-16T23:38Z the checkout was observed on local
+`beryllium/s1-synthesis`; see **Observed state** above).
 
 ```sh
 npm ci
