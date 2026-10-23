@@ -65,8 +65,27 @@
   approval. `owner-actions.sh --only push_awb` now pushes `main` to the
   private `origin`. The noncanonical `lx2` copy's `origin` still names the
   existing repository; the human reported its push URL disabled.
-- **Observed state:** on 2026-10-13, after the human-run `PMR-132` backup,
-  maintained inspection observes clean `analysis/k3-a100-service-design-private`
+- **Observed state:** on `lx2` at 2026-10-23T03:15Z (`PMD-20261023-001`),
+  maintained inspection observes clean new local branch
+  `analysis/dasics-cheri-fallback-private` checked out at `10c777a6`
+  ("docs: record DASICS session handoff"), with no upstream, over
+  `c0d5fb77` ("analysis: assess DASICS as CHERI fallback input vs
+  MicroGuards"), branched from `5db4f2c`; both commits are local-only. The
+  handoff records direct-human session `AWB-20261021-001` (2026-10-21), not
+  a Project Manager-mediated owner task: DASICS assessed against
+  MicroGuards as an input to the CHERI-preferred Beryllium hypervisor, Q-001
+  complete at Medium confidence with 109 evidence records, package
+  `private` with intended `public-candidate`, and `PMQ-037..048` queued.
+  It leaves the branch disposition (keep local, or push to private
+  `origin`) to the responsible human. The Project Manager ledgers the
+  twelve rows `pending` as `PML-0038..0049`: routing waits for that
+  disposition and, for the eleven rows suggesting `cheri-riscv-notes`, for
+  resolution of that checkout. While the rows exist only on this branch,
+  `pull-queues.sh check` fails if the workbook checks out a tree without
+  them. `analysis/k3-a100-service-design-private` stays at `5db4f2c` and
+  `main` at `4cf44d0`, each 0 behind / 0 ahead of `origin`. Earlier, on
+  2026-10-13, after the human-run `PMR-132` backup,
+  maintained inspection observed clean `analysis/k3-a100-service-design-private`
   at return checkpoint `5db4f2c0d353ea74cc5ea5f84e033a46178f1770`, 0 behind /
   0 ahead of `origin/analysis/k3-a100-service-design-private`.
   The four commits that backup pushed are PMR-124 work `a301348`, PMR-126

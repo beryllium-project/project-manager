@@ -31,8 +31,11 @@
   single-model SOP) supersedes that Codex pairing as project policy: the
   aligned hook source fills `claude-opus-5.5` / `max` / `long_context` for
   every agent type. The responsible human reported the user-level install
-  on `l1` done on 2026-10-13 (not independently verified); sessions started
-  before it still pass that triple explicitly, which is harmless anywhere. Open P3
+  on `l1` done on 2026-10-13 (not independently verified); on `lx2` the
+  2026-10-01 install is stale and denies task launches in the workspace
+  until the responsible human reinstalls (`PMD-20261023-001`). Sessions
+  started before a passing install still pass that triple explicitly,
+  which is harmless anywhere. Open P3
   `PMR-123` asks the owner to repin all four profiles to `claude-opus-5.5` /
   `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`
   floor, and `claude-fable-5.1` allowance wording, and record that a

@@ -4,7 +4,7 @@
 - **Created:** 2026-10-10
 - **Status:** recorded
 - **Supersedes:** `PMD-20260929-003` (temporary-workstation status only)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261023-001` (workstation status only)
 
 ## Scope
 

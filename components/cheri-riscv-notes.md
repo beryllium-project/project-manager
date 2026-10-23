@@ -18,7 +18,23 @@
   `.github/copilot-instructions.md` and maintained
   `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** clean `docs/reconcile-project-status` at PMR-119 carry
+- **Observed state:** **unresolved on `lx2`** (`PMD-20261023-001`). On
+  2026-10-23T03:15Z the symlink target holds only `main` at
+  `888f658a9d3c428543d3306ce3eae9de0742562b`, clean and 0 behind / 0 ahead
+  of its only remote-tracking ref `origin/main`. Its working-tree files are
+  dated 2026-10-21 and `meta/handoff.md` reads "As of: 2026-10-20". It has
+  no `.github/copilot-instructions.md`, no
+  `automation/validate-project-tasking.mjs`, and no Project Manager tasking
+  startup, and its `meta/decisions.md` records D5 licensing (CC BY 4.0 for
+  prose, MIT for code) as adopted, component-side. Maintained ref checks
+  find none of the recorded commits below (`6553092`, `7f67154`,
+  `34a8b50`, `8d1bc9d`, `7fb49f4`, `41e4125`, `4deec95`, `ae09213`,
+  `9a4c5ef`, `cd7dc81`). The responsible human answered `unresolved` and
+  keeps the `l1` copy untouched; it is the only known location of the
+  three unpushed commits. Until a named decision resolves the checkout, the
+  Project Manager makes no carry here and relies on nothing in the `lx2`
+  checkout. The last recorded state, on `l1`, follows: clean
+  `docs/reconcile-project-status` at PMR-119 carry
   `7f671548a18bc426133b5b2102fa83a70cb3f9bc`, 0 behind / 3 ahead of the
   last-fetched private `origin/docs/reconcile-project-status` `34a8b50`;
   `main` /

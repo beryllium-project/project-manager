@@ -20,28 +20,58 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
-  done. Maintained inspection at 2026-10-16T23:38Z observes clean new
-  local branch `beryllium/s1-synthesis` checked out at `2256101c`
-  ("docs: present the S1 synthesis for review"), with no upstream, over S1
-  proposal `0fbca0fd` ("planning: propose the S1 Helium-to-Beryllium
-  synthesis"); both commits are on that branch only, on no remote-tracking
-  ref, and the branch contains `56e36ae1`. No owner-session writer lock is
-  held, but a Beryllium S1 session may still be active. Earlier that day, maintained inspection at 22:46Z observed clean
-  `beryllium/k3-b7-bringup` at `PMR-090` owner return
+  done. Maintained inspection on `lx2` at 2026-10-23T03:15Z, after the
+  relocation recorded by `PMD-20261023-001`, observes clean local branch
+  `beryllium/s3-mvp-plan` checked out at `882868b9` ("docs: present the S3
+  MVP plan for review and record the development-branch push"), with no
+  upstream, over S3 proposal `06c35f48` ("planning: propose the S3 MVP
+  plan"); both are on that branch only. Development branch
+  `beryllium/single-hart-runtime-r0` is at `0096de3e` ("docs: record
+  acceptance of security model v1"), 0 behind / 0 ahead of last-fetched
+  `origin`, which therefore also holds S1 revision `fd670dcd`, RP-2
+  `95ef0f6c`, RP-3 `1ac7080f`, their acceptance record `0eb37570`, the S2
+  plan `5ce7827f`, and security model v1 `0e3eec8b`. Local
+  `beryllium/s1-synthesis` (`fd670dcd`), `beryllium/project-review-20261017`
+  (`0eb37570`), and `beryllium/s2-security-model` (`0096de3e`) have no
+  upstream. No owner-session writer lock is held. The instructions at
+  `882868b9` record, component-side:
+  - S1 accepted as of 2026-10-18 at `fd670dcd` (owner-recorded `I accept
+    RP-1 RP-2 RP-3`), superseding first draft `0fbca0fd`; its row H59
+    adopts a central declarative Type Enforcement-family policy as the
+    specification and selects no runtime mechanism;
+  - the 2026-10-17 project review `planning/project-review-2026-10-17.md`
+    accepted at `480dab72` with revision plan
+    `planning/s1-te-trigger-revision-plan.md` at `07541c59`
+    (`approve 480d 07541`);
+  - the S2 plan `planning/s2-security-model-plan.md` accepted at
+    `5ce7827f` (2026-10-19, `accept 5ce782`), and
+    `planning/security-model-v1.md` accepted at `0e3eec8b` (2026-10-22,
+    `accept 0e3eec8b`), with no code, `model/`, or accepted-byte change;
+  - the development branch fast-forwarded and pushed to `0eb37570`
+    (2026-10-18, `fast-forward dev to 0eb37570 and push`) and to
+    `0096de3e` (2026-10-22, `merge & push, start S3`), which also directed
+    S3;
+  - `planning/mvp-plan.md` proposed at `06c35f48`, with packet
+    `planning/mvp-plan-review-summary.md`, not accepted; its acceptance
+    would authorize only M0's bounded plan, and no MVP milestone is
+    authorized; and
+  - one 2026-10-18 session run on `claude-fable-5.1` by the responsible
+    human's direction (`override pinning and use fable 5.1 for everything,
+    re-run the research agents, apply changes if any`), with the governance
+    hook's required model edited for that run and restored afterwards; the
+    owner states its model pin is unchanged.
+  These are component-side records, not Project Manager gates or SOP
+  changes; the workstation each session used is not stated. Earlier,
+  maintained inspection at 2026-10-16T23:38Z observed clean new local
+  branch `beryllium/s1-synthesis` at `2256101c` over first S1 draft
+  `0fbca0fd`, with the instruction `authorize S1, proceed` recorded, and
+  at 22:46Z clean `beryllium/k3-b7-bringup` at `PMR-090` owner return
   `56e36ae11e47bb08416a44c5647aecd304fd4902` ("docs: record the PMR-090
   owner return"), over work `65df753a` ("docs: refresh status after the
-  backup push; retire PMR-090 candidate"), with no upstream configured.
-  Development branch `beryllium/single-hart-runtime-r0` is at the same
-  commit, 0 behind / 0 ahead of `origin`, and remote-tracking
-  `origin/beryllium/k3-b7-bringup` is at `56e36ae1` too, after the owner
-  session's 2026-10-16 fast-forward and push on owner-recorded
-  responsible-human form answers. The instructions at `2256101c` record
-  that the owner-recorded instruction `authorize S1, proceed` (2026-10-16)
-  authorized S1 (Helium-to-Beryllium synthesis), and that
-  `planning/he-to-be-synthesis.md` is proposed for review at exact commit
-  `0fbca0fd`, with review summary
-  `planning/he-to-be-synthesis-review-summary.md`, and is not accepted; S2
-  and S3 are not authorized. These are component-side records, not Project
+  backup push; retire PMR-090 candidate"), with the development branch and
+  remote-tracking `origin/beryllium/k3-b7-bringup` at the same commit after
+  the owner session's 2026-10-16 fast-forward and push on owner-recorded
+  responsible-human form answers. These are component-side records, not Project
   Manager gates. Earlier, maintained inspection at
   2026-10-13T18:27Z, rechecked after the backup push at 21:09Z, observed clean
   `beryllium/k3-b7-bringup` at `PMR-134` owner return
@@ -220,8 +250,8 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 ## Commands
 
 Run these from development branch `beryllium/single-hart-runtime-r0` (at
-2026-10-16T23:38Z the checkout was observed on local
-`beryllium/s1-synthesis`; see **Observed state** above).
+2026-10-23T03:15Z the checkout was observed on local
+`beryllium/s3-mvp-plan`; see **Observed state** above).
 
 ```sh
 npm ci
@@ -323,13 +353,15 @@ New-session restart launch path name the registered `l1` checkout, with
 directly related validator path changes. Seven linked-worktree
 registrations are repaired. Five under a former Copilot session-state
 directory are retained unrepaired, unpruned, and unlocked; that directory
-is absent on `l1`, and whether it still exists on `lx2` is uninspected. The
-owner's worktree list puts one of them, `source-first-corrected-validation`,
-at `66eaa7f7`, which no branch contains. The owner reports that default
-`git gc` may prune them from about 2026-12-28. The responsible human chooses
-whether to have the owner lock them or let them go; copying the directory
-from `lx2` to `l1` would first need a new named responsible-human decision,
-because `PMD-20261011-001` and `PMD-20261010-001` forbid it.
+was absent on `l1`. On `lx2` (2026-10-23 `quiescence`) the five
+directories exist, so Git does not report them prunable there, but
+`git status` fails in each because its link names the former `lx2` root;
+an owner-run `git worktree repair` could reconnect them. The owner's
+worktree list puts one of them, `source-first-corrected-validation`, at
+`66eaa7f7`, which no branch contains. The owner reported that, on `l1`,
+default `git gc` could prune them from about 2026-12-28. Whether to have
+the owner repair, lock, or release them is the responsible human's choice
+(`PMD-20261023-001`); no request is allocated.
 `PMR-133` is closed from owner work `f0e24f1f` and return `80ef261e`
 (2026-10-12). On `beryllium/k3-b7-bringup`, `## Project Manager tasking`
 is again the first level-two section of `.github/copilot-instructions.md`,

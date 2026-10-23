@@ -2,8 +2,9 @@
 
 **Maintained by:** `project-manager`
 **Contract:** `records/decisions/PMD-20261011-001-workspace-rehydration-contract.md`
-**Last reviewed:** 2026-10-12 on the usual `l1` workstation (inventory and
-commands reviewed; no clone or install was run to test them)
+**Last reviewed:** 2026-10-23 on `lx2`, after the relocation recorded by
+`PMD-20261023-001` (inventory unchanged; the Project Manager ran no clone or
+install)
 
 Git is the only transfer mechanism for Beryllium coordination state. Rebuild
 a workstation from the repositories below plus the per-workstation steps in
@@ -28,7 +29,7 @@ branches, ahead/behind counts, and the exact workspace root are in
 
 The parent's `main` tracks the canonical repository as remote `upstream`,
 which `scripts/owner-actions.sh --only push_pm` expects. The personal fork
-`jamorris_microsoft/beryllium-project`, kept as `origin` on `l1`, is not
+`jamorris_microsoft/beryllium-project`, kept as `origin` in the existing checkout, is not
 needed. The parent repository is not public; `beryllium-project/project-manager`
 is public by the responsible human's decision (`PMD-20261012-001`).
 
@@ -158,13 +159,13 @@ Then start Copilot in `project-manager/` and select `/agent project-manager`.
 | State | Location | How it is restored |
 | --- | --- | --- |
 | Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips but not visibility (`beryllium-project/project-manager` stays public by the responsible human's decision, `PMD-20261012-001`, so that step publishes; default runs include it and the public `push_tm` and `push_sr`, and `--skip push_pm,push_tm,push_sr` omits all three), and components under their owners' rules and a human push decision (pushes to the public `threat-modeler`, `security-reviewer`, and `provenance-review` publish; `PMD-20261012-002`). |
-| Retained Project Manager artifacts | `../files/` (ignored by the parent) | Restore from a backup if the responsible human keeps one (none is recorded in Project Manager records), and locate candidates with the human-run `bash ./scripts/owner-actions.sh --only files_search --files-search --files-root <dir>`. `PMD-20260906-002` and `PMD-20260912-002` hold the inventory; `PMD-20260916-004` records the selection. |
-| Linked worktrees | `../worktrees/` and owner-chosen paths | Component-owned; the owner recreates them with `git worktree add`. Closed `PMR-127` repaired Beryllium's seven `l1` registrations; five under a former session-state directory stay unrepaired (see `../COMPONENTS.md`). |
+| Retained Project Manager artifacts | `../files/` (ignored by the parent) | Restore from a backup if the responsible human keeps one (none is recorded in Project Manager records), and locate candidates with the human-run `bash ./scripts/owner-actions.sh --only files_search --files-search --files-root <dir>`. `PMD-20260906-002` and `PMD-20260912-002` hold the inventory; `PMD-20260916-004` records the selection. On `lx2` the copied `../files` link dangles; the artifacts are known only on `l1` (`PMD-20261023-001`). |
+| Linked worktrees | `../worktrees/` and owner-chosen paths | Component-owned; the owner recreates them with `git worktree add`. Closed `PMR-127` repaired Beryllium's seven registrations at the current root path; five under a former session-state directory stay unrepaired (see `../COMPONENTS.md`). |
 | Component-ignored data | For example analysis-workbook quarantine copies and XRV `review-inbox/` PDFs | Owner-managed under each component's rules. |
 | OS-security restricted sources | Private `os-security-restricted-sources` | Manual responsible-human handling only; agents never access or copy them. |
 | User-level Copilot state | `~/.copilot` (settings, hooks, sub-agent defaults, session state) | Section 4; never copied between hosts. |
 | Generated and transient Project Manager files | `outbox/tasking/`, `scratch/`, `inbox/` | Tasking is regenerated in section 5; scratch logs and inbox drops are transient. |
-| Credentials | `gh` and Git credential stores; repo-local Git configuration | Re-authenticate; never stored in a repository. On `l1` the parent and Project Manager checkouts also carry an optional repo-local `credential.https://github.com.helper`: an empty entry that resets the inherited helpers, then a shell helper that answers `get` with the required account's `gh auth token`, selected by account name, and stores no token. It keeps their pushes on that account whichever `gh` account another session made active. A fresh clone lacks it; re-create it by hand when needed, and remove it with `git config --local --unset-all credential.https://github.com.helper` (`HANDOFF.md`, "Remote access"). |
+| Credentials | `gh` and Git credential stores; repo-local Git configuration | Re-authenticate; never stored in a repository. The parent and Project Manager checkouts on `l1`, and their copies on `lx2`, also carry an optional repo-local `credential.https://github.com.helper`: an empty entry that resets the inherited helpers, then a shell helper that answers `get` with the required account's `gh auth token`, selected by account name, and stores no token. It keeps their pushes on that account whichever `gh` account another session made active. A fresh clone lacks it; re-create it by hand when needed, and remove it with `git config --local --unset-all credential.https://github.com.helper` (`HANDOFF.md`, "Remote access"). |
 
 ## Keep current
 
