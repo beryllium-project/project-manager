@@ -63,8 +63,9 @@
   `private`, and `AWB-20260829-001`, `AWB-20260915-001`, and
   `AWB-20260928-001` intend `public-candidate`, which is not publication
   approval. `owner-actions.sh --only push_awb` now pushes `main` to the
-  private `origin`. The noncanonical `lx2` copy's `origin` still names the
-  existing repository; the human reported its push URL disabled.
+  private `origin`. On `lx2` this checkout's `origin` is the private
+  `beryllium-project/analysis-workbook-private`; the former `lx2` copy
+  under `~/src/l1/src` is absent.
 - **Observed state:** on `lx2` at 2026-10-23T03:15Z (`PMD-20261023-001`),
   maintained inspection observes clean new local branch
   `analysis/dasics-cheri-fallback-private` checked out at `10c777a6`

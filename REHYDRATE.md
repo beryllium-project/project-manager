@@ -4,7 +4,8 @@
 **Contract:** `records/decisions/PMD-20261011-001-workspace-rehydration-contract.md`
 **Last reviewed:** 2026-10-23 on `lx2`, after the relocation recorded by
 `PMD-20261023-001` (inventory unchanged; the Project Manager ran no clone or
-install)
+install; the responsible human completed section 4 there through a logged
+run whose `check` passed every line)
 
 Git is the only transfer mechanism for Beryllium coordination state. Rebuild
 a workstation from the repositories below plus the per-workstation steps in

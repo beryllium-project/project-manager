@@ -178,8 +178,12 @@ stated exactly `"there is no other running session"` as point-in-time
 evidence only. Recheck immediately before execution; PMR-108 actions still
 require fresh same-turn confirmation.
 The responsible human later reported the exact governance `install && check`
-command completed on `lx2` (`"done above"`). This is human evidence only; the
-Project Manager did not inspect real user configuration or establish
+command completed on `lx2` (`"done above"`, 2026-10-01, at the earlier
+`lx2` location). That install was stale after the 2026-10-23 relocation and
+was replaced by a logged install whose `check` passed every line
+(`PMD-20261023-001`; `HANDOFF.md` records the current status). The
+Project Manager reads such logs but did not run either mode against real
+user configuration or establish
 install-time session state. User-level hook state is per workstation
 (`PMD-20261011-001`): the human-run `check` reports it, `install` renders it
 from this repository, and `HANDOFF.md` records the current status;

@@ -55,11 +55,13 @@
     `planning/mvp-plan-review-summary.md`, not accepted; its acceptance
     would authorize only M0's bounded plan, and no MVP milestone is
     authorized; and
-  - one 2026-10-18 session run on `claude-fable-5.1` by the responsible
-    human's direction (`override pinning and use fable 5.1 for everything,
-    re-run the research agents, apply changes if any`), with the governance
-    hook's required model edited for that run and restored afterwards; the
-    owner states its model pin is unchanged.
+  - one session run on `claude-fable-5.1` by the responsible human's
+    choice, whose research agents the hook first kept on
+    `claude-opus-5.5`; on 2026-10-18 the human directed `override pinning
+    and use fable 5.1 for everything, re-run the research agents, apply
+    changes if any` for that session only, and the hook's required model
+    was edited for that run and restored afterwards. The owner states its
+    model pin is unchanged and does not state the session's span.
   These are component-side records, not Project Manager gates or SOP
   changes; the workstation each session used is not stated. Earlier,
   maintained inspection at 2026-10-16T23:38Z observed clean new local
@@ -92,8 +94,9 @@
   0 behind / 0 ahead of `origin`, and on 2026-10-16 the `PMR-090` owner
   session moved and pushed it to `56e36ae1`. `PMR-127` is closed: the owner handoff names the `l1` checkout,
   seven linked-worktree registrations are repaired, and five under a former
-  Copilot session-state directory are retained unrepaired and still
-  prunable. `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
+  Copilot session-state directory are retained unrepaired; they were
+  prunable on `l1` and are not prunable on `lx2`, where their directories
+  exist. `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
   the development branch, `## Project Manager tasking` is again the first
   level-two section, and the owner reports `--tasking-contract` passing;
   the owner reports that the other 21 local branches that contain

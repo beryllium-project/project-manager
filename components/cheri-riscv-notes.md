@@ -14,9 +14,10 @@
 - **Agent:** none
 - **Local instructions to read first:** `README.md`, `CONTRIBUTING.md`,
   `meta/handoff.md` (non-standard handoff path), `automation/design.md`,
-  `automation/schema.md`, and the `.github/` policy files. PMR-071 adds
+  `automation/schema.md`, and the `.github/` policy files. PMR-071 added
   `.github/copilot-instructions.md` and maintained
-  `automation/validate-project-tasking.mjs`; `CONTRIBUTING.md`,
+  `automation/validate-project-tasking.mjs` (last recorded on `l1`; both
+  are absent from the `lx2` checkout); `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
 - **Observed state:** **unresolved on `lx2`** (`PMD-20261023-001`). On
   2026-10-23T03:15Z the symlink target holds only `main` at
@@ -29,16 +30,30 @@
   prose, MIT for code) as adopted, component-side. Maintained ref checks
   find none of the recorded commits below (`6553092`, `7f67154`,
   `34a8b50`, `8d1bc9d`, `7fb49f4`, `41e4125`, `4deec95`, `ae09213`,
-  `9a4c5ef`, `cd7dc81`). The responsible human answered `unresolved` and
-  keeps the `l1` copy untouched; it is the only known location of the
-  three unpushed commits. Until a named decision resolves the checkout, the
+  `9a4c5ef`, `cd7dc81`). The 128th-turn audit found, and the Project
+  Manager confirmed by reading the checkout's Git metadata, that it is the
+  same registered repository: its only remote, `origin`, is
+  `agentic-os-research/cheri-riscv-notes`; `ORIG_HEAD` is the recorded
+  `main` `6553092`; `FETCH_HEAD` is `34a8b50` from that remote's
+  `docs/reconcile-project-status`; and `packed-refs` holds only `main` and
+  `origin/main` at `888f658`. Its earlier history was replaced and pruned,
+  and when it last fetched or pushed, the remote's `main` was `888f658`;
+  file and metadata times place the replacement on 2026-10-21 between
+  06:25:09Z (the workbook's DASICS session record still saw `7f67154`) and
+  08:06:13Z (`packed-refs`), with no fetch since 2026-09-29. The Project
+  Manager infers no cause, and the remote's current contents
+  are unknown. The responsible human answered `unresolved` and keeps the
+  `l1` copy untouched; it is the only known location of the three unpushed
+  commits, and whether it still holds them is unknown. The human-run
+  read-only check is in `../outbox/OWNER-RUNBOOK.md` "P1 CHERI-RISC-V notes
+  history check". Until a named decision resolves the checkout, the
   Project Manager makes no carry here and relies on nothing in the `lx2`
   checkout. The last recorded state, on `l1`, follows: clean
   `docs/reconcile-project-status` at PMR-119 carry
   `7f671548a18bc426133b5b2102fa83a70cb3f9bc`, 0 behind / 3 ahead of the
   last-fetched private `origin/docs/reconcile-project-status` `34a8b50`;
   `main` /
-  `origin/main` remain `6553092`. Owner work `41e4125` integrates exactly the
+  `origin/main` were then `6553092`. Owner work `41e4125` integrates exactly the
   thirteen D4-approved content paths; return `4deec95` changes only
   `meta/handoff.md`. Maintained validation passed, no remote operation
   occurred, and the recovery wrapper exited 0 with clean post-status and
@@ -54,14 +69,15 @@
   it is also local and unpushed.
   The Project Manager verified both commit objects and the return parent
   through maintained inspection, and observed the branch clean with no owner
-  writer lock at the latest check.
+  writer lock at the last `l1` check.
   `PMR-009`, `PMR-051`, `PMR-071`,
   `PMR-101`, `PMR-103`, `PMR-104`, `PMR-106`, `PMR-114`, and `PMR-119`
   remain closed; PMR-102 is
-  superseded; `PMR-093` and `PMR-096` are withdrawn. Inactive
-  `gim-inactive` preserves the old internal home, and private
-  `origin/archive/gim-wiki` preserves complete Wiki history through
-  `cd7dc81`. `PMD-20260928-001` selects a dedicated human-run
+  superseded; `PMR-093` and `PMR-096` are withdrawn. As last recorded on
+  `l1`, inactive `gim-inactive` preserved the old internal home, and private
+  `origin/archive/gim-wiki` preserved complete Wiki history through
+  `cd7dc81`; the `lx2` checkout has neither, and the remote's current
+  contents are unknown. `PMD-20260928-001` selects a dedicated human-run
   `outbox/pmr105-push.sh`: corrected preflight and execution verified active
   account `xjamesmorris`, private target, `ADMIN`, writer lock, exact
   `9a4c5ef -> 34a8b50`, three heads, zero tags, other-ref preservation, and
@@ -89,6 +105,10 @@ one-to-one with it.
   public-mirror checklist before any public distribution.
 
 ## Commands (run by the human, from the repository root)
+
+Last recorded on `l1`; the `lx2` checkout lacks
+`automation/validate-project-tasking.mjs`, so its second command fails
+there until the checkout is resolved (`PMD-20261023-001`).
 
 ```sh
 node --check automation/*.mjs
@@ -129,7 +149,8 @@ completed exactly that proposal revision and returned fingerprint
 responsible-human D4 `approve_exact` for that exact set. PMR-104 completed:
 work `41e4125` commits exactly those thirteen paths and return `4deec95`
 records successful validation and a released reservation. The clean topic
-branch is privately backed up through `34a8b50`; PMR-106 refreshes only the
+branch was privately backed up through `34a8b50` (last recorded; the
+remote's current contents are unknown); PMR-106 refreshes only the
 handoff at that same tip. PMR-105 is closed and its authorization consumed.
 Do not rerun its script, merge to `main`, publish, enable Pages, or infer a
 new source or D5 disposition.

@@ -31,11 +31,13 @@
   single-model SOP) supersedes that Codex pairing as project policy: the
   aligned hook source fills `claude-opus-5.5` / `max` / `long_context` for
   every agent type. The responsible human reported the user-level install
-  on `l1` done on 2026-10-13 (not independently verified); on `lx2` the
-  2026-10-01 install is stale and denies task launches in the workspace
-  until the responsible human reinstalls (`PMD-20261023-001`). Sessions
-  started before a passing install still pass that triple explicitly,
-  which is harmless anywhere. Open P3
+  on `l1` done on 2026-10-13 (not independently verified). On `lx2` the
+  stale 2026-10-01 install was replaced on 2026-10-23: the log of the
+  human-run `scratch/lx2-setup.sh` records `install` and `check` passing
+  at 05:38:54Z (`PMD-20261023-001`). Restart any session started before
+  that install, because the hook denied its task launches whatever
+  arguments were passed; passing that triple explicitly remains harmless.
+  Open P3
   `PMR-123` asks the owner to repin all four profiles to `claude-opus-5.5` /
   `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`
   floor, and `claude-fable-5.1` allowance wording, and record that a
@@ -82,8 +84,9 @@
   silent fallback. Under `PMD-20261006-001` the aligned hook source instead
   fills `claude-opus-5.5` / `max` / `long_context` for every agent type;
   the responsible human reported the user-level install on `l1` done on
-  2026-10-13 (not independently verified), and sessions started before it
-  still pass that triple explicitly. PMR-109 closes the component policy exception found by the
+  2026-10-13 (not independently verified), and the logged `lx2` install of
+  2026-10-23 passed `check`; a session started before its workstation's
+  install must be restarted. PMR-109 closes the component policy exception found by the
   `PMD-20260930-001` discovery and conflict audit; PMR-110 applies the named
   Codex capability exception to all four profiles, including the direct
   orchestrator. Their closure grants no engagement, acceptance, review
