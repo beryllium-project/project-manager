@@ -1,24 +1,32 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-10-23
-**Update scope:** one-hundred-twenty-eighth coordination turn. You said
-exactly `"run deferred audit"` at 2026-10-23T05:39:12Z (01:39 at UTC-4).
-The log of your human-run `scratch/lx2-setup.sh`,
-`scratch/lx2-setup-20261023T053854Z.log`, shows the `lx2` governance
-`install` and `check` passing every line at 05:38:54Z, and this session's
-`pm-auditor` launch passed the hook. The single deferred audit of the
-127th turn found nothing blocking. Its main finding, confirmed by the
-Project Manager, is that the `lx2` CHERI notes checkout is the same
-registered repository with its earlier history replaced, so that item is
-now P1 with a one-line read-only check for you. Every other stale and
-minor finding is reconciled. No component write, push, request, or gate
-change.
+**Last updated:** 2026-10-25
+**Update scope:** one-hundred-twenty-ninth coordination turn, the first on
+`l1` after your return by rsync from `lx2`. You said exactly `"ok, we have
+just rsync'd from lx2 laptop after a few days travel, proceed with any
+actions required"`, then `"btw, I checked git status in several projects
+before the rsync"`, then `"everything important should be committed and
+pushed, gh is a backup"` (2026-10-25 from about 22:36Z, 15:36 at UTC-7).
+`PMD-20261025-001` records the return; `PMD-20261025-002` records the
+backup direction, which confirms this turn's private parent push. After the
+Project Manager said that its own push publishes, you answered
+`publish_now`, which confirms the public Project Manager push for this turn
+only. The `l1` CHERI notes copy holds none of
+the three never-pushed commits. Beryllium records your acceptance of the S3
+MVP plan and the M0 plan, with M0 under way and its newest commits on no
+remote. XRV holds an uncommitted publication-preparation change set.
+Twenty-five new workbook pointers are ledgered, and 21 of them, with one
+DASICS pointer, are routed by `PMR-135`, `PMR-136`, and `PMR-137`. No
+component write or gate change.
 
-Prior update scope (2026-10-23): one-hundred-twenty-seventh coordination
-turn. It recorded the relocation to `lx2` (`PMD-20261023-001`), verified
-the 126th-turn push, and reconciled Beryllium, workbook, and CHERI notes
-drift; the then-stale `lx2` hook refused its audit launch. Earlier turns
-are under "What changed in this turn" below.
+Prior update scope (2026-10-23): one-hundred-twenty-eighth coordination
+turn. You said exactly `"run deferred audit"` at 2026-10-23T05:39:12Z; the
+log of your human-run `scratch/lx2-setup.sh` showed the `lx2` governance
+`install` and `check` passing every line, the single deferred audit of the
+127th turn found nothing blocking, and its main finding, that the CHERI
+notes checkout is the same registered repository with its earlier history
+replaced, became P1. Earlier turns are under "What changed in this turn"
+below.
 
 **Workspace root:** parent of this repository; exact current root is recorded
 in `../COMPONENTS.md`
@@ -31,79 +39,80 @@ in `../COMPONENTS.md`
 
 | Area | Current state |
 | --- | --- |
-| Current coordination baseline | **On `lx2`; Copilot setup done and the deferred audit run; the CHERI notes history question is now P1.** `PMD-20261023-001` makes `~/src/beryllium-project` on `lx2` canonical (same root path) and the `l1` copy a noncanonical former location that you keep untouched. The 126th-turn push is verified live. Your logged `lx2` setup passed every `install` and `check` line at 2026-10-23T05:38:54Z, and the deferred audit then ran, found nothing blocking, and its stale and minor findings are reconciled. The audit also found, and the Project Manager confirmed, that the `lx2` CHERI notes checkout is the same registered repository with its earlier history replaced and pruned; `outbox/OWNER-RUNBOOK.md` "P1 CHERI-RISC-V notes history check" has a one-line read-only check. Since 2026-10-16 Beryllium recorded, component-side, S1 and S2 (security model v1) accepted, the development branch pushed to `0096de3`, and an S3 MVP plan proposed for your review; the workbook gained your private DASICS session with twelve new pointers, ledgered `pending`. Earlier baseline: `PMR-090`, `PMR-127`, `PMR-132`, `PMR-133`, `PMR-134`, `PMR-121`, and the workbook split requests are closed; `PMR-122` and `PMR-123` (with `PMR-118`) remain open P3; `PMR-125` is parked P4; the workbook publication decision is deferred with both workbook repositories private; `PMD-20261012-002` keeps `threat-modeler`, `security-reviewer`, `provenance-review`, and Helium's public remote public. Threat-owner adoption remains complete; PMR-064/117 remain parked P4. |
+| Current coordination baseline | **Back on `l1`; back up unpushed work first; the CHERI notes history question stays P1.** `PMD-20261025-001` makes `~/src/beryllium-project` on `l1` canonical again (same root path) after your rsync from `lx2`, which becomes a noncanonical former location. `PMD-20261025-002` records `"everything important should be committed and pushed, gh is a backup"`: under it, and under your answer `publish_now` for the public Project Manager repository, the Project Manager pushes its own and the parent's commits after committing this turn, and the human-run `scratch/l1-backup-and-checks.sh` offers the component pushes it cannot make (Beryllium `beryllium/mvp-m0`, threat-modeler, and security-reviewer) after the read-only governance `check` and CHERI notes remote check. The `l1` CHERI notes copy matches the `lx2` one, so the three never-pushed commits have no known local copy. Since 2026-10-23 Beryllium recorded, component-side, the S3 MVP plan and the M0 plan accepted and M0 implementation and board runs under way; OS-security pushed an MPT survey and proposal; your private MPT workbook session reviewed them, is on the private `origin` with the DASICS work, and queued twenty-five pointers (21 routed by `PMR-135`, `PMR-136`, and `PMR-137`, two duplicates, two waiting on CHERI notes); and XRV holds your uncommitted publication-preparation change set. Earlier baseline: `PMR-090`, `PMR-127`, `PMR-132`, `PMR-133`, `PMR-134`, `PMR-121`, and the workbook split requests are closed; `PMR-122` and `PMR-123` (with `PMR-118`) remain open P3; `PMR-125` is parked P4; the workbook publication decision is deferred with both workbook repositories private; `PMD-20261012-002` keeps `threat-modeler`, `security-reviewer`, `provenance-review`, and Helium's public remote public. Threat-owner adoption remains complete; PMR-064/117 remain parked P4. |
 | Operational PM closure | **PMR-077 and PMR-112 complete, with independent backup and gate gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105/114, XRV PMR-115, formal-verification PMR-014/037/041/069, and Beryllium PMR-077/090/098/100/112 are closed. Security backup PMR-111 remains separate and unapproved. |
-| Workspace worktree layout | **Container and ignore complete; inventory, namespacing, and the session-state choice open.** Workspace-root `worktrees/` holds five Beryllium linked worktrees at temporary flat paths, repaired under `PMR-127` at the current root path and clean on `lx2`; the sixth, `be-doc-repro-review-7cf4-20260930`, is absent. Five session-state registrations stay unrepaired by owner disposition: on `lx2` their directories exist (not prunable here), but their links name the former `lx2` root, so an owner-run `git worktree repair` could reconnect them (your choice). Six unregistered `worktrees/beryllium-hypervisor-*` directories and an empty `worktrees/beryllium-hypervisor/` await a later owner inventory. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; the Project Manager never moves, repairs, or removes them. |
-| Workstation | **Fedora laptop `lx2` since 2026-10-23 (`PMD-20261023-001`).** You said exactly `"we've relocated to the laptop again, please rehydrate as appropriate"`; the host name `lx2` was observed directly, and the root stays `/home/jmorris/src/beryllium-project`. The checkouts carry local-only branches, untracked files, the parent's ignored `files` link, and the repo-local credential helpers, so the Project Manager infers a file-level copy of `l1`; you did not state the method, and such a copy is outside the Git-only rehydration contract (`PMD-20261011-001`), with no action implied. The earlier `lx2` location `~/src/l1/src` is absent, and the parent's `files` link dangles here, so the retained artifacts are known only on `l1`. The `l1` copy is noncanonical: start no sessions there, and keep it untouched, because it is the only known location of three unpushed CHERI notes commits, though whether it still holds them is unknown (see "CHERI-RISC-V notes"). Both CHERI symlinks are relative and resolve; the Project Manager and parent have no linked worktrees. `REHYDRATE.md` (`PMD-20261011-001`) is the rebuild procedure; you completed its section 4 per-workstation Copilot setup on `lx2` on 2026-10-23 (logged; see "Single-model governance"). `../SOT.md` is the global status anchor. |
-| Global startup-status rollout | **PMR-108 complete; PMR-112, PMR-114, and PMR-115 owner adoptions are complete.** Tasking binds every view/dispatch packet to regular `workspace://SOT.md` by SHA-256. Project Manager, analysis-workbook, formal-verification, provenance, Beryllium, CHERI notes, and XRV read the anchor (the unresolved `lx2` CHERI notes checkout lacks that startup). Four child gaps remain: PMR-113 Helium, PMR-116 OS-security, PMR-117 threat-modeler, and PMR-118 security-reviewer. |
-| Single-model governance | **Source aligned; installed on `lx2` (2026-10-23, logged).** `PMD-20261006-001` keeps one model, `claude-opus-5.5` at `max` with `long_context`. The log of your human-run `scratch/lx2-setup.sh`, `scratch/lx2-setup-20261023T053854Z.log`, which the Project Manager read, records the `cross-repo-collaboration` skill at the expected SHA-256 `da583f99…`, `install` post-install checks passing, the retired scope agent and skill already absent (removed before that run by a step the Project Manager did not observe), and `check` passing every line, exit 0, at 05:38:54Z. A read-only listing shows the hook configuration now names the current root. `check` does not inspect `/subagents`, and whether another Copilot session was running during the install is unrecorded. This session's `pm-auditor` launch, refused in the 127th turn, then passed the hook; the Project Manager did not determine when this session started. Restart any Copilot session started before 05:38:54Z: the hook denied its task launches whatever arguments were passed. On `l1` you reported the install done on 2026-10-13 (`"done above"`; not independently verified). Beryllium's instructions record that one session ran on `claude-fable-5.1` by your choice, and that on 2026-10-18 you directed `override pinning and use fable 5.1 for everything, re-run the research agents, apply changes if any` for that session only, with the hook's required model edited for that run and restored afterwards. That is a component-side record outside the SOP, and Project Manager records carry no exception (open reconciliation question). Do not copy hook files between hosts (`PMD-20261011-001`). The Project Manager never runs the installer against real user configuration. |
+| Workspace worktree layout | **Container and ignore complete; inventory, namespacing, and the session-state choice open.** Workspace-root `worktrees/` holds five Beryllium linked worktrees at temporary flat paths, repaired under `PMR-127` at the current root path and clean on `l1`; the sixth, `be-doc-repro-review-7cf4-20260930`, is absent. Five session-state registrations stay unrepaired by owner disposition: on `l1` their directories are absent and Git reports them prunable, and one holds `66eaa7f7`, which no branch contains (your choice). Six unregistered `worktrees/beryllium-hypervisor-*` directories and an empty `worktrees/beryllium-hypervisor/` await a later owner inventory. New placements use `worktrees/<repository>/<purpose-or-branch>`. Later renames require Beryllium-owner `git worktree move`; the Project Manager never moves, repairs, or removes them. |
+| Workstation | **`l1` again since 2026-10-25 (`PMD-20261025-001`).** You said exactly `"ok, we have just rsync'd from lx2 laptop after a few days travel, proceed with any actions required"` and `"btw, I checked git status in several projects before the rsync"`; `/etc/hostname` reads `l1.local`, and the root stays `/home/jmorris/src/beryllium-project`. The rsync's scope and options are unstated: XRV's change set, dated after the 128th turn's `lx2` observation, is consistent with it including `~/src/agentic-os-research`, and the prunable session-state worktrees with it excluding `~/.copilot`. Like the earlier copy to `lx2`, it is outside the Git-only rehydration contract (`PMD-20261011-001`), with no action implied. The `lx2` copy is now noncanonical: start no sessions there. The parent's `files` link resolves on `l1` (1,042 paths), so the retained artifacts are available here, though they have no GitHub backup. Both CHERI symlinks are relative and resolve; the Project Manager and parent have no linked worktrees. Copilot CLI created an untracked `.github/copilot/settings.json` (`claude-opus-5.5`) and its lock file in this checkout; the Project Manager leaves them untracked. `REHYDRATE.md` (`PMD-20261011-001`) is the rebuild procedure; `../SOT.md` is the global status anchor. |
+| Global startup-status rollout | **PMR-108 complete; PMR-112, PMR-114, and PMR-115 owner adoptions are complete.** Tasking binds every view/dispatch packet to regular `workspace://SOT.md` by SHA-256. Project Manager, analysis-workbook, formal-verification, provenance, Beryllium, CHERI notes, and XRV read the anchor (the unresolved CHERI notes checkout lacks that startup). Four child gaps remain: PMR-113 Helium, PMR-116 OS-security, PMR-117 threat-modeler, and PMR-118 security-reviewer. |
+| Single-model governance | **Source aligned; the `l1` install is not re-checked since the return.** `PMD-20261006-001` keeps one model, `claude-opus-5.5` at `max` with `long_context`. On `l1` you reported the install done on 2026-10-13 (`"done above"`; not independently verified). A read-only listing on 2026-10-25 shows the hook configuration naming the current root and both tracked targets, and the installed hook script modified at 2026-10-19T00:26:23Z, after that install, which is consistent with Beryllium's record of a hook model edit for one run and its restoration; the repository hook source last changed at `337b73b` (2026-10-06). Step 1 of `scratch/l1-backup-and-checks.sh` runs the read-only `check`; until it passes, task launches pass `claude-opus-5.5` / `max` / `long_context` explicitly, as this turn's `pm-auditor` launch does. On `lx2` the logged 2026-10-23 install passed every `check` line. Beryllium's instructions record sessions run on `claude-fable-5.1` by your choice: on 2026-10-18 your direction `override pinning and use fable 5.1 for everything, re-run the research agents, apply changes if any` for one session, with the hook's required model edited for that run and restored afterwards, and later the S3 revision, acceptance, and M0-plan sessions; the M0 plan's acceptance names `opus-5.5` for implementation. These are component-side records outside the SOP, and Project Manager records carry no exception (open reconciliation question). Do not copy hook files between hosts (`PMD-20261011-001`). The Project Manager never runs the installer against real user configuration. |
 | Component policy alignment | **Three repositories aligned; two repins open.** Analysis-workbook `4cf44d0` and Beryllium `afa4336` already pin `claude-opus-5.5`, and threat-modeler does since closed `PMR-121` (work `c156c0a`, return `aba3350`, 2026-10-13; all six profiles verified at `aba3350`). Provenance-review (`PMR-122`, three `gpt-5.6-sol` profiles) and security-reviewer (`PMR-123`, four `gpt-5.3-codex` `xhigh` / `default` profiles from closed PMR-109/110) need human-started owner sessions. Security-reviewer unpushed commits remain tracked by PMR-111, which has no push authority. |
 | Owner-worker control plane | Hidden `analysis-workbook-owner` remains the only PM-invocable owner. `threat-modeler-owner` is adopted at `e6aed9f` but has no native discovery/isolation handshake and therefore is not PM-invocable or write-dispatchable. Further rollout is parked. |
 | Planned OSS alignment | `PMR-076` is parked at P4 by `PMD-20260918-003`. It remains a future responsible-human idea, blocked on locating/scoping `kcopilotd`, and does not block development. |
 | Repository reorganization | **Complete.** `PMR-044`, `PMR-045`, and `PMR-046` are closed from verified owner returns `49fbfd6`, `456c70b`, and `9a4c5ef`. The owner returns record the successors as private active `origin` repositories; live refs show the expected branches; old homes remain inactive references. The responsible human now renamed and retargeted the CHERI notes and XRV workspace links to those verified successors. |
-| Beryllium runtime | **S3 MVP plan proposed for your review; S1 and S2 accepted component-side.** Maintained `state` and `refs` on `lx2` at 2026-10-23T03:15Z show clean local `beryllium/s3-mvp-plan` at `882868b9` over S3 proposal `06c35f48`, both local-only, and development branch `beryllium/single-hart-runtime-r0` at `0096de3e`, 0 behind / 0 ahead of last-fetched `origin`. Beryllium's instructions at `882868b9` record, component-side: S1 accepted at `fd670dcd` (2026-10-18); the project review `480dab72` and revision plan `07541c59` accepted; the S2 plan `5ce7827f` (2026-10-19) and security model v1 `0e3eec8b` (2026-10-22) accepted; the development branch pushed to `0eb37570` and then `0096de3e` (`merge & push, start S3`); and `planning/mvp-plan.md` proposed at `06c35f48`, not accepted, with no MVP milestone authorized. They also record one `claude-fable-5.1` session (see "Single-model governance"). No owner-session writer lock is held. Earlier: `PMR-090` closed 2026-10-16 (candidate `6e93461` retired unpushed); `PMR-127`, `PMR-133`, and `PMR-134` closed; component-side acceptance of B0-B7 and the 2026-10-08 KVM0 and R8 H1-H4 drops are recorded in the instructions. These are component-side records; Project Manager records are not reconciled to them (open responsible-human question). R8-H0 is a committed candidate and is not accepted; H1-H4 are not authorized; K0-X/K0-R remain blocked; KVM0 and K3 hardware are `NOT RUN` in Project Manager records; development kernel/BSP is `UNDECIDED`. |
+| Beryllium runtime | **S3 MVP plan and M0 plan accepted component-side; M0 under way; its newest commits unbacked.** Maintained `state` and `refs` on `l1` at 2026-10-25T22:38Z show clean local `beryllium/mvp-m0` at `977dd4ee`, ahead of last-fetched `origin/beryllium/mvp-m0` `1a6898e9`; its later commits, including plan revision M0-C's implementation (`129626e0` to `2d0a4fe5`), harness fix `f89366bc`, and lock refresh `804fa95f`, are on no remote. The development branch and `beryllium/s3-mvp-plan` are at `1fb46419`, 0 / 0 with last-fetched `origin`; `beryllium/mvp-m0-plan` `6ef36d3a` is in `origin`. Beryllium's instructions at `977dd4ee` record, component-side: `planning/mvp-plan.md` revision 1 accepted at `93967fba` (2026-10-23, `accept 93967fba`; first candidate `06c35f48` superseded and never accepted), defining MVP 1.0 on three of the COM260's eight harts with milestones M0 to M4; the development branch fast-forwarded and pushed to `1fb46419`; `planning/mvp-m0-plan.md` revision 2 accepted at `4d129808` (2026-10-23, `accept 4d129808, proceed with implementation using opus-5.5 model`), authorizing M0 work packages M0-1 to M0-6; plan revisions M0-A to M0-C implemented and presented for acceptance with M0's result packet; `mvp check` and `mvp evaluate` passing after the 2026-10-25 lock refresh; M0-5 RAM-only kexec board runs on the COM260, the first campaign ending at stop condition 6 and the second in progress, waiting on your board resets; and the 2026-10-24 backup push of `beryllium/mvp-m0` and `beryllium/mvp-m0-plan`. No MVP milestone result is accepted. Fifteen other local branch tips are on no remote (see "Remote access"). No owner-session writer lock is held. Earlier: S1, the project review, the S2 plan, and security model v1 accepted component-side; `PMR-090` closed 2026-10-16 (candidate `6e93461` retired unpushed); `PMR-127`, `PMR-133`, and `PMR-134` closed; component-side acceptance of B0-B7 and the 2026-10-08 KVM0 and R8 H1-H4 drops are recorded in the instructions. These are component-side records; Project Manager records are not reconciled to them (open responsible-human question). R8-H0 is a committed candidate and is not accepted; H1-H4 are not authorized; K0-X/K0-R remain blocked; KVM0 and K3 hardware are `NOT RUN` in Project Manager records; development kernel/BSP is `UNDECIDED` in Project Manager records, and the accepted MVP plan's D2 records it as not needed for MVP 1.0, component-side. |
 | Helium | PMR-026 is closed from owner work `e202c6e` and durable return `f928aac`. PMR-091 is closed: only private `for-review` fast-forwarded `1ab289c -> f928aac`; the other 22 branches and zero tags were preserved; independent inspection confirms clean synchronized 0/0 state. `main`, other branches, tags, `public`, remotes, and helpers were excluded. PMR-068 remains P4 because the responsible human stated the project is complete; this is scheduling only. The public-release gate remains blocked, and no review, acceptance, approval, publication, or release follows. Helium remains a review-and-test proof of concept, not formally verified or hardware validated. |
-| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, backed up, and paused by explicit user request. Its repository `beryllium-project/threat-modeler` is public, and you chose to keep it public (`PMD-20261012-002`), so the threat model is publicly readable. Clean local `main` is at `PMR-121` return `aba3350`, 0/6 relative to last-fetched public `origin/main` `c4126b6`; pushing the six local commits would publish them. The four PMR-120 owner-adoption commits and the two PMR-121 repin commits are local/unpushed and did not inspect, resume, or modify the model. |
-| XRV | Open P4 `PMR-131` asks the owner to triage workbook pointers PMQ-034..036; PMQ-044 waits `pending` as PML-0045. Re-observed unchanged on `lx2` (2026-10-23): local private `main` at PMR-115 owner work/return `7361de4`, dirty only with two untracked `review-inbox/*.pdf` files (a coordination lock; not Project Manager-owned), 0 behind / 1 ahead of last-fetched `origin/main` `5e7387a`. PMR-115 adopts current SOT/registry startup resolution and changes only `.github/copilot-instructions.md` and `HANDOFF.md`; no fetch or push occurred. The earlier Bao-CHERI state remains bounded public experimental evidence that is unreproduced, non-upstream, unreleased, and not a complete decomposed hypervisor. PMR-075/092/094 and PMR-040/058/072 closures remain exact; no research or publication gate changed. |
-| Analysis-workbook | **Your private DASICS session is on a local-only branch; twelve pointers pending.** On `lx2`, clean `analysis/dasics-cheri-fallback-private` at `10c777a6` over `c0d5fb7` (branched from `5db4f2c`, no upstream, no backup) holds direct-human session `AWB-20261021-001` (2026-10-21): DASICS assessed against MicroGuards as an input for the CHERI-preferred hypervisor, Q-001 complete at Medium confidence with 109 evidence records, package `private` with intended `public-candidate`, which is not publication approval. Its PMQ-037..048 are ledgered `pending` as PML-0038..0049 until you decide the branch disposition (keep local, or back up to private `origin`); the eleven CHERI notes rows also wait for that checkout's resolution. `analysis/k3-a100-service-design-private` (`5db4f2c`) and `main` (`4cf44d0`) are 0/0 with the private `origin` `beryllium-project/analysis-workbook-private`; push-disabled `public` holds `main` only (`PMD-20261011-002`). The publication decision is deferred while both repositories stay private; `PMR-130` found `main` not publication-ready as-is. PMQ-034..036 are routed by P4 `PMR-131` and PMQ-031..033 by `PMR-107`. CRQ-003 is parked Project Manager todo `PMR-125`. Earlier backup PMRs (`PMR-085`, `088`, `089`, `095`, `097`) remain open pending reconciliation of observed containment with their review/authorization requirements. |
-| CHERI-RISC-V notes | **P1: same repository, earlier history replaced; still unresolved (`PMD-20261023-001`).** The `lx2` checkout is `main`-only at `888f658` (files dated 2026-10-21, handoff dated 2026-10-20), 0/0 with its only remote-tracking ref, without Project Manager tasking startup, and it contains none of the recorded commits: `main` `6553092`, `docs/reconcile-project-status` (`7f67154`, remote-tracking `34a8b50`), PMR-114 `8d1bc9d` / `7fb49f4`, or PMR-104 `41e4125` / `4deec95`. The 128th-turn audit found, and the Project Manager confirmed by reading its Git metadata, that it is the same registered repository: `origin` is `agentic-os-research/cheri-riscv-notes`, `ORIG_HEAD` is the recorded `main` `6553092`, `FETCH_HEAD` is backup tip `34a8b50` fetched from that remote's `docs/reconcile-project-status`, and `packed-refs` holds only `main` and `origin/main`, both at `888f658`. So its earlier history was replaced and pruned, and when it last fetched or pushed, the remote's `main` was `888f658`. Timing, from read-only `stat` in UTC: the workbook's DASICS session record (`AWB-20261021-001` `session.md` at `10c777a6`) observed CHERI notes clean at `7f67154` at 2026-10-21T06:25:09Z (workstation not stated); `ORIG_HEAD` was written at 07:39:13Z, the working-tree files at 08:05:56Z, and `packed-refs` at 08:06:13Z, while `FETCH_HEAD` dates from 2026-09-29. Copied files on `lx2` keep their source times (parent `COMPONENTS.md` showed its 2026-10-16 edit time). So the replacement happened on 2026-10-21 between 06:25Z and 08:06Z, and, since no fetch followed, `origin/main` at `888f658` suggests, but does not show, a push of the new `main` then. The Project Manager infers no cause. Unknown: whether the remote still holds `34a8b50` and `archive/gim-wiki` `cd7dc81`, and whether the `l1` copy, the only known location of the three unpushed commits (including Project Manager carry `7f67154`), still holds them; if `lx2` is a copy of `l1`, `l1` may show the same replacement. Its `meta/decisions.md` records D5 licensing (CC BY 4.0 / MIT) as adopted, component-side. You answered `unresolved` and keep the `l1` copy untouched. The Project Manager makes no carry and relies on nothing here until a named decision resolves it. D4/D5, licensing, redistribution, publication, Pages, and merge to `main` remain open in Project Manager records. |
-| Formal verification | Clean `main` is synchronized 0/0 at handoff-only successor `388690d`. Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. |
-| Other drift | OS-security is clean and synchronized at active private successor `86645d4`. Its owner return records independent executable-backlog integration, maintained validation, no restricted access, and no publication; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
-| Other components | Security-reviewer is clean at HANDOFF-only return `c2edac7`, behind 0 / ahead 2 of last-fetched public `origin/main` `2e8d205`; its repository, like `provenance-review`, stays public by your choice (`PMD-20261012-002`). Its four profiles still record exact `gpt-5.3-codex` / `xhigh` / `default`, now superseded by `PMD-20261006-001` pending owner repin `PMR-123`; PMR-062/065/074/109/110 are closed, the tasking startup contract is active, and no engagement ran. |
-| Remote access | **126th-turn push verified; the 127th- and 128th-turn commits stay local.** Live authenticated `ls-remote` from `lx2` at 2026-10-23T03:15Z shows Project Manager `origin` and parent `upstream` each holding only `main`, at `e3c8e10` and `6639e86`, with no tag. Those are the 126th turn's plain fast-forwards `e5b18ae..e3c8e10` (published) and `1ca8869..6639e86`, under your exact `"push all"` (2026-10-16T23:37Z), which is consumed. The repo-local credential helper in both checkouts came with the copy and works here; it answers with your personal account's `gh auth token` whichever `gh` account is active, and `git config --local --unset-all credential.https://github.com.helper` removes it. Every push to the public Project Manager, `threat-modeler`, `security-reviewer`, or `provenance-review` repositories publishes (`PMD-20261012-001`, `PMD-20261012-002`) and needs a new same-turn confirmation. Component state: the owner records the Beryllium development-branch pushes to `0eb37570` (2026-10-18) and `0096de3e` (2026-10-22) as made on your instructions, and last-fetched refs reflect them; `beryllium/s3-mvp-plan`, the workbook DASICS branch, threat-modeler's six commits, security-reviewer's two, XRV's one, and the three CHERI notes commits last known on `l1` are local without backup authority. The CHERI notes remote's current contents are unknown to the Project Manager (see "CHERI-RISC-V notes"). Earlier push history is in "What changed in this turn" and `outbox/OWNER-RUNBOOK.md`. No other push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
-| Queues | 48 analysis-workbook source rows / 48 ledger rows plus one transfer row are exact (49 / 49). PMQ-037..048 from your private DASICS session are `pending` as PML-0038..0049 (2026-10-23): none is a duplicate in the XRV index at `7361de4` or in the `lx2` CHERI notes checkout at `888f658`; routing waits for your disposition of their local-only branch and, for eleven rows, the CHERI notes resolution. PMQ-034..036 are `routed` as PML-0035..0037 / P4 `PMR-131`, and PMQ-031..033 as PML-0032..0034 / PMR-107. The prior 30 source rows and the transfer row retain their recorded dispositions. `pull-queues.sh check` depends on the DASICS branch staying checked out. |
+| Threat model | `TM-20260911-001-helium-te-poc-astra` is complete, backed up, and paused by explicit user request. Its repository `beryllium-project/threat-modeler` is public, and you chose to keep it public (`PMD-20261012-002`), so the threat model is publicly readable. Clean local `main` is at `PMR-121` return `aba3350`, 0/6 relative to last-fetched public `origin/main` `c4126b6`; pushing the six local commits would publish them. The four PMR-120 owner-adoption commits and the two PMR-121 repin commits are local/unpushed and did not inspect, resume, or modify the model; the P1 script offers their `push_tm` fast-forward, which publishes (`PMD-20261025-002`). |
+| XRV | **Your uncommitted publication-preparation change set has no backup; publication stays blocked.** On `l1` (2026-10-25), local private `main` at PMR-115 owner work/return `7361de4`, 0 behind / 1 ahead of last-fetched `origin/main` `5e7387a`, is dirty with 13 entries: your 2026-10-23 change set (four modified tracked files, including `HANDOFF.md`, and new licenses, a MkDocs wiki and build files, tests, scripts, and a build-only workflow). Its uncommitted handoff records your selection of CC BY 4.0 for original research and MIT for site tooling, and your authorization of commit, push, public visibility, and wiki publication "once ready", while withholding approval to disclose the existing content and history; publication is blocked on that disclosure decision, and no commit, push, or publication occurred. The two `review-inbox/*.pdf` files are now ignored. The dirty tree is an owner coordination lock and blocks `owner-session.sh` for P4 `PMR-131` (PMQ-034..036) and `PMR-135` (PMQ-044, PMQ-050, PMQ-055, PMQ-061, and PMQ-069). The Project Manager records no disclosure, licensing, or publication decision. The earlier Bao-CHERI state remains bounded public experimental evidence that is unreproduced, non-upstream, unreleased, and not a complete decomposed hypervisor. PMR-075/092/094, PMR-040/058/072, and PMR-115 closures remain exact. |
+| Analysis-workbook | **All workbook work is on the private `origin`; your MPT session queued 25 pointers.** On `l1`, clean `analysis/mpt-core-vs-extension-private` at `add42644` is 0/0 with private `origin`: your 2026-10-24 `"commit & push"` backed it up, and because it was created from the DASICS tip, the DASICS session's `c0d5fb7` and `10c777a6` are on `origin` too. Direct-human session `AWB-20261023-001` (2026-10-23 to 2026-10-24) reviews OS-security's 2026-10-23 MPT and Smmtt packets and assesses an MPT/Smsd-based model as Beryllium's architectural core versus a future extension; Q-001 is complete at Medium confidence and favors a future extension tracked against explicit triggers (analysis, not a decision); Q-002 to Q-007 follow; the package is `private` with intended `public-candidate`, which is not publication approval. Its PMQ-049..073 are ledgered as PML-0050..0074 (see "Queues"). Local `analysis/dasics-cheri-fallback-private` keeps no upstream and is now redundant. `analysis/k3-a100-service-design-private` (`5db4f2c`) and `main` (`4cf44d0`) are 0/0 with private `origin` `beryllium-project/analysis-workbook-private`; push-disabled `public` holds `main` only (`PMD-20261011-002`). The publication decision is deferred while both repositories stay private; `PMR-130` found `main` not publication-ready as-is. CRQ-003 is parked Project Manager todo `PMR-125`. Earlier backup PMRs (`PMR-085`, `088`, `089`, `095`, `097`) remain open pending reconciliation of observed containment with their review/authorization requirements. |
+| CHERI-RISC-V notes | **P1: earlier history replaced; the three never-pushed commits have no known local copy; still unresolved (`PMD-20261023-001`, `PMD-20261025-001`).** On `l1` (2026-10-25), as on `lx2` (2026-10-23), the checkout is `main`-only at `888f658`, 0/0 with its only remote-tracking ref, without Project Manager tasking startup, and contains none of the recorded commits: `main` `6553092`, `docs/reconcile-project-status` (`7f67154`, remote-tracking `34a8b50`), PMR-114 `8d1bc9d` / `7fb49f4`, PMR-104 `41e4125` / `4deec95`, or `archive/gim-wiki` `cd7dc81`. Its Git metadata on `l1` matches the 128th turn's `lx2` reading: `origin` is `agentic-os-research/cheri-riscv-notes`, `ORIG_HEAD` is `6553092`, `FETCH_HEAD` is `34a8b50` from that remote's `docs/reconcile-project-status`, `packed-refs` holds only `main` and `origin/main` at `888f658`, the reflogs are empty, and the objects are one pack. File and metadata times place the replacement on 2026-10-21 between 06:25Z and 08:06Z (23:25 on 2026-10-20 to 01:06 on 2026-10-21 at UTC-7), and `origin/main` at `888f658` suggests, but does not show, a push of the new `main` then. The `l1` copy, then the only known location of PMR-114 work `8d1bc9d`, return `7fb49f4`, and Project Manager carry `7f67154`, holds none of them, so they are presumed lost unless you hold another copy; their content can be re-requested once the checkout is resolved. Unknown: whether the remote still holds `34a8b50` and `cd7dc81`; step 2 of `scratch/l1-backup-and-checks.sh` answers it read-only. The Project Manager infers no cause, makes no carry, and relies on nothing here until a named decision resolves it. Its `meta/decisions.md` records D5 licensing (CC BY 4.0 / MIT) as adopted, component-side; D4/D5, licensing, redistribution, publication, Pages, and merge to `main` remain open in Project Manager records. |
+| Formal verification | Clean `main` is synchronized 0/0 at handoff-only successor `388690d`, re-observed unchanged on `l1` (2026-10-25). Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. Open P4 `PMR-136` routes workbook pointers PMQ-049, PMQ-066, and PMQ-067 for owner triage. |
+| Other drift | OS-security is clean and synchronized at active private successor `a6cd0def`: its handoff records a hypervisors-on-Supervisor-Domains survey, a Be-MPT direction proposal for Beryllium planning (proposal only), and a 243-file source collection, pushed on your `push` (2026-10-23), with owner validation passing and no publication; the analysis-workbook review it lists as pending is recorded in your MPT workbook session. Open P3 `PMR-137` routes fourteen workbook pointers to it, beside `PMR-107`. Earlier owner return: independent executable-backlog integration `86645d4`, no restricted access; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
+| Other components | Security-reviewer is clean at HANDOFF-only return `c2edac7`, behind 0 / ahead 2 of last-fetched public `origin/main` `2e8d205`; its repository, like `provenance-review`, stays public by your choice (`PMD-20261012-002`), and the P1 script offers the `push_sr` fast-forward (`PMR-111`), which publishes. Its four profiles still record exact `gpt-5.3-codex` / `xhigh` / `default`, now superseded by `PMD-20261006-001` pending owner repin `PMR-123`; PMR-062/065/074/109/110 are closed, the tasking startup contract is active, and no engagement ran. |
+| Remote access | **The coordination commits are pushed after this turn's commits; component work needs your pushes.** Under your backup direction `"everything important should be committed and pushed, gh is a backup"` (`PMD-20261025-002`) for the private parent, and your structured answer `publish_now` for the public Project Manager repository, given after the Project Manager said that its push publishes (`PMD-20261012-001` disposition 3), the Project Manager pushes its `main` from `e3c8e10` and the parent `main` from `6639e86` through this turn's commits as plain fast-forwards after committing; the next turn verifies them with live `ls-remote`. Both confirmations are consumed by those pushes, and later pushes need a new same-turn confirmation. The repo-local credential helper in both checkouts answers with your personal account's `gh auth token` whichever `gh` account is active, and `git config --local --unset-all credential.https://github.com.helper` removes it. Work on no remote, as of each repository's last fetch: Beryllium `beryllium/mvp-m0` beyond `1a6898e9` and fifteen other local branch tips (including retired candidate `6e93461`, unpushed by your `PMR-090` decision); threat-modeler's six commits and security-reviewer's two (both public, so pushing publishes); XRV's one commit and its uncommitted change set; and the retained `../files` artifacts, which are outside Git. The workbook, OS-security, formal verification, provenance, and Helium are fully on their remotes. The three CHERI notes commits have no known copy, and the CHERI notes remote's current contents are unknown (see "CHERI-RISC-V notes"). Earlier push history is in "What changed in this turn" and `outbox/OWNER-RUNBOOK.md`. No other push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
+| Queues | 73 analysis-workbook source rows / 73 ledger rows plus one transfer row are exact (74 / 74). Your MPT session's PMQ-049..073 are PML-0050..0074 (2026-10-25): 21 are routed after read-only duplicate searches, to XRV by P4 `PMR-135` (with DASICS row PMQ-044), to formal verification by P4 `PMR-136`, and to OS-security by P3 `PMR-137`; PMQ-053 and PMQ-054 are `duplicate` against OS-security's hypervisor-source manifest, with their class-1 source edits due but not carried, because a carried commit on that session branch would need a separate push of the branch, which `owner-actions.sh` does not make (`push_awb` pushes `main` only) and the Project Manager never makes (`PMD-20261025-002`); and PMQ-056 and PMQ-060 stay `pending` with the eleven DASICS CHERI notes rows until that checkout is resolved. PMQ-034..036 are `routed` as PML-0035..0037 / P4 `PMR-131`, and PMQ-031..033 as PML-0032..0034 / PMR-107. The prior rows and the transfer row retain their recorded dispositions. `pull-queues.sh check` depends on the MPT branch staying checked out. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. Independent OS-security integration `86645d4` does not execute PMR-052. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
 | Cross-repo collaboration | `PMD-20260917-001` requires owner tasking to load `cross-repo-collaboration` when destination work consumes sibling research/analysis. Source `COLLAB.md` budgets remain controlling; missing or read-only ledgers grant no source write. Completed-use evidence is recorded only after destination work and validation. |
-| Approved target topology | The organization is `agentic-os-research`. `PMD-20260915-005` superseded the Beryllium mapping only with `beryllium-project/beryllium-hypervisor`; on 2026-09-21 the responsible human moved its canonical checkout to direct workspace entry `beryllium-hypervisor/` and stated that origin is in the public project. PMR-098's owner return reports authenticated current GitHub visibility `PRIVATE`; the Project Manager performed no network operation, and neither wording grants publication. `beryllium/s3-mvp-plan`, a local branch with no upstream, is the branch observed checked out at 2026-10-23T03:15Z on `lx2`. Development branch `beryllium/single-hart-runtime-r0` is at `0096de3`, 0 behind / 0 ahead of last-fetched private `origin`, after owner-recorded pushes on your instructions of 2026-10-18 and 2026-10-22; `beryllium/k3-b7-bringup` stays at `56e36ae` in `origin` since the `PMR-090` owner session's 2026-10-16 push. OS-security, XRV, and CHERI notes retain their `agentic-os-research` targets; the `lx2` CHERI notes checkout is unresolved (`PMD-20261023-001`). |
+| Approved target topology | The organization is `agentic-os-research`. `PMD-20260915-005` superseded the Beryllium mapping only with `beryllium-project/beryllium-hypervisor`; on 2026-09-21 the responsible human moved its canonical checkout to direct workspace entry `beryllium-hypervisor/` and stated that origin is in the public project. PMR-098's owner return reports authenticated current GitHub visibility `PRIVATE`; the Project Manager performed no network operation, and neither wording grants publication. `beryllium/mvp-m0`, a local branch with no upstream configured whose 2026-10-24 backup `origin/beryllium/mvp-m0` (`1a6898e`) it has since passed, is the branch observed checked out at 2026-10-25T22:38Z on `l1`. Development branch `beryllium/single-hart-runtime-r0` is at `1fb4641`, 0 behind / 0 ahead of last-fetched private `origin`, after owner-recorded pushes on your instructions of 2026-10-18, 2026-10-22, and 2026-10-23; `beryllium/k3-b7-bringup` stays at `56e36ae` in `origin` since the `PMR-090` owner session's 2026-10-16 push. OS-security, XRV, and CHERI notes retain their `agentic-os-research` targets; the CHERI notes checkout is unresolved (`PMD-20261023-001`, `PMD-20261025-001`). |
 | D0 transition inventory | `PMD-20260914-004` records the bounded local inventory. `PMD-20260915-001` closes `PMR-049`: no additional Microsoft-origin repositories, all successors private initially, and no repository public-approved, except that `PMD-20261012-001` keeps `beryllium-project/project-manager` public and approves publishing its named backup commits, and later commits only on an exact same-turn confirmation (its disposition 3), and `PMD-20261012-002` keeps `threat-modeler`, `security-reviewer`, `provenance-review`, and Helium's public remote `helium-te-poc` public. Neither approves a release. `PMD-20260915-005` supersedes only its Beryllium target name; workflow/evidence repositories and formal-verification otherwise stay under `beryllium-project`. "None known" remains an owner statement, not an independently authenticated negative finding. |
 | Applied transition policy | The OS-security owner return records clean root `58f8023`, 2,039 tracked files, and no restricted subtree in reachable successor history; complete old private history remains inactive. The owner reports the personal quarantine exists with no branch or history. Live refs show each verified successor as `origin`; old homes remain explicit inactive-reference remotes. The later CHERI notes/XRV link consolidation changes only parent workspace pointers. |
 | Generated tasking | `PMR-048` is closed citing `PMD-20260914-005`. `scripts/project-tasking.sh` generates ignored per-component views from the committed request table and resolves either a direct checkout or tracked workspace symlink. It refuses a missing view, dirty Project Manager request table, stale Project Manager commit, wrong request-table blob, or absent/symlinked/SHA-drifted `workspace://SOT.md`. Component instructions separately enforce dirty/competing-writer handling. |
-| Tasking startup contract | `PMD-20260915-008` still governs the exact resolver. PMR-108 adds the global SOT anchor without silently expanding child ownership. Project Manager, analysis-workbook, formal-verification, provenance, Beryllium, CHERI notes, and XRV now read it (not the unresolved `lx2` CHERI notes checkout). PMR-112/114/115 are closed; PMR-113 and PMR-116..118 remain the four child-adoption requests. PMR-119 is closed as handoff-only class-3 housekeeping and did not alter the startup contract. `PMR-133` (closed 2026-10-12; work `f0e24f1f`, return `80ef261e`) moved `## Project Manager tasking` back to the first level-two section on `beryllium/k3-b7-bringup` and let `docs/check-links.mjs` accept one dated `## Current direction` section after it; the owner reports `--tasking-contract` passing there. The owner reported that the other 22 local branches containing `2e9b5b1a` kept the earlier order; closed `PMR-134` fast-forwarded the development branch to `80ef261e`, so it now has the fix, and nothing is proposed for the remaining 21 branches. Pre-existing PMR-064/068/070 may be selected with their same-component SOT request, while PMR-066 remains tasking-only provenance maintenance. |
+| Tasking startup contract | `PMD-20260915-008` still governs the exact resolver. PMR-108 adds the global SOT anchor without silently expanding child ownership. Project Manager, analysis-workbook, formal-verification, provenance, Beryllium, CHERI notes, and XRV now read it (not the unresolved CHERI notes checkout). PMR-112/114/115 are closed; PMR-113 and PMR-116..118 remain the four child-adoption requests. PMR-119 is closed as handoff-only class-3 housekeeping and did not alter the startup contract. `PMR-133` (closed 2026-10-12; work `f0e24f1f`, return `80ef261e`) moved `## Project Manager tasking` back to the first level-two section on `beryllium/k3-b7-bringup` and let `docs/check-links.mjs` accept one dated `## Current direction` section after it; the owner reports `--tasking-contract` passing there. The owner reported that the other 22 local branches containing `2e9b5b1a` kept the earlier order; closed `PMR-134` fast-forwarded the development branch to `80ef261e`, so it now has the fix, and nothing is proposed for the remaining 21 branches. Pre-existing PMR-064/068/070 may be selected with their same-component SOT request, while PMR-066 remains tasking-only provenance maintenance. |
 | Planned Git maintenance | `PMR-073` is withdrawn by `PMD-20260918-003`. The proven owner-worker path supplies the bounded PM-driven component execution need; no current request depends on a separate Git-maintainer specialist. |
 | Human interaction | `PMD-20261002-001` records the exact direction `"also remember to use a full pathname when giving me an initial cd command"`. User-facing command sequences now render an initial `cd` with the current absolute path re-resolved from `SOT.md` / `COMPONENTS.md`; later commands may be relative to that established directory. The prior PMR-105 single-use authorization remains consumed. |
 | Model policy | `PMD-20261006-001` supersedes the `PMD-20260916-001` role-to-model matrix and the remainder of `PMD-20260915-007`, the `PMD-20260930-001` floor and scope-review assets, the `PMD-20260930-002` hook rules, and the `PMD-20260930-005` Codex exception: one model, `claude-opus-5.5` at `max` with `long_context`, for every orchestrator, agent, sub-agent, and task, with no silent model, effort, or context fallback. `PMD-20260930-003` reinstall safety remains in force. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | Before this turn, Project Manager `918ce7c` and parent `7a8dfe6` were clean, each 0 behind / 1 ahead with the 127th-turn commit. This turn updates parent `SOT.md`, `COMPONENTS.md`, and `README.md`, commits both repositories, and pushes nothing; any push needs a new same-turn confirmation. No component write by the Project Manager occurs. |
+| Parent coordination | Before this turn, Project Manager `e4a4f8b` and parent `a362829` were each 0 behind / 2 ahead with the 127th- and 128th-turn commits; the parent was clean, and the Project Manager's only dirt was Copilot CLI's untracked settings file and its lock. This turn updates parent `SOT.md`, `COMPONENTS.md`, and `README.md`, commits both repositories, and pushes both as plain fast-forwards after committing: the private parent under your `"everything important should be committed and pushed, gh is a backup"` (`PMD-20261025-002`), and the public Project Manager, which publishes, under your answer `publish_now`; later pushes need a new same-turn confirmation. No component write by the Project Manager occurs. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
 
-`PMD-20261023-001` records the relocation to the Fedora laptop `lx2` and
-supersedes the `l1` workstation status of `PMD-20261010-001`. Your logged
-`lx2` Copilot setup passed, so governed sessions work here again, and the
-deferred audit is done. Its main finding makes the CHERI notes history the
-top item: a read-only check takes seconds and shows whether the old
-history still exists on the remote. The S3 review is the main development
-step. Beryllium's S1/S2 acceptances and S3 direction are component-side
-records only. The DASICS session's pointers wait on your branch decision.
-Earlier closures (`PMR-090`, `PMR-121`, `PMR-124`, `PMR-126` through
-`PMR-130`, `PMR-132` through `PMR-134`) and the decisions
-`PMD-20261011-001`, `PMD-20261011-002`, `PMD-20261012-001`, and
-`PMD-20261012-002` stand; `PMD-20261006-001` records the single-model SOP;
-threat-owner adoption and the autonomous P3 fleet disposition
-(`PMD-20261002-003`, `PMD-20261003-003`) are unchanged.
+`PMD-20261025-001` records your return to `l1` by rsync and supersedes the
+`lx2` workstation status of `PMD-20261023-001`. `PMD-20261025-002` records
+your direction that GitHub is the backup, so backing up work that exists on
+no remote now leads: one script makes the component pushes the Project
+Manager cannot make, each after your y/N, and runs two read-only checks.
+The CHERI notes history stays P1 because the `l1` copy holds none of the
+three never-pushed commits. Beryllium's S3 MVP plan and M0 plan
+acceptances are component-side records only. Earlier closures (`PMR-090`,
+`PMR-121`, `PMR-124`, `PMR-126` through `PMR-130`, `PMR-132` through
+`PMR-134`) and the decisions `PMD-20261011-001`, `PMD-20261011-002`,
+`PMD-20261012-001`, and `PMD-20261012-002` stand; `PMD-20261006-001`
+records the single-model SOP; threat-owner adoption and the autonomous P3
+fleet disposition (`PMD-20261002-003`, `PMD-20261003-003`) are unchanged.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P1 | `CHERI notes history check` (no PMR) | **Your one-line read-only check now; keep `l1` untouched** | The audit found that the `lx2` checkout is the same registered repository with its earlier history replaced and pruned, and that the remote's `main` was `888f658` at its last fetch or push. If the remote was rewritten, its backups of the earlier history (`34a8b50`, `archive/gim-wiki` `cd7dc81`) may be gone; and if `lx2` is a copy of `l1` (inferred), the `l1` copy may no longer hold the three never-pushed commits either. The check (`outbox/OWNER-RUNBOOK.md` "P1") lists the remote's branches and its visibility and changes nothing. Then tell the Project Manager whether the replacement was intended, which unblocks a named decision, CHERI notes work, and eleven pending pointers. You act; the Project Manager never fetches, clones, or recovers. |
-| P2 | `Beryllium S3 MVP plan review` (no PMR) | **Your review, in a new Beryllium session** | Beryllium proposes `planning/mvp-plan.md` at exact commit `06c35f48` on local branch `beryllium/s3-mvp-plan`, with packet `planning/mvp-plan-review-summary.md`; it is not accepted. Accepting it would authorize only M0's bounded plan, so this decides whether MVP planning starts. Use a session started after the 2026-10-23T05:38:54Z install. The branch is local-only, so a backup needs your direction in that session. The Project Manager records nothing as accepted. |
+| P1 | `Backup and checks on l1` (no PMR) | **Your one command now** | `scratch/l1-backup-and-checks.sh` runs the read-only governance `check` and CHERI notes remote check, then asks y/N before backing up Beryllium's active `beryllium/mvp-m0` to its private `origin` (refused unless GitHub reports it private) and before the threat-modeler and security-reviewer fast-forwards, which publish because those repositories are public; then it fetches everything. It unblocks verified backups of M0's newest work and of eight configuration commits, and confirms the `l1` hook. You act; the Project Manager reads the logs. |
+| P1 | `CHERI notes history decision` (no PMR) | **Your answer, after the script's remote check** | The checkout's earlier history was replaced on 2026-10-21, and the three never-pushed commits have no known copy. Once the log shows what the remote holds, tell the Project Manager whether the replacement was intended; that unblocks a named decision, CHERI notes work, re-raising the lost startup adoption, and thirteen pending pointers. The Project Manager never fetches, clones, or recovers. |
+| P2 | `XRV change set backup` (no PMR) | **Your choice, in an XRV session** | Your uncommitted 2026-10-23 publication-preparation change set has no backup. Committing it and pushing to the private `origin` is a backup only; publication stays blocked on your disclosure decision. It also unblocks the XRV pointer session (`PMR-131`, `PMR-135`). |
+| P2 | `Beryllium local-only branches` (no PMR) | **Your choice, in your next Beryllium session** | Fifteen branch tips are on no remote, including a reproducibility-acceptance record, B4/B5 work in progress, KVM0, and R8 candidates; `6e93461f` stays unpushed under `PMR-090` unless you revisit it. Tell the session which to back up; M0's board campaign waits on your resets there anyway. |
 | P3 | `PMR-123`, `PMR-118` | **Ready for one human-started security-reviewer owner session** | Repin the four profiles to `claude-opus-5.5` / `max` / `long_context`, retire the Codex exception, record review-on-request, and adopt SOT startup together; PMR-118's Codex-preservation clause no longer applies. No engagement, push, or gate. |
 | P3 | `PMR-122` | **Ready for a direct human-started provenance-review session** | Repin three `gpt-5.6-sol` profiles; PMR-066 stays separate. No review package, push, or gate changes. |
-| P3 | `Beryllium stage reconciliation` (no PMR) | **Open responsible-human question** | Beryllium's instructions at `882868b9` record component-side acceptance of B0-B7, S1 (`fd670dcd`), the project review, the S2 plan, and security model v1 (`0e3eec8b`), the 2026-10-08 KVM0 and R8 H1-H4 drops, the S3 direction, and one session run on `claude-fable-5.1` by your choice, outside the SOP, including your 2026-10-18 direction to re-run its research agents on that model. Project Manager records keep K3 hardware `NOT RUN`, K0-X/K0-R blocked, H1-H4 not authorized, and R8-H0 unaccepted. Nothing changes until you make a named record saying which acceptances, authorizations, drops, and SOP exceptions to carry. |
-| P3 | `Beryllium session-state worktrees` (no PMR) | **Your choice; not urgent on `lx2`** | Five registrations retained by `PMR-127`: on `lx2` their directories exist (not prunable here), but their links name the former `lx2` root; one holds `66eaa7f7`, which no branch contains. Default: do nothing and keep `~/.copilot/session-state/`. A Beryllium owner can repair, lock, or release them (`outbox/OWNER-RUNBOOK.md`). The Project Manager never touches worktrees. |
+| P3 | `Beryllium stage reconciliation` (no PMR) | **Open responsible-human question** | Beryllium's instructions at `977dd4ee` record component-side acceptance of B0-B7, S1 (`fd670dcd`), the project review, the S2 plan, security model v1 (`0e3eec8b`), the S3 MVP plan (`93967fba`), and the M0 plan (`4d129808`), the 2026-10-08 KVM0 and R8 H1-H4 drops, M0 plan revisions presented with M0's result, and sessions run on `claude-fable-5.1` by your choice, outside the SOP, including your 2026-10-18 direction to re-run research agents on that model. Project Manager records keep K3 hardware `NOT RUN`, K0-X/K0-R blocked, H1-H4 not authorized, and R8-H0 unaccepted. Nothing changes until you make a named record saying which acceptances, authorizations, drops, and SOP exceptions to carry. |
+| P3 | `Beryllium session-state worktrees` (no PMR) | **Your choice; not urgent** | Five registrations retained by `PMR-127` are prunable on `l1`, where their directories are absent (they existed only on `lx2`); one holds `66eaa7f7`, which no branch contains. Default: do nothing. A Beryllium owner can keep `66eaa7f7` on a branch, lock the registrations, or let them go (`outbox/OWNER-RUNBOOK.md`). The Project Manager never touches worktrees. |
 | P3 | `Worktree inventory and namespacing` (no PMR) | **Ready for a later owner inventory; not blocking** | Five repaired Beryllium worktrees sit at temporary flat `worktrees/be-*` paths, not yet under `worktrees/beryllium-hypervisor/...`. Six unregistered `worktrees/beryllium-hypervisor-*` directories, whose Git admin directories no longer exist, and an empty `worktrees/beryllium-hypervisor/` need an owner disposition. Any move is Beryllium-owner `git worktree move`; nothing is deleted before the owner confirms that no unique content remains. |
 | P3 | `PMR-085` | **Containment observed — push review/authorization evidence unresolved** | `main`, synchronized at `3c9d2a3` before the split and now `4cf44d0` on both the private `origin` and `public`, contains the range through `ea72522`; reconcile who reviewed/authorized the encompassing push before closure, using the `PMR-128` audit results. No handshake, analysis disposition, or gate follows. |
 | P3 | `PMR-088` | **Containment observed — depends on `PMR-085` disposition** | `main` (`3c9d2a3`, now `4cf44d0` on both the private `origin` and `public`) contains PMR-086 commits `efbfdb8` and `858a73b`; close only after independently reconciling the predecessor push evidence. |
-| P3 | `PMR-107` | **Ready after ask-first human approval** | OS-security owner triages only PMQ-031..033 as public metadata/lawful routes without restricted access, source admission by Project Manager, architecture selection, or publication. |
+| P3 | `PMR-111` | **Offered as a y/N step of the P1 script** | Fast-forward security-reviewer `origin/main` from `2e8d205` through local return `c2edac7`; the repository stays public (`PMD-20261012-002`), so your y there publishes and is the same-turn confirmation. This backs up the closed PMR-109/110 result only; no engagement or gate follows, and the Project Manager closes it when fetched refs show the push. |
+| P3 | `PMR-107`, `PMR-137` | **Ready after ask-first human approval** | One OS-security owner session triages PMQ-031..033 and fourteen MPT-session pointers as public metadata/lawful routes, without restricted access, running any proof-of-concept or fuzzer, source admission by the Project Manager, architecture selection, or publication. |
 | P3 | `PMR-066` | **Blocked on a human-started provenance owner session** | No hidden provenance owner exists. The owner must add deterministic tasking startup without modifying a review package. |
 | P3 | `PMR-070`, `PMR-116` | **Blocked on OS-security ask-first consent plus a human-started owner session** | No hidden OS-security owner exists. Broad fleet direction is not component-specific consent; restricted material remains prohibited. |
-| P3 | `PMR-111` | **Ready only after a new exact same-turn human push confirmation** | Review and fast-forward security-reviewer `origin/main` from `2e8d205` through local return `c2edac7`; the repository stays public (`PMD-20261012-002`), so this publishes. This backs up the closed PMR-109/110 result only; the responsible human acts, and no engagement or gate follows. |
 | P3 | `PMR-053` | **Blocked by `PMR-052`** | The XRV owner reviews only materially relevant cap-talk threads after the archive result returns; no research adoption follows automatically. |
 | P3 | `PMR-054` | **Blocked by `PMR-052` and `PMR-053`** | The analysis-workbook owner records the bounded follow-up only after the external and XRV stages complete; no existing analysis disposition changes automatically. |
 | P4 | `Workbook publication decision` (no PMR) | **Deferred: decide whenever you want** | Both workbook repositories are private, so nothing is exposed. The `PMR-130` inventory finds `main` `4cf44d0` not publication-ready as-is. Your choices: keep both private (default, no action), have the owner prepare a clean publication line, or publish an exact commit. See `outbox/OWNER-RUNBOOK.md` "Deferred and non-blocking work". |
-| P4 | `Workbook DASICS branch` (no PMR), PMQ-037..048 | **Your choice; not needed for development** | Your DASICS session is on local-only `analysis/dasics-cheri-fallback-private` with no backup. Keeping it local or backing it up to the private `origin` (never `public`) unblocks routing its twelve pointers (PML-0038..0049); the eleven CHERI notes rows also wait for that checkout. You act; commands are in `outbox/OWNER-RUNBOOK.md` "Deferred and non-blocking work". |
-| P4 | `PMR-131` | **Ready for an XRV owner session; research intake only** | The XRV owner decides whether to record pointers PMQ-034..036 (K3 heterogeneous-VLEN talk, Chimera ISAX paper, Plumbers recording) in its review log. Not needed for development; related to parked RVV todo `PMR-125`. XRV's two untracked PDFs block the launcher until the owner handles them. |
+| P4 | `PMR-131`, `PMR-135` | **Ready for one XRV owner session once the change set is committed; research intake only** | The XRV owner decides whether to record eight workbook pointers (PMQ-034..036, PMQ-044, PMQ-050, PMQ-055, PMQ-061, and PMQ-069) in its review log. Not needed for development; related to parked RVV todo `PMR-125`. |
+| P4 | `PMR-136` | **Ready for a human-started formal-verification session; research intake only** | The owner decides whether to record PMQ-049 (MILS integration), PMQ-066 (TF-RMM CBMC note), and PMQ-067 (Keystone secure boot); the last two may already be represented at repository level. Not needed for development. |
 | P4 | `PMR-125` | **Parked until you schedule it** | The Project Manager-owned CRQ-003 todo to investigate RVV use in the Beryllium hypervisor; the Beryllium hold that parked it ended on 2026-10-11. When you want it scheduled, the Project Manager selects the investigating owner and allocates owner requests; it does no investigation itself. Private package AWB-20261007-001 may be relevant input but is not adopted. |
 | P4 | `PMR-064`, `PMR-117` | **Parked after completed PMR-120 adoption** | Resume only after explicit later direction and a separately allocated/closed native no-write handshake. Both human bootstrap bindings are consumed. |
 | P4 | `PMR-089` | **Containment observed — blocked by `PMR-085`/`088` disposition** | `main` (`3c9d2a3`, now `4cf44d0` on both the private `origin` and `public`) contains the frozen twelve-commit `858a73b..8b5a301` range; reconcile predecessor push evidence before closure. |
@@ -115,51 +124,54 @@ threat-owner adoption and the autonomous P3 fleet disposition
 
 ### One recommended next action
 
-**Check what the CHERI-RISC-V notes remote holds now (read-only, seconds).**
-Why: the deferred audit found that the `lx2` checkout is the same
-registered repository with its earlier history replaced and pruned, so the
-earlier history may survive only on the remote or in the untouched `l1`
-copy, and the three never-pushed commits only in the `l1` copy, if
-anywhere. File and Git-metadata times place the replacement on 2026-10-21
-between 06:25Z and 08:06Z (02:25 to 04:06 at UTC-4), which may help you
-recall what ran then. This check lists the remote's branches and tags, its
-GitHub visibility and last push time, and the `gh` account used, writes a
-log the Project Manager reads, and changes nothing:
+**Run the `l1` backup-and-checks script (one command; about a minute plus
+your y/N answers).**
+Why: you said everything important should be committed and pushed, with
+GitHub as the backup, and Beryllium's newest M0 work (M0-C, the lock
+refresh, and the campaign-2 records), threat-modeler's six commits, and
+security-reviewer's two are on no remote. The Project Manager cannot push
+components. The same run confirms the `l1` governance hook, whose script
+changed after your 2026-10-13 install, and shows what the CHERI notes
+remote still holds. It asks before each push; the threat-modeler and
+security-reviewer pushes publish, so answer n there if you do not want
+that:
 
 ```sh
-bash /home/jmorris/src/beryllium-project/project-manager/scratch/cheri-notes-remote-check.sh
+bash /home/jmorris/src/beryllium-project/project-manager/scratch/l1-backup-and-checks.sh
 ```
 
-Then tell the Project Manager whether you, or a session at your direction,
-replaced that history on purpose. The Project Manager records your answer;
-it never fetches, clones, or recovers a repository.
+Then tell the Project Manager `done`; it reads the logs, verifies each push
+from the fetched refs, and records the result.
 
 Further actions, in priority order:
 
-- **Review the S3 MVP plan in Beryllium** (`planning/mvp-plan.md` at
-  `06c35f48` on `beryllium/s3-mvp-plan`) in a session started after the
-  2026-10-23T05:38:54Z install, then run `/model` to confirm
-  `claude-opus-5.5` / `max` / `long_context`:
+- **Tell the Project Manager whether the CHERI notes history replacement
+  was intended**, after reading the remote check (its log path prints at
+  the end of step 2).
+- **Back up XRV's uncommitted change set** in an XRV session, as a backup
+  only with no publication; the instruction to give it is in
+  `outbox/OWNER-RUNBOOK.md` "P2 XRV uncommitted publication-preparation
+  change set":
+
+  ```sh
+  cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research && copilot
+  ```
+
+- **Choose which Beryllium local-only branches to back up** in your next
+  Beryllium session, where M0's board campaign also waits on your resets:
 
   ```sh
   cd /home/jmorris/src/beryllium-project/beryllium-hypervisor && copilot
   ```
 
-- **Keep the `l1` copy untouched** until the CHERI notes question is
-  resolved; it is the only known location of the three unpushed commits
-  and of the retained `files` artifacts.
-- **Decide the DASICS branch's disposition** whenever convenient.
-- **Reply `"push all"`** whenever you want the 127th- and 128th-turn
-  coordination commits pushed; the Project Manager push publishes
-  (`PMD-20261012-001`).
-
 This handoff grants no implementation stage, target acceptance, H1-H4
-authority, K3 result, push, publication, or release. Beryllium is accepted
+authority, K3 result, publication, or release. Beryllium is accepted
 through R7; R8-H0 is a committed candidate and is not accepted; H1-H4 are
 not authorized; K3 hardware is `NOT RUN` in Project Manager records.
-Beryllium's component-side B0-B7, S1, and S2 acceptances and S3 direction
-remain an open reconciliation question for the responsible human. Other
-priorities outside Project Manager visibility may take precedence.
+Beryllium's component-side B0-B7, S1, S2, S3 MVP plan, and M0 plan
+acceptances remain an open reconciliation question for the responsible
+human. Other priorities outside Project Manager visibility may take
+precedence.
 
 ### Minimal restart commands
 
@@ -178,8 +190,8 @@ git -C .. status --short --branch
 ```
 
 `quiescence` fails while the five retained Beryllium session-state
-registrations stay unrepaired (on `lx2`, `git status` fails in them) and
-XRV's two untracked PDFs remain; that
+registrations stay prunable on `l1`, XRV's change set stays uncommitted,
+and Copilot CLI's untracked settings file sits in this checkout; that
 failure blocks only global maintenance under `PMR-108`, not ordinary
 coordination. If a
 responsible-human hold excludes a component again, replace `status`,
@@ -187,6 +199,70 @@ responsible-human hold excludes a component again, replace `status`,
 for every other entry.
 
 ## What changed in this turn
+
+### One-hundred-twenty-ninth-turn return to `l1`
+
+- You said exactly `"ok, we have just rsync'd from lx2 laptop after a few
+  days travel, proceed with any actions required"`, then `"btw, I checked
+  git status in several projects before the rsync"`, then `"everything
+  important should be committed and pushed, gh is a backup"` (2026-10-25,
+  from about 22:36Z). `/etc/hostname` reads `l1.local`.
+- Records: `PMD-20261025-001` makes `l1` canonical again and the `lx2` copy
+  noncanonical, ends `PMD-20261023-001`'s keep-`l1`-untouched disposition,
+  and leaves the CHERI notes checkout unresolved; `PMD-20261025-002`
+  records the backup direction, uses it as the same-turn confirmation for
+  the private parent push, rests the public Project Manager push on your
+  separate answer `publish_now`, and is not a standing push authorization.
+- Maintained inspection on `l1` (2026-10-25T22:37Z to 22:49Z): the parent
+  `a362829` and the Project Manager `e4a4f8b` were each 0 behind / 2 ahead;
+  eight registry rows matched; Beryllium (`977dd4ee`), OS-security
+  (`a6cd0def`), and the workbook (`add42644`) drifted, each explained by
+  its own records. The Project Manager's only dirt was Copilot CLI's
+  untracked `.github/copilot/settings.json` and its lock, left untracked.
+- CHERI notes: the `l1` checkout matches the `lx2` one (`main` only at
+  `888f658`, one pack, empty reflogs, the same `ORIG_HEAD`, `FETCH_HEAD`,
+  and `packed-refs`) and holds none of the recorded commits, so
+  `8d1bc9d`, `7fb49f4`, and `7f67154` have no known local copy. No remote
+  check log existed, so the 128th turn's read-only remote check had not
+  run; it is now step 2 of the new P1 script.
+- Backup inventory (`refs` ref checks): Beryllium's `beryllium/mvp-m0`
+  commits after `1a6898e9` (including M0-C `129626e0`..`2d0a4fe5`,
+  `f89366bc`, and `804fa95f`) and fifteen other local tips are on no
+  remote; every Helium tip is on a remote; the workbook's DASICS commits
+  are inside the pushed MPT branch; threat-modeler (6), security-reviewer
+  (2), and XRV (1 plus an uncommitted change set) are unbacked.
+- New human-run, ignored `scratch/l1-backup-and-checks.sh`: governance
+  `check`, the CHERI notes remote check, a y/N private fast-forward of
+  `beryllium/mvp-m0` refused unless GitHub reports the repository
+  `PRIVATE`, then `owner-actions.sh --only
+  review,push_tm,push_sr,fetch_snapshot`.
+- Queues: PMQ-049..073 ledgered as PML-0050..0074 after read-only duplicate
+  searches; 21 routed by new `PMR-135` (XRV, P4, with DASICS PMQ-044),
+  `PMR-136` (formal verification, P4), and `PMR-137` (OS-security, P3);
+  PMQ-053 and PMQ-054 `duplicate`, with their class-1 edits left due; and
+  PMQ-056 and PMQ-060 `pending`. The eleven DASICS CHERI notes rows now
+  wait only on that checkout. `pull-queues.sh check` passes 74 / 74.
+- Updated: the component cards for Beryllium, the workbook, OS-security,
+  CHERI notes, XRV, formal verification, and security-reviewer;
+  `AGENT-ROSTER.md`, `REHYDRATE.md`, `README.md`, `outbox/OWNER-RUNBOOK.md`,
+  `outbox/component-requests.md`, `queue/LEDGER.md`, and the parent
+  `SOT.md`, `COMPONENTS.md`, and `README.md`. No component write, carry,
+  or gate change.
+- The single same-model `pm-auditor` pass, launched with explicit
+  `claude-opus-5.5` / `max` / `long_context`, returned 2 blocking, 11
+  stale, and 12 minor findings, all reconciled. Its first blocking finding
+  was that the backup direction does not meet `PMD-20261012-001`
+  disposition 3 for the public Project Manager push. The Project Manager
+  then said in one structured question that the push publishes, and you
+  answered exactly `publish_now` ("Publish now: push the Project Manager
+  commits this turn"), not the standing option. The second was push
+  wording that read as already done; the pushes follow the commits, and
+  the next turn verifies them.
+- `PMD-20261023-001` now reads "Superseded by: `PMD-20261025-001`
+  (workstation status and disposition 2 only)"; closed `PMR-104`,
+  `PMR-106`, `PMR-114`, and `PMR-119` gain dated notes that their commits
+  are absent from the current CHERI notes checkout; `PMR-111` notes that
+  the P1 script offers its push.
 
 ### One-hundred-twenty-eighth-turn deferred audit
 
@@ -3597,13 +3673,15 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P1 | CHERI-RISC-V notes history check (no PMR) | Your one-line read-only check of what the remote holds (`outbox/OWNER-RUNBOOK.md` "P1"), then a named decision on whether the history replacement seen on `lx2` was intended; keep the `l1` copy untouched, start no CHERI notes session on `lx2`, and expect no Project Manager carry there meanwhile. |
-| P2 | Beryllium S3 MVP plan review (no PMR) | Your component-side review of `planning/mvp-plan.md` at exact commit `06c35f48` on local `beryllium/s3-mvp-plan`, in a session started after the 2026-10-23T05:38:54Z install; the Project Manager records no acceptance and writes nothing there. |
-| P3 | Beryllium stage reconciliation (no PMR) | Your named record of which component-side acceptances (B0-B7, S1, the project review, the S2 plan, security model v1), authorizations, drops, the S3 direction, and the recorded `claude-fable-5.1` session Project Manager records should carry; until then no Project Manager gate changes. |
-| P3 | Beryllium session-state worktrees (no PMR) | Your choice whether a Beryllium owner repairs, locks, or releases the five retained session-state registrations; on `lx2` their directories exist and they are not prunable, so nothing is urgent here. |
+| P1 | Backup and checks on `l1` (no PMR) | Your one command, `scratch/l1-backup-and-checks.sh` (`outbox/OWNER-RUNBOOK.md` "P1 Backup and checks on `l1`"): the read-only governance `check` and CHERI notes remote check, then y/N backups of Beryllium `beryllium/mvp-m0` (private) and of threat-modeler and security-reviewer `main` (public, so those publish), then a fetch. |
+| P1 | CHERI-RISC-V notes history decision (no PMR) | After the script's remote check, your named decision on whether the 2026-10-21 history replacement was intended; the three never-pushed commits have no known local copy; no CHERI notes session or Project Manager carry meanwhile. |
+| P2 | XRV change set backup (no PMR) | Your choice, in an XRV session, to commit the uncommitted publication-preparation change set and push it to the private `origin` as a backup only; publication stays blocked on your disclosure decision. |
+| P2 | Beryllium local-only branches (no PMR) | Your choice, in your next Beryllium session, of which of fifteen local-only branch tips to back up to the private `origin`; `6e93461f` stays unpushed under `PMR-090` unless you revisit it. |
+| P3 | Beryllium stage reconciliation (no PMR) | Your named record of which component-side acceptances (B0-B7, S1, the project review, the S2 plan, security model v1, the S3 MVP plan, and the M0 plan), authorizations, drops, M0 plan revisions, and the recorded `claude-fable-5.1` sessions Project Manager records should carry; until then no Project Manager gate changes. |
+| P3 | Beryllium session-state worktrees (no PMR) | Your choice whether a Beryllium owner keeps `66eaa7f7` on a branch, locks the five retained session-state registrations, or lets them go; on `l1` they are prunable, so nothing is urgent. |
 | P3 | Worktree namespacing (no PMR) | Five Beryllium worktrees repaired under `PMR-127` remain at temporary flat `worktrees/be-*` paths, and the sixth is absent; six unregistered `worktrees/beryllium-hypervisor-*` directories and an empty `worktrees/beryllium-hypervisor/` need a later owner inventory. A human/Beryllium-owner `git worktree move` may apply namespacing; Project Manager never performs it. |
-| P3 | `PMR-111` | PMR-109/110 are closed at local work `2bb4c98` / return `c2edac7`. After a new exact same-turn responsible-human confirmation and unchanged expected tips, fast-forward only security-reviewer `origin/main`, which publishes because the repository stays public (`PMD-20261012-002`); no engagement or gate follows. |
-| P3 | `PMR-107` | After the responsible human satisfies OS-security's ask-first convention, triage public pointers PMQ-031..033 without restricted access or a publication/licensing decision. |
+| P3 | `PMR-107`, `PMR-137` | After the responsible human satisfies OS-security's ask-first convention, triage public pointers PMQ-031..033 and fourteen MPT-session pointers without restricted access, proof-of-concept or fuzzer execution, or a publication/licensing decision. |
+| P3 | `PMR-111` | Offered as the y/N `push_sr` step of the P1 script: fast-forward only security-reviewer `origin/main` from `2e8d205` through `c2edac7`, which publishes because the repository stays public (`PMD-20261012-002`); your y is the same-turn confirmation, and no engagement or gate follows. |
 | P3 | `PMR-053` | After `PMR-052`, XRV reviews only materially relevant returned cap-talk threads in the verified successor. |
 | P3 | `PMR-054` | After verified OS-security and XRV returns, analysis-workbook appends the revision-bound follow-up inquiry. |
 | P3 | `PMR-066` | Blocked on a human-started provenance owner session; no hidden owner exists. Add only the fail-closed tasking startup contract. |
@@ -3618,26 +3696,29 @@ Previous turn (thirty-sixth):
 | P4 | `PMR-052` | Waiting on the cap-talk archive owners' response; the responsible human is working on it. |
 | P4 | `PMR-068`, `PMR-113` | Parked because the responsible human states the project is complete; deterministic Helium tasking and SOT startup maintenance remain open and grant no gate. |
 | P4 | `PMR-076` | Parked elective OSS-alignment idea; blocked on locating/scoping `kcopilotd` and outside the development-return closure line. |
-| P4 | `PMR-131` | Ready for an XRV owner session once the owner handles its two untracked `review-inbox/` PDFs; research intake of pointers PMQ-034..036 only. |
+| P4 | `PMR-131`, `PMR-135` | Ready for one XRV owner session once its publication-preparation change set is committed; research intake of pointers PMQ-034..036, PMQ-044, PMQ-050, PMQ-055, PMQ-061, and PMQ-069 only. |
+| P4 | `PMR-136` | Ready for a human-started formal-verification session; research intake of PMQ-049, PMQ-066, and PMQ-067 only. |
 | P4 | `PMR-125` | Project Manager-owned CRQ-003 RVV todo, parked until you schedule it; the Project Manager does no investigation itself. |
 | P4 | `PMR-064`, `PMR-117` | PMR-120 adoption is complete at `e6aed9f`. Parked under the exact return-to-hypervisor priority; resume only after explicit later direction and a separately allocated/closed native no-write handshake. |
 | P4 | Workbook publication decision (no PMR) | Deferred; both workbook repositories are private. Keep both private (default), have the owner prepare a clean publication line, or publish an exact commit. |
-| P4 | Workbook DASICS branch (no PMR), PMQ-037..048 | Your disposition of local-only `analysis/dasics-cheri-fallback-private` (keep local, or back up to the private `origin`); PML-0038..0049 stay `pending` until then, and eleven also wait for the CHERI notes resolution. |
 
 Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## Open human gates
 
-- On `lx2` the log of your human-run `scratch/lx2-setup.sh`,
+- On `l1`, the current workstation since 2026-10-25 (`PMD-20261025-001`),
+  you reported the corrected governance `install && check` completed on
+  2026-10-13 (`"done above"`); the Project Manager did not independently
+  verify that output, installed hashes, or install-time session state, and
+  the installed script was modified on 2026-10-19 (00:26Z). Step 1 of
+  `scratch/l1-backup-and-checks.sh` re-runs the read-only `check` there.
+  On `lx2` the log of your human-run `scratch/lx2-setup.sh`,
   `scratch/lx2-setup-20261023T053854Z.log`, records the governance
   `install` and `check` passing every line at 2026-10-23T05:38:54Z, which
   replaced the stale 2026-10-01 install. The Project Manager read the log
   and the hook configuration but ran neither `check` nor `install` against
   real user configuration. `check` does not inspect `/subagents`, and
-  install-time session state is unrecorded. On `l1` you reported the
-  corrected governance `install && check` completed (`"done above"`); the
-  Project Manager did not independently verify that `l1` output, installed
-  hashes, or install-time session state. New sessions load hook
+  install-time session state is unrecorded. New sessions load hook
   configuration, matcher, and environment; already-running session reread
   behavior remains unknown. These reports grant no component or human gate.
 - The deep/adversarial security model choice that `PMD-20260930-005`
@@ -3647,7 +3728,9 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   explicit responsible-human request. Security-reviewer work `2bb4c98` /
   return `c2edac7` closed PMR-109/110 and still records the exception,
   pending owner repin `PMR-123`. Your logged 2026-10-23 `lx2` reinstall
-  passed `check`; the Project Manager did not run it against real user
+  passed `check`; on `l1` the install reported on 2026-10-13 has not been
+  re-checked since the 2026-10-25 return. The Project Manager ran neither
+  against real user
   configuration. No security-review engagement
   authorization, acceptance, sign-off, push, publication, or release gate
   follows; PMR-111 separately tracks optional backup, which would publish.
@@ -3673,10 +3756,11 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   Beryllium checkout into this workspace and stated that its origin is in the
   public project. PMR-098's owner return reports authenticated current GitHub
   visibility `PRIVATE`; the Project Manager did not repeat that network
-  check. Maintained inspection on `lx2` at 2026-10-23T03:15Z (unchanged at
-  05:42Z) observes clean local `beryllium/s3-mvp-plan` checked out at
-  `882868b9`, with development branch `beryllium/single-hart-runtime-r0` at
-  `0096de3e`, 0 behind / 0 ahead of last-fetched private `origin`, and
+  check. Maintained inspection on `l1` at 2026-10-25T22:38Z observes clean
+  local `beryllium/mvp-m0` checked out at `977dd4ee`, ahead of its
+  2026-10-24 backup `origin/beryllium/mvp-m0` `1a6898e9`, with development
+  branch `beryllium/single-hart-runtime-r0` at `1fb46419`, 0 behind / 0
+  ahead of last-fetched private `origin`, and
   renamed `origin/historical_he/*` refs remain observed. Neither wording
   supplies publication authorization evidence. The
   Project Manager executed no
@@ -3697,9 +3781,10 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 - The Beryllium successor was backed up through `f05ccb3` when PMR-061
   closed. PMR-098/100 reconciliation and PMR-112 startup adoption are
   complete. Active/default `beryllium/single-hart-runtime-r0` is at
-  `0096de3e`, 0 behind / 0 ahead of last-fetched private `origin`
-  (2026-10-23; the owner records the 2026-10-18 and 2026-10-22 pushes as
-  made on your instructions; it was at `56e36ae1` on 2026-10-16).
+  `1fb46419`, 0 behind / 0 ahead of last-fetched private `origin`
+  (2026-10-25 on `l1`; the owner records the 2026-10-18, 2026-10-22, and
+  2026-10-23 pushes as made on your instructions; it was at `56e36ae1` on
+  2026-10-16).
   PMR-090 is closed: the responsible human retired candidate `6e93461`,
   which was never pushed and keeps its local branch, and, on owner-recorded
   form answers outside PMR-090, the owner session backed up
@@ -3717,8 +3802,10 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   nothing now. Project Manager and parent are synchronized with their
   remotes through `e3c8e10` and `6639e86` (live `ls-remote`, 2026-10-23,
   verifying the 126th-turn push under your exact `"push all"`, which is
-  consumed); the 127th- and 128th-turn commits are local until a new
-  same-turn confirmation. PMR-085/088/089 push-evidence
+  consumed); the 127th- to 129th-turn commits are pushed after this
+  turn's commits, the parent under your backup direction and the public
+  Project Manager under your answer `publish_now` (`PMD-20261025-002`),
+  and the next turn verifies them. PMR-085/088/089 push-evidence
   reconciliation is unaffected.
   Helium PMR-026 commits
   `e202c6e` / `f928aac` are now backed up by
@@ -3743,7 +3830,8 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
   tracked-diff SHA-256 `8bfec674…`; PMR-104 exact local integration completed
   at work `41e4125` / return `4deec95`. PMR-105 closed on 2026-09-29
   (`PMD-20260929-002`) and its single-use authorization is consumed; those
-  commits are absent from the unresolved `lx2` checkout (`PMD-20261023-001`).
+  commits are absent from the unresolved checkout on `l1`, as on `lx2`
+  (`PMD-20261023-001`, `PMD-20261025-001`).
   D5, merge to `main`, Pages, publication, remotes,
   and sibling writes remain separate.
 - The archive hash matches and all expected names are present. The owner

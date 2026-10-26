@@ -20,8 +20,57 @@
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
-  done. Maintained inspection on `lx2` at 2026-10-23T03:15Z, after the
-  relocation recorded by `PMD-20261023-001`, observes clean local branch
+  done. Maintained inspection on `l1` at 2026-10-25T22:38Z, after the
+  return recorded by `PMD-20261025-001`, observes clean local branch
+  `beryllium/mvp-m0` checked out at `977dd4ee` ("planning: record the lock
+  refresh, the passing gates, and campaign 2"), with no upstream
+  configured. Last-fetched `origin/beryllium/mvp-m0` is at its ancestor
+  `1a6898e9` ("planning: record the push of the M0 branches to the private
+  origin"); the later commits, including plan revision M0-C's
+  implementation (`129626e0` to `2d0a4fe5`), harness fix `f89366bc`, and
+  lock refresh `804fa95f`, are on no remote. `beryllium/mvp-m0-plan` at
+  `6ef36d3a` ("docs: record acceptance of the MVP M0 plan") matches
+  `origin`. The development branch `beryllium/single-hart-runtime-r0` and
+  `beryllium/s3-mvp-plan` are both at `1fb46419` ("docs: record acceptance
+  of the S3 MVP plan"), 0 behind / 0 ahead of last-fetched `origin`, which
+  therefore also holds `06c35f48` and `882868b9`. Fifteen other local
+  branch tips are on no remote-tracking ref (`PMD-20261025-002`). The
+  instructions at `977dd4ee` record, component-side:
+  - `planning/mvp-plan.md` revision 1 accepted on 2026-10-23 at
+    `93967fba` (`accept 93967fba`, Q1 to Q12 at their defaults),
+    superseding the never-accepted first candidate `06c35f48`; it defines
+    MVP 1.0 on three of the COM260's eight harts with milestones M0 to M4
+    and authorized writing M0's bounded plan only;
+  - the development branch fast-forwarded from `0096de3e` to `1fb46419`
+    and pushed with `beryllium/s3-mvp-plan` (2026-10-23, `sure. update
+    that, then proceed with (a) and continue development`);
+  - `planning/mvp-m0-plan.md` revision 2 accepted on 2026-10-23 at
+    `4d129808` (`accept 4d129808, proceed with implementation using
+    opus-5.5 model`, Q1 to Q13 at their defaults), authorizing M0
+    implementation, work packages M0-1 to M0-6, on `beryllium/mvp-m0`
+    with `claude-opus-5.5`, ending in one result review packet;
+  - plan revisions M0-A (2026-10-23), M0-B (2026-10-24, `accept A`), and
+    M0-C (2026-10-25, `proceed with A`), each implemented and presented
+    for acceptance with M0's result packet, and the 2026-10-25 lock
+    refresh (`refresh the lock`), after which `mvp check` and `mvp
+    evaluate` pass;
+  - M0-5 RAM-only kexec board runs on the COM260 with human resets: the
+    first campaign (2026-10-24) passed its probes and ended at stop
+    condition 6, and the second is in progress, waiting on the human's
+    board resets;
+  - `beryllium/mvp-m0` and `beryllium/mvp-m0-plan` pushed to the private
+    `origin` on 2026-10-24 (`push, I will work on this later when k3 is
+    available`), with any merge into the development branch needing its
+    own instruction; and
+  - the revision, acceptance, and M0-plan sessions run on
+    `claude-fable-5.1` after the responsible human switched the model, with
+    the model pin unchanged.
+  No MVP milestone result is accepted. These are component-side records,
+  not Project Manager gates, hardware validation, or SOP changes; K3
+  hardware remains `NOT RUN` in Project Manager records, and the
+  workstation each session used is not stated. Earlier, maintained
+  inspection on `lx2` at 2026-10-23T03:15Z, after the
+  relocation recorded by `PMD-20261023-001`, observed clean local branch
   `beryllium/s3-mvp-plan` checked out at `882868b9` ("docs: present the S3
   MVP plan for review and record the development-branch push"), with no
   upstream, over S3 proposal `06c35f48` ("planning: propose the S3 MVP
@@ -95,8 +144,8 @@
   session moved and pushed it to `56e36ae1`. `PMR-127` is closed: the owner handoff names the `l1` checkout,
   seven linked-worktree registrations are repaired, and five under a former
   Copilot session-state directory are retained unrepaired; they were
-  prunable on `l1` and are not prunable on `lx2`, where their directories
-  exist. `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
+  prunable on `l1`, were not prunable on `lx2`, where their directories
+  existed, and are prunable on `l1` again since 2026-10-25. `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
   the development branch, `## Project Manager tasking` is again the first
   level-two section, and the owner reports `--tasking-contract` passing;
   the owner reports that the other 21 local branches that contain
@@ -253,8 +302,8 @@ records, and the retained Helium pathfinder under `pathfinder/`. The stable
 ## Commands
 
 Run these from development branch `beryllium/single-hart-runtime-r0` (at
-2026-10-23T03:15Z the checkout was observed on local
-`beryllium/s3-mvp-plan`; see **Observed state** above).
+2026-10-25T22:38Z the checkout was observed on local `beryllium/mvp-m0`;
+see **Observed state** above).
 
 ```sh
 npm ci
@@ -266,6 +315,10 @@ npm ci
 ./be evaluate
 ./tests/r8/run-make.sh r8-check   # R8 history: the component records R8 H1-H4 dropped (2026-10-08)
 ```
+
+On the M0 line (`beryllium/mvp-m0`), the component's instructions at
+`977dd4ee` document `make -C mvp check`, `./mvp/mvp evaluate`, and the
+kexec rehearsal; board runs are RAM-only kexec runs with human resets.
 
 The component's current direction also documents per-milestone bring-up
 checks on each milestone branch, for example `make -C bringup/k3-b7 check`
@@ -359,7 +412,9 @@ directory are retained unrepaired, unpruned, and unlocked; that directory
 was absent on `l1`. On `lx2` (2026-10-23 `quiescence`) the five
 directories exist, so Git does not report them prunable there, but
 `git status` fails in each because its link names the former `lx2` root;
-an owner-run `git worktree repair` could reconnect them. The owner's
+an owner-run `git worktree repair` could reconnect them. Back on `l1`
+(2026-10-25 `quiescence`, `PMD-20261025-001`) the directories are absent
+again and Git reports all five prunable. The owner's
 worktree list puts one of them, `source-first-corrected-validation`, at
 `66eaa7f7`, which no branch contains. The owner reported that, on `l1`,
 default `git gc` could prune them from about 2026-12-28. Whether to have

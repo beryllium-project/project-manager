@@ -9,10 +9,21 @@
   `.github/skills/os-security-research/`
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`
-- **Observed state:** clean `main` at `86645d4`, synchronized with private
-  active `origin/main`; owner return records independently authorized
-  executable-backlog integration with maintained checks passing and no
-  restricted access. Clean root snapshot `58f8023` remains the reviewed
+- **Observed state:** on `l1` at 2026-10-25T22:38Z (`PMD-20261025-001`),
+  clean `main` at `a6cd0def` ("handoff: record push and pending
+  analysis-workbook review"), synchronized with private active
+  `origin/main`. The handoff records 2026-10-23 work pushed on the
+  responsible human's `push`: a hypervisors-on-Supervisor-Domains survey, a
+  Be-MPT direction proposal for Beryllium planning (a proposal only;
+  Beryllium was read, not changed), a 243-file
+  `sources/riscv-smmtt/hypervisors/` collection with its own manifest, and
+  related index edits, with owner validation passing and no publication. It
+  lists the analysis-workbook review of the proposal as pending; workbook
+  session `AWB-20261023-001` records that review component-side. Pointer
+  triage `PMR-107` and `PMR-137` (P3, ask-first) are open. Earlier: clean
+  `main` at `86645d4`, synchronized with private active `origin/main`;
+  owner return records independently authorized executable-backlog
+  integration with maintained checks passing and no restricted access. Clean root snapshot `58f8023` remains the reviewed
   non-restricted base, while inactive `legacy-personal/main` preserves old
   private history at `e275544`. `PMR-044` and `PMR-027` are closed;
   `PMR-052` remains unstarted and blocked on the cap-talk archive response;

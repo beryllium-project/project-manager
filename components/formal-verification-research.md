@@ -20,7 +20,13 @@
   `collab/*`, and no sibling write. `PMR-014`, `PMR-037`, `PMR-041`, and
   `PMR-069` are closed from that durable evidence. `PMD-20260914-003` keeps
   the component independent and mixed for now; `PMD-20260915-001` retains
-  the current `beryllium-project` placement
+  the current `beryllium-project` placement. Re-observed unchanged on `l1`
+  on 2026-10-25 (`PMD-20261025-001`). Open P4 `PMR-136` (2026-10-25) asks
+  the owner, in a human-started session, to triage workbook pointers
+  PMQ-049 (MILS component integration), PMQ-066 (TF-RMM CBMC application
+  note), and PMQ-067 (Keystone secure-boot patch and bootrom measurement);
+  TF-RMM and Keystone are already indexed at repository level, so the
+  owner decides whether the last two are already represented
 
 ## Role
 

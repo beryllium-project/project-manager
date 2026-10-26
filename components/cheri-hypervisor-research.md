@@ -12,14 +12,26 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `COLLAB.md`, `review-log.md`
 - **Observed state:** the renamed tracked symlink resolves to local `main`
-  (re-observed 2026-10-10 on `l1` and 2026-10-23 on `lx2`), dirty only with two untracked
-  `review-inbox/*.pdf` files, at PMR-115 owner work/return
+  (re-observed 2026-10-10 on `l1`, 2026-10-23 on `lx2`, and 2026-10-25 on
+  `l1`) at PMR-115 owner work/return
   `7361de4138ad733be46e8a72608a779d24ae488a`, 0 behind / 1 ahead of
-  last-fetched private active `origin/main` `5e7387a`. Open P4 `PMR-131`
-  (2026-10-12) asks the owner to triage workbook pointers PMQ-034..036 under
-  its review-log rules. Workbook pointer PMQ-044 (SKIO / DBChecker) also
-  suggests this owner; it is ledgered `pending` as PML-0045 until the
-  responsible human disposes of its local-only source branch. PMR-115 changes only
+  last-fetched private active `origin/main` `5e7387a`. On `l1` at
+  2026-10-25T22:49Z (`PMD-20261025-001`) it is dirty with 13 entries: the
+  owner's uncommitted 2026-10-23 publication-preparation change set (four
+  modified tracked files, including `HANDOFF.md`, and untracked licenses, a
+  MkDocs wiki and its build configuration, tests, scripts, and a
+  build-only workflow). The uncommitted handoff records the owner's
+  2026-10-23 selection of CC BY 4.0 for original research and MIT for site
+  tooling and authorization of commit, push, public visibility, and wiki
+  publication "once ready", while withholding approval to disclose the
+  existing content and history; publication is blocked on that disclosure
+  decision, and no commit, push, or publication occurred. The two
+  `review-inbox/*.pdf` files are now ignored by Git. The dirty tree is an
+  owner coordination lock, blocks `owner-session.sh`, and, with the one
+  local commit `7361de4`, is XRV work with no backup (`PMD-20261025-002`). Open P4 `PMR-131` (2026-10-12)
+  and `PMR-135` (2026-10-25) ask the owner to triage workbook pointers
+  PMQ-034..036 and PMQ-044, PMQ-050, PMQ-055, PMQ-061, and PMQ-069 under
+  its review-log rules. PMR-115 changes only
   `.github/copilot-instructions.md` and `HANDOFF.md`, binds startup path
   resolution to current SOT/registry state, and records dated path facts. The
   owner reports fingerprint/path review and `git diff --check` passed; this
@@ -66,7 +78,9 @@ non-CHERI comparisons include Supervisor Domain Isolation / SmMTT.
 
 ## Commands
 
-No configured build, test, or lint toolchain.
+No configured build, test, or lint toolchain at committed `7361de4`; the
+owner's uncommitted 2026-10-23 change set adds a MkDocs wiki build and
+focused tests, recorded in its uncommitted handoff.
 
 ## What the Project Manager may request
 

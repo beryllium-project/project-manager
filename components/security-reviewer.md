@@ -34,9 +34,12 @@
   on `l1` done on 2026-10-13 (not independently verified). On `lx2` the
   stale 2026-10-01 install was replaced on 2026-10-23: the log of the
   human-run `scratch/lx2-setup.sh` records `install` and `check` passing
-  at 05:38:54Z (`PMD-20261023-001`). Restart any session started before
-  that install, because the hook denied its task launches whatever
-  arguments were passed; passing that triple explicitly remains harmless.
+  at 05:38:54Z (`PMD-20261023-001`); a session on `lx2` started before that
+  install had to be restarted, because the stale hook denied its task
+  launches whatever arguments were passed. Back on `l1` since 2026-10-25
+  (`PMD-20261025-001`), `check` has not been re-run there, and the
+  installed script was modified after the 2026-10-13 install. Passing that
+  triple explicitly remains harmless.
   Open P3
   `PMR-123` asks the owner to repin all four profiles to `claude-opus-5.5` /
   `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`

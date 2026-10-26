@@ -181,7 +181,10 @@ The responsible human later reported the exact governance `install && check`
 command completed on `lx2` (`"done above"`, 2026-10-01, at the earlier
 `lx2` location). That install was stale after the 2026-10-23 relocation and
 was replaced by a logged install whose `check` passed every line
-(`PMD-20261023-001`; `HANDOFF.md` records the current status). The
+(`PMD-20261023-001`). On `l1` the responsible human reported the install
+done on 2026-10-13; its script was modified afterwards, and `check` has
+not been re-run since the 2026-10-25 return (`PMD-20261025-001`;
+`HANDOFF.md` records the current status). The
 Project Manager reads such logs but did not run either mode against real
 user configuration or establish
 install-time session state. User-level hook state is per workstation
@@ -358,8 +361,10 @@ formal-verification-research, and provenance-review. Distinct owner requests
 Beryllium PMR-112 is complete at owner work `2313cbe0`, return `55b568b4`,
 and checkpoint `93819fd9`; as of the 2026-10-11 refs inspection all three
 are contained in last-fetched `origin`. CHERI notes PMR-114 is complete at
-owner work `8d1bc9d` / return `7fb49f4`, and XRV PMR-115 is complete at
-owner work/return `7361de4`; those three commits remain local and unpushed.
+owner work `8d1bc9d` / return `7fb49f4`, which were never pushed and have
+no known local copy after the 2026-10-25 return to `l1`
+(`PMD-20261025-001`), and XRV PMR-115 is complete at owner work/return
+`7361de4`, which remains local and unpushed.
 
 From the workspace root, use
 `bash ./project-manager/scripts/project-tasking.sh resolve <component>`.

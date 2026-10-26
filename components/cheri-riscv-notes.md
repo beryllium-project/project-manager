@@ -16,11 +16,21 @@
   `meta/handoff.md` (non-standard handoff path), `automation/design.md`,
   `automation/schema.md`, and the `.github/` policy files. PMR-071 added
   `.github/copilot-instructions.md` and maintained
-  `automation/validate-project-tasking.mjs` (last recorded on `l1`; both
-  are absent from the `lx2` checkout); `CONTRIBUTING.md`,
+  `automation/validate-project-tasking.mjs` (last recorded before the
+  2026-10-21 replacement; both are absent from the current checkout);
+  `CONTRIBUTING.md`,
   `meta/decisions.md`, and `meta/handoff.md` remain controlling
-- **Observed state:** **unresolved on `lx2`** (`PMD-20261023-001`). On
-  2026-10-23T03:15Z the symlink target holds only `main` at
+- **Observed state:** **unresolved** (`PMD-20261023-001`,
+  `PMD-20261025-001`). On `l1` at 2026-10-25T22:38Z, after the
+  responsible human's rsync from `lx2`, the checkout is in the state the
+  128th turn recorded on `lx2`: `main` only at `888f658`, 0 / 0, one pack,
+  empty reflogs, the same `ORIG_HEAD`, `FETCH_HEAD`, and `packed-refs`, and
+  none of the recorded commits. No local copy of the three never-pushed
+  commits (`8d1bc9d`, `7fb49f4`, `7f67154`) is therefore known on any
+  workstation; they are presumed lost unless the human holds another copy,
+  and their content (PMR-114 startup adoption, PMR-119 handoff wording) can
+  be re-requested once the checkout is resolved. As first observed on
+  `lx2` at 2026-10-23T03:15Z, the symlink target holds only `main` at
   `888f658a9d3c428543d3306ce3eae9de0742562b`, clean and 0 behind / 0 ahead
   of its only remote-tracking ref `origin/main`. Its working-tree files are
   dated 2026-10-21 and `meta/handoff.md` reads "As of: 2026-10-20". It has
@@ -42,13 +52,13 @@
   06:25:09Z (the workbook's DASICS session record still saw `7f67154`) and
   08:06:13Z (`packed-refs`), with no fetch since 2026-09-29. The Project
   Manager infers no cause, and the remote's current contents
-  are unknown. The responsible human answered `unresolved` and keeps the
-  `l1` copy untouched; it is the only known location of the three unpushed
-  commits, and whether it still holds them is unknown. The human-run
+  are unknown. The responsible human answered `unresolved` on 2026-10-23;
+  the `l1` copy, then the only known location of the three unpushed
+  commits, now holds none of them (`PMD-20261025-001`). The human-run
   read-only check is in `../outbox/OWNER-RUNBOOK.md` "P1 CHERI-RISC-V notes
   history check". Until a named decision resolves the checkout, the
-  Project Manager makes no carry here and relies on nothing in the `lx2`
-  checkout. The last recorded state, on `l1`, follows: clean
+  Project Manager makes no carry here and relies on nothing in this
+  checkout's history. The last recorded state, on `l1`, follows: clean
   `docs/reconcile-project-status` at PMR-119 carry
   `7f671548a18bc426133b5b2102fa83a70cb3f9bc`, 0 behind / 3 ahead of the
   last-fetched private `origin/docs/reconcile-project-status` `34a8b50`;
@@ -63,20 +73,21 @@
   `9a4c5ef -> 34a8b50`; other refs were preserved, final state is clean 0/0,
   and the single-use authorization is consumed. PMR-114 owner work
   `8d1bc9d` and handoff-only return `7fb49f4` add the SOT-bound startup
-  contract and refresh current checkout paths; they remain local and unpushed.
+  contract and refresh current checkout paths; they were never pushed.
   Project Manager class-3 carry `7f67154` then changes only
   `meta/handoff.md`'s opening date and `Exact next action`, closing PMR-119;
-  it is also local and unpushed.
+  it was never pushed either, and none of the three has a known local copy
+  since 2026-10-25 (`PMD-20261025-001`).
   The Project Manager verified both commit objects and the return parent
   through maintained inspection, and observed the branch clean with no owner
-  writer lock at the last `l1` check.
+  writer lock at its last `l1` check before the 2026-10-21 replacement.
   `PMR-009`, `PMR-051`, `PMR-071`,
   `PMR-101`, `PMR-103`, `PMR-104`, `PMR-106`, `PMR-114`, and `PMR-119`
   remain closed; PMR-102 is
   superseded; `PMR-093` and `PMR-096` are withdrawn. As last recorded on
   `l1`, inactive `gim-inactive` preserved the old internal home, and private
   `origin/archive/gim-wiki` preserved complete Wiki history through
-  `cd7dc81`; the `lx2` checkout has neither, and the remote's current
+  `cd7dc81`; the current checkout has neither, and the remote's current
   contents are unknown. `PMD-20260928-001` selects a dedicated human-run
   `outbox/pmr105-push.sh`: corrected preflight and execution verified active
   account `xjamesmorris`, private target, `ADMIN`, writer lock, exact
@@ -106,9 +117,9 @@ one-to-one with it.
 
 ## Commands (run by the human, from the repository root)
 
-Last recorded on `l1`; the `lx2` checkout lacks
+Last recorded before the 2026-10-21 replacement; the current checkout lacks
 `automation/validate-project-tasking.mjs`, so its second command fails
-there until the checkout is resolved (`PMD-20261023-001`).
+until the checkout is resolved (`PMD-20261023-001`).
 
 ```sh
 node --check automation/*.mjs
@@ -181,6 +192,7 @@ facts. The owner reports 35/35 negative tasking mutations and other listed
 validation passed. The two commits remain unpushed; no corpus, citation,
 D4/D5, merge, Pages, or publication gate changed. Project Manager class-3
 carry `7f671548` closes PMR-119 by changing only `meta/handoff.md`'s opening
-date and `Exact next action` to current PMR-114 state. The clean topic is
-0 behind / 3 ahead; the carry is local and unpushed and changes no research,
+date and `Exact next action` to current PMR-114 state. The clean topic was
+then 0 behind / 3 ahead; the carry was never pushed, has no known local
+copy since 2026-10-25 (`PMD-20261025-001`), and changed no research,
 corpus, source, gate, ref, remote, Pages, merge, or publication state.

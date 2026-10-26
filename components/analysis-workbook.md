@@ -63,11 +63,39 @@
   `private`, and `AWB-20260829-001`, `AWB-20260915-001`, and
   `AWB-20260928-001` intend `public-candidate`, which is not publication
   approval. `owner-actions.sh --only push_awb` now pushes `main` to the
-  private `origin`. On `lx2` this checkout's `origin` is the private
+  private `origin`. On `l1` (2026-10-25, `PMD-20261025-001`) this
+  checkout's `origin` is the private
   `beryllium-project/analysis-workbook-private`; the former `lx2` copy
   under `~/src/l1/src` is absent.
-- **Observed state:** on `lx2` at 2026-10-23T03:15Z (`PMD-20261023-001`),
-  maintained inspection observes clean new local branch
+- **Observed state:** on `l1` at 2026-10-25T22:38Z (`PMD-20261025-001`),
+  maintained inspection observes clean local branch
+  `analysis/mpt-core-vs-extension-private` checked out at `add42644`
+  ("AWB-20261023-001: record the push of the session branch to private
+  origin"), 0 behind / 0 ahead of
+  `origin/analysis/mpt-core-vs-extension-private`. The branch was created
+  from DASICS tip `10c777a6`, so private `origin` now also holds the DASICS
+  session's `c0d5fb77` and `10c777a6`; local
+  `analysis/dasics-cheri-fallback-private` stays at `10c777a6` with no
+  upstream. The handoff records direct-human session `AWB-20261023-001`
+  (2026-10-23 to 2026-10-24), not a Project Manager-mediated owner task:
+  a review of OS-security's 2026-10-23 MPT and Smmtt packets that assesses
+  an MPT/Smsd-based model as Beryllium's architectural core versus a future
+  extension. Its Q-001 is complete at Medium confidence and favors a
+  future extension tracked against explicit triggers; Q-002 to Q-007
+  follow; the package is `private` with intended `public-candidate`, which
+  is not publication approval; and it queues `PMQ-049..073`. The
+  responsible human's 2026-10-24 `"commit & push"` pushed the branch to
+  private `origin`, not to `main` or `public`. The Project Manager ledgers
+  PMQ-049..073 as `PML-0050..0074`: 21 routed (`PMR-135`, `PMR-136`, and
+  `PMR-137`), PMQ-053 and PMQ-054 `duplicate` with their class-1 edits due
+  but not carried (`PMD-20261025-002`), and PMQ-056 and PMQ-060 `pending`
+  with the eleven DASICS CHERI notes rows; DASICS row PMQ-044 is routed by
+  `PMR-135`. `pull-queues.sh check` depends on this branch, which holds
+  every queued row, staying checked out.
+  `analysis/k3-a100-service-design-private` stays at `5db4f2c` and `main`
+  at `4cf44d0`, each 0 / 0 with `origin`, and `public/main` is at
+  `4cf44d0`. Earlier, on `lx2` at 2026-10-23T03:15Z (`PMD-20261023-001`),
+  maintained inspection observed clean new local branch
   `analysis/dasics-cheri-fallback-private` checked out at `10c777a6`
   ("docs: record DASICS session handoff"), with no upstream, over
   `c0d5fb77` ("analysis: assess DASICS as CHERI fallback input vs
