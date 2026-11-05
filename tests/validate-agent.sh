@@ -283,7 +283,7 @@ refute_pattern "$governance_installer" \
 
 for component in helium-te-poc formal-verification-research osr-claude \
     beryllium-hypervisor cheri-riscv-notes cheri-hypervisor-research provenance-review \
-    analysis-workbook threat-modeler security-reviewer; do
+    analysis-workbook threat-modeler security-reviewer communications; do
     require_file "$repository_root/components/$component.md"
     require_text "$repository_root/components/$component.md" "# $component"
     require_text "$repository_root/components/$component.md" '**Ownership:**'
@@ -1703,7 +1703,7 @@ init_repo() {
 }
 init_repo "$synth" workspace
 for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
-    provenance-review analysis-workbook threat-modeler security-reviewer; do
+    provenance-review analysis-workbook threat-modeler security-reviewer communications; do
     init_repo "$synth/$name" "$name"
 done
 init_repo "$sandbox/agentic-os-research/cheri-riscv-notes" cheri
@@ -1746,7 +1746,7 @@ registry=$synth/COMPONENTS.md
     printf '| Workspace entry | Integration | Observed state | Role and boundary |\n'
     printf '| --- | --- | --- | --- |\n'
     for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
-        provenance-review analysis-workbook threat-modeler security-reviewer; do
+        provenance-review analysis-workbook threat-modeler security-reviewer communications; do
         printf '| `%s/` | Ignored direct checkout | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$synth/$name" rev-parse --short HEAD)"
     done
@@ -1815,7 +1815,7 @@ qcommit() {
 }
 init_repo "$qws" workspace
 for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
-    provenance-review analysis-workbook threat-modeler security-reviewer; do
+    provenance-review analysis-workbook threat-modeler security-reviewer communications; do
     init_repo "$qws/$name" "$name"
     printf '/%s/\n' "$name" >>"$qws/.gitignore"
 done
@@ -1827,7 +1827,7 @@ ln -s ../qlinks/cheri-hypervisor-research "$qws/cheri-hypervisor-research"
 {
     printf '| Workspace entry | Integration | Observed state | Role |\n| --- | --- | --- | --- |\n'
     for name in project-manager beryllium-hypervisor helium-te-poc formal-verification-research osr-claude \
-        provenance-review analysis-workbook threat-modeler security-reviewer \
+        provenance-review analysis-workbook threat-modeler security-reviewer communications \
         cheri-riscv-notes cheri-hypervisor-research; do
         printf '| `%s/` | Fixture | Clean `main` at `%s` | Fixture |\n' \
             "$name" "$(git -C "$qws/$name" rev-parse --short HEAD)"

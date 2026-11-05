@@ -2,7 +2,10 @@
 
 **Maintained by:** `project-manager`
 **Contract:** `records/decisions/PMD-20261011-001-workspace-rehydration-contract.md`
-**Last reviewed:** 2026-10-25 on `l1`, after the return by rsync from `lx2`
+**Last reviewed:** 2026-11-05 on `l1`: `communications/` added
+(`PMD-20261105-001`); its private repository was not known to exist, so a
+fresh workstation cannot clone it until the responsible human creates it
+and pushes `main`. Earlier: 2026-10-25 on `l1`, after the return by rsync from `lx2`
 recorded by `PMD-20261025-001` (inventory unchanged; the Project Manager
 ran no clone or install; on `l1` the install reported done on 2026-10-13
 has not been re-checked since the return, and its script was modified
@@ -54,7 +57,8 @@ parent's tracked symlinks `cheri-riscv-notes` and
 `cheri-hypervisor-research` already point to `../agentic-os-research/`.
 Identities come from Project Manager records (component cards and the D0
 inventory `PMD-20260914-004`), read-only Git configuration, and the
-responsible human (analysis-workbook, 2026-10-11), and the verified
+responsible human (analysis-workbook, 2026-10-11; communications,
+2026-11-05, `PMD-20261105-001`), and the verified
 `PMR-129` split log (`analysis-workbook-private`, 2026-10-12).
 
 | Workspace entry | GitHub repository | Notes |
@@ -67,6 +71,7 @@ responsible human (analysis-workbook, 2026-10-11), and the verified
 | `analysis-workbook/` | `beryllium-project/analysis-workbook-private` | Private `origin` with every branch since the verified `PMR-129` split (2026-10-12); add remote `public`, see below |
 | `threat-modeler/` | `beryllium-project/threat-modeler` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `security-reviewer/` | `beryllium-project/security-reviewer` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
+| `communications/` | `beryllium-project/communications` | Private by the responsible human's statement (`PMD-20261105-001`); not known to exist on 2026-11-05, so its clone fails until the human creates it and pushes `main` |
 | `../agentic-os-research/cheri-riscv-notes` | `agentic-os-research/cheri-riscv-notes` | Target of tracked symlink `cheri-riscv-notes` |
 | `../agentic-os-research/cheri-hypervisor-research` | `agentic-os-research/cheri-hypervisor-research` | Target of tracked symlink `cheri-hypervisor-research` |
 
@@ -81,6 +86,7 @@ for spec in \
     analysis-workbook=beryllium-project/analysis-workbook-private \
     threat-modeler=beryllium-project/threat-modeler \
     security-reviewer=beryllium-project/security-reviewer \
+    communications=beryllium-project/communications \
     ../agentic-os-research/cheri-riscv-notes=agentic-os-research/cheri-riscv-notes \
     ../agentic-os-research/cheri-hypervisor-research=agentic-os-research/cheri-hypervisor-research
 do
@@ -165,7 +171,8 @@ Then start Copilot in `project-manager/` and select `/agent project-manager`.
 | Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips but not visibility (`beryllium-project/project-manager` stays public by the responsible human's decision, `PMD-20261012-001`, so that step publishes; default runs include it and the public `push_tm` and `push_sr`, and `--skip push_pm,push_tm,push_sr` omits all three), and components under their owners' rules and a human push decision (pushes to the public `threat-modeler`, `security-reviewer`, and `provenance-review` publish; `PMD-20261012-002`). |
 | Retained Project Manager artifacts | `../files/` (ignored by the parent) | Restore from a backup if the responsible human keeps one (none is recorded in Project Manager records), and locate candidates with the human-run `bash ./scripts/owner-actions.sh --only files_search --files-search --files-root <dir>`. `PMD-20260906-002` and `PMD-20260912-002` hold the inventory; `PMD-20260916-004` records the selection. On `lx2` the copied `../files` link dangled; on `l1` it resolves again, and the artifacts have no GitHub backup (`PMD-20261025-001`). |
 | Linked worktrees | `../worktrees/` and owner-chosen paths | Component-owned; the owner recreates them with `git worktree add`. Closed `PMR-127` repaired Beryllium's seven registrations at the current root path; five under a former session-state directory stay unrepaired (see `../COMPONENTS.md`). |
-| Component-ignored data | For example analysis-workbook quarantine copies and XRV `review-inbox/` PDFs | Owner-managed under each component's rules. |
+| Component-ignored data | For example analysis-workbook quarantine copies, XRV `review-inbox/` PDFs, and communications `scratch/` prompts | Owner-managed under each component's rules. |
+| Workstation helper scripts | Outside every repository, for example the phrasing checker the communications README names | Restore from the responsible human's own copy; no repository carries them. |
 | OS-security restricted sources | Private `os-security-restricted-sources` | Manual responsible-human handling only; agents never access or copy them. |
 | User-level Copilot state | `~/.copilot` (settings, hooks, sub-agent defaults, session state) | Section 4; never copied between hosts. |
 | Generated and transient Project Manager files | `outbox/tasking/`, `scratch/`, `inbox/` | Tasking is regenerated in section 5; scratch logs and inbox drops are transient. |

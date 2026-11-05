@@ -72,6 +72,7 @@ registered_direct=(
     analysis-workbook
     threat-modeler
     security-reviewer
+    communications
 )
 registered_symlinks=(
     cheri-riscv-notes

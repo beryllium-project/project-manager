@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-10-25
+**Last refreshed:** 2026-11-05
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -52,7 +52,49 @@ On 2026-10-23 you ran it through the ignored wrapper
 ignored wrapper `scratch/l1-backup-and-checks.sh` (P1 below) runs `check`
 and logs it.
 
+## P1 Create the private communications repository (no PMR)
+
+Why: on 2026-11-05 you asked the Project Manager to register
+`communications/` and said it "will be a private repo in the gh beryllium
+project" (`PMD-20261105-001`). It has no remote, so the `l1` checkout is
+the only copy of its work, including the two as-submitted conference
+proposal texts; under your backup direction (`PMD-20261025-002`) it belongs
+on GitHub. The Project Manager cannot do this step: its execution boundary
+excludes `gh`, adding remotes, and component pushes, and the component's
+own rules reserve adding a remote and pushing to you.
+
+Run this one line in a terminal on `l1`, with the `gh` account that
+administers the `beryllium-project` organization active (`gh auth status`
+shows it; `gh auth switch` changes it):
+
+```sh
+gh repo create beryllium-project/communications --private --source /home/jmorris/src/beryllium-project/communications --remote origin --push
+```
+
+It creates the repository as private, adds remote `origin` to the
+communications checkout, and pushes `main`. It changes no file and touches
+no other repository, so the active Beryllium and workbook sessions are
+unaffected. The component's ignored `scratch/` folder (three prompt files)
+stays local by its own `.gitignore`. If it reports that the name already exists, stop and tell the
+Project Manager rather than retrying another way, because that repository's
+visibility and contents would need checking first. Then tell the Project
+Manager `done`; the next turn verifies `origin/main` at `1f66802` with
+`bash ./scripts/inspect-components.sh refs communications`.
+
+Later, at the communications session's next start, tell it that the Project
+Manager registered the repository under `PMD-20261105-001`, so it can drop
+the "not yet registered" wording from its README and handoff and its
+pending next action of preparing a registration request.
+
 ## P1 Backup and checks on `l1` (no PMR)
+
+**Wait until the Beryllium and analysis-workbook sessions have ended**
+(you reported both active on 2026-11-05): step 4 fetches every registered
+repository, which updates remote-tracking refs inside those checkouts.
+Not run yet: no `scratch/l1-backup-and-checks-*.log` existed on
+2026-11-05. Its Beryllium step targets only `beryllium/mvp-m0`; on
+2026-11-05 that branch and its last-fetched `origin` branch both pointed at
+`6f7b6e7`, so the step should report nothing to push.
 
 Why: you returned the workspace to `l1` by rsync on 2026-10-25
 (`PMD-20261025-001`) and said exactly `"everything important should be
@@ -63,12 +105,12 @@ implementation, a harness fix, the lock refresh, and the campaign-2
 records), threat-modeler's six commits, and security-reviewer's two
 (`PMR-111`). The `l1` governance install has not been checked since the
 return, and the CHERI notes remote check (next section) has not run. The
-Project Manager pushes its own commits (public; on your answer
-`publish_now`) and the parent's after committing its turn; it never pushes
-a component.
+Project Manager pushed its own and the parent's 129th-turn commits (live
+`ls-remote` verified them on 2026-11-05); it never pushes a component.
 
-Run this in a terminal on `l1`. It changes no Copilot configuration, so no
-session needs to stop:
+Run this in a terminal on `l1` once the Beryllium and workbook sessions
+have ended. It changes no Copilot configuration, so no other governed
+session needs to stop for its hook check:
 
 ```sh
 bash /home/jmorris/src/beryllium-project/project-manager/scratch/l1-backup-and-checks.sh
@@ -167,6 +209,12 @@ Manager records no disclosure, licensing, or publication decision.
 
 ## P2 Beryllium local-only branches (no PMR)
 
+**Stale since 2026-11-05:** maintained inspection then found Beryllium on
+`beryllium/single-hart-runtime-r0` at `d776f324`, contained in
+last-fetched `origin`, with local `beryllium/mvp-m10*` branches, during a
+session you reported active. This section reflects the 2026-10-25 state
+and is refreshed in the first turn after that session ends.
+
 Why: the P1 script backs up only the active `beryllium/mvp-m0`. Fifteen
 other Beryllium branch tips are on no remote:
 `beryllium/doc-repro-option-a-20260929` (`c6fa7a7c`, "docs: record
@@ -213,7 +261,14 @@ with the governance hook's required model edited for that run and restored
 afterwards. Project Manager records keep K3 hardware
 `NOT RUN`, K0-X/K0-R blocked, H1-H4 not authorized, and R8-H0 a committed
 candidate, not accepted, and they record none of these component-side
-acceptances. This question is reconciled only from a named
+acceptances. The communications handoff at `1f66802` adds unverified
+component-side claims that Beryllium release candidate 3 board evidence
+has overtaken the K3 `NOT RUN` wording and that a public snapshot of
+`beryllium-project/beryllium-hypervisor` exists, which conflicts with
+PMR-098's `PRIVATE` report; Beryllium has also moved well past the
+state above (see the P2 note). These join this question, and the Project
+Manager re-reads Beryllium's records once its active session ends.
+This question is reconciled only from a named
 responsible-human record: tell the Project Manager which component-side
 acceptances, authorizations, drops, and SOP exceptions its records should
 carry. No gate follows from this runbook.
@@ -484,8 +539,8 @@ existing security-reviewer owner session, releasing only that component's
 session/reservation. The two commits remain local and unpushed; no engagement
 ran.
 
-PMR-111 is a separate backup-only request. The P1 script at the top of this
-runbook now offers it as its y/N `push_sr` step (`PMD-20261025-002`); your
+PMR-111 is a separate backup-only request. The P1 backup-and-checks
+script in this runbook now offers it as its y/N `push_sr` step (`PMD-20261025-002`); your
 y there is the same-turn confirmation. Before any push, require a new
 exact same-turn responsible-human confirmation, clean idle `main` at
 `c2edac70`, and live public `origin/main` still at
@@ -956,11 +1011,13 @@ and no views from 2026-09-27 to 2026-10-10; 2026-10-11 is outside that
 window. Re-run the audit at any time; its `MISMATCH` lines for those five
 repositories are expected.
 
-The coordination backup is complete through Project Manager `e3c8e10` and
-parent `6639e86`, verified by live `ls-remote` on 2026-10-23
-(`PMD-20261023-001`); the 127th- to 129th-turn commits are pushed after
-the 129th turn's commits (`PMD-20261025-002`), and the next turn verifies
-them. History: the backup was complete through Project Manager `e5b18ae`
+The coordination backup is complete through Project Manager `faca00f` and
+parent `0a1571a`, verified by live `ls-remote` on 2026-11-05; the
+130th-turn commits are pushed after that turn's commits under your answer
+`push_both`, and the next turn verifies them. History: the backup was
+complete through Project Manager `e3c8e10` and parent `6639e86`, verified
+by live `ls-remote` on 2026-10-23 (`PMD-20261023-001`), before the
+129th-turn push (`PMD-20261025-002`), and through Project Manager `e5b18ae`
 and parent `1ca8869` before that. Under your exact `"push"` (2026-10-13), the 118th turn
 pushed Project Manager `918efe7..3873777` (publishing it) and parent
 `b7ba4a4..29dcf66` as fast-forwards; on 2026-10-13 the 119th turn verified
@@ -1250,20 +1307,21 @@ authorizes no default or opt-in helper step and no parent, Project Manager,
 component, branch, tag, or remote mutation.
 
 **Project Manager and parent pushes need an exact same-turn confirmation;
-component pushes are yours.** In the 129th turn (2026-10-25,
-`PMD-20261025-002`) the Project Manager pushes the parent `main` from
-`6639e86` under your `"everything important should be committed and
-pushed, gh is a backup"` and its own `main` from `e3c8e10`, which
-publishes, under your answer `publish_now`, both through the 129th turn's
-commits as plain fast-forwards after committing; the next turn verifies
-them with live `ls-remote`, and later commits again need a same-turn
-confirmation.
+component pushes are yours.** In the 130th turn (2026-11-05) the Project
+Manager pushes the parent `main` from `0a1571a` and its own `main` from
+`faca00f`, which publishes, under your answer `push_both`, both through
+that turn's commits as plain fast-forwards after committing; the next turn
+verifies them with live `ls-remote`, and later commits again need a
+same-turn confirmation. The 129th turn's pushes, under your backup
+direction and your answer `publish_now` (`PMD-20261025-002`), were verified
+on 2026-11-05.
 `beryllium-project/project-manager` stays public by your decision, so
 every `push_pm` publishes the Project Manager commits it pushes.
 `threat-modeler` and `security-reviewer` also stay public
 (`PMD-20261012-002`), so `push_tm` and `push_sr` publish too. The current
-component backups are the P1 script and the two P2 owner sessions at the
-top of this runbook.
+component backups are the two P1 items (the communications repository and
+the backup-and-checks script) and the two P2 owner sessions at the top of
+this runbook.
 
 For any other helper run from `project-manager/`, add
 `--skip push_pm,push_tm,push_sr` unless you intend to publish new commits
@@ -1277,9 +1335,12 @@ bash ./scripts/owner-actions.sh --skip push_pm,push_tm,push_sr
 The relevant local component commits are:
 
 - `analysis-workbook`: on `l1` (2026-10-25) clean
-  `analysis/mpt-core-vs-extension-private` at `add4264` is 0 behind / 0
+  `analysis/mpt-core-vs-extension-private` at `add4264` was 0 behind / 0
   ahead of the private `origin`, which therefore also holds the DASICS
-  commits `c0d5fb7` and `10c777a`; nothing in the workbook needs a backup.
+  commits `c0d5fb7` and `10c777a`. On 2026-11-05, during a session you
+  reported active, the session commits after `2fcacc1` on local
+  `research/AWB-20261105-001-cjc-scan` (no upstream; `f31d9bd` at 06:44Z)
+  are on no remote; back them up from that session once it ends.
   Private branch `analysis/k3-a100-service-design-private` is at
   owner return `5db4f2c`, 0 behind / 0 ahead of private `origin`
   `beryllium-project/analysis-workbook-private` since the human-run
@@ -1297,10 +1358,12 @@ The relevant local component commits are:
   separate dependent `PMR-088` tracks only the two PMR-086 commits; PMR-089
   freezes the twelve-commit post-`858a73b` closure range at `8b5a301`;
   PMR-095 and PMR-097 separately track carries `5a646df` and `8da398d`;
-- `beryllium-hypervisor/` is clean on local branch `beryllium/mvp-m0` at
+- `beryllium-hypervisor/` was clean on local branch `beryllium/mvp-m0` at
   `977dd4e` (2026-10-25T22:38Z on `l1`), ahead of last-fetched
-  `origin/beryllium/mvp-m0` `1a6898e`; the P1 script offers its
-  fast-forward. The development branch and `beryllium/s3-mvp-plan` are at
+  `origin/beryllium/mvp-m0` `1a6898e`; on 2026-11-05 that branch matches
+  last-fetched `origin` at `6f7b6e7`, and the checkout is on the
+  development branch at `d776f324`, contained in last-fetched `origin`,
+  during a session you reported active (not re-inventoried). The development branch and `beryllium/s3-mvp-plan` were at
   `1fb4641`, 0 behind / 0 ahead of last-fetched `origin`, which the owner
   records as pushed on your instructions of 2026-10-23; fifteen other local
   tips are on no remote (see "P2 Beryllium local-only branches"). On
@@ -1372,10 +1435,14 @@ The relevant local component commits are:
   remotely contained and those backup requests are closed. The later
   startup-path change remains local and unpushed; inactive
   `legacy-backup/main` remains `706e708`;
-- `formal-verification-research` clean `main` is synchronized 0/0 with
+- `formal-verification-research` `main` is synchronized 0/0 with
   last-fetched `origin/main` at `388690d`, which contains `c55065c` and
   `784be93` (`PMR-035`, `PMR-037`, `PML-0022`, `PML-0024`); no
-  formal-verification commit is pending;
+  formal-verification commit is pending, though on 2026-11-05 the checkout
+  also holds one untracked `inbox.txt`, which is not backed up until the
+  owner decides what to do with it;
+- `communications` clean `main` is at `1f66802` with no remote (2026-11-05);
+  the P1 "Create the private communications repository" step backs it up;
 - `threat-modeler` clean `main` is at `PMR-121` return `aba3350`, 0 behind
   / 6 ahead of last-fetched public `origin/main` `c4126b6`. Remote backup
   reaches only predecessor owner maintenance `c4126b6` (`PMR-028` closed;

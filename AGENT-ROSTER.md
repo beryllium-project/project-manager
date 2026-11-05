@@ -55,7 +55,7 @@ workstation-status anchor. Generated tasking views and dispatch packets bind
 changed. Each owner context must also read the current anchor from its
 registered logical workspace entry before resolving component paths or
 beginning work. The 2026-10-01 inventory, refreshed with owner returns on
-2026-10-02, is:
+2026-10-02 and extended by the communications registration on 2026-11-05, is:
 
 | Component | Registered owner context(s) | SOT startup state |
 | --- | --- | --- |
@@ -70,6 +70,7 @@ beginning work. The 2026-10-01 inventory, refreshed with owner returns on
 | `osr-claude` | OS-security skill owner context | Ask-first gap recorded as `PMR-116`, alongside `PMR-070` |
 | `threat-modeler` | `threat-modeler`; `threat-model-maintainer`; adopted hidden `threat-modeler-owner` (not native-handshaken or PM-invocable) | User-facing startup gap remains parked PMR-117 alongside PMR-064; adopted owner packets bind SOT, but native discovery/isolation remains deferred after PMR-120 closure at `e6aed9f` |
 | `security-reviewer` | orchestrator and three write-disabled specialists | Gap recorded as `PMR-118` |
+| `communications` | ordinary communications session (no custom agent) | Registered 2026-11-05 (`PMD-20261105-001`); its README directs reading the parent `SOT.md` before resolving a sibling path, and it has no `check Project Manager tasking` mapping; no request is open for it, so no adoption request is raised |
 
 Project-wide model and review practice follows the single-model,
 low-overhead SOP `PMD-20261006-001`, recorded from the responsible human's
@@ -113,7 +114,10 @@ because it is aligned. Threat-modeler is aligned since closed `PMR-121`
 pins remain in provenance-review (three profiles at `gpt-5.6-sol`, `PMR-122`) and
 security-reviewer (four profiles at `gpt-5.3-codex` with `xhigh` /
 `default`, `PMR-123`). Formal-verification, OS-security, the CHERI notes,
-XRV, and Helium carry no model pin.
+XRV, and Helium carry no model pin. Communications, registered on
+2026-11-05, has no agent profile; its repository instructions at `1f66802`
+adopt `claude-opus-5.5` / `max` / `long_context`, so it receives no SOP
+request.
 
 For allow-listed orchestrators, this resolver is startup discovery outside an
 analysis, threat-model, provenance, or security-review package. It is not
@@ -340,6 +344,7 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
 | `osr-claude/` | Copilot skill `.github/skills/os-security-research/`; `.github/copilot-instructions.md`; `HANDOFF.md`; clean private successor synchronized at `a6cd0def` ("handoff: record push and pending analysis-workbook review", 2026-10-25 on `l1`), over the 2026-10-23 MPT survey, proposal, and source collection and the earlier independent executable-backlog integration `86645d4`; PMR-044 baseline `49fbfd6` remains reachable; PMR-052 is unstarted; tasking startup adoption `PMR-070`; pointer triage `PMR-107` and `PMR-137` (ask-first) | `tools/md-to-html.sh --check` | Owner |
 | `cheri-riscv-notes` | **Unresolved** (`PMD-20261023-001`, `PMD-20261025-001`): the checkout on `l1`, as on `lx2`, is `main`-only at `888f658`, contains none of the recorded commits, and lacks `.github/copilot-instructions.md` and the tasking validator; its Git metadata shows the same registered repository with its earlier history replaced (P1 history check in `outbox/OWNER-RUNBOOK.md`). Do not start an owner session there until a named decision resolves it. Last recorded before the 2026-10-21 replacement: `meta/handoff.md`; `CONTRIBUTING.md`; PMR-071/114 `.github/copilot-instructions.md` and maintained tasking validator; clean local `docs/reconcile-project-status` at PMR-119 class-3 carry `7f67154`, 0/3 relative to last-fetched private `origin` tip `34a8b50`. PMR-114 work `8d1bc9d` changes only startup instructions and tasking-validator policy; handoff-only return `7fb49f4` records 35/35 negative mutations and other owner-reported validation; PMR-119 changes only the handoff opening date and next action. No push/fetch occurred; all three commits were never pushed and have no known local copy | Last recorded before the replacement: `node --check automation/*.mjs`; `node automation/validate-project-tasking.mjs` (absent from the current checkout); `node automation/validate-corpus.mjs`; `node automation/build-wiki.mjs ../wiki-build [owner/repo]` | PMR-105 completed at the then-synchronized topic tip `34a8b50` (the remote's current contents are unknown); PMR-114 and PMR-119 are closed and must not be rerun. Merge, publication, D5, force, tags, and remote mutation remain separate or prohibited |
 | `cheri-hypervisor-research` | `.github/copilot-instructions.md`; `HANDOFF.md`; `COLLAB.md`; `review-log.md`; local `main` at PMR-115 owner work/return `7361de4`, 0/1 against last-fetched private `origin/main` `5e7387a`, dirty on `l1` (2026-10-25) with the owner's uncommitted 2026-10-23 publication-preparation change set (the two `review-inbox/*.pdf` files now ignored; publication blocked on the owner's disclosure decision). PMR-115 changes only startup instructions and dated handoff path facts; no fetch/push or research/review/source/collaboration change occurred. Existing PMR-075/092/094 predecessor closures remain exact; the Bao-CHERI state remains owner evidence, not a Project Manager disposition | none configured at committed `7361de4`; the uncommitted change set adds a MkDocs wiki build and focused tests | Owner; PMR-115 is closed as acknowledgement, while the local commit remains unpushed; pointer triage `PMR-131` and `PMR-135` wait for the change set to be committed |
+| `communications/` | `.github/copilot-instructions.md`; `HANDOFF.md`; `README.md`; no custom agent or skill. Registered 2026-11-05 (`PMD-20261105-001`): clean `main` at `1f66802`, no remote, remote-tracking ref, or tag; the responsible human states it will be the private `beryllium-project/communications`. Its README and handoff still call the registration pending (left to its next session) | The workstation phrasing checker named in its README, run on public-safe copy before each commit (outside every repository); no in-repository validator | Human-started ordinary session in `communications/`; creating the private repository, adding `origin`, and every push are the human's |
 
 ## Orchestration rules
 

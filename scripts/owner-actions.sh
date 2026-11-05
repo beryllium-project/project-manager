@@ -1122,7 +1122,7 @@ step_fetch_snapshot() {
     local -a entries=("$ws_root" "$pm_root")
     local e dir r url
     for e in helium-te-poc formal-verification-research osr-claude provenance-review \
-        analysis-workbook threat-modeler security-reviewer beryllium-hypervisor cheri-riscv-notes \
+        analysis-workbook threat-modeler security-reviewer communications beryllium-hypervisor cheri-riscv-notes \
         cheri-hypervisor-research; do
         entries+=("$ws_root/$e")
     done
