@@ -3,9 +3,8 @@
 **Maintained by:** `project-manager`
 **Contract:** `records/decisions/PMD-20261011-001-workspace-rehydration-contract.md`
 **Last reviewed:** 2026-11-05 on `l1`: `communications/` added
-(`PMD-20261105-001`); its private repository was not known to exist, so a
-fresh workstation cannot clone it until the responsible human creates it
-and pushes `main`. Earlier: 2026-10-25 on `l1`, after the return by rsync from `lx2`
+(`PMD-20261105-001`); the responsible human created its private repository
+and pushed `main` the same day, so it clones like the others. Earlier: 2026-10-25 on `l1`, after the return by rsync from `lx2`
 recorded by `PMD-20261025-001` (inventory unchanged; the Project Manager
 ran no clone or install; on `l1` the install reported done on 2026-10-13
 has not been re-checked since the return, and its script was modified
@@ -71,7 +70,7 @@ responsible human (analysis-workbook, 2026-10-11; communications,
 | `analysis-workbook/` | `beryllium-project/analysis-workbook-private` | Private `origin` with every branch since the verified `PMR-129` split (2026-10-12); add remote `public`, see below |
 | `threat-modeler/` | `beryllium-project/threat-modeler` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `security-reviewer/` | `beryllium-project/security-reviewer` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
-| `communications/` | `beryllium-project/communications` | Private by the responsible human's statement (`PMD-20261105-001`); not known to exist on 2026-11-05, so its clone fails until the human creates it and pushes `main` |
+| `communications/` | `beryllium-project/communications` | Private, created by the responsible human with `--private` and pushed on 2026-11-05 (`PMD-20261105-001`); visibility not independently checked by the Project Manager |
 | `../agentic-os-research/cheri-riscv-notes` | `agentic-os-research/cheri-riscv-notes` | Target of tracked symlink `cheri-riscv-notes` |
 | `../agentic-os-research/cheri-hypervisor-research` | `agentic-os-research/cheri-hypervisor-research` | Target of tracked symlink `cheri-hypervisor-research` |
 

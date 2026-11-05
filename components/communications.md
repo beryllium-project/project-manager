@@ -17,11 +17,13 @@
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `HANDOFF.md`, `README.md`
 - **Observed state:** clean `main` at `1f66802` ("Refresh the handoff with
-  the public repository's current state"), its only branch, with no remote,
-  remote-tracking ref, or tag (maintained inspection,
-  2026-11-05T04:53Z on `l1`). The responsible human states that it will be
-  the private `beryllium-project/communications`; until the human creates
-  that repository and pushes, the `l1` checkout is its only copy
+  the public repository's current state"), its only branch, tracking
+  `origin/main` 0/0 with no tag (maintained inspection,
+  2026-11-05T08:55Z on `l1`). Remote `origin` is
+  `beryllium-project/communications`, which the responsible human created
+  with `--private` and pushed on 2026-11-05; the Project Manager did not
+  check its visibility independently. The ignored `scratch/` prompts stay
+  local
 
 ## Role
 
@@ -72,8 +74,7 @@ commit; that checker lives outside every repository.
 ## What the Project Manager may request
 
 Class-3 registration wording in its README and handoff (stale after
-`PMD-20261105-001`; left to its next session, no request raised), a
-source-use report back to a source owner through the Project Manager, or
-sibling evidence it should cite. Creating the private
-`beryllium-project/communications` repository and pushing `main` are the
-human's actions (`../outbox/OWNER-RUNBOOK.md`).
+`PMD-20261105-001` and the 2026-11-05 backup; left to its next session, no
+request raised), a source-use report back to a source owner through the
+Project Manager, or sibling evidence it should cite. Every push,
+submission, publication, pull request, and email is the human's.

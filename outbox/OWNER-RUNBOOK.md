@@ -52,38 +52,23 @@ On 2026-10-23 you ran it through the ignored wrapper
 ignored wrapper `scratch/l1-backup-and-checks.sh` (P1 below) runs `check`
 and logs it.
 
-## P1 Create the private communications repository (no PMR)
+## Completed: private communications repository (no PMR)
 
-Why: on 2026-11-05 you asked the Project Manager to register
-`communications/` and said it "will be a private repo in the gh beryllium
-project" (`PMD-20261105-001`). It has no remote, so the `l1` checkout is
-the only copy of its work, including the two as-submitted conference
-proposal texts; under your backup direction (`PMD-20261025-002`) it belongs
-on GitHub. The Project Manager cannot do this step: its execution boundary
-excludes `gh`, adding remotes, and component pushes, and the component's
-own rules reserve adding a remote and pushing to you.
+On 2026-11-05 you asked the Project Manager to register `communications/`
+as a private repository in the `beryllium-project` organization
+(`PMD-20261105-001`), ran the one-line `gh repo create
+beryllium-project/communications --private --source ... --remote origin
+--push`, and said `done` (08:54Z). Maintained inspection at 08:55Z shows
+`main` at `1f66802` tracking `origin/main` 0/0 with remote `origin` at
+`beryllium-project/communications`; the Project Manager did not check the
+repository's visibility independently. The component's ignored `scratch/`
+folder (three prompt files) stays local by its own `.gitignore`. Do not
+re-run the command.
 
-Run this one line in a terminal on `l1`, with the `gh` account that
-administers the `beryllium-project` organization active (`gh auth status`
-shows it; `gh auth switch` changes it):
-
-```sh
-gh repo create beryllium-project/communications --private --source /home/jmorris/src/beryllium-project/communications --remote origin --push
-```
-
-It creates the repository as private, adds remote `origin` to the
-communications checkout, and pushes `main`. It changes no file and touches
-no other repository, so the active Beryllium and workbook sessions are
-unaffected. The component's ignored `scratch/` folder (three prompt files)
-stays local by its own `.gitignore`. If it reports that the name already exists, stop and tell the
-Project Manager rather than retrying another way, because that repository's
-visibility and contents would need checking first. Then tell the Project
-Manager `done`; the next turn verifies `origin/main` at `1f66802` with
-`bash ./scripts/inspect-components.sh refs communications`.
-
-Later, at the communications session's next start, tell it that the Project
-Manager registered the repository under `PMD-20261105-001`, so it can drop
-the "not yet registered" wording from its README and handoff and its
+Still to do, at the communications session's next start: tell it that the
+Project Manager registered the repository under `PMD-20261105-001` and
+that `main` is on its private `origin`, so it can update the "not yet
+registered" and "no remote" wording in its README and handoff and drop its
 pending next action of preparing a registration request.
 
 ## P1 Backup and checks on `l1` (no PMR)
@@ -1011,11 +996,13 @@ and no views from 2026-09-27 to 2026-10-10; 2026-10-11 is outside that
 window. Re-run the audit at any time; its `MISMATCH` lines for those five
 repositories are expected.
 
-The coordination backup is complete through Project Manager `faca00f` and
-parent `0a1571a`, verified by live `ls-remote` on 2026-11-05; the
-130th-turn commits are pushed after that turn's commits under your answer
-`push_both`, and the next turn verifies them. History: the backup was
-complete through Project Manager `e3c8e10` and parent `6639e86`, verified
+The coordination backup is complete through Project Manager `2d04109` and
+parent `141d2d4`, verified by live `ls-remote` at 2026-11-05T08:55Z; the
+131st-turn commits are pushed after that turn's commits under your second
+answer `push_both`, and the next turn verifies them. History: the backup
+was complete through Project Manager `faca00f` and parent `0a1571a`
+(verified 2026-11-05, before the 130th-turn push), through Project Manager
+`e3c8e10` and parent `6639e86`, verified
 by live `ls-remote` on 2026-10-23 (`PMD-20261023-001`), before the
 129th-turn push (`PMD-20261025-002`), and through Project Manager `e5b18ae`
 and parent `1ca8869` before that. Under your exact `"push"` (2026-10-13), the 118th turn
@@ -1307,21 +1294,20 @@ authorizes no default or opt-in helper step and no parent, Project Manager,
 component, branch, tag, or remote mutation.
 
 **Project Manager and parent pushes need an exact same-turn confirmation;
-component pushes are yours.** In the 130th turn (2026-11-05) the Project
-Manager pushes the parent `main` from `0a1571a` and its own `main` from
-`faca00f`, which publishes, under your answer `push_both`, both through
-that turn's commits as plain fast-forwards after committing; the next turn
-verifies them with live `ls-remote`, and later commits again need a
-same-turn confirmation. The 129th turn's pushes, under your backup
-direction and your answer `publish_now` (`PMD-20261025-002`), were verified
-on 2026-11-05.
+component pushes are yours.** In the 131st turn (2026-11-05) the Project
+Manager pushes the parent `main` from `141d2d4` and its own `main` from
+`2d04109`, which publishes, under your second answer `push_both`, both
+through that turn's commits as plain fast-forwards after committing; the
+next turn verifies them with live `ls-remote`, and later commits again need
+a same-turn confirmation. The 130th turn's pushes, under your first answer
+`push_both`, were verified at 2026-11-05T08:55Z.
 `beryllium-project/project-manager` stays public by your decision, so
 every `push_pm` publishes the Project Manager commits it pushes.
 `threat-modeler` and `security-reviewer` also stay public
 (`PMD-20261012-002`), so `push_tm` and `push_sr` publish too. The current
-component backups are the two P1 items (the communications repository and
-the backup-and-checks script) and the two P2 owner sessions at the top of
-this runbook.
+component backups are the P1 backup-and-checks script and the two P2
+owner sessions at the top of this runbook; the communications repository
+was backed up on 2026-11-05.
 
 For any other helper run from `project-manager/`, add
 `--skip push_pm,push_tm,push_sr` unless you intend to publish new commits
@@ -1441,8 +1427,8 @@ The relevant local component commits are:
   formal-verification commit is pending, though on 2026-11-05 the checkout
   also holds one untracked `inbox.txt`, which is not backed up until the
   owner decides what to do with it;
-- `communications` clean `main` is at `1f66802` with no remote (2026-11-05);
-  the P1 "Create the private communications repository" step backs it up;
+- `communications` clean `main` is at `1f66802`, 0/0 with its private
+  `origin/main` since your 2026-11-05 push; nothing is pending;
 - `threat-modeler` clean `main` is at `PMR-121` return `aba3350`, 0 behind
   / 6 ahead of last-fetched public `origin/main` `c4126b6`. Remote backup
   reaches only predecessor owner maintenance `c4126b6` (`PMR-028` closed;
