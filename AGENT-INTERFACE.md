@@ -160,9 +160,9 @@ current status.
 The `project-manager` orchestrator and `pm-auditor` pin `claude-opus-5.5`;
 the auditor runs one same-model consistency pass with no iteration loop.
 Historical artifacts are unchanged and no in-flight task is restarted.
-`PMR-121` (closed 2026-10-13) aligned the threat-modeler profiles;
-`PMR-122` and `PMR-123` request provenance-review and security-reviewer
-profile alignment; and `PMR-124` (closed 2026-10-12) mirrored CRQ-004 in
+`PMR-121` (closed 2026-10-13) aligned the threat-modeler profiles and
+`PMR-123` (closed 2026-11-08) the security-reviewer profiles; `PMR-122`
+requests provenance-review profile alignment; and `PMR-124` (closed 2026-10-12) mirrored CRQ-004 in
 the analysis-workbook. `AGENT-ROSTER.md` records the
 observed per-component model state.
 

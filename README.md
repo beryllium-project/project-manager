@@ -153,8 +153,8 @@ of `PMD-20260930-005`. The `project-manager` orchestrator and `pm-auditor`
 pin `claude-opus-5.5`; the former scope-review agent and scope-management
 skill are retired. Historical artifacts are unchanged. Analysis-workbook
 `4cf44d0` and Beryllium `afa4336` are already aligned, and threat-modeler
-is aligned since closed `PMR-121` (2026-10-13); `PMR-122` and `PMR-123`
-request provenance-review and security-reviewer profile
+is aligned since closed `PMR-121` (2026-10-13), and security-reviewer since closed `PMR-123`
+(2026-11-08); `PMR-122` requests provenance-review profile
 alignment, and `PMR-124` (closed 2026-10-12) the analysis-workbook CRQ-004 status mirror.
 
 The human-installed user-level hook matches `task|run_dynamic_workflow`
@@ -372,7 +372,8 @@ a fallback. Component-owned entry points are tracked by
 `PMR-063..PMR-072`. PMR-108's 2026-10-01 inventory found the SOT startup
 anchor already active for Project Manager, analysis-workbook,
 formal-verification-research, and provenance-review. Distinct owner requests
-`PMR-113` and `PMR-116..PMR-118` are the four remaining child-owned gaps.
+`PMR-113`, `PMR-116`, and `PMR-117` are the three remaining child-owned
+gaps; security-reviewer `PMR-118` closed on 2026-11-08.
 Beryllium PMR-112 is complete at owner work `2313cbe0`, return `55b568b4`,
 and checkpoint `93819fd9`; as of the 2026-10-11 refs inspection all three
 are contained in last-fetched `origin`. CHERI notes PMR-114 is complete at

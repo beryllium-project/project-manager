@@ -18,14 +18,14 @@
 - **Agents:** `security-reviewer` (user-invocable orchestrator),
   `security-evidence`, `security-research`, and `security-finding-review`
   (write-disabled specialists). **2026-11-08:** all four pin
-  `claude-opus-5.5` in the observed `PMR-123` return on public `main`,
-  which the Project Manager verifies against the commits that replace it
-  under P0 `PMR-138`; the history below describes the earlier pin. Earlier,
+  `claude-opus-5.5` at replacement commit `8055bec`, verified when
+  `PMR-123` closed in the 135th turn; the history below describes the
+  earlier pin. Earlier,
   all were `gpt-5.3-codex` with exact reasoning
   `xhigh` and context `default` at owner work `2bb4c98` / return `c2edac7`
   under `PMD-20260930-005` as the former sole named capability exception
-  and closed `PMR-109` / `PMR-110`. The following rules describe only the
-  component's current pre-PMR-123 files and the previously installed
+  and closed `PMR-109` / `PMR-110`. The following rules described only the
+  component's pre-PMR-123 files and the previously installed
   user-level hook, not active project policy: explicit non-Codex selections
   retain the `max` default and the former `high` floor; unavailable or
   invalid values stop without silent fallback; the task hook covers exactly
@@ -45,18 +45,19 @@
   (`PMD-20261025-001`), `check` has not been re-run there, and the
   installed script was modified after the 2026-10-13 install. Passing that
   triple explicitly remains harmless.
-  Open P3
-  `PMR-123` asks the owner to repin all four profiles to `claude-opus-5.5` /
+  Closed P3
+  `PMR-123` asked the owner to repin all four profiles to `claude-opus-5.5` /
   `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`
   floor, and `claude-fable-5.1` allowance wording, and record that a
   security review runs only on explicit responsible-human request, on that
   same model, and is not standard practice. The owner returned PMR-123
-  (observed 2026-11-08); once verified after the P0 rewrite, it supersedes
-  the component-side Codex-exception description recorded on this card.
+  (observed 2026-11-08), and it was verified at `8055bec` when it closed;
+  it supersedes the component-side Codex-exception description recorded on
+  this card.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **P0 (2026-11-08, `PMD-20261108-001`):** maintained inspection and live
+- **P0 (2026-11-08, 132nd turn, `PMD-20261108-001`):** maintained inspection and live
   anonymous `ls-remote` at 02:28Z show clean `main` 0/0 with public
   `origin/main` after a push the Project Manager did not observe. The pushed
   range carries the 2026-11-07 publication-safety commit, which embeds a
@@ -75,7 +76,16 @@
   installed, and the human-run owner session for `PMR-138` / `PMR-141` has
   run since 07:25:13Z, an active writer here. `PMR-151` (P3) asks the owner
   to pin the two launch commands in `README.md` and `AGENT-INTERFACE.md`
-  (`PMD-20261108-003`).
+  (`PMD-20261108-003`). **135th turn (2026-11-08):** the responsible human
+  force-pushed the single replacement commit
+  `8055becd9b785ffa8bf389b15eb5adbafaf86036` with lease while private;
+  maintained `state` shows clean `main` 0/0 with `origin/main` there, and
+  the gate's `audit --all-refs` of the local clone passed (3 refs, 268
+  items), so `PMR-138` is closed and `PMR-118` / `PMR-123` are verified and
+  closed. The owner session has exited without `PMR-141`, which waits with
+  `PMR-151` for the next owner session; the GitHub Support request and the
+  return to public stay with the responsible human. Further pushes stay
+  held until `PMR-140` lifts the P0 hold after `PMR-139` closes.
 - **Observed state (to 2026-11-07):** clean `main` at HANDOFF-only return
   `c2edac70afdfe5b0bb90e237487cd168fb91e900`, behind 0 / ahead 2 of
   last-fetched public `origin/main` `2e8d205`. Work
@@ -101,7 +111,7 @@
   `PMD-20260930-002` supplied the general hook scope and fail-closed
   behavior; `PMD-20260930-005` narrowed its Codex denial and resolved the
   model choice without changing the model. The following describes only the
-  component's current pre-PMR-123 files and the previously installed
+  component's then-current pre-PMR-123 files and the previously installed
   user-level hook, not active project policy:
   that hook defaults the three confirmed model-invocable specialist task
   types to `gpt-5.3-codex` / `xhigh` / `default`, accepts Codex only with
@@ -230,14 +240,17 @@ git diff --check
   `PMR-110`; the responsible human released the session/reservation with the
   exact reply `"done"`.
 - Pushes remain owner-only. Since 2026-11-08 `main` is 0/0 with
-  `origin/main` (public until the containment, private for the repair); `PMR-111` is superseded, and the only pending push is the
-  P0 `PMR-138` force push with lease, which the responsible human runs. The
+  `origin/main` (public until the containment, private for the repair); `PMR-111` is superseded, and the
+  P0 `PMR-138` force push with lease, run by the responsible human, landed
+  `8055bec` (135th turn). The
   remote was created and first pushed on 2026-09-06 (`PMR-021` closed).
-- `PMR-118` separately requests the SHA-bound `workspace://SOT.md`
+- `PMR-118` (closed 2026-11-08, verified at `8055bec`) requested the
+  SHA-bound `workspace://SOT.md`
   startup/status anchor for the orchestrator and all three specialists. It
   changes no engagement, package, model policy, target execution, push, or
   human gate.
-- `PMR-123` is the owner-only single-model repin under
+- `PMR-123` (closed 2026-11-08, verified at `8055bec`) was the owner-only
+  single-model repin under
   `PMD-20261006-001`: all four profiles move to `claude-opus-5.5` / `max` /
   `long_context`, the Codex-exception, floor, and `claude-fable-5.1`
   allowance wording is removed, and security reviews run only on explicit
@@ -245,6 +258,6 @@ git diff --check
   historical package or model provenance. Under `PMD-20261006-001`,
   `PMR-118`'s clause preserving the Codex pair no longer applies; both
   requests may share one human-started owner session launched without the
-  then Codex-pinned `security-reviewer` profile. The return for both is
-  observed (2026-11-08) and is verified after the P0 rewrite; `PMR-111` is
+  then Codex-pinned `security-reviewer` profile. The return for both
+  was verified at `8055bec` when both closed on 2026-11-08; `PMR-111` is
   superseded.

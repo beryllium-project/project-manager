@@ -69,7 +69,7 @@ responsible human (analysis-workbook, 2026-10-11; communications,
 | `provenance-review/` | `beryllium-project/provenance-review` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
 | `analysis-workbook/` | `beryllium-project/analysis-workbook-private` | Private `origin` with every branch since the verified `PMR-129` split (2026-10-12); add remote `public`, see below |
 | `threat-modeler/` | `beryllium-project/threat-modeler` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
-| `security-reviewer/` | `beryllium-project/security-reviewer` | Public; the responsible human chose to keep it public (`PMD-20261012-002`) |
+| `security-reviewer/` | `beryllium-project/security-reviewer` | Public by the responsible human's choice (`PMD-20261012-002`); private for the P0 repair since 2026-11-08, to be public again afterwards (`PMD-20261108-002`) |
 | `communications/` | `beryllium-project/communications` | Private, created by the responsible human with `--private` and pushed on 2026-11-05 (`PMD-20261105-001`); visibility not independently checked by the Project Manager |
 | `../agentic-os-research/cheri-riscv-notes` | `agentic-os-research/cheri-riscv-notes` | Target of tracked symlink `cheri-riscv-notes` |
 | `../agentic-os-research/cheri-hypervisor-research` | `agentic-os-research/cheri-hypervisor-research` | Target of tracked symlink `cheri-hypervisor-research` |
