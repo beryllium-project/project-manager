@@ -28,10 +28,13 @@ The command fails rather than showing stale or unreachable tasking.
 ## P0 publication-safety hold and remediation (`PMD-20261108-001`)
 
 **Hold (you confirmed it on 2026-11-08):** no further security-reviewer
-push, and no public Beryllium review-snapshot refresh, merge of the
-internal release branch into `main`, or release publication, until
-`PMR-139` closes and the Project Manager lifts the hold (`PMR-140`). Its
-Project Manager clause ended on 2026-11-08 (135th turn), when the
+push, and, outside the Beryllium release, no public Beryllium
+review-snapshot refresh or merge of the internal release branch into
+`main`, until `PMR-139` closes and the Project Manager lifts the hold
+(`PMR-140`). By your decision on 2026-11-08 (`"Be release can bypass the
+P0 hold as it is part of the P0 solution"`, `PMD-20261108-004`), the
+Beryllium release itself proceeds outside the hold. The hold's Project
+Manager clause ended on 2026-11-08 (135th turn), when the
 security-reviewer rewrite landed (`PMD-20261108-001` disposition 9).
 Making security-reviewer public again is a visibility change under
 `PMD-20261108-002`, not a push. Every public push runs the publication
@@ -45,11 +48,37 @@ Exact commits, paths, lines, and commands are only in the private
 Why: the internal release branch carries the identifier in pages, one file
 name, the planning-site configuration, and `release/release.py`, all of
 which `mvp/tools/snapshot.sh` would copy into the public review snapshot,
-and the snapshot tool has no term check. Tell your Beryllium session to run
-`check Project Manager tasking` and take `PMR-139` (with `PMR-143` if it
-wishes); the request text lists the four parts. Until it closes, do not
-refresh the public snapshot, merge that branch into `main`, or publish the
-release.
+and the snapshot tool has no term check.
+
+**2026-11-08 (136th turn):** you said the snapshot will be deleted soon and
+that the Beryllium release is part of the P0 solution and proceeds outside
+the hold (`PMD-20261108-004`). Finishing and publishing the release are
+your own actions, with no Project Manager approval. Its public pushes still
+pass the installed gate: a refusal means removing the finding from the
+content, never `--no-verify` or a denylist edit. Before you create a public
+repository for it, or push to an empty public remote, fetch everything and
+run the gate's full audit in the repository you publish from:
+
+```sh
+python3 -I -B ~/.config/beryllium/publication-gate/bin/publication-gate audit --repo . --all-refs
+```
+
+Files you publish outside Git are not seen by the hook, and `scan-tree`
+reads a compressed archive only as raw bytes, so extract each archive first
+and scan the unpacked release files from the directory that holds them:
+
+```sh
+python3 -I -B ~/.config/beryllium/publication-gate/bin/publication-gate scan-tree .
+```
+
+Outside the release, do not refresh the public review snapshot or merge
+that branch into `main`. When the release is finished and the snapshot is
+deleted, tell the Project Manager `done`: it observes both and asks you how
+to narrow or close `PMR-139` (the snapshot-tool part may become moot, as
+you decide; the embedded entry in `release/release.py`, the planning pages,
+the planning-site configuration, the page whose file name carries the
+entry, and the two gate-run clones remain to be decided). A Beryllium session then takes what
+remains, with `PMR-143` if it wishes.
 
 ### P0 PMR-140: install the publication gate
 
@@ -442,7 +471,8 @@ Every Copilot CLI launch the Project Manager gives now names
 a model. The `PMR-138` owner session did not select it and has exited.
 Select it with P1 `PMR-141` (gate adoption) in the next security-reviewer
 owner session; agents may not run Git there, so you commit its edits,
-which stay local while the P0 hold stands (until `PMR-139` closes):
+which stay local while the P0 hold stands (until `PMR-140` lifts it after
+`PMR-139` closes):
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager

@@ -7,7 +7,9 @@
   of its disposition 5 gains `P0` above `P1`) and `PMD-20260916-003` in part
   (P0 rows are listed first and individually in every todo table); the rest
   of both records stands
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261108-004` in part (disposition 9: the hold's
+  Beryllium clause no longer applies to the Beryllium release; the rest of
+  this record stands)
 
 ## Scope
 

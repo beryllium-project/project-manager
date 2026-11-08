@@ -34,12 +34,19 @@
   repository pass. Snapshot-excluded internal records may keep the exact
   name under the owner's 2026-11-07 rule, which so far is recorded only on
   that release branch, not on `main` (commit in the private note). P0 `PMR-139` makes those
-  paths and tools entry-free and fail closed. Hold: no public snapshot
-  refresh, merge of that branch into `main`, or release publication until it
-  closes. Details only in the private
+  paths and tools entry-free and fail closed. Hold (136th turn,
+  `PMD-20261108-004`): outside the Beryllium release, no public snapshot
+  refresh or merge of that branch into `main` until it closes; the release
+  itself proceeds outside the hold by the responsible human's decision, its
+  public pushes still pass the gate, and the responsible human states that
+  the public review snapshot will be deleted soon (until then, release
+  publication was held too). Details only in the private
   `workspace://.publication-gate/P0-20261108-001.md`. Gate adoption is
   `PMR-143` (P2). On 2026-11-08 development is on `main` at `c7be2498`, 0/0
-  with private `origin`, and release work continues in owner clones.
+  with private `origin`, and release work continues in owner clones. On
+  2026-11-08T20:05Z (136th turn) the canonical checkout holds seven local release branches, `beryllium/mvp-release-step-2`, `beryllium/mvp-release-step-3`, `beryllium/mvp-release-step-3-plan`, `beryllium/mvp-release-step-5`, `beryllium/mvp-release-step-5-plan`, `beryllium/mvp-release-step-6`, and `beryllium/mvp-release-step-6-plan`
+  (only step 2 on a remote), and the clean release repository has no
+  `origin` remote yet.
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is
