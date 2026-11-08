@@ -51,6 +51,7 @@ iteration, and publication-preparation evidence.
 ## Commands (run by the human, from `../provenance-review/`)
 
 ```sh
+copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo   # PMD-20261108-003
 /agent provenance-review                  # in Copilot CLI
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-review.sh reviews/PRV-YYYYMMDD-NNN-short-name

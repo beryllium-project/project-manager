@@ -346,6 +346,7 @@ structured return are closed at `e6c8aad`.
 ## Commands (run by the human, from `../analysis-workbook/`)
 
 ```sh
+copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo   # PMD-20261108-003
 /agent analysis-workbook                  # in Copilot CLI
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-session.sh [--draft|--baseline <prior-copy>] sessions/AWB-YYYYMMDD-NNN-short-name

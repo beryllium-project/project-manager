@@ -493,13 +493,21 @@ if [[ -f $owner_session ]]; then
     else
         fail "scripts/owner-session.sh fails bash -n"
     fi
-    if grep -Fq 'copilot_args=(--no-auto-update --yolo)' "$owner_session" &&
+    if grep -Fq 'copilot_args=(--no-auto-update --yolo --model "$copilot_model"' "$owner_session" &&
        grep -Fq ' -i "$initial_prompt"' "$owner_session" &&
        grep -Fq 'bash "$tasking" dispatch "$component" "$pmr"' "$owner_session" &&
        grep -Fq 'scratch/owner-sessions' "$owner_session"; then
         pass "scripts/owner-session.sh binds dispatch to private interactive --yolo packets"
     else
         fail "scripts/owner-session.sh lost its dispatch, scratch, or interactive --yolo binding"
+    fi
+    if grep -Fxq 'copilot_model=claude-opus-5.5' "$owner_session" &&
+       grep -Fxq 'copilot_effort=max' "$owner_session" &&
+       grep -Fxq 'copilot_context=long_context' "$owner_session" &&
+       grep -Fq -- '--reasoning-effort "$copilot_effort" --context "$copilot_context")' "$owner_session"; then
+        pass "scripts/owner-session.sh pins the SOP model, effort, and context tier (PMD-20261108-003)"
+    else
+        fail "scripts/owner-session.sh does not pin --model claude-opus-5.5 --reasoning-effort max --context long_context"
     fi
     if grep -Ev '^[[:space:]]*#' "$owner_session" |
         grep -Eq 'git_safe .* (push|fetch|remote|tag)([[:space:]]|$)'; then
@@ -537,6 +545,15 @@ if [[ -f $owner_recovery ]]; then
         pass "scripts/owner-recovery.sh binds exact specs, digest, dispatch, lock, and transcript"
     else
         fail "scripts/owner-recovery.sh lost its spec, digest, dispatch, lock, or transcript binding"
+    fi
+    if grep -Fxq 'copilot_model=claude-opus-5.5' "$owner_recovery" &&
+       grep -Fxq 'copilot_effort=max' "$owner_recovery" &&
+       grep -Fxq 'copilot_context=long_context' "$owner_recovery" &&
+       grep -Fq -- '--no-auto-update --yolo --model "$copilot_model"' "$owner_recovery" &&
+       grep -Fq -- '--reasoning-effort "$copilot_effort" --context "$copilot_context"' "$owner_recovery"; then
+        pass "scripts/owner-recovery.sh pins the SOP model, effort, and context tier (PMD-20261108-003)"
+    else
+        fail "scripts/owner-recovery.sh does not pin --model claude-opus-5.5 --reasoning-effort max --context long_context"
     fi
     if grep -Ev '^[[:space:]]*#' "$owner_recovery" |
         grep -Eq 'git_safe .* (push|fetch|remote|tag|reset|clean|checkout|stash|add|commit)([[:space:]]|$)'; then
@@ -640,6 +657,56 @@ if ((check_parent)); then
         fail "the private parent denylist or python3 is unavailable; the publication-gate scan cannot run"
     fi
 fi
+
+# --- Copilot launch commands (PMD-20261108-003) ------------------------------
+# Every Copilot CLI launch given as current guidance names the single-model
+# SOP options on the same line. Files under records/, generated tasking views,
+# and the handoff's "What changed in this turn" history record what was run at
+# the time and are not rewritten. This is a guard on the usual one-line command
+# shapes, not a proof: a launch through a path or variable, or split across
+# lines, is not recognised.
+
+launch_pattern='(^|[^A-Za-z0-9_./~-])copilot([[:space:]]+(-|#|\\)|[[:space:]]*($|[`")|;&>]|'"'"'))'
+launch_name() {
+    if [[ $1 == "$root/"* ]]; then
+        rel "$1"
+    elif [[ -n ${parent:-} && $1 == "$parent/"* ]]; then
+        printf '../%s' "${1#"$parent/"}"
+    else
+        printf '%s' "$1"
+    fi
+}
+launch_files=()
+for f in "${markdown_files[@]}"; do
+    case $f in
+        "$root"/outbox/tasking/README.md) ;;
+        "$root"/records/* | "$root"/outbox/tasking/*) continue ;;
+    esac
+    launch_files+=("$f")
+done
+if ((check_parent)); then
+    for f in README.md HANDOFF.md SOT.md .github/copilot-instructions.md; do
+        [[ -f $parent/$f ]] && launch_files+=("$parent/$f")
+    done
+fi
+bad=0
+for f in "${launch_files[@]}"; do
+    in_handoff=0
+    [[ $f == "$root/HANDOFF.md" ]] && in_handoff=1
+    while IFS= read -r line; do
+        if [[ $line == *"--model claude-opus-5.5"* && $line == *"--reasoning-effort max"* &&
+            $line == *"--context long_context"* ]]; then
+            continue
+        fi
+        fail "$(launch_name "$f") gives a Copilot launch without --model claude-opus-5.5 --reasoning-effort max --context long_context: line ${line:0:120}"
+        bad=1
+    done < <(awk -v handoff="$in_handoff" '
+        handoff && /^## What changed in this turn/ { skip = 1 }
+        handoff && /^## Pending coordination/ { skip = 0 }
+        !skip { print FNR ": " $0 }' "$f" |
+        grep -E -- "$launch_pattern" || true)
+done
+((bad == 0)) && pass "every current Copilot launch command names --model claude-opus-5.5 --reasoning-effort max --context long_context"
 
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"
 ((fail_count == 0))

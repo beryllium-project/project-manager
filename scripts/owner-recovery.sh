@@ -16,8 +16,10 @@ Usage:
 prepare  validate committed tasking and the exact recorded dirty state, then
          write and print the private recovery packet without reserving a writer
 launch   perform the same checks, hold the shared component writer lock, and
-         start interactive `copilot --no-auto-update --yolo` with the recovery
-         packet preloaded and a transcript/state log under ignored PM scratch
+         start interactive `copilot --no-auto-update --yolo` pinned with
+         `--model claude-opus-5.5 --reasoning-effort max --context long_context`
+         (PMD-20261108-003), with the recovery packet preloaded and a
+         transcript/state log under ignored PM scratch
 
 Recovery is allowed only when outbox/owner-recovery/<PMR-NNN>.tsv is committed,
 names the same component/request, records the prior owner session as closed,
@@ -47,6 +49,11 @@ scratch_root=${PM_OWNER_RECOVERY_SCRATCH:-$pm_root/scratch/owner-recoveries}
 lock_root=${PM_OWNER_SESSION_SCRATCH:-$pm_root/scratch/owner-sessions}/locks
 copilot_bin=${COPILOT_BIN:-copilot}
 copilot_bin_explicit=${COPILOT_BIN+x}
+# Every launch pins the single-model SOP (PMD-20261006-001) explicitly
+# (PMD-20261108-003); there is deliberately no override.
+copilot_model=claude-opus-5.5
+copilot_effort=max
+copilot_context=long_context
 
 git_safe() {
     env -i "PATH=$PATH" HOME=/nonexistent XDG_CONFIG_HOME=/nonexistent \
@@ -377,7 +384,9 @@ initial_prompt="Read the complete owner-recovery packet at $packet. First verify
 {
     printf '#!/usr/bin/env bash\n'
     printf 'exec '
-    printf '%q ' "$copilot_bin" --no-auto-update --yolo -C "$component_entry" -i "$initial_prompt"
+    printf '%q ' "$copilot_bin" --no-auto-update --yolo --model "$copilot_model" \
+        --reasoning-effort "$copilot_effort" --context "$copilot_context" \
+        -C "$component_entry" -i "$initial_prompt"
     printf '\n'
 } >"$runner"
 chmod 700 "$runner"
@@ -393,8 +402,8 @@ chmod 700 "$runner"
 } >"$log"
 printf 'owner-recovery log: %s\n' "$log"
 printf 'owner-recovery transcript: %s\n' "$transcript"
-printf 'owner-recovery launch: copilot --no-auto-update --yolo -C %s -i <packet locator>\n' \
-    "$component_entry"
+printf 'owner-recovery launch: copilot --no-auto-update --yolo --model %s --reasoning-effort %s --context %s -C %s -i <packet locator>\n' \
+    "$copilot_model" "$copilot_effort" "$copilot_context" "$component_entry"
 
 runner_command=$(printf '%q' "$runner")
 set +e

@@ -97,7 +97,8 @@ never uses it for live owner work, while maintained validation uses sandbox
 state and a Copilot stub. Give the human one exact launch command instead of
 prompt text. It binds clean PM tasking/component state into
 ignored `scratch/owner-sessions/` and starts interactive
-`copilot --no-auto-update --yolo`; it creates no pre-launch component write,
+`copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context`
+(`PMD-20261108-003`); it creates no pre-launch component write,
 hidden owner worker, gate grant, or push.
 
 `scripts/owner-recovery.sh` is human-run only and this agent never executes
@@ -156,6 +157,9 @@ worktrees, disabled hooks, hook timeout, and non-Copilot tooling remain
 outside or beyond this command-hook enforcement.
 The main session model comes from the human's launch and settings; the
 responsible human keeps it at `claude-opus-5.5` / `max` / `long_context`.
+Every Copilot CLI launch command that the Project Manager gives, and every
+Project Manager launcher, names `--model claude-opus-5.5 --reasoning-effort max --context long_context`
+explicitly (`PMD-20261108-003`).
 
 Every push to a public remote passes the publication gate
 (`PMD-20261108-001`); private pushes are outside it. The private denylist

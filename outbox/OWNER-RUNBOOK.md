@@ -32,8 +32,8 @@ than the `PMR-138` force push; no public Beryllium review-snapshot refresh,
 merge of the internal release branch into `main`, or release publication
 until `PMR-139` closes; and no public Project Manager push until the
 security-reviewer rewrite lands, because the Project Manager records
-describe the incident. Every other public push runs the publication gate;
-until you install it, `owner-actions.sh` refuses every public push step.
+describe the incident. Every other public push runs the publication gate,
+installed on `l1` since 2026-11-08T07:25:02Z.
 Exact commits, paths, lines, and commands are only in the private
 `../.publication-gate/P0-20261108-001.md` (parent repository, private).
 
@@ -49,24 +49,29 @@ private for repair then public again"` (`PMD-20261108-002`). Both
 visibility changes are your commands, because the Project Manager runs no
 `gh` command and changes no component remote.
 
-1. Make the repository private now (GitHub erases its stars and watchers;
-   you reported no forks):
-
-   ```sh
-   gh repo edit beryllium-project/security-reviewer --visibility private --accept-visibility-change-consequences
-   ```
-
-2. Install the publication gate (`PMR-140` below), or run its `install`
-   again if you installed it before the 133rd turn: the corrected gate scans
-   the step 4 force push as public even while the repository is private,
-   where the earlier copy would have refused it.
-3. Start one owner session for the fix and the gate adoption (`PMR-141`);
-   agents may not run Git in this component, so the session edits files and
-   hands you the Git commands:
+1. **Done (2026-11-08, between 07:23:36Z and 07:27:14Z):** the repository
+   is private; the gate's anonymous probe can no longer read it.
+2. **Done (07:25:02Z):** the gate is installed and its `check` passed every
+   line; the corrected gate scans the step 4 force push as public even while
+   the repository is private.
+3. **Running since 07:25:13Z:** the owner session for the fix and the gate
+   adoption (`PMR-141`). It was launched before `PMD-20261108-003`, so its
+   command line names no model; your user settings default to
+   `claude-opus-5.5` / `max` / `long_context`. Its footer shows the model
+   and effort, and `/config` (Assistant > Model) shows the context tier: if
+   they are `claude-opus-5.5`, `max`, and `long_context`, keep it.
+   Otherwise, and only while the component is still clean, exit it and
+   relaunch with the command below, which now pins all three (once the
+   session has edited files the launcher refuses; then keep the session and
+   tell the Project Manager). Do not ask that session to `check Project
+   Manager tasking` again: after this turn's commit it would stop on the
+   changed Project Manager commit; if it already reported a tasking
+   refusal, relaunch the same way. Agents may not run Git in this component,
+   so the session edits files and hands you the Git commands:
 
    ```sh
    cd /home/jmorris/src/beryllium-project/project-manager
-   bash ./scripts/owner-session.sh launch security-reviewer PMR-138 PMR-141
+   bash ./scripts/owner-session.sh launch security-reviewer PMR-138 PMR-141 PMR-151
    ```
 
 4. Rewrite, gate-audit, and force-push with lease exactly as the private
@@ -104,8 +109,15 @@ release.
 
 ### P0 PMR-140: install the publication gate
 
-Why: the gate is what refuses a public push carrying a denylisted entry; it
-is built and tested but not installed. One command from any directory; it
+**Installed on `l1` at 2026-11-08T07:25:02Z:** the closing `check` passed
+every line (log
+`scratch/publication-gate-setup/publication-gate-setup-install-20261108T072502Z.log`),
+and the installed files match their sources. Nothing more for you here;
+`PMR-140` closes when `PMR-138` and `PMR-139` close. Kept for later
+reinstalls:
+
+Why: the gate is what refuses a public push carrying a denylisted entry. One
+command from any directory; it
 copies the gate, its hook dispatcher, the `beryllium-publication-gate`
 skill, and the private denylist (mode 0600), adds scoped Git `includeIf`
 entries, and ends with its own `check`. It refuses while a global
@@ -132,14 +144,30 @@ security-reviewer (`PMR-141`, with `PMR-138`) and threat-modeler
 (`PMR-142`, a direct human-started session as for `PMR-121`, which also
 corrects its handoff's description of the public `origin` as a private
 backup); P2 Beryllium (`PMR-143`, with `PMR-139`), provenance-review
-(`PMR-144`), Helium (`PMR-145`; otherwise parked, but its `public` remote
+(`PMR-144`, a direct session that may also take `PMR-122`), Helium
+(`PMR-145`; otherwise parked, but its `public` remote
 makes it public-bound), and XRV (`PMR-146`, after its change set is
 committed); P3 analysis-workbook (`PMR-147`) and communications
 (`PMR-148`); P4 formal verification (`PMR-149`) and OS-security
 (`PMR-150`, ask first). The CHERI notes checkout gets no request until it is
-resolved. Until a component adopts, `owner-actions.sh` gates its public
-pushes, and once you install the gate (P0 `PMR-140`) the global pre-push
-hook does too; before the install a direct `git push` is not hooked.
+resolved. Until a component adopts, `owner-actions.sh` and the global
+pre-push hook, installed since 2026-11-08T07:25:02Z, gate its public pushes.
+
+Threat-modeler and provenance-review have not adopted the tasking resolver
+(parked `PMR-064` / `PMR-117`; open `PMR-066`), so their requests use the
+direct-carry exception described under "P3 CRQ-004 single-model SOP
+alignment": confirm the component is clean and no other session is active
+there, then start, from the workspace root:
+
+```sh
+cd /home/jmorris/src/beryllium-project/threat-modeler
+copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context -i "Carry Project Manager request PMR-142 under this repository's own rules. Read its row in /home/jmorris/src/beryllium-project/project-manager/outbox/component-requests.md with read-only file tools and run no parent or sibling command. Do only that request, validate with this repository's own tests, commit locally, append the owner return to HANDOFF.md using /home/jmorris/src/beryllium-project/project-manager/templates/owner-return.md, and do not push."
+```
+
+```sh
+cd /home/jmorris/src/beryllium-project/provenance-review
+copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context -i "Carry Project Manager requests PMR-144 and PMR-122 under this repository's own rules. Read their rows in /home/jmorris/src/beryllium-project/project-manager/outbox/component-requests.md with read-only file tools and run no parent or sibling command. Do only those requests, keeping their scopes distinct, validate with this repository's own tests, commit locally, append the owner return to HANDOFF.md using /home/jmorris/src/beryllium-project/project-manager/templates/owner-return.md, and do not push."
+```
 
 ## Human-run script output
 
@@ -154,8 +182,9 @@ transcript under ignored `scratch/owner-recoveries/` and prints both paths.
 The transcript may contain sensitive interactive output and is never copied
 wholesale into a durable record.
 The ordinary owner-session preflight log is the narrow exception to the
-print-path convention: its path is intentionally not printed so launcher
-stdout/stderr and Copilot arguments remain unchanged. The Project Manager
+print-path convention: its path is intentionally not printed, which keeps
+launcher stdout/stderr unchanged (the Copilot arguments gained only the
+model pin of `PMD-20261108-003`). The Project Manager
 retrieves the newest component/PMR-matched file directly from fixed ignored
 `scratch/owner-sessions/preflight/`; it contains only the documented
 fixed-field state, never command output or a transcript.
@@ -189,16 +218,17 @@ pending next action of preparing a registration request.
 
 ## P1 Backup and checks on `l1` (no PMR)
 
-**2026-11-08 update:** run it after you install the publication gate
-(`PMR-140` above). Since `PMD-20261108-001`, step 4's `owner-actions.sh`
-runs the gate before each push step and refuses every public push until the
-gate is installed. Security-reviewer has nothing to push (its fix is the P0
+**2026-11-08 update:** the publication gate is installed (`PMR-140`
+above). Since `PMD-20261108-001`, step 3's `owner-actions.sh` runs the gate
+before each push step. Security-reviewer has nothing to push (its fix is the P0
 force push under `PMR-138`, which you run separately), and threat-modeler's
 six commits pass the gate. The workbook's November branch is already on its
 private `origin`. The older text below is otherwise unchanged.
 
-**Run it while the Beryllium and analysis-workbook sessions are idle**
-(you reported both active on 2026-11-05): its last step fetches every
+**Run it while the Beryllium, analysis-workbook, and security-reviewer
+sessions are idle** (you reported the first two active on 2026-11-05; the
+security-reviewer owner session has run since 2026-11-08T07:25:13Z): its
+last step fetches every
 registered repository, which updates remote-tracking refs inside those
 checkouts. Not run yet: no `scratch/l1-backup-and-checks-*.log` existed on
 2026-11-08.
@@ -215,8 +245,8 @@ return, and the CHERI notes remote check (next section) has not run. The
 Project Manager pushed its own and the parent's 129th-turn commits (live
 `ls-remote` verified them on 2026-11-05); it never pushes a component.
 
-Run this in a terminal on `l1` after the gate install, while the
-Beryllium and workbook sessions are idle. It changes no Copilot
+Run this in a terminal on `l1` while the Beryllium, workbook, and
+security-reviewer sessions are idle. It changes no Copilot
 configuration, so no other governed session needs to stop for its hook
 check:
 
@@ -300,11 +330,11 @@ content and history may be disclosed, and the dirty tree blocks
 `owner-session.sh` for `PMR-131` and `PMR-135`.
 
 Recommended, a backup only with no publication: start an XRV session from
-its workspace entry and run `/model` to confirm `claude-opus-5.5` / `max` /
-`long_context`:
+its workspace entry; the command pins `claude-opus-5.5` / `max` /
+`long_context` (`PMD-20261108-003`):
 
 ```sh
-cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research && copilot
+cd /home/jmorris/src/beryllium-project/cheri-hypervisor-research && copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo
 ```
 
 Then tell it: `commit the publication-preparation change set with explicit
@@ -334,11 +364,11 @@ unpushed by your decision. Beryllium records, component-side, your
 acceptance of the S3 MVP plan and the M0 plan, with M0 implementation in
 progress and its second board campaign waiting on your board resets.
 
-When you next work in Beryllium, start a session and run `/model` to
-confirm `claude-opus-5.5` / `max` / `long_context`:
+When you next work in Beryllium, start a session; the command pins
+`claude-opus-5.5` / `max` / `long_context` (`PMD-20261108-003`):
 
 ```sh
-cd /home/jmorris/src/beryllium-project/beryllium-hypervisor && copilot
+cd /home/jmorris/src/beryllium-project/beryllium-hypervisor && copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo
 ```
 
 Tell it which local-only branches to back up to the private `origin`
@@ -427,12 +457,14 @@ aligned too: `PMR-121` closed on 2026-10-13 (work `c156c0a0`, return
 Start an owner session only after the Project Manager commits this turn and
 regenerates tasking; the launcher refuses a dirty Project Manager worktree or
 stale tasking. `owner-session.sh` accepts an optional
-`--agent <component-agent>` but has no model option. The commands below
+`--agent <component-agent>` and, since `PMD-20261108-003`, always passes
+`--model claude-opus-5.5 --reasoning-effort max --context long_context` (no override). The commands below
 select no agent: each component's existing profiles still pin a superseded
 model, and the ordinary default context performs owner maintenance.
 
 **Model check for every session below.** The session must run on
-`claude-opus-5.5` / `max` / `long_context`. As soon as Copilot opens (press
+`claude-opus-5.5` / `max` / `long_context`; every command here pins all
+three, so this check only confirms them. As soon as Copilot opens (press
 `esc esc` if the first turn has already started), run `/model`. If it shows
 another model, effort, or context tier, switch to `claude-opus-5.5` with
 `max` effort and the `long_context` tier, check `/subagents` if sub-agent
@@ -463,7 +495,7 @@ reports any mismatch, it stops.
 
 ```sh
 cd /home/jmorris/src/beryllium-project/provenance-review
-copilot --no-auto-update --yolo -i "Carry Project Manager request PMR-122 under this repository's own rules. Read its row in /home/jmorris/src/beryllium-project/project-manager/outbox/component-requests.md with read-only file tools and run no parent or sibling command. Do only that request, validate with this repository's own tests, commit locally, append the owner return to HANDOFF.md using /home/jmorris/src/beryllium-project/project-manager/templates/owner-return.md, and do not push."
+copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context -i "Carry Project Manager request PMR-122 under this repository's own rules. Read its row in /home/jmorris/src/beryllium-project/project-manager/outbox/component-requests.md with read-only file tools and run no parent or sibling command. Do only that request, validate with this repository's own tests, commit locally, append the owner return to HANDOFF.md using /home/jmorris/src/beryllium-project/project-manager/templates/owner-return.md, and do not push."
 ```
 
 Keep open P3 `PMR-066` for a separate later session. The owner repins the
@@ -471,6 +503,21 @@ three profiles (`provenance-review`, `provenance-code-lineage`, and
 `provenance-research`) to `claude-opus-5.5`, updates instructions, tests,
 README, and handoff only as directly required, changes no `reviews/PRV-*`
 package, commits locally, returns in `HANDOFF.md`, and does not push.
+
+### P3 PMR-151: security-reviewer launch commands (`PMD-20261108-003`)
+
+Every Copilot CLI launch the Project Manager gives now names
+`--model claude-opus-5.5 --reasoning-effort max --context long_context`. Security-reviewer's own
+`README.md` and `AGENT-INTERFACE.md` still give its launch command without
+a model. The session running since 07:25:13Z did not select `PMR-151`. If
+you relaunch that session (see `PMR-138` step 3), the relaunch command
+already adds it; otherwise select it in the next security-reviewer owner
+session:
+
+```sh
+cd /home/jmorris/src/beryllium-project/project-manager
+bash ./scripts/owner-session.sh launch security-reviewer PMR-151
+```
 
 ### P3 PMR-123 and PMR-118: returned; verification after the P0 rewrite
 
@@ -985,7 +1032,7 @@ Project Manager carry. Generic fleet agents cannot run any of these writes.
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
 | `PMR-107`, `PMR-137` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-107 PMR-137`, only after you approve the ask-first OS-security session (see "P3 PMR-107 and PMR-137" above) | OS-security owner must decide the seventeen public pointers under its own source/redistribution rules. Do not combine with PMR-070/116 or treat this as class-2 carry. |
-| `PMR-118` | P3 | `bash ./project-manager/scripts/owner-session.sh launch security-reviewer PMR-118 PMR-123` | `PMR-118` is startup policy only, with no engagement, push, or gate; it shares this session with the `PMR-123` repin in the CRQ-004 section. Do not add `--agent`: the `security-reviewer` profile still pins `gpt-5.3-codex` until `PMR-123` lands. Under `PMD-20261006-001` its Codex-preservation clause no longer applies. |
+| `PMR-118` | P3 | **Returned; do not launch.** | The `PMR-118` / `PMR-123` owner return is observed in the component handoff; the Project Manager verifies both against the commits that replace it under P0 `PMR-138` (see "P3 PMR-123 and PMR-118"). A security-reviewer owner session is already running. |
 
 Do not paste a follow-up phrase. Every ordinary generated packet includes exact
 PM/request/SOT fingerprints, selected PMR text, local instruction checklist,

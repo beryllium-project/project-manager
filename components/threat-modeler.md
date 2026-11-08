@@ -115,6 +115,7 @@ status edits itself as class-1 carried writes when this component is clean.
 ## Commands (run by the human, from `../threat-modeler/`)
 
 ```sh
+copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo   # PMD-20261108-003
 /agent threat-modeler                     # in Copilot CLI
 /agent threat-model-maintainer            # maintenance, validation, and authorized Git delivery
 bash ./tests/validate-agent.sh

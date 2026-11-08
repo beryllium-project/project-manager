@@ -2,10 +2,12 @@
 
 This independent component holds the Beryllium Project Manager: the agent,
 procedures, records, and tooling that coordinate the component repositories
-and their agents from the parent workspace. Invoke the user-facing agent from
-this directory with:
+and their agents from the parent workspace. Start Copilot in this directory
+with the single-model options (`PMD-20261108-003`), then select the
+user-facing agent:
 
 ```text
+copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo
 /agent project-manager
 ```
 
@@ -168,7 +170,10 @@ hook-disable settings, the user session and plan defaults, and the absence
 of retired scope assets. Direct custom-agent sessions, SDK-started
 workflows, out-of-scope worktrees, disabled hooks, hook timeout, and
 non-Copilot tooling remain outside or beyond this enforcement; the main
-session model comes from the human's launch and settings.
+session model comes from the human's launch and settings, so every Copilot
+CLI launch command the Project Manager gives, and every Project Manager
+launcher, names `--model claude-opus-5.5 --reasoning-effort max --context long_context`
+explicitly (`PMD-20261108-003`).
 
 `PMD-20260930-003` records the user-level reinstall boundary: new sessions
 load hook configuration, matcher, and environment, while a registered
@@ -293,8 +298,8 @@ templates/owner-return.md                    component HANDOFF return shape for 
 templates/owner-agent-response.md            live PM/owner response and guided-question shape
 scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
-scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, consumed PMR-120 bootstrap bindings, and interactive copilot --yolo launch
-scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and copilot --yolo launch
+scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, consumed PMR-120 bootstrap bindings, and interactive Copilot CLI launch pinned to claude-opus-5.5 / max / long_context
+scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and Copilot CLI launch pinned to claude-opus-5.5 / max / long_context
 scripts/publication-gate.py                  publication gate for public pushes (PMD-20261108-001); holds no denylisted entry; agent runs only its read-only modes
 scripts/publication-gate-hook.sh             Git hook dispatcher installed by the setup script; pre-push runs the gate, every hook chains to the repository's own
 scripts/publication-gate-setup.sh            HUMAN-RUN install/check/uninstall of the gate, dispatcher, skill, private denylist copy, and scoped includeIf entries
@@ -394,8 +399,9 @@ bash ./project-manager/scripts/owner-session.sh launch <component> <PMR-NNN>...
 
 The launcher requires clean current PM tasking and a clean component, writes a
 private revision-bound packet under `project-manager/scratch/owner-sessions/`,
-and starts interactive `copilot --no-auto-update --yolo` with a short packet
-path/hash/HEAD prompt. `prepare` performs the same checks without launching.
+and starts interactive
+`copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context`
+(`PMD-20261108-003`) with a short packet path/hash/HEAD prompt. `prepare` performs the same checks without launching.
 Only `launch` holds the per-component `flock` writer reservation through the
 Copilot process; `prepare` reserves no writer. Both `owner-session.sh` and
 `owner-recovery.sh` launches also hold a shared lock on the PMR-108 global

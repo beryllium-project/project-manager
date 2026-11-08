@@ -4,7 +4,8 @@
   checkout; created 2026-09-06; `origin` -> public
   `beryllium-project/security-reviewer` since the owner's 19:38Z push on
   2026-09-06; the responsible human chose on 2026-10-12 to keep it public,
-  `PMD-20261012-002`)
+  `PMD-20261012-002`, and made it private on 2026-11-08 for the P0 repair,
+  to be public again afterwards, `PMD-20261108-002`)
 - **Ownership:** agent-owned; its agents write only inside that component; the
   Project Manager writes here only to carry requests under the standing carry
   authority `../records/decisions/PMD-20260904-003-standing-carry-authority.md`
@@ -68,7 +69,13 @@
   `workspace://.publication-gate/P0-20261108-001.md`. Hold:
   no other push of this component until `PMR-138` closes. `PMR-111` is
   superseded; the `PMR-118` / `PMR-123` returns are verified after the
-  rewrite. Gate adoption is `PMR-141` (P1).
+  rewrite. Gate adoption is `PMR-141` (P1). **134th turn (2026-11-08):**
+  the repository is private for the repair (unreadable anonymously from
+  07:27:14Z; the gate still treats it as recorded public), the gate is
+  installed, and the human-run owner session for `PMR-138` / `PMR-141` has
+  run since 07:25:13Z, an active writer here. `PMR-151` (P3) asks the owner
+  to pin the two launch commands in `README.md` and `AGENT-INTERFACE.md`
+  (`PMD-20261108-003`).
 - **Observed state (to 2026-11-07):** clean `main` at HANDOFF-only return
   `c2edac70afdfe5b0bb90e237487cd168fb91e900`, behind 0 / ahead 2 of
   last-fetched public `origin/main` `2e8d205`. Work
@@ -194,6 +201,7 @@ or declines it.
 ## Commands (run by the human, from `../security-reviewer/`)
 
 ```sh
+copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo   # PMD-20261108-003
 /agent security-reviewer                  # in Copilot CLI
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-security-review.sh [--draft|--baseline <prior-copy>] reviews/SR-YYYYMMDD-NNN-short-name
@@ -210,6 +218,10 @@ git diff --check
   carried).
 - Owner model migration and deterministic tasking startup are complete at
   `f2051a4` (`PMR-062`, `PMR-065`).
+- `PMR-151` (P3): pin the Copilot launch commands in `README.md` and
+  `AGENT-INTERFACE.md` with
+  `--model claude-opus-5.5 --reasoning-effort max --context long_context`
+  (`PMD-20261108-003`).
 - Model reassignment of all four profiles to `gpt-5.3-codex` under
   `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`), which was the
   public `origin/main` tip until a push the Project Manager did not observe
@@ -217,8 +229,8 @@ git diff --check
 - Owner work `2bb4c98` and durable return `c2edac7` close `PMR-109` and
   `PMR-110`; the responsible human released the session/reservation with the
   exact reply `"done"`.
-- Pushes remain owner-only. Since 2026-11-08 `main` is 0/0 with public
-  `origin/main`; `PMR-111` is superseded, and the only pending push is the
+- Pushes remain owner-only. Since 2026-11-08 `main` is 0/0 with
+  `origin/main` (public until the containment, private for the repair); `PMR-111` is superseded, and the only pending push is the
   P0 `PMR-138` force push with lease, which the responsible human runs. The
   remote was created and first pushed on 2026-09-06 (`PMR-021` closed).
 - `PMR-118` separately requests the SHA-bound `workspace://SOT.md`

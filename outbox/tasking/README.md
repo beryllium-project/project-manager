@@ -102,7 +102,8 @@ The human-run launcher validates current committed tasking, direct open
 assignment of each PMR, a clean component at an exact HEAD, and a clean
 Project Manager worktree. It writes the full timestamped packet under ignored
 `scratch/owner-sessions/` and starts interactive
-`copilot --no-auto-update --yolo` with a short packet path/SHA/HEAD prompt.
+`copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context`
+(`PMD-20261108-003`) with a short packet path/SHA/HEAD prompt.
 `launch` holds a per-component `flock` reservation until Copilot exits;
 `prepare` performs the same checks without launching and reserves no writer.
 The Project Manager

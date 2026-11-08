@@ -174,7 +174,9 @@ bash ./scripts/inspect-components.sh status
 bash ./scripts/inspect-components.sh registry-check
 ```
 
-Then start Copilot in `project-manager/` and select `/agent project-manager`.
+Then start Copilot in `project-manager/` with
+`copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo` and select
+`/agent project-manager` (`PMD-20261108-003`).
 
 ## 6. State Git does not carry
 

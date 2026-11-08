@@ -6,7 +6,9 @@
 - **Supersedes:** Manual copy/paste owner-prompt handoffs in current Project
   Manager runbook and reporting surfaces; historical instructions remain
   evidence
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261108-003` in part (the launch command line
+  names `--model claude-opus-5.5 --reasoning-effort max --context
+  long_context`; the rest stands)
 
 ## Scope
 

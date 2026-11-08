@@ -4,7 +4,9 @@
 - **Created:** 2026-09-26
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261108-003` in part (the recovery launch
+  command line names `--model claude-opus-5.5 --reasoning-effort max
+  --context long_context`; the rest stands)
 
 ## Scope
 

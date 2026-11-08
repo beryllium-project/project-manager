@@ -66,7 +66,7 @@ planned after the human authorizes that phase.
 ## Commands (from `../communications/`; the Project Manager runs none)
 
 ```sh
-copilot                                    # ordinary session; no custom agent
+copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo   # ordinary session; no custom agent
 ```
 
 Before each commit of public-safe copy, the component's sessions run the

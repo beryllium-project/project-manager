@@ -62,8 +62,10 @@ prepare  validate tasking and component state, write the ignored owner packet,
          and print its path and hash without launching Copilot or reserving a
          writer
 launch   perform the same fail-closed preparation, then start an interactive
-         `copilot --no-auto-update --yolo` session with the packet preloaded;
-         hold one per-component writer reservation until Copilot exits
+         `copilot --no-auto-update --yolo` session pinned with
+         `--model claude-opus-5.5 --reasoning-effort max --context long_context`
+         (PMD-20261108-003) and the packet preloaded; hold one per-component
+         writer reservation until Copilot exits
 
 This is a human-run ordinary-owner path. It does not invoke a hidden owner
 worker, grant a human gate, push, or write inside the component before Copilot
@@ -113,6 +115,11 @@ tasking=$pm_root/scripts/project-tasking.sh
 scratch_root=${PM_OWNER_SESSION_SCRATCH:-$pm_root/scratch/owner-sessions}
 copilot_bin=${COPILOT_BIN:-copilot}
 copilot_bin_explicit=${COPILOT_BIN+x}
+# Every launch pins the single-model SOP (PMD-20261006-001) explicitly
+# (PMD-20261108-003); there is deliberately no override.
+copilot_model=claude-opus-5.5
+copilot_effort=max
+copilot_context=long_context
 
 git_safe() {
     git -c core.hooksPath=/dev/null -c core.fsmonitor=false \
@@ -582,9 +589,11 @@ else
     initial_prompt="Read the complete owner-session packet at $packet. First verify its SHA-256 is $packet_sha and this repository HEAD is $component_head. If either check fails, stop. Then follow only that packet, stay interactive, and ask the human only for genuine unresolved gates."
 fi
 
-printf 'owner-session launch: copilot --no-auto-update --yolo -C %s -i <packet locator>\n' \
-    "$component_entry"
-copilot_args=(--no-auto-update --yolo)
+printf 'owner-session launch: copilot --no-auto-update --yolo --model %s --reasoning-effort %s --context %s %s-C %s -i <packet locator>\n' \
+    "$copilot_model" "$copilot_effort" "$copilot_context" \
+    "${owner_agent:+--agent $owner_agent }" "$component_entry"
+copilot_args=(--no-auto-update --yolo --model "$copilot_model"
+    --reasoning-effort "$copilot_effort" --context "$copilot_context")
 [[ -n $owner_agent ]] && copilot_args+=(--agent "$owner_agent")
 copilot_args+=(-C "$component_entry" -i "$initial_prompt")
 owner_stage=complete

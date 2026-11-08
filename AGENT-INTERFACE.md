@@ -333,7 +333,9 @@ Copilot launch. It replaces copied prompts with one exact command, validates
 committed/current tasking plus a clean component, writes a timestamped
 SHA-256-bound packet under ignored
 `scratch/owner-sessions/`, and launches interactive
-`copilot --no-auto-update --yolo -C <logical-entry> -i <packet-locator>`.
+`copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context -C <logical-entry> -i <packet-locator>`
+(`PMD-20261108-003`; every Copilot CLI launch command the Project Manager
+gives names those three flags).
 Only `launch` holds a per-component `flock` writer reservation through the
 Copilot process; `prepare` reserves no writer. `owner-session.sh` and
 `owner-recovery.sh` launches also hold a shared lock on the human-run PMR-108

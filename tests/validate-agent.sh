@@ -454,7 +454,14 @@ require_text "$owner_session" '[[ -f $tasking && -r $tasking ]]'
 expect_pass "owner-session passes bash -n" bash -n "$owner_session"
 require_text "$owner_session" 'HUMAN-RUN launcher'
 require_text "$owner_session" 'copilot --no-auto-update --yolo'
-require_text "$owner_session" 'copilot_args=(--no-auto-update --yolo)'
+require_text "$owner_session" 'copilot_args=(--no-auto-update --yolo --model "$copilot_model"'
+require_text "$owner_session" '--reasoning-effort "$copilot_effort" --context "$copilot_context")'
+for f in "$owner_session" "$repository_root/scripts/owner-recovery.sh"; do
+    require_text "$f" 'copilot_model=claude-opus-5.5'
+    require_text "$f" 'copilot_effort=max'
+    require_text "$f" 'copilot_context=long_context'
+    require_text "$f" 'PMD-20261108-003'
+done
 require_text "$owner_session" 'copilot_args+=(--agent "$owner_agent")'
 require_text "$owner_session" 'bash "$tasking" dispatch "$component" "$pmr"'
 require_text "$owner_session" 'scratch/owner-sessions'
@@ -563,10 +570,11 @@ require_text "$owner_session_record" '**Status:** recorded'
 for f in "$agent" "$skill" "$instructions" "$interface" "$readme" "$roster" \
     "$repository_root/outbox/tasking/README.md"; do
     require_text "$f" 'owner-session.sh'
-    require_text "$f" 'copilot --no-auto-update --yolo'
+    require_text "$f" 'copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context'
 done
 require_text "$repository_root/../.github/copilot-instructions.md" 'owner-session.sh'
-require_text "$repository_root/../.github/copilot-instructions.md" 'copilot --yolo'
+require_text "$repository_root/../.github/copilot-instructions.md" '--model claude-opus-5.5 --reasoning-effort max --context long_context'
+require_text "$repository_root/../.github/copilot-instructions.md" 'PMD-20261108-003'
 parent_instructions=$repository_root/../.github/copilot-instructions.md
 require_file "$parent_instructions"
 require_text "$parent_instructions" 'check Project Manager tasking'
@@ -2589,6 +2597,19 @@ if [ "${COPILOT_SLEEP:-0}" != 0 ]; then
 fi
 EOF
 chmod +x "$copilot_stub"
+require_pinned_launch() {
+    # require_pinned_launch <capture> <label>: one argument per line, each
+    # SOP flag immediately followed by its value (PMD-20261108-003).
+    if awk 'prev == "--model" && $0 == "claude-opus-5.5" {m = 1}
+        prev == "--reasoning-effort" && $0 == "max" {e = 1}
+        prev == "--context" && $0 == "long_context" {c = 1}
+        {prev = $0}
+        END {exit !(m && e && c)}' "$1"; then
+        pass "$2 pins --model claude-opus-5.5 --reasoning-effort max --context long_context"
+    else
+        fail "$2 does not pin the SOP model, effort, and context tier"
+    fi
+}
 expect_exit "owner-session launches Copilot with the preloaded packet" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
     PM_OWNER_SESSION_SCRATCH="$owner_session_scratch" \
@@ -2600,6 +2621,7 @@ require_text "$copilot_capture" '-C'
 require_text "$copilot_capture" "$tasking_workspace/direct-component"
 require_text "$copilot_capture" '-i'
 require_text "$copilot_capture" 'Read the complete owner-session packet at '
+require_pinned_launch "$copilot_capture" "owner-session launch"
 refute_pattern "$copilot_capture" '^-p$|^--prompt$|^--add-dir$|^--agent$'
 expect_exit "owner-session selects an explicit component agent" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
@@ -2608,6 +2630,7 @@ expect_exit "owner-session selects an explicit component agent" 0 \
     bash "$owner_session" --agent fixture-owner launch direct-component PMR-001
 require_text "$copilot_capture" '--agent'
 require_text "$copilot_capture" 'fixture-owner'
+require_pinned_launch "$copilot_capture" "owner-session --agent launch"
 bootstrap_capture=$sandbox/copilot-bootstrap-argv.txt
 expect_exit "owner-session launches the exact threat tasking bootstrap" 0 \
     env PM_TASKING_ROOT="$tasking_pm" PM_TASKING_WORKSPACE="$tasking_workspace" \
@@ -2617,6 +2640,7 @@ expect_exit "owner-session launches the exact threat tasking bootstrap" 0 \
     launch threat-modeler PMR-120
 require_text "$bootstrap_capture" '--agent'
 require_text "$bootstrap_capture" 'threat-model-maintainer'
+require_pinned_launch "$bootstrap_capture" "owner-session tasking-bootstrap launch"
 require_text "$bootstrap_capture" \
     'This human-run launcher already verified its SHA-256'
 require_text "$bootstrap_capture" \
@@ -2945,6 +2969,7 @@ require_text "$copilot_capture" '--no-auto-update'
 require_text "$copilot_capture" '--yolo'
 require_text "$copilot_capture" "$recovery_component"
 require_text "$copilot_capture" 'Read the complete owner-recovery packet at '
+require_pinned_launch "$copilot_capture" "owner-recovery launch"
 recovery_logs=("$owner_recovery_scratch"/*.log)
 recovery_transcripts=("$owner_recovery_scratch"/*.typescript)
 if ((${#recovery_logs[@]} == 1 && ${#recovery_transcripts[@]} == 1)); then
@@ -3430,6 +3455,27 @@ copy=$(mutate denylist-copy)
 mkdir -p "$copy/.publication-gate"
 printf 'synthetic\n' >"$copy/.publication-gate/denylist"
 expect_exit "validate-pm fails when a denylist-like file is in this public repository" 1 \
+    bash "$validate" --no-parent "$copy"
+
+copy=$(mutate bare-copilot-launch)
+printf '\nStart a session with `cd fixture && copilot`.\n' >>"$copy/AGENT-ROSTER.md"
+expect_exit "validate-pm fails on a Copilot launch without --model claude-opus-5.5" 1 \
+    bash "$validate" --no-parent "$copy"
+
+copy=$(mutate code-block-copilot-launch)
+printf '\n```sh\ncopilot --yolo\n```\n' >>"$copy/AGENT-ROSTER.md"
+expect_exit "validate-pm fails on an unpinned Copilot launch in a code block" 1 \
+    bash "$validate" --no-parent "$copy"
+
+copy=$(mutate model-only-copilot-launch)
+printf '\nStart with `copilot --model claude-opus-5.5 --yolo`.\n' >>"$copy/AGENT-ROSTER.md"
+expect_exit "validate-pm fails on a Copilot launch without the effort and context options" 1 \
+    bash "$validate" --no-parent "$copy"
+
+copy=$(mutate pinned-copilot-launch)
+printf '\nStart a session with `cd fixture && copilot --model claude-opus-5.5 --reasoning-effort max --context long_context`.\n' \
+    >>"$copy/AGENT-ROSTER.md"
+expect_exit "validate-pm accepts a Copilot launch that names --model claude-opus-5.5" 0 \
     bash "$validate" --no-parent "$copy"
 
 copy=$(mutate request-priority-closed)

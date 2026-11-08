@@ -258,7 +258,7 @@ Run each block from the named component directory.
 
 ```sh
 cd project-manager
-# Copilot CLI: /agent project-manager
+# Copilot CLI: copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo, then /agent project-manager
 # Human-only user-level read-only check, then install only while governed
 # sessions are idle (per workstation; see REHYDRATE.md, PMD-20261011-001):
 # bash ./scripts/beryllium-governance.sh check
@@ -282,7 +282,7 @@ python3 -I -B ./scripts/publication-gate.py audit --repo ../<component> --remote
 
 ```sh
 cd analysis-workbook
-# Copilot CLI: /agent analysis-workbook
+# Copilot CLI: copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo, then /agent analysis-workbook
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-session.sh [--draft|--baseline <prior-copy>] sessions/AWB-YYYYMMDD-NNN-short-name
 bash ./scripts/validate-helium-transfer-queue.sh [--baseline <prior-copy>]   # before recording or mirroring a HET change
@@ -315,7 +315,7 @@ commits without reapplying them and close the request.
 
 ```sh
 cd threat-modeler
-# Copilot CLI: /agent threat-modeler
+# Copilot CLI: copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo, then /agent threat-modeler
 # For repository maintenance or explicitly authorized commit/push:
 # /agent threat-model-maintainer
 bash ./tests/validate-agent.sh
@@ -333,7 +333,7 @@ outside a threat-model package, not target execution.
 
 ```sh
 cd security-reviewer
-# Copilot CLI: /agent security-reviewer
+# Copilot CLI: copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo, then /agent security-reviewer
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-security-review.sh [--draft|--baseline <prior-copy>] reviews/SR-YYYYMMDD-NNN-short-name
 bash ./scripts/update-index.sh --check
@@ -359,7 +359,7 @@ package, is not target execution, and uses neither `APPROVAL-NNN` nor
 
 ```sh
 cd provenance-review
-# Copilot CLI: /agent provenance-review
+# Copilot CLI: copilot --model claude-opus-5.5 --reasoning-effort max --context long_context --yolo, then /agent provenance-review
 bash ./tests/validate-agent.sh
 bash ./scripts/validate-review.sh reviews/PRV-YYYYMMDD-NNN-short-name
 python3 ./scripts/render-review.py --check reviews/PRV-YYYYMMDD-NNN-short-name
@@ -395,7 +395,9 @@ Reviews include a hyperlinked prior-art summary with a clear latest iteration.
   exact `bash ./project-manager/scripts/owner-session.sh launch <component>
   <PMR-NNN>...` command instead of prompt text. The human-run helper validates
   PM tasking/component state, writes the complete private packet under ignored
-  PM scratch, and launches interactive `copilot --no-auto-update --yolo`.
+  PM scratch, and launches interactive
+  `copilot --no-auto-update --yolo --model claude-opus-5.5 --reasoning-effort max --context long_context`
+  (`PMD-20261108-003`).
   The Project Manager never uses it for live owner work; maintained tests use
   only sandbox state and a Copilot stub. The human starts the real command and
   answers genuine gates. Multiple PMRs may share one ordinary session only when the
