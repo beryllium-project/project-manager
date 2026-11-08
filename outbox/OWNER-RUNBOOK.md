@@ -41,18 +41,26 @@ Exact commits, paths, lines, and commands are only in the private
 
 Why: a non-public model identifier is readable, in reversible encodings, in
 the public `beryllium-project/security-reviewer` history since a push on
-2026-11-08 between 02:03Z and 02:28Z.
+2026-11-08 between 02:03Z and 02:28Z. At 06:48Z the repository was still
+public.
 
-1. Containment, your decision (recommended now). Check forks, then make the
-   repository private while it is fixed; GitHub erases stars and watchers and
-   detaches public forks, and you may make it public again after step 6:
+**Your decision (2026-11-08T06:43Z):** `"there are no forks, we will make
+private for repair then public again"` (`PMD-20261108-002`). Both
+visibility changes are your commands, because the Project Manager runs no
+`gh` command and changes no component remote.
+
+1. Make the repository private now (GitHub erases its stars and watchers;
+   you reported no forks):
 
    ```sh
-   gh api repos/beryllium-project/security-reviewer --jq .forks_count
    gh repo edit beryllium-project/security-reviewer --visibility private --accept-visibility-change-consequences
    ```
 
-2. Start one owner session for the fix and the gate adoption (`PMR-141`);
+2. Install the publication gate (`PMR-140` below), or run its `install`
+   again if you installed it before the 133rd turn: the corrected gate scans
+   the step 4 force push as public even while the repository is private,
+   where the earlier copy would have refused it.
+3. Start one owner session for the fix and the gate adoption (`PMR-141`);
    agents may not run Git in this component, so the session edits files and
    hands you the Git commands:
 
@@ -61,19 +69,27 @@ the public `beryllium-project/security-reviewer` history since a push on
    bash ./scripts/owner-session.sh launch security-reviewer PMR-138 PMR-141
    ```
 
-3. Rewrite, gate-audit, and force-push with lease exactly as the private
-   note's steps 3 to 5 say. The force push rewrites public history and needs
-   your explicit same-turn decision.
-4. Ask GitHub Support to purge the old commits' cached views (private note,
-   step 6). Do not quote the identifier in the request.
-5. If you made the repository private, make it public again only after the
-   gate's `audit --all-refs` passes on the rewritten repository after a full
-   fetch.
-6. Tell the Project Manager `done`; it verifies with the gate's
-   `audit --remote origin` (the live public view; while the repository is
-   private, `audit --all-refs` after a fetch), closes `PMR-138`, then
-   verifies the `PMR-118` / `PMR-123` return against the replacement
-   commits.
+4. Rewrite, gate-audit, and force-push with lease exactly as the private
+   note's steps 3 to 5 say, while the repository is private. The force push
+   rewrites the published history and needs your explicit same-turn
+   decision. Keep no branch or tag at the replaced commits.
+5. Send the GitHub Support request drafted in the private note's step 6
+   (it names no identifier). GitHub may decline non-credential data.
+6. Make the repository public again (private note, step 7). Recommended:
+   only after Support confirms the garbage collection and cached-view
+   removal, because until then anyone holding a replaced commit's ID can
+   open it once the repository is public; and only after the gate's
+   `audit --all-refs` passes following a full fetch. The timing is your
+   decision; if Support declines, tell the Project Manager whether to stay
+   private, go public anyway, or replace the GitHub repository.
+7. Tell the Project Manager `done` after the force push (run
+   `git fetch --prune --tags origin` in the component first) and again after
+   the return to public. After the force push it runs the gate's
+   `audit --all-refs` of the local clone; when that passes it closes
+   `PMR-138` and verifies the `PMR-118` / `PMR-123` return against the
+   replacement commits, whether the repository is then private or public.
+   After the return to public it confirms the live view with
+   `audit --remote origin`.
 
 ### P0 PMR-139: Beryllium public snapshot path
 
@@ -103,6 +119,9 @@ bash /home/jmorris/src/beryllium-project/project-manager/scripts/publication-gat
 It prints its log path last (under the ignored
 `scratch/publication-gate-setup/`); tell the Project Manager `done`, and it
 reads the log. To remove it later: `publication-gate-setup.sh uninstall`.
+If you installed it before the 133rd turn, run the same `install` again:
+`check` then fails by SHA-256 until the corrected gate
+(`PMD-20261108-002`) is copied.
 
 ## P1-P4 publication-gate adoption (`PMR-141`..`PMR-150`)
 
@@ -1370,7 +1389,8 @@ a same-turn confirmation. The 130th turn's pushes, under your first answer
 `beryllium-project/project-manager` stays public by your decision, so
 every `push_pm` publishes the Project Manager commits it pushes.
 `threat-modeler` and `security-reviewer` also stay public
-(`PMD-20261012-002`), so `push_tm` and `push_sr` publish too; since
+(`PMD-20261012-002`; security-reviewer is to be private only for its P0
+repair, `PMD-20261108-002`), so `push_tm` and `push_sr` publish too; since
 2026-11-08 every push step runs the publication gate first and refuses until
 it is installed, and the P0 hold keeps `push_sr` skipped until `PMR-138`
 closes. The current
@@ -1532,7 +1552,8 @@ every push step: a push to a public remote is scanned and refused on a
 finding, or refused outright until the gate is installed; a passing push to
 a public repository still publishes. `beryllium-project/project-manager`, `threat-modeler`, and
 `security-reviewer` stay public by your decisions (`PMD-20261012-001`,
-`PMD-20261012-002`), so keep `--skip push_pm,push_tm,push_sr` unless you
+`PMD-20261012-002`; security-reviewer private only for its P0 repair,
+`PMD-20261108-002`), so keep `--skip push_pm,push_tm,push_sr` unless you
 intend to publish new commits there. Report its log path and result to the
 next Project Manager turn.
 

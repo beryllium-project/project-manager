@@ -514,7 +514,8 @@ The helper checks remote tips but not visibility, and a push to a public
 repository publishes. `beryllium-project/project-manager` stays public by the
 responsible human's decision (`PMD-20261012-001`), and so do
 `beryllium-project/threat-modeler` and `beryllium-project/security-reviewer`
-(`PMD-20261012-002`). So `push_pm`, `push_tm`, and `push_sr`, which the
+(`PMD-20261012-002`; security-reviewer is to be private only for its P0
+repair, `PMD-20261108-002`). So `push_pm`, `push_tm`, and `push_sr`, which the
 default and `--yes` runs include, publish the commits they push; add
 `--skip push_pm,push_tm,push_sr` unless you intend that.
 
@@ -576,9 +577,12 @@ never prints matched text. Each component adopts the trigger phrase
 `check publication gate` through its own request (`PMR-141`..`PMR-150`).
 `git push --no-verify` and other hook bypasses are prohibited for public
 remotes. A visibility change to public or a new public repository needs
-`audit --all-refs` after a full fetch, because `check` passes a remote that
-is still private unscanned; `audit --remote <remote>` shows what a public
-remote serves now and fails closed when a live tip is absent locally.
+`audit --all-refs` after a full fetch, because `check` covers only the
+pushed refs and passes a private remote that is not recorded public
+unscanned; `audit --remote <remote>` shows what a public
+remote serves now and fails closed when a live tip is absent locally. A
+recorded public repository made private for containment is still scanned
+as public, and `audit --remote` refuses it (`PMD-20261108-002`).
 Every setup run logs under the ignored `scratch/publication-gate-setup/`.
 Passing the gate is not publication approval. The Project Manager never runs
 `install` or `uninstall` against real user configuration; the maintained

@@ -27,14 +27,18 @@ usage:
 
 pre-push and check scan only pushes to a public remote: a remote is public
 when it is listed below or anonymous `git ls-remote` succeeds with every
-credential source disabled. A private or local remote passes unscanned; a
-remote whose visibility cannot be determined is refused. audit scans
+credential source disabled. A listed remote, or one treated as public, that
+cannot be read anonymously (for example, made private for containment) is
+still scanned as public, excluding only what the remote already holds for
+the pushed refs. A private or local remote passes unscanned; a remote whose
+visibility cannot be determined is refused. audit scans
 everything reachable from the named refs (local branches and tags by
 default), as required before any visibility change to public, any new
 public repository, or any first push to a public remote. audit --remote
 scans what a public remote serves now: every live ref name it lists
 anonymously and everything reachable from those tips; it fails closed when
-a live tip is not present locally (fetch first). scan-tree scans
+a live tip is not present locally (fetch first) or when a listed remote
+cannot be read anonymously (then fetch and use --all-refs). scan-tree scans
 files and file names; - reads standard input. scan-worktree scans the
 tracked and untracked, not ignored, files of a working tree.
 
@@ -61,7 +65,9 @@ FINDINGS_PER_OBJECT = 10
 
 # Repositories recorded public by PMD-20261012-001, PMD-20261012-002, and the
 # public Beryllium review snapshot. A listed repository that cannot be read
-# anonymously is refused rather than treated as private.
+# anonymously (for example, private for containment) is scanned as public,
+# excluding only what the remote already holds for the pushed refs, and is
+# never treated as private (PMD-20261108-002).
 KNOWN_PUBLIC = frozenset({
     "beryllium-project/beryllium-hypervisor",
     "beryllium-project/helium-te-poc",
@@ -465,9 +471,11 @@ def scan_objects(report, repo, objects, environment):
 # ----------------------------------------------------------- visibility
 
 class Remote:
-    def __init__(self, kind, label, refs=(), detail=""):
+    def __init__(self, kind, label, refs=None, detail=""):
         self.kind, self.label, self.detail = kind, label, detail
-        self.refs = list(refs)
+        # live is False when the remote's refs could not be read anonymously.
+        self.live = refs is not None
+        self.refs = list(refs or [])
         self.tips = [value for _, value in self.refs]
 
 
@@ -522,8 +530,8 @@ def classify(url):
     if treated_as_public(url):
         refs, detail = probe(url)
         if refs is None:
-            return Remote("unknown", url, detail=f"treated as public, but "
-                          f"its refs cannot be read: {detail}")
+            return Remote("public", url, detail="treated as public, but its "
+                          f"refs cannot be read anonymously now: {detail}")
         return Remote("public", url, refs)
     match = GITHUB_URL.match(url)
     if match:
@@ -532,7 +540,7 @@ def classify(url):
         if refs is not None:
             return Remote("public", slug, refs)
         if slug in KNOWN_PUBLIC:
-            return Remote("unknown", slug, detail="recorded public, but not "
+            return Remote("public", slug, detail="recorded public, but not "
                           f"readable anonymously now: {detail}")
         if is_auth_failure(detail):
             return Remote("private", slug)
@@ -567,7 +575,14 @@ def gate_push(repo, url, label, updates, remote_ids, denylist, advisory,
         say(f"{label} ({remote.label}): cannot determine whether it is "
             f"public ({remote.detail}); refusing, fail closed ({RECORD})")
         return ERROR
-    say(f"{label} ({remote.label}) is public: scanning the push")
+    if remote.live:
+        say(f"{label} ({remote.label}) is public: scanning the push")
+    else:
+        scope = ("excluding only what the remote already holds for the "
+                 "pushed refs" if remote_ids else
+                 "over the whole history of the pushed refs")
+        say(f"{label} ({remote.label}) is {remote.detail}; scanning the push "
+            f"as public, {scope}")
     report = Report(Matchers(load_denylist(denylist)), advisory)
     names = sorted({name for name, _ in updates})
     for name in names:
@@ -684,6 +699,11 @@ def audit_remote(repo, name, denylist, advisory, environment):
             "anonymously; audit every ref with --all-refs before it becomes "
             "public")
         return PASS
+    if not remote.live:
+        say(f"{name} ({remote.label}) is {remote.detail}; its live public view "
+            "cannot be read, so fetch every ref and run audit --all-refs "
+            f"instead; refusing, fail closed ({RECORD})")
+        return ERROR
     say(f"{name} ({remote.label}) is public: auditing its {len(remote.refs)} "
         "live ref(s)")
     report = Report(Matchers(load_denylist(denylist)), advisory)

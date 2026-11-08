@@ -37,8 +37,9 @@ The gate is installed per workstation at
    public repository, or a first push to an empty public remote, fetch every
    ref that will become visible, tags included, then run
    `... publication-gate audit --repo . --all-refs` (or name the refs).
-   `check` is not enough there: it passes a remote that is still private
-   unscanned, and a pre-push hook cannot see a visibility change.
+   `check` is not enough there: it covers only the pushed refs, it passes a
+   private remote that is not recorded public unscanned, and a pre-push hook
+   cannot see a visibility change.
 3. **Files outside Git.** For a snapshot directory, a generated site, or text
    about to be submitted, run `... publication-gate scan-tree <path>...`
    (`-` reads standard input).
@@ -55,6 +56,9 @@ The gate is installed per workstation at
    already holds, report it to the responsible human at once as a P0. Containment
    (temporary private visibility), history rewrite, a force push with lease,
    and a GitHub Support cache-purge request are responsible-human actions.
+   While a recorded public repository is private for containment, the gate
+   still scans pushes to it as public, and `audit --remote` refuses it:
+   fetch every ref and use `audit --repo . --all-refs` instead.
 7. **Push.** The push itself still needs the responsible human's explicit
    same-turn confirmation and the repository's own push rules. Once
    installed, the pre-push hook runs the same scan again.

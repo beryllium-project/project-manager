@@ -1,7 +1,25 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-11-08 (UTC; about 19:45 on 2026-11-07 at UTC-8)
-**Update scope:** one-hundred-thirty-second coordination turn, on `l1`:
+**Last updated:** 2026-11-08 (UTC; about 23:05 on 2026-11-07 at UTC-8)
+**Update scope:** one-hundred-thirty-third coordination turn, on `l1`:
+**your containment decision for security-reviewer, and a gate correction**
+(`PMD-20261108-002`). You said exactly `"there are no forks, we will make
+private for repair then public again"` (2026-11-08T06:43Z, 22:43 at
+UTC-8). At 06:48Z the gate's anonymous probe still read the repository as
+public; nothing else had moved, and neither the gate install nor the owner
+session had started. Tracing your plan through the gate showed that the
+gate, once installed, would have refused the repair force push while the
+repository is private, because it treated a recorded public repository that
+cannot be read anonymously as of unknown visibility. The gate now scans
+such a push as public, with regression tests. This turn records the
+decision, the order of steps, and the recommendation to make the repository
+public again only after GitHub Support confirms its purge and the gate's
+`audit --all-refs` passes after a full fetch; it drafts the
+Support request in the private note and makes **no push** and no remote or
+visibility change (both visibility changes are your commands).
+
+Prior update scope (2026-11-08, about 20:30 on 2026-11-07 at UTC-8):
+one-hundred-thirty-second coordination turn, on `l1`:
 **P0 publication-safety incident and project-wide publication gate**
 (`PMD-20261108-001`). You asked for a project-wide check for one non-public
 model identifier and any details about it, `"make a P0 task to remediate,
@@ -59,8 +77,8 @@ in `../COMPONENTS.md`
 
 | Area | Current state |
 | --- | --- |
-| **P0 publication-safety incident** | **Active; containment and remediation are yours.** A non-public model identifier, embedded in reversible encodings by a 2026-11-07 publication-safety commit, is in the public security-reviewer `main` since a push between 02:03Z and 02:28Z on 2026-11-08 that the Project Manager did not observe; live anonymous `ls-remote` at 03:30Z still shows it public. P0 `PMR-138` asks for the history rewrite (owner file edits, your Git, a force push with lease); optional temporary private visibility and a GitHub Support cache-purge request are your decisions. Beryllium's internal release branch carries the identifier in paths the public review snapshot copies, and `mvp/tools/snapshot.sh` has no term check: P0 `PMR-139`. The gate's audit passes Beryllium `main`, the public snapshot, the clean release repository, threat-modeler's six unpushed commits, and this repository. Exact commits, paths, and commands are only in the private `../.publication-gate/P0-20261108-001.md`. **Hold (confirmed by you):** no other security-reviewer push; no public Beryllium snapshot refresh, merge of the release branch into `main`, or release publication; and no public Project Manager push until the rewrite lands. |
-| Publication gate | **Built and tested; your one-line install is next (P0 `PMR-140`).** `PMD-20261108-001`: every push to a public remote from a Beryllium repository passes `scripts/publication-gate.py`, which holds no entry, reads the private denylist (canonical `../.publication-gate/denylist` in the private parent; installed copy mode 0600), derives encoded variants in memory, scans contents, file names, messages, identities, tag text, and ref names, and never prints matched text. The human-run `scripts/publication-gate-setup.sh install` adds a global pre-push dispatcher scoped by `includeIf` to the workspace roots and the two organisations, chaining repository hooks, plus the user-level skill `beryllium-publication-gate`; `owner-actions.sh` runs the gate before every push step and, until the install, refuses every public push. Private pushes are outside the gate. Adoption of the trigger phrase `check publication gate` is `PMR-141`..`PMR-150`. Validation: `validate-pm.sh` 908 / 0 (its gate scan of this tree passes), `tests/validate-agent.sh` 1239 / 0 with sandbox-only installs; your real Git and Copilot configuration were not touched. |
+| **P0 publication-safety incident** | **Active; containment and remediation are yours.** A non-public model identifier, embedded in reversible encodings by a 2026-11-07 publication-safety commit, is in the public security-reviewer `main` since a push between 02:03Z and 02:28Z on 2026-11-08 that the Project Manager did not observe; live anonymous `ls-remote` at 03:30Z still shows it public. P0 `PMR-138` asks for the history rewrite (owner file edits, your Git, a force push with lease). **2026-11-08T06:43Z: you decided temporary private visibility for the repair, then public again (`PMD-20261108-002`; no forks, as you reported); at 06:48Z it was still public, so making it private is your next command.** The GitHub Support purge request (drafted in the private note) and the timing of the return to public are yours; the Project Manager recommends returning only after Support confirms the purge and the gate's `audit --all-refs` passes after a full fetch. Beryllium's internal release branch carries the identifier in paths the public review snapshot copies, and `mvp/tools/snapshot.sh` has no term check: P0 `PMR-139`. The gate's audit passes Beryllium `main`, the public snapshot, the clean release repository, threat-modeler's six unpushed commits, and this repository. Exact commits, paths, and commands are only in the private `../.publication-gate/P0-20261108-001.md`. **Hold (confirmed by you):** no other security-reviewer push; no public Beryllium snapshot refresh, merge of the release branch into `main`, or release publication; and no public Project Manager push until the rewrite lands. |
+| Publication gate | **Built and tested; your one-line install follows the visibility change (P0 `PMR-140`). 2026-11-08 (133rd turn): corrected so that a recorded public repository that cannot be read anonymously, such as security-reviewer while private, is scanned as public instead of refused (`PMD-20261108-002`); install after this correction, or run `install` again if you installed earlier.** `PMD-20261108-001`: every push to a public remote from a Beryllium repository passes `scripts/publication-gate.py`, which holds no entry, reads the private denylist (canonical `../.publication-gate/denylist` in the private parent; installed copy mode 0600), derives encoded variants in memory, scans contents, file names, messages, identities, tag text, and ref names, and never prints matched text. The human-run `scripts/publication-gate-setup.sh install` adds a global pre-push dispatcher scoped by `includeIf` to the workspace roots and the two organisations, chaining repository hooks, plus the user-level skill `beryllium-publication-gate`; `owner-actions.sh` runs the gate before every push step and, until the install, refuses every public push. Private pushes are outside the gate. Adoption of the trigger phrase `check publication gate` is `PMR-141`..`PMR-150`. Validation (133rd turn): `validate-pm.sh` 919 / 0 (its gate scan of this tree passes), `tests/validate-agent.sh` 1248 / 0 with sandbox-only installs; your real Git and Copilot configuration were not touched. |
 | Current coordination baseline | **2026-11-08: the P0 incident and the publication gate lead (rows above). Beryllium (`main` `c7be2498`) and the workbook (`624ce26`) are 0/0 with their private origins, so the revised backup script no longer pushes either; it runs after the gate install while those sessions are idle. The workbook's CRQ-005 and CRQ-006 to the Project Manager wait for intake.** Earlier (2026-11-05): **Communications registered and backed up; the backup script was next once two sessions ended.** `PMD-20261105-001` registered `communications/` (public-facing writing about Beryllium); you created the private `beryllium-project/communications` and pushed `main` (`done`, 2026-11-05T08:54Z), and maintained refs show `main` at `1f66802` tracking `origin/main` 0/0. You reported the Beryllium and analysis-workbook sessions active, so the Project Manager observed them only with lock-free maintained inspection, wrote nothing there, and recommends no fetch or push touching them until they end. Both moved on: Beryllium to `d776f324` on its development branch, with local `beryllium/mvp-m10*` branches, and the workbook to session branch `research/AWB-20261105-001-cjc-scan`, whose 32 new queue rows are ledgered `pending` and whose collaboration request CRQ-005 to the Project Manager waits for intake; reconciling them waits. The unregistered `beryllium-cheri/` (a Beryllium CHERI investigation repository, modified minutes before this turn) is untracked in the parent and untouched. Last turn's P1 backup script has not run and now waits for those sessions to end; the CHERI notes history question stays P1. Earlier baseline (2026-10-25): `PMD-20261025-001` made `~/src/beryllium-project` on `l1` canonical again after your rsync from `lx2`; `PMD-20261025-002` records `"everything important should be committed and pushed, gh is a backup"`; the `l1` CHERI notes copy holds none of the three never-pushed commits; Beryllium recorded, component-side, the S3 MVP plan and the M0 plan accepted; OS-security pushed an MPT survey and proposal; your MPT workbook session queued twenty-five pointers (21 routed by `PMR-135`, `PMR-136`, and `PMR-137`); and XRV holds your uncommitted publication-preparation change set. `PMR-090`, `PMR-127`, `PMR-132`, `PMR-133`, `PMR-134`, `PMR-121`, and the workbook split requests are closed; `PMR-122` and `PMR-123` (with `PMR-118`) remain open P3; `PMR-125` is parked P4; the workbook publication decision is deferred with both workbook repositories private; `PMD-20261012-002` keeps `threat-modeler`, `security-reviewer`, `provenance-review`, and Helium's public remote public. Threat-owner adoption remains complete; PMR-064/117 remain parked P4. |
 | Communications | **Registered and backed up on 2026-11-05.** `communications/` is an ignored canonical direct checkout (`PMD-20261105-001`): clean `main` at `1f668021`, its only branch, tracking `origin/main` 0/0 with no tag; remote `origin` is `beryllium-project/communications`, which you created with the runbook's `--private` command and pushed (`done`, 08:54Z). The Project Manager did not independently check its visibility, and the component's ignored `scratch/` prompts stay local. It holds two conference proposals its handoff records as submitted by you (2026-10-31 and 2026-11-01), their drafts, a review, and a rewrite prompt; a white paper is planned. No custom agent, queue, or source index; the Project Manager may carry only class-3 registration wording there, and its README and handoff still call the registration pending and the repository remote-less (left to its next session). Its handoff's claim that Beryllium release candidate 3 board evidence overtakes the K3 `NOT RUN` wording is an unverified component-side claim; no assurance wording or gate changes. Its other claim, a public Beryllium review snapshot `beryllium-project/beryllium-hypervisor`, is confirmed on 2026-11-08 by the Beryllium owner record and the gate's anonymous probe (see "Approved target topology"). Its README records drafts from your human-run sessions on other models; Project Manager records carry no SOP exception. |
 | Operational PM closure | **PMR-077 and PMR-112 complete, with independent backup and gate gaps.** Security-reviewer PMR-109/110, CHERI PMR-104/105/114, XRV PMR-115, formal-verification PMR-014/037/041/069, and Beryllium PMR-077/090/098/100/112 are closed. Security backup PMR-111 was superseded on 2026-11-08 by the unobserved push and P0 `PMR-138`. |
@@ -81,7 +99,7 @@ in `../COMPONENTS.md`
 | Formal verification | `main` is synchronized 0/0 at handoff-only successor `388690d`; on 2026-11-05 the checkout also holds one untracked `inbox.txt`, not opened, which is an owner coordination lock. Earlier, re-observed clean on `l1` (2026-10-25). Research `62cc207` and owner controls `9109345` triage all seven routed pointers, refresh current remote/topology wording, and adopt the exact tasking resolver. PMR-014/037/041/069 are closed; the owner reports 48 URL checks and no sibling modification. Open P4 `PMR-136` routes workbook pointers PMQ-049, PMQ-066, and PMQ-067 for owner triage. |
 | Other drift | On 2026-11-05 OS-security is dirty at `a6cd0def` with five uncommitted owner entries (modified `HANDOFF.md`, `README.md`, and `sources/README.md`; untracked `inbox.txt` and `sources/hotsos/`; none under the restricted subtree), an owner coordination lock with no backup until committed. Earlier, OS-security was clean and synchronized at active private successor `a6cd0def`: its handoff records a hypervisors-on-Supervisor-Domains survey, a Be-MPT direction proposal for Beryllium planning (proposal only), and a 243-file source collection, pushed on your `push` (2026-10-23), with owner validation passing and no publication; the analysis-workbook review it lists as pending is recorded in your MPT workbook session. Open P3 `PMR-137` routes fourteen workbook pointers to it, beside `PMR-107`. Earlier owner return: independent executable-backlog integration `86645d4`, no restricted access; PMR-052 remains unstarted. Root `58f8023` is the restricted-free successor base, while complete old private history remains at inactive `legacy-personal/main` `e275544`. `PMR-044` and `PMR-027` are closed. `provenance-review` remains synchronized at `9bfbab3`. |
 | Other components | **2026-11-08: security-reviewer is clean and 0/0 with its public `origin` after the unobserved push (P0 row); `PMR-111` is superseded, and the `PMR-118` / `PMR-123` owner return is observed but verified only after the P0 rewrite replaces its commit.** Earlier: Security-reviewer is clean at HANDOFF-only return `c2edac7`, behind 0 / ahead 2 of last-fetched public `origin/main` `2e8d205`; its repository, like `provenance-review`, stays public by your choice (`PMD-20261012-002`), and the P1 script then offered the `push_sr` fast-forward (`PMR-111`, superseded 2026-11-08), which would have published. Its four profiles then recorded exact `gpt-5.3-codex` / `xhigh` / `default`, superseded by `PMD-20261006-001` pending owner repin `PMR-123` (returned 2026-11-08); PMR-062/065/074/109/110 are closed, the tasking startup contract is active, and no engagement ran. |
-| Remote access | **2026-11-08: no push this turn. The Project Manager's public push is held under P0 until the security-reviewer rewrite lands; the private parent push (which also carries the private denylist and incident note) needs your same-turn confirmation. Work on no remote now: this turn's two commits; threat-modeler's six (public, so pushing publishes; they pass the gate); Beryllium's local internal release branch (held under P0) and older local-only branches (stale inventory); XRV's one commit and change set; OS-security's and formal verification's uncommitted files; and `../files`.** Earlier: **This turn's coordination commits are pushed after committing; component work needs your pushes.** Live `ls-remote` at 2026-11-05T08:55Z verified the 130th-turn pushes: Project Manager `origin` and parent `upstream` each hold only `main`, at `2d04109` and `141d2d4`, with no tag. You answered `push_both` again (about 08:56Z) after the Project Manager said that its own push publishes (`PMD-20261012-001` disposition 3), so the Project Manager pushes its `main` from `2d04109` and the parent `main` from `141d2d4` through this turn's commits as plain fast-forwards after committing; the next turn verifies them with live `ls-remote`. That answer is consumed by those pushes, and later pushes need a new same-turn confirmation. The repo-local credential helper in both checkouts answers with your personal account's `gh auth token` whichever `gh` account is active, and `git config --local --unset-all credential.https://github.com.helper` removes it. Communications `main` is on its private `origin` since your 2026-11-05 push. Work on no remote, as of each repository's last fetch: the workbook's session commits after `2fcacc1`, including PMQ-098..105 and CRQ-005; Beryllium's local-only branches as last inventoried on 2026-10-25 (not re-inventoried while its session is active; its current development-branch tip `d776f324` is in `origin`, and `beryllium/mvp-m0` matches `origin` at `6f7b6e7`), including retired candidate `6e93461`, unpushed by your `PMR-090` decision; threat-modeler's six commits and security-reviewer's two (both public, so pushing publishes); XRV's one commit and its uncommitted change set; OS-security's and formal verification's uncommitted files; and the retained `../files` artifacts, which are outside Git. Provenance and Helium are fully on their remotes, apart from Helium's long-recorded local tag `v0.6.0`. The three CHERI notes commits have no known copy, and the CHERI notes remote's current contents are unknown (see "CHERI-RISC-V notes"). Earlier push history is in "What changed in this turn" and `outbox/OWNER-RUNBOOK.md`. No other push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
+| Remote access | **2026-11-08 (133rd turn): no push and no remote or visibility change; the Project Manager (`8a40adc` and this turn's commit) and the parent (`525f721` and this turn's commit) are each two commits ahead and unpushed. Making security-reviewer private, the repair force push, and the return to public are your commands (`PMD-20261108-002`).** 132nd turn: no push. The Project Manager's public push is held under P0 until the security-reviewer rewrite lands; the private parent push (which also carries the private denylist and incident note) needs your same-turn confirmation. Work on no remote now: this turn's two commits; threat-modeler's six (public, so pushing publishes; they pass the gate); Beryllium's local internal release branch (held under P0) and older local-only branches (stale inventory); XRV's one commit and change set; OS-security's and formal verification's uncommitted files; and `../files`.** Earlier: **This turn's coordination commits are pushed after committing; component work needs your pushes.** Live `ls-remote` at 2026-11-05T08:55Z verified the 130th-turn pushes: Project Manager `origin` and parent `upstream` each hold only `main`, at `2d04109` and `141d2d4`, with no tag. You answered `push_both` again (about 08:56Z) after the Project Manager said that its own push publishes (`PMD-20261012-001` disposition 3), so the Project Manager pushes its `main` from `2d04109` and the parent `main` from `141d2d4` through this turn's commits as plain fast-forwards after committing; the next turn verifies them with live `ls-remote`. That answer is consumed by those pushes, and later pushes need a new same-turn confirmation. The repo-local credential helper in both checkouts answers with your personal account's `gh auth token` whichever `gh` account is active, and `git config --local --unset-all credential.https://github.com.helper` removes it. Communications `main` is on its private `origin` since your 2026-11-05 push. Work on no remote, as of each repository's last fetch: the workbook's session commits after `2fcacc1`, including PMQ-098..105 and CRQ-005; Beryllium's local-only branches as last inventoried on 2026-10-25 (not re-inventoried while its session is active; its current development-branch tip `d776f324` is in `origin`, and `beryllium/mvp-m0` matches `origin` at `6f7b6e7`), including retired candidate `6e93461`, unpushed by your `PMR-090` decision; threat-modeler's six commits and security-reviewer's two (both public, so pushing publishes); XRV's one commit and its uncommitted change set; OS-security's and formal verification's uncommitted files; and the retained `../files` artifacts, which are outside Git. Provenance and Helium are fully on their remotes, apart from Helium's long-recorded local tag `v0.6.0`. The three CHERI notes commits have no known copy, and the CHERI notes remote's current contents are unknown (see "CHERI-RISC-V notes"). Earlier push history is in "What changed in this turn" and `outbox/OWNER-RUNBOOK.md`. No other push, force, tag, remote mutation, visibility change, publication, release, or gate is authorized. |
 | Queues | **2026-11-08: 137 analysis-workbook source rows plus the transfer row are exact against 138 ledger rows (138 / 138); PMQ-106..137 (raised 2026-11-05 and 2026-11-06) are PML-0107..0138, `pending` without triage; the branch is backed up, so triage and CRQ-005/CRQ-006 intake can follow in a later turn.** 105 analysis-workbook source rows / 105 ledger rows plus one transfer row are exact (106 / 106) at the 06:44Z observation. PMQ-074..105 (raised 2026-10-28 to 2026-11-05; suggested owners OS-security 16, XRV 9, formal verification 7) are PML-0075..0106, `pending` without triage, pulled from the committed queue on the active session's local branch; PMQ-101 and PMQ-102 are `private` source rows, so the public ledger withholds their titles. Triage waits until that session ends and its rows are backed up; CRQ-005 waits for intake with it. Your MPT session's PMQ-049..073 are PML-0050..0074 (2026-10-25): 21 are routed after read-only duplicate searches, to XRV by P4 `PMR-135` (with DASICS row PMQ-044), to formal verification by P4 `PMR-136`, and to OS-security by P3 `PMR-137`; PMQ-053 and PMQ-054 are `duplicate` against OS-security's hypervisor-source manifest, with their class-1 source edits due but not carried, because a carried commit on a session branch would need a separate push of the branch, which `owner-actions.sh` does not make (`push_awb` pushes `main` only) and the Project Manager never makes (`PMD-20261025-002`); and PMQ-056 and PMQ-060 stay `pending` with the eleven DASICS CHERI notes rows until that checkout is resolved. PMQ-034..036 are `routed` as PML-0035..0037 / P4 `PMR-131`, and PMQ-031..033 as PML-0032..0034 / PMR-107. The prior rows and the transfer row retain their recorded dispositions. `pull-queues.sh check` reads the checked-out branch, which on 2026-11-05 holds every queued row. |
 | Cap-talk closure | Successor prerequisites `PMR-027`, `PMR-044`, and `PMR-045` are complete. The responsible human reports they are waiting on a cap-talk archive response from its owners and are working on it, so `PMR-052` is P4 and blocked on that external response. Independent OS-security integration `86645d4` does not execute PMR-052. `PMR-053` and `PMR-054` remain downstream. |
 | Coordination model | `PMD-20260914-002` adopts pull-based owner returns in component handoffs and PM-owned outbound requests/cards. Every repository write requires a fresh worktree and active-session check; a clean tree alone is not permission. |
@@ -95,14 +113,14 @@ in `../COMPONENTS.md`
 | Human interaction | `PMD-20261002-001` records the exact direction `"also remember to use a full pathname when giving me an initial cd command"`. User-facing command sequences now render an initial `cd` with the current absolute path re-resolved from `SOT.md` / `COMPONENTS.md`; later commands may be relative to that established directory. The prior PMR-105 single-use authorization remains consumed. |
 | Model policy | `PMD-20261006-001` supersedes the `PMD-20260916-001` role-to-model matrix and the remainder of `PMD-20260915-007`, the `PMD-20260930-001` floor and scope-review assets, the `PMD-20260930-002` hook rules, and the `PMD-20260930-005` Codex exception: one model, `claude-opus-5.5` at `max` with `long_context`, for every orchestrator, agent, sub-agent, and task, with no silent model, effort, or context fallback. `PMD-20260930-003` reinstall safety remains in force. |
 | Quarantine | Licensed/restricted OS-security resources use private personal repository `os-security-restricted-sources`, clean new history, and manual responsible-human review/copy with license metadata. The Project Manager never opens or copies the restricted subtree. |
-| Parent coordination | **2026-11-08: before this turn, Project Manager `a874b19` and parent `9c6d167` were each 0/0 with their remotes; this turn adds the private `.publication-gate/` (denylist and incident note), updates parent `COMPONENTS.md`, `README.md`, and `.github/copilot-instructions.md`, commits both repositories, and pushes neither.** Earlier (131st turn): before that turn, Project Manager `2d04109` and parent `141d2d4` were each 0 behind / 0 ahead, with live `ls-remote` agreeing; the parent's only dirt was the unregistered `beryllium-cheri/`, and the Project Manager's only dirt was Copilot CLI's untracked settings file and its lock. This turn updates parent `COMPONENTS.md` and `README.md` to record the communications backup, leaves `beryllium-cheri/` untracked and untouched, commits both repositories, and pushes both as plain fast-forwards after committing under your second answer `push_both` (the Project Manager push publishes); later pushes need a new same-turn confirmation. No component write by the Project Manager occurs. In the 130th turn the parent `.gitignore` gained `/communications/`. |
+| Parent coordination | **2026-11-08 (133rd turn): before this turn, Project Manager `8a40adc` and parent `525f721` were each one ahead of their remotes and unpushed; this turn changes the private `.publication-gate/P0-20261108-001.md` and `COMPONENTS.md`, commits both repositories, and pushes neither.** 132nd turn: before that turn, Project Manager `a874b19` and parent `9c6d167` were each 0/0 with their remotes; this turn adds the private `.publication-gate/` (denylist and incident note), updates parent `COMPONENTS.md`, `README.md`, and `.github/copilot-instructions.md`, commits both repositories, and pushes neither.** Earlier (131st turn): before that turn, Project Manager `2d04109` and parent `141d2d4` were each 0 behind / 0 ahead, with live `ls-remote` agreeing; the parent's only dirt was the unregistered `beryllium-cheri/`, and the Project Manager's only dirt was Copilot CLI's untracked settings file and its lock. This turn updates parent `COMPONENTS.md` and `README.md` to record the communications backup, leaves `beryllium-cheri/` untracked and untouched, commits both repositories, and pushes both as plain fast-forwards after committing under your second answer `push_both` (the Project Manager push publishes); later pushes need a new same-turn confirmation. No component write by the Project Manager occurs. In the 130th turn the parent `.gitignore` gained `/communications/`. |
 | Retained PM artifacts | `PMD-20260916-004` closed `PMR-032`; owner decision `db2293b` closes `PMR-078`. The exact OCI archive and conservative H1/H2 baselines are selected as H0 inputs; the checklist is an adequate passive collection instrument only. Six non-archive files had no prior byte baseline, but the owner independently hashed and inspected the selected candidates. No artifact was copied into Beryllium. |
 
 ### Current todo choices
 
 `PMD-20261108-001` adds the stop-the-line priority `P0`. Three P0 rows lead:
-the published security-reviewer history (your containment decision and your
-Git), the Beryllium public snapshot path (a Beryllium owner session), and
+the published security-reviewer history (your decided containment command
+and your Git), the Beryllium public snapshot path (a Beryllium owner session), and
 the gate install (one command). The backup script stays P1 but is
 smaller: Beryllium and the workbook are already 0/0 with their private
 origins, the security-reviewer push is removed (its only push is the P0
@@ -131,9 +149,9 @@ fleet disposition (`PMD-20261002-003`, `PMD-20261003-003`) are unchanged.
 
 | Priority | Request(s) | Blocking status | Human-focused description |
 | --- | --- | --- | --- |
-| P0 | `PMR-138` | **Your containment decision now; then one owner session plus your Git** | The identifier is readable in the public security-reviewer history today; the gate's live-view audit at 04:14Z (20:14 on 2026-11-07 at UTC-8) still finds it. Optionally make the repository private at once (one command; GitHub erases its stars and watchers and detaches public forks), then have a security-reviewer owner session remove the encoded literals, rewrite the published commits with your Git, gate-check, and force-push with lease; then ask GitHub Support to purge the old commits' cached views. Steps are in the private `../.publication-gate/P0-20261108-001.md`. Unblocks every security-reviewer push and the Project Manager's own push. You act. |
+| P0 | `PMR-138` | **Containment decided (yours, 06:43Z): make it private now; then one owner session plus your Git** | The identifier is readable in the public security-reviewer history; at 06:48Z (22:48 on 2026-11-07 at UTC-8) the repository was still public. Make it private (one command; GitHub erases its stars and watchers; you reported no forks), install the gate, then have a security-reviewer owner session remove the encoded literals while you rewrite the published commits with your Git, gate-audit, and force-push with lease; then send the drafted GitHub Support request; make it public again once Support confirms and the gate's `audit --all-refs` passes. Steps are in the private `../.publication-gate/P0-20261108-001.md`. Unblocks every security-reviewer push and the Project Manager's own push. You act. |
 | P0 | `PMR-139` | **A Beryllium owner session (your current one, or a new launch); holds the snapshot path** | Before the internal release branch reaches `main` or the public review snapshot, the owner makes its snapshot-bound pages, the planning-site configuration, one page's file name, and `release/release.py` entry-free, makes `snapshot.sh` run the gate before committing, and decides the two gate-run clones that still reach a superseded commit. Internal, snapshot-excluded records may keep the exact name. Unblocks snapshot refreshes, the merge, and release publication. Your Beryllium session acts. |
-| P0 | `PMR-140` | **Your one-line install, then Project Manager verification** | Install and check the publication gate on `l1`; it also installs the `beryllium-publication-gate` skill and the private denylist copy, and logs under the ignored `scratch/publication-gate-setup/`. Until then every public push from `owner-actions.sh` is refused (fail closed), although a direct `git push` is not hooked. The Project Manager then verifies the two remediations with the gate's read-only `audit --remote` (the live public view) and `audit`, and lifts the hold. You act first. |
+| P0 | `PMR-140` | **Your one-line install (before the repair force push), then Project Manager verification** | Install and check the publication gate on `l1` (or run `install` again if you installed it before the 133rd-turn correction, which `check` then reports by SHA-256); it also installs the `beryllium-publication-gate` skill and the private denylist copy, and logs under the ignored `scratch/publication-gate-setup/`. Until then every public push from `owner-actions.sh` is refused (fail closed), although a direct `git push` is not hooked. The Project Manager then verifies the two remediations with the gate's read-only `audit --remote` (the live public view) and `audit`, and lifts the hold. You act first. |
 | P1 | `PMR-141` | **With `PMR-138`, same owner session** | Security-reviewer adopts the trigger phrase `check publication gate` and the gate command; public repository. |
 | P1 | `PMR-142` | **Ready for a direct human-started threat-modeler session** | Threat-modeler adopts the gate and corrects its handoff, which still calls the public `origin` a private backup; its six unpushed commits already pass the gate. |
 | P1 | `Backup and checks on l1` (no PMR) | **Run after the gate install, while your Beryllium and workbook sessions are idle; not run yet** | `scratch/l1-backup-and-checks.sh`, revised 2026-11-08, runs the read-only governance `check` and CHERI notes remote check, then `owner-actions.sh` review, the y/N threat-modeler fast-forward (public, so y publishes; the gate runs first, and the six commits pass it), and a fetch of every registered repository. The former Beryllium step and the security-reviewer push are removed: Beryllium and the workbook are already 0/0 with their private origins, and security-reviewer's only push is the P0 force push. It confirms the `l1` hook and answers the CHERI notes remote question. You act; the Project Manager reads the logs. |
@@ -177,43 +195,36 @@ fleet disposition (`PMD-20261002-003`, `PMD-20261003-003`) are unchanged.
 
 ### One recommended next action
 
-**Decide now whether to make the public security-reviewer repository private
-while it is fixed, then start its P0 owner session.**
-Why: the identifier is readable in that repository's public history today
-(the gate's live-view audit at 04:14Z, 20:14 on 2026-11-07 at UTC-8, still
-finds it), and every hour raises the chance that it is copied or archived.
-Making it private stops further exposure at once (GitHub erases its stars
-and watchers and detaches public forks; you can make it public again after
-the fix); the history rewrite is the actual fix. Check for forks first, then
-choose:
+**Make the public security-reviewer repository private now, as you decided,
+then install the gate and start its P0 owner session.**
+Why: the identifier is readable in that repository's public history (still
+public at 06:48Z, 22:48 at UTC-8), and every hour raises the chance that it
+is copied or archived. You must run these yourself: the Project Manager runs
+no `gh` command and changes no component remote or visibility. The gate
+install comes before the force push so that its hook scans what the force
+push adds, even while the repository is private; the private note's step 4
+`audit` verifies the whole repaired history.
 
 ```sh
-gh api repos/beryllium-project/security-reviewer --jq .forks_count
 gh repo edit beryllium-project/security-reviewer --visibility private --accept-visibility-change-consequences
-```
-
-Then start the owner session for the P0 fix and the gate adoption (the
-owner edits files; you run every Git command it hands you):
-
-```sh
+bash /home/jmorris/src/beryllium-project/project-manager/scripts/publication-gate-setup.sh install
 bash /home/jmorris/src/beryllium-project/project-manager/scripts/owner-session.sh launch security-reviewer PMR-138 PMR-141
 ```
 
-The rewrite, gate audit, force push with lease, GitHub Support request, and
-optional return to public visibility are spelled out in the private
-`../.publication-gate/P0-20261108-001.md`. Tell the Project Manager `done`
-after the force push; it verifies with the gate's `audit --remote origin`
-(or, while the repository is private, `audit --all-refs` after a fetch).
+The owner session edits files; you run every Git command it hands you. The
+rewrite, gate audit, force push with lease, the drafted GitHub Support
+request, and the return to public are in the private
+`../.publication-gate/P0-20261108-001.md` (steps 3 to 7). Recommended: make
+it public again only after Support confirms the garbage collection and the
+gate's `audit --all-refs` passes after a fetch; until Support's collection
+runs, anyone holding a replaced commit's ID can open it once the repository
+is public. After the force push, run `git fetch --prune --tags origin` in
+the component and tell the Project Manager `done`: it closes `PMR-138` once
+its `audit --all-refs` of the local clone passes, whether the repository is
+then private or public. Tell it again after the return to public; it then
+confirms the live view with `audit --remote origin`.
 
 Further actions, in priority order:
-
-- **Install the publication gate** (P0 `PMR-140`, one command; it ends with
-  its own `check` and logs under `scratch/publication-gate-setup/`; until it
-  passes, every public push from `owner-actions.sh` is refused):
-
-  ```sh
-  bash /home/jmorris/src/beryllium-project/project-manager/scripts/publication-gate-setup.sh install
-  ```
 
 - **Give a Beryllium owner session P0 `PMR-139` with `PMR-143`.** In a
   running Beryllium session, say `check Project Manager tasking`; if none
@@ -283,10 +294,16 @@ bash ./scripts/pull-queues.sh list
 bash ./scripts/pull-queues.sh edits
 bash ./scripts/pull-queues.sh check
 bash ./scripts/project-tasking.sh check
+python3 -I -B ./scripts/publication-gate.py classify https://github.com/beryllium-project/security-reviewer.git
 python3 -I -B ./scripts/publication-gate.py audit --repo ../security-reviewer --remote origin --denylist ../.publication-gate/denylist
+python3 -I -B ./scripts/publication-gate.py audit --repo ../security-reviewer --all-refs --denylist ../.publication-gate/denylist
 git status --short --branch
 git -C .. status --short --branch
 ```
+
+While security-reviewer is private, `classify` reports it as recorded
+public but not readable anonymously, and `audit --remote` refuses it (exit
+2); use the `--all-refs` audit of the local clone instead (`PMD-20261108-002`).
 
 `quiescence` fails while the five retained Beryllium session-state
 registrations stay prunable on `l1`, XRV's change set stays uncommitted, and on
@@ -299,6 +316,51 @@ responsible-human hold excludes a component again, replace `status`,
 for every other entry.
 
 ## What changed in this turn
+
+### One-hundred-thirty-third-turn containment decision and gate correction
+
+- **Your decision (2026-11-08T06:43Z, 22:43 at UTC-8).** `"there are no
+  forks, we will make private for repair then public again"`, recorded in
+  `PMD-20261108-002` with the order of steps. The fork count is as you
+  reported. Both visibility changes are your commands.
+- **Observed (06:48Z).** Security-reviewer is still public at the published
+  tip; no gate install log and no owner-session packet exist; every
+  component is unchanged since the 132nd turn.
+- **Gate correction.** A sandbox comparison with a synthetic term showed
+  that the gate committed at `8a40adc` refused (exit 2) any push, clean or
+  not, to a recorded public repository it could not read anonymously, so
+  once installed it would have blocked the repair force push to the private
+  repository. It now scans such a push as public, excluding only what the
+  remote already holds for the pushed refs, and `audit --remote` refuses
+  such a repository in favour of `audit --all-refs`. Three regression tests
+  were added; two of them fail on the earlier gate.
+- **Recommendation.** Make the repository public again only after GitHub
+  Support confirms the garbage collection and cached-view removal (GitHub's
+  documentation says replaced commits stay reachable by their IDs in cached
+  views until then) and after `audit --all-refs` passes. The private note
+  now drafts the Support request without the identifier; sending it is
+  yours.
+- **Records.** `PMD-20261108-002`; `PMR-138` and `PMR-140` notes; the
+  private note (timeline, steps 1, 3, 5, 6, 7, 8); runbook `PMR-138`
+  section and `PMR-140` reinstall note; the gate sections of `README.md`,
+  `AGENT-INTERFACE.md`, and the user-level skill; registry review scope and
+  the security-reviewer, parent, and Project Manager rows.
+- **Audit reconciliation.** One same-model `pm-auditor` pass returned 0
+  blocking, 5 stale, 12 minor, and 2 unknown items, all reconciled. The main
+  fixes:
+  - The private note's rewrite step lacked staging after `git reset
+    --soft`; committing without staging would have recreated the old
+    content.
+  - Several places said the hook "scans the repaired history". It scans
+    only what the force push adds; the step 4 `audit` verifies the whole
+    repaired history.
+  - `PMR-138` now has one closure rule (`PMD-20261108-002` disposition 5).
+  - The Support draft's pull-request count is marked for you to confirm.
+- **Validation.** `validate-pm.sh` 919 / 0; `tests/validate-agent.sh`
+  1248 / 0 (the three new gate tests pass, sandbox only);
+  `pull-queues.sh check` 138 / 138; `registry-check` exact; the gate's scan
+  of this tree and of the changed parent files passes.
+- **No push**, no remote or visibility change, no component write.
 
 ### One-hundred-thirty-second-turn P0 incident and publication gate
 
@@ -3954,9 +4016,9 @@ Previous turn (thirty-sixth):
 
 | Priority | Request | Blocker or action |
 | --- | --- | --- |
-| P0 | `PMR-138` | Your containment decision (optional temporary private visibility), then a security-reviewer owner session that removes the encoded literals, your history rewrite and force push with lease, and your GitHub Support purge request; steps in the private `../.publication-gate/P0-20261108-001.md`. The Project Manager verifies with the gate's `audit --remote origin`. |
+| P0 | `PMR-138` | Containment decided by you at 06:43Z (`PMD-20261108-002`): make the repository private now; then a security-reviewer owner session that removes the encoded literals, your history rewrite and force push with lease while it is private, the drafted GitHub Support request, and your return to public (recommended after Support confirms and `audit --all-refs` passes); steps in the private `../.publication-gate/P0-20261108-001.md`. The Project Manager closes it when its `audit --all-refs` of the local clone passes after your force push and `git fetch --prune --tags origin`, whether the repository is then private or public, and confirms the live view with `audit --remote origin` after the return to public. |
 | P0 | `PMR-139` | A Beryllium owner session makes snapshot- and release-bound paths entry-free and the snapshot and release tools fail closed; no snapshot refresh, merge of the internal release branch into `main`, or release publication until it closes. |
-| P0 | `PMR-140` | Your one-line gate install (`scripts/publication-gate-setup.sh install`, logged under `scratch/publication-gate-setup/`), then Project Manager verification of `PMR-138` and `PMR-139` with the gate's read-only `audit --remote` and `audit`, and lifting of the hold. |
+| P0 | `PMR-140` | Your one-line gate install before the repair force push, or a reinstall if you installed before the 133rd-turn correction (`scripts/publication-gate-setup.sh install`, logged under `scratch/publication-gate-setup/`), then Project Manager verification of `PMR-138` and `PMR-139` with the gate's read-only `audit --remote` and `audit`, and lifting of the hold. |
 | P1 | `PMR-141` | With `PMR-138` in the same security-reviewer owner session: gate adoption. |
 | P1 | `PMR-142` | A direct human-started threat-modeler session: gate adoption and the handoff wording that still calls the public `origin` a private backup. |
 | P1 | Backup and checks on `l1` (no PMR) | After the gate install and while the Beryllium and workbook sessions are idle, your one command `scratch/l1-backup-and-checks.sh` (revised 2026-11-08; `outbox/OWNER-RUNBOOK.md` "P1 Backup and checks on `l1`"): the read-only governance `check` and CHERI notes remote check, then `owner-actions.sh` review, the gated y/N threat-modeler fast-forward (public, so y publishes), and a fetch of every repository. |
@@ -4002,9 +4064,13 @@ Exact owner commands and ordering are in `outbox/OWNER-RUNBOOK.md`.
 
 ## Open human gates
 
-- **P0 publication-safety decisions (`PMD-20261108-001`), all yours and all
-  open:** temporary private visibility of
-  `beryllium-project/security-reviewer` for containment; the history
+- **P0 publication-safety decisions (`PMD-20261108-001`,
+  `PMD-20261108-002`), all yours:** temporary private visibility of
+  `beryllium-project/security-reviewer` for containment is decided
+  (`"there are no forks, we will make private for repair then public
+  again"`, 06:43Z) but not yet carried out; its timing back to public stays
+  open (recommended after GitHub Support confirms the purge and
+  `audit --all-refs` passes after a full fetch); the history
   rewrite and the force push with lease (`PMR-138`); a GitHub Support
   request to purge cached views of the replaced commits; the
   publication-gate install on `l1` (`PMR-140`); and the private parent push

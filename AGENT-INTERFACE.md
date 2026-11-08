@@ -392,7 +392,10 @@ runs its `install` or `uninstall` against real user configuration.
 change to public, a new public repository, or a first push to an empty public
 remote needs `audit --all-refs` after fetching every ref about to become
 visible, tags included; `audit --remote <remote>` audits what a public remote
-serves now and fails closed when a live tip is absent locally. The installer
+serves now and fails closed when a live tip is absent locally. A recorded
+public repository that cannot be read anonymously, for example while private
+for containment, is still scanned as public, and `audit --remote` refuses it
+(`PMD-20261108-002`). The installer
 logs every run under the ignored `scratch/publication-gate-setup/`. Hook bypasses
 such as `git push --no-verify` are prohibited for public remotes. Project
 Manager records never name a denylisted entry in any form; exact incident

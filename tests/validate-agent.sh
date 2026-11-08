@@ -3342,6 +3342,24 @@ expect_exit "gate audit --remote fails closed when a live tip is not present loc
     python3 -I -B "$gate" audit --repo "$gate_comp" --remote other
 expect_exit "gate audit --remote refuses explicit refs" 2 \
     "${gate_env[@]}" python3 -I -B "$gate" audit --repo "$gate_comp" --remote origin main
+"${gate_env[@]}" git -C "$gate_comp" remote add contained "$gate_ws/contained.git"
+"${gate_env[@]}" git -C "$gate_comp" branch clean-base HEAD~1
+gate_contained_output=$("${gate_env[@]}" \
+    BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/contained.git" \
+    python3 -I -B "$gate" check --repo "$gate_comp" --remote contained 2>&1)
+gate_contained_status=$?
+if ((gate_contained_status == 1)) && grep -q 'scanning the push as public' <<<"$gate_contained_output" &&
+    ! grep -qi 'blorp' <<<"$gate_contained_output"; then
+    pass "gate scans a public remote it cannot read anonymously, as if public, and blocks an entry"
+else
+    fail "gate did not scan an unreadable public remote as public (exit $gate_contained_status)"
+fi
+expect_exit "gate passes a clean push to a public remote it cannot read anonymously" 0 \
+    "${gate_env[@]}" BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/contained.git" \
+    python3 -I -B "$gate" check --repo "$gate_comp" --remote contained refs/heads/clean-base
+expect_exit "gate audit --remote refuses a public remote it cannot read anonymously" 2 \
+    "${gate_env[@]}" BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/contained.git" \
+    python3 -I -B "$gate" audit --repo "$gate_comp" --remote contained
 "${gate_env[@]}" git -C "$gate_comp" config core.hooksPath /dev/null
 expect_exit "gate check fails on a repository-local core.hooksPath override" 1 \
     "${gate_env[@]}" bash "$gate_sandbox_setup" check

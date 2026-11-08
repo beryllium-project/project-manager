@@ -61,9 +61,11 @@
   range carries the 2026-11-07 publication-safety commit, which embeds a
   denylisted identifier in reversible encodings, and the `PMR-118` /
   `PMR-123` owner return. P0 `PMR-138` rewrites that published history
-  (human-run Git, force push with lease, optional temporary private
-  visibility, GitHub Support cache purge); exact commits and steps are only
-  in the private `workspace://.publication-gate/P0-20261108-001.md`. Hold:
+  (human-run Git, force push with lease, temporary private visibility
+  decided by the responsible human on 2026-11-08 under `PMD-20261108-002`,
+  GitHub Support cache purge); exact commits and steps are only in private
+  parent records, chiefly
+  `workspace://.publication-gate/P0-20261108-001.md`. Hold:
   no other push of this component until `PMR-138` closes. `PMR-111` is
   superseded; the `PMR-118` / `PMR-123` returns are verified after the
   rewrite. Gate adoption is `PMR-141` (P1).
