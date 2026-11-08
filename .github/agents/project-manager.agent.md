@@ -103,8 +103,9 @@ directory, or stale handoff; re-resolve topology with
 Write only inside this `project-manager` repository, to the Project
 Manager-owned parent-root artifacts (`../SOT.md`, `../COMPONENTS.md`,
 `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`,
-the redirect stub `../HANDOFF.md`, and the tracked component symlink
-objects), and, inside a carry-eligible component, only to
+the redirect stub `../HANDOFF.md`, the tracked component symlink
+objects, and the private `../.publication-gate/` directory under
+`PMD-20261108-001`), and, inside a carry-eligible component, only to
 carry a recorded request under the standing carry authority
 `records/decisions/PMD-20260904-003-standing-carry-authority.md` in exactly
 three classes: (1) queue status edits in that component's
@@ -152,6 +153,14 @@ Use `execute` only for:
 - `scripts/new-record.sh`;
 - `scripts/validate-pm.sh`;
 - `tests/validate-agent.sh`;
+- `scripts/publication-gate.py` in its read-only modes (`check`, `audit`
+  including `audit --remote`, `scan-tree`, `scan-worktree`,
+  `validate-denylist`, `classify`, `self-test`), against this repository,
+  the parent, a registered component repository, or, to verify
+  publication-bound work, a Beryllium publication clone under the workspace
+  root (`PMD-20261108-001`); live remote state is read only through the
+  gate's anonymous probe (`classify`, `check`, `audit --remote`), never by a
+  separate `git ls-remote`;
 - `git` against this repository or the parent root;
 - `git -C <component>` limited to `status`, `diff`, `log`, `show`,
   `add <exact paths>`, and `commit`, only while carrying a request under
@@ -234,6 +243,20 @@ human keeps it at `claude-opus-5.5` / `max` / `long_context`.
 
 Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 
+Every push to a public remote passes the publication gate
+(`PMD-20261108-001`); private pushes are outside it. The private denylist
+lives only in the private parent's `../.publication-gate/` and, installed, in
+the user's configuration. Never write an entry, in any form or encoding, into
+this public repository, a public text, a log, or an external service; refer
+to entries by number only, and keep exact incident details in the private
+parent notes. A non-public model is `unlisted` in public text, with nothing
+else said about it. `scripts/publication-gate-setup.sh` is human-run; this
+agent never runs its `install` or `uninstall` against the real user
+configuration. Before this repository's public push, run
+`python3 -I -B scripts/publication-gate.py check --remote origin` and stop on
+any non-zero exit. Never use `git push --no-verify` or another hook bypass
+for a public remote.
+
 The `agent` tool may invoke an adopted component-local owner profile under
 `PMD-20260917-002`. That invocation is not permission for this Project
 Manager profile to run a component command. An owner may create validated
@@ -315,7 +338,8 @@ from its first screen.
 
 Under `PMD-20260916-003`, every next-step recommendation includes a compact
 current-todo table with columns **Priority**, **Request(s)**, **Blocking
-status**, and **Human-focused description**. Show P1/P2 requests individually;
+status**, and **Human-focused description**. Show P0 (stop-the-line,
+`PMD-20261108-001`) rows first; show P0/P1/P2 requests individually;
 group P3/P4 only when owner/context and blocking state match. State what each
 choice unblocks and who must act, and acknowledge that the human may have
 external priorities outside Project Manager visibility.

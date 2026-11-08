@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-11-05
+**Last refreshed:** 2026-11-08
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -24,6 +24,103 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 ```
 
 The command fails rather than showing stale or unreachable tasking.
+
+## P0 publication-safety hold and remediation (`PMD-20261108-001`)
+
+**Hold (you confirmed it on 2026-11-08):** no security-reviewer push other
+than the `PMR-138` force push; no public Beryllium review-snapshot refresh,
+merge of the internal release branch into `main`, or release publication
+until `PMR-139` closes; and no public Project Manager push until the
+security-reviewer rewrite lands, because the Project Manager records
+describe the incident. Every other public push runs the publication gate;
+until you install it, `owner-actions.sh` refuses every public push step.
+Exact commits, paths, lines, and commands are only in the private
+`../.publication-gate/P0-20261108-001.md` (parent repository, private).
+
+### P0 PMR-138: security-reviewer published history
+
+Why: a non-public model identifier is readable, in reversible encodings, in
+the public `beryllium-project/security-reviewer` history since a push on
+2026-11-08 between 02:03Z and 02:28Z.
+
+1. Containment, your decision (recommended now). Check forks, then make the
+   repository private while it is fixed; GitHub erases stars and watchers and
+   detaches public forks, and you may make it public again after step 6:
+
+   ```sh
+   gh api repos/beryllium-project/security-reviewer --jq .forks_count
+   gh repo edit beryllium-project/security-reviewer --visibility private --accept-visibility-change-consequences
+   ```
+
+2. Start one owner session for the fix and the gate adoption (`PMR-141`);
+   agents may not run Git in this component, so the session edits files and
+   hands you the Git commands:
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project/project-manager
+   bash ./scripts/owner-session.sh launch security-reviewer PMR-138 PMR-141
+   ```
+
+3. Rewrite, gate-audit, and force-push with lease exactly as the private
+   note's steps 3 to 5 say. The force push rewrites public history and needs
+   your explicit same-turn decision.
+4. Ask GitHub Support to purge the old commits' cached views (private note,
+   step 6). Do not quote the identifier in the request.
+5. If you made the repository private, make it public again only after the
+   gate's `audit --all-refs` passes on the rewritten repository after a full
+   fetch.
+6. Tell the Project Manager `done`; it verifies with the gate's
+   `audit --remote origin` (the live public view; while the repository is
+   private, `audit --all-refs` after a fetch), closes `PMR-138`, then
+   verifies the `PMR-118` / `PMR-123` return against the replacement
+   commits.
+
+### P0 PMR-139: Beryllium public snapshot path
+
+Why: the internal release branch carries the identifier in pages, one file
+name, the planning-site configuration, and `release/release.py`, all of
+which `mvp/tools/snapshot.sh` would copy into the public review snapshot,
+and the snapshot tool has no term check. Tell your Beryllium session to run
+`check Project Manager tasking` and take `PMR-139` (with `PMR-143` if it
+wishes); the request text lists the four parts. Until it closes, do not
+refresh the public snapshot, merge that branch into `main`, or publish the
+release.
+
+### P0 PMR-140: install the publication gate
+
+Why: the gate is what refuses a public push carrying a denylisted entry; it
+is built and tested but not installed. One command from any directory; it
+copies the gate, its hook dispatcher, the `beryllium-publication-gate`
+skill, and the private denylist (mode 0600), adds scoped Git `includeIf`
+entries, and ends with its own `check`. It refuses while a global
+`core.hooksPath` is set (none is set on `l1` today). No Copilot session
+restart is needed for the Git hook; new sessions pick up the skill:
+
+```sh
+bash /home/jmorris/src/beryllium-project/project-manager/scripts/publication-gate-setup.sh install
+```
+
+It prints its log path last (under the ignored
+`scratch/publication-gate-setup/`); tell the Project Manager `done`, and it
+reads the log. To remove it later: `publication-gate-setup.sh uninstall`.
+
+## P1-P4 publication-gate adoption (`PMR-141`..`PMR-150`)
+
+Each component adds a short `Publication gate` instruction section, the
+trigger phrase `check publication gate`, the gate command among its allowed
+commands, and a contract test, then returns without pushing. Order: P1
+security-reviewer (`PMR-141`, with `PMR-138`) and threat-modeler
+(`PMR-142`, a direct human-started session as for `PMR-121`, which also
+corrects its handoff's description of the public `origin` as a private
+backup); P2 Beryllium (`PMR-143`, with `PMR-139`), provenance-review
+(`PMR-144`), Helium (`PMR-145`; otherwise parked, but its `public` remote
+makes it public-bound), and XRV (`PMR-146`, after its change set is
+committed); P3 analysis-workbook (`PMR-147`) and communications
+(`PMR-148`); P4 formal verification (`PMR-149`) and OS-security
+(`PMR-150`, ask first). The CHERI notes checkout gets no request until it is
+resolved. Until a component adopts, `owner-actions.sh` gates its public
+pushes, and once you install the gate (P0 `PMR-140`) the global pre-push
+hook does too; before the install a direct `git push` is not hooked.
 
 ## Human-run script output
 
@@ -73,13 +170,19 @@ pending next action of preparing a registration request.
 
 ## P1 Backup and checks on `l1` (no PMR)
 
-**Wait until the Beryllium and analysis-workbook sessions have ended**
-(you reported both active on 2026-11-05): step 4 fetches every registered
-repository, which updates remote-tracking refs inside those checkouts.
-Not run yet: no `scratch/l1-backup-and-checks-*.log` existed on
-2026-11-05. Its Beryllium step targets only `beryllium/mvp-m0`; on
-2026-11-05 that branch and its last-fetched `origin` branch both pointed at
-`6f7b6e7`, so the step should report nothing to push.
+**2026-11-08 update:** run it after you install the publication gate
+(`PMR-140` above). Since `PMD-20261108-001`, step 4's `owner-actions.sh`
+runs the gate before each push step and refuses every public push until the
+gate is installed. Security-reviewer has nothing to push (its fix is the P0
+force push under `PMR-138`, which you run separately), and threat-modeler's
+six commits pass the gate. The workbook's November branch is already on its
+private `origin`. The older text below is otherwise unchanged.
+
+**Run it while the Beryllium and analysis-workbook sessions are idle**
+(you reported both active on 2026-11-05): its last step fetches every
+registered repository, which updates remote-tracking refs inside those
+checkouts. Not run yet: no `scratch/l1-backup-and-checks-*.log` existed on
+2026-11-08.
 
 Why: you returned the workspace to `l1` by rsync on 2026-10-25
 (`PMD-20261025-001`) and said exactly `"everything important should be
@@ -93,27 +196,26 @@ return, and the CHERI notes remote check (next section) has not run. The
 Project Manager pushed its own and the parent's 129th-turn commits (live
 `ls-remote` verified them on 2026-11-05); it never pushes a component.
 
-Run this in a terminal on `l1` once the Beryllium and workbook sessions
-have ended. It changes no Copilot configuration, so no other governed
-session needs to stop for its hook check:
+Run this in a terminal on `l1` after the gate install, while the
+Beryllium and workbook sessions are idle. It changes no Copilot
+configuration, so no other governed session needs to stop for its hook
+check:
 
 ```sh
 bash /home/jmorris/src/beryllium-project/project-manager/scratch/l1-backup-and-checks.sh
 ```
 
-It runs four steps in order:
+It runs three steps in order (revised 2026-11-08: the former Beryllium
+`beryllium/mvp-m0` step and the security-reviewer push are removed):
 
 1. the read-only governance `check`;
 2. the read-only CHERI notes remote check, which also writes its own log;
-3. a fast-forward of Beryllium `beryllium/mvp-m0` to its private `origin`:
-   it shows the commits and asks y/N, and it refuses unless GitHub reports
-   the repository `PRIVATE`;
-4. `owner-actions.sh --only review,push_tm,push_sr,fetch_snapshot`, which
-   reviews the commits, then asks y/N before each of threat-modeler and
-   security-reviewer `main` to `origin`. Both repositories are public, so
-   y publishes those commits (agent-configuration and handoff changes; the
-   threat model itself is unchanged); answer n to skip either. It then
-   fetches every reachable remote and prints the restart snapshot.
+3. `owner-actions.sh --only review,push_tm,fetch_snapshot`, which reviews
+   the commits, runs the publication gate, then asks y/N before
+   threat-modeler `main` to `origin`. The repository is public, so y
+   publishes its six commits (agent-configuration and handoff changes; the
+   threat model itself is unchanged; they pass the gate); answer n to skip.
+   It then fetches every reachable remote and prints the restart snapshot.
 
 The logs are `scratch/l1-backup-and-checks-<UTC>.log`,
 `scratch/cheri-notes-remote-check-<UTC>.log`, and the newest file under
@@ -247,12 +349,13 @@ afterwards. Project Manager records keep K3 hardware
 `NOT RUN`, K0-X/K0-R blocked, H1-H4 not authorized, and R8-H0 a committed
 candidate, not accepted, and they record none of these component-side
 acceptances. The communications handoff at `1f66802` adds unverified
-component-side claims that Beryllium release candidate 3 board evidence
-has overtaken the K3 `NOT RUN` wording and that a public snapshot of
-`beryllium-project/beryllium-hypervisor` exists, which conflicts with
-PMR-098's `PRIVATE` report; Beryllium has also moved well past the
-state above (see the P2 note). These join this question, and the Project
-Manager re-reads Beryllium's records once its active session ends.
+component-side claim that Beryllium release candidate 3 board evidence
+has overtaken the K3 `NOT RUN` wording (its other claim, a public review
+snapshot `beryllium-project/beryllium-hypervisor`, is confirmed on
+2026-11-08 by the Beryllium owner record and the gate's probe); Beryllium
+has also moved well past the state above (see the P2 note). These join this
+question, and the Project Manager re-reads Beryllium's records when your
+Beryllium session is idle.
 This question is reconciled only from a named
 responsible-human record: tell the Project Manager which component-side
 acceptances, authorizations, drops, and SOP exceptions its records should
@@ -350,29 +453,14 @@ three profiles (`provenance-review`, `provenance-code-lineage`, and
 README, and handoff only as directly required, changes no `reviews/PRV-*`
 package, commits locally, returns in `HANDOFF.md`, and does not push.
 
-### P3 PMR-123: security-reviewer repin and Codex-exception retirement
+### P3 PMR-123 and PMR-118: returned; verification after the P0 rewrite
 
-```sh
-cd /home/jmorris/src/beryllium-project/project-manager
-bash ./scripts/owner-session.sh launch security-reviewer PMR-123
-```
-
-Do not add `--agent security-reviewer`; that profile pins `gpt-5.3-codex`
-until this request lands. To handle open P3 `PMR-118` in the same session,
-use `bash ./scripts/owner-session.sh launch security-reviewer PMR-118 PMR-123`
-instead; under `PMD-20261006-001`, `PMR-118`'s clause preserving the Codex
-pair no longer applies. The owner repins all four profiles, removes the
-Codex-exception, `high` / `xhigh` floor, and `claude-fable-5.1` allowance
-wording, records that security reviews run only on explicit
-responsible-human request, preserves the tasking resolver and every
-historical record, starts no engagement, commits locally, returns in
-`HANDOFF.md`, and does not push. `PMR-111` stays separate. On `l1`, start
-the session after the governance `check` in the P1 script passes (and after
-any reinstall it calls for); a session started before a reinstall keeps its
-loaded hook configuration.
-Passing `claude-opus-5.5` / `max` / `long_context` explicitly to a
-`security-evidence`, `security-research`, or `security-finding-review`
-task launch remains harmless.
+The owner session for both requests returned in the component handoff on
+2026-11-08, and the commit holding the return was then pushed to the public
+`origin` (see P0 `PMR-138`). Because `PMR-138` rewrites that published
+history, the Project Manager verifies and closes `PMR-118` and `PMR-123`
+against the replacement commit. Nothing for you to do beyond `PMR-138`; do
+not launch another session for these two requests.
 
 ## Completed user-level governance installs (no PMR)
 
@@ -514,35 +602,13 @@ formal-verification-research, and provenance-review already read the SOT
 anchor. PMR-108 is closed; PMR-098/100 returns are now acknowledged, while
 the remaining child requests and every human gate remain independent.
 
-## P3 PMR-111: security-reviewer backup (publishes)
+## Superseded PMR-111: security-reviewer backup
 
-PMR-109 and PMR-110 are closed as acknowledgements of owner work
-`2bb4c989bbe9b57f870e6f653ed3732e742b11f9` and HANDOFF-only return
-`c2edac70afdfe5b0bb90e237487cd168fb91e900`. The responsible human replied
-exactly `"done"` after being directed to review the return and exit the
-existing security-reviewer owner session, releasing only that component's
-session/reservation. The two commits remain local and unpushed; no engagement
-ran.
-
-PMR-111 is a separate backup-only request. The P1 backup-and-checks
-script in this runbook now offers it as its y/N `push_sr` step (`PMD-20261025-002`); your
-y there is the same-turn confirmation. Before any push, require a new
-exact same-turn responsible-human confirmation, clean idle `main` at
-`c2edac70`, and live public `origin/main` still at
-`2e8d2054840af35ba6d64a00546ee99806a88dfb`. Then the responsible human may
-run the maintained helper from the workspace root:
-
-```sh
-bash ./project-manager/scripts/owner-actions.sh --only push_sr
-```
-
-The Project Manager never runs this command. The human retrieves the
-timestamped helper log from `project-manager/scratch/owner-actions/`; closure
-requires exact remote containment and final clean branch state.
-`beryllium-project/security-reviewer` stays public by your choice
-(`PMD-20261012-002`), so this push publishes the two commits, and the
-confirmation must say so. No force, tag, remote mutation, engagement,
-review approval, risk acceptance, release, or other gate is combined.
+Superseded on 2026-11-08: the public `main` already moved past this
+request's target through a push the Project Manager did not observe, and
+that push is under P0 `PMR-138`. Do not run `owner-actions.sh --only
+push_sr` for this request; the security-reviewer fix is a separate force
+push with lease that you run under `PMR-138`.
 
 ## Owner-worker closure results
 
@@ -1304,7 +1370,10 @@ a same-turn confirmation. The 130th turn's pushes, under your first answer
 `beryllium-project/project-manager` stays public by your decision, so
 every `push_pm` publishes the Project Manager commits it pushes.
 `threat-modeler` and `security-reviewer` also stay public
-(`PMD-20261012-002`), so `push_tm` and `push_sr` publish too. The current
+(`PMD-20261012-002`), so `push_tm` and `push_sr` publish too; since
+2026-11-08 every push step runs the publication gate first and refuses until
+it is installed, and the P0 hold keeps `push_sr` skipped until `PMR-138`
+closes. The current
 component backups are the P1 backup-and-checks script and the two P2
 owner sessions at the top of this runbook; the communications repository
 was backed up on 2026-11-05.
@@ -1436,10 +1505,11 @@ The relevant local component commits are:
   `bbbc534`, `71bca3f`, and `e6aed9f` and the two PMR-121 commits `c156c0a`
   and `aba3350` are local-only and unpushed; the P1 script offers their
   `push_tm` fast-forward, which publishes;
-- `security-reviewer`: work `2bb4c98` and return `c2edac7` close
-  PMR-109/110 locally and leave clean `main` two ahead of public
-  `origin/main` `2e8d205`; PMR-111 separately tracks the `push_sr`
-  fast-forward, which the P1 script offers and which publishes.
+- `security-reviewer`: work `2bb4c98` and return `c2edac7` closed
+  PMR-109/110; on 2026-11-08 `main` is 0/0 with its public `origin` after a
+  push the Project Manager did not observe, `PMR-111` is superseded, and its
+  only pending push is the P0 `PMR-138` force push, which you run
+  separately.
 
 The current helper's `push_fvr` path expects a remote named `backup`, while
 the restored formal-verification clone has only `origin`. It will not push
@@ -1457,8 +1527,10 @@ confirmation.
 
 The helper prompts before every push, warns on a dirty worktree and skips it
 automatically only under `--yes`, never forces, and changes no visibility.
-It does not check visibility, though, so a push to a public repository
-publishes. `beryllium-project/project-manager`, `threat-modeler`, and
+Since 2026-11-08 (`PMD-20261108-001`) it runs the publication gate before
+every push step: a push to a public remote is scanned and refused on a
+finding, or refused outright until the gate is installed; a passing push to
+a public repository still publishes. `beryllium-project/project-manager`, `threat-modeler`, and
 `security-reviewer` stay public by your decisions (`PMD-20261012-001`,
 `PMD-20261012-002`), so keep `--skip push_pm,push_tm,push_sr` unless you
 intend to publish new commits there. Report its log path and result to the

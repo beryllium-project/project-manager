@@ -3145,6 +3145,223 @@ if [[ -f $record_sandbox/records/decisions/PMD-$today-002-second-slug.md ]]; the
     refute_pattern "$record_sandbox/records/decisions/PMD-$today-002-second-slug.md" '@@'
 fi
 
+# --- publication gate (PMD-20261108-001) --------------------------------------
+# Synthetic entries only: no real denylist entry appears in this repository.
+# Every Git command below runs with a sandbox HOME and GIT_CONFIG_GLOBAL, so
+# the real user configuration is never read or written.
+
+gate=$repository_root/scripts/publication-gate.py
+gate_hook=$repository_root/scripts/publication-gate-hook.sh
+gate_setup=$repository_root/scripts/publication-gate-setup.sh
+gate_skill=$repository_root/user-assets/skills/beryllium-publication-gate/SKILL.md
+for f in "$gate" "$gate_hook" "$gate_setup" "$gate_skill"; do
+    require_file "$f"
+done
+for f in "$gate" "$gate_hook" "$gate_setup"; do
+    require_executable "$f"
+done
+require_text "$gate" 'This program holds no denylisted term.'
+require_text "$gate_setup" 'HUMAN-RUN installer/checker for the Beryllium publication gate'
+require_pattern "$gate_skill" '^name: beryllium-publication-gate$'
+require_text "$gate_skill" 'check publication gate'
+require_text "$gate_skill" 'Call a non-public model `unlisted`, and say nothing else about it'
+require_text "$gate_skill" '`git push --no-verify`'
+require_text "$repository_root/scripts/owner-actions.sh" \
+    'publication_gate "$dir" "$remote" "$branch" "$id"'
+require_text "$repository_root/scripts/project-tasking.sh" '^P[0-4]$'
+for f in "$repository_root/.github/copilot-instructions.md" \
+    "$repository_root/.github/agents/project-manager.agent.md" \
+    "$repository_root/.github/skills/beryllium-project-management/SKILL.md" \
+    "$repository_root/AGENT-INTERFACE.md" "$repository_root/README.md"; do
+    require_text "$f" 'PMD-20261108-001'
+    require_text "$f" 'scripts/publication-gate-setup.sh'
+done
+require_text "$repository_root/AGENT-ROSTER.md" 'check publication gate'
+require_text "$repository_root/REHYDRATE.md" 'publication-gate-setup.sh install'
+
+expect_exit "publication gate self-test passes" 0 \
+    env HOME="$sandbox/gate-self" XDG_CONFIG_HOME="$sandbox/gate-self/.config" \
+    python3 -I -B "$gate" self-test
+expect_exit "publication gate rejects an unknown mode" 2 \
+    python3 -I -B "$gate" bogus
+
+gate_dir=$sandbox/gate
+mkdir -p "$gate_dir/tree/docs"
+printf 'abc\n' >"$gate_dir/short"
+printf '# comment only\n' >"$gate_dir/empty"
+printf 'caf\303\251-entry\n' >"$gate_dir/non-ascii"
+printf '# synthetic\nblorptangle\n' >"$gate_dir/denylist"
+chmod 0600 "$gate_dir/short" "$gate_dir/empty" "$gate_dir/non-ascii" "$gate_dir/denylist"
+expect_exit "gate rejects an entry with fewer than four letters or digits" 2 \
+    python3 -I -B "$gate" validate-denylist --denylist "$gate_dir/short"
+expect_exit "gate rejects a denylist without entries" 2 \
+    python3 -I -B "$gate" validate-denylist --denylist "$gate_dir/empty"
+expect_exit "gate rejects a non-ASCII entry" 2 \
+    python3 -I -B "$gate" validate-denylist --denylist "$gate_dir/non-ascii"
+expect_exit "gate fails closed without an installed denylist" 2 \
+    env HOME="$gate_dir/no-home" XDG_CONFIG_HOME="$gate_dir/no-home/.config" \
+    python3 -I -B "$gate" scan-tree "$gate_dir/short"
+gate_octal=$(python3 -c 'print("".join("\\%03o" % ord(c) for c in "blorptangle"))')
+printf 'ordinary\n' >"$gate_dir/tree/docs/notes-blorptangle.md"
+printf "x=\$(printf '%s')\n" "$gate_octal" >"$gate_dir/tree/encoded.sh"
+printf 'clean text\n' >"$gate_dir/tree/clean.txt"
+gate_tree_output=$(python3 -I -B "$gate" scan-tree --denylist "$gate_dir/denylist" \
+    "$gate_dir/tree" 2>&1)
+gate_tree_status=$?
+if ((gate_tree_status == 1)); then
+    pass "gate scan-tree blocks an encoded entry and a carrying file name (exit 1)"
+else
+    fail "gate scan-tree expected exit 1, got $gate_tree_status"
+fi
+if grep -q 'octal-escape' <<<"$gate_tree_output" &&
+    grep -q 'name withheld' <<<"$gate_tree_output"; then
+    pass "gate scan-tree names the variant and withholds the carrying name"
+else
+    fail "gate scan-tree output lacks the variant or the withheld name"
+fi
+if grep -qi 'blorp' <<<"$gate_tree_output" ||
+    grep -Fq -- "$gate_octal" <<<"$gate_tree_output"; then
+    fail "gate output printed matched text or a carrying name"
+else
+    pass "gate output never prints matched text or a carrying name"
+fi
+expect_exit "gate scan-tree passes clean files" 0 \
+    python3 -I -B "$gate" scan-tree --denylist "$gate_dir/denylist" "$gate_dir/tree/clean.txt"
+
+gate_ws=$sandbox/gate-ws
+gate_home=$gate_ws/home
+gate_base=$gate_home/.config/beryllium/publication-gate
+gate_env=(env HOME="$gate_home" XDG_CONFIG_HOME="$gate_home/.config"
+    COPILOT_HOME="$gate_home/.copilot" GIT_CONFIG_GLOBAL="$gate_home/.gitconfig"
+    GIT_CONFIG_NOSYSTEM=1 GIT_AUTHOR_NAME=Fixture
+    GIT_AUTHOR_EMAIL=fixture@example.invalid GIT_COMMITTER_NAME=Fixture
+    GIT_COMMITTER_EMAIL=fixture@example.invalid)
+gate_pm=$gate_ws/parent/project-manager
+mkdir -p "$gate_home" "$gate_pm/scripts" \
+    "$gate_pm/user-assets/skills/beryllium-publication-gate" \
+    "$gate_ws/parent/.publication-gate"
+cp "$gate" "$gate_hook" "$gate_setup" "$gate_pm/scripts/"
+cp "$gate_skill" "$gate_pm/user-assets/skills/beryllium-publication-gate/"
+printf '# synthetic\nblorptangle\n' >"$gate_ws/parent/.publication-gate/denylist"
+printf 'fixture\n' >"$gate_ws/parent/SOT.md"
+"${gate_env[@]}" git -C "$gate_ws/parent" init -q -b main
+"${gate_env[@]}" git -C "$gate_ws/parent" add SOT.md .publication-gate
+"${gate_env[@]}" git -C "$gate_ws/parent" -c commit.gpgsign=false commit -q -m fixture
+gate_sandbox_setup=$gate_pm/scripts/publication-gate-setup.sh
+expect_exit "gate check fails before a sandbox install" 1 \
+    "${gate_env[@]}" bash "$gate_sandbox_setup" check
+expect_exit "gate installs into a sandbox HOME and passes its check" 0 \
+    "${gate_env[@]}" bash "$gate_sandbox_setup" install
+if compgen -G "$gate_pm/scratch/publication-gate-setup/publication-gate-setup-install-*.log" \
+    >/dev/null; then
+    pass "gate setup writes a timestamped log under the Project Manager scratch directory"
+else
+    fail "gate setup did not write its log under the Project Manager scratch directory"
+fi
+if [[ $(stat -c '%a' "$gate_base/denylist" 2>/dev/null) == 600 ]]; then
+    pass "installed denylist has mode 0600"
+else
+    fail "installed denylist is absent or not mode 0600"
+fi
+if [[ $(grep -c '^\[includeIf ' "$gate_home/.gitconfig" 2>/dev/null) -ge 7 ]]; then
+    pass "gate install adds the scoped includeIf entries to the sandbox global config"
+else
+    fail "gate install did not add the scoped includeIf entries"
+fi
+gate_comp=$gate_ws/parent/component
+"${gate_env[@]}" git init -q -b main "$gate_comp"
+"${gate_env[@]}" git init -q --bare "$gate_ws/public.git"
+"${gate_env[@]}" git init -q --bare "$gate_ws/private.git"
+"${gate_env[@]}" git -C "$gate_comp" remote add origin "$gate_ws/public.git"
+"${gate_env[@]}" git -C "$gate_comp" remote add private "$gate_ws/private.git"
+if [[ $("${gate_env[@]}" git -C "$gate_comp" config --get core.hooksPath) == \
+    "$gate_base/hooks" ]]; then
+    pass "a repository under the workspace root resolves core.hooksPath to the gate"
+else
+    fail "a repository under the workspace root does not resolve core.hooksPath to the gate"
+fi
+printf '#!/bin/sh\ntouch "%s/chained-pre-commit-ran"\n' "$gate_ws" \
+    >"$gate_comp/.git/hooks/pre-commit"
+chmod 0755 "$gate_comp/.git/hooks/pre-commit"
+printf 'hello\n' >"$gate_comp/clean.txt"
+"${gate_env[@]}" git -C "$gate_comp" add clean.txt
+"${gate_env[@]}" git -C "$gate_comp" -c commit.gpgsign=false commit -q -m clean
+if [[ -f $gate_ws/chained-pre-commit-ran ]]; then
+    pass "the dispatcher chains the repository's own pre-commit hook"
+else
+    fail "the dispatcher did not chain the repository's own pre-commit hook"
+fi
+rm -f -- "$gate_comp/.git/hooks/pre-commit"
+expect_exit "gate passes a clean push to a public remote" 0 \
+    "${gate_env[@]}" BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/public.git" \
+    git -C "$gate_comp" push -q origin main
+printf "x=\$(printf '%s')\n" "$gate_octal" >"$gate_comp/encoded.sh"
+"${gate_env[@]}" git -C "$gate_comp" add encoded.sh
+"${gate_env[@]}" git -C "$gate_comp" -c commit.gpgsign=false commit -q -m 'add helper'
+gate_push_output=$("${gate_env[@]}" \
+    BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/public.git" \
+    git -C "$gate_comp" push origin main 2>&1)
+gate_push_status=$?
+if ((gate_push_status != 0)) && grep -q 'BLOCKED' <<<"$gate_push_output"; then
+    pass "gate refuses a public push that carries an encoded entry"
+else
+    fail "gate did not refuse a public push that carries an encoded entry (exit $gate_push_status)"
+fi
+if grep -qi 'blorp' <<<"$gate_push_output"; then
+    fail "gate pre-push output printed matched text"
+else
+    pass "gate pre-push output never prints matched text"
+fi
+expect_exit "gate leaves a private push unscanned" 0 \
+    "${gate_env[@]}" git -C "$gate_comp" push -q private main
+expect_exit "gate audit --remote passes the clean live view of a public remote" 0 \
+    "${gate_env[@]}" BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/public.git" \
+    python3 -I -B "$gate" audit --repo "$gate_comp" --remote origin
+expect_exit "gate audit --remote passes a remote that is not public" 0 \
+    "${gate_env[@]}" python3 -I -B "$gate" audit --repo "$gate_comp" --remote private
+"${gate_env[@]}" git --git-dir="$gate_ws/public.git" fetch -q "$gate_comp" main:main
+gate_live_output=$("${gate_env[@]}" \
+    BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/public.git" \
+    python3 -I -B "$gate" audit --repo "$gate_comp" --remote origin 2>&1)
+gate_live_status=$?
+if ((gate_live_status == 1)) && grep -q 'BLOCKED' <<<"$gate_live_output" &&
+    ! grep -qi 'blorp' <<<"$gate_live_output"; then
+    pass "gate audit --remote blocks an already-public entry without printing it"
+else
+    fail "gate audit --remote did not block an already-public entry cleanly (exit $gate_live_status)"
+fi
+"${gate_env[@]}" git init -q -b main "$gate_ws/elsewhere"
+printf 'elsewhere\n' >"$gate_ws/elsewhere/other.txt"
+"${gate_env[@]}" git -C "$gate_ws/elsewhere" add other.txt
+"${gate_env[@]}" git -C "$gate_ws/elsewhere" -c commit.gpgsign=false commit -q -m other
+"${gate_env[@]}" git init -q --bare "$gate_ws/public2.git"
+"${gate_env[@]}" git -C "$gate_ws/elsewhere" push -q "$gate_ws/public2.git" main
+"${gate_env[@]}" git -C "$gate_comp" remote add other "$gate_ws/public2.git"
+expect_exit "gate audit --remote fails closed when a live tip is not present locally" 2 \
+    "${gate_env[@]}" BERYLLIUM_PUBLICATION_GATE_TREAT_AS_PUBLIC="$gate_ws/public2.git" \
+    python3 -I -B "$gate" audit --repo "$gate_comp" --remote other
+expect_exit "gate audit --remote refuses explicit refs" 2 \
+    "${gate_env[@]}" python3 -I -B "$gate" audit --repo "$gate_comp" --remote origin main
+"${gate_env[@]}" git -C "$gate_comp" config core.hooksPath /dev/null
+expect_exit "gate check fails on a repository-local core.hooksPath override" 1 \
+    "${gate_env[@]}" bash "$gate_sandbox_setup" check
+"${gate_env[@]}" git -C "$gate_comp" config --unset core.hooksPath
+printf '#!/bin/sh\nexit 0\n' >"$gate_comp/.git/hooks/reference-transaction"
+chmod 0755 "$gate_comp/.git/hooks/reference-transaction"
+expect_exit "gate check fails when a repository relies on an unchained hook" 1 \
+    "${gate_env[@]}" bash "$gate_sandbox_setup" check
+rm -f -- "$gate_comp/.git/hooks/reference-transaction"
+expect_exit "gate check passes again after the override and hook are removed" 0 \
+    "${gate_env[@]}" bash "$gate_sandbox_setup" check
+expect_exit "gate uninstalls from the sandbox HOME" 0 \
+    "${gate_env[@]}" bash "$gate_sandbox_setup" uninstall
+if [[ ! -e $gate_base && $(grep -c '^\[includeIf ' "$gate_home/.gitconfig" 2>/dev/null) == 0 ]] &&
+    [[ -z $("${gate_env[@]}" git -C "$gate_comp" config --get core.hooksPath) ]]; then
+    pass "gate uninstall removes the managed directory and every includeIf entry"
+else
+    fail "gate uninstall left the managed directory or an includeIf entry"
+fi
+
 # --- validate-pm.sh ------------------------------------------------------------------
 
 validate=$repository_root/scripts/validate-pm.sh
@@ -3185,6 +3402,17 @@ expect_exit "validate-pm fails on an invalid request status" 1 bash "$validate" 
 copy=$(mutate request-priority)
 sed -i 's/| open | P2 |/| open | P9 |/' "$copy/outbox/component-requests.md"
 expect_exit "validate-pm fails on an invalid request priority" 1 bash "$validate" --no-parent "$copy"
+
+copy=$(mutate request-priority-p0)
+sed -i 's/| open | P2 |/| open | P0 |/' "$copy/outbox/component-requests.md"
+expect_exit "validate-pm accepts a stop-the-line P0 request priority" 0 \
+    bash "$validate" --no-parent "$copy"
+
+copy=$(mutate denylist-copy)
+mkdir -p "$copy/.publication-gate"
+printf 'synthetic\n' >"$copy/.publication-gate/denylist"
+expect_exit "validate-pm fails when a denylist-like file is in this public repository" 1 \
+    bash "$validate" --no-parent "$copy"
 
 copy=$(mutate request-priority-closed)
 sed -i 's/| closed | - | 2000-01-02 |/| closed | P1 | 2000-01-02 |/' "$copy/outbox/component-requests.md"

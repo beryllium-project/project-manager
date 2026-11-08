@@ -4,7 +4,8 @@
 - **Created:** 2026-09-06
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261108-001` in part (its disposition 5
+  request priority scale gains `P0` above `P1`; the rest stands)
 
 ## Scope
 

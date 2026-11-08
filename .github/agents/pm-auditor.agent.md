@@ -57,7 +57,8 @@ Never open `../osr-claude/sources/restricted-microsoft/`.
    request the Project Manager carried under `PMD-20260904-003`, the named
    component commit exists on the component's checked-out branch, touches
    only paths inside the request's class, and names the request identifier;
-   every `open` row carries a priority `P1`-`P4` and every other row `-`, and
+   every `open` row carries a priority `P0`-`P4` (`P0` added by
+   `PMD-20261108-001`) and every other row `-`, and
    `outbox/OWNER-RUNBOOK.md` lists every open row with the same priority and
    steps consistent with the request text and the recorded edit files in
    `outbox/owner-edits/`.

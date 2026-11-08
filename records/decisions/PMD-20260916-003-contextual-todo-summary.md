@@ -4,7 +4,8 @@
 - **Created:** 2026-09-16
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261108-001` in part (P0 rows are listed
+  first and individually; the rest stands)
 
 ## Scope
 

@@ -124,6 +124,12 @@ git diff --check
 
 ## What the Project Manager may request
 
+`PMR-142` (P1, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. The repository is public; its six
+unpushed commits pass the gate's `check` on 2026-11-08.
+
 A model or review engagement on a registered snapshot; nothing that grants
 risk acceptance or approval. `PMR-015` (the ledger in the discovery
 reference set) was carried at `226d367` on 2026-09-05. `PMR-005` (push of

@@ -372,7 +372,7 @@ dispatch_request() {
         die "dispatch request is assigned to $owner, not $component: $request_id"
     [[ $status == open ]] ||
         die "dispatch request is not open: $request_id"
-    [[ $priority =~ ^P[1-4]$ ]] ||
+    [[ $priority =~ ^P[0-4]$ ]] ||
         die "dispatch request has an invalid open priority: $request_id"
     [[ $resolved == "Not applicable" ]] ||
         die "dispatch request has a resolved date while open: $request_id"

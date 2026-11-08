@@ -14,3 +14,10 @@
 # Regenerable local tasking projections; README documents the contract.
 /outbox/tasking/*.md
 !/outbox/tasking/README.md
+
+# Copilot CLI local settings written on a workstation. PMD-20261025-001 keeps
+# them untracked; ignoring them lets the human-run owner-session launcher see
+# a clean checkout (PMD-20261108-001).
+/.github/copilot/settings.json
+/.github/copilot/settings.json.lock
+/.github/copilot/settings.local.json

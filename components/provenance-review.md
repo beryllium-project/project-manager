@@ -60,6 +60,12 @@ git diff --check
 
 ## What the Project Manager may request
 
+`PMR-144` (P2, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. The repository is public; `PMR-066`
+and `PMR-122` stay separate unless selected together.
+
 A new aspect review, an iteration of an existing review, or registration of
 `project-manager/` in its `RESEARCH-SOURCES.md` if that component chooses to
 cite Project Manager records. `PMR-066` asks the orchestrator to map

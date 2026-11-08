@@ -29,7 +29,9 @@ The parent workspace root remains the thin coordination shell: `SOT.md`
 (canonical topology and workstation-status anchor), `COMPONENTS.md`
 (component registry), `README.md`,
 `.gitignore`, `.github/copilot-instructions.md`, the compatibility redirect
-`HANDOFF.md`, and the tracked component symlink objects. This component owns
+`HANDOFF.md`, the tracked component symlink objects, and the private
+`.publication-gate/` directory (the publication-gate denylist and private
+incident notes; `PMD-20261108-001`). This component owns
 the Project Manager handoff, component knowledge cards, the agent roster,
 assurance-transfer records, decision records, the queue ledger, and the
 component-request outbox.
@@ -113,7 +115,8 @@ unanswered question.
 Next-step reporting follows `PMD-20260916-003`: every recommendation includes
 a compact current-todo table with priority, request identifiers, **Blocking
 status**, and a **Human-focused description** of what each choice unblocks and who
-must act. P1/P2 work is shown individually; similar P3/P4 work may be grouped.
+must act. P0 (stop-the-line, `PMD-20261108-001`) work comes first; P0/P1/P2
+work is shown individually; similar P3/P4 work may be grouped.
 The Project Manager explicitly acknowledges priorities outside its view.
 
 The repository-reorganization critical path in `PMD-20260916-002` is
@@ -273,7 +276,7 @@ AGENT-INTERFACE.md                           boundaries, inputs, outputs, gates
 AGENT-ROSTER.md                              how every project agent is invoked and validated
 HANDOFF.md                                   restartable Project Manager handoff
 REHYDRATE.md                                 rebuild a workstation from Git: identities, clone layout, per-workstation Copilot setup, non-Git state
-user-assets/skills/                          byte-identical copies of user-level skills the project requires (restored by hand per REHYDRATE.md)
+user-assets/skills/                          byte-identical copies of user-level skills the project requires (cross-repo-collaboration restored by hand per REHYDRATE.md; beryllium-publication-gate installed by scripts/publication-gate-setup.sh)
 components/<component>.md                    one knowledge card per registered component
 records/assurance/                           assurance-transfer records
 records/decisions/PMD-YYYYMMDD-NNN-*.md      decision records
@@ -292,6 +295,9 @@ scripts/                                     maintained helpers (agent-run)
 scripts/owner-actions.sh                     HUMAN-RUN owner-side pushes, fetches, recorded edits, artifact search; never executed by the agent
 scripts/owner-session.sh                     HUMAN-RUN fail-closed ordinary-owner packet, consumed PMR-120 bootstrap bindings, and interactive copilot --yolo launch
 scripts/owner-recovery.sh                    HUMAN-RUN exact dirty-state recovery packet, transcript, and copilot --yolo launch
+scripts/publication-gate.py                  publication gate for public pushes (PMD-20261108-001); holds no denylisted entry; agent runs only its read-only modes
+scripts/publication-gate-hook.sh             Git hook dispatcher installed by the setup script; pre-push runs the gate, every hook chains to the repository's own
+scripts/publication-gate-setup.sh            HUMAN-RUN install/check/uninstall of the gate, dispatcher, skill, private denylist copy, and scoped includeIf entries
 templates/                                   record and row templates
 tests/validate-agent.sh                      component contract suite
 ```
@@ -320,6 +326,10 @@ bash ./scripts/maintenance-reservation.sh hold -- <command>
 bash ./scripts/new-record.sh decision <slug>
 bash ./scripts/validate-pm.sh
 bash ./tests/validate-agent.sh
+python3 -I -B ./scripts/publication-gate.py check --remote origin
+python3 -I -B ./scripts/publication-gate.py audit --repo <repo> --denylist ../.publication-gate/denylist [<ref>...]
+python3 -I -B ./scripts/publication-gate.py scan-worktree --denylist ../.publication-gate/denylist
+python3 -I -B ./scripts/publication-gate.py self-test
 git diff --check
 ```
 
@@ -526,9 +536,50 @@ or `beryllium-hypervisor/` (`records/decisions/PMD-20260906-001-owner-edits-and-
 The run ends with the open requests by priority; `outbox/OWNER-RUNBOOK.md` has
 the exact steps for each. Logs go to `scratch/owner-actions/` (ignored).
 Afterwards, start a Project Manager session and say what the run did.
+Every push step first runs the publication gate's read-only `check`
+(`PMD-20261108-001`) and refuses on a finding, on undeterminable visibility,
+or while the gate is not installed; there is no override.
 
 PMR-105 used a separate one-request script rather than the generic helper.
 The exact private topic fast-forward completed on 2026-09-29 and is closed by
 `PMD-20260929-002`; do not rerun `outbox/pmr105-push.sh`. Its retained private
 logs under `scratch/owner-actions/` show exact account/ref/tip checks,
 other-ref preservation, and final clean 0/0 state.
+
+## Publication gate (human-installed)
+
+Every push to a public remote from a Beryllium repository passes the
+publication gate (`records/decisions/PMD-20261108-001-public-push-publication-gate.md`);
+private pushes are outside it. Install and check it once per workstation,
+from the workspace root:
+
+```sh
+bash ./project-manager/scripts/publication-gate-setup.sh install
+bash ./project-manager/scripts/publication-gate-setup.sh check
+```
+
+`install` copies `scripts/publication-gate.py`, the hook dispatcher
+`scripts/publication-gate-hook.sh`, the user-level skill
+`user-assets/skills/beryllium-publication-gate/SKILL.md`, and the private
+denylist from the parent's `.publication-gate/denylist` (mode 0600) under
+`~/.config/beryllium/publication-gate/` and `~/.copilot/skills/`, then adds
+global Git `includeIf` entries (one `gitdir:` per workspace root and
+`hasconfig:remote.*.url:` for the `beryllium-project` and
+`agentic-os-research` organisations) that point `core.hooksPath` at the
+dispatcher. The dispatcher runs the gate at `pre-push` and chains every
+listed hook to the repository's own hook. A public remote is scanned for
+every denylist entry in plain, separator-tolerant, reversed, ROT13, escaped,
+character-code, hex-byte, and base64 forms across contents, file names,
+commit messages, identities, tag text, and ref names; a finding,
+undeterminable visibility, or a missing denylist refuses the push. Output
+never prints matched text. Each component adopts the trigger phrase
+`check publication gate` through its own request (`PMR-141`..`PMR-150`).
+`git push --no-verify` and other hook bypasses are prohibited for public
+remotes. A visibility change to public or a new public repository needs
+`audit --all-refs` after a full fetch, because `check` passes a remote that
+is still private unscanned; `audit --remote <remote>` shows what a public
+remote serves now and fails closed when a live tip is absent locally.
+Every setup run logs under the ignored `scratch/publication-gate-setup/`.
+Passing the gate is not publication approval. The Project Manager never runs
+`install` or `uninstall` against real user configuration; the maintained
+tests use a sandbox copy.

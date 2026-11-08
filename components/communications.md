@@ -55,11 +55,13 @@ planned after the human authorizes that phase.
   Manager records carry no exception to `PMD-20261006-001`.
 - Its handoff at `1f66802` asserts that Beryllium release candidate 3 board
   evidence has overtaken the parent's assurance wording that K3 hardware
-  is `NOT RUN`, and cites a public Beryllium snapshot of
-  `beryllium-project/beryllium-hypervisor` `main`, which conflicts with
-  PMR-098's owner-reported `PRIVATE` visibility. These are unverified
-  component-side claims; Project Manager assurance wording stays unchanged
-  pending the open responsible-human Beryllium stage reconciliation.
+  is `NOT RUN`; that is an unverified component-side claim, and Project
+  Manager assurance wording stays unchanged pending the open
+  responsible-human Beryllium stage reconciliation. It also cites a public
+  Beryllium review snapshot of `beryllium-project/beryllium-hypervisor`
+  `main`, which the Beryllium owner record and the gate's anonymous probe
+  confirm on 2026-11-08 (the canonical `origin` is the private
+  `beryllium-project/beryllium-hypervisor-internal`).
 
 ## Commands (from `../communications/`; the Project Manager runs none)
 
@@ -72,6 +74,13 @@ workstation phrasing checker its README names against an exact Beryllium
 commit; that checker lives outside every repository.
 
 ## What the Project Manager may request
+
+`PMR-148` (P3, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. It also runs the gate's `scan-tree`
+on text before it is submitted outside Git; submissions stay
+responsible-human actions.
 
 Class-3 registration wording in its README and handoff (stale after
 `PMD-20261105-001` and the 2026-11-05 backup; left to its next session, no

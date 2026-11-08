@@ -60,6 +60,12 @@ tools/md-to-html.sh           # regenerate registered HTML
 
 ## What the Project Manager may request
 
+`PMR-150` (P4, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. Ask the responsible human first;
+never access the restricted subtree.
+
 Removal of stale handoff statements (`PMR-002`, closed 2026-09-06: the owner
 applied the exact two-line replacement the Project Manager had recorded,
 through the human-run `../scripts/owner-actions.sh --apply-edits`, whose y/N

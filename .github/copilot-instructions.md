@@ -20,7 +20,9 @@ Write only:
 - to the Project Manager-owned parent-root artifacts: `../SOT.md`,
   `../COMPONENTS.md`, `../README.md`, `../.gitignore`,
   `../.github/copilot-instructions.md`, the redirect stub `../HANDOFF.md`,
-  and the tracked component symlink objects; and
+  the tracked component symlink objects, and the private
+  `../.publication-gate/` directory (the publication-gate denylist and
+  private incident notes, `PMD-20261108-001`); and
 - inside a carry-eligible component, only to carry a recorded request under
   the standing carry authority
   `records/decisions/PMD-20260904-003-standing-carry-authority.md`, in
@@ -67,6 +69,14 @@ Use `execute` only for:
 - `scripts/new-record.sh`;
 - `scripts/validate-pm.sh`;
 - `tests/validate-agent.sh`;
+- `scripts/publication-gate.py` in its read-only modes (`check`, `audit`
+  including `audit --remote`, `scan-tree`, `scan-worktree`,
+  `validate-denylist`, `classify`, `self-test`), against this repository,
+  the parent, a registered component repository, or, to verify
+  publication-bound work, a Beryllium publication clone under the workspace
+  root (`PMD-20261108-001`); live remote state is read only through the
+  gate's anonymous probe (`classify`, `check`, `audit --remote`), never by a
+  separate `git ls-remote`;
 - `git` against this repository or the parent root; and
 - `git -C <component>` limited to `status`, `diff`, `log`, `show`,
   `add <exact paths>`, and `commit`, only while carrying a request under
@@ -146,6 +156,22 @@ worktrees, disabled hooks, hook timeout, and non-Copilot tooling remain
 outside or beyond this command-hook enforcement.
 The main session model comes from the human's launch and settings; the
 responsible human keeps it at `claude-opus-5.5` / `max` / `long_context`.
+
+Every push to a public remote passes the publication gate
+(`PMD-20261108-001`); private pushes are outside it. The private denylist
+lives only in the private parent repository's `../.publication-gate/` and,
+installed, in the user's configuration; never write an entry, in any form or
+encoding, into this public repository, a public text, a log, or an external
+service, and refer to entries by number only. A non-public model is
+`unlisted` in public text, with nothing else said about it.
+`scripts/publication-gate-setup.sh` is human-run: the Project Manager never
+runs its `install` or `uninstall` against the real user configuration, and
+maintained tests use a sandbox copy. Before this repository's public push,
+run `python3 -I -B scripts/publication-gate.py check --remote origin` and stop
+on any non-zero exit; `scripts/validate-pm.sh` also scans the working tree
+with the parent denylist. Never use `git push --no-verify` or another hook
+bypass for a public remote. Exact incident details stay in the private
+parent notes, never in this repository.
 
 `git push`, `git remote`, `gh repo create`, tags, and every publication step
 require an explicit user confirmation in the same turn, for this repository,
@@ -324,7 +350,8 @@ operations, never as ambiguous snippets.
 
 Every next-step recommendation also includes the compact current-todo table
 required by `PMD-20260916-003`: **Priority**, **Request(s)**, **Blocking
-status**, and **Human-focused description**. P1/P2 rows are individual; P3/P4
+status**, and **Human-focused description**. P0 rows (stop-the-line,
+`PMD-20261108-001`) come first; P0/P1/P2 rows are individual; P3/P4
 rows may be grouped only when their owner/context and blocking state match.
 Explain what each choice unblocks and who acts, while acknowledging priorities
 outside Project Manager visibility.

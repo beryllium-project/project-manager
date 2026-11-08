@@ -16,7 +16,11 @@
   inside this component; nothing else
 - **Agents:** `security-reviewer` (user-invocable orchestrator),
   `security-evidence`, `security-research`, and `security-finding-review`
-  (write-disabled specialists), all `gpt-5.3-codex` with exact reasoning
+  (write-disabled specialists). **2026-11-08:** all four pin
+  `claude-opus-5.5` in the observed `PMR-123` return on public `main`,
+  which the Project Manager verifies against the commits that replace it
+  under P0 `PMR-138`; the history below describes the earlier pin. Earlier,
+  all were `gpt-5.3-codex` with exact reasoning
   `xhigh` and context `default` at owner work `2bb4c98` / return `c2edac7`
   under `PMD-20260930-005` as the former sole named capability exception
   and closed `PMR-109` / `PMR-110`. The following rules describe only the
@@ -45,14 +49,25 @@
   `max` / `long_context`, remove the Codex-exception, `high` / `xhigh`
   floor, and `claude-fable-5.1` allowance wording, and record that a
   security review runs only on explicit responsible-human request, on that
-  same model, and is not standard practice. Until the owner returns, the
-  observed files at `c2edac7` still carry the Codex pair; once the owner
-  returns PMR-123, it supersedes the component-side Codex-exception
-  description recorded on this card.
+  same model, and is not standard practice. The owner returned PMR-123
+  (observed 2026-11-08); once verified after the P0 rewrite, it supersedes
+  the component-side Codex-exception description recorded on this card.
 - **Local instructions to read first:** `.github/copilot-instructions.md`,
   `AGENT-INTERFACE.md`, `HANDOFF.md`, `RESEARCH-SOURCES.md`,
   `contracts/REVIEW-PROVENANCE.md`
-- **Observed state:** clean `main` at HANDOFF-only return
+- **P0 (2026-11-08, `PMD-20261108-001`):** maintained inspection and live
+  anonymous `ls-remote` at 02:28Z show clean `main` 0/0 with public
+  `origin/main` after a push the Project Manager did not observe. The pushed
+  range carries the 2026-11-07 publication-safety commit, which embeds a
+  denylisted identifier in reversible encodings, and the `PMR-118` /
+  `PMR-123` owner return. P0 `PMR-138` rewrites that published history
+  (human-run Git, force push with lease, optional temporary private
+  visibility, GitHub Support cache purge); exact commits and steps are only
+  in the private `workspace://.publication-gate/P0-20261108-001.md`. Hold:
+  no other push of this component until `PMR-138` closes. `PMR-111` is
+  superseded; the `PMR-118` / `PMR-123` returns are verified after the
+  rewrite. Gate adoption is `PMR-141` (P1).
+- **Observed state (to 2026-11-07):** clean `main` at HANDOFF-only return
   `c2edac70afdfe5b0bb90e237487cd168fb91e900`, behind 0 / ahead 2 of
   last-fetched public `origin/main` `2e8d205`. Work
   `2bb4c989bbe9b57f870e6f653ed3732e742b11f9` is owner-reported to change the
@@ -194,16 +209,16 @@ git diff --check
 - Owner model migration and deterministic tasking startup are complete at
   `f2051a4` (`PMR-062`, `PMR-065`).
 - Model reassignment of all four profiles to `gpt-5.3-codex` under
-  `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`), which remains the
-  last-fetched public `origin/main` tip; local `main` is now two ahead at
-  `c2edac7`.
+  `PMD-20260916-001` is complete at `2e8d205` (`PMR-074`), which was the
+  public `origin/main` tip until a push the Project Manager did not observe
+  (2026-11-08) made `main` 0/0 with `origin`.
 - Owner work `2bb4c98` and durable return `c2edac7` close `PMR-109` and
   `PMR-110`; the responsible human released the session/reservation with the
   exact reply `"done"`.
-- Pushes remain owner-only. `main` is two commits ahead of public
-  `origin/main`; `PMR-111` separately tracks an exact fast-forward, which
-  publishes, after a new same-turn human confirmation. The remote was created and first
-  pushed on 2026-09-06 (`PMR-021` closed).
+- Pushes remain owner-only. Since 2026-11-08 `main` is 0/0 with public
+  `origin/main`; `PMR-111` is superseded, and the only pending push is the
+  P0 `PMR-138` force push with lease, which the responsible human runs. The
+  remote was created and first pushed on 2026-09-06 (`PMR-021` closed).
 - `PMR-118` separately requests the SHA-bound `workspace://SOT.md`
   startup/status anchor for the orchestrator and all three specialists. It
   changes no engagement, package, model policy, target execution, push, or
@@ -216,5 +231,6 @@ git diff --check
   historical package or model provenance. Under `PMD-20261006-001`,
   `PMR-118`'s clause preserving the Codex pair no longer applies; both
   requests may share one human-started owner session launched without the
-  still Codex-pinned `security-reviewer` profile. `PMR-111` backup stays
-  separate.
+  then Codex-pinned `security-reviewer` profile. The return for both is
+  observed (2026-11-08) and is verified after the P0 rewrite; `PMR-111` is
+  superseded.

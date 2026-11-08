@@ -13,10 +13,33 @@
   still requires its own adoption and proof, while `PMD-20260918-003` parks
   further rollout. No hidden owner profile was needed for the completed
   ordinary PMR-067/PMR-083 housekeeping session
-- **Local instructions to read first:** on the selected active branch,
+- **Local instructions to read first:** on the checked-out branch,
   `.github/copilot-instructions.md`, `planning/HANDOFF.md`,
-  `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`; the placeholder `main`
-  branch, which is not checked out, carries only generic instructions
+  `planning/roadmap.md`, `LLM_POLICY_ALIGNMENT.md`. Since the owner-recorded
+  2026-11-05 cut-over, development is on `main` (checked out, clean, 0/0
+  with the private `origin` on 2026-11-08); the earlier note that `main` was
+  an unchecked-out placeholder with generic instructions no longer applies
+- **GitHub repositories:** the canonical `origin` is the private
+  `beryllium-project/beryllium-hypervisor-internal` (owner record
+  `planning/HANDOFF.md` at `c7be2498`, since 2026-10-31);
+  `beryllium-project/beryllium-hypervisor` is the public review snapshot
+  (`main` `fc730b7f` on 2026-11-05), changed only by the responsible
+  human's own pushes. The gate's anonymous probe agreed on 2026-11-08
+- **P0 (2026-11-08, `PMD-20261108-001`):** the gate's read-only audit of
+  the canonical checkout's local `beryllium/mvp-release-step-3` finds a
+  denylisted identifier in snapshot-bound paths (planning pages, the
+  planning-site configuration, one page's file name, and
+  `release/release.py`), and `mvp/tools/snapshot.sh` has no term check;
+  `main` `c7be2498`, the public review snapshot, and the clean release
+  repository pass. Snapshot-excluded internal records may keep the exact
+  name under the owner's 2026-11-07 rule, which so far is recorded only on
+  that release branch, not on `main` (commit in the private note). P0 `PMR-139` makes those
+  paths and tools entry-free and fail closed. Hold: no public snapshot
+  refresh, merge of that branch into `main`, or release publication until it
+  closes. Details only in the private
+  `workspace://.publication-gate/P0-20261108-001.md`. Gate adoption is
+  `PMR-143` (P2). On 2026-11-08 development is on `main` at `c7be2498`, 0/0
+  with private `origin`, and release work continues in owner clones.
 - **Observed state:** see `../../COMPONENTS.md`. Beryllium remains read-only
   to the Project Manager. The 2026-10-10 leave-alone hold ended when the
   responsible human reported on 2026-10-11 that the Beryllium session is

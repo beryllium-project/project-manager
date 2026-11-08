@@ -130,6 +130,11 @@ node automation/validate-corpus.mjs
 
 ## What the Project Manager may request
 
+No publication-gate adoption request is raised until the checkout is
+resolved (`PMD-20261108-001`). Until the gate is installed, only
+`owner-actions.sh` gates a public push from it; once installed, the global
+pre-push hook does too.
+
 PMR-009 is closed: under the BibTeX-first canonical workflow, its owner return
 records PMQ-008 and PMQ-011 after separate D4 approvals at work `e95922f` /
 return `6cb15e3`; no SQLite database is committed, and D5

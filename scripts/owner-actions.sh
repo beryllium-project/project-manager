@@ -16,9 +16,12 @@
 # fetch, remote creation, gh, component pushes, and every write inside a
 # component are outside its execution boundary (AGENT-INTERFACE.md
 # "Execution boundary"). The agent may push only this repository and the
-# parent, directly with git, on an exact same-turn confirmation. This helper
-# checks remote tips but not visibility, so a push to a public repository
-# publishes; skip that push step (for example --skip push_pm) unless you
+# parent, directly with git, on an exact same-turn confirmation. Every push
+# step first runs the publication gate (PMD-20261108-001): a push to a public
+# remote is scanned against the private denylist and refused on any finding,
+# when visibility cannot be determined, or when the gate is not installed; a
+# private or local remote passes unscanned. A push to a public repository
+# still publishes; skip that push step (for example --skip push_pm) unless you
 # intend to publish.
 # You run it, as component owner and responsible human; every commit it makes
 # is yours, made after you have seen the diff and answered y. It never forces
@@ -376,6 +379,26 @@ helium_local_only_branches() {
     return 0
 }
 
+# --- publication gate (PMD-20261108-001) --------------------------------------
+# Every push step runs the gate's read-only check first. A public remote is
+# scanned against the private denylist installed by
+# scripts/publication-gate-setup.sh; a private or local remote passes
+# unscanned; an undeterminable remote, a missing installed denylist, or any
+# finding refuses the push. There is no override. Passing the gate is not
+# publication approval; the y/N prompt below remains your decision.
+
+publication_gate() {
+    local dir=$1 remote=$2 branch=$3 id=$4 rc=0
+    note "publication gate: checking $remote/$branch"
+    python3 -I -B "$pm_root/scripts/publication-gate.py" check --repo "$dir" \
+        --remote "$remote" "refs/heads/$branch" || rc=$?
+    if ((rc == 0)); then
+        return 0
+    fi
+    warn "publication gate refused $id (exit $rc). Install it with scripts/publication-gate-setup.sh install, or remove the findings; see outbox/OWNER-RUNBOOK.md"
+    return 1
+}
+
 # --- do_push <step> <label> <dir> <remote> <branch> <set-upstream> -----------
 
 do_push() {
@@ -450,6 +473,10 @@ do_push() {
             skipped_list+=("$id: dirty worktree")
             return 0
         fi
+    fi
+    if ! publication_gate "$dir" "$remote" "$branch" "$id"; then
+        failed_list+=("$id: publication gate refused")
+        return 1
     fi
     local -a cmd=(git -C "$dir" push)
     if ((setu)); then cmd+=(-u); fi
@@ -1165,10 +1192,11 @@ print_list() {
 }
 
 # Open requests from outbox/component-requests.md, highest priority first
-# (P1 act now, P2 next, P3 housekeeping, P4 waiting on an external input).
+# (P0 stop the line, P1 act now, P2 next, P3 housekeeping, P4 waiting on an
+# external input).
 still_yours() {
     local file=$pm_root/outbox/component-requests.md
-    printf '\nStill yours: open requests by priority (P1 first); exact steps in outbox/OWNER-RUNBOOK.md\n'
+    printf '\nStill yours: open requests by priority (P0 first); exact steps in outbox/OWNER-RUNBOOK.md\n'
     if [[ ! -f $file ]]; then
         printf '  (outbox/component-requests.md not found)\n'
         return 0

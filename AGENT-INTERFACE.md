@@ -13,7 +13,8 @@ research, analysis, threat-model, or provenance content.
 ```text
                     parent root (SOT.md, COMPONENTS.md, README.md,
                     .gitignore, HANDOFF.md compatibility redirect,
-                    tracked component symlink objects)
+                    tracked component symlink objects, private
+                    .publication-gate/)
                                    ^ maintains
                                    |
    component repositories -----> project-manager <----- human decisions
@@ -178,7 +179,8 @@ weakens a human gate.
 Next-step reporting follows `PMD-20260916-003`. Every recommendation includes
 a compact table of current todos with priority, request identifiers,
 **Blocking status**, and a **Human-focused description** of what each choice unblocks and who
-must act. P1/P2 requests are shown individually; P3/P4 rows are grouped only
+must act. P0 (stop-the-line, `PMD-20261108-001`) rows come first; P0/P1/P2
+requests are shown individually; P3/P4 rows are grouped only
 when owner/context and blocking state match. The Project Manager acknowledges
 that the human may have relevant priorities outside its view.
 
@@ -221,7 +223,8 @@ Never access or copy `../osr-claude/sources/restricted-microsoft/`.
 | Dirty owner recovery specifications | `outbox/owner-recovery/<PMR-NNN>.tsv` | Project Manager-owned exact branch/HEAD/status fingerprints for a responsible-human-confirmed closed owner session; consumed only by the human-run recovery launcher |
 | Exact dispatch packet | `scripts/project-tasking.sh dispatch <component> <PMR-NNN>` | Read-only selection of one directly assigned open row, bound to the current PM commit and request blob; emitted by the Project Manager or embedded by the human-run owner launcher, never by a component agent; writes and launches nothing |
 | Carried writes | `../<component>/outbox/pm-queue.md`, the owner's designated source index, the component's Markdown interface, collaboration, research-source, and handoff documents | Only inside a carry-eligible component, only to carry a recorded request, committed inside that component with the `PMR`/`PML` identifiers and the Copilot co-author trailer; see "Write and execution boundaries" |
-| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked component symlink objects | Project Manager-owned; edited and committed in the parent repository. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
+| Parent-root artifacts | `../SOT.md`, `../COMPONENTS.md`, `../README.md`, `../.gitignore`, `../.github/copilot-instructions.md`, compatibility redirect `../HANDOFF.md`, tracked component symlink objects, and the private `../.publication-gate/` directory (publication-gate denylist and private incident notes, `PMD-20261108-001`) | Project Manager-owned; edited and committed in the parent repository, which stays private and is pushed only to its private `upstream`. The former `../formal-verification/` redirects were retired by `PMD-20260912-001` |
+| Publication gate | `scripts/publication-gate.py`, `scripts/publication-gate-hook.sh`, human-run `scripts/publication-gate-setup.sh`, user-level skill source `user-assets/skills/beryllium-publication-gate/SKILL.md` | `PMD-20261108-001`: gates every push to a public remote with the private denylist; holds no entry; its output never prints matched text; passing it is not publication approval |
 
 ## Write and execution boundaries
 
@@ -269,6 +272,14 @@ Execution is limited to the maintained helpers:
 - `scripts/new-record.sh`;
 - `scripts/validate-pm.sh`;
 - `tests/validate-agent.sh`;
+- `scripts/publication-gate.py` in its read-only modes (`check`, `audit`
+  including `audit --remote`, `scan-tree`, `scan-worktree`,
+  `validate-denylist`, `classify`, `self-test`), against this repository,
+  the parent, a registered component repository, or, to verify
+  publication-bound work, a Beryllium publication clone under the workspace
+  root (`PMD-20261108-001`); live remote state is read only through the
+  gate's anonymous probe (`classify`, `check`, `audit --remote`), never by a
+  separate `git ls-remote`;
 
 plus direct Git against this repository and the parent root, plus
 `git -C <component>` limited to `status`, `diff`, `log`, `show`,
@@ -289,8 +300,9 @@ check is needed, the agent hands the user the exact command from
 
 `scripts/owner-actions.sh` is a **human-run** helper for the owner-side
 actions this agent records but never performs: reviewing the commits a push
-would publish, fast-forward pushing component branches to their private
-remotes, backing up this repository and the parent (which this agent may
+would publish, fast-forward pushing component branches to their remotes
+(since `PMD-20261108-001`, every push step runs the publication gate first,
+and a passing push to a public remote still publishes), backing up this repository and the parent (which this agent may
 instead push directly with Git, only on an exact same-turn confirmation
 under the boundary above), opt-in creation of one
 backup remote (`--fvr-backup`, `PMR-001`), opt-in pushes of the Helium
@@ -358,6 +370,35 @@ transcript, and state-log files around Copilot. It never cleans, stashes, resets
 pushes, changes a remote, or writes a component before Copilot starts. Dirty
 recovery grants no retroactive content authority or human gate; a clean
 component uses `owner-session.sh`.
+
+### Publication gate (`PMD-20261108-001`)
+
+Every push to a public remote from a repository under the Beryllium
+workspace roots, or with a remote in the `beryllium-project` or
+`agentic-os-research` organisations, passes the publication gate first;
+private pushes are outside it. `scripts/publication-gate.py` holds no
+denylisted entry: it reads the private denylist (canonical copy
+`../.publication-gate/denylist` in the private parent; installed copy
+`~/.config/beryllium/publication-gate/denylist`, mode 0600), derives encoded
+variants in memory, scans contents, file names, commit messages, identities,
+tag text, and ref names, and never prints matched text. A remote is public
+when it is recorded public or anonymous `git ls-remote` succeeds with every
+credential source disabled; when visibility cannot be determined, the push
+is refused. The human-run `scripts/publication-gate-setup.sh` installs the
+gate, the hook dispatcher, the user-level skill `beryllium-publication-gate`,
+and the denylist, and adds scoped Git `includeIf` entries; this agent never
+runs its `install` or `uninstall` against real user configuration.
+`scripts/owner-actions.sh` runs the gate before every push step. A visibility
+change to public, a new public repository, or a first push to an empty public
+remote needs `audit --all-refs` after fetching every ref about to become
+visible, tags included; `audit --remote <remote>` audits what a public remote
+serves now and fails closed when a live tip is absent locally. The installer
+logs every run under the ignored `scratch/publication-gate-setup/`. Hook bypasses
+such as `git push --no-verify` are prohibited for public remotes. Project
+Manager records never name a denylisted entry in any form; exact incident
+details stay in the private parent notes. A non-public model is `unlisted`
+in public text, with nothing else said about it. Passing the gate is not
+publication approval.
 
 ## Queue protocol (ledger-first)
 

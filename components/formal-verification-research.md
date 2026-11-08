@@ -105,6 +105,12 @@ by the owner.
 
 ## What the Project Manager may request
 
+`PMR-149` (P4, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. Housekeeping when next working
+here.
+
 Owner reconciliation of the owner-status table and `HANDOFF.md` after guest
 integrations; the backup decision is made (`PMR-001` closed 2026-09-06: the
 owner created the private `beryllium-project/formal-verification-research`

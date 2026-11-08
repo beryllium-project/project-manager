@@ -18,6 +18,17 @@ research, analysis, threat models, provenance findings, or human decisions.
 
 ## Non-negotiable boundaries
 
+- Every push to a public remote passes the publication gate
+  (`PMD-20261108-001`); private pushes are outside it. The private denylist
+  lives only in the private parent's `../.publication-gate/` and, installed,
+  in the user's configuration. Never write an entry, in any form or
+  encoding, into this public repository, a public text, a log, or an
+  external service; refer to entries by number only and keep exact incident
+  details in the private parent notes. A non-public model is `unlisted` in
+  public text, with nothing else said about it.
+  `scripts/publication-gate-setup.sh` is human-run; never run its `install`
+  or `uninstall` against the real user configuration. Never use
+  `git push --no-verify` or another hook bypass for a public remote.
 - Write only inside `project-manager/`, to the Project Manager-owned
   parent-root artifacts listed in `AGENT-INTERFACE.md`, and, inside a
   carry-eligible component, only to carry a recorded request under the
@@ -39,6 +50,12 @@ research, analysis, threat models, provenance findings, or human decisions.
 - Execute only `scripts/inspect-components.sh`, `scripts/pull-queues.sh`,
   `scripts/project-tasking.sh`, `scripts/new-record.sh`,
   `scripts/validate-pm.sh`, `tests/validate-agent.sh`,
+  `scripts/publication-gate.py` in its read-only modes (`check`, `audit`
+  including `audit --remote`, `scan-tree`, `scan-worktree`,
+  `validate-denylist`, `classify`, `self-test`; against this repository, the
+  parent, registered components, and Beryllium publication clones; live
+  remote state only through the gate's anonymous probe, never a separate
+  `git ls-remote`; `PMD-20261108-001`),
   `git` against this repository or the parent root, and `git -C <component>`
   limited to `status`, `diff`, `log`, `show`, `add <exact paths>`, and
   `commit` while carrying under `PMD-20260904-003`. Every other
@@ -319,7 +336,8 @@ Everything outside the three classes, and everything in `helium-te-poc/` or
    scaffold; leave "What this record does not decide" explicit.
 5. Append owner-actionable requests to `outbox/component-requests.md`
    (`PMR-NNN`, one sentence, basis with path and commit, and a proposed
-   priority `P1`-`P4`; `-` once closed). Close a request only when the
+   priority `P0`-`P4`, where `P0` is stop-the-line under `PMD-20261108-001`;
+   `-` once closed). Close a request only when the
    owner's action is observed in component state or when the Project Manager
    carried it in Phase 4b and names the component commit. Refresh
    `outbox/OWNER-RUNBOOK.md` so that every open item, request or not, has
@@ -368,6 +386,8 @@ The parent status must list only Project Manager-owned root artifacts. If a
 check fails, fix the artifact or record the failure in `HANDOFF.md`; never
 weaken a check to pass. `bash ./scripts/inspect-components.sh registry-check`
 must be exact, including every component written in Phase 4b.
+`scripts/validate-pm.sh` scans this repository's working tree with the
+private parent denylist; a finding is a stop condition.
 
 ## Phase 8: commit
 
@@ -381,6 +401,10 @@ coordination change and the trailer
 `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`. Never
 push, add a remote, create a repository, or tag without an explicit user
 confirmation in the same turn; quote the confirmation in `HANDOFF.md`.
+Before this repository's public push, run
+`python3 -I -B scripts/publication-gate.py check --remote origin` and stop on
+any non-zero exit; while a P0 hold covers the Project Manager's push, do not
+push it even with a confirmation, and say why.
 
 `outbox/component-requests.md` remains authoritative. Generated
 `outbox/tasking/<component>.md` files are ignored local projections, never
@@ -400,7 +424,8 @@ End the turn with, in this order:
    commit made in Phase 4b;
 3. blockers and open human gates, each named;
 4. a compact current-todo table with columns **Priority**, **Request(s)**,
-   **Blocking status**, and **Human-focused description**, showing P1/P2
+   **Blocking status**, and **Human-focused description**, showing P0
+   (stop-the-line) rows first and P0/P1/P2 rows
    individually and grouping P3/P4 only when owner/context and blocking state
    match;
 5. one specific next action with exact commands and paths, followed by any

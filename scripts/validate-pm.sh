@@ -179,15 +179,15 @@ check_table "$ledger" "$root/templates/ledger-row.md" PML \
 check_table "$requests" "$root/templates/request-row.md" PMR \
     '^PMR-[0-9]{3}$' 6 '^(open|closed|withdrawn|superseded)$'
 
-# Request-specific cells: an open row carries a priority P1-P4; every other
-# row carries "-".
+# Request-specific cells: an open row carries a priority P0-P4 (P0 added by
+# PMD-20261108-001); every other row carries "-".
 if [[ -f $requests ]]; then
     bad=0
     while IFS=$'\t' read -r id _ _ _ _ status priority _; do
         case "$status:$priority" in
-            open:P[1-4]) ;;
+            open:P[0-4]) ;;
             open:*)
-                fail "$(rel "$requests") row $id is open without a priority P1-P4: $priority"
+                fail "$(rel "$requests") row $id is open without a priority P0-P4: $priority"
                 bad=1
                 ;;
             *:-) ;;
@@ -584,6 +584,61 @@ if [[ -f $governance_hook && -f $governance_config &&
     fi
 else
     pass "Beryllium governance checks skipped for fixture without scripts"
+fi
+
+# --- publication gate (PMD-20261108-001) ------------------------------------
+# The gate's sources must parse and hold no denylisted term; this public
+# repository must hold no denylist copy; and, when the private parent
+# denylist is present, every tracked or untracked, not ignored, file here must
+# pass the gate. The human-run installer is never executed here.
+
+gate=$root/scripts/publication-gate.py
+gate_hook=$root/scripts/publication-gate-hook.sh
+gate_setup=$root/scripts/publication-gate-setup.sh
+if [[ -f $gate && -f $gate_hook && -f $gate_setup ]]; then
+    if command -v python3 >/dev/null 2>&1 &&
+        python3 -I -B -c 'import ast, sys; ast.parse(open(sys.argv[1]).read())' "$gate"; then
+        pass "scripts/publication-gate.py parses"
+    else
+        fail "scripts/publication-gate.py does not parse or python3 is unavailable"
+    fi
+    if bash -n "$gate_hook" && bash -n "$gate_setup"; then
+        pass "publication-gate shell scripts pass bash -n"
+    else
+        fail "a publication-gate shell script fails bash -n"
+    fi
+    if grep -Fq 'HUMAN-RUN installer' "$gate_setup"; then
+        pass "scripts/publication-gate-setup.sh declares itself human-run"
+    else
+        fail "scripts/publication-gate-setup.sh does not declare itself human-run"
+    fi
+    if grep -Ev '^[[:space:]]*#' "$gate_hook" | grep -Eq -- '--no-verify|BYPASS|SKIP_GATE'; then
+        fail "publication-gate hook dispatcher offers a bypass"
+    else
+        pass "publication-gate hook dispatcher offers no bypass"
+    fi
+else
+    pass "publication-gate checks skipped for fixture without scripts"
+fi
+bad=0
+while IFS= read -r -d '' f; do
+    fail "a denylist-like file is present in this public repository: $(rel "$f")"
+    bad=1
+done < <(find "$root" -path "$root/.git" -prune -o \
+    \( -iname '*denylist*' -o -name '.publication-gate' \) -print0)
+((bad == 0)) && pass "no denylist-like file in this repository"
+if ((check_parent)); then
+    parent_denylist=$(CDPATH= cd -- "$root/.." && pwd -P)/.publication-gate/denylist
+    if [[ -f $parent_denylist && -f $gate ]] && command -v python3 >/dev/null 2>&1; then
+        if python3 -I -B "$gate" scan-worktree --repo "$root" \
+            --denylist "$parent_denylist" >/dev/null 2>&1; then
+            pass "the working tree passes the publication gate with the private parent denylist"
+        else
+            fail "the working tree fails the publication gate; run: python3 -I -B scripts/publication-gate.py scan-worktree --denylist ../.publication-gate/denylist"
+        fi
+    else
+        fail "the private parent denylist or python3 is unavailable; the publication-gate scan cannot run"
+    fi
 fi
 
 printf '\n%d passed, %d failed\n' "$pass_count" "$fail_count"

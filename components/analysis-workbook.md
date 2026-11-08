@@ -356,6 +356,12 @@ git diff --check
 
 ## What the Project Manager may request
 
+`PMR-147` (P3, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. Housekeeping until publication is
+planned; the push-disabled `public` remote stays disabled.
+
 A new analysis session on a named aspect and, only after `PMR-052` and
 `PMR-053` return, the bounded cap-talk follow-up inquiry under `PMR-054`.
 Analysis content and the collaboration queue remain request-only outside

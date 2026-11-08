@@ -84,6 +84,13 @@ focused tests, recorded in its uncommitted handoff.
 
 ## What the Project Manager may request
 
+`PMR-146` (P2, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. It lands before any visibility
+change, which also needs the gate's `audit` of every ref; the uncommitted
+publication-preparation change set is an owner lock.
+
 `PMR-025` and `PMR-034` are closed by owner commits `706e708` and `d618935`.
 The Project Manager may request owner review and disposition of
 `REV-20260914-001..013` or report completed-use feedback through the

@@ -62,7 +62,7 @@ responsible human (analysis-workbook, 2026-10-11; communications,
 
 | Workspace entry | GitHub repository | Notes |
 | --- | --- | --- |
-| `beryllium-hypervisor/` | `beryllium-project/beryllium-hypervisor` | Carry-ineligible |
+| `beryllium-hypervisor/` | `beryllium-project/beryllium-hypervisor-internal` | Carry-ineligible; private canonical `origin` since 2026-10-31 (owner record `planning/HANDOFF.md`). Never clone the public review snapshot `beryllium-project/beryllium-hypervisor` here: pushing internal work to it would publish (`PMD-20261108-001`) |
 | `helium-te-poc/` | `beryllium-project/helium-te-poc-historical` | Carry-ineligible; identity as named in `outbox/pmr091-push.sh` |
 | `formal-verification-research/` | `beryllium-project/formal-verification-research` | |
 | `osr-claude/` | `agentic-os-research/os-security-research` | Ask-first owner; restricted sources are never cloned here |
@@ -77,7 +77,7 @@ responsible human (analysis-workbook, 2026-10-11; communications,
 ```sh
 cd /home/jmorris/src/beryllium-project
 for spec in \
-    beryllium-hypervisor=beryllium-project/beryllium-hypervisor \
+    beryllium-hypervisor=beryllium-project/beryllium-hypervisor-internal \
     helium-te-poc=beryllium-project/helium-te-poc-historical \
     formal-verification-research=beryllium-project/formal-verification-research \
     osr-claude=agentic-os-research/os-security-research \
@@ -94,8 +94,9 @@ done
 ```
 
 Then switch each checkout to the branch that `../COMPONENTS.md` records for
-it with `git -C <entry> switch <branch>`. On 2026-10-11 these were
-`beryllium/k3-b7-bringup` (Beryllium), `for-review` (Helium),
+it with `git -C <entry> switch <branch>`. On 2026-11-08 Beryllium develops
+on `main`; on 2026-10-11 these were `beryllium/k3-b7-bringup` (Beryllium),
+`for-review` (Helium),
 `analysis/k3-a100-service-design-private` (analysis-workbook),
 `docs/reconcile-project-status` (CHERI notes), and `main` elsewhere.
 `scripts/owner-actions.sh` push steps name specific remotes in its target
@@ -150,6 +151,18 @@ git -C analysis-workbook fetch public
    pass; it does not inspect `/subagents`. Until `check` passes, pass
    `claude-opus-5.5` / `max` / `long_context` explicitly on every task
    launch.
+4. Install the publication gate (`PMD-20261108-001`) after section 3, from
+   the private parent checkout, which holds the canonical denylist
+   `.publication-gate/denylist`. `install` copies the gate, its hook
+   dispatcher, the `beryllium-publication-gate` skill, and the denylist
+   (mode 0600), adds scoped Git `includeIf` entries, and ends with `check`.
+   It refuses while a global `core.hooksPath` is set. Until it passes,
+   `owner-actions.sh` refuses every public push step:
+
+   ```sh
+   cd /home/jmorris/src/beryllium-project
+   bash ./project-manager/scripts/publication-gate-setup.sh install
+   ```
 
 ## 5. Project Manager restart
 
@@ -167,7 +180,7 @@ Then start Copilot in `project-manager/` and select `/agent project-manager`.
 
 | State | Location | How it is restored |
 | --- | --- | --- |
-| Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips but not visibility (`beryllium-project/project-manager` stays public by the responsible human's decision, `PMD-20261012-001`, so that step publishes; default runs include it and the public `push_tm` and `push_sr`, and `--skip push_pm,push_tm,push_sr` omits all three), and components under their owners' rules and a human push decision (pushes to the public `threat-modeler`, `security-reviewer`, and `provenance-review` publish; `PMD-20261012-002`). |
+| Unpushed commits and local-only branches | Every repository | A fresh clone lacks them. `../COMPONENTS.md` lists ahead counts and local-only commits. Back them up first: the Project Manager and parent with the human-run `bash ./scripts/owner-actions.sh --only push_pm`, which checks tips and, since `PMD-20261108-001`, runs the publication gate before every push step, refusing public pushes until the gate is installed (`beryllium-project/project-manager` stays public by the responsible human's decision, `PMD-20261012-001`, so that step publishes; default runs include it and the public `push_tm` and `push_sr`, and `--skip push_pm,push_tm,push_sr` omits all three), and components under their owners' rules and a human push decision (pushes to the public `threat-modeler`, `security-reviewer`, and `provenance-review` publish; `PMD-20261012-002`). |
 | Retained Project Manager artifacts | `../files/` (ignored by the parent) | Restore from a backup if the responsible human keeps one (none is recorded in Project Manager records), and locate candidates with the human-run `bash ./scripts/owner-actions.sh --only files_search --files-search --files-root <dir>`. `PMD-20260906-002` and `PMD-20260912-002` hold the inventory; `PMD-20260916-004` records the selection. On `lx2` the copied `../files` link dangled; on `l1` it resolves again, and the artifacts have no GitHub backup (`PMD-20261025-001`). |
 | Linked worktrees | `../worktrees/` and owner-chosen paths | Component-owned; the owner recreates them with `git worktree add`. Closed `PMR-127` repaired Beryllium's seven registrations at the current root path; five under a former session-state directory stay unrepaired (see `../COMPONENTS.md`). |
 | Component-ignored data | For example analysis-workbook quarantine copies, XRV `review-inbox/` PDFs, and communications `scratch/` prompts | Owner-managed under each component's rules. |

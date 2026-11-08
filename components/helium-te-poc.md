@@ -143,6 +143,15 @@ the Helium root.
 
 ## What the Project Manager may request
 
+`PMR-145` (P2, `PMD-20261108-001`): adopt the project-wide publication gate:
+a `Publication gate` instruction section, the trigger phrase `check
+publication gate`, the gate command among the allowed commands, and a
+contract test, returned without pushing. It is P2, as the approved plan
+proposed, because the `public` remote makes this checkout public-bound,
+although Helium is otherwise parked with `PMR-068` and `PMR-113`. Until the
+gate is installed, only `owner-actions.sh` gates a public push from this
+checkout; once installed, the global pre-push hook does too.
+
 `PMR-026` is closed from owner work `e202c6e` and durable return `f928aac`;
 future checkout, ref, frozen-history, or publication decisions remain with
 the responsible human and Helium owner. The backup push recorded by
