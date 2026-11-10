@@ -62,7 +62,7 @@ responsible human (analysis-workbook, 2026-10-11; communications,
 
 | Workspace entry | GitHub repository | Notes |
 | --- | --- | --- |
-| `beryllium-hypervisor/` | `beryllium-project/beryllium-hypervisor-internal` | Carry-ineligible; private canonical `origin` since 2026-10-31 (owner record `planning/HANDOFF.md`). Never clone the public review snapshot `beryllium-project/beryllium-hypervisor` here: pushing internal work to it would publish (`PMD-20261108-001`) |
+| `beryllium-hypervisor/` | `beryllium-project/beryllium-hypervisor-internal` | Carry-ineligible; private canonical `origin` since 2026-10-31 (owner record `planning/HANDOFF.md`). Never clone the public repository `beryllium-project/beryllium-hypervisor` (formerly the review snapshot; MVP 1.0 since 2026-11-10) here: pushing internal work to it would publish (`PMD-20261108-001`) |
 | `helium-te-poc/` | `beryllium-project/helium-te-poc-historical` | Carry-ineligible; identity as named in `outbox/pmr091-push.sh` |
 | `formal-verification-research/` | `beryllium-project/formal-verification-research` | |
 | `osr-claude/` | `agentic-os-research/os-security-research` | Ask-first owner; restricted sources are never cloned here |

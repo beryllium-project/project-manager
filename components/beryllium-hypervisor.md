@@ -22,8 +22,8 @@
 - **GitHub repositories:** the canonical `origin` is the private
   `beryllium-project/beryllium-hypervisor-internal` (owner record
   `planning/HANDOFF.md` at `c7be2498`, since 2026-10-31);
-  `beryllium-project/beryllium-hypervisor` is the public review snapshot
-  (`main` `fc730b7f` on 2026-11-05), changed only by the responsible
+  `beryllium-project/beryllium-hypervisor` is the public repository (on 2026-11-10, by the owner record at `d56fa1a`, MVP 1.0 at tag `mvp-1.0` and the review snapshot deleted);
+  earlier it was the public review snapshot (`main` `fc730b7f` on 2026-11-05), changed only by the responsible
   human's own pushes. The gate's anonymous probe agreed on 2026-11-08
 - **P0 (2026-11-08, `PMD-20261108-001`):** the gate's read-only audit of
   the canonical checkout's local `beryllium/mvp-release-step-3` finds a
@@ -42,7 +42,13 @@
   the public review snapshot will be deleted soon (until then, release
   publication was held too). Details only in the private
   `workspace://.publication-gate/P0-20261108-001.md`. Gate adoption is
-  `PMR-143` (P2). On 2026-11-08 development is on `main` at `c7be2498`, 0/0
+  `PMR-143` (P2). **2026-11-10 (`PMD-20261110-003`):** MVP 1.0 is
+  published at tag `mvp-1.0` and the review snapshot is deleted (owner
+  handoff at `d56fa1a`); the gate's live audit of the public repository
+  passes; `PMR-139` and `PMR-140` are closed and the hold is lifted. The
+  entries remain in the private internal checkout and the push-disabled
+  release clone; P2 `PMR-157` asks the owner to remove them before any of
+  that content is published. On 2026-11-08 development is on `main` at `c7be2498`, 0/0
   with private `origin`, and release work continues in owner clones. On
   2026-11-08T20:05Z (136th turn) the canonical checkout holds seven local release branches, `beryllium/mvp-release-step-2`, `beryllium/mvp-release-step-3`, `beryllium/mvp-release-step-3-plan`, `beryllium/mvp-release-step-5`, `beryllium/mvp-release-step-5-plan`, `beryllium/mvp-release-step-6`, and `beryllium/mvp-release-step-6-plan`
   (only step 2 on a remote), and the clean release repository has no

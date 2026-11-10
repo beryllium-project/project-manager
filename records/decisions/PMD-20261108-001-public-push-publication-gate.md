@@ -9,7 +9,8 @@
   of both records stands
 - **Superseded by:** `PMD-20261108-004` in part (disposition 9: the hold's
   Beryllium clause no longer applies to the Beryllium release; the rest of
-  this record stands)
+  this record stands); `PMD-20261110-003` (the hold ends; the gate and
+  every other disposition stand)
 
 ## Scope
 

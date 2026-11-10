@@ -25,7 +25,35 @@ bash "${PWD%/*}/project-manager/scripts/project-tasking.sh" resolve .
 
 The command fails rather than showing stale or unreachable tasking.
 
-## P0 publication-safety hold and remediation (`PMD-20261108-001`)
+## P2 PMR-157 and PMR-143: Beryllium internal clean-up and gate adoption
+
+Why: the private internal Beryllium checkout and the push-disabled
+release clone still carry denylisted entries (gate audit 2026-11-10:
+499 and 463 findings). They are private, and the gate refuses any public
+push that carries one, but removing them before that content is merged
+into a published branch prevents a refused push later. Exact paths are in
+the private `../.publication-gate/P0-20261108-001.md`, which also names
+two push-disabled gate-run clones whose disposal this request decides.
+The Beryllium planning session that reported `done` on 2026-11-10 is
+still running (its owner record says S3-D planning continues there): give
+it both requests with `check Project Manager tasking`, or, after it ends,
+start one Beryllium owner session for both:
+
+```sh
+bash /home/jmorris/src/beryllium-project/project-manager/scripts/owner-session.sh launch beryllium-hypervisor PMR-143 PMR-157
+```
+
+Then tell the Project Manager `done`; it re-runs the gate's audits.
+
+## P0 publication-safety hold and remediation (`PMD-20261108-001`) — closed
+
+**2026-11-10: closed, and the hold is lifted** (`PMD-20261110-003`). The
+Beryllium release is published at tag `mvp-1.0` and the review snapshot is
+deleted, by the owner record at `d56fa1a` (your own actions; no Project
+Manager release or publication approval), and the gate's live audit of the public repository passes;
+security-reviewer is public again and passes too. `PMR-139` and `PMR-140`
+are closed. Every public push still passes the installed gate and needs
+its own decision. Remaining: P2 `PMR-157` below. Earlier text follows.
 
 **Hold (you confirmed it on 2026-11-08):** no further security-reviewer
 push, and, outside the Beryllium release, no public Beryllium
@@ -44,7 +72,7 @@ and on `lx2`, the canonical workstation since 2026-11-10
 Exact commits, paths, lines, and commands are only in the private
 `../.publication-gate/P0-20261108-001.md` (parent repository, private).
 
-### P0 PMR-139: Beryllium public snapshot path
+### P0 PMR-139: Beryllium public snapshot path (closed 2026-11-10)
 
 Why: the internal release branch carries the identifier in pages, one file
 name, the planning-site configuration, and `release/release.py`, all of
@@ -81,7 +109,7 @@ the planning-site configuration, the page whose file name carries the
 entry, and the two gate-run clones remain to be decided). A Beryllium session then takes what
 remains, with `PMR-143` if it wishes.
 
-### P0 PMR-140: install the publication gate
+### P0 PMR-140: install the publication gate (closed 2026-11-10)
 
 **2026-11-10T05:24:16Z: installed on `lx2`; its closing `check` passed
 every line** (log
@@ -141,8 +169,8 @@ second run at 11:34:13Z found nothing to push and re-confirmed. You said
 `"done"` (11:34Z). The Project Manager's own live audit at 11:35Z passes
 and the gate's probe reads the repository as public. The replaced
 commits left GitHub with the deleted repository; copies taken elsewhere
-while it was public are beyond reach. The P0 hold's security-reviewer
-clause still stands until `PMR-140` lifts it with `PMR-139`. Nothing more for you here.
+while it was public are beyond reach. The P0 hold, including its
+security-reviewer clause, was lifted on 2026-11-10 (`PMD-20261110-003`). Nothing more for you here.
 
 **2026-11-10: you chose to delete and recreate the GitHub repository
 instead of the Support request** (`PMD-20261110-002`; no issues, pull
@@ -372,7 +400,7 @@ security-reviewer (`PMR-141`, with `PMR-151` in the next owner session; launch
 command under "P3 PMR-151") and threat-modeler
 (`PMR-142`, a direct human-started session as for `PMR-121`, which also
 corrects its handoff's description of the public `origin` as a private
-backup); P2 Beryllium (`PMR-143`, with `PMR-139`), provenance-review
+backup); P2 Beryllium (`PMR-143`, with `PMR-157`), provenance-review
 (`PMR-144`, a direct session that may also take `PMR-122`), Helium
 (`PMR-145`; otherwise parked, but its `public` remote
 makes it public-bound), and XRV (`PMR-146`, after its change set is
@@ -598,8 +626,8 @@ Every Copilot CLI launch the Project Manager gives now names
 a model. The `PMR-138` owner session did not select it and has exited.
 Select it with P1 `PMR-141` (gate adoption) in the next security-reviewer
 owner session; agents may not run Git there, so you commit its edits,
-which stay local while the P0 hold stands (until `PMR-140` lifts it after
-`PMR-139` closes):
+and, with the hold lifted on 2026-11-10, pushing them is your decision
+(the gate checks the push):
 
 ```sh
 cd /home/jmorris/src/beryllium-project/project-manager
@@ -1593,8 +1621,9 @@ every `push_pm` publishes the Project Manager commits it pushes.
 (`PMD-20261012-002`; security-reviewer is to be private only for its P0
 repair, `PMD-20261108-002`), so `push_tm` and `push_sr` publish too; since
 2026-11-08 every push step runs the publication gate first and refuses until
-it is installed. `PMR-138` closed on 2026-11-08, but the P0 hold keeps
-`push_sr` skipped until `PMR-140` lifts it after `PMR-139` closes. The current
+it is installed. The P0 hold was lifted on 2026-11-10 (`PMD-20261110-003`),
+so `push_sr` is no longer held; security-reviewer is public, so it
+publishes. The current
 component backups are the P1 backup-and-checks script and the two P2
 owner sessions at the top of this runbook; the communications repository
 was backed up on 2026-11-05.

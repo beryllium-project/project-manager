@@ -6,7 +6,7 @@
 - **Supersedes:** `PMD-20261108-001` in part (disposition 9: the hold's
   Beryllium clause no longer applies to the Beryllium release; the rest of
   that record stands)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261110-003` (fulfilled; the hold is lifted)
 
 ## Scope
 
