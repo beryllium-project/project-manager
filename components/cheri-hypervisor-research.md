@@ -31,7 +31,7 @@
   local commit `7361de4`, is XRV work with no backup (`PMD-20261025-002`). Open P4 `PMR-131` (2026-10-12)
   and `PMR-135` (2026-10-25) ask the owner to triage workbook pointers
   PMQ-034..036 and PMQ-044, PMQ-050, PMQ-055, PMQ-061, and PMQ-069 under
-  its review-log rules. PMR-115 changes only
+  its review-log rules; P4 `PMR-152` (2026-11-10) adds twenty-three more. PMR-115 changes only
   `.github/copilot-instructions.md` and `HANDOFF.md`, binds startup path
   resolution to current SOT/registry state, and records dated path facts. The
   owner reports fingerprint/path review and `git diff --check` passed; this

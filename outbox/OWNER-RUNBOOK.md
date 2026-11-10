@@ -393,7 +393,7 @@ licenses, MkDocs wiki and build files, tests, scripts, and a build-only
 workflow. With its one local commit `7361de4`, none of it has a backup. Its
 own handoff keeps publication blocked until you decide whether the existing
 content and history may be disclosed, and the dirty tree blocks
-`owner-session.sh` for `PMR-131` and `PMR-135`.
+`owner-session.sh` for `PMR-131`, `PMR-135`, and `PMR-152`.
 
 Recommended, a backup only with no publication: start an XRV session from
 its workspace entry; the command pins `claude-opus-5.5` / `max` /
@@ -1026,7 +1026,10 @@ remain excluded.
 `PMD-20260929-001` recorded authorization; and `PMD-20260929-002` records
 verified completion. Do not rerun `outbox/pmr105-push.sh`.
 
-## P3 PMR-107 and PMR-137: OS-security pointer triage
+## P3 PMR-107, PMR-137, and PMR-154: OS-security pointer triage
+
+The launcher refuses while the checkout has uncommitted files (five owner
+entries on 2026-11-10); the owner commits or resolves them first.
 
 The synchronized analysis-workbook added three public-source pointers from
 `AWB-20260928-001`, now ledgered as `PML-0032..0034`: Sirius, the *Secure
@@ -1044,8 +1047,12 @@ must approve starting the OS-security owner session. The exact prepared
 request is run from the workspace root:
 
 ```sh
-bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-107 PMR-137
+bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-107 PMR-137 PMR-154
 ```
+
+2026-11-10: `PMR-154` adds twenty-six more workbook pointers for the same
+session; `PMQ-101` and `PMQ-102` are your private conference decks, which
+the owner records at most as metadata unless you decide redistribution.
 
 The owner may record public metadata/lawful routes, report an existing
 record, or decline each pointer. It must not access
@@ -1156,7 +1163,7 @@ Project Manager carry. Generic fleet agents cannot run any of these writes.
 | `PMR-066` | P3 | `bash ./project-manager/scripts/owner-session.sh launch provenance-review PMR-066` | Packet preloaded for ordinary configuration maintenance. |
 | `PMR-068`, `PMR-113` | P4 | `bash ./project-manager/scripts/owner-session.sh launch helium-te-poc PMR-068 PMR-113` | Parked; preserve frozen refs and gates. |
 | `PMR-070`, `PMR-116` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-070 PMR-116`; answer the component's ask-first gate before writing | Packet preloaded; never open `restricted-microsoft`. |
-| `PMR-107`, `PMR-137` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-107 PMR-137`, only after you approve the ask-first OS-security session (see "P3 PMR-107 and PMR-137" above) | OS-security owner must decide the seventeen public pointers under its own source/redistribution rules. Do not combine with PMR-070/116 or treat this as class-2 carry. |
+| `PMR-107`, `PMR-137`, `PMR-154` | P3 | `bash ./project-manager/scripts/owner-session.sh launch osr-claude PMR-107 PMR-137 PMR-154`, only after you approve the ask-first OS-security session (see "P3 PMR-107 and PMR-137" above) | OS-security owner must decide the forty-three pointers (two are private decks) under its own source/redistribution rules. Do not combine with PMR-070/116 or treat this as class-2 carry. |
 | `PMR-141`, `PMR-151` | P1 / P3 | `bash ./project-manager/scripts/owner-session.sh launch security-reviewer PMR-141 PMR-151` | Gate adoption and the pinned launch lines; agents may not run Git there, so you commit its edits. `PMR-118` and `PMR-123` closed on 2026-11-08 (verified at `8055bec`). |
 
 Do not paste a follow-up phrase. Every ordinary generated packet includes exact
@@ -1424,7 +1431,7 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   action); have the owner prepare a clean publication line; or publish an
   exact commit, naming what you accept. The Project Manager then records
   the decision.
-- **P4 PMR-131 and PMR-135:** in one human-started XRV owner session, the
+- **P4 PMR-131, PMR-135, and PMR-152:** in one human-started XRV owner session, the
   owner decides under its review-log rules whether to record PMQ-034..036
   and PMQ-044, PMQ-050, PMQ-055, PMQ-061, and PMQ-069 as pointer-only
   entries, and reports each as recorded, already represented, or declined.
@@ -1432,13 +1439,14 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 
   ```sh
   cd /home/jmorris/src/beryllium-project/project-manager
-  bash ./scripts/owner-session.sh launch cheri-hypervisor-research PMR-131 PMR-135
+  bash ./scripts/owner-session.sh launch cheri-hypervisor-research PMR-131 PMR-135 PMR-152
   ```
 
   The launcher refuses while XRV's 2026-10-23 publication-preparation
   change set is uncommitted, because it counts any change as dirty; see
   "P2 XRV uncommitted publication-preparation change set" first.
-- **P4 PMR-136:** in a human-started formal-verification owner session,
+  `PMR-152` (2026-11-10) adds twenty-three more workbook pointers.
+- **P4 PMR-136 and PMR-153:** in a human-started formal-verification owner session (`PMR-153`, 2026-11-10, adds fourteen more workbook pointers),
   the owner decides under its bibliography rules whether to record PMQ-049
   (MILS component integration), PMQ-066 (TF-RMM CBMC application note),
   and PMQ-067 (Keystone secure-boot patch and bootrom measurement); TF-RMM
@@ -1447,8 +1455,16 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
 
   ```sh
   cd /home/jmorris/src/beryllium-project/project-manager
-  bash ./scripts/owner-session.sh launch formal-verification-research PMR-136
+  bash ./scripts/owner-session.sh launch formal-verification-research PMR-136 PMR-153
   ```
+
+  The launcher refuses while the untracked `inbox.txt` remains; the owner
+  resolves it first.
+- **P4 PMR-155 and PMR-156:** the workbook's `CRQ-005` (device-handoff
+  checklist) and `CRQ-006` (capability-verification checklist), routed to
+  Beryllium as planning input. Nothing to do now: give them to a Beryllium
+  owner session only when device-domain work is authorized or the CAP+TE
+  trigger is reviewed. They authorize nothing.
 - **P3 PMR-085:** analysis-workbook `main` (synchronized at `3c9d2a3`,
   now `4cf44d0` on both the private `origin` and `public`) contains the exact predecessor range through `ea72522`. Reconcile who
   reviewed and authorized the encompassing push before closure. No force,
@@ -1515,9 +1531,9 @@ at work `9d76048` / return `e6c8aad`. Final PMR-063 work `62bd071` / return
   fail-closed tasking resolver. The owner reports 48 URL checks and no sibling
   write. Pointer removal or admission changes no licensing, verification,
   Beryllium, or publication gate.
-- **P3 PMR-107 and PMR-137:** after the responsible human satisfies
-  OS-security's ask-first convention, triage only PMQ-031..033 and the
-  fourteen PMR-137 pointers under the public-source rules; never access
+- **P3 PMR-107, PMR-137, and PMR-154:** after the responsible human satisfies
+  OS-security's ask-first convention, triage only PMQ-031..033, the
+  fourteen PMR-137 pointers, and the twenty-six PMR-154 pointers under the public-source rules; never access
   restricted material.
 - **P4 PMR-125:** Project Manager-owned `CRQ-003` todo to investigate RVV
   use in the Beryllium hypervisor. The 2026-10-10 Beryllium hold ended on

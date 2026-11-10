@@ -20,7 +20,7 @@
   related index edits, with owner validation passing and no publication. It
   lists the analysis-workbook review of the proposal as pending; workbook
   session `AWB-20261023-001` records that review component-side. Pointer
-  triage `PMR-107` and `PMR-137` (P3, ask-first) are open. Earlier: clean
+  triage `PMR-107`, `PMR-137`, and `PMR-154` (2026-11-10, twenty-six more) (P3, ask-first) are open. Earlier: clean
   `main` at `86645d4`, synchronized with private active `origin/main`;
   owner return records independently authorized executable-backlog
   integration with maintained checks passing and no restricted access. Clean root snapshot `58f8023` remains the reviewed
