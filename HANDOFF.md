@@ -2,7 +2,12 @@
 
 **Last updated:** 2026-11-10 (UTC; about 00:10 at UTC-8)
 **Update scope:** one-hundred-fortieth coordination turn, on `lx2`:
-**both coordination repositories pushed.** You said exactly `"ok, the
+**parent pushed; Project Manager push failed (GitHub HTTP 408).** **Correction (08:10Z):** the parent push to private `upstream/main`
+succeeded (`9c6d167..001063f`), but the Project Manager push to public
+`origin` failed three times with GitHub `HTTP 408` (request timeout) after
+the gate passed, so the Project Manager stays unpushed (ahead of
+`origin/main` `a874b19`); the `push_both` confirmation covers a retry this
+turn only.  You said exactly `"ok, the
 hypervisor session has paused work to allow for the admin tasks above."`
 (about 08:05Z, 00:04 at UTC-8), and, after the Project Manager said that
 its own push publishes, answered `push_both` (about 08:05Z). The gate's
