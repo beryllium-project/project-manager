@@ -175,7 +175,9 @@
   seven linked-worktree registrations are repaired, and five under a former
   Copilot session-state directory are retained unrepaired; they were
   prunable on `l1`, were not prunable on `lx2`, where their directories
-  existed, and are prunable on `l1` again since 2026-10-25. `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
+  existed, were prunable on `l1` again from 2026-10-25, and on `lx2` on
+  2026-11-10 are no longer listed by `git worktree list` (disposition
+  unknown; `PMD-20261110-001`). `PMR-133` is closed: on `beryllium/k3-b7-bringup` and, since `PMR-134`, on
   the development branch, `## Project Manager tasking` is again the first
   level-two section, and the owner reports `--tasking-contract` passing;
   the owner reports that the other 21 local branches that contain

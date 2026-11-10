@@ -1,7 +1,7 @@
 # Owner runbook: current open items
 
 **Maintained by:** `project-manager`
-**Last refreshed:** 2026-11-08
+**Last refreshed:** 2026-11-10
 **Workspace root:** parent of `project-manager/`; exact current root is
 recorded in `../COMPONENTS.md`
 
@@ -38,8 +38,10 @@ Manager clause ended on 2026-11-08 (135th turn), when the
 security-reviewer rewrite landed (`PMD-20261108-001` disposition 9).
 Making security-reviewer public again is a visibility change under
 `PMD-20261108-002`, not a push. Every public push runs the publication
-gate, installed on `l1` since 2026-11-08T07:25:02Z (again at 08:38:02Z),
-and still needs its own decision.
+gate, installed on `l1` since 2026-11-08T07:25:02Z (again at 08:38:02Z)
+but **not yet on `lx2`**, the canonical workstation since 2026-11-10
+(`PMD-20261110-001`); no public push from `lx2` until the install below
+passes. Every public push still needs its own decision.
 Exact commits, paths, lines, and commands are only in the private
 `../.publication-gate/P0-20261108-001.md` (parent repository, private).
 
@@ -82,7 +84,21 @@ remains, with `PMR-143` if it wishes.
 
 ### P0 PMR-140: install the publication gate
 
-**Installed on `l1` at 2026-11-08T07:25:02Z, and again at 08:38:02Z:** both
+**2026-11-10: install it on `lx2` now.** Why: the install is per
+workstation and did not travel with the rsync; on `lx2` there is no
+installed gate, no scoped pre-push hook, and no `beryllium-publication-gate`
+skill, so a direct `git push` from `lx2` (your Beryllium release, the
+threat-modeler fast-forward, or the Project Manager push) would not be
+gated; `owner-actions.sh` refuses public pushes meanwhile. No global `core.hooksPath` is set on `lx2`, and the parent's private
+denylist arrived intact. Run the `install` command below, then tell the
+Project Manager `gate installed on lx2`; it reads the log. Then run the
+read-only governance check:
+
+```sh
+bash /home/jmorris/src/beryllium-project/project-manager/scripts/beryllium-governance.sh check
+```
+
+Earlier: **Installed on `l1` at 2026-11-08T07:25:02Z, and again at 08:38:02Z:** both
 closing `check` runs passed every line (logs
 `scratch/publication-gate-setup/publication-gate-setup-install-20261108T072502Z.log`
 and `scratch/publication-gate-setup/publication-gate-setup-install-20261108T083802Z.log`),
@@ -140,7 +156,12 @@ request and changes no visibility. The exact text is only in the private
 
 ## P1 Backup and checks on `l1` (no PMR)
 
-**2026-11-08 update:** the publication gate is installed (`PMR-140`
+**2026-11-10 update:** the workspace is on `lx2` since the rsync
+(`PMD-20261110-001`). Run this script on `lx2` only, and only after the
+`PMR-140` install there; never on `l1`. Its name is historical; its root is
+the same path, and its governance `check` then checks `lx2`.
+
+**2026-11-08 update (on `l1`):** the publication gate is installed (`PMR-140`
 above). Since `PMD-20261108-001`, step 3's `owner-actions.sh` runs the gate
 before each push step. Security-reviewer has nothing to push (its P0 repair push
 under `PMR-138` is done), and threat-modeler's
@@ -168,8 +189,8 @@ return, and the CHERI notes remote check (next section) has not run. The
 Project Manager pushed its own and the parent's 129th-turn commits (live
 `ls-remote` verified them on 2026-11-05); it never pushes a component.
 
-Run this in a terminal on `l1` while the Beryllium, workbook, and
-security-reviewer sessions are idle. It changes no Copilot
+Run this in a terminal on `lx2` (after the gate install) while the
+Beryllium, workbook, and security-reviewer sessions are idle. It changes no Copilot
 configuration, so no other governed session needs to stop for its hook
 check:
 
@@ -370,6 +391,12 @@ carry. No gate follows from this runbook.
 
 ## P3 Beryllium session-state worktrees (no PMR)
 
+**2026-11-10 on `lx2` (`PMD-20261110-001`):** `git worktree list` no
+longer lists these five registrations. Whether they were pruned, and
+whether `66eaa7f7` still exists, are unknown until a Beryllium session
+reports it; the options below apply only if they still exist. Earlier
+text:
+
 `PMR-127` repaired seven Beryllium linked-worktree registrations, which are
 clean on `l1`. The owner retained five more, unrepaired, unpruned, and
 unlocked, registered under a former Copilot session-state directory under
@@ -533,7 +560,13 @@ pending next action of preparing a registration request.
 
 ## Completed user-level governance installs (no PMR)
 
-Back on `l1` since 2026-10-25 (`PMD-20261025-001`): the install you
+On `lx2` again since 2026-11-10 (`PMD-20261110-001`): the hook installed
+here on 2026-10-23 matches the repository source by SHA-256; `check` has
+not been re-run since the move. Run the read-only `check` in the `PMR-140`
+section after the gate install; if it fails, follow `REHYDRATE.md`
+section 4 on `lx2`.
+
+Earlier: Back on `l1` since 2026-10-25 (`PMD-20261025-001`): the install you
 reported done there on 2026-10-13 has not been re-checked, and the
 installed hook script was modified on 2026-10-19 (00:26Z), consistent with
 Beryllium's record of a temporary model edit and its restoration. The P1
@@ -638,8 +671,9 @@ On 2026-10-12 `PMR-127` repaired, at the current root path, the five registered 
 yet follow `worktrees/<repository>/<purpose-or-branch>`. The owner also
 observed, untouched, six unregistered `worktrees/beryllium-hypervisor-*`
 directories whose `.git` files name Git admin directories that no longer
-exist, so `git worktree repair` cannot reattach them, and an empty
-`worktrees/beryllium-hypervisor/`. A later Beryllium owner inventory
+exist, so `git worktree repair` cannot reattach them, and a then-empty
+`worktrees/beryllium-hypervisor/`, which on 2026-11-10 holds the
+registered `m10` and `m10-plan` worktrees. A later Beryllium owner inventory
 decides any `git worktree move` and the unregistered directories'
 disposition, after fresh tasking, worktree, and one-writer checks; nothing
 is deleted before the owner confirms that no unique content remains. The

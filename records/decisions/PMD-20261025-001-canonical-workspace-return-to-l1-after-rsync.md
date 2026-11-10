@@ -5,7 +5,8 @@
 - **Status:** recorded
 - **Supersedes:** `PMD-20261023-001` (workstation status and its
   disposition 2 only)
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261110-001` (workstation status and
+  disposition 2 only)
 
 ## Scope
 
