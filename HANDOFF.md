@@ -2,12 +2,16 @@
 
 **Last updated:** 2026-11-10 (UTC; about 00:10 at UTC-8)
 **Update scope:** one-hundred-fortieth coordination turn, on `lx2`:
-**parent pushed; Project Manager push failed (GitHub HTTP 408).** **Correction (08:10Z):** the parent push to private `upstream/main`
+**both coordination repositories pushed, the Project Manager after GitHub HTTP 408 retries.** **Correction (08:10Z):** the parent push to private `upstream/main`
 succeeded (`9c6d167..001063f`), but the Project Manager push to public
 `origin` failed three times with GitHub `HTTP 408` (request timeout) after
-the gate passed, so the Project Manager stays unpushed (ahead of
-`origin/main` `a874b19`); the `push_both` confirmation covers a retry this
-turn only.  You said exactly `"ok, the
+the gate passed. Your `owner-actions.sh --only push_pm` retry (log
+`scratch/owner-actions/owner-actions-20261110T082257Z.log`) failed the same
+way; you said `"done"` (08:25Z). A traced retry at 08:28Z, under the same
+`push_both` confirmation, succeeded: public `origin/main` moved
+`a874b19..1a59774` after a 131 KB upload took about 10 seconds, so the
+timeouts look like a slow laptop uplink, not the gate. This turn's
+follow-up record commit is pushed the same way.  You said exactly `"ok, the
 hypervisor session has paused work to allow for the admin tasks above."`
 (about 08:05Z, 00:04 at UTC-8), and, after the Project Manager said that
 its own push publishes, answered `push_both` (about 08:05Z). The gate's
