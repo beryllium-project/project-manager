@@ -4,7 +4,8 @@
 - **Created:** 2026-11-08
 - **Status:** recorded
 - **Supersedes:** None
-- **Superseded by:** None
+- **Superseded by:** `PMD-20261110-002` (only the GitHub Support request
+  and the timing of the return to public)
 
 ## Scope
 

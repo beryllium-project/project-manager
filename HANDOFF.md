@@ -1,7 +1,18 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-11-10 (UTC; about 00:10 at UTC-8)
-**Update scope:** one-hundred-fortieth coordination turn, on `lx2`:
+**Last updated:** 2026-11-10 (UTC; about 01:05 at UTC-8)
+**Update scope:** one-hundred-forty-first coordination turn, on `lx2`:
+**you chose to delete and recreate the security-reviewer GitHub
+repository** (`PMD-20261110-002`) instead of the Support request. You
+asked `"can we delete and recreate security-reviewer on gh ?"`, ran the
+read-only `gh` listings, and answered `all_empty` and `replace` (about
+09:01Z). The clone is clean at `8055bec` and passes the gate's full audit
+(09:02Z). At your direction, one logged script,
+`~/scripts/security-reviewer-replace.sh`, runs the whole replacement and
+asks before deleting and before going public; then say `done`. Nothing was pushed, deleted, or created by the Project Manager.
+
+Prior update scope (2026-11-10, about 00:10 at UTC-8):
+one-hundred-fortieth coordination turn, on `lx2`:
 **both coordination repositories pushed, the Project Manager after GitHub HTTP 408 retries.** **Correction (08:10Z):** the parent push to private `upstream/main`
 succeeded (`9c6d167..001063f`), but the Project Manager push to public
 `origin` failed three times with GitHub `HTTP 408` (request timeout) after
@@ -274,7 +285,7 @@ fleet disposition (`PMD-20261002-003`, `PMD-20261003-003`) are unchanged.
 | --- | --- | --- | --- |
 | P0 | `PMR-139` | **Your Beryllium release first (outside the hold by your decision); re-scoped after it** | You decided the release is part of the P0 solution and proceeds outside the hold (`PMD-20261108-004`); its public pushes still pass the gate, and files published outside Git need `scan-tree` on their unpacked contents first. The public review snapshot is to be deleted, which may make this request's snapshot-tool part moot, as you decide; after the release, the Project Manager observes the deletion and asks you how to narrow or close the rest (the embedded entry in the internal `release/release.py`, the snapshot-bound planning pages, the planning-site configuration, the page whose file name carries the entry, and the two gate-run clones). Closing it lifts the hold. You and your Beryllium session act. |
 | P0 | `PMR-140` | **Installed on `lx2` (05:24:16Z); closes with `PMR-139`** | Your `lx2` install passed every check; nothing more for you here. Earlier: **2026-11-10: the install is per workstation and did not travel with the rsync, so on `lx2` no public push is gated; run the install before any public push, including your Beryllium release.** Earlier: the gate is installed on `l1`, and your 08:38 reinstall passed every check. `PMR-138` is closed, so the Project Manager closes this and lifts the hold (its security-reviewer and Beryllium clauses) when `PMR-139` closes. The Beryllium release is already outside the hold (`PMD-20261108-004`). Nothing more for you here. |
-| P1 | `Security-reviewer purge and return to public` (no PMR) | **Your GitHub Support request now; public again recommended only after Support confirms** | The repair is pushed and passes the gate's audit of the local clone (`PMR-138` closed), and the repository is private, so nothing is anonymously readable on GitHub now. GitHub keeps the replaced commits reachable by their IDs until Support runs a garbage collection, and those IDs were public, so going public first would reopen them. Send the request drafted in the private note (step 6, with the new `main` `8055bec`), then make the repository public once Support confirms and `audit --all-refs` passes (step 7) and tell the Project Manager, which confirms the live view with `audit --remote origin`. If Support declines, choose between staying private, going public anyway, or replacing the GitHub repository. You act. |
+| P1 | `Security-reviewer repository replacement` (no PMR) | **2026-11-10: you chose delete and recreate (`PMD-20261110-002`); run `bash ~/scripts/security-reviewer-replace.sh`, then `done`.** No Support request is needed; the Project Manager audits the new repository, then you make it public. Earlier: **Your GitHub Support request now; public again recommended only after Support confirms** | The repair is pushed and passes the gate's audit of the local clone (`PMR-138` closed), and the repository is private, so nothing is anonymously readable on GitHub now. GitHub keeps the replaced commits reachable by their IDs until Support runs a garbage collection, and those IDs were public, so going public first would reopen them. Send the request drafted in the private note (step 6, with the new `main` `8055bec`), then make the repository public once Support confirms and `audit --all-refs` passes (step 7) and tell the Project Manager, which confirms the live view with `audit --remote origin`. If Support declines, choose between staying private, going public anyway, or replacing the GitHub repository. You act. |
 | P1 | `PMR-141` | **Ready for the next security-reviewer owner session, with `PMR-151`** | Security-reviewer adopts the trigger phrase `check publication gate` and the gate command; the `PMR-138` session left it for a separate session and has exited. One launcher command (see "Further actions"); you commit its edits. Public repository, private for the repair. |
 | P1 | `PMR-142` | **Ready for a direct human-started threat-modeler session (pinned command in the runbook)** | Threat-modeler adopts the gate and corrects its handoff, which still calls the public `origin` a private backup; its six unpushed commits already pass the gate. The exact command is in `outbox/OWNER-RUNBOOK.md` "P1-P4 publication-gate adoption". |
 | P1 | `Backup and checks on l1` (no PMR) | **2026-11-10: gate installed on `lx2`; run it on `lx2` (never `l1`) while your sessions are idle.** Earlier: **Gate installed; run it while your Beryllium, workbook, and security-reviewer sessions are idle; not run yet** | `scratch/l1-backup-and-checks.sh`, revised 2026-11-08, runs the read-only governance `check` and CHERI notes remote check, then `owner-actions.sh` review, the y/N threat-modeler fast-forward (public, so y publishes; the gate runs first, and the six commits pass it), and a fetch of every registered repository. The former Beryllium step and the security-reviewer push are removed: Beryllium and the workbook are already 0/0 with their private origins, and security-reviewer's repair push is done. Run on `lx2`, it checks the `lx2` hook and answers the CHERI notes remote question. You act; the Project Manager reads the logs. |
@@ -353,7 +364,13 @@ or merge the internal release branch into `main`.
 
 Further actions, in priority order:
 
-- **Send the GitHub Support request for security-reviewer.** The repair is
+- **Replace the security-reviewer GitHub repository** (your choice,
+  2026-11-10, `PMD-20261110-002`): delete it, create it again private,
+  push `main` from the clean clone, re-audit, and optionally make it
+  public, all by one logged script, `bash ~/scripts/security-reviewer-replace.sh`
+  (`outbox/OWNER-RUNBOOK.md` "P1 security-reviewer repository
+  replacement"); then say `done` and the Project Manager reads the log. Superseded earlier text: **Send the
+  GitHub Support request for security-reviewer.** The repair is
   pushed, the gate's audit of the local clone passes (`PMR-138` closed),
   and the repository is private, so nothing is anonymously readable on
   GitHub now; but GitHub keeps the replaced commits reachable by their IDs

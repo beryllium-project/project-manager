@@ -129,7 +129,77 @@ If you installed it before the 133rd turn, run the same `install` again:
 `check` then fails by SHA-256 until the corrected gate
 (`PMD-20261108-002`) is copied.
 
-## P1 security-reviewer purge and return to public (no PMR)
+## P1 security-reviewer repository replacement (no PMR)
+
+**2026-11-10: you chose to delete and recreate the GitHub repository
+instead of the Support request** (`PMD-20261110-002`; no issues, pull
+requests, or releases, and stars and watchers don't matter).
+
+**One command does all of it, with a log** (your direction, 2026-11-10:
+`"if you need me to do a bunch of things and paste things back, make a
+script for me to run with logs you can review"`):
+
+```sh
+bash ~/scripts/security-reviewer-replace.sh
+```
+
+It checks the clone (clean, `8055bec`, gate audit passing) and that the
+repository has no issues, pull requests, or releases; refreshes `gh`'s
+`delete_repo` permission if needed; asks you to type
+`delete security-reviewer` before deleting; creates the private
+repository; pushes `main` through the gate (retrying GitHub timeouts);
+fetches and re-audits; then asks you to type `public` to return it to
+public, running the live audit afterwards. It logs to
+`project-manager/scratch/security-reviewer-replace/`. Then say `done`.
+
+The individual steps, for reference. Run each line from any directory, in order. Why: deleting the GitHub
+repository removes the replaced commits that anyone holding their IDs can
+still open; recreating it from the clean clone gives back only the
+repaired `main`, so no Support request is needed (`PMD-20261110-002`).
+The local clone is clean at `8055bec` and passes the gate's full audit
+(2026-11-10T09:02Z).
+
+1. Give `gh` permission to delete repositories (skip if already granted;
+   it may open a browser):
+
+   ```sh
+   gh auth refresh -h github.com -s delete_repo
+   ```
+
+2. Delete the GitHub repository (irreversible for you; stars, watchers,
+   and settings go with it):
+
+   ```sh
+   gh repo delete beryllium-project/security-reviewer --yes
+   ```
+
+3. Create it again, private:
+
+   ```sh
+   gh repo create beryllium-project/security-reviewer --private
+   ```
+
+4. Push only `main` from the existing clone (the installed gate scans it
+   as public first; stop on any refusal):
+
+   ```sh
+   git -C /home/jmorris/src/beryllium-project/security-reviewer push origin main
+   ```
+
+5. Refresh the clone's view of GitHub:
+
+   ```sh
+   git -C /home/jmorris/src/beryllium-project/security-reviewer fetch --prune --tags origin
+   ```
+
+Then tell the Project Manager `done`. It runs the gate's
+`audit --all-refs` of the clone; when that passes, it gives you the one
+`gh repo edit ... --visibility public` line, and after you run it,
+confirms the live public view with `audit --remote origin`.
+
+Earlier plan, superseded for its Support request and timing:
+
+## P1 security-reviewer purge and return to public (no PMR, superseded)
 
 `PMR-138` closed on 2026-11-08 (135th turn). Done: private
 (between 07:23:36Z and 07:27:14Z); the gate install (07:25:02Z, again at
