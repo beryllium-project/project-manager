@@ -2,7 +2,9 @@
 
 **Last updated:** 2026-11-10 (UTC; about 12:40 at UTC+1)
 **Update scope:** one-hundred-forty-fifth coordination turn, on `lx2`:
-the security-reviewer GitHub repository replacement is complete and public
+you then said exactly `"push both"` (11:36Z, 12:36 at UTC+1), confirming
+this turn's public Project Manager push (after a passing gate `check`)
+and private parent push, fast-forward only. Also this turn: the security-reviewer GitHub repository replacement is complete and public
 again (`PMD-20261110-002`). Your resume run at 11:32:48Z (log
 `scratch/security-reviewer-replace/resume-20261110T113248Z.log`) pushed
 `main` at `8055bec` into the new repository (the gate passed, 266 items),
