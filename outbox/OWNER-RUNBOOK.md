@@ -131,6 +131,19 @@ If you installed it before the 133rd turn, run the same `install` again:
 
 ## P1 security-reviewer repository replacement (no PMR)
 
+**Done 2026-11-10T11:33Z:** the security-reviewer GitHub repository replacement is complete and public
+again (`PMD-20261110-002`). Your resume run at 11:32:48Z (log
+`scratch/security-reviewer-replace/resume-20261110T113248Z.log`) pushed
+`main` at `8055bec` into the new repository (the gate passed, 266 items),
+fetched, passed the gate's `audit --all-refs` (268 items), and on your
+`public` answer made it public; its live audit passed (267 items). A
+second run at 11:34:13Z found nothing to push and re-confirmed. You said
+`"done"` (11:34Z). The Project Manager's own live audit at 11:35Z passes
+and the gate's probe reads the repository as public. The replaced
+commits left GitHub with the deleted repository; copies taken elsewhere
+while it was public are beyond reach. The P0 hold's security-reviewer
+clause still stands until `PMR-140` lifts it with `PMR-139`. Nothing more for you here.
+
 **2026-11-10: you chose to delete and recreate the GitHub repository
 instead of the Support request** (`PMD-20261110-002`; no issues, pull
 requests, or releases, and stars and watchers don't matter).
