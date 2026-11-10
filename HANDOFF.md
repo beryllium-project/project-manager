@@ -1,7 +1,14 @@
 # Beryllium Project Manager handoff
 
-**Last updated:** 2026-11-10 (UTC; about 01:50 at UTC-8)
-**Update scope:** one-hundred-forty-third coordination turn, on `lx2`:
+**Last updated:** 2026-11-10 (UTC; about 12:35 at UTC+1)
+**Update scope:** one-hundred-forty-fourth coordination turn, on `lx2`:
+you said exactly `"push both"` (11:33Z, 12:33 at UTC+1), confirming this
+turn's public Project Manager push (after a passing gate `check`) and
+private parent push, fast-forward only; later pushes need a new same-turn
+confirmation.
+
+Prior update scope (2026-11-10, about 01:50 at UTC-8):
+one-hundred-forty-third coordination turn, on `lx2`:
 **offline triage while pushes wait for a better network.** You chose
 `both` (about 09:30Z): the Beryllium planning session resumes local-only
 work (your action), and the Project Manager triaged the workbook queue.
