@@ -2,6 +2,9 @@
 
 **Last updated:** 2026-11-10 (UTC; about 00:15 on 2026-11-11 at UTC+1)
 **Update scope:** one-hundred-forty-sixth coordination turn, on `lx2`:
+you then said exactly `"push both"` (23:44Z, 00:44 on 2026-11-11 at UTC+1),
+confirming this turn's public Project Manager push (after a passing gate
+`check`) and private parent push, fast-forward only. Also this turn:
 **the P0 publication-safety incident is closed and the hold is lifted**
 (`PMD-20261110-003`). You said exactly `"beryllium-hypervisor session says done"` (22:59Z) and answered
 `close_and_followup`. The Beryllium session reported `done` at clean
