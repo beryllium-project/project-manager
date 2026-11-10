@@ -41,9 +41,9 @@
   human-run `scratch/lx2-setup.sh` records `install` and `check` passing
   at 05:38:54Z (`PMD-20261023-001`); a session on `lx2` started before that
   install had to be restarted, because the stale hook denied its task
-  launches whatever arguments were passed. Back on `l1` since 2026-10-25
-  (`PMD-20261025-001`), `check` has not been re-run there, and the
-  installed script was modified after the 2026-10-13 install. Passing that
+  launches whatever arguments were passed. On `lx2` again since 2026-11-10
+  (`PMD-20261110-001`), the installed hook matches the repository source
+  and the human reported `check` done (not independently verified). Passing that
   triple explicitly remains harmless.
   Closed P3
   `PMR-123` asked the owner to repin all four profiles to `claude-opus-5.5` /

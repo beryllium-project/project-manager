@@ -66,7 +66,8 @@ call a non-public model `unlisted` with nothing else said about it. Each
 component maps the trigger phrase `check publication gate` to that
 procedure through its own adoption request (`PMR-141`..`PMR-150`). The
 human installed the gate on `l1` with `scripts/publication-gate-setup.sh
-install` on 2026-11-08 (P0 `PMR-140`), so there the global pre-push hook
+install` on 2026-11-08 (P0 `PMR-140`), and on `lx2` on 2026-11-10 after
+the move (`PMD-20261110-001`), so on both the global pre-push hook
 gates every public push, as `owner-actions.sh` does; on a workstation
 without the install, only `owner-actions.sh` gates public pushes and a
 direct `git push` is not hooked.

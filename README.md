@@ -191,8 +191,10 @@ command completed on `lx2` (`"done above"`, 2026-10-01, at the earlier
 was replaced by a logged install whose `check` passed every line
 (`PMD-20261023-001`). On `l1` the responsible human reported the install
 done on 2026-10-13; its script was modified afterwards, and `check` has
-not been re-run since the 2026-10-25 return (`PMD-20261025-001`;
-`HANDOFF.md` records the current status). The
+not been re-run since the 2026-10-25 return (`PMD-20261025-001`). On
+`lx2`, canonical again since 2026-11-10, the installed hook matches the
+repository source and the human reported `check` done
+(`PMD-20261110-001`; `HANDOFF.md` records the current status). The
 Project Manager reads such logs but did not run either mode against real
 user configuration or establish
 install-time session state. User-level hook state is per workstation

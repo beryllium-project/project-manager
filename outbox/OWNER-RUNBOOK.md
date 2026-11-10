@@ -39,9 +39,8 @@ security-reviewer rewrite landed (`PMD-20261108-001` disposition 9).
 Making security-reviewer public again is a visibility change under
 `PMD-20261108-002`, not a push. Every public push runs the publication
 gate, installed on `l1` since 2026-11-08T07:25:02Z (again at 08:38:02Z)
-but **not yet on `lx2`**, the canonical workstation since 2026-11-10
-(`PMD-20261110-001`); no public push from `lx2` until the install below
-passes. Every public push still needs its own decision.
+and on `lx2`, the canonical workstation since 2026-11-10
+(`PMD-20261110-001`), since 2026-11-10T05:24:16Z. Every public push still needs its own decision.
 Exact commits, paths, lines, and commands are only in the private
 `../.publication-gate/P0-20261108-001.md` (parent repository, private).
 
@@ -84,7 +83,12 @@ remains, with `PMR-143` if it wishes.
 
 ### P0 PMR-140: install the publication gate
 
-**2026-11-10: install it on `lx2` now.** Why: the install is per
+**2026-11-10T05:24:16Z: installed on `lx2`; its closing `check` passed
+every line** (log
+`scratch/publication-gate-setup/publication-gate-setup-install-20261110T052416Z.log`),
+and you reported the governance `check` done (`"done above"`). Nothing
+more for you here; `PMR-140` closes when `PMR-139` closes. Earlier
+(before the install): Why: the install is per
 workstation and did not travel with the rsync; on `lx2` there is no
 installed gate, no scoped pre-push hook, and no `beryllium-publication-gate`
 skill, so a direct `git push` from `lx2` (your Beryllium release, the
@@ -158,7 +162,7 @@ request and changes no visibility. The exact text is only in the private
 
 **2026-11-10 update:** the workspace is on `lx2` since the rsync
 (`PMD-20261110-001`). Run this script on `lx2` only, and only after the
-`PMR-140` install there; never on `l1`. Its name is historical; its root is
+`PMR-140` install there (done 2026-11-10T05:24:16Z); never on `l1`. Its name is historical; its root is
 the same path, and its governance `check` then checks `lx2`.
 
 **2026-11-08 update (on `l1`):** the publication gate is installed (`PMR-140`
@@ -535,9 +539,9 @@ writes no log, so its `check` and `install` results reach the Project
 Manager only through your report, which the Project Manager records as
 unverified responsible-human evidence, unless a logging wrapper runs it.
 On 2026-10-23 you ran it through the ignored wrapper
-`scratch/lx2-setup.sh`, whose log the Project Manager read. On `l1` the
-ignored wrapper `scratch/l1-backup-and-checks.sh` (P1 above) runs `check`
-and logs it.
+`scratch/lx2-setup.sh`, whose log the Project Manager read. The ignored
+wrapper `scratch/l1-backup-and-checks.sh` (P1 above), now run on `lx2`
+only, runs `check` and logs it.
 
 ## Completed: private communications repository (no PMR)
 
@@ -561,10 +565,10 @@ pending next action of preparing a registration request.
 ## Completed user-level governance installs (no PMR)
 
 On `lx2` again since 2026-11-10 (`PMD-20261110-001`): the hook installed
-here on 2026-10-23 matches the repository source by SHA-256; `check` has
-not been re-run since the move. Run the read-only `check` in the `PMR-140`
-section after the gate install; if it fails, follow `REHYDRATE.md`
-section 4 on `lx2`.
+here on 2026-10-23 matches the repository source by SHA-256, and you
+reported the read-only `check` done on 2026-11-10 (`"done above"`; it
+writes no log, so not independently verified). If a later `check` fails,
+follow `REHYDRATE.md` section 4 on `lx2`.
 
 Earlier: Back on `l1` since 2026-10-25 (`PMD-20261025-001`): the install you
 reported done there on 2026-10-13 has not been re-checked, and the
