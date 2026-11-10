@@ -135,6 +135,19 @@ If you installed it before the 133rd turn, run the same `install` again:
 instead of the Support request** (`PMD-20261110-002`; no issues, pull
 requests, or releases, and stars and watchers don't matter).
 
+**2026-11-10T09:16Z: half done.** Your run of the script (log
+`scratch/security-reviewer-replace/replace-20261110T091355Z.log`) found 0
+issues, pull requests, and releases, deleted the old GitHub repository
+(09:15:44Z), so the replaced commits are gone from GitHub, and created
+the new private, empty repository; all five pushes of `main` then failed
+with GitHub HTTP 408 (the gate passed each, 266 items). The clone is
+intact, clean at `8055bec`. You said exactly `"puh failed with 408
+errors, will retry in a couple of hours from hotel. what can we continue
+with?"` (about 09:22Z). Resume on a better network with
+`bash ~/scripts/security-reviewer-replace-resume.sh`, which tries HTTPS,
+then SSH to the same repository (no remote change), re-audits, and asks
+before going public.
+
 **One command does all of it, with a log** (your direction, 2026-11-10:
 `"if you need me to do a bunch of things and paste things back, make a
 script for me to run with logs you can review"`):
